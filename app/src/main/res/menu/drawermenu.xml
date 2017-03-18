@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/home" />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/my_profile" />
+
+    <item
+        android:id="@+id/my_contacts"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/autokatta_contacts" />
+
+    <item
+        android:id="@+id/group"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/groups" />
+
+    <item android:title="@string/store">
+        <menu>
+
+            <item
+                android:id="@+id/my_store"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/my_store" />
+
+            <item
+                android:id="@+id/browse_store"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/browse_store" />
+
+            <item
+                android:id="@+id/search_store"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/search_store" />
+
+        </menu>
+    </item>
+
+    <item android:title="@string/vehicle">
+        <menu>
+
+            <item
+                android:id="@+id/upload_vehicle"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/upload_vehicle" />
+
+            <item
+                android:id="@+id/search_vehicle"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/search_vehicle" />
+            <item
+                android:id="@+id/my_search"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/my_search" />
+
+            <item
+                android:id="@+id/my_vehicle"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/my_uploaded_vehicle" />
+
+        </menu>
+    </item>
+
+    <item android:title="@string/auction">
+        <menu>
+
+            <item
+                android:id="@+id/create_event"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/create_event" />
+
+            <item
+                android:id="@+id/active_event"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/my_active_event" />
+
+            <item
+                android:id="@+id/saved_event"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/my_saved_event" />
+
+            <item
+                android:id="@+id/ended_event"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/ended_event" />
+
+            <item
+                android:id="@+id/black_list_contact"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/black_listed_members" />
+        </menu>
+    </item>
+
+    <item android:title="@string/other">
+        <menu>
+
+            <item
+                android:id="@+id/broadcast_groups"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/broadcast_groups" />
+
+            <item
+                android:id="@+id/my_broadcast_message"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/broadcast_message" />
+
+            <item
+                android:id="@+id/business_Chat"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/business_chat" />
+            <item
+                android:id="@+id/locality"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/locality" />
+
+        </menu>
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/sign_out"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/sign_out" />
+        </menu>
+    </item>
+</menu>

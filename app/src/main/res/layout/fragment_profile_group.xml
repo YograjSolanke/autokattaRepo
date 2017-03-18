@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin">
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/actgroup">
+
+            <RelativeLayout
+                android:id="@+id/creategroup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    android:id="@+id/creategrouptxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:paddingEnd="35dp"
+                    android:paddingStart="35dp"
+                    android:text="Create Group  +"
+                    android:textColor="#2C3343"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <ExpandableListView
+                android:id="@+id/groupexpanablelistview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/creategroup"
+                android:layout_marginTop="2dp"
+                android:textColor="#2C3343" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:src="@mipmap/ic_menu"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="top|right|end" />
+</LinearLayout>

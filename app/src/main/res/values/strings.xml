@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Autokatta</string>
+    <string name="action_settings">Settings</string>
+    <string name="base_url">http://autokatta.com/mobile/</string>
+
+    <!-- Navigation Drawer Items...-->
+    <string name="home">Home</string>
+    <string name="my_profile">My Profile</string>
+    <string name="autokatta_contacts">My Autokatta Contacts</string>
+    <string name="groups">Group (s)</string>
+    <string name="store">Store</string>
+    <string name="my_store">My Store</string>
+    <string name="browse_store">Browse Store</string>
+    <string name="search_store">Search Store</string>
+    <string name="vehicle">Vehicle</string>
+    <string name="upload_vehicle">Upload Vehicle</string>
+    <string name="search_vehicle">Search Vehicle</string>
+    <string name="my_search">My Search</string>
+    <string name="my_uploaded_vehicle">My Uploaded Vehicles</string>
+    <string name="auction">Auction</string>
+    <string name="create_event">Create Event</string>
+    <string name="my_active_event">My Active Event</string>
+    <string name="my_saved_event">My Saved Event</string>
+    <string name="ended_event">Ended event</string>
+    <string name="black_listed_members">My Blacklisted Members</string>
+    <string name="other">Other</string>
+    <string name="broadcast_groups">Broadcast Groups</string>
+    <string name="broadcast_message">My Broadcast Messages</string>
+    <string name="business_chat">Business Chat</string>
+    <string name="locality">Locality</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="title_activity_my_autokatta_contacts">MyAutokattaContacts</string>
+
+    <!--Alert Dialog -->
+    <string name="alert_title">Confirmation</string>
+    <string name="alert_msg">Do you Want To Close The App?</string>
+
+    <!--Error Results-->
+    <string name="no_internet">No Internet Connection&#8230;</string>
+    <string name="_404">We are unable to process the request due to network delays&#8230;</string>
+    <string name="no_response">No response from server&#8230;try again!!!</string>
+
+    <!-- About US-->
+    <string name="about">About</string>
+    <string name="worked_at">Worked At</string>
+    <string name="address">Address</string>
+    <string name="company_name">Company Name</string>
+    <string name="designation">Designation</string>
+    <string name="skills">Skills</string>
+    <string name="contact_no">Contact No</string>
+    <string name="email">Email</string>
+    <string name="website">WebSite</string>
+</resources>

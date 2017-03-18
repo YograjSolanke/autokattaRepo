@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:background="@color/colorAccent"
+        android:id="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/auction_tab"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        android:background="#2C3343"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabTextColor="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/auction_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tablerowfloat"
+        android:layout_below="@+id/tabsauction">
+
+    </android.support.v4.view.ViewPager>
+
+    <TableRow
+        android:id="@+id/tablerowfloat"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+    </TableRow>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        app:backgroundTint="#FF9933"
+        android:layout_margin="15dp"
+        app:elevation="6dp"
+        app:fabSize="mini"
+        android:src="@mipmap/ic_menu" />
+</LinearLayout>
