@@ -1,6 +1,7 @@
 package autokatta.com.interfaces;
 
 import autokatta.com.response.ProfileAboutResponse;
+import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -13,4 +14,7 @@ public interface ServiceApi {
 
     @GET("getProfileData.php")
     Call<ProfileAboutResponse> _autokattaProfileAbout(@Query("contact") String contact);
+
+    @GET("getGroups.php")
+    Call<ProfileGroupResponse> _autokattaProfileGroup(@Query("contact") String contact);
 }

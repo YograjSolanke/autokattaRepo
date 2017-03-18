@@ -10,6 +10,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.ProfileAboutResponse;
+import autokatta.com.response.ProfileGroupResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -36,7 +37,7 @@ public class ApiCall {
     /*
     Login Api Call
      */
-    public void userLogin(String userName, String password){
+    public void userLogin(String userName, String password) {
 
     }
 
@@ -44,7 +45,7 @@ public class ApiCall {
     Get Profile Data About...
      */
 
-    public void profileAbout(String contact){
+    public void profileAbout(String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -62,6 +63,40 @@ public class ApiCall {
 
                     @Override
                     public void onFailure(Call<ProfileAboutResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                Toast.makeText(mContext, mContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Profile Data Group...
+     */
+
+    public void profileGroup(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<ProfileGroupResponse> mProfileGroupCall = mServiceApi._autokattaProfileGroup(contact);
+                mProfileGroupCall.enqueue(new Callback<ProfileGroupResponse>() {
+                    @Override
+                    public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

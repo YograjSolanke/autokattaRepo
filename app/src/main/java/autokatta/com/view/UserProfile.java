@@ -6,12 +6,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -19,14 +16,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import autokatta.com.R;
-import autokatta.com.adapter.TabAdapter;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment.AuctionNotification;
-import autokatta.com.fragment.SocialFragment;
-import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
-import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.fragment_profile.AboutStore;
 import autokatta.com.fragment_profile.Event;
@@ -42,6 +34,7 @@ import retrofit2.Response;
 public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
     ImageView mProfilePicture;
+    Bundle mUserProfileBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +44,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mUserProfileBundle = new Bundle();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,19 +108,37 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
             if (response.isSuccessful()) {
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
+
+
                     String dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
-                    String userName = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
-                    String email = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
-                    String contact = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
-                    String profession = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
-                    String company = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
-                    String designation = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
+                    String userName = mProfileAboutResponse.getSuccess().get(0).getUsername();
+                    String email = mProfileAboutResponse.getSuccess().get(0).getEmail();
+                    String contact = mProfileAboutResponse.getSuccess().get(0).getContact();
+                    String profession = mProfileAboutResponse.getSuccess().get(0).getProfession();
+                    String company = mProfileAboutResponse.getSuccess().get(0).getCompanyName();
+                    String designation = mProfileAboutResponse.getSuccess().get(0).getDesignation();
+                    String subProfession = mProfileAboutResponse.getSuccess().get(0).getSubProfession();
+                    String websitestr = mProfileAboutResponse.getSuccess().get(0).getWebsite();
+                    String city = mProfileAboutResponse.getSuccess().get(0).getCity();
+                    String skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
                     String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
                     Glide.with(this)
                             .load(dp_path)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(mProfilePicture);
+
+                    Log.i("contact in ", "Profile=>" + contact);
+
+
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_contact", contact).apply();
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_profession", profession).apply();
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_email", email).apply();
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_website", websitestr).apply();
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_city", city).apply();
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_company", company).apply();
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_designation", designation).apply();
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_skills", skills).apply();
                 } else {
 
                 }
