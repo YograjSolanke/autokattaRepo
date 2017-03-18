@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ExpandableListView
-        android:id="@+id/groupexpanablelistview"
-        android:layout_width="match_parent"
+        android:id="@+id/eventexpandalelistview"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:layout_marginTop="2dp"
-        android:textColor="#2C3343" />
+        android:textColor="@color/kprogresshud_default_color" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

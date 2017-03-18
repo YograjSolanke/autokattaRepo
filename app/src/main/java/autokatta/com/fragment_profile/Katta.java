@@ -13,12 +13,12 @@ import autokatta.com.R;
  * Created by ak-001 on 18/3/17.
  */
 
-public class AboutStore extends Fragment {
-    View mAboutStore;
+public class Katta extends Fragment {
+    View mKatta;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mAboutStore = inflater.inflate(R.layout.fragment_store_layout, container, false);
-        return mAboutStore;
+        mKatta = inflater.inflate(R.layout.fragment_profile_katta, container, false);
+        return mKatta;
     }
 }

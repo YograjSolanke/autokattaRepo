@@ -51,4 +51,7 @@
     <string name="contact_no">Contact No</string>
     <string name="email">Email</string>
     <string name="website">WebSite</string>
+
+    <!--User Profile-->
+    <string name="create_store">Create Store</string>
 </resources>
