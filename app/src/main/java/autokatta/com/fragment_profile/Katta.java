@@ -15,6 +15,13 @@ import autokatta.com.R;
 
 public class Katta extends Fragment {
     View mKatta;
+
+    public Katta(){
+        //empty constructor...
+    }
+    public static Katta newInstance(){
+        return new Katta();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

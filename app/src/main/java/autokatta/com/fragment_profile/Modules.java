@@ -14,11 +14,17 @@ import autokatta.com.R;
  */
 
 public class Modules extends Fragment {
-    View mMdules;
+    View mModules;
+    public Modules(){
+        //empty constructor...
+    }
+    public static Modules newInstance(){
+        return new Modules();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mMdules = inflater.inflate(R.layout.fragment_profile_module, container, false);
-        return mMdules;
+        mModules = inflater.inflate(R.layout.fragment_profile_module, container, false);
+        return mModules;
     }
 }
