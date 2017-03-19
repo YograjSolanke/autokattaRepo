@@ -54,6 +54,7 @@
 
     <!--User Profile-->
     <string name="create_store">Create Store</string>
+    <string name="title_activity_upload_vehicle">UploadVehicle</string>
 
     <string name="my_preference">Autokatta</string>
 </resources>
