@@ -48,10 +48,16 @@
         <activity
             android:name=".view.UploadVehicle"
             android:label="@string/title_activity_upload_vehicle"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.UploadVehicleIntro" />
         <activity
-            android:name=".view.UploadVehicleIntro"/>
+            android:name=".view.GroupsTab"
+            android:label="@string/title_activity_groups_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.MyStoreListActivity"
+            android:label="@string/title_activity_my_store_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

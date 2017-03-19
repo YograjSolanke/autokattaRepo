@@ -1,6 +1,7 @@
 package autokatta.com.apicall;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
@@ -109,7 +110,7 @@ public class ApiCall {
         }
     }
 
-    public void getVehicleCount(String contact){
+    public void getVehicleCount(String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -139,9 +140,32 @@ public class ApiCall {
         }
     }
 
-    /*
-    Get Vehicle Types...
+     /*
+    getGroups
      */
+
+    public void Groups(String contact) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mContext.getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(initLog().build())
+                .build();
+
+        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+        Call<ProfileGroupResponse> groupResponseCall = serviceApi._autokattaProfileGroup(contact);
+        groupResponseCall.enqueue(new Callback<ProfileGroupResponse>() {
+            @Override
+            public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                Log.i("Response", "Groups->" + response);
+                mNotifier.notifySuccess(response);
+            }
+
+            @Override
+            public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+                mNotifier.notifyError(t);
+            }
+        });
+    }
 
     /***
      * Retrofit Logs

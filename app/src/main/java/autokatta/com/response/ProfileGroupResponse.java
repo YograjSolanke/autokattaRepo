@@ -28,16 +28,16 @@ public class ProfileGroupResponse {
 
         @SerializedName("My_groups")
         @Expose
-        private List<JoinedGroup.MyGroup> myGroups = null;
+        private List<MyGroup> myGroups = null;
         @SerializedName("Joined_groups")
         @Expose
         private List<JoinedGroup> joinedGroups = null;
 
-        public List<JoinedGroup.MyGroup> getMyGroups() {
+        public List<MyGroup> getMyGroups() {
             return myGroups;
         }
 
-        public void setMyGroups(List<JoinedGroup.MyGroup> myGroups) {
+        public void setMyGroups(List<MyGroup> myGroups) {
             this.myGroups = myGroups;
         }
 
@@ -119,100 +119,100 @@ public class ProfileGroupResponse {
                 this.vehiclecount = vehiclecount;
             }
 
+        }
 
-            public class MyGroup {
 
-                @SerializedName("id")
-                @Expose
-                private String id;
-                @SerializedName("title")
-                @Expose
-                private String title;
-                @SerializedName("image")
-                @Expose
-                private String image;
-                @SerializedName("modified_date")
-                @Expose
-                private String modifiedDate;
-                @SerializedName("groupcount")
-                @Expose
-                private String groupcount;
-                @SerializedName("vehiclecount")
-                @Expose
-                private Integer vehiclecount;
-                @SerializedName("query")
-                @Expose
-                private String query;
-                @SerializedName("adminVehicleCount")
-                @Expose
-                private String adminVehicleCount;
+        public class MyGroup {
 
-                public String getId() {
-                    return id;
-                }
+            @SerializedName("id")
+            @Expose
+            private String id;
+            @SerializedName("title")
+            @Expose
+            private String title;
+            @SerializedName("image")
+            @Expose
+            private String image;
+            @SerializedName("modified_date")
+            @Expose
+            private String modifiedDate;
+            @SerializedName("groupcount")
+            @Expose
+            private String groupcount;
+            @SerializedName("vehiclecount")
+            @Expose
+            private Integer vehiclecount;
+            @SerializedName("query")
+            @Expose
+            private String query;
+            @SerializedName("adminVehicleCount")
+            @Expose
+            private String adminVehicleCount;
 
-                public void setId(String id) {
-                    this.id = id;
-                }
+            public String getId() {
+                return id;
+            }
 
-                public String getTitle() {
-                    return title;
-                }
+            public void setId(String id) {
+                this.id = id;
+            }
 
-                public void setTitle(String title) {
-                    this.title = title;
-                }
+            public String getTitle() {
+                return title;
+            }
 
-                public String getImage() {
-                    return image;
-                }
+            public void setTitle(String title) {
+                this.title = title;
+            }
 
-                public void setImage(String image) {
-                    this.image = image;
-                }
+            public String getImage() {
+                return image;
+            }
 
-                public String getModifiedDate() {
-                    return modifiedDate;
-                }
+            public void setImage(String image) {
+                this.image = image;
+            }
 
-                public void setModifiedDate(String modifiedDate) {
-                    this.modifiedDate = modifiedDate;
-                }
+            public String getModifiedDate() {
+                return modifiedDate;
+            }
 
-                public String getGroupcount() {
-                    return groupcount;
-                }
+            public void setModifiedDate(String modifiedDate) {
+                this.modifiedDate = modifiedDate;
+            }
 
-                public void setGroupcount(String groupcount) {
-                    this.groupcount = groupcount;
-                }
+            public String getGroupcount() {
+                return groupcount;
+            }
 
-                public Integer getVehiclecount() {
-                    return vehiclecount;
-                }
+            public void setGroupcount(String groupcount) {
+                this.groupcount = groupcount;
+            }
 
-                public void setVehiclecount(Integer vehiclecount) {
-                    this.vehiclecount = vehiclecount;
-                }
+            public Integer getVehiclecount() {
+                return vehiclecount;
+            }
 
-                public String getQuery() {
-                    return query;
-                }
+            public void setVehiclecount(Integer vehiclecount) {
+                this.vehiclecount = vehiclecount;
+            }
 
-                public void setQuery(String query) {
-                    this.query = query;
-                }
+            public String getQuery() {
+                return query;
+            }
 
-                public String getAdminVehicleCount() {
-                    return adminVehicleCount;
-                }
+            public void setQuery(String query) {
+                this.query = query;
+            }
 
-                public void setAdminVehicleCount(String adminVehicleCount) {
-                    this.adminVehicleCount = adminVehicleCount;
-                }
+            public String getAdminVehicleCount() {
+                return adminVehicleCount;
+            }
+
+            public void setAdminVehicleCount(String adminVehicleCount) {
+                this.adminVehicleCount = adminVehicleCount;
             }
 
         }
     }
-
 }

@@ -10,12 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import autokatta.com.R;
-import autokatta.com.adapter.TabAdapter;
-import autokatta.com.fragment.AuctionNotification;
-import autokatta.com.fragment.SocialFragment;
-import autokatta.com.fragment.StoreNotification;
-import autokatta.com.fragment.UpdatesFragment;
-import autokatta.com.fragment.WallNotificationFragment;
+import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.fragment.AutokattaContactFragment;
+import autokatta.com.fragment.InviteContactFragment;
 
 public class MyAutokattaContacts extends AppCompatActivity {
 
@@ -48,14 +45,14 @@ public class MyAutokattaContacts extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.my_autokatta_contacts_tab);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
+//        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
+//        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new WallNotificationFragment());
-        adapter.addFragment(new UpdatesFragment());
+        TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
+        adapter.addFragment(new AutokattaContactFragment(), "Autokatta Contacts");
+        adapter.addFragment(new InviteContactFragment(), "Invite Contacts");
         viewPager.setAdapter(adapter);
     }
 

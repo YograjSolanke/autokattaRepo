@@ -56,5 +56,11 @@
     <string name="create_store">Create Store</string>
     <string name="title_activity_upload_vehicle">UploadVehicle</string>
 
+    <!-- Shared Preferences -->
     <string name="my_preference">Autokatta</string>
+
+    <!-- Other Stuff -->
+    <string name="search_contact">search contacts</string>
+    <string name="title_activity_groups_tab">GroupsTab</string>
+    <string name="title_activity_my_store_list">MyStoreListActivity</string>
 </resources>
