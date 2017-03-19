@@ -3,4 +3,6 @@
     <dimen name="text_about">16sp</dimen>
     <dimen name="card_margin">10dp</dimen>
     <dimen name="detail_backdrop_height">256dp</dimen>
+    <dimen name="text_margin_top">5dp</dimen>
+    <dimen name="margin_heading_top">10sp</dimen>
 </resources>

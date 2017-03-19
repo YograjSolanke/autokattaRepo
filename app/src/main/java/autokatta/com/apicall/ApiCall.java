@@ -10,6 +10,8 @@ import autokatta.com.R;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
@@ -40,7 +42,32 @@ public class ApiCall {
     Login Api Call
      */
     public void userLogin(String userName, String password) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<LoginResponse> mLoginCall = mServiceApi._autokattaLogin(userName, password);
+                mLoginCall.enqueue(new Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
 
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -146,26 +173,34 @@ public class ApiCall {
      */
 
     public void Groups(String contact) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mContext.getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(initLog().build())
-                .build();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
 
-        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-        Call<ProfileGroupResponse> groupResponseCall = serviceApi._autokattaProfileGroup(contact);
-        groupResponseCall.enqueue(new Callback<ProfileGroupResponse>() {
-            @Override
-            public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
-                Log.i("Response", "Groups->" + response);
-                mNotifier.notifySuccess(response);
-            }
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ProfileGroupResponse> groupResponseCall = serviceApi._autokattaProfileGroup(contact);
+                groupResponseCall.enqueue(new Callback<ProfileGroupResponse>() {
+                    @Override
+                    public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                        Log.i("Response", "Groups->" + response);
+                        mNotifier.notifySuccess(response);
+                    }
 
-            @Override
-            public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
-                mNotifier.notifyError(t);
+                    @Override
+                    public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
       /*
@@ -173,26 +208,34 @@ public class ApiCall {
      */
 
     public void MyStoreList(String contact) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mContext.getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(initLog().build())
-                .build();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
 
-        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-        Call<MyStoreResponse> storeResponseCall = serviceApi._autokattaGetMyStoreList(contact);
-        storeResponseCall.enqueue(new Callback<MyStoreResponse>() {
-            @Override
-            public void onResponse(Call<MyStoreResponse> call, Response<MyStoreResponse> response) {
-                Log.i("Response", "Store->" + response);
-                mNotifier.notifySuccess(response);
-            }
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyStoreResponse> storeResponseCall = serviceApi._autokattaGetMyStoreList(contact);
+                storeResponseCall.enqueue(new Callback<MyStoreResponse>() {
+                    @Override
+                    public void onResponse(Call<MyStoreResponse> call, Response<MyStoreResponse> response) {
+                        Log.i("Response", "Store->" + response);
+                        mNotifier.notifySuccess(response);
+                    }
 
-            @Override
-            public void onFailure(Call<MyStoreResponse> call, Throwable t) {
-                mNotifier.notifyError(t);
+                    @Override
+                    public void onFailure(Call<MyStoreResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

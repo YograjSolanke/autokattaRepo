@@ -2,6 +2,7 @@
     <string name="app_name">Autokatta</string>
     <string name="action_settings">Settings</string>
     <string name="base_url">http://autokatta.com/mobile/</string>
+    <string name="permission">Autokatta allows your permissions to access your data</string>
 
     <!-- Navigation Drawer Items...-->
     <string name="home">Home</string>
@@ -36,11 +37,6 @@
     <string name="alert_title">Confirmation</string>
     <string name="alert_msg">Do you Want To Close The App?</string>
 
-    <!--Error Results-->
-    <string name="no_internet">No Internet Connection&#8230;</string>
-    <string name="_404">We are unable to process the request due to network delays&#8230;</string>
-    <string name="no_response">No response from server&#8230;try again!!!</string>
-
     <!-- About US-->
     <string name="about">About</string>
     <string name="worked_at">Worked At</string>
@@ -63,4 +59,25 @@
     <string name="search_contact">search contacts</string>
     <string name="title_activity_groups_tab">GroupsTab</string>
     <string name="title_activity_my_store_list">MyStoreListActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <!--Login Activity -->
+    <string name="username">Mobile Number</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forgot password?</string>
+
+    <!--Error Results-->
+    <string name="no_internet">No Internet Connection&#8230;</string>
+    <string name="_404">We are unable to process the request due to network delays&#8230;</string>
+    <string name="no_response">No response from server&#8230;try again!!!</string>
+    <string name="no_patient">No patient added&#8230;please add patient!!!</string>
+    <string name="err_username">username required</string>
+    <string name="err_password">password required</string>
+    <string name="err_doctor">name required</string>
+    <string name="err_address">address required</string>
+    <string name="err_area">area required</string>
+    <string name="err_mobile">mobile required</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
 </resources>
