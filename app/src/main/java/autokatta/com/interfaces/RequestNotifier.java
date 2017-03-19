@@ -9,4 +9,5 @@ import retrofit2.Response;
 public interface RequestNotifier {
     void notifySuccess(Response<?> response);
     void notifyError(Throwable error);
+    void notifyString(String str);
 }

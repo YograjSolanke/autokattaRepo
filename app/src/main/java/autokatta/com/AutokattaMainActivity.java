@@ -33,6 +33,7 @@ import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.view.MyAutokattaContacts;
+import autokatta.com.view.UploadVehicle;
 import autokatta.com.view.UploadVehicleIntro;
 import autokatta.com.view.UserProfile;
 
@@ -131,7 +132,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.search_store) {
 
                         } else if (menuItem.getItemId() == R.id.upload_vehicle) {
-                            Intent intent = new Intent(AutokattaMainActivity.this, UploadVehicleIntro.class);
+                            Intent intent = new Intent(AutokattaMainActivity.this, UploadVehicle.class);
                             startActivity(intent);
                         } else if (menuItem.getItemId() == R.id.search_vehicle) {
 

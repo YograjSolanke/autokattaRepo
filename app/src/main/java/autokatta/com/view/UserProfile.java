@@ -154,4 +154,9 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
     public void notifyError(Throwable error) {
 
     }
+
+    @Override
+    public void notifyString(String str) {
+
+    }
 }

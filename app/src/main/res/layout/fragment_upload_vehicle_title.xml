@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/fullimg"
+            android:layout_width="150dip"
+            android:layout_height="150dip"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/app_name"/>
+
+        <EditText
+            android:id="@+id/titleText1"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fullimg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColorHint="#848484"
+            android:background="#80bebebe"
+            android:textColor="#2C3343"
+            android:ems="10"
+            android:hint="Title"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/grouptitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/titleText1"
+            android:layout_alignEnd="@+id/titleText1"
+            android:layout_below="@+id/titleText1"
+            android:layout_marginTop="10dp"
+            android:textColor="#2C3343"
+            android:text="Do you want allow your vehicle to display in groups?"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <RadioGroup
+            android:id="@+id/radiopermit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignStart="@+id/titleText1"
+            android:layout_alignEnd="@+id/titleText1"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/grouptitle" >
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+
+                android:textColor="#2C3343"/>
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:textColor="#2C3343"/>
+        </RadioGroup>
+
+
+
+        <TextView
+            android:id="@+id/storetitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/titleText1"
+            android:layout_alignEnd="@+id/titleText1"
+            android:layout_below="@+id/radiopermit"
+            android:layout_marginTop="10dp"
+            android:textColor="#2C3343"
+            android:text="Do you want allow your vehicle to display in stores?"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+        <RadioGroup
+            android:id="@+id/storeradiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignStart="@+id/titleText1"
+            android:layout_alignEnd="@+id/titleText1"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/storetitle" >
+            <RadioButton
+                android:id="@+id/storeradio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+
+                android:textColor="#2C3343"/>
+
+            <RadioButton
+                android:id="@+id/storeradio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:textColor="#2C3343"/>
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/storeradiogroup"
+            android:layout_alignStart="@+id/titleText1"
+            android:layout_alignEnd="@+id/titleText1"
+            android:layout_marginTop="5dp"
+            android:textColor="#2C3343"
+            android:id="@+id/exchangetext"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Are you looking for vehicle exchange?"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/exchangetext"
+            android:layout_alignStart="@+id/titleText1"
+            android:layout_alignEnd="@+id/titleText1"
+            android:layout_marginTop="5dp"
+            android:textColor="#2C3343"
+            android:id="@+id/financetext"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Finance"/>
+
+        <RadioGroup
+            android:id="@+id/finance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignStart="@+id/financetext"
+            android:layout_alignEnd="@+id/financetext"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/financetext" >
+            <RadioButton
+                android:id="@+id/financeYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+                android:textColor="#2C3343"/>
+
+            <RadioButton
+                android:id="@+id/financeNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:textColor="#2C3343"/>
+        </RadioGroup>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/finance"
+            android:layout_alignStart="@+id/titleText1"
+            android:layout_alignEnd="@+id/titleText1"
+            android:layout_marginTop="5dp"
+            android:textColor="#2C3343"
+            android:id="@+id/exchange"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Exchange"/>
+
+        <RadioGroup
+            android:id="@+id/exchangeradio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignStart="@+id/exchange"
+            android:layout_alignEnd="@+id/exchange"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/exchange" >
+            <RadioButton
+                android:id="@+id/exchangeYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes"
+                android:textColor="#2C3343"/>
+
+            <RadioButton
+                android:id="@+id/exchangeNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:textColor="#2C3343"/>
+        </RadioGroup>
+    </RelativeLayout>
+</ScrollView>

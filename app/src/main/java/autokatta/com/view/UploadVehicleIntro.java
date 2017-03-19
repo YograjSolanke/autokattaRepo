@@ -119,7 +119,7 @@ public class UploadVehicleIntro extends IntroActivity {
             permissionsSlide = null;
         }*/
 
-        final Slide loginSlide;
+        /*final Slide loginSlide;
         if (customFragments) {
             loginSlide = new FragmentSlide.Builder()
                     .background(R.color.white)
@@ -127,11 +127,11 @@ public class UploadVehicleIntro extends IntroActivity {
                     .build();
             addSlide(loginSlide);
 
-           /* addSlide(new FragmentSlide.Builder()
+           *//* addSlide(new FragmentSlide.Builder()
                     .background(R.color.color_custom_fragment_2)
                     .backgroundDark(R.color.color_dark_custom_fragment_2)
                     .fragment(R.layout.fragment_custom, R.style.AppThemeDark)
-                    .build());*/
+                    .build());*//*
         } else {
             loginSlide = null;
         }
@@ -144,11 +144,11 @@ public class UploadVehicleIntro extends IntroActivity {
                     .build();
             addSlide(loginSlide1);
 
-           /* addSlide(new FragmentSlide.Builder()
+           *//* addSlide(new FragmentSlide.Builder()
                     .background(R.color.color_custom_fragment_2)
                     .backgroundDark(R.color.color_dark_custom_fragment_2)
                     .fragment(R.layout.fragment_custom, R.style.AppThemeDark)
-                    .build());*/
+                    .build());*//*
         } else {
             loginSlide1 = null;
         }
@@ -160,14 +160,14 @@ public class UploadVehicleIntro extends IntroActivity {
                     .build();
             addSlide(loginSlide2);
 
-           /* addSlide(new FragmentSlide.Builder()
+           *//* addSlide(new FragmentSlide.Builder()
                     .background(R.color.color_custom_fragment_2)
                     .backgroundDark(R.color.color_dark_custom_fragment_2)
                     .fragment(R.layout.fragment_custom, R.style.AppThemeDark)
-                    .build());*/
+                    .build());*//*
         } else {
             loginSlide2 = null;
-        }
+        }*/
         //Feel free to add a navigation policy to define when users can go forward/backward
         /*
         setNavigationPolicy(new NavigationPolicy() {

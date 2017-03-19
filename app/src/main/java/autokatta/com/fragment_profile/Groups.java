@@ -65,4 +65,9 @@ public class Groups extends Fragment implements RequestNotifier {
     public void notifyError(Throwable error) {
 
     }
+
+    @Override
+    public void notifyString(String str) {
+
+    }
 }

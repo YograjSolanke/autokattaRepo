@@ -17,4 +17,7 @@ public interface ServiceApi {
 
     @GET("getGroups.php")
     Call<ProfileGroupResponse> _autokattaProfileGroup(@Query("contact") String contact);
+
+    @GET("getuploadcount.php")
+    Call<String> _autokattaGetVehicleCount(@Query("contact") String contact);
 }
