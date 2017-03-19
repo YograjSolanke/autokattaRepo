@@ -10,6 +10,7 @@ import autokatta.com.R;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import okhttp3.OkHttpClient;
@@ -166,6 +167,34 @@ public class ApiCall {
             }
         });
     }
+
+      /*
+        getMyStores
+     */
+
+    public void MyStoreList(String contact) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mContext.getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(initLog().build())
+                .build();
+
+        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+        Call<MyStoreResponse> storeResponseCall = serviceApi._autokattaGetMyStoreList(contact);
+        storeResponseCall.enqueue(new Callback<MyStoreResponse>() {
+            @Override
+            public void onResponse(Call<MyStoreResponse> call, Response<MyStoreResponse> response) {
+                Log.i("Response", "Store->" + response);
+                mNotifier.notifySuccess(response);
+            }
+
+            @Override
+            public void onFailure(Call<MyStoreResponse> call, Throwable t) {
+                mNotifier.notifyError(t);
+            }
+        });
+    }
+
 
     /***
      * Retrofit Logs

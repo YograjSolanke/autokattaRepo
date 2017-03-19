@@ -1,5 +1,6 @@
 package autokatta.com.interfaces;
 
+import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Call;
@@ -20,4 +21,7 @@ public interface ServiceApi {
 
     @GET("getuploadcount.php")
     Call<String> _autokattaGetVehicleCount(@Query("contact") String contact);
+
+    @GET("getOwnStores.php")
+    Call<MyStoreResponse> _autokattaGetMyStoreList(@Query("contact") String contact);
 }
