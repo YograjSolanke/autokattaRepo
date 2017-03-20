@@ -19,9 +19,7 @@ public class AboutStore extends Fragment {
     public AboutStore(){
         //empty constructor...
     }
-    public static AboutStore newInstance(){
-        return new AboutStore();
-    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

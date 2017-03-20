@@ -69,11 +69,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
             TabLayout tabLayout = (TabLayout) findViewById(R.id.user_profile_tabs);
             tabLayout.setupWithViewPager(viewPager);
-            if (tabLayout.getSelectedTabPosition() == 1){
-                AppBarLayout appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
-                appBarLayout.setExpanded(true, true);
-                Log.e("here","->");
-            }
              /*
             Get Profile Data
              */

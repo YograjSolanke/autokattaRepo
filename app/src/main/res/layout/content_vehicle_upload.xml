@@ -8,8 +8,8 @@
     tools:context="autokatta.com.view.VehicleUpload"
     tools:showIn="@layout/activity_vehicle_upload">
 
-    <ListView
-        android:id="@+id/upload_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+   <FrameLayout
+       android:id="@+id/vehicle_upload_container"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
 </RelativeLayout>

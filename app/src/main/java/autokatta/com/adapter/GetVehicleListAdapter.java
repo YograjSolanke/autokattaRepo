@@ -18,8 +18,8 @@ import autokatta.com.response.GetVehicleListResponse;
  */
 
 public class GetVehicleListAdapter extends BaseAdapter {
-    Activity mContext;
-    List<GetVehicleListResponse.Success> mVehicleList;
+    private Activity mContext;
+    private List<GetVehicleListResponse.Success> mVehicleList;
 
     public GetVehicleListAdapter(Activity mContext, List<GetVehicleListResponse.Success> mVehicleList) {
         this.mContext = mContext;
@@ -41,7 +41,7 @@ public class GetVehicleListAdapter extends BaseAdapter {
         return mVehicleList.get(position).hashCode();
     }
 
-    class VehicleListHolder{
+    private class VehicleListHolder{
         TextView mName;
     }
 
