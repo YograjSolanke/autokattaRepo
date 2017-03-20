@@ -32,13 +32,13 @@ import static autokatta.com.R.id.fabCreateGroup;
  * Created by ak-003 on 19/3/17.
  */
 
-public class MyGroupsFragment extends Fragment implements RequestNotifier, View.OnClickListener {
-
+public class MyGroupsFragment{//} extends Fragment implements RequestNotifier, View.OnClickListener {
+/*
     View mMyGroups;
     RecyclerView mRecyclerView;
     FloatingActionButton floatCreateGroup;
     SharedPreferences mSharedPreferences = null;
-    ArrayList<ProfileGroupResponse.Success.MyGroup> profileGroupResponseArrayList;
+   // ArrayList<ProfileGroupResponse.Success.MyGroup> profileGroupResponseArrayList;
 
     public MyGroupsFragment() {
         //Empty constructor
@@ -135,5 +135,5 @@ public class MyGroupsFragment extends Fragment implements RequestNotifier, View.
 
         }
 
-    }
+    }*/
 }

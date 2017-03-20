@@ -3,6 +3,7 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,16 +13,181 @@ import java.util.List;
 public class ProfileGroupResponse {
 
 
-    @SerializedName("Success")
-    @Expose
-    private Success success;
+        @SerializedName("Success")
+        @Expose
+        private Success success;
 
-    public Success getSuccess() {
-        return success;
+        public Success getSuccess() {
+            return success;
+        }
+
+        public void setSuccess(Success success) {
+            this.success = success;
+        }
+
+
+    public class JoinedGroup {
+
+        @SerializedName("id")
+        @Expose
+        private String id;
+        @SerializedName("title")
+        @Expose
+        private String title;
+        @SerializedName("image")
+        @Expose
+        private String image;
+        @SerializedName("modified_date")
+        @Expose
+        private String modifiedDate;
+        @SerializedName("groupcount")
+        @Expose
+        private String groupcount;
+        @SerializedName("vehiclecount")
+        @Expose
+        private Integer vehiclecount;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getModifiedDate() {
+            return modifiedDate;
+        }
+
+        public void setModifiedDate(String modifiedDate) {
+            this.modifiedDate = modifiedDate;
+        }
+
+        public String getGroupcount() {
+            return groupcount;
+        }
+
+        public void setGroupcount(String groupcount) {
+            this.groupcount = groupcount;
+        }
+
+        public Integer getVehiclecount() {
+            return vehiclecount;
+        }
+
+        public void setVehiclecount(Integer vehiclecount) {
+            this.vehiclecount = vehiclecount;
+        }
+
     }
 
-    public void setSuccess(Success success) {
-        this.success = success;
+    public class MyGroup {
+
+        @SerializedName("id")
+        @Expose
+        private String id;
+        @SerializedName("title")
+        @Expose
+        private String title;
+        @SerializedName("image")
+        @Expose
+        private String image;
+        @SerializedName("modified_date")
+        @Expose
+        private String modifiedDate;
+        @SerializedName("groupcount")
+        @Expose
+        private String groupcount;
+        @SerializedName("vehiclecount")
+        @Expose
+        private Integer vehiclecount;
+        @SerializedName("query")
+        @Expose
+        private String query;
+        @SerializedName("adminVehicleCount")
+        @Expose
+        private String adminVehicleCount;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getModifiedDate() {
+            return modifiedDate;
+        }
+
+        public void setModifiedDate(String modifiedDate) {
+            this.modifiedDate = modifiedDate;
+        }
+
+        public String getGroupcount() {
+            return groupcount;
+        }
+
+        public void setGroupcount(String groupcount) {
+            this.groupcount = groupcount;
+        }
+
+        public Integer getVehiclecount() {
+            return vehiclecount;
+        }
+
+        public void setVehiclecount(Integer vehiclecount) {
+            this.vehiclecount = vehiclecount;
+        }
+
+        public String getQuery() {
+            return query;
+        }
+
+        public void setQuery(String query) {
+            this.query = query;
+        }
+
+        public String getAdminVehicleCount() {
+            return adminVehicleCount;
+        }
+
+        public void setAdminVehicleCount(String adminVehicleCount) {
+            this.adminVehicleCount = adminVehicleCount;
+        }
+
     }
 
     public class Success {
@@ -49,170 +215,5 @@ public class ProfileGroupResponse {
             this.joinedGroups = joinedGroups;
         }
 
-
-        public class JoinedGroup {
-
-            @SerializedName("id")
-            @Expose
-            private String id;
-            @SerializedName("title")
-            @Expose
-            private String title;
-            @SerializedName("image")
-            @Expose
-            private String image;
-            @SerializedName("modified_date")
-            @Expose
-            private String modifiedDate;
-            @SerializedName("groupcount")
-            @Expose
-            private String groupcount;
-            @SerializedName("vehiclecount")
-            @Expose
-            private Integer vehiclecount;
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getImage() {
-                return image;
-            }
-
-            public void setImage(String image) {
-                this.image = image;
-            }
-
-            public String getModifiedDate() {
-                return modifiedDate;
-            }
-
-            public void setModifiedDate(String modifiedDate) {
-                this.modifiedDate = modifiedDate;
-            }
-
-            public String getGroupcount() {
-                return groupcount;
-            }
-
-            public void setGroupcount(String groupcount) {
-                this.groupcount = groupcount;
-            }
-
-            public Integer getVehiclecount() {
-                return vehiclecount;
-            }
-
-            public void setVehiclecount(Integer vehiclecount) {
-                this.vehiclecount = vehiclecount;
-            }
-
-        }
-
-
-        public class MyGroup {
-
-            @SerializedName("id")
-            @Expose
-            private String id;
-            @SerializedName("title")
-            @Expose
-            private String title;
-            @SerializedName("image")
-            @Expose
-            private String image;
-            @SerializedName("modified_date")
-            @Expose
-            private String modifiedDate;
-            @SerializedName("groupcount")
-            @Expose
-            private String groupcount;
-            @SerializedName("vehiclecount")
-            @Expose
-            private Integer vehiclecount;
-            @SerializedName("query")
-            @Expose
-            private String query;
-            @SerializedName("adminVehicleCount")
-            @Expose
-            private String adminVehicleCount;
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getImage() {
-                return image;
-            }
-
-            public void setImage(String image) {
-                this.image = image;
-            }
-
-            public String getModifiedDate() {
-                return modifiedDate;
-            }
-
-            public void setModifiedDate(String modifiedDate) {
-                this.modifiedDate = modifiedDate;
-            }
-
-            public String getGroupcount() {
-                return groupcount;
-            }
-
-            public void setGroupcount(String groupcount) {
-                this.groupcount = groupcount;
-            }
-
-            public Integer getVehiclecount() {
-                return vehiclecount;
-            }
-
-            public void setVehiclecount(Integer vehiclecount) {
-                this.vehiclecount = vehiclecount;
-            }
-
-            public String getQuery() {
-                return query;
-            }
-
-            public void setQuery(String query) {
-                this.query = query;
-            }
-
-            public String getAdminVehicleCount() {
-                return adminVehicleCount;
-            }
-
-            public void setAdminVehicleCount(String adminVehicleCount) {
-                this.adminVehicleCount = adminVehicleCount;
-            }
-
-        }
     }
 }

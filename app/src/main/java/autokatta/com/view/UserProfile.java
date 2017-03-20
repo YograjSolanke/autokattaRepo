@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -68,7 +69,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
             TabLayout tabLayout = (TabLayout) findViewById(R.id.user_profile_tabs);
             tabLayout.setupWithViewPager(viewPager);
-
+            if (tabLayout.getSelectedTabPosition() == 1){
+                AppBarLayout appBarLayout = (AppBarLayout)findViewById(R.id.appbar);
+                appBarLayout.setExpanded(true, true);
+                Log.e("here","->");
+            }
              /*
             Get Profile Data
              */

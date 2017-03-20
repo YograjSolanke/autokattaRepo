@@ -30,9 +30,9 @@ import static autokatta.com.R.id.fabCreateGroup;
  * Created by ak-003 on 19/3/17.
  */
 
-public class JoinedGroupsFragment extends Fragment implements RequestNotifier {
+public class JoinedGroupsFragment{//} extends Fragment implements RequestNotifier {
 
-    View mJoinedGroups;
+   /* View mJoinedGroups;
     RecyclerView mRecyclerView;
     FloatingActionButton floatCreateGroup;
     SharedPreferences mSharedPreferences = null;
@@ -117,6 +117,6 @@ public class JoinedGroupsFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
 
-    }
+    }*/
 
 }

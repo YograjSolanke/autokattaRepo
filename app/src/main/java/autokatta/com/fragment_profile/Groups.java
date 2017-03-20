@@ -4,15 +4,23 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import autokatta.com.R;
+import autokatta.com.adapter.GroupsExpandableListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.ModelGroups;
+import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Response;
 
@@ -27,10 +35,14 @@ public class Groups extends Fragment implements RequestNotifier {
 
     ExpandableListView groupExpandableListView;
     SharedPreferences mSharedPreferences = null;
-
+    List<ModelGroups> list = new ArrayList<>();
+    List<ModelGroups> list1 = new ArrayList<>();
+    HashMap<String, List<ModelGroups>> mGroupList;
+    List<String> mHeaderList;
+    GroupsExpandableListAdapter adapter;
 
     public Groups() {
-
+     //empty constructor...
     }
 
     @Nullable
@@ -41,7 +53,7 @@ public class Groups extends Fragment implements RequestNotifier {
         groupExpandableListView = (ExpandableListView) mGroups.findViewById(R.id.groupexpanablelistview);
 
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        String contact = mSharedPreferences.getString("user_contact", "");
+        String contact = mSharedPreferences.getString("loginContact", "");
 
         ApiCall apiCall = new ApiCall(getActivity(), this);
         apiCall.profileGroup(contact);
@@ -53,12 +65,43 @@ public class Groups extends Fragment implements RequestNotifier {
 
         if (response != null) {
             if (response.isSuccessful()) {
-                ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
+                mHeaderList = new ArrayList<>();
+                mHeaderList.add("My Groups");
+                mHeaderList.add("Joined groups");
 
-            }else {
-                CustomToast.customToast(getActivity(),getString(R.string._404));
+                ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
+                for (ProfileGroupResponse.MyGroup success : profileGroupResponse.getSuccess().getMyGroups()) {
+                    ModelGroups modelGroups = new ModelGroups();
+                    modelGroups.setId(success.getId());
+                    modelGroups.setTitle(success.getTitle());
+                    modelGroups.setImage(success.getImage());
+                    modelGroups.setGroupCount(success.getGroupcount());
+                    modelGroups.setVehicleCount(success.getVehiclecount());
+                    modelGroups.setAdminVehicleCount(success.getAdminVehicleCount());
+                    list.add(modelGroups);
+                }
+                for (ProfileGroupResponse.JoinedGroup joinedGroup : profileGroupResponse.getSuccess().getJoinedGroups()) {
+                    ModelGroups modelGroups = new ModelGroups();
+                    modelGroups.setId(joinedGroup.getId());
+                    modelGroups.setTitle(joinedGroup.getTitle());
+                    modelGroups.setImage(joinedGroup.getImage());
+                    modelGroups.setGroupCount(joinedGroup.getGroupcount());
+                    modelGroups.setVehicleCount(joinedGroup.getVehiclecount());
+                    list1.add(modelGroups);
+                    Log.i("list1","->"+list1.get(0).getTitle());
+                }
+                mGroupList = new HashMap<>();
+                mGroupList.put(mHeaderList.get(0), list);
+                mGroupList.put(mHeaderList.get(1), list1);
+
+                adapter = new GroupsExpandableListAdapter(getActivity(), mHeaderList, mGroupList);
+                groupExpandableListView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
-        }else {
+        } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
