@@ -47,6 +47,7 @@ public class SearchStoreActivity extends AppCompatActivity implements View.OnCli
         myContact = mSharedPreferences.getString("loginContact", "7841023392");
         Log.i("myContact", myContact);
 
+        autoTxtCategory.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
 
     @Override

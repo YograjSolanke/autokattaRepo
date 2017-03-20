@@ -1,5 +1,6 @@
 package autokatta.com.interfaces;
 
+import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
@@ -39,4 +40,8 @@ public interface ServiceApi {
     //Get Vehicle List...
     @GET("getVehicleType.php")
     Call<GetVehicleListResponse> _autokattaGetVehicleList();
+
+    //Get Category...
+    @GET("getModule.php")
+    Call<CategoryResponse> _autokattaGetCategories();
 }

@@ -11,6 +11,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
@@ -273,6 +274,32 @@ public class ApiCall {
         }
     }
 
+    /*
+    getCategories
+     */
+
+    public void Categories() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mContext.getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(initLog().build())
+                .build();
+
+        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+        Call<CategoryResponse> categoryResponseCall = serviceApi._autokattaGetCategories();
+        categoryResponseCall.enqueue(new Callback<CategoryResponse>() {
+            @Override
+            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                Log.i("loo", "" + response);
+                mNotifier.notifySuccess(response);
+            }
+
+            @Override
+            public void onFailure(Call<CategoryResponse> call, Throwable t) {
+                mNotifier.notifyError(t);
+            }
+        });
+    }
 
     /***
      * Retrofit Logs
