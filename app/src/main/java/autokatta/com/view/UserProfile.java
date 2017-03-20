@@ -109,36 +109,13 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
 
-
                     String dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
-                    String userName = mProfileAboutResponse.getSuccess().get(0).getUsername();
-                    String email = mProfileAboutResponse.getSuccess().get(0).getEmail();
-                    String contact = mProfileAboutResponse.getSuccess().get(0).getContact();
-                    String profession = mProfileAboutResponse.getSuccess().get(0).getProfession();
-                    String company = mProfileAboutResponse.getSuccess().get(0).getCompanyName();
-                    String designation = mProfileAboutResponse.getSuccess().get(0).getDesignation();
-                    String subProfession = mProfileAboutResponse.getSuccess().get(0).getSubProfession();
-                    String websitestr = mProfileAboutResponse.getSuccess().get(0).getWebsite();
-                    String city = mProfileAboutResponse.getSuccess().get(0).getCity();
-                    String skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
                     String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
                     Glide.with(this)
                             .load(dp_path)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(mProfilePicture);
-
-                    Log.i("contact in ", "Profile=>" + contact);
-
-
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_contact", contact).apply();
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_profession", profession).apply();
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_email", email).apply();
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_website", websitestr).apply();
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_city", city).apply();
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_company", company).apply();
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_designation", designation).apply();
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("user_skills", skills).apply();
                 } else {
 
                 }

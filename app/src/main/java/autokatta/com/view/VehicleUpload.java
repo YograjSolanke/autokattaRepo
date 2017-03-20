@@ -2,6 +2,7 @@ package autokatta.com.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,17 +14,22 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
+import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
+import autokatta.com.adapter.GetVehicleListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetVehicleListResponse;
 import retrofit2.Response;
 
 public class VehicleUpload extends AppCompatActivity implements RequestNotifier {
 
     ListView mListView;
-
+    List<GetVehicleListResponse.Success> mGetVehicle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,7 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
                         .setAction("Action", null).show();
             }
         });
+        mGetVehicle = new ArrayList<>();
         mListView = (ListView) findViewById(R.id.upload_list);
         getData();
     }
@@ -50,7 +57,25 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
 
     @Override
     public void notifySuccess(Response<?> response) {
-
+        if (response!=null){
+            if (response.isSuccessful()){
+                GetVehicleListResponse mGetVehicleListResponse = (GetVehicleListResponse) response.body();
+                if (!mGetVehicleListResponse.getSuccess().isEmpty()){
+                    for (GetVehicleListResponse.Success mSuccess: mGetVehicleListResponse.getSuccess()){
+                            mSuccess.setId(mSuccess.getId());
+                            mSuccess.setName(mSuccess.getName());
+                        mGetVehicle.add(mSuccess);
+                    }
+                    GetVehicleListAdapter mGetVehicleListAdapter = new GetVehicleListAdapter(VehicleUpload.this,mGetVehicle);
+                    mListView.setAdapter(mGetVehicleListAdapter);
+                    mGetVehicleListAdapter.notifyDataSetChanged();
+                }
+            }else {
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            }
+        }else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
     }
 
     @Override
@@ -69,25 +94,33 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            Log.i("String", "->" + str);
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(VehicleUpload.this);
-            alertDialog.setTitle("Confirm Delete...");
-            alertDialog.setMessage("Are you sure you want delete this?");
+            alertDialog.setTitle("Upload Vehicle");
+            alertDialog.setMessage("You already uploaded" + str + " vehicles. you want to upload another vehicle?");
             alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog,int which) {
-                    Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
+                public void onClick(DialogInterface dialog, int which) {
+                    getVehicleList();
                 }
             });
             alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(VehicleUpload.this, AutokattaMainActivity.class));
                     dialog.cancel();
+                    finish();
                 }
             });
             alertDialog.show();
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
+    }
+
+    /*
+    Get Vehicle List...
+     */
+    private void getVehicleList() {
+        ApiCall mApiCall = new ApiCall(VehicleUpload.this, this);
+        mApiCall.getVehicleList();
     }
 }

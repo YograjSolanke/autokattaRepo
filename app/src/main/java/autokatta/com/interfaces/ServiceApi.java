@@ -1,5 +1,6 @@
 package autokatta.com.interfaces;
 
+import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileAboutResponse;
@@ -34,4 +35,8 @@ public interface ServiceApi {
     //Get Own Store...
     @GET("getOwnStores.php")
     Call<MyStoreResponse> _autokattaGetMyStoreList(@Query("contact") String contact);
+
+    //Get Vehicle List...
+    @GET("getVehicleType.php")
+    Call<GetVehicleListResponse> _autokattaGetVehicleList();
 }

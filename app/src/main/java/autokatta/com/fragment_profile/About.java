@@ -10,7 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import java.net.SocketTimeoutException;
+
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.ProfileAboutResponse;
+import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -18,12 +28,11 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-001 on 18/3/17.
  */
 
-public class About extends Fragment {
+public class About extends Fragment implements RequestNotifier{
 
     View mAbout;
-    Bundle bundle;
-    SharedPreferences mSharedPreferences = null;
     TextView txtContact, txtProfession, txtEmail, txtWebsite, txtCity, txtCompany, txtDesignation, txtSkills;
+    String userName, email, contact, profession, company, designation, subProfession, websitestr, city, skills;
 
     @Nullable
     @Override
@@ -39,29 +48,60 @@ public class About extends Fragment {
         txtDesignation = (TextView) mAbout.findViewById(R.id.designation);
         txtSkills = (TextView) mAbout.findViewById(R.id.skills);
 
-
-        mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        String contact = mSharedPreferences.getString("user_contact", "");
-        String profession = mSharedPreferences.getString("user_profession", "");
-        String email = mSharedPreferences.getString("user_email", "");
-        String website = mSharedPreferences.getString("user_website", "");
-        String city = mSharedPreferences.getString("user_city", "");
-        String company = mSharedPreferences.getString("user_company", "");
-        String designation = mSharedPreferences.getString("user_designation", "");
-        String skills = mSharedPreferences.getString("user_skills", "");
-
-
-        txtContact.setText(contact);
-        txtProfession.setText(profession);
-        txtEmail.setText(email);
-        txtWebsite.setText(website);
-        txtCity.setText(city);
-        txtCompany.setText(company);
-        txtDesignation.setText(designation);
-        txtSkills.setText(skills);
-
-
-        Log.i("contact in ", "About=>" + contact);
+        ApiCall mApiCall = new ApiCall(getActivity(),this);
+        mApiCall.profileAbout("8007855589");
         return mAbout;
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
+                if (!mProfileAboutResponse.getSuccess().isEmpty()) {
+                    userName = mProfileAboutResponse.getSuccess().get(0).getUsername();
+                    email = mProfileAboutResponse.getSuccess().get(0).getEmail();
+                    contact = mProfileAboutResponse.getSuccess().get(0).getContact();
+                    profession = mProfileAboutResponse.getSuccess().get(0).getProfession();
+                    company = mProfileAboutResponse.getSuccess().get(0).getCompanyName();
+                    designation = mProfileAboutResponse.getSuccess().get(0).getDesignation();
+                    subProfession = mProfileAboutResponse.getSuccess().get(0).getSubProfession();
+                    websitestr = mProfileAboutResponse.getSuccess().get(0).getWebsite();
+                    city = mProfileAboutResponse.getSuccess().get(0).getCity();
+                    skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
+                }
+
+                txtContact.setText(contact);
+                txtProfession.setText(profession);
+                txtEmail.setText(email);
+                txtWebsite.setText(websitestr);
+                txtCity.setText(city);
+                txtCompany.setText(company);
+                txtDesignation.setText(designation);
+                txtSkills.setText(skills);
+            } else {
+               CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Login Activity");
+        }
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 }

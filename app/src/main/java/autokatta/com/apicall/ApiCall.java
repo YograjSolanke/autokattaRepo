@@ -11,6 +11,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileAboutResponse;
@@ -156,6 +157,40 @@ public class ApiCall {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                Toast.makeText(mContext, mContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Vehicle List...
+     */
+
+    public void getVehicleList(){
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetVehicleListResponse> mGetVehicleListResponseCall = mServiceApi._autokattaGetVehicleList();
+                mGetVehicleListResponseCall.enqueue(new Callback<GetVehicleListResponse>() {
+                    @Override
+                    public void onResponse(Call<GetVehicleListResponse> call, Response<GetVehicleListResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetVehicleListResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

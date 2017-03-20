@@ -12,6 +12,7 @@ import android.widget.ExpandableListView;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Response;
 
@@ -54,10 +55,11 @@ public class Groups extends Fragment implements RequestNotifier {
             if (response.isSuccessful()) {
                 ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
 
-//                for(ProfileGroupResponse.Success mesaage : profileGroupResponse.getSuccess()){
-//
-//                }
+            }else {
+                CustomToast.customToast(getActivity(),getString(R.string._404));
             }
+        }else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
