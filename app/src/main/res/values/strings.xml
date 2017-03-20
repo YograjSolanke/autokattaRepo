@@ -81,4 +81,5 @@
     <string name="err_mobile">mobile required</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_browse_store">BrowseStoreActivity</string>
+    <string name="title_activity_vehicle_upload">VehicleUpload</string>
 </resources>

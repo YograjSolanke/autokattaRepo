@@ -52,10 +52,6 @@
             android:name=".view.MyAutokattaContacts"
             android:label="@string/title_activity_my_autokatta_contacts"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".view.UploadVehicle"
-            android:label="@string/title_activity_upload_vehicle"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.UploadVehicleIntro" />
         <activity
             android:name=".view.GroupsTab"
@@ -83,6 +79,11 @@
         <activity
             android:name=".view.BrowseStoreActivity"
             android:label="@string/title_activity_browse_store"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".view.VehicleUpload"
+            android:label="@string/title_activity_vehicle_upload"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
