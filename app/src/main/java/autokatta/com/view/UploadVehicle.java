@@ -33,6 +33,7 @@ import retrofit2.Response;
 public class UploadVehicle extends AppCompatActivity implements RequestNotifier {
 
     ListView mVehicleList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class UploadVehicle extends AppCompatActivity implements RequestNotifier 
                         .setAction("Action", null).show();
 //            }
         });*/
-       // initViewPager();
+        // initViewPager();
     }
 
     private void getData() {
@@ -79,29 +80,29 @@ public class UploadVehicle extends AppCompatActivity implements RequestNotifier 
 
     @Override
     public void notifyString(String str) {
-           if (!str.isEmpty()){
-               int _str = Integer.parseInt(str);
-               if (_str>2){
-                   new AlertDialog.Builder(getApplicationContext())
-                           .setTitle("Upload Vehicle")
-                           .setMessage("You already uploaded"+_str+"vehicles if you wan to upload more vehicles you have to " +
-                                   "pay please press yes to payment gateway")
-                           .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                       public void onClick(DialogInterface dialog, int which) {
-                           getVehicleData();
-                       }
-                   }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                       public void onClick(DialogInterface dialog, int which) {
-                           onBackPressed();
+        if (!str.isEmpty()) {
+            int _str = Integer.parseInt(str);
+            if (_str > 2) {
+                /*new AlertDialog.Builder(getApplicationContext())
+                        .setTitle("Upload Vehicle")
+                        .setMessage("You already uploaded" + _str + "vehicles if you wan to upload more vehicles you have to " +
+                                "pay please press yes to payment gateway")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                getVehicleData();
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        onBackPressed();
 
-                       }
-                   })
-                           .setIcon(android.R.drawable.ic_dialog_alert)
-                           .show();
-               }
-           }else {
-               CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-           }
+                    }
+                })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();*/
+            }
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
     }
 
     private void getVehicleData() {
