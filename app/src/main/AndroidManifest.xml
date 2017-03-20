@@ -79,11 +79,14 @@
         <activity
             android:name=".view.BrowseStoreActivity"
             android:label="@string/title_activity_browse_store"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.VehicleUpload"
             android:label="@string/title_activity_vehicle_upload"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.SearchStore"
+            android:label="@string/title_activity_search_store"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
