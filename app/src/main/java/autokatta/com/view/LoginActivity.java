@@ -2,8 +2,6 @@ package autokatta.com.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -74,10 +72,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (response!=null){
             if (response.isSuccessful()){
                 LoginResponse mLoginResponse = (LoginResponse) response.body();
+                String myContact = mUserName.getText().toString();
                 if (mLoginResponse.getSuccess()!=null){
                     String id = mLoginResponse.getSuccess().get(0).getRegID();
                     Log.i("id","->"+id);
                     CustomToast.customToast(getApplicationContext(),"Login Successful");
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginContact", myContact).apply();
                     startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
                 }else{
                     CustomToast.customToast(getApplicationContext(),mLoginResponse.getError().get(0));
