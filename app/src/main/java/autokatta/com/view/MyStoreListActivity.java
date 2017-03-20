@@ -39,6 +39,7 @@ public class MyStoreListActivity extends AppCompatActivity implements RequestNot
         setSupportActionBar(toolbar);
 
         fabCreateStore = (FloatingActionButton) findViewById(R.id.fabCreateStore);
+        fabCreateStore.setOnClickListener(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 

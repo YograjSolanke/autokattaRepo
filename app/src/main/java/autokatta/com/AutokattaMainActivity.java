@@ -31,6 +31,7 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
+import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.GroupsTab;
 import autokatta.com.view.MyAutokattaContacts;
 import autokatta.com.view.MyStoreListActivity;
@@ -128,6 +129,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.my_store) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyStoreListActivity.class));
                         } else if (menuItem.getItemId() == R.id.browse_store) {
+                            startActivity(new Intent(AutokattaMainActivity.this, BrowseStoreActivity.class));
 
                         } else if (menuItem.getItemId() == R.id.search_store) {
 

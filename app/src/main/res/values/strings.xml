@@ -80,4 +80,5 @@
     <string name="err_area">area required</string>
     <string name="err_mobile">mobile required</string>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_browse_store">BrowseStoreActivity</string>
 </resources>
