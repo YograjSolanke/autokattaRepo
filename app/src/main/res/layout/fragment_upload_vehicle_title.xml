@@ -369,6 +369,200 @@
             </LinearLayout>
         </RelativeLayout>
 
+        <!--Year Fragment-->
+        <RelativeLayout
+            android:id="@+id/year_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
+
+            <TextView
+                android:id="@+id/year_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="Year"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/wheeler3count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/year_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dip"
+                android:text="Make Year"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/make"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wheeler3count"
+                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/make_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#80bebebe"
+                    android:hint="Month"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/card_margin" />
+
+                <EditText
+                    android:id="@+id/make_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#80bebebe"
+                    android:hint="Year"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/card_margin" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/make"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dip"
+                android:text="Registration Year"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bus"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/register_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#80bebebe"
+                    android:hint="Month"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/card_margin" />
+
+                <EditText
+                    android:id="@+id/register_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#80bebebe"
+                    android:hint="Year"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/card_margin" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--Kam Fragment-->
+        <RelativeLayout
+            android:id="@+id/kms_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
+
+            <TextView
+                android:id="@+id/kms_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="KMS/HRS Detais"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kms_title"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/hrstext1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="5dp"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:hint="Hrs"
+                    android:inputType="number"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+
+                <Spinner
+                    android:id="@+id/pumpspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+
+                <Spinner
+                    android:id="@+id/brakespinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+
+                <Spinner
+                    android:id="@+id/stearingspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+            </LinearLayout>
+        </RelativeLayout>
+
         <Button
             android:id="@+id/title_next"
             android:layout_marginTop="@dimen/text_about"

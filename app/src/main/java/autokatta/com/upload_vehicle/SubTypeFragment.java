@@ -28,7 +28,7 @@ public class SubTypeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSubtype = inflater.inflate(R.layout.fragment_subtype_fragment, container, false);
-        mMakeMonth = (EditText) mSubtype.findViewById(R.id.make_month);
+        /*mMakeMonth = (EditText) mSubtype.findViewById(R.id.make_month);
         mMakeYear = (EditText) mSubtype.findViewById(R.id.make_year);
         mRegisterMonth = (EditText) mSubtype.findViewById(R.id.register_month);
         mRegisterYear = (EditText) mSubtype.findViewById(R.id.register_year);
@@ -87,7 +87,7 @@ public class SubTypeFragment extends Fragment {
                 }, null);
             }
         });
-        /*mButton.setOnClickListener(new View.OnClickListener() {
+        *//*mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myp.show();
@@ -97,7 +97,7 @@ public class SubTypeFragment extends Fragment {
         return mSubtype;
     }
 
-    private void makeMonth() {
+    /*private void makeMonth() {
         myp = new MonthYearPicker(getActivity());
         myp.build(new DialogInterface.OnClickListener() {
             @Override
@@ -106,7 +106,7 @@ public class SubTypeFragment extends Fragment {
                 mMakeYear.setText(myp.getSelectedYear());
             }
         }, null);
-    }
+    }*/
 }
 
     /*@Override
