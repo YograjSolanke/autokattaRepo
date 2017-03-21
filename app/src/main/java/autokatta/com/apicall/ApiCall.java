@@ -279,6 +279,8 @@ public class ApiCall {
      */
 
     public void Categories() {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(mContext.getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -299,12 +301,20 @@ public class ApiCall {
                 mNotifier.notifyError(t);
             }
         });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     /*
     Forget Password
      */
 
     public void forgetPassword(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(mContext.getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -321,9 +331,15 @@ public class ApiCall {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+mNotifier.notifyError(t);
             }
         });
+    } else {
+        CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+    }
+} catch (Exception e) {
+        e.printStackTrace();
+        }
     }
 
     /***
