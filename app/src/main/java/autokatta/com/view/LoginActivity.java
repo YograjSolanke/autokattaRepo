@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.net.SocketTimeoutException;
 
@@ -23,6 +24,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, RequestNotifier {
 
     EditText mUserName, mPassword;
+    TextView mForgetPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +34,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mUserName = (EditText) findViewById(R.id.username);
         mPassword = (EditText) findViewById(R.id.password);
+        mForgetPassword= (TextView) findViewById(R.id.forget_password);
         Button mLogin = (Button) findViewById(R.id.login);
         Button mRegistration = (Button) findViewById(R.id.register);
         mLogin.setOnClickListener(this);
         mRegistration.setOnClickListener(this);
+        mForgetPassword.setOnClickListener(this);
     }
 
     @Override
@@ -47,6 +51,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.register:
                 startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+                break;
+
+
+            case R.id.forget_password:
+                startActivity(new Intent(LoginActivity.this, Forget_Password.class));
                 break;
         }
     }

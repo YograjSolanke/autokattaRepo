@@ -96,6 +96,9 @@
             android:label="@string/title_activity_search_store"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name=".view.OTP">
+        </activity>
+
         <activity
             android:name=".view.MySearchActivity"
             android:label="@string/title_activity_my_search"

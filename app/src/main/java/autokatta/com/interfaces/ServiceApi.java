@@ -7,7 +7,6 @@ import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
-import autokatta.com.response.OTPResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
@@ -67,7 +66,7 @@ public interface ServiceApi {
 
     // get OTP
     @POST("otp.php")
-    Call<OTPResponse> _autokattagetOTP(@Query("number") String contact);
+    Call<String> _autokattagetOTP(@Query("number") String contact);
 
 
     // After OTP Registration

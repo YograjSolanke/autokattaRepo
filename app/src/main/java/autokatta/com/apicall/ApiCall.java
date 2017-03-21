@@ -20,7 +20,6 @@ import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
-import autokatta.com.response.OTPResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
@@ -436,24 +435,29 @@ public class ApiCall {
 
     public void getOTP(String contact) {
         try {
+
+            //JSON to Gson conversion
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
                         .client(initLog().build())
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<OTPResponse> otpResponseCall = serviceApi._autokattagetOTP(contact);
-                otpResponseCall.enqueue(new Callback<OTPResponse>() {
+                Call<String> otpResponseCall = serviceApi._autokattagetOTP(contact);
+                otpResponseCall.enqueue(new Callback<String>() {
                     @Override
-                    public void onResponse(Call<OTPResponse> call, Response<OTPResponse> response) {
+                    public void onResponse(Call<String> call, Response<String> response) {
                         Log.i("Response", "OTP->" + response);
-                        mNotifier.notifySuccess(response);
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
-                    public void onFailure(Call<OTPResponse> call, Throwable t) {
+                    public void onFailure(Call<String> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
