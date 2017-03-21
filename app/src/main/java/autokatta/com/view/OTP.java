@@ -121,9 +121,9 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
                 if (otpstr1.equals(otpstr2)) {
                     if (call.equalsIgnoreCase("forgot")) {
 
-                       /* Intent back = new Intent(OTP.this, NewPassword.class);
+                        Intent back = new Intent(OTP.this, NewPassword.class);
                         back.putExtra("contact", contact);
-                        startActivity(back);*/
+                        startActivity(back);
                     } else if (call.equalsIgnoreCase("register")) {
                         if (otpemailvalue.equalsIgnoreCase(otpemailpass)) {
                             ApiCall mApiCall = new ApiCall(OTP.this, this);

@@ -54,7 +54,7 @@ public class Forget_Password extends AppCompatActivity implements  View.OnClickL
 
     private void  forgetPassword()
     {
-        String contact=edtContact.getText().toString().trim();
+       contact=edtContact.getText().toString().trim();
         if (TextUtils.isEmpty(edtContact.getText().toString().trim())) {
             edtContact.requestFocus();
             edtContact.setFocusable(true);
@@ -95,7 +95,7 @@ public class Forget_Password extends AppCompatActivity implements  View.OnClickL
                 Log.i("String","->"+str);
                 CustomToast.customToast(getApplicationContext(),"You are a valid user");
                 Intent i=new Intent(Forget_Password.this,OTP.class);
-                System.out.println("contact="+contact);
+                System.out.println("contact================================================"+contact);
                 i.putExtra("contact",contact);
                 i.putExtra("call","forgot");
                 startActivity(i);
