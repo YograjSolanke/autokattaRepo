@@ -95,18 +95,18 @@
                     android:layout_height="wrap_content"
                     >
 
-                <EditText
-                    android:id="@+id/editEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:paddingEnd="@dimen/margin_heading_top"
-                    android:paddingStart="@dimen/margin_heading_top"
-                    android:maxLines="1"
-                    android:textColor="@color/textColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textSize="15sp" />
+                    <EditText
+                        android:id="@+id/editEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/margin_heading_top"
+                        android:paddingStart="@dimen/margin_heading_top"
+                        android:textColor="@color/textColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="15sp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <RelativeLayout
@@ -252,6 +252,7 @@
                     android:id="@+id/spinnerindustry"
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
@@ -264,13 +265,13 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/otherLayout"
-                    android:visibility="visible"
+                    android:id="@+id/otherIndustryLayout"
+                    android:visibility="gone"
                     >
 
 
                     <EditText
-                        android:id="@+id/editOtherType"
+                        android:id="@+id/editOtherTypeIndustry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter Your Industry"
@@ -288,9 +289,31 @@
                     android:layout_width="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/otherCategoryLayout"
+                    android:visibility="gone">
+
+
+                    <EditText
+                        android:id="@+id/editOtherTypeCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Your Profession"
+                        android:paddingEnd="@dimen/margin_heading_top"
+                        android:paddingStart="@dimen/margin_heading_top"
+                        android:maxLines="1"
+                        android:textColor="@color/textColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="15sp" />
+                </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

@@ -64,6 +64,16 @@ public interface ServiceApi {
     @POST("registrationValidation.php")
     Call<String> regContactValidation(@Query("contact") String contact);
 
+
+    //add other category
+    @POST("add_module.php")
+    Call<String> addOtherCategory(@Query("title") String contact);
+
+
+    //add other Industry
+    @POST("add_other_industry.php")
+    Call<String> addOtherIndustry(@Query("newIndustry") String contact);
+
     // get OTP
     @POST("otp.php")
     Call<String> _autokattagetOTP(@Query("number") String contact);
