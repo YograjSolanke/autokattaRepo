@@ -300,6 +300,31 @@ public class ApiCall {
             }
         });
     }
+    /*
+    Forget Password
+     */
+
+    public void forgetPassword(String contact) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(mContext.getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(initLog().build())
+                .build();
+
+        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+        Call<String> forgetPasswordResponseCall = serviceApi._autokattaForgotPassword(contact);
+        forgetPasswordResponseCall.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                mNotifier.notifyString(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
 
     /***
      * Retrofit Logs

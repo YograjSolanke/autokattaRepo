@@ -44,4 +44,9 @@ public interface ServiceApi {
     //Get Category...
     @GET("getModule.php")
     Call<CategoryResponse> _autokattaGetCategories();
+
+    //Forgot Password
+    @POST("getContactForgotPass.php")
+    Call<String> _autokattaForgotPassword(@Query("contact") String contact);
+
 }
