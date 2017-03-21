@@ -1,127 +1,694 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <!--Year Fragment-->
-    <RelativeLayout
-        android:id="@+id/brand_title_body"
+    <LinearLayout
+        android:id="@+id/relative_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/layout_padding"
-        android:layout_marginStart="@dimen/layout_padding"
-        android:layout_marginTop="@dimen/layout_top"
-        android:background="@drawable/layout_background">
+        android:orientation="vertical">
+        <!--Year Fragment-->
+        <RelativeLayout
+            android:id="@+id/brand_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
 
-        <TextView
-            android:id="@+id/brand_title"
+            <TextView
+                android:id="@+id/brand_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="Year"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/wheeler3count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brand_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dip"
+                android:text="Make Year"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/make"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wheeler3count"
+                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/make_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#80bebebe"
+                    android:hint="Month"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/card_margin" />
+
+                <EditText
+                    android:id="@+id/make_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#80bebebe"
+                    android:hint="Year"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/card_margin" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/make"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dip"
+                android:text="Registration Year"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bus"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/register_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#80bebebe"
+                    android:hint="Month"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/card_margin" />
+
+                <EditText
+                    android:id="@+id/register_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="#80bebebe"
+                    android:hint="Year"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/card_margin" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--Kam Fragment-->
+        <RelativeLayout
+            android:id="@+id/kms_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/brand_title_body"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
+
+            <TextView
+                android:id="@+id/kms_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="KMS/HRS Detais"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kms_title"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/hrstext1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="5dp"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:hint="Hrs"
+                    android:inputType="number"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+
+                <Spinner
+                    android:id="@+id/pumpspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+
+
+                <Spinner
+                    android:id="@+id/brakespinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+
+                <Spinner
+                    android:id="@+id/stearingspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--Location Fragment-->
+        <RelativeLayout
+            android:id="@+id/location_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
+
+            <TextView
+                android:id="@+id/location_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="Location Detais"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/location_title"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autolocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:hint="Parking location"
+                    android:padding="7dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/rtoautocompletetext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:hint="RTO city"
+                    android:padding="7dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+
+                <EditText
+                    android:id="@+id/registernumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:gravity="center_vertical"
+                    android:inputType="number"
+                    android:hint="Registration number"
+                    android:padding="5dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+
+                <CheckBox
+                    android:id="@+id/checkBox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Unregistered"
+                    android:textColor="#2C3343"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--Document Fragment-->
+        <RelativeLayout
+            android:id="@+id/document_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
+
+            <TextView
+                android:id="@+id/document_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="Document"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/document_title"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/hypospinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+
+                <Spinner
+                    android:id="@+id/rcspinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10"  />
+
+                <Spinner
+                    android:id="@+id/insurancespinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10"  />
+
+                <EditText
+                    android:id="@+id/insuranceidv1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:hint="Insurance IDV"
+                    android:inputType="number"
+                    android:paddingEnd="3dp"
+                    android:paddingStart="3dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+
+                <Spinner
+                    android:id="@+id/taxvalidspinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+
+                <Spinner
+                    android:id="@+id/permitspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10"  />
+
+                <Spinner
+                    android:id="@+id/fitnessspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10"  />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--Owner Fragment-->
+        <RelativeLayout
+            android:id="@+id/owner_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
+
+            <TextView
+                android:id="@+id/owner_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="Owner"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/owner_title"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/ownerstext"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10"  />
+
+                <Spinner
+                    android:id="@+id/emVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:layout_marginBottom="5dp"
+                    android:ems="10" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--Car Fragment-->
+        <RelativeLayout
+            android:id="@+id/car_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
+
+            <TextView
+                android:id="@+id/car_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="Car"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/car_title"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/chassi_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:digits="0123456789qwertzuiopasdfghjklyxcvbnm"
+                    android:background="#80bebebe"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:hint="Chassis no"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"/>
+
+                <EditText
+                    android:id="@+id/engine_no"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:inputType="text"
+                    android:digits="0123456789qwertzuiopasdfghjklyxcvbnm"
+                    android:background="#80bebebe"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:hint="Engine no" />
+
+                <Spinner
+                    android:id="@+id/driveSpinner"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:background="#80bebebe" />
+
+                <Spinner
+                    android:id="@+id/transmissionspinner"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:background="#80bebebe" />
+
+                <Spinner
+                    android:id="@+id/bodytypespinner"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:background="#80bebebe" />
+
+
+                <Button
+                    android:id="@+id/refreshbody"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:background="@drawable/refresh"
+                    android:layout_marginStart="5dp"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:id="@+id/linearbody"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:hint="@string/app_name"
+                        android:id="@+id/editbody"
+                        android:layout_width="100dip"
+                        android:inputType="text"
+                        android:textColor="#2C3343"
+                        android:layout_height="30dip"
+                        android:background="#80bebebe"/>
+                    <Button
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:background="@drawable/button_background"
+                        android:id="@+id/btnbody"
+                        android:text="Upload"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:layout_width="100dip"
+                        android:layout_height="40dip" />
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/bustypeSpinner"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:background="#80bebebe" />
+
+                <Spinner
+                    android:id="@+id/aircondspinner"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:background="#80bebebe" />
+
+                <Spinner
+                    android:id="@+id/invoicespinner"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:background="#80bebebe" />
+
+                <EditText
+                    android:id="@+id/apptext"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:background="#80bebebe"
+                    android:hint="Application"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343" />
+
+                <Spinner
+                    android:id="@+id/implementSpinner"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:hint="Implementation"
+                    android:background="#80bebebe" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/editimplement"
+                    android:layout_marginTop="5dp"
+                    android:background="#80bebebe"
+                    android:hint="Enter implement"
+                    android:gravity="center"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/seatcaptext"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:inputType="number"
+                    android:hint="Seating Capacity"
+                    android:background="#80bebebe"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"/>
+
+                <EditText
+                    android:id="@+id/tyrecontext"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:ems="10"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:background="#80bebebe"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:hint="Tyre Condition" />
+
+                <Spinner
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="#80bebebe"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:hint="Color"
+                    android:id="@+id/setcolor">
+                </Spinner>
+
+                <Spinner
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="#80bebebe"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:hint="Color"
+                    android:id="@+id/setfuel">
+                </Spinner>
+
+                <EditText
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="#80bebebe"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:hint="Hp/Capacity"
+                    android:id="@+id/sethpcapacity"
+                    android:inputType="number">
+                </EditText>
+
+                <EditText
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="#80bebebe"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:hint="JIB in Ft"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/setjib">
+                </EditText>
+
+                <EditText
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="#80bebebe"
+                    android:paddingStart="3dip"
+                    android:paddingEnd="3dip"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:hint="JIB in Ft"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/setBoon">
+                </EditText>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/title_next"
+            android:layout_marginTop="@dimen/text_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background"
-            android:drawableStart="@mipmap/ic_launcher"
-            android:gravity="start|center"
-            android:text="Year"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_layout"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/wheeler3count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/brand_title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dip"
-            android:text="Make Year"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#2C3343"
-            android:textStyle="bold" />
-        <LinearLayout
-            android:id="@+id/make"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/wheeler3count"
-            android:layout_marginEnd="@dimen/card_margin"
-            android:layout_marginStart="@dimen/card_margin"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="3dp">
-
-            <EditText
-                android:id="@+id/make_month"
-                android:layout_width="match_parent"
-                android:layout_height="40dip"
-                android:background="#80bebebe"
-                android:layout_gravity="center"
-                android:paddingStart="@dimen/card_margin"
-                android:layout_marginTop="5dp"
-                android:hint="Month"
-                android:layout_weight="1"
-                android:inputType="text"/>
-
-            <EditText
-                android:id="@+id/make_year"
-                android:layout_width="match_parent"
-                android:layout_height="40dip"
-                android:background="#80bebebe"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:paddingStart="@dimen/card_margin"
-                android:hint="Year"
-                android:layout_marginStart="3dp"
-                android:inputType="text"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/bus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dip"
-            android:text="Registration Year"
-            android:layout_below="@+id/make"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#2C3343"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bus"
-            android:layout_marginEnd="@dimen/card_margin"
-            android:layout_marginStart="@dimen/card_margin"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="5dp">
-
-            <EditText
-                android:id="@+id/register_month"
-                android:layout_width="match_parent"
-                android:layout_height="40dip"
-                android:background="#80bebebe"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:hint="Month"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/card_margin"
-                android:inputType="text"/>
-
-            <EditText
-                android:id="@+id/register_year"
-                android:layout_width="match_parent"
-                android:layout_height="40dip"
-                android:background="#80bebebe"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:hint="Year"
-                android:paddingLeft="@dimen/card_margin"
-                android:layout_marginStart="3dp"
-                android:inputType="text"/>
-
-        </LinearLayout>
-    </RelativeLayout>
-
-</RelativeLayout>
+            android:textStyle="bold"
+            android:text="submit" />
+    </LinearLayout>
+</ScrollView>
