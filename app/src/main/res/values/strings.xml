@@ -68,6 +68,7 @@
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="title_activity_forget_password">ForgetPassword</string>
 
     <!--Error Results-->
     <string name="no_internet">No Internet Connection&#8230;</string>

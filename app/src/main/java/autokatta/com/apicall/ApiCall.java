@@ -13,10 +13,12 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.AfterOtpRegistrationResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
+import autokatta.com.response.OTPResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
@@ -414,6 +416,79 @@ public class ApiCall {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+     /*
+        Get OTP
+     */
+
+    public void getOTP(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<OTPResponse> otpResponseCall = serviceApi._autokattagetOTP(contact);
+                otpResponseCall.enqueue(new Callback<OTPResponse>() {
+                    @Override
+                    public void onResponse(Call<OTPResponse> call, Response<OTPResponse> response) {
+                        Log.i("Response", "OTP->" + response);
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<OTPResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+      /*
+        Registration after getting OTP
+     */
+
+    public void registrationAfterOtp(String contact,String username,String email,String dob,String gender,String pincode,String city,String profession,String password,String sub_profession,String industry) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<AfterOtpRegistrationResponse> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration(contact, username, email, dob, gender,pincode,city,profession,password,sub_profession,industry);
+                afterOtpRegistrationResponseCall.enqueue(new Callback<AfterOtpRegistrationResponse>() {
+                    @Override
+                    public void onResponse(Call<AfterOtpRegistrationResponse> call, Response<AfterOtpRegistrationResponse> response) {
+                        Log.i("Response", "OTP->" + response);
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AfterOtpRegistrationResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
