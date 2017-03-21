@@ -93,4 +93,8 @@ public interface ServiceApi {
     //get My Search
     @POST("getMyVehicleSearch.php")
     Call<MySearchResponse> _autokattaGetMySearch(@Query("contact") String myContact);
+
+    //New Password
+    @POST("UpdateForgotPass.php")
+    Call<String> _autokattanewpassword(@Query("contact") String contact,@Query("newPass") String newPass);
 }

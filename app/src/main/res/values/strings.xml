@@ -82,6 +82,7 @@
     <string name="no_patient">No patient added&#8230;please add patient!!!</string>
     <string name="err_username">username required</string>
     <string name="err_password">password required</string>
+    <string name="err_confirm_password">Confirm password required</string>
     <string name="err_doctor">name required</string>
     <string name="err_address">address required</string>
     <string name="err_area">area required</string>
