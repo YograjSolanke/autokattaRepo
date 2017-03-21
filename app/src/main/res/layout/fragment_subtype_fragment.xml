@@ -1,6 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <!--Year Fragment-->
+    <RelativeLayout
+        android:id="@+id/brand_title_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/layout_padding"
+        android:layout_marginStart="@dimen/layout_padding"
+        android:layout_marginTop="@dimen/layout_top"
+        android:background="@drawable/layout_background">
+
+        <TextView
+            android:id="@+id/brand_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:drawableStart="@mipmap/ic_launcher"
+            android:gravity="start|center"
+            android:text="Year"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_layout"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/wheeler3count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/brand_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dip"
+            android:text="Make Year"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#2C3343"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/make"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/wheeler3count"
+            android:layout_marginEnd="@dimen/card_margin"
+            android:layout_marginStart="@dimen/card_margin"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginBottom="3dp">
+
+            <EditText
+                android:id="@+id/make_month"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:background="#80bebebe"
+                android:layout_gravity="center"
+                android:paddingStart="@dimen/card_margin"
+                android:layout_marginTop="5dp"
+                android:hint="Month"
+                android:layout_weight="1"
+                android:inputType="text"/>
+
+            <EditText
+                android:id="@+id/make_year"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:background="#80bebebe"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/card_margin"
+                android:hint="Year"
+                android:layout_marginStart="3dp"
+                android:inputType="text"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dip"
+            android:text="Registration Year"
+            android:layout_below="@+id/make"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#2C3343"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bus"
+            android:layout_marginEnd="@dimen/card_margin"
+            android:layout_marginStart="@dimen/card_margin"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginBottom="5dp">
+
+            <EditText
+                android:id="@+id/register_month"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:background="#80bebebe"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:hint="Month"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/card_margin"
+                android:inputType="text"/>
+
+            <EditText
+                android:id="@+id/register_year"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:background="#80bebebe"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:hint="Year"
+                android:paddingLeft="@dimen/card_margin"
+                android:layout_marginStart="3dp"
+                android:inputType="text"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
