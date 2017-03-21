@@ -28,7 +28,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment_profile.About;
+import autokatta.com.fragment.SearchStoreFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
@@ -110,7 +110,7 @@ public class SearchStoreActivity extends AppCompatActivity implements View.OnCli
                 int radiuspos = spnRadius.getSelectedItemPosition();
 
                 Bundle b = new Bundle();
-                b.putString("call", "search");
+                b.putString("myContact", myContact);
                 b.putString("location", strLocation);
                 b.putString("category", strCategory);
                 b.putString("phrase", strPhrase);
@@ -125,11 +125,11 @@ public class SearchStoreActivity extends AppCompatActivity implements View.OnCli
                     Snackbar.make(v, "you can not search store by your contact...", Snackbar.LENGTH_SHORT).show();
 
                 } else {
-                    About fragment2 = new About();
-                    fragment2.setArguments(b);
+                    SearchStoreFragment searchStoreFragment = new SearchStoreFragment();
+                    searchStoreFragment.setArguments(b);
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.searchStoreFrame, fragment2);
+                    fragmentTransaction.replace(R.id.searchStoreFrame, searchStoreFragment);
                     fragmentTransaction.commit();
                 }
                 break;
