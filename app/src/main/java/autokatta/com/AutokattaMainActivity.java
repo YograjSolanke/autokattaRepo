@@ -34,6 +34,7 @@ import autokatta.com.fragment_profile.About;
 import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.GroupsTab;
 import autokatta.com.view.MyAutokattaContacts;
+import autokatta.com.view.MySearchActivity;
 import autokatta.com.view.MyStoreListActivity;
 import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.UserProfile;
@@ -139,7 +140,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.search_vehicle) {
 
                         } else if (menuItem.getItemId() == R.id.my_search) {
-
+                            startActivity(new Intent(AutokattaMainActivity.this, MySearchActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {
 
                         } else if (menuItem.getItemId() == R.id.create_event) {

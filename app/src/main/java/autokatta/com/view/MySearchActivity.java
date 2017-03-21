@@ -7,10 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.MySearchResponse;
 import retrofit2.Response;
 
 public class MySearchActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
@@ -19,6 +27,7 @@ public class MySearchActivity extends AppCompatActivity implements SwipeRefreshL
     RecyclerView mRecyclerView;
     SharedPreferences mSharedPreferences;
     ApiCall apiCall;
+    List<MySearchResponse.Success> mySearchResponseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,7 @@ public class MySearchActivity extends AppCompatActivity implements SwipeRefreshL
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
                 apiCall.MySearchResult(myContact);
             }
         });
@@ -63,11 +73,55 @@ public class MySearchActivity extends AppCompatActivity implements SwipeRefreshL
     @Override
     public void notifySuccess(Response<?> response) {
 
+        if (response != null) {
+
+            if (response.isSuccessful()) {
+
+                MySearchResponse mySearchResponse = (MySearchResponse) response.body();
+                if (!mySearchResponse.getSuccess().isEmpty()) {
+                    for (MySearchResponse.Success mySearchSuccess : mySearchResponse.getSuccess()) {
+
+                        mySearchSuccess.setSearchId(mySearchSuccess.getSearchId());
+                        mySearchSuccess.setCategory(mySearchSuccess.getCategory());
+                        mySearchSuccess.setBrand(mySearchSuccess.getBrand());
+                        mySearchSuccess.setModel(mySearchSuccess.getModel());
+                        mySearchSuccess.setPrice(mySearchSuccess.getPrice());
+                        mySearchSuccess.setYearOfManufactur(mySearchSuccess.getYearOfManufactur());
+                        mySearchSuccess.setSearchstatus(mySearchSuccess.getSearchstatus());
+                        mySearchSuccess.setBuyerLeads(mySearchSuccess.getBuyerLeads());
+                        mySearchSuccess.setMysearchstatus(mySearchSuccess.getMysearchstatus());
+                        mySearchSuccess.setSearchdate(mySearchSuccess.getSearchdate());
+                        mySearchSuccess.setStopdate(mySearchSuccess.getStopdate());
+
+                        mySearchResponseList.add(mySearchSuccess);
+                    }
+                    Log.i("size", String.valueOf(mySearchResponseList.size()));
+                    mSwipeRefreshLayout.setRefreshing(false);
+
+                }
+
+            } else {
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            }
+
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("Check Class-"
+                    , "MySearchActivity");
+            error.printStackTrace();
+        }
     }
 
     @Override

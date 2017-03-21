@@ -56,37 +56,41 @@ public class MyStoreListActivity extends AppCompatActivity implements RequestNot
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                storeResponseArrayList = new ArrayList<>();
+                storeResponseArrayList.clear();
 
-        if (response.isSuccessful()) {
-            storeResponseArrayList = new ArrayList<>();
-            storeResponseArrayList.clear();
-
-            MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
+                MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
 
 
-            if (!myStoreResponse.getSuccess().isEmpty()) {
-                for (MyStoreResponse.Success Sresponse : myStoreResponse.getSuccess()) {
+                if (!myStoreResponse.getSuccess().isEmpty()) {
+                    for (MyStoreResponse.Success Sresponse : myStoreResponse.getSuccess()) {
 
-                    Sresponse.setId(Sresponse.getId());
-                    Sresponse.setName(Sresponse.getName());
-                    Sresponse.setLocation(Sresponse.getLocation());
-                    Sresponse.setWebsite(Sresponse.getWebsite());
-                    Sresponse.setStoreOpenTime(Sresponse.getStoreOpenTime());
-                    Sresponse.setStoreCloseTime(Sresponse.getStoreCloseTime());
-                    Sresponse.setStoreImage(Sresponse.getStoreImage());
-                    Sresponse.setCoverImage(Sresponse.getCoverImage());
-                    Sresponse.setWorkingDays(Sresponse.getWorkingDays());
-                    Sresponse.setRating(Sresponse.getRating());
-                    Sresponse.setLikecount(Sresponse.getLikecount());
-                    Sresponse.setFollowcount(Sresponse.getFollowcount());
-                    Sresponse.setStoreType(Sresponse.getStoreType());
+                        Sresponse.setId(Sresponse.getId());
+                        Sresponse.setName(Sresponse.getName());
+                        Sresponse.setLocation(Sresponse.getLocation());
+                        Sresponse.setWebsite(Sresponse.getWebsite());
+                        Sresponse.setStoreOpenTime(Sresponse.getStoreOpenTime());
+                        Sresponse.setStoreCloseTime(Sresponse.getStoreCloseTime());
+                        Sresponse.setStoreImage(Sresponse.getStoreImage());
+                        Sresponse.setCoverImage(Sresponse.getCoverImage());
+                        Sresponse.setWorkingDays(Sresponse.getWorkingDays());
+                        Sresponse.setRating(Sresponse.getRating());
+                        Sresponse.setLikecount(Sresponse.getLikecount());
+                        Sresponse.setFollowcount(Sresponse.getFollowcount());
+                        Sresponse.setStoreType(Sresponse.getStoreType());
 
-                    storeResponseArrayList.add(Sresponse);
+                        storeResponseArrayList.add(Sresponse);
+                    }
+
+                    Log.i("Store list size=>", String.valueOf(storeResponseArrayList.size()));
                 }
-
-                Log.i("Store list size=>", String.valueOf(storeResponseArrayList.size()));
-            } else
-                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            } else {
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            }
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
 
     }
@@ -102,6 +106,7 @@ public class MyStoreListActivity extends AppCompatActivity implements RequestNot
         } else {
             Log.i("Check Class-"
                     , "MyStoreListActivity");
+            error.printStackTrace();
         }
     }
 
