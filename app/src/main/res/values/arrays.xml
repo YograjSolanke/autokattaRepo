@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+<resources>
+
+
+
+    <string-array name="userType">
+        <item>Select User Type</item>
+        <item>Civil Servant</item>
+        <item>Employee</item>
+        <item>Enterpreneur</item>
+        <item>Executive</item>
+        <item>Freelancer</item>
+        <item>Recruiter</item>
+        <item>Retired</item>
+        <item>Seeking Employment</item>
+        <item>Student</item>
+    </string-array>
+</resources>
