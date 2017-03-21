@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 
@@ -128,6 +129,8 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
                         if (otpemailvalue.equalsIgnoreCase(otpemailpass)) {
                             ApiCall mApiCall = new ApiCall(OTP.this, this);
                             mApiCall.registrationAfterOtp(contact,username,email,dob,gender,pincode,city,profession,password,sub_profession,industry);
+                            Toast.makeText(getApplicationContext(), "to do",
+                                    Toast.LENGTH_LONG).show();
                             //  Registration();
                             /// new Registrationtask().execute();
                         } else {
@@ -148,200 +151,26 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
         @Override
         public void onBackPressed ()
         {
-            Intent i = new Intent(OTP.this, RegistrationActivity.class);
-            i.putExtra("username", username);
-            i.putExtra("contact", contact);
-            i.putExtra("email", email);
-            i.putExtra("pincode", pincode);
-            i.putExtra("city", city);
-            i.putExtra("password", password);
-            i.putExtra("dob", dob);
-            i.putExtra("gender", gender);
-
-            startActivity(i);
-            OTP.this.finish();
-        }
-    }
-
-        /*    OtpEdit.requestFocus();
-
-            if (call.equalsIgnoreCase("register"))
+            if (call.equals("forgot"))
             {
-                otpemail.setVisibility(View.VISIBLE);
-                emailOtpText.setVisibility(View.VISIBLE);
-                otpemail.clearFocus();
-
-                OTPeMail();
-                //  new OTPEmailTask().execute();
+                Intent i = new Intent(OTP.this,Forget_Password.class);
+                startActivity(i);
+                OTP.this.finish();
             }
-*/
+            else {
+                Intent i = new Intent(OTP.this, RegistrationActivity.class);
+                i.putExtra("username", username);
+                i.putExtra("contact", contact);
+                i.putExtra("email", email);
+                i.putExtra("pincode", pincode);
+                i.putExtra("city", city);
+                i.putExtra("password", password);
+                i.putExtra("dob", dob);
+                i.putExtra("gender", gender);
 
-/*
+                startActivity(i);
+                OTP.this.finish();
+            }
         }
-
-    //////////////////                 volley         /////////////////////////////////////
-    private  void Registration()
-
-    {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                "http://autokatta.com/mobile/registration1.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String sResponse) {
-
-                        if (sub_profession.equalsIgnoreCase("Select Category"))
-                            sub_profession="";
-                        if (industry.equalsIgnoreCase("Select Industry"))
-                            industry="";
-
-
-                        try {
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-                            StringBuilder sb = new StringBuilder();
-                            String line = null;
-                            while ((line = reader.readLine()) != null) {
-                                sb.append(line + "");
-                            }
-                            is.close();
-                            result1 = sb.toString();
-                        } catch (Exception e) {
-                            Log.e("log_tag", "Error converting result " + e.toString());
-                        }
-                        try {
-
-                            String response = sResponse.trim();
-                            System.out.println(sResponse);
-
-                            reg_id = sResponse
-                                    .replaceAll("[^0-9]", "");
-                            System.out.println("Registration id is :" + reg_id
-                            );
-                            editor.putString("reg_id", reg_id);
-                            editor.commit();
-
-                            if (response.startsWith("Success"))
-                            {
-                                Toast.makeText(getApplicationContext(), "Registration Sucessfull",
-                                        Toast.LENGTH_LONG).show();
-
-                                Intent i = new Intent(OTPClass.this, LoginActivity.class);
-                                startActivity(i);
-                                finish();
-                            }
-                            else
-                            {
-                                Toast.makeText(getApplicationContext(), "Please try later",
-                                        Toast.LENGTH_LONG).show();
-                            }
-
-
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                            Log.e(e.getClass().getName(), e.getMessage(), e);
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("onError:Registration:" + error.toString());
-
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-
-                params.put("username", username);
-                params.put("contact", contact);
-                params.put("email", email);
-                params.put("dob", dob);
-                params.put("gender", gender);
-                params.put("pincode", pincode);
-                params.put("city", city);
-                params.put("profession", profession);
-                params.put("password", password);
-                params.put("sub_profession", sub_profession);
-                params.put("industry", industry);
-
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
     }
 
-
-
-    /////////////////       volley for OTPmail   /////////////////////////////////
-
-    private  void OTPeMail()
-    {
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                "http://autokatta.com/mobile/otp.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String sResponse) {
-
-                        try {
-                            String response=sResponse.trim();
-                            System.out.println(sResponse);
-                            if(isNumeric(response))
-                            {
-                                emailOtpText.setText(response);
-                                msg="OTP for email validation "+response;
-                                System.out.println("rutu================"+sResponse);
-
-                                SendMail sm = new SendMail(OTPClass.this, "amitkamble@autokatta.com", "Don not reply to this mail ",msg);
-                                sm.execute();
-                            }
-                            else
-                            {
-                                Toast.makeText(OTPClass.this, "Resend OTP",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        } catch (Exception e) {
-                            Toast.makeText(OTPClass.this, e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                            Log.e(e.getClass().getName(), e.getMessage(), e);
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("onError:OTPeMail:" + error.toString());
-
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-
-                params.put("number",contact);
-
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
-
-    public static boolean isNumeric(String str)
-    {
-        try
-        {
-            double d = Double.parseDouble(str);
-        }
-        catch(NumberFormatException nfe)
-        {
-            return false;
-        }
-        return true;
-    }
-*/
