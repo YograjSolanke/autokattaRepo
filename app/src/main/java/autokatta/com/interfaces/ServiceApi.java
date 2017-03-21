@@ -7,6 +7,7 @@ import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
+import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
@@ -96,5 +97,9 @@ public interface ServiceApi {
 
     //New Password
     @POST("UpdateForgotPass.php")
-    Call<String> _autokattanewpassword(@Query("contact") String contact,@Query("newPass") String newPass);
+    Call<String> _autokattanewpassword(@Query("contact") String contact, @Query("newPass") String newPass);
+
+    //get My Uploaded vehicles
+    @POST("getUploadedvehicles.php")
+    Call<MyUploadedVehiclesResponse> _autokattaGetMyUploadedVehicles(@Query("mycontact") String myContact);
 }
