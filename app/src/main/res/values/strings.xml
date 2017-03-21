@@ -69,6 +69,7 @@
     <!--Login Activity -->
     <string name="username">Mobile Number</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Comfirm Password</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
