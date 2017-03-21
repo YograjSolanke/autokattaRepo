@@ -56,4 +56,8 @@ public interface ServiceApi {
                                               @Query("location") String location, @Query("category") String category,
                                               @Query("phrase") String phrase, @Query("radius") String radius);
 
+
+    //Registered Contact Validation
+    @POST("registrationValidation.php")
+    Call<String> regContactValidation(@Query("contact") String contact);
 }

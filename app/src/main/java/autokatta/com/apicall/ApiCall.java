@@ -3,6 +3,9 @@ package autokatta.com.apicall;
 import android.app.Activity;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
@@ -34,10 +37,12 @@ public class ApiCall {
     private RequestNotifier mNotifier;
     private ConnectionDetector mConnectionDetector;
 
+
     public ApiCall(Activity mContext, RequestNotifier mNotifier) {
         this.mContext = mContext;
         this.mNotifier = mNotifier;
         mConnectionDetector = new ConnectionDetector(mContext);
+
     }
 
     /*
@@ -315,9 +320,15 @@ public class ApiCall {
     public void forgetPassword(String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
                         .client(initLog().build())
                         .build();
 
@@ -372,6 +383,43 @@ public class ApiCall {
                 });
             } else
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void registrationContactValidation(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> forgetPasswordResponseCall = serviceApi.regContactValidation(contact);
+                forgetPasswordResponseCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
