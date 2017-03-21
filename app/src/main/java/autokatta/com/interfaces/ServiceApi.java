@@ -3,6 +3,7 @@ package autokatta.com.interfaces;
 import autokatta.com.response.AfterOtpRegistrationResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
+import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.OTPResponse;
@@ -71,9 +72,11 @@ public interface ServiceApi {
     // After OTP Registration
     @POST("registration1.php")
     Call<AfterOtpRegistrationResponse> _autokattaAfterOtpRegistration(@Query("username") String username, @Query("number") String contact, @Query("email") String email,
-                                                        @Query("dob") String dob, @Query("gender") String gender, @Query("pincode") String pincode,
-                                                        @Query("city") String city, @Query("profession") String profession, @Query("password") String password,
-                                                        @Query("sub_profession") String sub_profession, @Query("industry") String industry);
+                                                                      @Query("dob") String dob, @Query("gender") String gender, @Query("pincode") String pincode,
+                                                                      @Query("city") String city, @Query("profession") String profession, @Query("password") String password,
+                                                                      @Query("sub_profession") String sub_profession, @Query("industry") String industry);
 
-
+    // get Industries
+    @POST("getRegisteredIndustries.php")
+    Call<IndustryResponse> _getindustry();
 }
