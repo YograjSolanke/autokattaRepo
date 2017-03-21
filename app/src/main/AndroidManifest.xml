@@ -97,6 +97,12 @@
             android:name=".view.SearchStoreActivity"
             android:label="@string/title_activity_search_store"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.ForgetPasswordActivity"
+            android:label="@string/title_activity_forget_password"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".view.OTP">
+        </activity>
     </application>
 
 </manifest>
