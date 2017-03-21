@@ -2,7 +2,6 @@ package autokatta.com.apicall;
 
 import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +16,7 @@ import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.response.SearchStoreResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -99,7 +99,7 @@ public class ApiCall {
                 });
 
             } else {
-                Toast.makeText(mContext, mContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,7 +133,7 @@ public class ApiCall {
                 });
 
             } else {
-                Toast.makeText(mContext, mContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,7 +163,7 @@ public class ApiCall {
                 });
 
             } else {
-                Toast.makeText(mContext, mContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,7 +174,7 @@ public class ApiCall {
     Get Vehicle List...
      */
 
-    public void getVehicleList(){
+    public void getVehicleList() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -197,7 +197,7 @@ public class ApiCall {
                 });
 
             } else {
-                Toast.makeText(mContext, mContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -281,26 +281,26 @@ public class ApiCall {
     public void Categories() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mContext.getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(initLog().build())
-                .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
 
-        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-        Call<CategoryResponse> categoryResponseCall = serviceApi._autokattaGetCategories();
-        categoryResponseCall.enqueue(new Callback<CategoryResponse>() {
-            @Override
-            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-                Log.i("loo", "" + response);
-                mNotifier.notifySuccess(response);
-            }
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<CategoryResponse> categoryResponseCall = serviceApi._autokattaGetCategories();
+                categoryResponseCall.enqueue(new Callback<CategoryResponse>() {
+                    @Override
+                    public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                        Log.i("loo", "" + response);
+                        mNotifier.notifySuccess(response);
+                    }
 
-            @Override
-            public void onFailure(Call<CategoryResponse> call, Throwable t) {
-                mNotifier.notifyError(t);
-            }
-        });
+                    @Override
+                    public void onFailure(Call<CategoryResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
             } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
@@ -315,30 +315,65 @@ public class ApiCall {
     public void forgetPassword(String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mContext.getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(initLog().build())
-                .build();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
 
-        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-        Call<String> forgetPasswordResponseCall = serviceApi._autokattaForgotPassword(contact);
-        forgetPasswordResponseCall.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                mNotifier.notifyString(response.body());
-            }
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> forgetPasswordResponseCall = serviceApi._autokattaForgotPassword(contact);
+                forgetPasswordResponseCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-mNotifier.notifyError(t);
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
-        });
-    } else {
-        CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-} catch (Exception e) {
-        e.printStackTrace();
+
+
+    /*
+        Search Store
+     */
+
+    public void SearchStore(String myContact, String storecontact, String location, String finalCategory, String phrase, String radius) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<SearchStoreResponse> searchStoreResponseCall = serviceApi._getSearchStore(myContact, storecontact, location,
+                        finalCategory, phrase, radius);
+                searchStoreResponseCall.enqueue(new Callback<SearchStoreResponse>() {
+                    @Override
+                    public void onResponse(Call<SearchStoreResponse> call, Response<SearchStoreResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<SearchStoreResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -6,6 +6,7 @@ import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.response.SearchStoreResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -48,5 +49,11 @@ public interface ServiceApi {
     //Forgot Password
     @POST("getContactForgotPass.php")
     Call<String> _autokattaForgotPassword(@Query("contact") String contact);
+
+    //SearchStore Result
+    @POST("getStoreByContact.php")
+    Call<SearchStoreResponse> _getSearchStore(@Query("mycontact") String myContact, @Query("storecontact") String storecontact,
+                                              @Query("location") String location, @Query("category") String category,
+                                              @Query("phrase") String phrase, @Query("radius") String radius);
 
 }
