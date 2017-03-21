@@ -53,6 +53,7 @@ public class Title extends Fragment implements View.OnClickListener {
         exchangeno = (RadioButton) mTitle.findViewById(R.id.exchangeNo);
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
+        mSubmit.setOnClickListener(this);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

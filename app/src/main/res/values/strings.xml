@@ -55,6 +55,9 @@
     <!-- Shared Preferences -->
     <string name="my_preference">Autokatta</string>
     <string name="category">Category :-</string>
+    <string name="alert_dialog_title">Please Select</string>
+    <string name="positive_button_text">Select</string>
+    <string name="negative_button_text">Cancel</string>
 
     <!-- Other Stuff -->
     <string name="search_contact">search contacts</string>
