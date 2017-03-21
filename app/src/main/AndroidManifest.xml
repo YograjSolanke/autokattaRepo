@@ -28,7 +28,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <receiver
             android:name=".broadcastreceiver.Receiver"
             android:enabled="true"
@@ -52,7 +51,6 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
         <activity
             android:name=".view.UserProfile"
             android:label="@string/title_activity_user_profile"
@@ -96,13 +94,16 @@
         <activity
             android:name=".view.SearchStoreActivity"
             android:label="@string/title_activity_search_store"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".view.OTP">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.OTP"></activity>
+        <activity
+            android:name=".view.MySearchActivity"
+            android:label="@string/title_activity_my_search"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

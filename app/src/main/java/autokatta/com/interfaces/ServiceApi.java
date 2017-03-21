@@ -5,6 +5,7 @@ import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
+import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.OTPResponse;
 import autokatta.com.response.ProfileAboutResponse;
@@ -55,9 +56,9 @@ public interface ServiceApi {
 
     //SearchStore Result
     @POST("getStoreByContact.php")
-    Call<SearchStoreResponse> _getSearchStore(@Query("mycontact") String myContact, @Query("storecontact") String storecontact,
-                                              @Query("location") String location, @Query("category") String category,
-                                              @Query("phrase") String phrase, @Query("radius") String radius);
+    Call<SearchStoreResponse> _autokattaGetSearchStore(@Query("mycontact") String myContact, @Query("storecontact") String storecontact,
+                                                       @Query("location") String location, @Query("category") String category,
+                                                       @Query("phrase") String phrase, @Query("radius") String radius);
 
 
     //Registered Contact Validation
@@ -79,4 +80,8 @@ public interface ServiceApi {
     // get Industries
     @POST("getRegisteredIndustries.php")
     Call<IndustryResponse> _getindustry();
+
+    //get My Search
+    @POST("getMyVehicleSearch.php")
+    Call<MySearchResponse> _autokattaGetMySearch(@Query("contact") String myContact);
 }

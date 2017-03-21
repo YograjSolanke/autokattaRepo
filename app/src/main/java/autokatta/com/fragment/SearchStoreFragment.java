@@ -6,13 +6,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
+
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.SearchStoreResponse;
 import retrofit2.Response;
 
 /**
@@ -24,6 +31,7 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     View mSearchStore;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    List<SearchStoreResponse.Success> searchStoreResponseArrayList = new ArrayList<>();
 
     public SearchStoreFragment() {
         //empty constructor
@@ -89,11 +97,57 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void notifySuccess(Response<?> response) {
 
+        if (response != null) {
+            if (response.isSuccessful()) {
+                SearchStoreResponse searchStoreResponse = (SearchStoreResponse) response.body();
+
+                if (!searchStoreResponse.getSuccess().isEmpty()) {
+
+                    for (SearchStoreResponse.Success searchSuccess : searchStoreResponse.getSuccess()) {
+                        searchSuccess.setStoreId(searchSuccess.getStoreId());
+                        searchSuccess.setStoreName(searchSuccess.getStoreName());
+                        searchSuccess.setStoreImage(searchSuccess.getStoreImage());
+                        searchSuccess.setLocation(searchSuccess.getLocation());
+                        searchSuccess.setWebsite(searchSuccess.getWebsite());
+                        searchSuccess.setOpenTime(searchSuccess.getOpenTime());
+                        searchSuccess.setCloseTime(searchSuccess.getCloseTime());
+                        searchSuccess.setRatings(searchSuccess.getRatings());
+                        searchSuccess.setAddress(searchSuccess.getAddress());
+                        searchSuccess.setCategory(searchSuccess.getCategory());
+                        searchSuccess.setStoreType(searchSuccess.getStoreType());
+                        searchSuccess.setWorkingDays(searchSuccess.getWorkingDays());
+                        searchSuccess.setContact(searchSuccess.getContact());
+                        searchSuccess.setLikestatus(searchSuccess.getLikestatus());
+                        searchSuccess.setLikecount(searchSuccess.getLikecount());
+                        searchSuccess.setFollowstatus(searchSuccess.getFollowstatus());
+                        searchSuccess.setFollowcount(searchSuccess.getFollowcount());
+                        searchSuccess.setRating(searchSuccess.getRating());
+
+                        searchStoreResponseArrayList.add(searchSuccess);
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Search Store Fragment");
+            error.printStackTrace();
+        }
     }
 
     @Override

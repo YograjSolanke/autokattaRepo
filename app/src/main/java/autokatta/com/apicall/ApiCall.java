@@ -18,6 +18,7 @@ import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
+import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.OTPResponse;
 import autokatta.com.response.ProfileAboutResponse;
@@ -371,7 +372,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<SearchStoreResponse> searchStoreResponseCall = serviceApi._getSearchStore(myContact, storecontact, location,
+                Call<SearchStoreResponse> searchStoreResponseCall = serviceApi._autokattaGetSearchStore(myContact, storecontact, location,
                         finalCategory, phrase, radius);
                 searchStoreResponseCall.enqueue(new Callback<SearchStoreResponse>() {
                     @Override
@@ -531,6 +532,40 @@ public class ApiCall {
             } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+        MySearch Result
+     */
+
+    public void MySearchResult(String myContact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MySearchResponse> mySearchResponseCall = serviceApi._autokattaGetMySearch(myContact);
+                mySearchResponseCall.enqueue(new Callback<MySearchResponse>() {
+                    @Override
+                    public void onResponse(Call<MySearchResponse> call, Response<MySearchResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MySearchResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
         } catch (Exception e) {
             e.printStackTrace();
         }
