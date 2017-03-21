@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 
 public class GooglePlacesAdapter extends ArrayAdapter<String> implements Filterable {
-    private ArrayList<String> resultList;
+    public static ArrayList<String> resultList;
 
 
     public GooglePlacesAdapter(Context context, int textViewResourceId) {
@@ -127,6 +127,10 @@ public class GooglePlacesAdapter extends ArrayAdapter<String> implements Filtera
             Log.e("Error tag", "Cannot process JSON results", e);
         }
 
+        return resultList;
+    }
+
+    public static ArrayList<String> getResultList(){
         return resultList;
     }
 }
