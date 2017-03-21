@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,8 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetVehicleListResponse;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by ak-001 on 20/3/17.
  */
@@ -43,7 +47,15 @@ public class VehicleList extends Fragment  implements RequestNotifier {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                String s = mGetVehicle.get(position).getName();
+                if (s!=null){
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("category", s).apply();
+                    Bundle b = new Bundle();
+                    b.putInt("call", 1);
+                    FragmentManager manager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = manager.beginTransaction();
+                    fragmentTransaction.replace(R.id.vehicle_upload_container, new Title()).addToBackStack("vehicle_list").commit();
+                }
             }
         });
         getData();

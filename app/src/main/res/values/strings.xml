@@ -54,6 +54,7 @@
 
     <!-- Shared Preferences -->
     <string name="my_preference">Autokatta</string>
+    <string name="category">Category :-</string>
 
     <!-- Other Stuff -->
     <string name="search_contact">search contacts</string>
