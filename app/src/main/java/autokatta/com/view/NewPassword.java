@@ -94,7 +94,7 @@ public class NewPassword extends AppCompatActivity implements View.OnClickListen
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            Log.i("String", "->" + str);
+            Log.i("String-----", "->" + str);
             if (str.equals("Success")) {
                 Toast.makeText(getApplicationContext(), "Your password has been changed successfully ", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(NewPassword.this, LoginActivity.class);

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 
@@ -25,10 +24,8 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
 
     TextView OtpText, emailOtpText;
     EditText OtpEdit, otpemail;
-    String otpstr2, msg;
-    String username, contact, email, city, profession, sub_profession, password, dob, gender, industry,
-            pincode, call;
-    String reg_id;
+    String otpstr2;
+    String  contact, email, call;
     Button mSubmit;
 
     Editor editor;
@@ -54,25 +51,13 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
 
 
         Intent i = getIntent();
-        username = i.getStringExtra("username");
         contact = i.getStringExtra("contact");
-        email = i.getStringExtra("email");
-        dob = i.getStringExtra("dob");
-        gender = i.getStringExtra("gender");
-
-        pincode = i.getStringExtra("pincode");
-        city = i.getStringExtra("city");
-
-        profession = i.getStringExtra("profession");
-        sub_profession = i.getStringExtra("sub_profession");
-        industry = i.getStringExtra("industry");
-        password = i.getStringExtra("password");
-        call = i.getStringExtra("call");
+       call = i.getStringExtra("call");
 
         System.out.println("text contact=" + contact + call + email);
 
-        ApiCall mApiCall = new ApiCall(OTP.this, this);
-        mApiCall.getOTP(contact);
+            ApiCall mApiCall = new ApiCall(OTP.this, this);
+            mApiCall.getOTP(contact);
 
     }
 
@@ -97,17 +82,12 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
         @Override
         public void notifyString (String str){
             if (str != null) {
-                    Log.i("String", "->" + str);
-                    {
-                        OtpText.setText(str);
-                        otpstr2 = "" + str;
-                    }
+              OtpText.setText(str);
+             otpstr2 = "" + str;
 
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
-
-
 
         }
 
@@ -117,26 +97,12 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
             case R.id.submit_otp:
                 String otpstr1 = OtpEdit.getText().toString();
                 otpstr2 = OtpText.getText().toString().trim();
-                String otpemailvalue = otpemail.getText().toString();
-                String otpemailpass = emailOtpText.getText().toString();
                 if (otpstr1.equals(otpstr2)) {
                     if (call.equalsIgnoreCase("forgot")) {
 
-                        Intent back = new Intent(OTP.this, NewPassword.class);
-                        back.putExtra("contact", contact);
-                        startActivity(back);
-                    } else if (call.equalsIgnoreCase("register")) {
-                        if (otpemailvalue.equalsIgnoreCase(otpemailpass)) {
-                            ApiCall mApiCall = new ApiCall(OTP.this, this);
-                            mApiCall.registrationAfterOtp(contact,username,email,dob,gender,pincode,city,profession,password,sub_profession,industry);
-                            Toast.makeText(getApplicationContext(), "to do",
-                                    Toast.LENGTH_LONG).show();
-                            //  Registration();
-                            /// new Registrationtask().execute();
-                        } else {
-                            otpemail.setError("Please enter valid OTP");
-                        }
-
+                        Intent i = new Intent(OTP.this, NewPassword.class);
+                        i.putExtra("contact", contact);
+                        startActivity(i);
                     }
                 } else {
                     OtpEdit.setError("Please enter valid OTP");
@@ -144,7 +110,6 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
                 }
 
                 break;
-
         }
     }
 
@@ -157,20 +122,7 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
                 startActivity(i);
                 OTP.this.finish();
             }
-            else {
-                Intent i = new Intent(OTP.this, RegistrationActivity.class);
-                i.putExtra("username", username);
-                i.putExtra("contact", contact);
-                i.putExtra("email", email);
-                i.putExtra("pincode", pincode);
-                i.putExtra("city", city);
-                i.putExtra("password", password);
-                i.putExtra("dob", dob);
-                i.putExtra("gender", gender);
 
-                startActivity(i);
-                OTP.this.finish();
-            }
         }
     }
 

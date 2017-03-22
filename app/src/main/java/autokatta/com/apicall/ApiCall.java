@@ -13,7 +13,6 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.AfterOtpRegistrationResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.IndustryResponse;
@@ -551,26 +550,30 @@ public class ApiCall {
         Registration after getting OTP
      */
 
-    public void registrationAfterOtp(String contact, String username, String email, String dob, String gender, String pincode, String city, String profession, String password, String sub_profession, String industry) {
+    public void registrationAfterOtp( String username,String contact, String email, String dob, String gender, String pincode, String city, String profession, String password, String sub_profession, String industry) {
         try {
+            //JSON to Gson conversion
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
                         .client(initLog().build())
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<AfterOtpRegistrationResponse> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration(contact, username, email, dob, gender, pincode, city, profession, password, sub_profession, industry);
-                afterOtpRegistrationResponseCall.enqueue(new Callback<AfterOtpRegistrationResponse>() {
+                Call<String> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration( username,contact, email, dob, gender, pincode, city, profession, password, sub_profession, industry);
+                afterOtpRegistrationResponseCall.enqueue(new Callback<String>() {
                     @Override
-                    public void onResponse(Call<AfterOtpRegistrationResponse> call, Response<AfterOtpRegistrationResponse> response) {
-                        Log.i("Response", "OTP->" + response);
-                        mNotifier.notifySuccess(response);
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        Log.i("Response", "Registration->" + response);
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
-                    public void onFailure(Call<AfterOtpRegistrationResponse> call, Throwable t) {
+                    public void onFailure(Call<String> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

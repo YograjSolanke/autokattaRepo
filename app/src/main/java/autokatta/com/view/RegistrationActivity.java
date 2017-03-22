@@ -10,6 +10,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -47,6 +48,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     Button btnSubmit,btnClear;
     AutoCompleteTextView address;
     TextInputLayout otherIndustryLayout, otherCategoryLayout;
+    String namestr,contactstr,emailstr,DOBstr,pincodestr,passwordstr,confirmpassstr,addressstr,genderstr,
+            profession,sub_profession,strIndustry;
+
     RadioButton rbtmale,rbtfemale;
     ImageView dob_calender;
     RadioGroup rg1;
@@ -117,8 +121,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             case (R.id.btnsubmit) :
 
                 Boolean flag = false;
-                String namestr,contactstr,emailstr,DOBstr,pincodestr,passwordstr,confirmpassstr,addressstr,genderstr,
-                profession,sub_profession,strIndustry;
 
                 namestr = personName.getText().toString().trim();
                 contactstr = mobileNo.getText().toString().trim();
@@ -261,41 +263,24 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                 } else {
 
-                    Intent i = new Intent(RegistrationActivity.this, OTP.class);
-                    i.putExtra("username", namestr);
-                    i.putExtra("contact", contactstr);
-                    i.putExtra("email", emailstr);
-                    i.putExtra("pincode", pincodestr);
-                    i.putExtra("city", addressstr);
-                    i.putExtra("password", passwordstr);
-                    i.putExtra("dob", DOBstr);
-                    i.putExtra("gender", genderstr);
-                    i.putExtra("call", "register");
-
                     if (sub_profession.equalsIgnoreCase("Other")) {
                         sub_profession = otherCategory.getText().toString().trim();
-                        i.putExtra("sub_profession", sub_profession);
                         apiCall.addOtherCategory(sub_profession);
 
-                    } else {
-                        i.putExtra("sub_profession", sub_profession);
                     }
-
                     if (strIndustry.equalsIgnoreCase("Other")) {
                         strIndustry = otherIndustry.getText().toString().trim();
-                        i.putExtra("industry", strIndustry);
 
                         apiCall.addOtherIndustry(strIndustry);
 
-                    } else {
-                        i.putExtra("industry", strIndustry);
                     }
 
-                    i.putExtra("profession", profession);
+                    if (sub_profession.equalsIgnoreCase("Select Category"))
+                        sub_profession="";
+                    if (strIndustry.equalsIgnoreCase("Select Industry"))
+                        strIndustry="";
 
-
-                    startActivity(i);
-                    RegistrationActivity.this.finish();
+                    apiCall.registrationAfterOtp(namestr,contactstr,emailstr,DOBstr,genderstr,pincodestr,addressstr,profession,passwordstr,sub_profession,strIndustry);
 
                 }
 
@@ -514,15 +499,60 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void notifyString(String str) {
+        if (str != null) {
+            Log.i("String------", "->" + str);
+            getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
+            CustomToast.customToast(getApplicationContext(), "Registration Successfully");
+            Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
+            startActivity(i);
+            RegistrationActivity.this.finish();
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
+
+  /*      i.putExtra("username", namestr);
+        i.putExtra("contact", contactstr);
+        i.putExtra("email", emailstr);
+        i.putExtra("pincode", pincodestr);
+        i.putExtra("city", addressstr);
+        i.putExtra("password", passwordstr);
+        i.putExtra("dob", DOBstr);
+        i.putExtra("gender", genderstr);
+        i.putExtra("call", "register");*/
+/*
+
+        if (sub_profession.equalsIgnoreCase("Other")) {
+            sub_profession = otherCategory.getText().toString().trim();
+            i.putExtra("sub_profession", sub_profession);
+            apiCall.addOtherCategory(sub_profession);
+
+        } else {
+            i.putExtra("sub_profession", sub_profession);
+        }
+
+        if (strIndustry.equalsIgnoreCase("Other")) {
+            strIndustry = otherIndustry.getText().toString().trim();
+            i.putExtra("industry", strIndustry);
+
+            apiCall.addOtherIndustry(strIndustry);
+
+        } else {
+            i.putExtra("industry", strIndustry);
+        }
+
+        i.putExtra("profession", profession);
+
+*/
 
 
-        if (str.equalsIgnoreCase("Success")) {
+
+   /*     if (str.equalsIgnoreCase("Success")) {
 
 
             mobileNo.setError("Contact Already Exists!!!!!!!");
             mobileNo.requestFocus();
         }
-
+*/
 
     }
 
