@@ -116,6 +116,10 @@
         <activity
             android:name=".view.MySavedAuctionEventActivity"
             android:label="@string/title_activity_my_saved_auction_event"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.BlackListedMemberActivity"
+            android:label="@string/title_activity_black_listed_member"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

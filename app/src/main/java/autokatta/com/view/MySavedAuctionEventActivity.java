@@ -11,10 +11,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.MySavedAuctionResponse;
 import retrofit2.Response;
 
 public class MySavedAuctionEventActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
@@ -24,6 +28,8 @@ public class MySavedAuctionEventActivity extends AppCompatActivity implements Sw
     ApiCall apiCall;
     SharedPreferences mSharedPreferences;
 
+    List<MySavedAuctionResponse.Success> mysavedAuctionList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +37,7 @@ public class MySavedAuctionEventActivity extends AppCompatActivity implements Sw
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutMySavedAuctions);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerMyUploadedVehicle);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_recycler_view);
 
         apiCall = new ApiCall(this, this);
         mSharedPreferences = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
@@ -52,7 +58,7 @@ public class MySavedAuctionEventActivity extends AppCompatActivity implements Sw
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyUploadedVehicles(mContact);
+                apiCall.getMySavedAuctions(mContact);
             }
         });
 
@@ -66,6 +72,43 @@ public class MySavedAuctionEventActivity extends AppCompatActivity implements Sw
 
     @Override
     public void notifySuccess(Response<?> response) {
+
+        if (response != null) {
+
+            if (response.isSuccessful()) {
+
+                MySavedAuctionResponse savedAuctionResponse = (MySavedAuctionResponse) response.body();
+                if (!savedAuctionResponse.getSuccess().isEmpty()) {
+                    for (MySavedAuctionResponse.Success success : savedAuctionResponse.getSuccess()) {
+
+                        success.setAuctionId(success.getAuctionId());
+                        success.setActionTitle(success.getActionTitle());
+                        success.setStartDate(success.getStartDate());
+                        success.setStartTime(success.getStartTime());
+                        success.setEndDate(success.getEndDate());
+                        success.setEndTime(success.getEndTime());
+                        success.setNoOfVehicles(success.getNoOfVehicles());
+                        success.setSpecialClauses(success.getSpecialClauses());
+                        success.setSpecialPosition(success.getSpecialPosition());
+                        success.setPositionArray(success.getPositionArray());
+
+                        mysavedAuctionList.add(success);
+
+
+                    }
+
+                    Log.i("Ssize", String.valueOf(mysavedAuctionList.size()));
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+
+
+            } else {
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            }
+
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
 
     }
 
