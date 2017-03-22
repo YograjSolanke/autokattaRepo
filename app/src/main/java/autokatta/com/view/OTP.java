@@ -103,6 +103,7 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
                         Intent i = new Intent(OTP.this, NewPassword.class);
                         i.putExtra("contact", contact);
                         startActivity(i);
+                        finish();
                     }
                 } else {
                     OtpEdit.setError("Please enter valid OTP");
