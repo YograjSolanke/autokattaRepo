@@ -12,7 +12,8 @@ import android.view.View;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.events.MyActiveAuctionFragment;
-import autokatta.com.fragment.AutokattaContactFragment;
+import autokatta.com.events.MyActiveExchangeMelaFrament;
+import autokatta.com.events.MyActiveLoanMelaFragment;
 
 public class MyActiveEventsTabActivity extends AppCompatActivity {
 
@@ -51,8 +52,8 @@ public class MyActiveEventsTabActivity extends AppCompatActivity {
     private void setUpPager(ViewPager viewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getSupportFragmentManager());
         tabAdapterName.addFragment(new MyActiveAuctionFragment(), "Auction");
-        tabAdapterName.addFragment(new AutokattaContactFragment(), "Loan Mela");
-        tabAdapterName.addFragment(new AutokattaContactFragment(), "Exchange Mela");
+        tabAdapterName.addFragment(new MyActiveLoanMelaFragment(), "Loan Mela");
+        tabAdapterName.addFragment(new MyActiveExchangeMelaFrament(), "Exchange Mela");
 
         viewPager.setAdapter(tabAdapterName);
     }

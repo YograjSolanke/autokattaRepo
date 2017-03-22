@@ -6,6 +6,8 @@ import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
+import autokatta.com.response.MyActiveExchangeMelaResponse;
+import autokatta.com.response.MyActiveLoanMelaResponse;
 import autokatta.com.response.MySavedAuctionResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
@@ -85,9 +87,9 @@ public interface ServiceApi {
     // After OTP Registration
     @POST("registration1.php")
     Call<String> _autokattaAfterOtpRegistration(@Query("username") String username, @Query("contact") String contact, @Query("email") String email,
-                                                                      @Query("dob") String dob, @Query("gender") String gender, @Query("pincode") String pincode,
-                                                                      @Query("city") String city, @Query("profession") String profession, @Query("password") String password,
-                                                                      @Query("sub_profession") String sub_profession, @Query("industry") String industry);
+                                                @Query("dob") String dob, @Query("gender") String gender, @Query("pincode") String pincode,
+                                                @Query("city") String city, @Query("profession") String profession, @Query("password") String password,
+                                                @Query("sub_profession") String sub_profession, @Query("industry") String industry);
 
     // get Industries
     @POST("getRegisteredIndustries.php")
@@ -105,10 +107,17 @@ public interface ServiceApi {
     @POST("getUploadedvehicles.php")
     Call<MyUploadedVehiclesResponse> _autokattaGetMyUploadedVehicles(@Query("mycontact") String myContact);
 
-    //get My Uploaded vehicles
+    //get My Active Events
     @POST("getAuctionEvents.php")
     Call<MyActiveAuctionResponse> _autokattaGetMyActiveAuction(@Query("contact") String myContact, @Query("status") String status);
 
+    //get My Active Loan Mela
+    @POST("getAllMyloanMela.php")
+    Call<MyActiveLoanMelaResponse> _autokattaGetMyActiveLoanMela(@Query("contact") String myContact);
+
+    //get My Active Exchange Mela
+    @POST("getAllMyExchangeMela.php")
+    Call<MyActiveExchangeMelaResponse> _autokattaGetMyActiveExchangeMela(@Query("contact") String myContact);
 
     //get saved Auctions
     @POST("getMySavedAuction.php")
@@ -116,7 +125,7 @@ public interface ServiceApi {
 
     //Create Group
     @POST("createGroup.php")
-    Call<String> _autokattaCreateGroup(@Query("title") String title,@Query("image") String image,@Query("admin_contact") String contact);
+    Call<String> _autokattaCreateGroup(@Query("title") String title, @Query("image") String image, @Query("admin_contact") String contact);
 
     //get Vehicle Sub Types...
     @GET("getVehicleSubType.php")

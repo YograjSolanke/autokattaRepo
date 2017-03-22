@@ -38,7 +38,7 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
     List<MyActiveAuctionResponse.Success.Vehicle> myVehicleResponseList;
 
     public MyActiveAuctionFragment() {
-        //empty fragment
+        //empty constructor
     }
 
     @Nullable
@@ -116,7 +116,7 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
                         Log.i("Vsize", String.valueOf(myVehicleResponseList.size()));*/
 
                     }
-
+                    mSwipeRefreshLayout.setRefreshing(false);
                     Log.i("size", String.valueOf(myActiveAuctionResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
