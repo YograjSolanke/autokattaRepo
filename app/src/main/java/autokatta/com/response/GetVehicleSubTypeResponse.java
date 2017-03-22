@@ -3,32 +3,52 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by ak-001 on 22/3/17.
  */
 
 public class GetVehicleSubTypeResponse {
 
-    @SerializedName("id")
+
+    @SerializedName("Success")
     @Expose
-    private String id;
-    @SerializedName("name")
-    @Expose
-    private String name;
+    private List<Success> success = null;
 
-    public String getId() {
-        return id;
+    public List<Success> getSuccess() {
+        return success;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSuccess(List<Success> success) {
+        this.success = success;
     }
 
-    public String getName() {
-        return name;
-    }
+    public class Success {
 
-    public void setName(String name) {
-        this.name = name;
+        @SerializedName("id")
+        @Expose
+        private String id;
+        @SerializedName("name")
+        @Expose
+        private String name;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+
     }
 }

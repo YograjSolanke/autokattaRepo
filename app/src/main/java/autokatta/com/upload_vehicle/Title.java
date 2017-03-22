@@ -14,14 +14,18 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.AutokattaMainActivity;
@@ -30,6 +34,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.Modules;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileGroupResponse;
@@ -54,6 +59,10 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     String[] storetitlearray = new String[0];
     String stringgroupids = "", stringstoreids = "", stringstorename = "", stringgroupname = "";
     String financests = null, exchangests = null;
+    Spinner mSubType;
+    List<String> mSubTypeList = new ArrayList<>();
+    List<String> parsedData = new ArrayList<>();
+    HashMap<String, String> mSubTypeList1 = new HashMap<>();
 
     @Nullable
     @Override
@@ -71,6 +80,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         financeno = (RadioButton) mTitle.findViewById(R.id.financeNo);
         exchangeyes = (RadioButton) mTitle.findViewById(R.id.exchangeYes);
         exchangeno = (RadioButton) mTitle.findViewById(R.id.exchangeNo);
+
+        /*
+        Spinners...
+         */
+        mSubType = (Spinner) mTitle.findViewById(R.id.subtypespinner);
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
         mSubmit.setOnClickListener(this);
@@ -327,7 +341,33 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         list1.add(success.getName());
                     }
                     storetitlearray = list1.toArray(new String[list1.size()]);
-                    Log.i("MyStoreResponse", "->" + storetitlearray);
+                } else if (response.body() instanceof GetVehicleSubTypeResponse) {
+                    Log.e("GetVehicleTypes", "->");
+                    GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
+                    for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
+                        subTypeResponse.setId(subTypeResponse.getId());
+                        subTypeResponse.setName(subTypeResponse.getName());
+                        mSubTypeList.add(subTypeResponse.getName());
+                        mSubTypeList1.put(subTypeResponse.getName(), subTypeResponse.getId());
+                    }
+                    parsedData.addAll(mSubTypeList);
+                    ArrayAdapter<String> adapter =
+                            new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, parsedData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSubType.setAdapter(adapter);
+                    mSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            String subcategory = mSubTypeList1.get(parsedData.get(position));
+                            //int subID=vehicleID[position].;
+                            System.out.println("Sub cat is::" + subcategory);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 } else {
                     Log.e("Title Fragment", "No Response found");
                 }
