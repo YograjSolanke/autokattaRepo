@@ -4,6 +4,7 @@ import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
+import autokatta.com.response.MyActiveAuctionResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
@@ -101,4 +102,8 @@ public interface ServiceApi {
     //get My Uploaded vehicles
     @POST("getUploadedvehicles.php")
     Call<MyUploadedVehiclesResponse> _autokattaGetMyUploadedVehicles(@Query("mycontact") String myContact);
+
+    //get My Uploaded vehicles
+    @POST("getAuctionEvents.php")
+    Call<MyActiveAuctionResponse> _autokattaGetMyActiveAuction(@Query("contact") String myContact, @Query("status") String status);
 }
