@@ -542,8 +542,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             case (R.id.editdob):
 
-                dateOfBirth.setHint("Please Touch Calender On Right");
+                int action1 = motionEvent.getAction();
+                if (action1 == MotionEvent.ACTION_DOWN) {
+                    DialogFragment newFragment = new SelectDateFragment();
+                    newFragment.show(getFragmentManager(), "DatePicker");
 
+                }
+                break;
 
         }
 
