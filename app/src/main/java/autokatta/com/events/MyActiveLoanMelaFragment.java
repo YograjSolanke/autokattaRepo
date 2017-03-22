@@ -6,13 +6,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
+
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.MyActiveLoanMelaResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -27,6 +34,7 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
+    List<MyActiveLoanMelaResponse.Success> activeLoanMelaResponseList = new ArrayList<>();
 
     public MyActiveLoanMelaFragment() {
         //empty constructor
@@ -57,8 +65,7 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyActiveAuction(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"),
-                        "ACTIVE");
+                apiCall.MyActiveLoanMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
             }
         });
         return mActiveLoan;
@@ -71,12 +78,52 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
 
+            if (response.isSuccessful()) {
+
+                MyActiveLoanMelaResponse myActiveLoanMelaResponse = (MyActiveLoanMelaResponse) response.body();
+                if (!myActiveLoanMelaResponse.getSuccess().isEmpty()) {
+
+                    for (MyActiveLoanMelaResponse.Success loanSuccess : myActiveLoanMelaResponse.getSuccess()) {
+
+                        loanSuccess.setId(loanSuccess.getId());
+                        loanSuccess.setName(loanSuccess.getName());
+                        loanSuccess.setLocation(loanSuccess.getLocation());
+                        loanSuccess.setAddress(loanSuccess.getAddress());
+                        loanSuccess.setStartDate(loanSuccess.getStartDate());
+                        loanSuccess.setStartTime(loanSuccess.getStartTime());
+                        loanSuccess.setEndDate(loanSuccess.getEndDate());
+                        loanSuccess.setEndTime(loanSuccess.getEndTime());
+                        loanSuccess.setImage(loanSuccess.getImage());
+                        loanSuccess.setDetails(loanSuccess.getDetails());
+                        loanSuccess.setContact(loanSuccess.getContact());
+
+                        activeLoanMelaResponseList.add(loanSuccess);
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    Log.i("size", String.valueOf(activeLoanMelaResponseList.size()));
+                } else
+                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+
+            } else
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
+
+        } else
+            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Login Activity");
+        }
     }
 
     @Override
