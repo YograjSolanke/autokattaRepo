@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
                 break;
 
-
             case R.id.forget_password:
                 startActivity(new Intent(LoginActivity.this, Forget_Password.class));
                 break;

@@ -50,6 +50,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     View mTitle;
     ScrollView scrollView1;
     RadioButton radioButton1, radioButton2, storeradioyes, storeradiono, financeyes, financeno, exchangeyes, exchangeno;
+    RadioButton mTouristPassing, mPrivatePassing;
     EditText title;
     TextView mCategory;
     Button mSubmit;
@@ -60,9 +61,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     String stringgroupids = "", stringstoreids = "", stringstorename = "", stringgroupname = "";
     String financests = null, exchangests = null;
     Spinner mSubType;
+    Spinner mBrandSpinner, mModelSpinner, mVersionSpinner;
     List<String> mSubTypeList = new ArrayList<>();
     List<String> parsedData = new ArrayList<>();
     HashMap<String, String> mSubTypeList1 = new HashMap<>();
+    String category;
 
     @Nullable
     @Override
@@ -81,10 +84,25 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         exchangeyes = (RadioButton) mTitle.findViewById(R.id.exchangeYes);
         exchangeno = (RadioButton) mTitle.findViewById(R.id.exchangeNo);
 
-        /*
-        Spinners...
+         /*
+        mSub type...
          */
         mSubType = (Spinner) mTitle.findViewById(R.id.subtypespinner);
+
+        /*
+        Sub Type...
+         */
+        mTouristPassing = (RadioButton) mTitle.findViewById(R.id.tourist_passing);
+        mPrivatePassing = (RadioButton) mTitle.findViewById(R.id.private_passing);
+
+        /*
+        Brand Fragment...
+         */
+        mBrandSpinner = (Spinner) mTitle.findViewById(R.id.brandspinner);
+        mModelSpinner = (Spinner) mTitle.findViewById(R.id.modelspinner);
+        mVersionSpinner = (Spinner) mTitle.findViewById(R.id.versionspinner);
+
+        category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("category", null);
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
         mSubmit.setOnClickListener(this);
@@ -153,13 +171,27 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         financests = "No";
                     }
 
-
                     if (exchangeyes.isChecked()) {
                         exchangests = "Yes";
                     } else if (exchangeno.isChecked()) {
 
                         exchangests = "No";
                     }
+
+                    String permit = "";
+                    if (category.equalsIgnoreCase("Car")) {
+
+                        if (mTouristPassing.isChecked())
+                            permit = "Tourist Passing";
+                        if (mPrivatePassing.isChecked())
+                            permit = "Private Passing";
+                    }
+
+                    /*
+                    Brand Fragment...
+                     */
+                    if(category.equalsIgnoreCase("construction Equipment"))
+                        mVersionSpinner.setVisibility(View.GONE);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -343,6 +375,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     storetitlearray = list1.toArray(new String[list1.size()]);
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
                     Log.e("GetVehicleTypes", "->");
+                    mSubTypeList.add("Select Vehicle Types");
                     GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
                         subTypeResponse.setId(subTypeResponse.getId());
@@ -358,9 +391,10 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            String subcategory = mSubTypeList1.get(parsedData.get(position));
-                            //int subID=vehicleID[position].;
-                            System.out.println("Sub cat is::" + subcategory);
+                            if (position!=0){
+                                String subcategory = mSubTypeList1.get(parsedData.get(position));
+                                System.out.println("Sub cat is::" + subcategory);
+                            }
                         }
 
                         @Override
