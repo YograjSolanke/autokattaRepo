@@ -6,13 +6,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
+
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.MyActiveAuctionResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -27,6 +34,8 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
+    List<MyActiveAuctionResponse.Success.Auction> myActiveAuctionResponseList = new ArrayList<>();
+    List<MyActiveAuctionResponse.Success.Vehicle> myVehicleResponseList;
 
     public MyActiveAuctionFragment() {
         //empty fragment
@@ -68,11 +77,69 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
     @Override
     public void notifySuccess(Response<?> response) {
 
+        if (response != null) {
+
+            if (response.isSuccessful()) {
+
+                MyActiveAuctionResponse myActiveAuctionResponse = (MyActiveAuctionResponse) response.body();
+                if (!myActiveAuctionResponse.getSuccess().getAuction().isEmpty()) {
+
+                    for (MyActiveAuctionResponse.Success.Auction auctionSuccess : myActiveAuctionResponse.getSuccess().getAuction()) {
+
+                        myVehicleResponseList = new ArrayList<>();
+
+                        auctionSuccess.setAuctionId(auctionSuccess.getAuctionId());
+                        auctionSuccess.setActionTitle(auctionSuccess.getActionTitle());
+                        auctionSuccess.setNoOfVehicle(auctionSuccess.getNoOfVehicle());
+                        auctionSuccess.setEndDate(auctionSuccess.getEndDate());
+                        auctionSuccess.setEndTime(auctionSuccess.getEndTime());
+                        auctionSuccess.setStartDate(auctionSuccess.getStartDate());
+                        auctionSuccess.setStartTime(auctionSuccess.getStartTime());
+                        auctionSuccess.setStartDateTime(auctionSuccess.getStartDateTime());
+                        auctionSuccess.setEndDateTime(auctionSuccess.getEndDateTime());
+                        auctionSuccess.setSpecialClauses(auctionSuccess.getSpecialClauses());
+                        auctionSuccess.setAuctionType(auctionSuccess.getAuctionType());
+                        auctionSuccess.setGoingcount(auctionSuccess.getGoingcount());
+/*
+                       // loop to add vehicle depend on auction
+
+                        for (MyActiveAuctionResponse.Success.Vehicle vehicle : myActiveAuctionResponse.getSuccess().getVehicles()){
+                            if (auctionSuccess.getAuctionId().equals(vehicle.getAuctionId())){
+                                myVehicleResponseList.add(vehicle);
+                            }
+                        }
+
+                        auctionSuccess.setVehicles(myVehicleResponseList);
+                        myActiveAuctionResponseList.add(auctionSuccess);
+
+                        Log.i("size", String.valueOf(myActiveAuctionResponseList.size()));
+                        Log.i("Vsize", String.valueOf(myVehicleResponseList.size()));*/
+
+                    }
+
+                    Log.i("size", String.valueOf(myActiveAuctionResponseList.size()));
+                } else
+                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+
+            } else
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
+
+        } else
+            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Login Activity");
+        }
     }
 
     @Override
