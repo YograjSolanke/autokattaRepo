@@ -49,7 +49,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     TextView mCategory;
     Button mSubmit;
     List<String> list = new ArrayList<>();
+    List<String> list1 = new ArrayList<>();
     String[] stringTitles = new String[0];
+    String[] storetitlearray = new String[0];
+    String stringgroupids = "", stringstoreids = "", stringstorename = "", stringgroupname = "";
+    String financests = null, exchangests = null;
 
     @Nullable
     @Override
@@ -76,6 +80,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 try {
                     getGroup();
                     getStore();
+                    getSubCategoryTask();
 
                     radioButton1.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -103,6 +108,45 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             }
                         }
                     });
+
+                    //radio store
+                    radioButton2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            stringgroupids = "";
+                            stringgroupname = "";
+                        }
+                    });
+                    storeradiono.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            stringstoreids = "";
+                            stringstorename = "";
+                        }
+                    });
+
+                    storeradioyes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertBoxToSelectStore(storetitlearray);
+                        }
+                    });
+
+                    if (financeyes.isChecked()) {
+                        financests = "Yes";
+                    } else if (financeno.isChecked()) {
+
+                        financests = "No";
+                    }
+
+
+                    if (exchangeyes.isChecked()) {
+                        exchangests = "Yes";
+                    } else if (exchangeno.isChecked()) {
+
+                        exchangests = "No";
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -141,11 +185,126 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     }
 
     /*
+    Sub Category...
+     */
+    private void getSubCategoryTask() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getVehicleSubtype(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("category_id", null));
+    }
+
+    /*
     Alert Dialog
      */
-    private void alertBoxToSelectExcelSheet(String[] stringTitles) {
+    private void alertBoxToSelectExcelSheet(final String[] stringTitles) {
+        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        mSelectedItems.clear();
+        stringgroupids = "";
+        stringgroupname = "";
 
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+
+        // set the dialog title
+        builder.setTitle("Select Groups From Following")
+                .setCancelable(true)
+                .setMultiChoiceItems(stringTitles, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(stringTitles[which]);
+                        } else if (mSelectedItems.contains(stringTitles[which])) {
+                            mSelectedItems.remove(stringTitles[which]);
+                        }
+                    }
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            for (int j = 0; j < stringTitles.length; j++) {
+                                if (mSelectedItems.get(i).equals(stringTitles[j])) {
+                                    if (stringgroupids.equals("")) {
+                                        stringgroupids = list.get(j);
+                                        stringgroupname = stringTitles[j];
+                                    } else {
+                                        stringgroupids = stringgroupids + "," + list.get(j);
+                                        stringgroupname = stringgroupname + "," + stringTitles[j];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        radioButton1.setChecked(false);
+                        radioButton2.setChecked(true);
+                    }
+
+                })
+                .show();
     }
+
+    /*
+    Store
+     */
+
+    private void alertBoxToSelectStore(final String[] choices) {
+        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        mSelectedItems.clear();
+        stringstoreids = "";
+        stringstorename = "";
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        // set the dialog title
+        builder.setTitle("Select Stores From Following")
+                .setCancelable(true)
+                .setMultiChoiceItems(choices, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(choices[which]);
+                        } else if (mSelectedItems.contains(choices[which])) {
+                            mSelectedItems.remove(choices[which]);
+                        }
+                    }
+
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            for (int j = 0; j < storetitlearray.length; j++) {
+                                if (mSelectedItems.get(i).equals(storetitlearray[j])) {
+                                    if (stringstoreids.equals("")) {
+                                        stringstoreids = list1.get(i);
+                                        stringstorename = storetitlearray[j];
+                                    } else {
+                                        stringstoreids = stringstoreids + "," + list1.get(i);
+                                        stringstorename = stringstorename + "," + storetitlearray[j];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // removes the AlertDialog in the screen
+                        storeradioyes.setChecked(false);
+                        storeradiono.setChecked(true);
+                        stringstoreids = "";
+                        stringstorename = "";
+                    }
+
+                })
+                .show();
+    }
+
 
     /*
     Response from Retrofit
@@ -162,8 +321,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     }
                     stringTitles = list.toArray(new String[list.size()]);
                 } else if (response.body() instanceof MyStoreResponse) {
-                    MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
                     Log.e("MyStoreResponse", "->");
+                    MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
+                    for (MyStoreResponse.Success success : myStoreResponse.getSuccess()) {
+                        list1.add(success.getName());
+                    }
+                    storetitlearray = list1.toArray(new String[list1.size()]);
+                    Log.i("MyStoreResponse", "->" + storetitlearray);
                 } else {
                     Log.e("Title Fragment", "No Response found");
                 }

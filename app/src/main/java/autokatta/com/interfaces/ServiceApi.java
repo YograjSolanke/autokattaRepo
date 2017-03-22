@@ -2,6 +2,7 @@ package autokatta.com.interfaces;
 
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
+import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
@@ -116,5 +117,9 @@ public interface ServiceApi {
     //Create Group
     @POST("createGroup.php")
     Call<String> _autokattaCreateGroup(@Query("title") String title,@Query("image") String image,@Query("admin_contact") String contact);
+
+    //get Vehicle Sub Types...
+    @GET("getVehicleSubType.php")
+    Call<GetVehicleSubTypeResponse> _autokattaGetVehicleSubType(@Query("vehicle_id") String vehicleId);
 
 }

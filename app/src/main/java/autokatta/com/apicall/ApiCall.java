@@ -15,6 +15,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
+import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
@@ -831,6 +832,39 @@ public class ApiCall {
         }
     }
 
+    /*
+    Get Vehicle Type Response...
+     */
+
+    public void getVehicleSubtype(String vehicleId){
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetVehicleSubTypeResponse> mSubTypeResponseCall = serviceApi._autokattaGetVehicleSubType(vehicleId);
+                mSubTypeResponseCall.enqueue(new Callback<GetVehicleSubTypeResponse>() {
+                    @Override
+                    public void onResponse(Call<GetVehicleSubTypeResponse> call, Response<GetVehicleSubTypeResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetVehicleSubTypeResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /***
      * Retrofit Logs
      ***/
