@@ -18,6 +18,7 @@ import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
+import autokatta.com.response.MySavedAuctionResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
@@ -761,6 +762,43 @@ public class ApiCall {
             e.printStackTrace();
         }
     }
+
+
+      /*
+        My Saved Auctions
+     */
+
+    public void getMySavedAuctions(String myContact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MySavedAuctionResponse> myUploadedVehiclesResponseCall = serviceApi._autokattaMySavedAuctions(myContact);
+                myUploadedVehiclesResponseCall.enqueue(new Callback<MySavedAuctionResponse>() {
+                    @Override
+                    public void onResponse(Call<MySavedAuctionResponse> call, Response<MySavedAuctionResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MySavedAuctionResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /***
      * Retrofit Logs
      ***/
