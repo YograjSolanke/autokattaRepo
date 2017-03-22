@@ -552,7 +552,7 @@ public class ApiCall {
         Registration after getting OTP
      */
 
-    public void registrationAfterOtp( String username,String contact, String email, String dob, String gender, String pincode, String city, String profession, String password, String sub_profession, String industry) {
+    public void registrationAfterOtp(String username, String contact, String email, String dob, String gender, String pincode, String city, String profession, String password, String sub_profession, String industry) {
         try {
             //JSON to Gson conversion
             Gson gson = new GsonBuilder()
@@ -566,7 +566,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration( username,contact, email, dob, gender, pincode, city, profession, password, sub_profession, industry);
+                Call<String> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration(username, contact, email, dob, gender, pincode, city, profession, password, sub_profession, industry);
                 afterOtpRegistrationResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -798,6 +798,38 @@ public class ApiCall {
         }
     }
 
+    /*
+    Create Group...
+     */
+    public void createGroup(String title, String image, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mCreateGroup = serviceApi._autokattaCreateGroup(title, image, contact);
+                mCreateGroup.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs

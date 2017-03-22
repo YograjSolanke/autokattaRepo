@@ -35,9 +35,11 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class VehicleList extends Fragment  implements RequestNotifier {
+
     View mVehicleList;
     ListView mListView;
     List<GetVehicleListResponse.Success> mGetVehicle;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,8 +52,6 @@ public class VehicleList extends Fragment  implements RequestNotifier {
                 String s = mGetVehicle.get(position).getName();
                 if (s!=null){
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("category", s).apply();
-                    Bundle b = new Bundle();
-                    b.putInt("call", 1);
                     FragmentManager manager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = manager.beginTransaction();
                     fragmentTransaction.replace(R.id.vehicle_upload_container, new Title()).addToBackStack("vehicle_list").commit();

@@ -1,5 +1,8 @@
 package autokatta.com.upload_vehicle;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,8 +21,19 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.Modules;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.ModelGroups;
+import autokatta.com.response.MyStoreResponse;
+import autokatta.com.response.ProfileGroupResponse;
+import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -27,13 +41,15 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-001 on 19/3/17.
  */
 
-public class Title extends Fragment implements View.OnClickListener {
+public class Title extends Fragment implements View.OnClickListener, RequestNotifier {
     View mTitle;
     ScrollView scrollView1;
     RadioButton radioButton1, radioButton2, storeradioyes, storeradiono, financeyes, financeno, exchangeyes, exchangeno;
     EditText title;
     TextView mCategory;
     Button mSubmit;
+    List<String> list = new ArrayList<>();
+    String[] stringTitles = new String[0];
 
     @Nullable
     @Override
@@ -57,9 +73,36 @@ public class Title extends Fragment implements View.OnClickListener {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 try {
+                    getGroup();
+                    getStore();
 
+                    radioButton1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (stringTitles.length == 0) {
+                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                                alertDialog.setTitle("No Group Found");
+                                alertDialog.setMessage("Do you want to create Group...");
+                                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FragmentManager manager = getFragmentManager();
+                                        FragmentTransaction mFragmentTransaction = manager.beginTransaction();
+                                        mFragmentTransaction.replace(R.id.vehicle_upload_container, new Upload_Group_Create_Fragment()).commit();
+                                    }
+                                });
+                                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        radioButton2.setChecked(true);
+                                    }
+                                });
+                                alertDialog.show();
+                            } else {
+                                alertBoxToSelectExcelSheet(stringTitles);
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -71,12 +114,74 @@ public class Title extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.title_next:
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction mTransaction = manager.beginTransaction();
                 mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();
                 break;
         }
+    }
+
+    /*
+    Get Group Data...
+     */
+    private void getGroup() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.Groups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+    }
+
+    /*
+    Get store Data...
+     */
+
+    private void getStore() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.MyStoreList(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+    }
+
+    /*
+    Alert Dialog
+     */
+    private void alertBoxToSelectExcelSheet(String[] stringTitles) {
+
+    }
+
+    /*
+    Response from Retrofit
+     */
+    @Override
+    public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                if (response.body() instanceof ProfileGroupResponse) {
+                    Log.e("ProfileGroupResponse", "->");
+                    ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
+                    for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
+                        list.add(success.getTitle());
+                    }
+                    stringTitles = list.toArray(new String[list.size()]);
+                } else if (response.body() instanceof MyStoreResponse) {
+                    MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
+                    Log.e("MyStoreResponse", "->");
+                } else {
+                    Log.e("Title Fragment", "No Response found");
+                }
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 }

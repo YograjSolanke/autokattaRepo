@@ -505,7 +505,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/title_next"
+            android:id="@+id/upload_vehicle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/text_about"

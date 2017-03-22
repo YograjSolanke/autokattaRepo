@@ -113,4 +113,8 @@ public interface ServiceApi {
     @POST("getMySavedAuction.php")
     Call<MySavedAuctionResponse> _autokattaMySavedAuctions(@Query("contact") String myContact);
 
+    //Create Group
+    @POST("createGroup.php")
+    Call<String> _autokattaCreateGroup(@Query("title") String title,@Query("image") String image,@Query("admin_contact") String contact);
+
 }
