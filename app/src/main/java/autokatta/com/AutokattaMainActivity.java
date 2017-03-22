@@ -149,6 +149,8 @@ public class AutokattaMainActivity extends AppCompatActivity {
 
                         } else if (menuItem.getItemId() == R.id.active_event) {
 
+                        } else if (menuItem.getItemId() == R.id.upcoming_event) {
+
                         } else if (menuItem.getItemId() == R.id.saved_event) {
 
                         } else if (menuItem.getItemId() == R.id.ended_event) {

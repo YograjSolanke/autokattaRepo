@@ -21,8 +21,9 @@
     <string name="auction">Auction</string>
     <string name="create_event">Create Event</string>
     <string name="my_active_event">My Active Event</string>
+    <string name="my_upcoming_event">My Upcoming Event</string>
     <string name="my_saved_event">My Saved Event</string>
-    <string name="ended_event">Ended event</string>
+    <string name="ended_event">My Ended event</string>
     <string name="black_listed_members">My Blacklisted Members</string>
     <string name="other">Other</string>
     <string name="broadcast_groups">Broadcast Groups</string>

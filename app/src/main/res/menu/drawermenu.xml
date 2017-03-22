@@ -81,6 +81,11 @@
                 android:title="@string/my_active_event" />
 
             <item
+                android:id="@+id/upcoming_event"
+                android:icon="@mipmap/ic_launcher"
+                android:title="@string/my_upcoming_event" />
+
+            <item
                 android:id="@+id/saved_event"
                 android:icon="@mipmap/ic_launcher"
                 android:title="@string/my_saved_event" />
