@@ -1,5 +1,6 @@
 package autokatta.com.interfaces;
 
+import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
@@ -130,5 +131,9 @@ public interface ServiceApi {
     //get Vehicle Sub Types...
     @GET("getVehicleSubType.php")
     Call<GetVehicleSubTypeResponse> _autokattaGetVehicleSubType(@Query("vehicle_id") String vehicleId);
+
+    //get Vehicle Sub Types...
+    @GET("getVehicleSubType.php")
+    Call<BlacklistMemberResponse> _autokattaBlacklistMembers(@Query("contact") String contact);
 
 }

@@ -7,10 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.BlacklistMemberResponse;
 import retrofit2.Response;
 
 public class BlackListedMemberActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
@@ -19,7 +25,7 @@ public class BlackListedMemberActivity extends AppCompatActivity implements Requ
     RecyclerView recyclerView;
     ApiCall apiCall;
     SharedPreferences sharedPreferences;
-
+    List<BlacklistMemberResponse.Success> blacklistMemberList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +57,7 @@ public class BlackListedMemberActivity extends AppCompatActivity implements Requ
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(true);
-                apiCall.getMySavedAuctions(myContact);
+                apiCall.getBlackListMembers(myContact);
             }
         });
 
@@ -65,6 +71,37 @@ public class BlackListedMemberActivity extends AppCompatActivity implements Requ
 
     @Override
     public void notifySuccess(Response<?> response) {
+
+        if (response != null) {
+
+            if (response.isSuccessful()) {
+
+                BlacklistMemberResponse blacklistMemberResponse = (BlacklistMemberResponse) response.body();
+                if (!blacklistMemberResponse.getSuccess().isEmpty()) {
+                    for (BlacklistMemberResponse.Success success : blacklistMemberResponse.getSuccess()) {
+
+                        success.setId(success.getId());
+                        success.setBlacklistContact(success.getBlacklistContact());
+                        success.setUsername(success.getUsername());
+                        success.setUserimage(success.getUserimage());
+
+                        blacklistMemberList.add(success);
+
+
+                    }
+
+                    Log.i("Ssize", String.valueOf(blacklistMemberList.size()));
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+
+            } else {
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            }
+
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
 
     }
 
