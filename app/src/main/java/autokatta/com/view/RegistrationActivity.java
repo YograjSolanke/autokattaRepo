@@ -1,16 +1,22 @@
 package autokatta.com.view;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -20,6 +26,7 @@ import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import autokatta.com.R;
@@ -33,7 +40,7 @@ import autokatta.com.response.IndustryResponse;
 import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener,
-        AdapterView.OnItemSelectedListener, android.location.LocationListener, RequestNotifier {
+        AdapterView.OnItemSelectedListener, android.location.LocationListener, RequestNotifier, View.OnTouchListener {
 
     EditText personName, mobileNo, email, dateOfBirth, pincode, otherIndustry, otherCategory, password, confirmPassword;
     Spinner moduleSpinner,usertypeSpinner,industrySpinner;
@@ -84,10 +91,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         btnClear=(Button)findViewById(R.id.btnclear);
         btnClear.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        dateOfBirth.setInputType(InputType.TYPE_NULL);
 
         usertypeSpinner.setOnItemSelectedListener(this);
         industrySpinner.setOnItemSelectedListener(this);
         moduleSpinner.setOnItemSelectedListener(this);
+        dob_calender.setOnTouchListener(this);
+        dateOfBirth.setOnTouchListener(this);
 
 
         address.setAdapter(new GooglePlacesAdapter(RegistrationActivity.this, R.layout.simple));
@@ -126,14 +136,17 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                 apiCall.registrationContactValidation(contactstr);
 
-                resultList=GooglePlacesAdapter.getResultList();
 
-                for (int i = 0; i < resultList.size(); i++) {
-                    if (addressstr.equalsIgnoreCase(resultList.get(i))) {
-                        flag = true;
-                        break;
-                    } else {
-                        flag = false;
+                if (!addressstr.isEmpty()) {
+
+                    resultList = GooglePlacesAdapter.getResultList();
+                    for (int i = 0; i < resultList.size(); i++) {
+                        if (addressstr.equalsIgnoreCase(resultList.get(i))) {
+                            flag = true;
+                            break;
+                        } else {
+                            flag = false;
+                        }
                     }
                 }
 
@@ -190,6 +203,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     dateOfBirth.setError("Minimum 8 Year Age Required");
                     dateOfBirth.requestFocus();
 
+                } else if (addressstr.isEmpty()) {
+                    address.setError("Enter Address");
+
                 } else if (!flag) {
 
                     address.setError("Please Select Address From Dropdown Only");
@@ -212,7 +228,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     pincode.requestFocus();
                 } else if (profession.equalsIgnoreCase("Select User Type")) {
                     Toast.makeText(getApplicationContext(), "Please select User type", Toast.LENGTH_LONG).show();
-                } else if ((!profession.equalsIgnoreCase("Student") || !profession.equalsIgnoreCase("Select User Type")) && strIndustry.equalsIgnoreCase("Select Industry")) {
+                } else if ((!profession.equalsIgnoreCase("Student") && strIndustry.equalsIgnoreCase("Select Industry"))) {
                     Toast.makeText(RegistrationActivity.this, "Please select industry", Toast.LENGTH_LONG).show();
                 } else if (strIndustry.equalsIgnoreCase("Other") && otherIndustry.getText().toString().trim().equalsIgnoreCase("")) {
                     otherIndustry.setError("Enter Industry");
@@ -507,6 +523,63 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             mobileNo.requestFocus();
         }
 
+
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        switch (view.getId()) {
+            case (R.id.dob_calender):
+
+                int action = motionEvent.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    DialogFragment newFragment = new SelectDateFragment();
+                    newFragment.show(getFragmentManager(), "DatePicker");
+
+                }
+                break;
+
+            case (R.id.editdob):
+
+                dateOfBirth.setHint("Please Touch Calender On Right");
+
+
+        }
+
+
+        return false;
+    }
+
+
+    //date  setting class
+    public class SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar calendar = Calendar.getInstance();
+            int yy = calendar.get(Calendar.YEAR);
+            int mm = calendar.get(Calendar.MONTH);
+            int dd = calendar.get(Calendar.DAY_OF_MONTH);
+            return new DatePickerDialog(getActivity(), this, yy, mm, dd);
+        }
+
+        public void onDateSet(DatePicker view, int yy, int mm, int dd) {
+            populateSetDate(yy, mm + 1, dd);
+        }
+
+        public void populateSetDate(int year, int month, int day) {
+            String m = String.valueOf(month);
+            String d = String.valueOf(day);
+            if (d.length() < 2) {
+                d = "0" + d;
+            }
+            if (m.length() < 2) {
+                m = "0" + m;
+            }
+            //dobtext.setText(d+"-"+m+"-"+year);
+            dateOfBirth.setText(year + "-" + m + "-" + d);
+        }
 
     }
 }
