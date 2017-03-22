@@ -95,7 +95,7 @@
             android:name=".view.SearchStoreActivity"
             android:label="@string/title_activity_search_store"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.OTP"></activity>
+        <activity android:name=".view.OTP" />
         <activity
             android:name=".view.MySearchActivity"
             android:label="@string/title_activity_my_search"
@@ -103,11 +103,15 @@
         <activity
             android:name=".view.Forget_Password"
             android:label="@string/title_activity_forget__password"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".view.NewPassword"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".view.NewPassword" />
         <activity
             android:name=".view.MyUploadedVehiclesActivity"
             android:label="@string/title_activity_my_uploaded_vehicles"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.MyActiveEventsTabActivity"
+            android:label="@string/title_activity_my_active_events_tab"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

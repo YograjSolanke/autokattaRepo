@@ -94,4 +94,5 @@
     <string name="title_activity_search_store">SearchStore</string>
     <string name="title_activity_my_search">MySearchActivity</string>
     <string name="title_activity_my_uploaded_vehicles">MyUploadedVehiclesActivity</string>
+    <string name="title_activity_my_active_events_tab">MyActiveEventsTabActivity</string>
 </resources>
