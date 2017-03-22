@@ -10,7 +10,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -500,12 +499,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            Log.i("String------", "->" + str);
             getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
             CustomToast.customToast(getApplicationContext(), "Registration Successfully");
             Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
             startActivity(i);
-            RegistrationActivity.this.finish();
+           finish();
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }

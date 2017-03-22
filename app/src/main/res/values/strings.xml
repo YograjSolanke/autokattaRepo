@@ -75,6 +75,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="title_activity_forget__password">Forget Password</string>
+    <string name="title_activity_continue_registration">ContinueRegistration</string>
 
     <!--Error Results-->
     <string name="no_internet">No Internet Connection&#8230;</string>
@@ -96,4 +97,5 @@
     <string name="title_activity_my_uploaded_vehicles">MyUploadedVehiclesActivity</string>
     <string name="title_activity_my_active_events_tab">MyActiveEventsTabActivity</string>
     <string name="title_activity_my_saved_auction_event">MySavedAuctionEventActivity</string>
+    <string name="title_activity_black_listed_member">BlackListedMemberActivity</string>
 </resources>
