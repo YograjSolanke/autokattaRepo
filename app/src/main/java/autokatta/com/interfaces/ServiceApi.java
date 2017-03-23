@@ -137,8 +137,8 @@ public interface ServiceApi {
     @GET("getVehicleSubType.php")
     Call<GetVehicleSubTypeResponse> _autokattaGetVehicleSubType(@Query("vehicle_id") String vehicleId);
 
-    //get Vehicle Sub Types...
-    @GET("getVehicleSubType.php")
+    //get Blacklisted contacts
+    @GET("getMyBlacklistedContact.php")
     Call<BlacklistMemberResponse> _autokattaBlacklistMembers(@Query("contact") String contact);
 
     //Upload image
@@ -147,7 +147,6 @@ public interface ServiceApi {
     Call<ResponseBody> postImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
 
     //Update Registration
-    @Multipart
     @POST("updateRegistrationInfo.php")
     Call<String>_autokattaUpdateRegistration(@Query("Regid") String Regid,@Query("page") String page,@Query("profileImage") String profileImage,
                                            @Query("about") String about,
