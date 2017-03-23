@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.register:
-                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+                startActivity(new Intent(LoginActivity.this, ContinueRegistration.class));
                 break;
 
             case R.id.forget_password:

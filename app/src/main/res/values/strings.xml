@@ -101,4 +101,20 @@
     <string name="title_activity_my_upcoming_events_tab">MyUpcomingEventsTabActivity</string>
     <string name="title_activity_create_event">create_event</string>
     <string name="title_activity_my_broadcast_groups">MyBroadcastGroupsActivity</string>
+
+    <!--Vehicle details-->
+    <string name="vehicle_no">Vehicle Number</string>
+    <string name="vehicle_type">Vehicle Type</string>
+    <string name="sub_category">Sub Category</string>
+    <string name="model_no">Model Number</string>
+    <string name="brand">Brand</string>
+    <string name="version">Version</string>
+    <string name="purchase_date">Purchase Date</string>
+    <string name="tax_validity">Tax Validity</string>
+    <string name="fitness_validity">Fitness Validity</string>
+    <string name="permit_validity">Permit Validity</string>
+    <string name="insurance_date">Insurance Date</string>
+    <string name="puc">PUC</string>
+    <string name="last_service_date">Last Service Date</string>
+    <string name="next_service_date">Next Service Date</string>
 </resources>
