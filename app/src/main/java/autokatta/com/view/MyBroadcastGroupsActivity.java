@@ -1,10 +1,12 @@
 package autokatta.com.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -106,7 +108,56 @@ public class MyBroadcastGroupsActivity extends AppCompatActivity implements View
     }
 
     private void deleteGroups() {
-        CustomToast.customToast(this, "deletegroup");
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Delete");
+        alert.setMessage("Are you sure you want to delete this group?");
+        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                /*
+                finalgrpids = "";
+                incominggrpids.clear();
+
+                incominggrpids = adapter.checkboxselect();
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Checked grp id====" + incominggrpids);
+
+                for (int i = 0; i < incominggrpids.size(); i++) {
+                    if (!incominggrpids.get(i).equals("0")) {
+                        if (finalgrpids.equals(""))
+                            finalgrpids = incominggrpids.get(i);
+                        else
+                            finalgrpids = finalgrpids + "," + incominggrpids.get(i);
+
+                    }
+
+                }
+
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
+
+                try {
+                    deletegroup(finalgrpids);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                */
+                dialog.dismiss();
+
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+
+        });
+        alert.create();
+        alert.show();
+
     }
 
 
