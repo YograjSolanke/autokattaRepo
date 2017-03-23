@@ -21,32 +21,46 @@ public class MyActiveEventsTabActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_active_events_tab);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final ViewPager mViewPager = (ViewPager) findViewById(R.id.activity_myactive_event_viewpager);
+        final TabLayout mTabLayout = (TabLayout) findViewById(R.id.activity_myactive_event_tab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.activity_myactive_event_viewpager);
-        if (mViewPager != null) {
-            setUpPager(mViewPager);
-        }
-
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.activity_myactive_event_tab);
-        mTabLayout.setupWithViewPager(mViewPager);
-        //        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-        //        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        this.runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void run() {
+                try {
+                    setSupportActionBar(toolbar);
+
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    }
+
+
+                    if (mViewPager != null) {
+                        setUpPager(mViewPager);
+                    }
+
+
+                    mTabLayout.setupWithViewPager(mViewPager);
+                    //        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
+                    //        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
+
+
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
+
     }
 
     private void setUpPager(ViewPager viewPager) {

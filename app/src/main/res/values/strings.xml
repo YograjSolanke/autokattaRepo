@@ -98,4 +98,5 @@
     <string name="title_activity_my_active_events_tab">MyActiveEventsTabActivity</string>
     <string name="title_activity_my_saved_auction_event">MySavedAuctionEventActivity</string>
     <string name="title_activity_black_listed_member">BlackListedMemberActivity</string>
+    <string name="title_activity_my_upcoming_events_tab">MyUpcomingEventsTabActivity</string>
 </resources>
