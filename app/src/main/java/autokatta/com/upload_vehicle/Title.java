@@ -34,6 +34,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.Modules;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.MonthYearPicker;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.response.MyStoreResponse;
@@ -62,10 +63,22 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     String financests = null, exchangests = null;
     Spinner mSubType;
     Spinner mBrandSpinner, mModelSpinner, mVersionSpinner;
+    Spinner mPumpSpinner, mBreakSpinner, mStaringSpinner;
     List<String> mSubTypeList = new ArrayList<>();
     List<String> parsedData = new ArrayList<>();
     HashMap<String, String> mSubTypeList1 = new HashMap<>();
     String category;
+
+    /*
+    Year Fragment...
+     */
+    private MonthYearPicker myp;
+    EditText mMakeMonth, mMakeYear;
+    EditText mRegisterMonth, mRegisterYear;
+
+    public Title(){
+        //empty constructor...
+    }
 
     @Nullable
     @Override
@@ -102,6 +115,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mModelSpinner = (Spinner) mTitle.findViewById(R.id.modelspinner);
         mVersionSpinner = (Spinner) mTitle.findViewById(R.id.versionspinner);
 
+        /*
+        kms fragment
+         */
+        mPumpSpinner = (Spinner) mTitle.findViewById(R.id.pumpspinner);
+        mBreakSpinner = (Spinner) mTitle.findViewById(R.id.brakespinner);
+        mStaringSpinner = (Spinner) mTitle.findViewById(R.id.stearingspinner);
+
         category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("category", null);
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
@@ -113,6 +133,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getGroup();
                     getStore();
                     getSubCategoryTask();
+                    getModel();
+                    getVersion();
+                    getBrand();
+                    getBreaks();
+                    getPumps();
 
                     radioButton1.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -202,17 +227,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         return mTitle;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_next:
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction mTransaction = manager.beginTransaction();
-                mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();
-                break;
-        }
-    }
-
     /*
     Get Group Data...
      */
@@ -237,6 +251,42 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getVehicleSubtype(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("category_id", null));
     }
+
+    /*
+    Get Brand
+     */
+    private void getBrand() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+    }
+
+    /*
+    Get Model...
+     */
+    private void getModel(){
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+    }
+
+    /*
+    Get Version...
+     */
+    private void getVersion(){
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+    }
+
+    /*
+    Get Breaks...
+     */
+    private void getBreaks(){
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+    }
+
+    /*
+    Get Staring...
+     */
+    private void getPumps(){
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+    }
+
 
     /*
     Alert Dialog
@@ -421,5 +471,19 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     @Override
     public void notifyString(String str) {
 
+    }
+
+    /*
+    On Click Listener...
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.title_next:
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction mTransaction = manager.beginTransaction();
+                mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();
+                break;
+        }
     }
 }

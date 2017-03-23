@@ -142,5 +142,89 @@ public interface ServiceApi {
                                              @Query("about") String about,
                                              @Query("website") String website);
 
+    /*
+    Add Brand Model Version...
+     */
+    //Add Brand
+    @POST("addYourOptions.php")
+    Call<String> _autokattaAddBrand(@Query("keyword") String keyword, @Query("title") String title,
+                                                @Query("category_id") String categoryId, @Query("subcat_id") String subCatID);
+    //Add Model
+    @POST("addYourOptions.php")
+    Call<String> _autokattaAddModel(@Query("keyword") String keyword, @Query("title") String title,
+                                                @Query("category_id") String categoryId, @Query("subcat_id") String subCatID,
+                                    @Query("brand_id") String brandId);
+
+    //Add Version
+    @POST("addYourOptions.php")
+    Call<String> _autokattaAddVersion(@Query("keyword") String keyword, @Query("title") String title,
+                                    @Query("category_id") String categoryId, @Query("subcat_id") String subCatID,
+                                    @Query("brand_id") String brandId, @Query("model_id") String modleId);
+
+    //Add Break..
+    @POST("post_other_brake.php")
+    Call<String> _autokattaAddBreaks(@Query("otherBrake") String otherBreaks);
+
+    //Add Pump...
+    @POST("post_other_pump.php")
+    Call<String> _autokattaAddPump(@Query("otherPump") String otherPump);
+
+    //addBodyAndSeatManufacturers
+    @POST("addBodyAndSeatManufacturers.php")
+    Call<String> _autokattaAddBodyAndSeatManufacturers(@Query("bodyManufacturerName") String bodyManufactureName,
+                            @Query("seatManufacturerName") String seatManufacture);
+
+    // Add Body Type
+    @POST("addYourOptions.php")
+    Call<String> _autokattaAddBodyType(@Query("keyword") String keyword, @Query("title") String title);
+
+    /*
+    Get Data...
+     */
+
+    //Get Brand
+    @GET("getVehicleBrand.php")
+    Call<String> _autokattaGetBrand(@Query("category") String category, @Query("subcategory") String subCategory);
+
+    //Get Model
+    @GET("getVehicleModel.php")
+    Call<String> _autokattaGetModel(@Query("category") String category, @Query("subcategory") String subCategory,
+                                    @Query("brand_id") String brandId);
+
+    //Get Version
+    @GET("getVehicleVersion.php")
+    Call<String> _autokattaGetVersion(@Query("category") String category, @Query("subcategory") String subCategory,
+                                      @Query("brand_id") String brandId, @Query("model_id") String modelId);
+
+    //Get Breaks
+    @GET("getBrakes.php")
+    Call<String> _autokattaGetBreaks();
+
+    //Get getPumps
+    @GET("getPump.php")
+    Call<String> _autokattaGetPumps();
+
+    /*
+    GetRTOCity
+     */
+    @GET("getVehicleRTOCity.php")
+    Call<String> _autokattaGetVehicleRTOCity();
+
+    //Get Body and Seat Manufacture
+    @GET("getBodyAndSeatManufacturers.php")
+    Call<String> _autokattaGetBodyAndSeatManufacture();
+
+    //Get Body Type
+    @GET("getBodytype.php")
+    Call<String> _autokattaGetBodyType();
+
+    //Get Vehicle Color
+    @GET("getVehicleColor.php")
+    Call<String> _autokattaGetColor();
+
+    //Get Vehicle Implements...
+    @GET("getVehicleImplements.php")
+    Call<String> _autokattaGetVehicleImplements();
+
 
 }

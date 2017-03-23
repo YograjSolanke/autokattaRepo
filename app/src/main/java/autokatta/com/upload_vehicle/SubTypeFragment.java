@@ -15,7 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -27,7 +30,11 @@ import com.nguyenhoanglam.imagepicker.model.Image;
 import java.util.ArrayList;
 
 import autokatta.com.R;
+import autokatta.com.adapter.GooglePlacesAdapter;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.MonthYearPicker;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -36,7 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-001 on 21/3/17.
  */
 
-public class SubTypeFragment extends Fragment implements View.OnClickListener {
+public class SubTypeFragment extends Fragment implements View.OnClickListener, RequestNotifier {
 
     View mSubtype;
     private MonthYearPicker myp;
@@ -47,13 +54,57 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener {
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
 
+    /*
+    Location...
+     */
+    AutoCompleteTextView mLocation;
+    AutoCompleteTextView mRTOcity;
+    String subCategory;
+    CheckBox checkBox1;
+    EditText registernumber;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSubtype = inflater.inflate(R.layout.fragment_subtype_fragment, container, false);
         mUploadVehicle = (Button) mSubtype.findViewById(R.id.upload_vehicle);
+        checkBox1 = (CheckBox) mSubtype.findViewById(R.id.checkBox1);
+        mRTOcity = (AutoCompleteTextView) mSubtype.findViewById(R.id.rtoautocompletetext);
+        mLocation = (AutoCompleteTextView) mSubtype.findViewById(R.id.autolocation);
+        registernumber = (EditText) mSubtype.findViewById(R.id.registernumber);
         mUploadVehicle.setOnClickListener(this);
 
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getRTOcity();
+                /*if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
+                        || subCategory.equals("Dozer") || subCategory.equals("Concrete Mixers") || subCategory.equals("Road Rollers")
+                        || subCategory.equals("Milling Equipment") || subCategory.equals("Trenches")) {
+                    mRTOcity.setVisibility(View.GONE);
+                    registernumber.setVisibility(View.GONE);
+                    checkBox1.setVisibility(View.GONE);
+                }*/
+
+                mLocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.addproductspinner_color));
+                checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                        if (checkBox1.isChecked()) {
+                            mRTOcity.setText("Unregistered");
+                            mRTOcity.setEnabled(false);
+                            registernumber.setText("");
+                            registernumber.setEnabled(false);
+                        } else {
+                            mRTOcity.setText("");
+                            mRTOcity.setEnabled(true);
+                            registernumber.setEnabled(true);
+                        }
+                    }
+                });
+            }
+        });
         /*mMakeMonth = (EditText) mSubtype.findViewById(R.id.make_month);
         mMakeYear = (EditText) mSubtype.findViewById(R.id.make_year);
         mRegisterMonth = (EditText) mSubtype.findViewById(R.id.register_month);
@@ -121,6 +172,13 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener {
         });*/
 
         return mSubtype;
+    }
+
+    /*
+            Get RTO City...
+     */
+    private void getRTOcity() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
     }
 
     @Override
@@ -234,6 +292,21 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener {
             System.out.println(selectedimg);
         }
         //textView.setText(sb.toString());
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
     /*private void makeMonth() {
         myp = new MonthYearPicker(getActivity());
