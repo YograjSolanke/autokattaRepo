@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+    <TableRow
+        android:id="@+id/tablerow1"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background">
+
+            <TextView
+                android:id="@+id/text_registration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Registration"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
+
+        </RelativeLayout>
+    </TableRow>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tablerow1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:paddingTop="20dp">
+
+
+            <RelativeLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+
+                <ImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/profile"
+
+                    />
+
+                <TextView
+                    android:id="@+id/upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/profile_pic"
+                    android:layout_below="@+id/profile_pic"
+                    android:text="Upload Photo"
+                    android:textColor="#848484"/>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/linearLayout1"
+                android:layout_below="@+id/linearLayout1"
+                android:layout_marginTop="10dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <EditText
+                        android:id="@+id/editabt"
+                        android:layout_width="fill_parent"
+                        android:layout_height="150dip"
+                        android:hint="About Us"
+                        android:maxLength="200"
+
+                        android:paddingLeft="10dip"
+
+
+                        android:textColor="#2C3343"
+                        android:textColorHint="#848484"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/linearLayout2"
+                android:layout_below="@+id/linearLayout2"
+                android:layout_marginTop="10dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/editwebsite"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dip"
+
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="Website"
+                        android:paddingLeft="10dip"
+                        android:singleLine="true"
+                        android:textColor="#2C3343"
+                        android:textColorHint="#848484"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/linearLayout3"
+                android:layout_below="@+id/linearLayout3"
+                android:layout_marginTop="10dp">
+
+
+                <Button
+                    android:id="@+id/btnadd"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:background="@color/background"
+                    android:text=" + Add Your Owned Vehicle Details"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp"
+                    />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/linearLayout4"
+                android:layout_below="@+id/linearLayout4"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btnSub"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/background"
+                        android:selectAllOnFocus="true"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/vehicle_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout5"
+                android:layout_marginTop="5dip"
+                android:padding="5dp"
+                android:visibility="gone">
+
+            </ListView>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

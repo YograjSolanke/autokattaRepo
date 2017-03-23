@@ -37,7 +37,6 @@ import java.util.regex.Pattern;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment.ContinueNextRegistration;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
@@ -407,12 +406,16 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
 
                 upload(picturePath);
 
-                b.putString("action", "ContinueRegisteration");
-                ContinueNextRegistration fr = new ContinueNextRegistration();
+               // b.putString("action", "ContinueRegisteration");
+               /* Intent i= new Intent(getApplication(), ContinueNextRegistration.class);
+                i.putExtra("action", "ContinueRegisteration");
+                startActivity(i);
+                finish();*/
+               /* ContinueNextRegistration fr = new ContinueNextRegistration();
                 fr.setArguments(b);
                 mFragmentManager = getApplicationContext().getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.container_all, fr).addToBackStack("continuenextreg").commit();
+                mFragmentTransaction.replace(R.id.container_all, fr).addToBackStack("continuenextreg").commit();*/
             }
 
         } else {
