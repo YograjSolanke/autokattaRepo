@@ -102,7 +102,7 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
                         activeLoanMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    Log.i("size", String.valueOf(activeLoanMelaResponseList.size()));
+                    Log.i("size loan list", String.valueOf(activeLoanMelaResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
 
@@ -122,7 +122,8 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Login Activity");
+            Log.i("Check Class-", "My Active Loan Mela Fragment");
+            error.printStackTrace();
         }
     }
 

@@ -29,7 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
-    View mMyactiveAuction;
+    View mupcomingAuction;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
@@ -44,10 +44,10 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mMyactiveAuction = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        mupcomingAuction = inflater.inflate(R.layout.fragment_simple_listview, container, false);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mMyactiveAuction.findViewById(R.id.swipeRefreshLayoutMain);
-        mRecyclerView = (RecyclerView) mMyactiveAuction.findViewById(R.id.recyclerMain);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mupcomingAuction.findViewById(R.id.swipeRefreshLayoutMain);
+        mRecyclerView = (RecyclerView) mupcomingAuction.findViewById(R.id.recyclerMain);
 
         apiCall = new ApiCall(getActivity(), this);
 
@@ -70,7 +70,7 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
                 apiCall.MyUpcomingAuction(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
             }
         });
-        return mMyactiveAuction;
+        return mupcomingAuction;
     }
 
     @Override
@@ -98,6 +98,7 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
                         successAuction.setGoingcount(successAuction.getGoingcount());
                         successAuction.setAuctionType(successAuction.getAuctionType());
 
+                        upcomingAuctionResponseList.add(successAuction);
 
                         /*
                              // loop to add vehicle depend on auction
@@ -115,7 +116,7 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
                         Log.i("Vsize", String.valueOf(upcomingVehicleResponseList.size()));*/
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    Log.i("size", String.valueOf(upcomingAuctionResponseList.size()));
+                    Log.i("size auction list up", String.valueOf(upcomingAuctionResponseList.size()));
 
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
@@ -137,7 +138,8 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Login Activity");
+            Log.i("Check Class-", "My Upcoming Auction fragment");
+            error.printStackTrace();
         }
     }
 

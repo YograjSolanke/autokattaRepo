@@ -102,7 +102,7 @@ public class MyActiveExchangeMelaFrament extends Fragment implements SwipeRefres
                         activeExchangeMelaList.add(ExchangeSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    Log.i("size", String.valueOf(activeExchangeMelaList.size()));
+                    Log.i("size exchange list", String.valueOf(activeExchangeMelaList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
 
@@ -122,7 +122,8 @@ public class MyActiveExchangeMelaFrament extends Fragment implements SwipeRefres
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Login Activity");
+            Log.i("Check Class-", "My Active Exchange Mela Fragment");
+            error.printStackTrace();
         }
     }
 

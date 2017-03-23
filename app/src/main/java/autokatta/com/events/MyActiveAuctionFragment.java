@@ -117,7 +117,7 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
 
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    Log.i("size", String.valueOf(myActiveAuctionResponseList.size()));
+                    Log.i("size auction list", String.valueOf(myActiveAuctionResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
 
@@ -138,7 +138,8 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Login Activity");
+            Log.i("Check Class-", "My Active Auction Fragment");
+            error.toString();
         }
     }
 
