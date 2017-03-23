@@ -132,6 +132,10 @@
         <activity
             android:name=".view.Create_Event"
             android:label="@string/title_activity_create_event"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.MyBroadcastGroupsActivity"
+            android:label="@string/title_activity_my_broadcast_groups"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
