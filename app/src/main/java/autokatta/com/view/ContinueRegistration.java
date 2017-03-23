@@ -53,6 +53,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.Part;
 
+//import autokatta.com.fragment.ContinueNextRegistration;
+
 public class ContinueRegistration extends AppCompatActivity implements RequestNotifier,View.OnClickListener,ImageUpload {
 
 
@@ -411,11 +413,8 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
                 i.putExtra("action", "ContinueRegisteration");
                 startActivity(i);
                 finish();*/
-               /* ContinueNextRegistration fr = new ContinueNextRegistration();
-                fr.setArguments(b);
-                mFragmentManager = getApplicationContext().getSupportFragmentManager();
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.container_all, fr).addToBackStack("continuenextreg").commit();*/
+
+
             }
 
         } else {
