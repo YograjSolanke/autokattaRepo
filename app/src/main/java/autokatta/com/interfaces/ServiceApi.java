@@ -12,6 +12,9 @@ import autokatta.com.response.MyActiveLoanMelaResponse;
 import autokatta.com.response.MySavedAuctionResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
+import autokatta.com.response.MyUpcomingAuctionResponse;
+import autokatta.com.response.MyUpcomingExchangeMelaResponse;
+import autokatta.com.response.MyUpcomingLoanMelaResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
@@ -76,6 +79,10 @@ public interface ServiceApi {
     Call<String> addOtherCategory(@Query("title") String contact);
 
 
+    // get Industries
+    @POST("getRegisteredIndustries.php")
+    Call<IndustryResponse> _getindustry();
+
     //add other Industry
     @POST("add_other_industry.php")
     Call<String> addOtherIndustry(@Query("newIndustry") String contact);
@@ -91,10 +98,6 @@ public interface ServiceApi {
                                                 @Query("dob") String dob, @Query("gender") String gender, @Query("pincode") String pincode,
                                                 @Query("city") String city, @Query("profession") String profession, @Query("password") String password,
                                                 @Query("sub_profession") String sub_profession, @Query("industry") String industry);
-
-    // get Industries
-    @POST("getRegisteredIndustries.php")
-    Call<IndustryResponse> _getindustry();
 
     //get My Search
     @POST("getMyVehicleSearch.php")
@@ -120,6 +123,18 @@ public interface ServiceApi {
     @POST("getAllMyExchangeMela.php")
     Call<MyActiveExchangeMelaResponse> _autokattaGetMyActiveExchangeMela(@Query("contact") String myContact);
 
+    //get My Upcoming Auction
+    @POST("getMyUpcomingAuction.php")
+    Call<MyUpcomingAuctionResponse> __autokattaGetMyUpcomingAuction(@Query("contact") String myContact);
+
+    //get My Upcoming Loan Mela
+    @POST("getUpcomingLoanMela.php")
+    Call<MyUpcomingLoanMelaResponse> __autokattaGetMyUpcomingLoanMela(@Query("contact") String myContact);
+
+    //get My Upcoming Loan Mela
+    @POST("getUpcomingExchangeMela.php")
+    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingExchangeMela(@Query("contact") String myContact);
+
     //get saved Auctions
     @POST("getMySavedAuction.php")
     Call<MySavedAuctionResponse> _autokattaMySavedAuctions(@Query("contact") String myContact);
@@ -138,9 +153,9 @@ public interface ServiceApi {
 
     //Update Registration
     @POST("updateRegistrationInfo.php")
-    Call<String>_autokattaUpdateRegistration(@Query("Regid") String Regid,@Query("page") String page,@Query("profileImage") String profileImage,
-                                             @Query("about") String about,
-                                             @Query("website") String website);
+    Call<String> _autokattaUpdateRegistration(@Query("Regid") String Regid, @Query("page") String page, @Query("profileImage") String profileImage,
+                                              @Query("about") String about,
+                                              @Query("website") String website);
 
     /*
     Add Brand Model Version...
@@ -148,18 +163,19 @@ public interface ServiceApi {
     //Add Brand
     @POST("addYourOptions.php")
     Call<String> _autokattaAddBrand(@Query("keyword") String keyword, @Query("title") String title,
-                                                @Query("category_id") String categoryId, @Query("subcat_id") String subCatID);
+                                    @Query("category_id") String categoryId, @Query("subcat_id") String subCatID);
+
     //Add Model
     @POST("addYourOptions.php")
     Call<String> _autokattaAddModel(@Query("keyword") String keyword, @Query("title") String title,
-                                                @Query("category_id") String categoryId, @Query("subcat_id") String subCatID,
+                                    @Query("category_id") String categoryId, @Query("subcat_id") String subCatID,
                                     @Query("brand_id") String brandId);
 
     //Add Version
     @POST("addYourOptions.php")
     Call<String> _autokattaAddVersion(@Query("keyword") String keyword, @Query("title") String title,
-                                    @Query("category_id") String categoryId, @Query("subcat_id") String subCatID,
-                                    @Query("brand_id") String brandId, @Query("model_id") String modleId);
+                                      @Query("category_id") String categoryId, @Query("subcat_id") String subCatID,
+                                      @Query("brand_id") String brandId, @Query("model_id") String modleId);
 
     //Add Break..
     @POST("post_other_brake.php")
@@ -172,7 +188,7 @@ public interface ServiceApi {
     //addBodyAndSeatManufacturers
     @POST("addBodyAndSeatManufacturers.php")
     Call<String> _autokattaAddBodyAndSeatManufacturers(@Query("bodyManufacturerName") String bodyManufactureName,
-                            @Query("seatManufacturerName") String seatManufacture);
+                                                       @Query("seatManufacturerName") String seatManufacture);
 
     // Add Body Type
     @POST("addYourOptions.php")

@@ -25,6 +25,9 @@ import autokatta.com.response.MyActiveLoanMelaResponse;
 import autokatta.com.response.MySavedAuctionResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
+import autokatta.com.response.MyUpcomingAuctionResponse;
+import autokatta.com.response.MyUpcomingExchangeMelaResponse;
+import autokatta.com.response.MyUpcomingLoanMelaResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
@@ -36,7 +39,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Query;
 
 /**
  * Created by ak-001 on 18/3/17.
@@ -836,6 +838,108 @@ public class ApiCall {
         }
     }
 
+    /*
+        My Upcoming Auction
+     */
+
+    public void MyUpcomingAuction(String myContact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyUpcomingAuctionResponse> myUpcomingAuctionResponseCall = serviceApi.__autokattaGetMyUpcomingAuction(myContact);
+                myUpcomingAuctionResponseCall.enqueue(new Callback<MyUpcomingAuctionResponse>() {
+                    @Override
+                    public void onResponse(Call<MyUpcomingAuctionResponse> call, Response<MyUpcomingAuctionResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyUpcomingAuctionResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+        My Upcoming Auction
+     */
+
+    public void MyUpcomingLoanMela(String myContact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyUpcomingLoanMelaResponse> myUpcomingLoanResponseCall = serviceApi.__autokattaGetMyUpcomingLoanMela(myContact);
+                myUpcomingLoanResponseCall.enqueue(new Callback<MyUpcomingLoanMelaResponse>() {
+                    @Override
+                    public void onResponse(Call<MyUpcomingLoanMelaResponse> call, Response<MyUpcomingLoanMelaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyUpcomingLoanMelaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+     /*
+        My Upcoming Auction
+     */
+
+    public void MyUpcomingExchangeMela(String myContact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyUpcomingExchangeMelaResponse> myUpcomingExchangeResponseCall = serviceApi.__autokattaGetMyUpcomingExchangeMela(myContact);
+                myUpcomingExchangeResponseCall.enqueue(new Callback<MyUpcomingExchangeMelaResponse>() {
+                    @Override
+                    public void onResponse(Call<MyUpcomingExchangeMelaResponse> call, Response<MyUpcomingExchangeMelaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyUpcomingExchangeMelaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
       /*
         My Saved Auctions
      */
@@ -975,7 +1079,7 @@ public class ApiCall {
     /*
  Update Registration/continue Registration
    */
-    public void updateRegistration(String Regid, String page, String profileImage,String about,String website) {
+    public void updateRegistration(String Regid, String page, String profileImage, String about, String website) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -983,10 +1087,10 @@ public class ApiCall {
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
-                Log.i("Regid---->","->"+Regid);
+                Log.i("Regid---->", "->" + Regid);
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateRegistration(Regid, page, profileImage,about,website);
+                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateRegistration(Regid, page, profileImage, about, website);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -1012,7 +1116,7 @@ public class ApiCall {
     /*
     Add Brand
      */
-    public void addBrand(String keyword, String title, String categoryId, String subCatID){
+    public void addBrand(String keyword, String title, String categoryId, String subCatID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1045,7 +1149,7 @@ public class ApiCall {
     /*
     Add Model
      */
-    public void addModel(String keyword, String title, String categoryId, String subCatID, String brandId){
+    public void addModel(String keyword, String title, String categoryId, String subCatID, String brandId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1074,11 +1178,12 @@ public class ApiCall {
             e.printStackTrace();
         }
     }
+
     /*
     Add Version
      */
     public void addVersion(String keyword, String title, String categoryId, String subCatID, String brandId,
-                           String modleId){
+                           String modleId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1107,10 +1212,11 @@ public class ApiCall {
             e.printStackTrace();
         }
     }
+
     /*
     Add Break
      */
-    public void addBreak(String otherBreaks){
+    public void addBreak(String otherBreaks) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1139,10 +1245,11 @@ public class ApiCall {
             e.printStackTrace();
         }
     }
+
     /*
     Add Pump
      */
-    public void addPump(String otherPump){
+    public void addPump(String otherPump) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1175,7 +1282,7 @@ public class ApiCall {
     /*
     addBodyAndSeatManufacturers
      */
-    public void addBodyAndSeatManufacturers(String bodyManufactureName, String seatManufacture){
+    public void addBodyAndSeatManufacturers(String bodyManufactureName, String seatManufacture) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1208,7 +1315,7 @@ public class ApiCall {
     /*
     Add Body Type
      */
-    public void addBodyType(String keyword, String title){
+    public void addBodyType(String keyword, String title) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1244,7 +1351,7 @@ public class ApiCall {
     /*
     Get Brand
      */
-    public void getBrand(String category, String subCategory){
+    public void getBrand(String category, String subCategory) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1277,7 +1384,7 @@ public class ApiCall {
     /*
     Get Model
      */
-    public void getModel(String category, String subCategory, String brandId){
+    public void getModel(String category, String subCategory, String brandId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1310,7 +1417,7 @@ public class ApiCall {
     /*
     Get Version
      */
-    public void getVersion(String category, String subCategory, String brandId, String modelId){
+    public void getVersion(String category, String subCategory, String brandId, String modelId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1339,10 +1446,11 @@ public class ApiCall {
             e.printStackTrace();
         }
     }
+
     /*
     Get Breaks
      */
-    public void getBreaks(){
+    public void getBreaks() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1371,10 +1479,11 @@ public class ApiCall {
             e.printStackTrace();
         }
     }
+
     /*
     Get Pump
      */
-    public void getPump(){
+    public void getPump() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1407,7 +1516,7 @@ public class ApiCall {
     /*
     Get Vehicle RTO City
      */
-    public void getVehicleRTOCity(){
+    public void getVehicleRTOCity() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1440,7 +1549,7 @@ public class ApiCall {
     /*
     Get Body & Seat Manufacture...
      */
-    public void getBodyAndSeatManufacture(){
+    public void getBodyAndSeatManufacture() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1473,7 +1582,7 @@ public class ApiCall {
     /*
     Get Body Type
      */
-    public void getBodyType(){
+    public void getBodyType() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1506,7 +1615,7 @@ public class ApiCall {
     /*
     Get Body Type
      */
-    public void getVehicleColor(){
+    public void getVehicleColor() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1539,7 +1648,7 @@ public class ApiCall {
     /*
     Get Body Type
      */
-    public void getVehicleImplements(){
+    public void getVehicleImplements() {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
