@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/createAuctionFrame"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tablerowfloat">
+
+        <LinearLayout
+            android:id="@+id/relative"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relativename"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/editauctionname"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#80bebebe"
+                android:textColorHint="#848484"
+                android:textColor="#2C3343"
+                android:hint="Auction Title"
+                android:layout_marginLeft="30dip"
+                android:layout_marginRight="30dp"
+                android:textAlignment="center"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Auction Start"
+                android:textColor="#848484"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:id="@+id/auctionstarttxt" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linear3"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/auctionstartdate"
+                    android:hint="Date"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe" />
+
+                <EditText
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/auctionstarttime"
+                    android:hint="Time"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Auction End"
+                android:id="@+id/auctionendtxt"
+                android:gravity="center_horizontal"
+                android:textColor="#848484"
+                android:textSize="18sp"
+                android:textAlignment="center" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linear4"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/auctionenddate"
+                    android:hint="Date"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe" />
+
+                <EditText
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/auctionendtime"
+                    android:hint="Time"
+                    android:textAlignment="center"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:gravity="center"
+                    android:background="#80bebebe"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Type Of Auction"
+                android:gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textColor="#848484"
+                android:id="@+id/auctiontypetxt"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp" />
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/physical"
+                    android:text="Physical"
+                    android:textColor="#848484"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/online"
+                    android:text="Online"
+                    android:textColor="#848484"
+                    android:checked="true"
+                    android:layout_marginLeft="15dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/banquet"
+                    android:text="Banquet"
+                    android:textColor="#848484"
+                    android:layout_marginLeft="15dp" />
+            </RadioGroup>
+
+            <AutoCompleteTextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:hint="Address/Location"
+                android:textColorHint="#000000"
+                android:background="#D2E28B"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/spnproductcategory"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:background="#D2E28B"></Spinner>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/relative1"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/linear9"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp">
+
+                <TextView
+                    android:id="@+id/txtclauses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Special Clauses"
+                    android:textSize="18sp"
+                    android:textColor="#848484"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal" />
+
+                <ListView
+                    android:background="#80bebebe"
+                    android:id="@+id/list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/txtclauses"
+                    android:textColor="#848484"
+                    android:visibility="visible" />
+
+                <Button
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/buttonback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:id="@+id/btnaddmore"
+                    android:textSize="15sp"
+                    android:text=" Add More + "
+                    android:layout_below="@+id/list_view"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+            <Button
+
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/btncreate"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Create"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/buttonback"
+                android:layout_marginBottom="5dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TableRow
+        android:id="@+id/tablerowfloat"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+    </TableRow>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        app:backgroundTint="#FF9933"
+        android:layout_margin="15dp"
+        app:elevation="6dp"
+        app:fabSize="mini"
+        android:src="@drawable/help" />
+</FrameLayout>

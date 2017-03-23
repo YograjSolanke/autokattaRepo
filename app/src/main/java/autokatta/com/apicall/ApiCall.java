@@ -16,6 +16,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBreaks;
 import autokatta.com.response.GetPumpResponse;
@@ -25,6 +26,7 @@ import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.IndustryResponse;
+import autokatta.com.response.LoanMelaCreateResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
 import autokatta.com.response.MyActiveExchangeMelaResponse;
@@ -1688,6 +1690,84 @@ public class ApiCall {
             e.printStackTrace();
         }
     }
+
+    /*
+  create Loan Mela Event
+   */
+    public void createLoanMela(String title, String location,
+                               String address, String start_date,
+                               String start_time, String end_date,
+                               String end_time, String image,
+                               String details, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<LoanMelaCreateResponse> mGetVehicleImplementation = mServiceApi._createLoanMela(title, location, address,
+                        start_date, start_time, end_date, end_time, image, details, contact);
+                mGetVehicleImplementation.enqueue(new Callback<LoanMelaCreateResponse>() {
+                    @Override
+                    public void onResponse(Call<LoanMelaCreateResponse> call, Response<LoanMelaCreateResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoanMelaCreateResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+  create Exchange Mela Event
+   */
+    public void createExchangeMela(String title, String location,
+                                   String address, String start_date,
+                                   String start_time, String end_date,
+                                   String end_time, String image,
+                                   String details, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<ExchangeMelaCreateResponse> mGetVehicleImplementation = mServiceApi._createExchangeMela(title, location, address,
+                        start_date, start_time, end_date, end_time, image, details, contact);
+                mGetVehicleImplementation.enqueue(new Callback<ExchangeMelaCreateResponse>() {
+                    @Override
+                    public void onResponse(Call<ExchangeMelaCreateResponse> call, Response<ExchangeMelaCreateResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ExchangeMelaCreateResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs

@@ -3,6 +3,7 @@ package autokatta.com.interfaces;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBreaks;
 import autokatta.com.response.GetPumpResponse;
@@ -12,6 +13,7 @@ import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.IndustryResponse;
+import autokatta.com.response.LoanMelaCreateResponse;
 import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
 import autokatta.com.response.MyActiveExchangeMelaResponse;
@@ -248,6 +250,24 @@ public interface ServiceApi {
     //Get Vehicle Implements...
     @GET("getVehicleImplements.php")
     Call<GetVehicleImplementsResponse> _autokattaGetVehicleImplements();
+
+    //create loan mela event
+    @GET("createLoanMela.php")
+    Call<LoanMelaCreateResponse> _createLoanMela(@Query("title") String title, @Query("location") String location,
+                                                 @Query("address") String address, @Query("start_date") String start_date,
+                                                 @Query("start_time") String start_time, @Query("end_date") String end_date,
+                                                 @Query("end_time") String end_time, @Query("image") String image,
+                                                 @Query("details") String details, @Query("contact") String contact);
+
+
+    //create loan mela event
+    @GET("createExchangeMela.php")
+    Call<ExchangeMelaCreateResponse> _createExchangeMela(@Query("title") String title, @Query("location") String location,
+                                                         @Query("address") String address, @Query("start_date") String start_date,
+                                                         @Query("start_time") String start_time, @Query("end_date") String end_date,
+                                                         @Query("end_time") String end_time, @Query("image") String image,
+                                                         @Query("details") String details, @Query("contact") String contact);
+
 
 
 }
