@@ -18,6 +18,7 @@ import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
 import autokatta.com.response.MyActiveExchangeMelaResponse;
 import autokatta.com.response.MyActiveLoanMelaResponse;
+import autokatta.com.response.MyBroadcastGroupsResponse;
 import autokatta.com.response.MySavedAuctionResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
@@ -268,6 +269,10 @@ public interface ServiceApi {
                                                          @Query("end_time") String end_time, @Query("image") String image,
                                                          @Query("details") String details, @Query("contact") String contact);
 
+
+    //get My Broadcast groups
+    @POST("getBroadcastGroups.php")
+    Call<MyBroadcastGroupsResponse> _autokattaGetBroadcastGroups(@Query("owner") String myContact);
 
 
 }

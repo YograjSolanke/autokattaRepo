@@ -1,6 +1,5 @@
 package autokatta.com.fragment_profile;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.net.SocketTimeoutException;
 
@@ -49,7 +45,7 @@ public class About extends Fragment implements RequestNotifier{
         txtSkills = (TextView) mAbout.findViewById(R.id.skills);
 
         ApiCall mApiCall = new ApiCall(getActivity(),this);
-        mApiCall.profileAbout("8007855589");
+        mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
         return mAbout;
     }
 
@@ -96,7 +92,7 @@ public class About extends Fragment implements RequestNotifier{
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Login Activity");
+            Log.i("Check Class-", "About Activity");
         }
     }
 

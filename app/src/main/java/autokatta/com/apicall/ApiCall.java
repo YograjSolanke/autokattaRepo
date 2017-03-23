@@ -31,6 +31,7 @@ import autokatta.com.response.LoginResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
 import autokatta.com.response.MyActiveExchangeMelaResponse;
 import autokatta.com.response.MyActiveLoanMelaResponse;
+import autokatta.com.response.MyBroadcastGroupsResponse;
 import autokatta.com.response.MySavedAuctionResponse;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.response.MyStoreResponse;
@@ -1768,6 +1769,39 @@ public class ApiCall {
         }
     }
 
+    /*
+        get My Broadcast Groups
+     */
+
+    public void MyBroadcastGroups(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<MyBroadcastGroupsResponse> broadcastGroupsResponseCall = mServiceApi._autokattaGetBroadcastGroups(contact);
+                broadcastGroupsResponseCall.enqueue(new Callback<MyBroadcastGroupsResponse>() {
+                    @Override
+                    public void onResponse(Call<MyBroadcastGroupsResponse> call, Response<MyBroadcastGroupsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyBroadcastGroupsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs
