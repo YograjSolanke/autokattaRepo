@@ -13,6 +13,7 @@
         android:hint="Enter your status"
         android:inputType="textMultiLine"
         android:maxWidth="300dp"
+        android:editable="false"
         android:singleLine="false"
         android:textAlignment="textStart"
         android:textColor="#2C3343"

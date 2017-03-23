@@ -368,6 +368,11 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 Bundle b = new Bundle();
                 b.putStringArrayList("IMAGE", mPath1);
                 b.putInt("call", 1);
+                SelectedImagesFragment mSelectedImagesFragment = new SelectedImagesFragment();
+                mSelectedImagesFragment.setArguments(b);
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction mFragmentTransaction = manager.beginTransaction();
+                mFragmentTransaction.replace(R.id.vehicle_upload_container, mSelectedImagesFragment).commit();
                 /*SelectedImagesFragment fragment2 = new SelectedImagesFragment();
                 fragment2.setArguments(b);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
