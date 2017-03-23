@@ -35,6 +35,8 @@ import autokatta.com.fragment_profile.Modules;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.MonthYearPicker;
+import autokatta.com.response.GetBreaks;
+import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.response.MyStoreResponse;
@@ -64,9 +66,20 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     Spinner mSubType;
     Spinner mBrandSpinner, mModelSpinner, mVersionSpinner;
     Spinner mPumpSpinner, mBreakSpinner, mStaringSpinner;
+    //SubType
     List<String> mSubTypeList = new ArrayList<>();
     List<String> parsedData = new ArrayList<>();
     HashMap<String, String> mSubTypeList1 = new HashMap<>();
+    //Break
+    List<String> mBreakList = new ArrayList<>();
+    List<String> breakListData = new ArrayList<>();
+    HashMap<String, String> mBreakList1 = new HashMap<>();
+    //Pump
+    List<String> mPumpList = new ArrayList<>();
+    List<String> pumpListData = new ArrayList<>();
+    HashMap<String, String> mPumpList1 = new HashMap<>();
+    //Staring
+    List<String> mStaringList = new ArrayList<>();
     String category;
 
     /*
@@ -218,6 +231,30 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     if(category.equalsIgnoreCase("construction Equipment"))
                         mVersionSpinner.setVisibility(View.GONE);
 
+                    /*
+                    Staring Spinner
+                     */
+                    mStaringList.add("Select Staring Type");
+                    mStaringList.add("Power");
+                    mStaringList.add("Manual");
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mStaringList);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mStaringSpinner.setAdapter(adapter);
+                    mStaringSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position!=0){
+                                String subcategory = mStaringList.get(position);
+                                System.out.println("Sub cat is::" + subcategory);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -278,6 +315,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
     private void getBreaks(){
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getBreaks();
     }
 
     /*
@@ -285,6 +323,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
     private void getPumps(){
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getPump();
     }
 
 
@@ -452,6 +491,64 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                         }
                     });
+                } else if (response.body() instanceof GetBreaks){
+                    Log.e("Get","Breaks");
+                    GetBreaks mGetBreaks = (GetBreaks) response.body();
+                    mBreakList.add("Select Break Types");
+                    for (GetBreaks.Success success : mGetBreaks.getSuccess()){
+                        success.setId(success.getId());
+                        success.setTitle(success.getTitle());
+                        mBreakList.add(success.getTitle());
+                        mBreakList1.put(success.getTitle(), success.getId());
+                    }
+                    breakListData.addAll(mBreakList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, breakListData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mBreakSpinner.setAdapter(adapter);
+                    mBreakSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position!=0){
+                                String subcategory = mBreakList1.get(breakListData.get(position));
+                                System.out.println("Sub cat is::" + subcategory);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+                } else if (response.body() instanceof GetPumpResponse){
+                    Log.e("Get","Pumps");
+                    GetPumpResponse mGetPumpResponse = (GetPumpResponse) response.body();
+                    mPumpList.add("Select Pump Types");
+                    for (GetPumpResponse.Success success : mGetPumpResponse.getSuccess()){
+                        success.setId(success.getId());
+                        success.setTitle(success.getTitle());
+                        mPumpList.add(success.getTitle());
+                        mPumpList1.put(success.getTitle(), success.getId());
+                    }
+                    pumpListData.addAll(mPumpList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, pumpListData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mPumpSpinner.setAdapter(adapter);
+                    mPumpSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position!=0){
+                                String subcategory = mPumpList1.get(pumpListData.get(position));
+                                System.out.println("Sub cat is::" + subcategory);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
                 } else {
                     Log.e("Title Fragment", "No Response found");
                 }

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,13 +29,17 @@ import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.other.MonthYearPicker;
+import autokatta.com.response.GetRTOCityResponse;
 import retrofit2.Response;
+import retrofit2.http.GET;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -53,6 +58,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     String allimgpath = "";
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
+    List<String> mRtoCity = new ArrayList<>();
 
     /*
     Location...
@@ -103,6 +109,21 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         }
                     }
                 });
+
+                /*
+                Owner Fragment...
+                 */
+                /*if (category.equalsIgnoreCase("Bus")) {
+
+                    bodymanufacturer.setVisibility(View.VISIBLE);
+                    seatmanufacturer.setVisibility(View.VISIBLE);
+
+                    getBodyAndSeatManufacturer();
+                } else if (category.equalsIgnoreCase("Tractor") || category.equalsIgnoreCase("Construction Equipment") ||
+                        category.equalsIgnoreCase("2 Wheeler")) {
+
+                    emmisionVersionspn.setVisibility(View.GONE);
+                }*/
             }
         });
         /*mMakeMonth = (EditText) mSubtype.findViewById(R.id.make_month);
@@ -175,10 +196,19 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     }
 
     /*
+    Get Body and Seat Manufacture...
+     */
+    private void getBodyAndSeatManufacturer() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getBodyAndSeatManufacture();
+    }
+
+    /*
             Get RTO City...
      */
     private void getRTOcity() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getVehicleRTOCity();
     }
 
     @Override
@@ -296,7 +326,25 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
     @Override
     public void notifySuccess(Response<?> response) {
-
+        if (response!=null){
+            if (response.isSuccessful()){
+                if (response.body() instanceof GetRTOCityResponse){
+                    GetRTOCityResponse mGetRTOCityResponse = (GetRTOCityResponse) response.body();
+                    for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()){
+                        success.setRtoCityId(success.getRtoCityId());
+                        success.setRtoCityName(success.getRtoCityName());
+                        mRtoCity.add(success.getRtoCityName());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_spinner_item, mRtoCity);
+                    mRTOcity.setAdapter(adapter);
+                }
+            }else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        }else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+        }
     }
 
     @Override

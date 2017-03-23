@@ -1,7 +1,14 @@
 package autokatta.com.interfaces;
 
 import autokatta.com.response.BlacklistMemberResponse;
+import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.GetBodyTypeResponse;
+import autokatta.com.response.GetBreaks;
+import autokatta.com.response.GetPumpResponse;
+import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetVehicleColor;
+import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.IndustryResponse;
@@ -214,33 +221,33 @@ public interface ServiceApi {
 
     //Get Breaks
     @GET("getBrakes.php")
-    Call<String> _autokattaGetBreaks();
+    Call<GetBreaks> _autokattaGetBreaks();
 
     //Get getPumps
     @GET("getPump.php")
-    Call<String> _autokattaGetPumps();
+    Call<GetPumpResponse> _autokattaGetPumps();
 
     /*
     GetRTOCity
      */
     @GET("getVehicleRTOCity.php")
-    Call<String> _autokattaGetVehicleRTOCity();
+    Call<GetRTOCityResponse> _autokattaGetVehicleRTOCity();
 
     //Get Body and Seat Manufacture
     @GET("getBodyAndSeatManufacturers.php")
-    Call<String> _autokattaGetBodyAndSeatManufacture();
+    Call<BodyAndSeatResponse> _autokattaGetBodyAndSeatManufacture();
 
     //Get Body Type
     @GET("getBodytype.php")
-    Call<String> _autokattaGetBodyType();
+    Call<GetBodyTypeResponse> _autokattaGetBodyType();
 
     //Get Vehicle Color
     @GET("getVehicleColor.php")
-    Call<String> _autokattaGetColor();
+    Call<GetVehicleColor> _autokattaGetColor();
 
     //Get Vehicle Implements...
     @GET("getVehicleImplements.php")
-    Call<String> _autokattaGetVehicleImplements();
+    Call<GetVehicleImplementsResponse> _autokattaGetVehicleImplements();
 
 
 }

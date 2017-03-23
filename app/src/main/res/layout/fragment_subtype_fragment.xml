@@ -125,7 +125,8 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="10dp"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:entries="@array/hypo" />
 
                 <Spinner
                     android:id="@+id/rcspinner1"
@@ -133,7 +134,8 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="10dp"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:entries="@array/RC_avl" />
 
                 <Spinner
                     android:id="@+id/insurancespinner1"
@@ -141,18 +143,55 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="10dp"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:entries="@array/ins" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/editinsurancedate"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="#80bebebe"
+                        android:digits="1234567890-"
+                        android:drawableEnd="@drawable/calendar"
+                        android:hint="Insurance(yyyy-mm-dd)"
+                        android:paddingLeft="3dip"
+                        android:textColor="#2C3343"
+                        android:textColorHint="#848484" />
+
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/edtOtherInsurance"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:hint="Enter Insurance type"
+                    android:paddingLeft="3dip"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/insuranceidv1"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
                     android:background="#80bebebe"
                     android:hint="Insurance IDV"
                     android:inputType="number"
                     android:paddingEnd="3dp"
                     android:paddingStart="3dp"
-                    android:layout_marginTop="10dp"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
 
@@ -162,7 +201,30 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="10dp"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:entries="@array/tax" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/taxpaid1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="#80bebebe"
+                        android:digits="1234567890-"
+                        android:drawableEnd="@drawable/calendar"
+                        android:hint="Tax Paid (yyyy-mm-dd)"
+                        android:paddingLeft="3dip"
+                        android:textColor="#2C3343"
+                        android:textColorHint="#848484" />
+
+                </RelativeLayout>
 
                 <Spinner
                     android:id="@+id/permitspinner"
@@ -170,7 +232,29 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="10dp"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:entries="@array/permit" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/permittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="#80bebebe"
+                        android:digits="1234567890-"
+                        android:drawableEnd="@drawable/calendar"
+                        android:hint="Permit (yyyy-mm-dd)"
+                        android:paddingLeft="3dip"
+                        android:textColor="#2C3343"
+                        android:textColorHint="#848484" />
+                </RelativeLayout>
 
                 <Spinner
                     android:id="@+id/fitnessspinner"
@@ -178,7 +262,29 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="10dp"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:entries="@array/fitness" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/fitnesstext"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="#80bebebe"
+                        android:digits="1234567890-"
+                        android:drawableEnd="@drawable/calendar"
+                        android:hint="Fitness (yyyy-mm-dd)"
+                        android:paddingLeft="3dip"
+                        android:textColor="#2C3343"
+                        android:textColorHint="#848484" />
+                </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
 
@@ -218,8 +324,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_marginTop="10dp"
+                    android:entries="@array/owners"
                     android:background="#80bebebe"
                     android:ems="10" />
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Body manufacurer"
+                    android:background="#80bebebe"
+                    android:id="@+id/bodymanufacturer"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:padding="7dp"
+                    android:visibility="gone"/>
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Seat manufacurer"
+                    android:background="#80bebebe"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    android:padding="7dp"
+                    android:id="@+id/seatmanufacturer"
+                    android:visibility="gone"/>
 
                 <Spinner
                     android:id="@+id/emVersion"

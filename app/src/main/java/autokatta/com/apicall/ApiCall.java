@@ -14,7 +14,14 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BlacklistMemberResponse;
+import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.GetBodyTypeResponse;
+import autokatta.com.response.GetBreaks;
+import autokatta.com.response.GetPumpResponse;
+import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetVehicleColor;
+import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.IndustryResponse;
@@ -1463,16 +1470,16 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetBreaks = mServiceApi._autokattaGetBreaks();
-                mGetBreaks.enqueue(new Callback<String>() {
+                Call<GetBreaks> mGetBreaks = mServiceApi._autokattaGetBreaks();
+                mGetBreaks.enqueue(new Callback<GetBreaks>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
+                    public void onResponse(Call<GetBreaks> call, Response<GetBreaks> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<GetBreaks> call, Throwable t) {
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1496,16 +1503,16 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetPump = mServiceApi._autokattaGetPumps();
-                mGetPump.enqueue(new Callback<String>() {
+                Call<GetPumpResponse> mGetPump = mServiceApi._autokattaGetPumps();
+                mGetPump.enqueue(new Callback<GetPumpResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
+                    public void onResponse(Call<GetPumpResponse> call, Response<GetPumpResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<GetPumpResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1529,16 +1536,16 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetRTOCity = mServiceApi._autokattaGetVehicleRTOCity();
-                mGetRTOCity.enqueue(new Callback<String>() {
+                Call<GetRTOCityResponse> mGetRTOCity = mServiceApi._autokattaGetVehicleRTOCity();
+                mGetRTOCity.enqueue(new Callback<GetRTOCityResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
+                    public void onResponse(Call<GetRTOCityResponse> call, Response<GetRTOCityResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<GetRTOCityResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1562,16 +1569,16 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetBodySeat = mServiceApi._autokattaGetBodyAndSeatManufacture();
-                mGetBodySeat.enqueue(new Callback<String>() {
+                Call<BodyAndSeatResponse> mGetBodySeat = mServiceApi._autokattaGetBodyAndSeatManufacture();
+                mGetBodySeat.enqueue(new Callback<BodyAndSeatResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
+                    public void onResponse(Call<BodyAndSeatResponse> call, Response<BodyAndSeatResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<BodyAndSeatResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1595,16 +1602,16 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetBodType = mServiceApi._autokattaGetBodyType();
-                mGetBodType.enqueue(new Callback<String>() {
+                Call<GetBodyTypeResponse> mGetBodType = mServiceApi._autokattaGetBodyType();
+                mGetBodType.enqueue(new Callback<GetBodyTypeResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
+                    public void onResponse(Call<GetBodyTypeResponse> call, Response<GetBodyTypeResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<GetBodyTypeResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1628,16 +1635,16 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetVehicleColor = mServiceApi._autokattaGetColor();
-                mGetVehicleColor.enqueue(new Callback<String>() {
+                Call<GetVehicleColor> mGetVehicleColor = mServiceApi._autokattaGetColor();
+                mGetVehicleColor.enqueue(new Callback<GetVehicleColor>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
+                    public void onResponse(Call<GetVehicleColor> call, Response<GetVehicleColor> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<GetVehicleColor> call, Throwable t) {
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1661,16 +1668,16 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetVehicleImplementation = mServiceApi._autokattaGetVehicleImplements();
-                mGetVehicleImplementation.enqueue(new Callback<String>() {
+                Call<GetVehicleImplementsResponse> mGetVehicleImplementation = mServiceApi._autokattaGetVehicleImplements();
+                mGetVehicleImplementation.enqueue(new Callback<GetVehicleImplementsResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
+                    public void onResponse(Call<GetVehicleImplementsResponse> call, Response<GetVehicleImplementsResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<GetVehicleImplementsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
                     }
                 });
 
