@@ -16,9 +16,14 @@ import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -135,5 +140,19 @@ public interface ServiceApi {
     //get Vehicle Sub Types...
     @GET("getVehicleSubType.php")
     Call<BlacklistMemberResponse> _autokattaBlacklistMembers(@Query("contact") String contact);
+
+    //Upload image
+    @Multipart
+    @POST("upload_profile_profile_pics.php")
+    Call<ResponseBody> postImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
+
+    //Update Registration
+    @Multipart
+    @POST("updateRegistrationInfo.php")
+    Call<String>_autokattaUpdateRegistration(@Query("Regid") String Regid,@Query("page") String page,@Query("profileImage") String profileImage,
+                                           @Query("about") String about,
+                                           @Query("website") String website);
+
+
 
 }
