@@ -17,14 +17,19 @@ import autokatta.com.events.MyActiveLoanMelaFragment;
 
 public class MyActiveEventsTabActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+    ViewPager mViewPager;
+    TabLayout mTabLayout;
+    FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_active_events_tab);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        final ViewPager mViewPager = (ViewPager) findViewById(R.id.activity_myactive_event_viewpager);
-        final TabLayout mTabLayout = (TabLayout) findViewById(R.id.activity_myactive_event_tab);
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mViewPager = (ViewPager) findViewById(R.id.activity_myactive_event_viewpager);
+        mTabLayout = (TabLayout) findViewById(R.id.activity_myactive_event_tab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         this.runOnUiThread(new Runnable() {
             @Override

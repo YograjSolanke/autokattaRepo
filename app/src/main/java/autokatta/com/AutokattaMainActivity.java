@@ -32,12 +32,14 @@ import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.view.BlackListedMemberActivity;
 import autokatta.com.view.BrowseStoreActivity;
+import autokatta.com.view.Create_Event;
 import autokatta.com.view.GroupsTab;
 import autokatta.com.view.MyActiveEventsTabActivity;
 import autokatta.com.view.MyAutokattaContacts;
 import autokatta.com.view.MySavedAuctionEventActivity;
 import autokatta.com.view.MySearchActivity;
 import autokatta.com.view.MyStoreListActivity;
+import autokatta.com.view.MyUpcomingEventsTabActivity;
 import autokatta.com.view.MyUploadedVehiclesActivity;
 import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.UserProfile;
@@ -156,12 +158,13 @@ public class AutokattaMainActivity extends AppCompatActivity {
                             startActivity(new Intent(AutokattaMainActivity.this, MyUploadedVehiclesActivity.class));
 
                         } else if (menuItem.getItemId() == R.id.create_event) {
+                            startActivity(new Intent(AutokattaMainActivity.this, Create_Event.class));
 
                         } else if (menuItem.getItemId() == R.id.active_event) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyActiveEventsTabActivity.class));
 
                         } else if (menuItem.getItemId() == R.id.upcoming_event) {
-
+                            startActivity(new Intent(AutokattaMainActivity.this, MyUpcomingEventsTabActivity.class));
                         } else if (menuItem.getItemId() == R.id.saved_event) {
 
                             startActivity(new Intent(AutokattaMainActivity.this, MySavedAuctionEventActivity.class));

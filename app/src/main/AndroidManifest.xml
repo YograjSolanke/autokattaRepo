@@ -124,10 +124,14 @@
         <activity
             android:name=".view.ContinueRegistration"
             android:label="@string/title_activity_continue_registration"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MyUpcomingEventsTabActivity"
             android:label="@string/title_activity_my_upcoming_events_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.Create_Event"
+            android:label="@string/title_activity_create_event"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
