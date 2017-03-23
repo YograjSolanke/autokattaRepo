@@ -985,6 +985,7 @@ public class ApiCall {
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
+                Log.i("Regid---->","->"+Regid);
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mUpdateRegistration = serviceApi._autokattaUpdateRegistration(Regid, page, profileImage,about,website);
