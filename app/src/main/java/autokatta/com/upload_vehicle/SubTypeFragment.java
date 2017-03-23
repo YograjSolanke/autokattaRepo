@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
@@ -37,7 +38,10 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.MonthYearPicker;
+import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetVehicleColor;
+import autokatta.com.response.GetVehicleImplementsResponse;
 import retrofit2.Response;
 import retrofit2.http.GET;
 
@@ -59,7 +63,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
     List<String> mRtoCity = new ArrayList<>();
+    List<String> mVehicleColor = new ArrayList<>();
+    List<String> mBodyType = new ArrayList<>();
+    List<String> mVehicleImplements = new ArrayList<>();
+    List<String> mFuel = new ArrayList();
 
+    Spinner mBodyTypeSpinner, mImplementSpinner, mSetColorSpinner, mSetFuel;
     /*
     Location...
      */
@@ -78,12 +87,20 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         mRTOcity = (AutoCompleteTextView) mSubtype.findViewById(R.id.rtoautocompletetext);
         mLocation = (AutoCompleteTextView) mSubtype.findViewById(R.id.autolocation);
         registernumber = (EditText) mSubtype.findViewById(R.id.registernumber);
+        mBodyTypeSpinner = (Spinner) mSubtype.findViewById(R.id.bodytypespinner);
+        mImplementSpinner = (Spinner) mSubtype.findViewById(R.id.implementSpinner);
+        mSetColorSpinner = (Spinner) mSubtype.findViewById(R.id.setcolor);
+        mSetFuel = (Spinner) mSubtype.findViewById(R.id.setfuel);
         mUploadVehicle.setOnClickListener(this);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getRTOcity();
+                try{
+                    getRTOcity();
+                    getVehicleColor();
+                    getImplements();
+                    getBodyTypes();
                 /*if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
                         || subCategory.equals("Dozer") || subCategory.equals("Concrete Mixers") || subCategory.equals("Road Rollers")
                         || subCategory.equals("Milling Equipment") || subCategory.equals("Trenches")) {
@@ -92,23 +109,37 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     checkBox1.setVisibility(View.GONE);
                 }*/
 
-                mLocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.addproductspinner_color));
-                checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mLocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.addproductspinner_color));
+                    checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                        if (checkBox1.isChecked()) {
-                            mRTOcity.setText("Unregistered");
-                            mRTOcity.setEnabled(false);
-                            registernumber.setText("");
-                            registernumber.setEnabled(false);
-                        } else {
-                            mRTOcity.setText("");
-                            mRTOcity.setEnabled(true);
-                            registernumber.setEnabled(true);
+                            if (checkBox1.isChecked()) {
+                                mRTOcity.setText("Unregistered");
+                                mRTOcity.setEnabled(false);
+                                registernumber.setText("");
+                                registernumber.setEnabled(false);
+                            } else {
+                                mRTOcity.setText("");
+                                mRTOcity.setEnabled(true);
+                                registernumber.setEnabled(true);
+                            }
                         }
-                    }
-                });
+                    });
+
+
+                    mFuel.add("-Select Fuel Type-");
+                    mFuel.add("Petrol");
+                    mFuel.add("Diesel");
+                    mFuel.add("CNG");
+                    mFuel.add("LPG");
+                    mFuel.add("Electric");
+                    mFuel.add("Hybrid");
+
+                    final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_spinner_item, mFuel);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSetFuel.setAdapter(dataAdapter);
 
                 /*
                 Owner Fragment...
@@ -124,6 +155,9 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
                     emmisionVersionspn.setVisibility(View.GONE);
                 }*/
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
         /*mMakeMonth = (EditText) mSubtype.findViewById(R.id.make_month);
@@ -193,6 +227,30 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         });*/
 
         return mSubtype;
+    }
+
+    /*
+    Get Body Types...
+     */
+    private void getBodyTypes() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getBodyType();
+    }
+
+    /*
+    Get Implements
+     */
+    private void getImplements() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getVehicleImplements();
+    }
+
+    /*
+    Get Vehicle Color...
+     */
+    private void getVehicleColor() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getVehicleColor();
     }
 
     /*
@@ -338,6 +396,38 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                             android.R.layout.simple_spinner_item, mRtoCity);
                     mRTOcity.setAdapter(adapter);
+                } else if (response.body() instanceof GetVehicleColor){
+                    GetVehicleColor mGetVehicleColor = (GetVehicleColor) response.body();
+                    for (GetVehicleColor.Success success : mGetVehicleColor.getSuccess()){
+                        success.setColorId(success.getColorId());
+                        success.setColor(success.getColor());
+                        mVehicleColor.add(success.getColor());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_spinner_item, mVehicleColor);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSetColorSpinner.setAdapter(adapter);
+                }else if (response.body() instanceof GetBodyTypeResponse){
+                    GetBodyTypeResponse mGetBodyTypeResponse = (GetBodyTypeResponse) response.body();
+                    for (GetBodyTypeResponse.Success success : mGetBodyTypeResponse.getSuccess()){
+                        success.setTitle(success.getTitle());
+                        mBodyType.add(success.getTitle());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_spinner_item,mBodyType);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mBodyTypeSpinner.setAdapter(adapter);
+                }else if (response.body() instanceof GetVehicleImplementsResponse){
+                    GetVehicleImplementsResponse mGetVehicleImplementsResponse = (GetVehicleImplementsResponse) response.body();
+                    for (GetVehicleImplementsResponse.Success success : mGetVehicleImplementsResponse.getSuccess()){
+                        success.setId(success.getId());
+                        success.setImplementName(success.getImplementName());
+                        mVehicleImplements.add(success.getImplementName());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_spinner_item, mVehicleImplements);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mImplementSpinner.setAdapter(adapter);
                 }
             }else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

@@ -426,13 +426,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_marginTop="5dp"
-                    android:background="#80bebebe" />
+                    android:background="#80bebebe"
+                    android:entries="@array/drive"
+                    android:visibility="visible"/>
 
                 <Spinner
                     android:id="@+id/transmissionspinner"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
+                    android:entries="@array/trance"
                     android:layout_marginTop="5dp"
+                    android:visibility="gone"
                     android:background="#80bebebe" />
 
                 <Spinner
@@ -489,6 +493,7 @@
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
                     android:paddingEnd="3dp"
+                    android:entries="@array/bustype"
                     android:paddingStart="3dp" />
 
                 <Spinner
@@ -497,6 +502,7 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
+                    android:entries="@array/air"
                     android:paddingEnd="3dp"
                     android:paddingStart="3dp" />
 
@@ -506,6 +512,7 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
+                    android:entries="@array/invoice"
                     android:paddingEnd="3dp"
                     android:paddingStart="3dp" />
 
