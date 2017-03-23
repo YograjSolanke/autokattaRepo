@@ -1080,11 +1080,15 @@ public class ApiCall {
  Update Registration/continue Registration
    */
     public void updateRegistration(String Regid, String page, String profileImage, String about, String website) {
+        //JSON to Gson conversion
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
                         .client(initLog().build())
                         .build();
                 Log.i("Regid---->", "->" + Regid);
