@@ -15,7 +15,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +30,7 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
+import autokatta.com.view.BlackListedMemberActivity;
 import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.GroupsTab;
 import autokatta.com.view.MyActiveEventsTabActivity;
@@ -169,6 +169,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.ended_event) {
 
                         } else if (menuItem.getItemId() == R.id.black_list_contact) {
+                            startActivity(new Intent(AutokattaMainActivity.this, BlackListedMemberActivity.class));
 
                         } else if (menuItem.getItemId() == R.id.broadcast_groups) {
 
