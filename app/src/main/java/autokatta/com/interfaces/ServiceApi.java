@@ -7,6 +7,8 @@ import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
+import autokatta.com.response.GetGroupVehiclesResponse;
+import autokatta.com.response.GetMyUploadedVehicleResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetVehicleColor;
@@ -311,4 +313,16 @@ public interface ServiceApi {
                                                                @Query("VersionId") String versionId, @Query("ManufactureYear") String mfgYear,
                                                                @Query("RTOCity") String rtoCity);
 
+    //Get Group Vehicles
+    @GET("getGroupVehicles.php")
+    Call<GetGroupVehiclesResponse> _autokattaGetGroupVehicles(@Query("group_id") String groupId,@Query("brand") String brand,
+                                                              @Query("model") String model,@Query("version") String version,
+                                                              @Query("city") String city,@Query("RTOcity") String rtoCity,
+                                                              @Query("price") String price,@Query("reg_year") String regYear,
+                                                              @Query("mgf_year") String mgfYear,@Query("kms") String kms,
+                                                              @Query("owners") String owners);
+
+    //Get My Uploaded Vehicle...
+    @GET("getMyUploadedVehicles.php")
+    Call<GetMyUploadedVehicleResponse> _autokattaMyUploadedVehicles(@Query("contact") String contact);
 }

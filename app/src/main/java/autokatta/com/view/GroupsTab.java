@@ -39,10 +39,10 @@ public class GroupsTab extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-       /* TabAdapterName tabAdapterName = new TabAdapterName(getSupportFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getSupportFragmentManager());
         tabAdapterName.addFragment(new MyGroupsFragment(), "My Groups");
         tabAdapterName.addFragment(new JoinedGroupsFragment(), "Joined Groups");
-        viewPager.setAdapter(tabAdapterName);*/
+        viewPager.setAdapter(tabAdapterName);
     }
 
 }

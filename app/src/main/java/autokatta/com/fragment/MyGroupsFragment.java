@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,28 +18,32 @@ import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.MyAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.ModelGroups;
 import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
 import static autokatta.com.R.id.fabCreateGroup;
 
 /**
  * Created by ak-003 on 19/3/17.
  */
 
-public class MyGroupsFragment{//} extends Fragment implements RequestNotifier, View.OnClickListener {
-/*
+public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, View.OnClickListener {
     View mMyGroups;
     RecyclerView mRecyclerView;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     FloatingActionButton floatCreateGroup;
-    SharedPreferences mSharedPreferences = null;
-   // ArrayList<ProfileGroupResponse.Success.MyGroup> profileGroupResponseArrayList;
+    List<ModelGroups> mMyGroupsList = new ArrayList<>();
+    MyAdapter mMyAdapter;
 
     public MyGroupsFragment() {
         //Empty constructor
@@ -51,55 +56,65 @@ public class MyGroupsFragment{//} extends Fragment implements RequestNotifier, V
 
         mRecyclerView = (RecyclerView) mMyGroups.findViewById(R.id.rv_recycler_view);
         floatCreateGroup = (FloatingActionButton) mMyGroups.findViewById(fabCreateGroup);
-        floatCreateGroup.setOnClickListener(this);
-
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mMyGroups.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setReverseLayout(true);
-        mLinearLayoutManager.setStackFromEnd(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        //getData();//Get Api...
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""));
+            }
+        });
+        return mMyGroups;
+    }
 
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-//        mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-//        String myContact = mSharedPreferences.getString("contact","");
+    /*
+    Get My Groups Data...
+     */
+    private void getData(String loginContact) {
 
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.Groups("7841023392");
-
-
-        return mMyGroups;
+        apiCall.Groups(loginContact);
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-        Log.i("GroupResponse=>", response.body().toString());
-
-        if (response.isSuccessful()) {
-            profileGroupResponseArrayList = new ArrayList<>();
-            profileGroupResponseArrayList.clear();
-
-            ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
-            ProfileGroupResponse.Success profileResponseSuccess = profileGroupResponse.getSuccess();
-
-            if (!profileResponseSuccess.getMyGroups().isEmpty()) {
-                for (ProfileGroupResponse.Success.MyGroup myGroupObject : profileResponseSuccess.getMyGroups()) {
-                    myGroupObject.setId(myGroupObject.getId());
-                    myGroupObject.setTitle(myGroupObject.getTitle());
-                    myGroupObject.setGroupcount(myGroupObject.getGroupcount());
-                    myGroupObject.setVehiclecount(myGroupObject.getVehiclecount());
-                    myGroupObject.setImage(myGroupObject.getImage());
-                    myGroupObject.setAdminVehicleCount(myGroupObject.getAdminVehicleCount());
-
-                    profileGroupResponseArrayList.add(myGroupObject);
-
+        if (response!=null){
+            if (response.isSuccessful()){
+                mSwipeRefreshLayout.setRefreshing(false);
+                ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
+                for (ProfileGroupResponse.MyGroup success : profileGroupResponse.getSuccess().getMyGroups()) {
+                    ModelGroups modelGroups = new ModelGroups();
+                    modelGroups.setId(success.getId());
+                    modelGroups.setTitle(success.getTitle());
+                    modelGroups.setImage(success.getImage());
+                    modelGroups.setGroupCount(success.getGroupcount());
+                    modelGroups.setVehicleCount(success.getVehiclecount());
+                    modelGroups.setAdminVehicleCount(success.getAdminVehicleCount());
+                    mMyGroupsList.add(modelGroups);
                 }
-
-                Log.i("Group=>", String.valueOf(profileGroupResponseArrayList.size()));
-            } else
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                mMyAdapter = new MyAdapter(getActivity(), mMyGroupsList,"MyGroups");
+                mRecyclerView.setAdapter(mMyAdapter);
+                mMyAdapter.notifyDataSetChanged();
+            }else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        }else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
-
-
     }
 
     @Override
@@ -135,5 +150,12 @@ public class MyGroupsFragment{//} extends Fragment implements RequestNotifier, V
 
         }
 
-    }*/
+    }
+
+    @Override
+    public void onRefresh() {
+        mMyGroupsList.clear();
+        getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""));
+    }
 }

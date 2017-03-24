@@ -50,15 +50,15 @@
     </string-array>
 
     <string-array name="drive">
-    <item>-Select DriveType-</item>
-    <item>2WD</item>
-    <item>4WD</item>
+        <item>-Select DriveType-</item>
+        <item>2WD</item>
+        <item>4WD</item>
     </string-array>
 
     <string-array name="trance">
         <item>-Select transmission-</item>
-        <item >automatic</item>
-        <item >manual</item>
+        <item>automatic</item>
+        <item>manual</item>
     </string-array>
 
     <string-array name="bustype">

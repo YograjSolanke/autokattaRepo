@@ -20,6 +20,7 @@ import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
+import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetVehicleColor;
@@ -1916,7 +1917,6 @@ Upload Vehicle
   Get Suggested Price
    */
     public void SuggestedPrice(String categoryId, String subCategoryId, String brandId, String modelId, String versionId, String mfgYear, String rtoCity) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1947,6 +1947,41 @@ Upload Vehicle
             e.printStackTrace();
         }
 
+    }
+
+    /*
+    Get Group Vehicles...
+     */
+    public void getGroupVehicles(String groupId,String brand, String model,String version, String city,String rtoCity,
+                                 String price,String regYear, String mgfYear,String kms, String owners){
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetGroupVehiclesResponse> mVehiclesResponse = mServiceApi._autokattaGetGroupVehicles(groupId, brand, model,
+                        version, city, rtoCity, price, regYear, mgfYear, kms, owners);
+                mVehiclesResponse.enqueue(new Callback<GetGroupVehiclesResponse>() {
+                    @Override
+                    public void onResponse(Call<GetGroupVehiclesResponse> call, Response<GetGroupVehiclesResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetGroupVehiclesResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /***
