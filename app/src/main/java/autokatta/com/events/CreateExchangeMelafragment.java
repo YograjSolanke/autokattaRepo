@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +33,20 @@ import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.generic.SetMyDateAndTime;
+import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -52,6 +63,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
     String picturePath = "";
     String lastWord = "";
     String userSelected;
+    ImageUpload mImageUpload;
     TextView textevent;
     Bitmap bitmap;
     GenericFunctions validObj = new GenericFunctions();
@@ -69,6 +81,15 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         createExchangeView = inflater.inflate(R.layout.fragment_create_loanmela, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        // Change base URL to your upload server URL.
+        mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
+
 
         eventname = (EditText) createExchangeView.findViewById(R.id.editauctionname);
         startdate = (EditText) createExchangeView.findViewById(R.id.auctionstartdate);
@@ -120,7 +141,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                 String details = eventdetails.getText().toString();
                 String location = eventlocation.getText().toString();
 
-                if (!address.isEmpty()) {
+                if (!location.isEmpty()) {
 
                     resultList = GooglePlacesAdapter.getResultList();
                     for (int i = 0; i < resultList.size(); i++) {
@@ -138,8 +159,8 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
 
 
                 if (name.equals("")) {
-                    eventname.setError("Enter auction title");
-                    Toast.makeText(getActivity(), "Enter auction title", Toast.LENGTH_LONG).show();
+                    eventname.setError("Enter Exchange title");
+                    // Toast.makeText(getActivity(), "Enter Exchange title", Toast.LENGTH_LONG).show();
 //                    auctioname.setFocusable(true);
                 } else if (stdate.equals("")) {
 //                    startdate.setError("Enter start date");
@@ -161,12 +182,12 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                     if (!validObj.startTimeEndTimeValidation(sttime, edtime)) {
                         endtime.setError("Enter valid time");
                     }
-                } else if (address.equals("")) {
-                    eventaddress.setError("Enter address");
                 } else if (location.equals("")) {
                     eventlocation.setError("Enter location");
                 } else if (!flag) {
                     eventlocation.setError("Please Select Location From Dropdown Only");
+                } else if (address.equals("")) {
+                    eventaddress.setError("Enter address");
                 } else {
                     apiCall.createExchangeMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
 
@@ -189,6 +210,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                     String id = createResponse.getSuccess().getExchangeID().toString();
                     Log.i("Exid", "->" + id);
                     CustomToast.customToast(getActivity(), "Exchange Event Created Successfully");
+                    upload(picturePath);
 
                 }
             } else {
@@ -285,7 +307,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
 
                 System.out.println(picturePath);
                 lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
-                System.out.println(lastWord);
+                System.out.println("lastword=" + lastWord);
             }
         }
     }
@@ -323,12 +345,69 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                 }
                 break;
             case (R.id.auctionenddate):
+
+                if (action == MotionEvent.ACTION_DOWN) {
+                    //whichclick = "enddate";
+                    enddate.setInputType(InputType.TYPE_NULL);
+                    enddate.setError(null);
+                    new SetMyDateAndTime("date", enddate, getActivity());
+                }
+
                 break;
             case (R.id.auctionendtime):
+
+                if (action == MotionEvent.ACTION_DOWN) {
+                    //whichclick = "enddate";
+                    endtime.setInputType(InputType.TYPE_NULL);
+                    endtime.setError(null);
+                    new SetMyDateAndTime("time", endtime, getActivity());
+                }
                 break;
 
         }
 
         return false;
+    }
+
+
+    //upload image to server
+
+    public void upload(String picturePath) {
+
+        System.out.println("picturePath while upload image:" + picturePath);
+        System.out.println("rutu= userselected in upload==========:" + userSelected);
+
+        try {
+
+            // HttpPost httpPost = new HttpPost("http://www.autokatta.com/mobile/upload_profile_profile_pics.php"); // serverupdate_profile.php
+            lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
+            System.out.println(lastWord);
+
+
+            File file = new File(picturePath);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file.getPath());
+            MultipartBody.Part body = MultipartBody.Part.createFormData("club_image", file.getName(), reqFile);
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
+
+            retrofit2.Call<okhttp3.ResponseBody> req = mImageUpload.postLoanAndExchangeImage(body, name);
+            req.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    CustomToast.customToast(getActivity(), "Image Upladed");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+
+        } catch (Exception e) {
+
+            Log.e(e.getClass().getName(), e.getMessage(), e);
+
+        }
+
+
     }
 }
