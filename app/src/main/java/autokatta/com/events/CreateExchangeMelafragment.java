@@ -31,7 +31,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
-import autokatta.com.generic.SetMyDate;
+import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ExchangeMelaCreateResponse;
@@ -300,26 +300,27 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-
+        int action = motionEvent.getAction();
         switch (view.getId()) {
 
             case (R.id.auctionstartdate):
-                int action = motionEvent.getAction();
+
                 if (action == MotionEvent.ACTION_DOWN) {
                     //whichclick = "enddate";
                     startdate.setInputType(InputType.TYPE_NULL);
                     startdate.setError(null);
-                    SetMyDate newFragment = new SetMyDate(startdate, getActivity());
-//                    setDate fromDate = new setDate(editTextFromDate, this);
-//                    DialogFragment dd=newFragment.getDa();
-//
-//                    dd.show(getActivity().getFragmentManager(), "DatePicker");
-//                    startdate.setText(newFragment.getFinalDate());
-
+                    new SetMyDateAndTime("date", startdate, getActivity());
                 }
-
                 break;
             case (R.id.auctionstarttime):
+
+
+                if (action == MotionEvent.ACTION_DOWN) {
+                    //whichclick = "enddate";
+                    starttime.setInputType(InputType.TYPE_NULL);
+                    starttime.setError(null);
+                    new SetMyDateAndTime("time", starttime, getActivity());
+                }
                 break;
             case (R.id.auctionenddate):
                 break;
