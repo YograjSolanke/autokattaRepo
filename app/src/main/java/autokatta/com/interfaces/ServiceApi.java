@@ -5,6 +5,7 @@ import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
+import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
@@ -274,5 +275,33 @@ public interface ServiceApi {
     @POST("getBroadcastGroups.php")
     Call<MyBroadcastGroupsResponse> _autokattaGetBroadcastGroups(@Query("owner") String myContact);
 
+
+
+    //Upload Vehicle
+    @POST("updateMyVehicle.php")
+    Call<String> _autokattaUploadVehicle(@Query("id") String id, @Query("vehicle_no") String vehicle_no,
+                               @Query("vehicle_type") String vehicle_type, @Query("subcategory") String subcategory,
+                               @Query("model_no") String model_no, @Query("brand") String brand,
+                               @Query("version") String version, @Query("year") String year,
+                               @Query("tax_validity") String tax_validity, @Query("fitness_validity") String fitness_validity,
+                               @Query("permit_validity") String permit_validity, @Query("insurance") String insurance,
+                                 @Query("PUC") String PUC, @Query("last_service_date") String last_service_date,
+                                         @Query("next_service_date") String next_service_date);
+
+
+    //ADD own Vehicle
+    @POST("addOwnVehicles.php")
+    Call<String> _autokattaAddOwn(@Query("contact") String contact, @Query("vehicle_no") String vehicle_no,
+                                         @Query("vehicle_type") String vehicle_type, @Query("subcategory") String subcategory,
+                                         @Query("model_no") String model_no, @Query("brand") String brand,
+                                         @Query("version") String version, @Query("year") String year,
+                                         @Query("tax_validity") String tax_validity, @Query("fitness_validity") String fitness_validity,
+                                         @Query("permit_validity") String permit_validity, @Query("insurance") String insurance,
+                                         @Query("PUC") String PUC, @Query("last_service_date") String last_service_date, @Query("next_service_date") String next_service_date);
+
+
+    //Get Brand Modle Version
+    @POST("getbrand_model_version.php")
+    Call<GetBrandModelVersionResponse> _autokattaGetBrandModelVersion(@Query("sub_category_id") String sub_category_id);
 
 }

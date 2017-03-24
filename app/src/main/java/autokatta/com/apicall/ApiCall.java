@@ -18,6 +18,7 @@ import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
+import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
@@ -1803,6 +1804,114 @@ public class ApiCall {
         }
     }
 
+    /*
+   Get Brand Model Version
+    */
+    public void getBrandModelVersion(String sub_category_id) {
+        {
+            try {
+                if (mConnectionDetector.isConnectedToInternet()) {
+                    Retrofit mRetrofit = new Retrofit.Builder()
+                            .baseUrl(mContext.getString(R.string.base_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(initLog().build())
+                            .build();
+                    ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                    Call<GetBrandModelVersionResponse> mGetBrandModelVersionResponse = mServiceApi._autokattaGetBrandModelVersion(sub_category_id);
+                    mGetBrandModelVersionResponse.enqueue(new Callback<GetBrandModelVersionResponse>() {
+                        @Override
+                        public void onResponse(Call<GetBrandModelVersionResponse> call, Response<GetBrandModelVersionResponse> response) {
+                            mNotifier.notifySuccess(response);
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetBrandModelVersionResponse> call, Throwable t) {
+                            mNotifier.notifyError(t);
+                        }
+                    });
+
+                } else {
+                    CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /*
+ ADD own
+  */
+    public void addOwn(String contact, String vehicle_no, String vehicle_type, String subcategory, String model_no, String brand,
+                       String version, String year, String tax_validity, String fitness_validity, String permit_validity, String insurance, String PUC, String last_service_date, String next_service_date)
+        {
+        {
+            try {
+                if (mConnectionDetector.isConnectedToInternet()) {
+                    Retrofit mRetrofit = new Retrofit.Builder()
+                            .baseUrl(mContext.getString(R.string.base_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(initLog().build())
+                            .build();
+                    ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                    Call<String> mAddOwn = mServiceApi._autokattaAddOwn(contact,   vehicle_no, vehicle_type,  subcategory, model_no,   brand, version,  year, tax_validity,   fitness_validity, permit_validity,  insurance, PUC,  last_service_date,   next_service_date);
+                    mAddOwn.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            mNotifier.notifyString(response.body());
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            mNotifier.notifyError(t);
+                        }
+                    });
+
+                } else {
+                    CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /*
+Upload Vehicle
+*/
+    public void uploadVehicle(String ids, String vehicle_no, String vehicle_type, String subcategory, String model_no, String brand,
+                       String version, String year, String tax_validity, String fitness_validity, String permit_validity, String insurance, String PUC, String last_service_date, String next_service_date)
+    {
+        {
+            try {
+                if (mConnectionDetector.isConnectedToInternet()) {
+                    Retrofit mRetrofit = new Retrofit.Builder()
+                            .baseUrl(mContext.getString(R.string.base_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(initLog().build())
+                            .build();
+                    ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                    Call<String> mUploadVehicle = mServiceApi._autokattaUploadVehicle(ids,   vehicle_no, vehicle_type,  subcategory, model_no,   brand, version,  year, tax_validity,   fitness_validity, permit_validity,  insurance, PUC,  last_service_date,   next_service_date);
+                    mUploadVehicle.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            mNotifier.notifyString(response.body());
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            mNotifier.notifyError(t);
+                        }
+                    });
+
+                } else {
+                    CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /***
      * Retrofit Logs
      ***/
