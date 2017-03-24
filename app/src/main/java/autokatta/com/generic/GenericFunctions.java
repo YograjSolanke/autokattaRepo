@@ -7,6 +7,7 @@ import android.media.ExifInterface;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -144,4 +145,163 @@ public class GenericFunctions {
         return rotatedBitmap;
 
     }
+
+    public Boolean startDateValidatioon(String startdate) {
+
+        Boolean flag2 = true;
+        long date = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
+        String dateString = sdf.format(now);
+        //String dateString = sdf.format(date);
+
+
+        System.out.println("current date====" + dateString);
+        // dobtext.getText();
+
+        System.out.println("Result here==================================================");
+
+        String[] partc = dateString.split("-");
+
+        // dob = dobtext.getText().toString();
+
+        String[] partu = startdate.split("-");
+
+
+        int currentyear = Integer.parseInt(partc[0]);
+        int useryear = Integer.parseInt(partu[0]);
+
+        if (currentyear - useryear > 0) {
+            flag2 = false;
+            System.out.println("year checking");
+            System.out.println("invalid user ");
+
+        } else if (currentyear - useryear < 0) {
+            System.out.println("year checking");
+            System.out.println("valid user ");
+
+        } else if (currentyear - useryear == 0) {
+
+            System.out.println("year checking");
+            if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) > 0) {
+
+                flag2 = false;
+                System.out.println("Mothns checking");
+                System.out.println("Months checked invalid user ");
+
+            } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) < 0) {
+
+                System.out.println("Mothns checking");
+                System.out.println("valid user ");
+
+                //dobtext.setError("Minimum 8 year age required");
+            } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) == 0) {
+
+                System.out.println("Mothns checking");
+                if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) > 0) {
+                    flag2 = false;
+                    System.out.println("day checking");
+                    System.out.println("date checked invalid user ");
+                } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) < 0) {
+
+                    System.out.println("day checking");
+                    System.out.println("date checked valid user ");
+                    //dobtext.setError("Minimum 8 year age required");
+                } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) == 0) {
+                    // flag=false;
+                    System.out.println("day checking");
+                    System.out.println("date checked valid user ");
+                    //dobtext.setError("Minimum 8 year age required");
+                }
+            }
+
+        }
+        return flag2;
+    }
+
+    public Boolean startDateEndDateValidation(String endDate, String startDate) {
+
+        Boolean flag1 = true;
+        System.out.println("Result here==================================================");
+
+        String[] partc = endDate.split("-");
+        String[] partu = startDate.split("-");
+
+
+        int currentyear = Integer.parseInt(partc[0]);
+        int useryear = Integer.parseInt(partu[0]);
+
+        if (currentyear - useryear > 0) {
+            System.out.println("year ");
+//            System.out.println("valid date ");
+
+        } else if (currentyear - useryear == 0) {
+
+            System.out.println("year checking");
+            if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) > 0) {
+                System.out.println("Mothns checking");
+                System.out.println("valid date ");
+            } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) < 0) {
+                flag1 = false;
+                System.out.println("Mothns checking");
+                System.out.println("Months checked invalid date ");
+                //dobtext.setError("Minimum 8 year age required");
+            } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) == 0) {
+
+                System.out.println("Mothns checking");
+                if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) > 0) {
+                    System.out.println("day checking");
+                    System.out.println("daty checked valid date ");
+                } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) < 0) {
+                    flag1 = false;
+                    System.out.println("day checking");
+                    System.out.println("daty checked invalid date ");
+                    //dobtext.setError("Minimum 8 year age required");
+                }
+            }
+
+        }
+        return flag1;
+    }
+
+    public Boolean startTimeEndTimeValidation(String startTime, String endTime) {
+
+        Boolean flag = true;
+        String[] startTime1 = startTime.split(":");
+        String[] endTime1 = endTime.split(":");
+
+        if (Integer.parseInt(startTime1[0]) > Integer.parseInt(endTime1[0])) {
+            flag = false;
+        } else if (Integer.parseInt(startTime1[0]) > Integer.parseInt(endTime1[0])) {
+            flag = true;
+        } else if (Integer.parseInt(startTime1[0]) == Integer.parseInt(endTime1[0])) {
+            if (Integer.parseInt(startTime1[1]) > Integer.parseInt(endTime1[1])) {
+                flag = false;
+            }
+        }
+
+        return flag;
+    }
+
+    public String getTimeFormat(int selectedHour, int selectedMinute, int selectedSecond) {
+
+        String hour = "", minute = "", second = "";
+        if (selectedHour < 10)
+            hour = "0" + String.valueOf(selectedHour);
+        else
+            hour = String.valueOf(selectedHour);
+
+        if (selectedMinute < 10)
+            minute = "0" + String.valueOf(selectedMinute);
+        else
+            minute = String.valueOf(selectedMinute);
+
+        if (selectedSecond < 10)
+            second = "0" + String.valueOf(selectedSecond);
+        else
+            second = String.valueOf(selectedSecond);
+
+        return hour + ":" + minute + ":" + second;
+    }
+
 }
