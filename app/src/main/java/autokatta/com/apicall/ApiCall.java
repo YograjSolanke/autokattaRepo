@@ -40,6 +40,7 @@ import autokatta.com.response.MyUpcomingAuctionResponse;
 import autokatta.com.response.MyUpcomingExchangeMelaResponse;
 import autokatta.com.response.MyUpcomingLoanMelaResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
+import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
@@ -1843,8 +1844,7 @@ public class ApiCall {
  ADD own
   */
     public void addOwn(String contact, String vehicle_no, String vehicle_type, String subcategory, String model_no, String brand,
-                       String version, String year, String tax_validity, String fitness_validity, String permit_validity, String insurance, String PUC, String last_service_date, String next_service_date)
-        {
+                       String version, String year, String tax_validity, String fitness_validity, String permit_validity, String insurance, String PUC, String last_service_date, String next_service_date) {
         {
             try {
                 if (mConnectionDetector.isConnectedToInternet()) {
@@ -1854,7 +1854,7 @@ public class ApiCall {
                             .client(initLog().build())
                             .build();
                     ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                    Call<String> mAddOwn = mServiceApi._autokattaAddOwn(contact,   vehicle_no, vehicle_type,  subcategory, model_no,   brand, version,  year, tax_validity,   fitness_validity, permit_validity,  insurance, PUC,  last_service_date,   next_service_date);
+                    Call<String> mAddOwn = mServiceApi._autokattaAddOwn(contact, vehicle_no, vehicle_type, subcategory, model_no, brand, version, year, tax_validity, fitness_validity, permit_validity, insurance, PUC, last_service_date, next_service_date);
                     mAddOwn.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
@@ -1880,38 +1880,75 @@ public class ApiCall {
 Upload Vehicle
 */
     public void uploadVehicle(String ids, String vehicle_no, String vehicle_type, String subcategory, String model_no, String brand,
-                       String version, String year, String tax_validity, String fitness_validity, String permit_validity, String insurance, String PUC, String last_service_date, String next_service_date)
-    {
-        {
-            try {
-                if (mConnectionDetector.isConnectedToInternet()) {
-                    Retrofit mRetrofit = new Retrofit.Builder()
-                            .baseUrl(mContext.getString(R.string.base_url))
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .client(initLog().build())
-                            .build();
-                    ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                    Call<String> mUploadVehicle = mServiceApi._autokattaUploadVehicle(ids,   vehicle_no, vehicle_type,  subcategory, model_no,   brand, version,  year, tax_validity,   fitness_validity, permit_validity,  insurance, PUC,  last_service_date,   next_service_date);
-                    mUploadVehicle.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            mNotifier.notifyString(response.body());
-                        }
+                              String version, String year, String tax_validity, String fitness_validity, String permit_validity, String insurance, String PUC, String last_service_date, String next_service_date) {
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            mNotifier.notifyError(t);
-                        }
-                    });
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<String> mUploadVehicle = mServiceApi._autokattaUploadVehicle(ids, vehicle_no, vehicle_type, subcategory, model_no, brand, version, year, tax_validity, fitness_validity, permit_validity, insurance, PUC, last_service_date, next_service_date);
+                mUploadVehicle.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
 
-                } else {
-                    CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
+
+    /*
+  Get Suggested Price
+   */
+    public void SuggestedPrice(String categoryId, String subCategoryId, String brandId, String modelId, String versionId, String mfgYear, String rtoCity) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<PriceSuggestionResponse> priceSuggestionResponseCall = mServiceApi._autokattaGetPriceSuggestion(categoryId, subCategoryId,
+                        brandId, modelId, versionId, mfgYear, rtoCity);
+
+                priceSuggestionResponseCall.enqueue(new Callback<PriceSuggestionResponse>() {
+                    @Override
+                    public void onResponse(Call<PriceSuggestionResponse> call, Response<PriceSuggestionResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<PriceSuggestionResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     /***
      * Retrofit Logs
      ***/
@@ -1925,4 +1962,5 @@ Upload Vehicle
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
 }
