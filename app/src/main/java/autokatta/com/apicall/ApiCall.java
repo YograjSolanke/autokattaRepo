@@ -45,6 +45,8 @@ import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
+import autokatta.com.response.SpecialClauseAddResponse;
+import autokatta.com.response.SpecialClauseGetResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -1983,6 +1985,75 @@ Upload Vehicle
             e.printStackTrace();
         }
     }
+
+
+    /*
+   Get Special Clauses For Auction
+    */
+    public void getSpecialClauses(String keyword) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<SpecialClauseGetResponse> mGetVehicleImplementation = mServiceApi.getSpecialClauses(keyword);
+                mGetVehicleImplementation.enqueue(new Callback<SpecialClauseGetResponse>() {
+                    @Override
+                    public void onResponse(Call<SpecialClauseGetResponse> call, Response<SpecialClauseGetResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<SpecialClauseGetResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+   Add Special Clauses For Auction
+    */
+    public void addSpecialClauses(String keyword, String clause) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<SpecialClauseAddResponse> mGetVehicleImplementation = mServiceApi.addSpecialClauses(keyword, clause);
+                mGetVehicleImplementation.enqueue(new Callback<SpecialClauseAddResponse>() {
+                    @Override
+                    public void onResponse(Call<SpecialClauseAddResponse> call, Response<SpecialClauseAddResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<SpecialClauseAddResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs

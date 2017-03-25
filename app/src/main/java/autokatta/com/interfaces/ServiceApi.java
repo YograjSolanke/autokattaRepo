@@ -33,6 +33,8 @@ import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
+import autokatta.com.response.SpecialClauseAddResponse;
+import autokatta.com.response.SpecialClauseGetResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -325,4 +327,15 @@ public interface ServiceApi {
     //Get My Uploaded Vehicle...
     @GET("getMyUploadedVehicles.php")
     Call<GetMyUploadedVehicleResponse> _autokattaMyUploadedVehicles(@Query("contact") String contact);
+
+
+    //Get SpecialCaluses For Auction
+    @GET("specialclauses.php")
+    Call<SpecialClauseGetResponse> getSpecialClauses(@Query("keyword") String keyword);
+
+
+    //Add SpecialCaluses For Auction
+    @GET("specialclauses.php")
+    Call<SpecialClauseAddResponse> addSpecialClauses(@Query("keyword") String keyword, @Query("clause") String clause);
+
 }
