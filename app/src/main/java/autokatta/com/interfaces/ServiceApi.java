@@ -1,5 +1,6 @@
 package autokatta.com.interfaces;
 
+import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
@@ -342,5 +343,16 @@ public interface ServiceApi {
     //Get Group Contacts...
     @GET("getGroupContacts.php")
     Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("group_id") String groupId);
+
+
+    //Get Group Vehicles
+    @GET("createAuction.php")
+    Call<AuctionCreateResponse> createAuction(@Query("title") String title, @Query("start_date") String start_date,
+                                              @Query("start_time") String start_time, @Query("end_date") String end_date,
+                                              @Query("end_time") String end_time, @Query("auction_type") String auction_type,
+                                              @Query("contact") String contact, @Query("location") String location,
+                                              @Query("product_category") String product_category, @Query("special_clauses") String special_clauses,
+                                              @Query("openClose") String openClose);
+
 
 }

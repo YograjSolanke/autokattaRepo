@@ -173,21 +173,11 @@
                 android:layout_marginTop="10dp"
                 android:hint="Address/Location"
                 android:textColorHint="#000000"
-                android:background="#D2E28B"
+                android:background="#80bebebe"
                 android:gravity="center"
                 android:visibility="gone"
                 android:textAlignment="center" />
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/spnproductcategory"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:gravity="center"
-                android:visibility="gone"
-                android:background="#D2E28B"></Spinner>
 
             <RelativeLayout
                 android:layout_width="wrap_content"

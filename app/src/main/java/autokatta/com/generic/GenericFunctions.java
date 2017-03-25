@@ -272,7 +272,7 @@ public class GenericFunctions {
 
         if (Integer.parseInt(startTime1[0]) > Integer.parseInt(endTime1[0])) {
             flag = false;
-        } else if (Integer.parseInt(startTime1[0]) > Integer.parseInt(endTime1[0])) {
+        } else if (Integer.parseInt(startTime1[0]) < Integer.parseInt(endTime1[0])) {
             flag = true;
         } else if (Integer.parseInt(startTime1[0]) == Integer.parseInt(endTime1[0])) {
             if (Integer.parseInt(startTime1[1]) > Integer.parseInt(endTime1[1])) {

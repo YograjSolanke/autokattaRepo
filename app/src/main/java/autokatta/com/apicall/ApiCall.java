@@ -13,6 +13,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
@@ -2087,6 +2088,51 @@ Upload Vehicle
             e.printStackTrace();
         }
     }
+
+
+    /*
+   create Auction Event
+     */
+    public void createAuction(String title, String start_date,
+                              String start_time, String end_date,
+                              String end_time, String auction_type,
+                              String contact, String location,
+                              String product_category, String special_clauses,
+                              String openClose) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<AuctionCreateResponse> mVehiclesResponse = mServiceApi.createAuction(title, start_date,
+                        start_time, end_date,
+                        end_time, auction_type,
+                        contact, location,
+                        product_category, special_clauses,
+                        openClose);
+                mVehiclesResponse.enqueue(new Callback<AuctionCreateResponse>() {
+                    @Override
+                    public void onResponse(Call<AuctionCreateResponse> call, Response<AuctionCreateResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AuctionCreateResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs
