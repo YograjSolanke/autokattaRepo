@@ -3,7 +3,12 @@ package autokatta.com.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +17,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.GroupVehicleRefreshAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by ak-001 on 24/3/17.
  */
 
-public class GroupVehicleList extends Fragment implements RequestNotifier {
+public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mGroupVehicleList;
     ListView mListView;
     String brand = "", model = "", version = "", city = "", RTOcity = "", reg_year = "",
@@ -37,12 +47,15 @@ public class GroupVehicleList extends Fragment implements RequestNotifier {
     ImageView filterimg;
     RelativeLayout relativefilter;
     List<GetGroupVehiclesResponse.Success> mSuccesses = new ArrayList<>();
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    RecyclerView mRecyclerView;
+    GroupVehicleRefreshAdapter mGroupVehicleRefreshAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroupVehicleList = inflater.inflate(R.layout.fragment_group_vehicle_list, container, false);
-        mListView = (ListView) mGroupVehicleList.findViewById(R.id.group_vehicle_list);
+        mRecyclerView = (RecyclerView) mGroupVehicleList.findViewById(R.id.rv_recycler_view);
         editbrand = (EditText) mGroupVehicleList.findViewById(R.id.editbrand);
         editmodel = (EditText) mGroupVehicleList.findViewById(R.id.editmodel);
         editversion = (EditText) mGroupVehicleList.findViewById(R.id.editversion);
@@ -56,6 +69,25 @@ public class GroupVehicleList extends Fragment implements RequestNotifier {
         filterimg = (ImageView) mGroupVehicleList.findViewById(R.id.filterimg);
         relativefilter = (RelativeLayout) mGroupVehicleList.findViewById(R.id.relative_filter);
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mGroupVehicleList.findViewById(R.id.swipeRefreshLayout);
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        //getData();//Get Api...
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                getGroupVehicles();
+            }
+        });
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -63,15 +95,13 @@ public class GroupVehicleList extends Fragment implements RequestNotifier {
                 filterimg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        if (mListView.getVisibility() == View.VISIBLE) {
-                            mListView.setVisibility(View.GONE);
+                        if (mSwipeRefreshLayout.getVisibility() == View.VISIBLE) {
+                            mSwipeRefreshLayout.setVisibility(View.GONE);
                             relativefilter.setVisibility(View.VISIBLE);
                         } else {
-                            mListView.setVisibility(View.VISIBLE);
+                            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                             relativefilter.setVisibility(View.GONE);
                         }
-
                     }
                 });
 
@@ -106,6 +136,7 @@ public class GroupVehicleList extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response!=null){
             if (response.isSuccessful()){
+                mSwipeRefreshLayout.setRefreshing(false);
                 if (response.body() instanceof GetGroupVehiclesResponse){
                     GetGroupVehiclesResponse mGetGroupVehiclesResponse = (GetGroupVehiclesResponse) response.body();
                     for (GetGroupVehiclesResponse.Success success : mGetGroupVehiclesResponse.getSuccess()){
@@ -152,22 +183,42 @@ public class GroupVehicleList extends Fragment implements RequestNotifier {
                         success.setUsername(success.getUsername());
                         mSuccesses.add(success);
                     }
+                    mGroupVehicleRefreshAdapter = new GroupVehicleRefreshAdapter(getActivity(), mSuccesses);
+                    mRecyclerView.setAdapter(mGroupVehicleRefreshAdapter);
+                    mGroupVehicleRefreshAdapter.notifyDataSetChanged();
                 }
             }else {
-                CustomToast.customToast(getActivity(),getString(R.string._404));
+                mSwipeRefreshLayout.setRefreshing(false);
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         }else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            mSwipeRefreshLayout.setRefreshing(false);
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("Check Class-"
+                    , "Group Vehicle List");
+        }
     }
 
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        mSuccesses.clear();
+        getGroupVehicles();
     }
 }

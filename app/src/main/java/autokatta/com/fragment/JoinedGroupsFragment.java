@@ -90,6 +90,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
     public void notifySuccess(Response<?> response) {
         if (response!=null){
             if (response.isSuccessful()){
+                mSwipeRefreshLayout.setRefreshing(false);
                 ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
                 for (ProfileGroupResponse.JoinedGroup joinedGroup : profileGroupResponse.getSuccess().getJoinedGroups()) {
                     ModelGroups modelGroups = new ModelGroups();
@@ -99,7 +100,6 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
                     modelGroups.setGroupCount(joinedGroup.getGroupcount());
                     modelGroups.setVehicleCount(joinedGroup.getVehiclecount());
                     mJoinedGroupsList.add(modelGroups);
-                    Log.i("list1","->"+mJoinedGroupsList.get(0).getTitle());
                 }
                 mMyAdapter = new MyAdapter(getActivity(), mJoinedGroupsList,"JoinedGroups");
                 mRecyclerView.setAdapter(mMyAdapter);

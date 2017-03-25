@@ -26,7 +26,6 @@ public class GroupsTab extends AppCompatActivity {
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
 
-
         ViewPager mviewPager = (ViewPager) findViewById(R.id.activity_groups_tab_viewpager);
         if (mviewPager != null) {
             setupViewPager(mviewPager);

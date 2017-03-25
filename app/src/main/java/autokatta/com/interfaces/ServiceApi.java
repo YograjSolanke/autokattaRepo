@@ -7,6 +7,7 @@ import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
+import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetMyUploadedVehicleResponse;
 import autokatta.com.response.GetPumpResponse;
@@ -337,5 +338,9 @@ public interface ServiceApi {
     //Add SpecialCaluses For Auction
     @GET("specialclauses.php")
     Call<SpecialClauseAddResponse> addSpecialClauses(@Query("keyword") String keyword, @Query("clause") String clause);
+
+    //Get Group Contacts...
+    @GET("getGroupContacts.php")
+    Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("group_id") String groupId);
 
 }

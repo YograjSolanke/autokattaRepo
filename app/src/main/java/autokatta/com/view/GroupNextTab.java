@@ -8,7 +8,7 @@ import android.os.Bundle;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.fragment.GroupVehicleList;
-import autokatta.com.fragment.JoinedGroupsFragment;
+import autokatta.com.fragment.MemberListFragment;
 import autokatta.com.fragment.MyGroupsFragment;
 
 public class GroupNextTab extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class GroupNextTab extends AppCompatActivity {
 
     private void setupViewPager(ViewPager mViewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getSupportFragmentManager());
-        tabAdapterName.addFragment(new MyGroupsFragment(), "Group Members");
+        tabAdapterName.addFragment(new MemberListFragment(), "Group Members");
         tabAdapterName.addFragment(new GroupVehicleList(), "Group Vehicles");
         mViewPager.setAdapter(tabAdapterName);
     }

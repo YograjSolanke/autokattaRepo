@@ -117,4 +117,15 @@
     <string name="puc">PUC</string>
     <string name="last_service_date">Last Service Date</string>
     <string name="next_service_date">Next Service Date</string>
+
+    <!--Custom Card Group Vehicle -->
+    <string name="no_register">Registration No :-</string>
+    <string name="price">Price :-</string>
+    <string name="model">Model :-</string>
+    <string name="brand_no">Brand :-</string>
+    <string name="updated_by">Uploaded By :-</string>
+    <string name="location">Location :-</string>
+    <string name="rto_city">RTO City :-</string>
+    <string name="year_of_mfg">Year Of Mfg :-</string>
+    <string name="kms_hrs">KMS/HRS :-</string>
 </resources>
