@@ -94,11 +94,13 @@
                 android:gravity="center" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Event Start"
+                android:layout_centerHorizontal="true"
                 android:textColor="#848484"
                 android:textSize="18sp"
+                android:background="@drawable/text_underline"
                 android:layout_below="@+id/editauctionname"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="10dp"
@@ -139,9 +141,11 @@
             </RelativeLayout>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/text_underline"
                 android:text="Event End"
                 android:layout_below="@+id/linear3"
                 android:id="@+id/auctionendtxt"

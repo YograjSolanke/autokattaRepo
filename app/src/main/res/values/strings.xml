@@ -128,4 +128,5 @@
     <string name="rto_city">RTO City :-</string>
     <string name="year_of_mfg">Year Of Mfg :-</string>
     <string name="kms_hrs">KMS/HRS :-</string>
+    <string name="title_activity_my_ended_event">MyEndedEventActivity</string>
 </resources>
