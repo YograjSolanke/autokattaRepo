@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
-
 <resources>
-
 
 
     <string-array name="userType">
@@ -19,4 +16,84 @@
         <item>Seeking Employment</item>
         <item>Student</item>
     </string-array>
+
+    <!--String Arrays...-->
+    <string-array name="hypo">
+        <item>Select Hypothetication</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="RC_avl">
+        <item>-Select RC Available-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="ins">
+        <item>-Select Insurance Valid-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="tax">
+        <item>-Select Tax Valid-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="permit">
+        <item>-Select Permit Validity-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="fitness">
+        <item>-Select Fitness Valid-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="owners">
+        <item>-Select Owners-</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>More than 3</item>
+    </string-array>
+
+    <string-array name="drive">
+        <item>-Select DriveType-</item>
+        <item>2WD</item>
+        <item>4WD</item>
+    </string-array>
+
+    <string-array name="trance">
+        <item>-Select transmission-</item>
+        <item>automatic</item>
+        <item>manual</item>
+    </string-array>
+
+    <string-array name="bustype">
+        <item>-Select BusType-</item>
+        <item>School Bus</item>
+        <item>Staff Bus</item>
+        <item>Luxary Bus</item>
+        <item>Sleeper Coach</item>
+        <item>Semi Sleeper</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="air">
+        <item>-Select Air Condition-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="invoice">
+        <item>-Select Invoice Available-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
 </resources>
