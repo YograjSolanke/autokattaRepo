@@ -196,7 +196,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
                     FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.groupFrame, groupVehicleList);
+                    fragmentTransaction.replace(R.id.group_container, groupVehicleList);
                     fragmentTransaction.addToBackStack("groupvehiclelist");
                     fragmentTransaction.commit();
                 }

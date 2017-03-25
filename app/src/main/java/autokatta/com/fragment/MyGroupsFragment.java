@@ -1,12 +1,8 @@
 package autokatta.com.fragment;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +19,6 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.MyAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment_profile.About;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
@@ -31,7 +26,6 @@ import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
-import static autokatta.com.R.id.fabCreateGroup;
 
 /**
  * Created by ak-003 on 19/3/17.
@@ -41,7 +35,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     View mMyGroups;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    FloatingActionButton floatCreateGroup;
     List<ModelGroups> mMyGroupsList = new ArrayList<>();
     MyAdapter mMyAdapter;
 
@@ -55,7 +48,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         mMyGroups = inflater.inflate(R.layout.fragment_my_groups, container, false);
 
         mRecyclerView = (RecyclerView) mMyGroups.findViewById(R.id.rv_recycler_view);
-        floatCreateGroup = (FloatingActionButton) mMyGroups.findViewById(fabCreateGroup);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyGroups.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -140,13 +132,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case fabCreateGroup:
-                About about = new About();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.groupFrame, about).commit();
-
-                break;
 
         }
 

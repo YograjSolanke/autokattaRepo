@@ -33,7 +33,7 @@ import autokatta.com.fragment_profile.About;
 import autokatta.com.view.BlackListedMemberActivity;
 import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.Create_Event;
-import autokatta.com.view.GroupsTab;
+import autokatta.com.view.GroupTabs;
 import autokatta.com.view.MyActiveEventsTabActivity;
 import autokatta.com.view.MyAutokattaContacts;
 import autokatta.com.view.MyBroadcastGroupsActivity;
@@ -142,7 +142,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.my_contacts) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyAutokattaContacts.class));
                         } else if (menuItem.getItemId() == R.id.group) {
-                            startActivity(new Intent(AutokattaMainActivity.this, GroupsTab.class));
+                            startActivity(new Intent(AutokattaMainActivity.this, GroupTabs.class));
                         } else if (menuItem.getItemId() == R.id.my_store) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyStoreListActivity.class));
                         } else if (menuItem.getItemId() == R.id.browse_store) {

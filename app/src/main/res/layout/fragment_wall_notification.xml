@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
+    <!--<EditText
         android:id="@+id/statustext"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -75,7 +75,7 @@
         android:layout_height="2dp"
         android:layout_below="@+id/post"
         android:layout_marginTop="2dp"
-        android:background="#cccccc" />
+        android:background="#cccccc" />-->
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"

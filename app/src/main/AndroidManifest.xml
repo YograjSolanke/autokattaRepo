@@ -61,10 +61,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.UploadVehicleIntro" />
         <activity
-            android:name=".view.GroupsTab"
-            android:label="@string/title_activity_groups_tab"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".view.MyStoreListActivity"
             android:label="@string/title_activity_my_store_list"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -141,10 +137,13 @@
             android:name=".view.ContinueNextRegistration"
             android:label="Continue Next Registration"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.GroupNextTab" />
         <activity
             android:name=".view.MyEndedEventTabActivity"
             android:label="@string/title_activity_my_ended_event"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.GroupTabs"
+            android:label="@string/title_activity_group_tabs"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
