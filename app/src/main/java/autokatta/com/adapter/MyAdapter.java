@@ -81,7 +81,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.mEditMemberCount.setText(mItemList.get(position).getGroupCount());
 //        holder.mEditVehicleCount.setText(mItemList.get(position).getVehicleCount());
 
-        /*Card Click Listener*/
+        /***Card Click Listener***/
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
