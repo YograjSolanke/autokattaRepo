@@ -141,7 +141,11 @@
             android:name=".view.ContinueNextRegistration"
             android:label="Continue Next Registration"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.GroupNextTab"></activity>
+        <activity android:name=".view.GroupNextTab" />
+        <activity
+            android:name=".view.MyEndedEventTabActivity"
+            android:label="@string/title_activity_my_ended_event"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
