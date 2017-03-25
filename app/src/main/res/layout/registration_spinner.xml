@@ -5,6 +5,7 @@
     android:paddingEnd="10sp"
     android:paddingStart="10sp"
     android:textSize="15sp"
-    android:textColor="@color/textColor">
+    android:textColor="@color/textColor"
+    android:textAlignment="center">
 
 </TextView>
