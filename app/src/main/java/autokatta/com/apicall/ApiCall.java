@@ -25,6 +25,7 @@ import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleColor;
 import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
@@ -1381,15 +1382,15 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetBrand = mServiceApi._autokattaGetBrand(category, subCategory);
-                mGetBrand.enqueue(new Callback<String>() {
+                Call<GetVehicleBrandResponse> mGetBrand = mServiceApi._autokattaGetBrand(category, subCategory);
+                mGetBrand.enqueue(new Callback<GetVehicleBrandResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<GetVehicleBrandResponse> call, Response<GetVehicleBrandResponse> response) {
 
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<GetVehicleBrandResponse> call, Throwable t) {
 
                     }
                 });

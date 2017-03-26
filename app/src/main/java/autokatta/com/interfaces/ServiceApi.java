@@ -13,6 +13,7 @@ import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetMyUploadedVehicleResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleColor;
 import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
@@ -218,7 +219,7 @@ public interface ServiceApi {
 
     //Get Brand
     @GET("getVehicleBrand.php")
-    Call<String> _autokattaGetBrand(@Query("category") String category, @Query("subcategory") String subCategory);
+    Call<GetVehicleBrandResponse> _autokattaGetBrand(@Query("category") String category, @Query("subcategory") String subCategory);
 
     //Get Model
     @GET("getVehicleModel.php")

@@ -2,43 +2,37 @@ package autokatta.com.upload_vehicle;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment_profile.Modules;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.MonthYearPicker;
 import autokatta.com.response.GetBreaks;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
-import autokatta.com.response.ModelGroups;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Response;
@@ -80,7 +74,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     HashMap<String, String> mPumpList1 = new HashMap<>();
     //Staring
     List<String> mStaringList = new ArrayList<>();
-    String category;
+    String category, categoryId;
 
     /*
     Year Fragment...
@@ -88,8 +82,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     private MonthYearPicker myp;
     EditText mMakeMonth, mMakeYear;
     EditText mRegisterMonth, mRegisterYear;
+    LinearLayout linearPermit;
 
-    public Title(){
+    /*
+        kms/hrs fragment
+     */
+    EditText mHrs, mKms;
+
+    public Title() {
         //empty constructor...
     }
 
@@ -118,6 +118,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         /*
         Sub Type...
          */
+        linearPermit = (LinearLayout) mTitle.findViewById(R.id.linearPermit);
         mTouristPassing = (RadioButton) mTitle.findViewById(R.id.tourist_passing);
         mPrivatePassing = (RadioButton) mTitle.findViewById(R.id.private_passing);
 
@@ -129,16 +130,30 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mVersionSpinner = (Spinner) mTitle.findViewById(R.id.versionspinner);
 
         /*
+        Year Fragment...
+         */
+
+        mMakeMonth = (EditText) mTitle.findViewById(R.id.make_month);
+        mMakeYear = (EditText) mTitle.findViewById(R.id.make_year);
+        mRegisterMonth = (EditText) mTitle.findViewById(R.id.register_month);
+        mRegisterYear = (EditText) mTitle.findViewById(R.id.register_year);
+
+
+        /*
         kms fragment
          */
         mPumpSpinner = (Spinner) mTitle.findViewById(R.id.pumpspinner);
         mBreakSpinner = (Spinner) mTitle.findViewById(R.id.brakespinner);
         mStaringSpinner = (Spinner) mTitle.findViewById(R.id.stearingspinner);
+        mHrs = (EditText) mTitle.findViewById(R.id.hrstext1);
+        mKms = (EditText) mTitle.findViewById(R.id.kmstext1);
 
-        category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("category", null);
+        category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
+        categoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", null);
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
         mSubmit.setOnClickListener(this);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -148,7 +163,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getSubCategoryTask();
                     getModel();
                     getVersion();
-                    getBrand();
+
                     getBreaks();
                     getPumps();
 
@@ -226,11 +241,45 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     }
 
                     /*
+                    Sub type Fragment
+                     */
+                    if (!category.equalsIgnoreCase("Car")) {
+                        linearPermit.setVisibility(View.GONE);
+                    }
+
+                    /*
                     Brand Fragment...
                      */
-                    if(category.equalsIgnoreCase("construction Equipment"))
+                    if (category.equalsIgnoreCase("construction Equipment"))
                         mVersionSpinner.setVisibility(View.GONE);
 
+                    /*
+                    Kms fragment
+                     */
+                    if (category.equalsIgnoreCase("Construction Equipment") || category.equalsIgnoreCase("Cranes")) {
+                        mKms.setVisibility(View.GONE);
+                        mHrs.setVisibility(View.VISIBLE);
+                        mPumpSpinner.setVisibility(View.GONE);
+                        mBreakSpinner.setVisibility(View.GONE);
+                        mStaringSpinner.setVisibility(View.GONE);
+                        //note.setText("In Hrs");
+
+                    } else if (category.equalsIgnoreCase("Tractor")) {
+                        mKms.setVisibility(View.GONE);
+                        mHrs.setVisibility(View.VISIBLE);
+                        mPumpSpinner.setVisibility(View.VISIBLE);
+                        mBreakSpinner.setVisibility(View.VISIBLE);
+                        mStaringSpinner.setVisibility(View.VISIBLE);
+                        //note.setText("In Hrs");
+                    } else {
+                        mKms.setVisibility(View.VISIBLE);
+                        mHrs.setVisibility(View.GONE);
+                        mPumpSpinner.setVisibility(View.GONE);
+                        mBreakSpinner.setVisibility(View.GONE);
+                        mStaringSpinner.setVisibility(View.GONE);
+                        //note.setText("In Kms");
+
+                    }
                     /*
                     Staring Spinner
                      */
@@ -243,9 +292,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mStaringSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position!=0){
-                                String subcategory = mStaringList.get(position);
-                                System.out.println("Sub cat is::" + subcategory);
+                            if (position != 0) {
+
+                                String stearingname = mStaringList.get(position);
+
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_stearingName", stearingname).apply();
+
+                                System.out.println("Stearing name is::" + stearingname);
                             }
                         }
 
@@ -286,34 +339,35 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
     private void getSubCategoryTask() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getVehicleSubtype(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("category_id", null));
+        mApiCall.getVehicleSubtype(categoryId);
     }
 
     /*
     Get Brand
      */
-    private void getBrand() {
+    private void getBrand(String category, String subcategory) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        //mApiCall.getBrand();
     }
 
     /*
     Get Model...
      */
-    private void getModel(){
+    private void getModel() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
     }
 
     /*
     Get Version...
      */
-    private void getVersion(){
+    private void getVersion() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
     }
 
     /*
     Get Breaks...
      */
-    private void getBreaks(){
+    private void getBreaks() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getBreaks();
     }
@@ -321,11 +375,26 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Get Staring...
      */
-    private void getPumps(){
+    private void getPumps() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getPump();
     }
 
+    /*
+   Add other Break...
+    */
+    private void addOtherBreak(String otherBreak) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.addBreak(otherBreak);
+    }
+
+    /*
+   Add other Pump...
+    */
+    private void addOtherPump(String otherPump) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.addPump(otherPump);
+    }
 
     /*
     Alert Dialog
@@ -480,9 +549,17 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position!=0){
+                            if (position != 0) {
                                 String subcategory = mSubTypeList1.get(parsedData.get(position));
+                                String subcategoryname = parsedData.get(position);
+
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_subCatId", subcategory).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_subCatName", subcategoryname).apply();
+
                                 System.out.println("Sub cat is::" + subcategory);
+                                System.out.println("Sub cat name::" + subcategoryname);
+
+                                //getBrand();
                             }
                         }
 
@@ -491,11 +568,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                         }
                     });
-                } else if (response.body() instanceof GetBreaks){
-                    Log.e("Get","Breaks");
+                } else if (response.body() instanceof GetBreaks) {
+                    Log.e("Get", "Breaks");
                     GetBreaks mGetBreaks = (GetBreaks) response.body();
                     mBreakList.add("Select Break Types");
-                    for (GetBreaks.Success success : mGetBreaks.getSuccess()){
+                    for (GetBreaks.Success success : mGetBreaks.getSuccess()) {
                         success.setId(success.getId());
                         success.setTitle(success.getTitle());
                         mBreakList.add(success.getTitle());
@@ -508,9 +585,56 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mBreakSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position!=0){
-                                String subcategory = mBreakList1.get(breakListData.get(position));
-                                System.out.println("Sub cat is::" + subcategory);
+                            if (position != 0) {
+                                String brakeid = mBreakList1.get(breakListData.get(position));
+                                String brakename = breakListData.get(position);
+
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeId", brakeid).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeName", brakename).apply();
+
+                                System.out.println("Brake id:" + brakeid);
+                                System.out.println("Brake name::" + brakename);
+                            }
+
+                            if (mBreakSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+
+                                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
+                                alertDialog.setTitle("Add Brakes");
+                                alertDialog.setMessage("Enter Brake name");
+
+                                final EditText input = new EditText(getActivity());
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Brake",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String otherBreak = input.getText().toString();
+
+                                                if (otherBreak.equals(""))
+                                                    CustomToast.customToast(getActivity(), "Please enter Brake type");
+                                                else
+                                                    addOtherBreak(otherBreak);
+
+
+                                                dialog.cancel();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mBreakSpinner.setSelection(0);
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                                alertDialog.show();
+
                             }
                         }
 
@@ -520,11 +644,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         }
                     });
 
-                } else if (response.body() instanceof GetPumpResponse){
-                    Log.e("Get","Pumps");
+                } else if (response.body() instanceof GetPumpResponse) {
+                    Log.e("Get", "Pumps");
                     GetPumpResponse mGetPumpResponse = (GetPumpResponse) response.body();
                     mPumpList.add("Select Pump Types");
-                    for (GetPumpResponse.Success success : mGetPumpResponse.getSuccess()){
+                    for (GetPumpResponse.Success success : mGetPumpResponse.getSuccess()) {
                         success.setId(success.getId());
                         success.setTitle(success.getTitle());
                         mPumpList.add(success.getTitle());
@@ -537,9 +661,55 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mPumpSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position!=0){
-                                String subcategory = mPumpList1.get(pumpListData.get(position));
-                                System.out.println("Sub cat is::" + subcategory);
+                            if (position != 0) {
+                                String pumpId = mPumpList1.get(pumpListData.get(position));
+                                String pumpName = mPumpList1.get(pumpListData.get(position));
+
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_pumpId", pumpId).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_pumpName", pumpName).apply();
+
+                                System.out.println("pump id::" + pumpId);
+                                System.out.println("pump name::" + pumpName);
+                            }
+                            if (mPumpSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+
+                                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
+                                alertDialog.setTitle("Add Pump");
+                                alertDialog.setMessage("Enter Pump name");
+
+                                final EditText input = new EditText(getActivity());
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Pump",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String otherPump = input.getText().toString();
+
+                                                if (otherPump.equals(""))
+                                                    CustomToast.customToast(getActivity(), "Please enter Brake type");
+                                                else
+                                                    addOtherPump(otherPump);
+
+
+                                                dialog.cancel();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mPumpSpinner.setSelection(0);
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                                alertDialog.show();
+
                             }
                         }
 
@@ -577,6 +747,91 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.title_next:
+
+               /* vehicleEditor.putString("title", titletext);
+                vehicleEditor.putString("privacy", privacy);
+                vehicleEditor.putString("exchange", exchangeYesNo);
+                vehicleEditor.putString("storeprivacy", storeprivacy);
+                vehicleEditor.putString("financestatus", financests);
+                vehicleEditor.putString("exchangestatus", exchangests);
+                vehicleEditor.putString("OwnerGroupIds", stringgroupids);
+                vehicleEditor.putString("OwnerStoreIds", stringstoreids);
+                vehicleEditor.putString("OwnerGroupName", stringgroupname);
+                vehicleEditor.putString("OwnerStoreName", stringstorename);
+                */
+                String strTitle = "", strGroupPriavcy = "", strStorePrivacy = "", strFinanceStatus = "", strExchangeStatus = "",
+                        permit = "", strMakemonth = "", strMakeyear = "", strRegisterMonth = "", strRegisterYear = "",
+                        strHrs = "", strKms = "";
+
+                strTitle = title.getText().toString();
+                strMakemonth = mMakeMonth.getText().toString();
+                strMakeyear = mMakeYear.getText().toString();
+                strRegisterMonth = mRegisterMonth.getText().toString();
+                strRegisterYear = mRegisterYear.getText().toString();
+                strHrs = mHrs.getText().toString();
+                strKms = mKms.getText().toString();
+
+                if (radioButton1.isChecked()) {
+                    strGroupPriavcy = "Yes";
+                } else if (radioButton2.isChecked()) {
+                    strGroupPriavcy = "No";
+                }
+                if (storeradioyes.isChecked()) {
+                    strStorePrivacy = "Yes";
+                } else if (storeradiono.isChecked()) {
+
+                    strStorePrivacy = "No";
+                }
+
+
+                if (financeyes.isChecked()) {
+                    strFinanceStatus = "Yes";
+                } else if (financeno.isChecked()) {
+
+                    strFinanceStatus = "No";
+                }
+
+
+                if (exchangeyes.isChecked()) {
+                    strExchangeStatus = "Yes";
+                } else if (exchangeno.isChecked()) {
+
+                    strExchangeStatus = "No";
+                }
+
+
+                if (category.equalsIgnoreCase("Car")) {
+
+                    if (mTouristPassing.isChecked())
+                        permit = "Tourist Passing";
+                    if (mPrivatePassing.isChecked())
+                        permit = "Private Passing";
+                }
+
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Title", strTitle).apply();
+
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_groupPrivacy", strGroupPriavcy).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupIds", stringgroupids).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupNames", stringgroupname).apply();
+
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_storePrivacy", strStorePrivacy).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreIds", stringstoreids).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreNames", stringstorename).apply();
+
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_financeStatus", strFinanceStatus).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_exchangeStatus", strExchangeStatus).apply();
+
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_permit", permit).apply();
+
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_makeMonth", strMakemonth).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_makeYear", strMakeyear).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_registerMonth", strRegisterMonth).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_registerYear", strRegisterYear).apply();
+
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Hrs", strHrs).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Kms", strKms).apply();
+
+
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction mTransaction = manager.beginTransaction();
                 mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();

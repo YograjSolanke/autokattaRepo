@@ -34,7 +34,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-001 on 20/3/17.
  */
 
-public class VehicleList extends Fragment  implements RequestNotifier {
+public class VehicleList extends Fragment implements RequestNotifier {
 
     View mVehicleList;
     ListView mListView;
@@ -51,9 +51,9 @@ public class VehicleList extends Fragment  implements RequestNotifier {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String s = mGetVehicle.get(position).getName();
                 String subTypeId = mGetVehicle.get(position).getId();
-                if (s!=null){
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("category", s).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("category_id", subTypeId).apply();
+                if (s != null) {
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryName", s).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryId", subTypeId).apply();
                     FragmentManager manager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = manager.beginTransaction();
                     fragmentTransaction.replace(R.id.vehicle_upload_container, new Title()).addToBackStack("vehicle_list").commit();
@@ -71,23 +71,23 @@ public class VehicleList extends Fragment  implements RequestNotifier {
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
+        if (response != null) {
+            if (response.isSuccessful()) {
                 GetVehicleListResponse mGetVehicleListResponse = (GetVehicleListResponse) response.body();
-                if (!mGetVehicleListResponse.getSuccess().isEmpty()){
-                    for (GetVehicleListResponse.Success mSuccess: mGetVehicleListResponse.getSuccess()){
+                if (!mGetVehicleListResponse.getSuccess().isEmpty()) {
+                    for (GetVehicleListResponse.Success mSuccess : mGetVehicleListResponse.getSuccess()) {
                         mSuccess.setId(mSuccess.getId());
                         mSuccess.setName(mSuccess.getName());
                         mGetVehicle.add(mSuccess);
                     }
-                    GetVehicleListAdapter mGetVehicleListAdapter = new GetVehicleListAdapter(getActivity(),mGetVehicle);
+                    GetVehicleListAdapter mGetVehicleListAdapter = new GetVehicleListAdapter(getActivity(), mGetVehicle);
                     mListView.setAdapter(mGetVehicleListAdapter);
                     mGetVehicleListAdapter.notifyDataSetChanged();
                 }
-            }else {
+            } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
-        }else {
+        } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
