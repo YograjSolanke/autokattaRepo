@@ -96,4 +96,14 @@
         <item>No</item>
     </string-array>
 
+
+    <string-array name="emission">
+        <item>-Select Emmission Version-</item>
+        <item>Bharat stage I</item>
+        <item>Bharat stage II</item>
+        <item>Bharat stage III</item>
+        <item>Bharat stage IV</item>
+        <item>Bharat stage V</item>
+        <item>Bharat stage VI</item>
+    </string-array>
 </resources>

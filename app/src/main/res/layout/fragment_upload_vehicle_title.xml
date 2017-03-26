@@ -78,8 +78,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Allow your vehicle to display in groups?"
-                    android:textSize="18sp"
-                    android:textColor="#2C3343" />
+                    android:textColor="#2C3343"
+                    android:textSize="18sp" />
 
                 <RadioGroup
                     android:id="@+id/radiopermit"
@@ -109,10 +109,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="18sp"
                     android:text="Allow your vehicle to display in stores?"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#2C3343" />
+                    android:textColor="#2C3343"
+                    android:textSize="18sp" />
 
 
                 <RadioGroup
@@ -144,10 +144,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="18sp"
                     android:text="Are you looking for vehicle exchange?"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#2C3343" />
+                    android:textColor="#2C3343"
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -162,9 +162,9 @@
                         android:layout_marginTop="5dp"
                         android:layout_weight="1.4"
                         android:text="Finance"
-                        android:textSize="18sp"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#2C3343" />
+                        android:textColor="#2C3343"
+                        android:textSize="18sp" />
 
                     <RadioGroup
                         android:id="@+id/finance"
@@ -203,9 +203,9 @@
                         android:layout_marginTop="5dp"
                         android:layout_weight="1.4"
                         android:text="Exchange"
-                        android:textSize="18sp"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#2C3343" />
+                        android:textColor="#2C3343"
+                        android:textSize="18sp" />
 
                     <RadioGroup
                         android:id="@+id/exchangeradio"
@@ -273,6 +273,7 @@
                     android:ems="10" />
 
                 <LinearLayout
+                    android:id="@+id/linearPermit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -283,8 +284,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Permit/Private* "
-                        android:textSize="18sp"
-                        android:textColor="#2C3343" />
+                        android:textColor="#2C3343"
+                        android:textSize="18sp" />
 
                     <RadioGroup
                         android:id="@+id/subtype_radiopermit"
@@ -346,7 +347,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
-                    android:ems="10"  />
+                    android:ems="10" />
 
                 <Spinner
                     android:id="@+id/modelspinner"
@@ -355,17 +356,17 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
-                    android:ems="10"  />
+                    android:ems="10" />
 
                 <Spinner
                     android:id="@+id/versionspinner"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="3dp"
+                    android:layout_marginTop="5dp"
                     android:background="#80bebebe"
-                    android:ems="10"  />
+                    android:ems="10" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -524,6 +525,21 @@
                 android:weightSum="2">
 
                 <EditText
+                    android:id="@+id/kmstext1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="5dp"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:hint="Kms Run"
+                    android:inputType="number"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:visibility="gone" />
+
+                <EditText
                     android:id="@+id/hrstext1"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
@@ -565,12 +581,12 @@
 
         <Button
             android:id="@+id/title_next"
-            android:layout_marginTop="@dimen/text_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_about"
             android:background="@color/background"
+            android:text="submit"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:text="submit" />
+            android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>

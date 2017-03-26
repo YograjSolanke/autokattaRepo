@@ -88,6 +88,82 @@
             </LinearLayout>
         </RelativeLayout>
 
+        <!--Owner Fragment-->
+        <RelativeLayout
+            android:id="@+id/owner_title_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_padding"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_top"
+            android:background="@drawable/layout_background">
+
+            <TextView
+                android:id="@+id/owner_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                android:drawableStart="@mipmap/ic_launcher"
+                android:gravity="start|center"
+                android:text="Owner"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_layout"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/owner_title"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="@dimen/card_margin"
+                android:layout_marginStart="@dimen/card_margin"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/ownerstext"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:entries="@array/owners" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/bodymanufacturer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:hint="Body manufacurer"
+                    android:padding="7dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:visibility="gone" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/seatmanufacturer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:hint="Seat manufacurer"
+                    android:padding="7dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:visibility="gone" />
+
+                <Spinner
+                    android:id="@+id/emVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:entries="@array/emission" />
+            </LinearLayout>
+        </RelativeLayout>
+
         <!--Document Fragment-->
         <RelativeLayout
             android:id="@+id/document_title_body"
@@ -147,6 +223,7 @@
                     android:entries="@array/ins" />
 
                 <RelativeLayout
+                    android:id="@+id/relInsurance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -205,6 +282,7 @@
                     android:entries="@array/tax" />
 
                 <RelativeLayout
+                    android:id="@+id/relTaxdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -236,6 +314,7 @@
                     android:entries="@array/permit" />
 
                 <RelativeLayout
+                    android:id="@+id/relPermit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -266,6 +345,7 @@
                     android:entries="@array/fitness" />
 
                 <RelativeLayout
+                    android:id="@+id/relFitness"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -288,79 +368,6 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <!--Owner Fragment-->
-        <RelativeLayout
-            android:id="@+id/owner_title_body"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/layout_padding"
-            android:layout_marginStart="@dimen/layout_padding"
-            android:layout_marginTop="@dimen/layout_top"
-            android:background="@drawable/layout_background">
-
-            <TextView
-                android:id="@+id/owner_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background"
-                android:drawableStart="@mipmap/ic_launcher"
-                android:gravity="start|center"
-                android:text="Owner"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_layout"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/owner_title"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="@dimen/card_margin"
-                android:layout_marginStart="@dimen/card_margin"
-                android:orientation="vertical">
-
-                <Spinner
-                    android:id="@+id/ownerstext"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:layout_marginTop="10dp"
-                    android:entries="@array/owners"
-                    android:background="#80bebebe"
-                    android:ems="10" />
-
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="Body manufacurer"
-                    android:background="#80bebebe"
-                    android:id="@+id/bodymanufacturer"
-                    android:textColorHint="#848484"
-                    android:textColor="#2C3343"
-                    android:padding="7dp"
-                    android:visibility="gone"/>
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="Seat manufacurer"
-                    android:background="#80bebebe"
-                    android:textColorHint="#848484"
-                    android:textColor="#2C3343"
-                    android:padding="7dp"
-                    android:id="@+id/seatmanufacturer"
-                    android:visibility="gone"/>
-
-                <Spinner
-                    android:id="@+id/emVersion"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#80bebebe"
-                    android:ems="10" />
-            </LinearLayout>
-        </RelativeLayout>
 
         <!--Car Fragment-->
         <RelativeLayout
@@ -428,16 +435,16 @@
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
                     android:entries="@array/drive"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <Spinner
                     android:id="@+id/transmissionspinner"
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:entries="@array/trance"
                     android:layout_marginTop="5dp"
-                    android:visibility="gone"
-                    android:background="#80bebebe" />
+                    android:background="#80bebebe"
+                    android:entries="@array/trance"
+                    android:visibility="gone" />
 
                 <Spinner
                     android:id="@+id/bodytypespinner"
@@ -492,8 +499,8 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
-                    android:paddingEnd="3dp"
                     android:entries="@array/bustype"
+                    android:paddingEnd="3dp"
                     android:paddingStart="3dp" />
 
                 <Spinner
@@ -632,7 +639,7 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
-                    android:hint="JIB in Ft"
+                    android:hint="Boon in Ft"
                     android:inputType="numberDecimal"
                     android:paddingEnd="3dp"
                     android:paddingStart="3dp"
