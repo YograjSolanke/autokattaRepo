@@ -130,4 +130,5 @@
     <string name="kms_hrs">KMS/HRS :-</string>
     <string name="title_activity_my_ended_event">MyEndedEventActivity</string>
     <string name="title_activity_group_tabs">GroupTabs</string>
+    <string name="title_activity_vehicle_details">VehicleDetails</string>
 </resources>

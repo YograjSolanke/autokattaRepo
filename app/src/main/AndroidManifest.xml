@@ -144,6 +144,10 @@
         <activity
             android:name=".view.GroupTabs"
             android:label="@string/title_activity_group_tabs"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.VehicleDetails"
+            android:label="@string/title_activity_vehicle_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
