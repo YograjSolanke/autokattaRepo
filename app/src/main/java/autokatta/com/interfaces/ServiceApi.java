@@ -414,4 +414,19 @@ public interface ServiceApi {
     Call<GetCompaniesResponse> _autokattaGetCompany();
 
 
+    //get  Ended Auction Events
+    @POST("getEndedAuction.php")
+    Call<MyActiveAuctionResponse> getEndedAuctions(@Query("contact") String myContact);
+
+
+    //get Ended Loan Mela
+    @POST("getEndedLoanMela.php")
+    Call<MyActiveLoanMelaResponse> getEndedLoanMela(@Query("contact") String myContact);
+
+
+    //get Ended Exchange Mela
+    @POST("getEndedExchangeMela.php")
+    Call<MyActiveExchangeMelaResponse> getEndedExchangeMela(@Query("contact") String myContact);
+
+
 }
