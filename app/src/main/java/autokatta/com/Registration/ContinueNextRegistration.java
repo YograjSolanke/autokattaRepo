@@ -1,4 +1,4 @@
-package autokatta.com.view;
+package autokatta.com.Registration;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -317,7 +317,6 @@ action="ContinueRegisteration";
                     //addOwn();
 
                 } else if (flag == 1 && action.equalsIgnoreCase("MyVehicles")) {
-//                    uploadvehicleData();
                     /*Response is success*/
                     mApicall.uploadVehicle(ids, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                             taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
@@ -600,6 +599,7 @@ action="ContinueRegisteration";
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
                         dataadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSpinnerVehitype.setAdapter(dataadapter);
+                        mSpinnerSubType.setAdapter(null);
                         mSpinnerVehitype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -652,6 +652,7 @@ action="ContinueRegisteration";
                         mSubTypeList.add(subTypeResponse.getName());
                         mSubTypeList1.put(subTypeResponse.getId(), subTypeResponse.getName());
                     }
+                    mSubTypeList.clear();
                     mSubTypeList1.clear();
                     parsedData1.clear();
                     parsedData1.addAll(mSubTypeList);
@@ -763,7 +764,9 @@ action="ContinueRegisteration";
 
                                         dialog.cancel();
 //
-
+                                        Intent i= new Intent(getApplicationContext(),CompanyBasedRegistrationActivity.class);
+                                        startActivity(i);
+                                        finish();
                                      /*   CompanyBasedRegisteration fr = new CompanyBasedRegisteration();
                                         //fr.setArguments(b);
                                         mFragmentManager = getActivity().getSupportFragmentManager();

@@ -76,7 +76,7 @@
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.RegistrationActivity"
+            android:name=".Registration.RegistrationActivity"
             android:label="@string/title_activity_registration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -118,7 +118,7 @@
             android:label="@string/title_activity_black_listed_member"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.ContinueRegistration"
+            android:name=".Registration.ContinueRegistration"
             android:label="@string/title_activity_continue_registration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -134,7 +134,7 @@
             android:label="@string/title_activity_my_broadcast_groups"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.ContinueNextRegistration"
+            android:name=".Registration.ContinueNextRegistration"
             android:label="Continue Next Registration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -149,7 +149,7 @@
             android:name=".view.VehicleDetails"
             android:label="@string/title_activity_vehicle_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".view.CompanyBasedRegistrationActivity"/>
+        <activity android:name=".Registration.CompanyBasedRegistrationActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

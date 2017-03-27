@@ -1,4 +1,4 @@
-package autokatta.com.view;
+package autokatta.com.Registration;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -501,7 +501,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (str != null) {
             getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
             CustomToast.customToast(getApplicationContext(), "Registration Successfully");
-            Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
+            Intent i = new Intent(RegistrationActivity.this, ContinueRegistration.class);
             startActivity(i);
            finish();
         } else {

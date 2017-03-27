@@ -1,4 +1,4 @@
-package autokatta.com.view;
+package autokatta.com.Registration;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,6 +41,7 @@ import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.view.LoginActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -52,9 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-//import autokatta.com.fragment.ContinueNextRegistration;
-
-public class ContinueRegistration extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
+public class ContinueRegistration extends AppCompatActivity implements RequestNotifier,View.OnClickListener{
 
 
     SharedPreferences.Editor editor;
@@ -113,7 +112,7 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
 
         prefs = getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);
         mApiCall = new ApiCall(ContinueRegistration.this, this);
-      //  RegiId = prefs.getString("RegID", "");
+        //  RegiId = prefs.getString("RegID", "");
         System.out.println("Registration id in continue reg i.e about" + RegiId);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -307,7 +306,7 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
                 picturePath = cursor.getString(columnIndex);
                 cursor.close();
 
-               GenericFunctions obj=new GenericFunctions();
+                GenericFunctions obj=new GenericFunctions();
                 Bitmap rotatedBitmap = obj.decodeFile(picturePath);
 
                 groupimg.setImageBitmap(rotatedBitmap);
@@ -315,7 +314,7 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
                 System.out.println(picturePath);
                 lastWord = picturePath.substring(picturePath.lastIndexOf("/")+1);
                 System.out.println("lastword gallery->"+lastWord);
-              //  upload(picturePath);
+                upload(picturePath);
             }
 
         }
@@ -328,7 +327,7 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
         return Uri.parse(picturePath);
     }
 
-        public void upload(String picturePath) {
+    public void upload(String picturePath) {
 
         System.out.println("picturePath while upload image:"+picturePath);
         System.out.println("rutu= userselected in upload==========:"+userSelected);
@@ -405,13 +404,13 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
             {
                 Log.i("String----","->"+str);
 
-                upload(picturePath);
+                // upload(picturePath);
 
-               // b.putString("action", "ContinueRegisteration");
-               /* Intent i= new Intent(getApplication(), ContinueNextRegistration.class);
+                // b.putString("action", "ContinueRegisteration");
+                Intent i= new Intent(getApplication(), ContinueNextRegistration.class);
                 i.putExtra("action", "ContinueRegisteration");
                 startActivity(i);
-                finish();*/
+                finish();
 
 
             }
@@ -421,9 +420,12 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
         }
     }
     public void onBackPressed() {
-
+        Intent i= new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(i);
+        finish();
 
     }
+
 
 }
 

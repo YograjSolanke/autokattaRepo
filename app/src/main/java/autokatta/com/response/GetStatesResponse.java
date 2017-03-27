@@ -3,6 +3,8 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by ak-005 on 27/3/17.
  */
@@ -10,6 +12,19 @@ import com.google.gson.annotations.SerializedName;
 public class GetStatesResponse {
 
 
+        @SerializedName("Success")
+        @Expose
+        private List<Success> success = null;
+
+        public List<Success> getSuccess() {
+            return success;
+        }
+
+        public void setSuccess(List<Success> success) {
+            this.success = success;
+        }
+
+    public class Success {
 
         @SerializedName("stateId")
         @Expose
@@ -34,5 +49,6 @@ public class GetStatesResponse {
             this.stateName = stateName;
         }
 
+    }
 
 }

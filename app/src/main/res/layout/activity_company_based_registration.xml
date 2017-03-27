@@ -170,19 +170,18 @@
                         android:entries="@array/kmsOptions">
                     </Spinner>
                 </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/relSpinnerDistrict"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
-                    <com.autokatta.search_vehicle.MultiSelectionSpinner
+                    <com.autokatta.Registration.MultiSelectionSpinner
                         android:id="@+id/spinnerDistrict"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         >
-                    </com.autokatta.search_vehicle.MultiSelectionSpinner>
+                    </com.autokatta.Registration.MultiSelectionSpinner>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -191,13 +190,13 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
-                    <com.autokatta.search_vehicle.MultiSelectionSpinner
+                    <com.autokatta.Registration.MultiSelectionSpinner
                         android:id="@+id/spinnerState"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         >
 
-                    </com.autokatta.search_vehicle.MultiSelectionSpinner>
+                    </com.autokatta.Registration.MultiSelectionSpinner>
                 </RelativeLayout>
             </RelativeLayout>
 

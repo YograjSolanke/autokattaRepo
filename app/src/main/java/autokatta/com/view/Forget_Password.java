@@ -16,6 +16,7 @@ import java.net.SocketTimeoutException;
 import java.util.Random;
 
 import autokatta.com.R;
+import autokatta.com.Registration.RegistrationActivity;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
