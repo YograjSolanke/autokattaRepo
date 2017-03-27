@@ -24,7 +24,7 @@
         app:layout_anchorGravity="bottom"
         app:tabGravity="fill"
         app:tabIndicatorColor="#C8C9CC"
-        app:tabMode="scrollable"
+        app:tabMode="fixed"
         app:tabTextColor="#ffffff" />
 
     <android.support.design.widget.AppBarLayout
@@ -45,7 +45,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/user_image"
+                android:id="@+id/vehicle_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"

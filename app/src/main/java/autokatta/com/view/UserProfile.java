@@ -36,6 +36,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
     ImageView mProfilePicture;
     Bundle mUserProfileBundle;
+    String mUserName;
+    CollapsingToolbarLayout collapsingToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         });
         try {
 
-            CollapsingToolbarLayout collapsingToolbar =
-                    (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-            collapsingToolbar.setTitle("Autokatta");
+             /*
+            Get Profile Data
+             */
+            getProfileData();
+            collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
             mProfilePicture = (ImageView) findViewById(R.id.user_image);
 
@@ -68,10 +72,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
             TabLayout tabLayout = (TabLayout) findViewById(R.id.user_profile_tabs);
             tabLayout.setupWithViewPager(viewPager);
-             /*
-            Get Profile Data
-             */
-            getProfileData();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,7 +82,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
      */
     private void getProfileData() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
-        mApiCall.profileAbout("8007855589");
+        mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE)
+                .getString("loginContact",""));
     }
 
     /*
@@ -109,12 +110,14 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
 
                     String dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
+                    mUserName = mProfileAboutResponse.getSuccess().get(0).getUsername();
                     String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
                     Glide.with(this)
                             .load(dp_path)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(mProfilePicture);
+                    collapsingToolbar.setTitle(mUserName);
                 } else {
 
                 }

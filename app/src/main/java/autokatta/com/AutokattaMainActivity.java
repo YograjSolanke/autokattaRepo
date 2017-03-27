@@ -45,6 +45,7 @@ import autokatta.com.view.MyUpcomingEventsTabActivity;
 import autokatta.com.view.MyUploadedVehiclesActivity;
 import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.UserProfile;
+import autokatta.com.view.VehicleDetails;
 import autokatta.com.view.VehicleUpload;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
@@ -183,7 +184,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.my_broadcast_message) {
 
                         } else if (menuItem.getItemId() == R.id.business_Chat) {
-
+startActivity(new Intent(AutokattaMainActivity.this, VehicleDetails.class));
                         } else if (menuItem.getItemId() == R.id.locality) {
 
                         } else if (menuItem.getItemId() == R.id.sign_out) {
