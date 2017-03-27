@@ -34,7 +34,9 @@ import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleColor;
 import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
+import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
+import autokatta.com.response.GetVehicleVersionResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoanMelaCreateResponse;
 import autokatta.com.response.LoginResponse;
@@ -1421,15 +1423,15 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetModel = mServiceApi._autokattaGetModel(category, subCategory, brandId);
-                mGetModel.enqueue(new Callback<String>() {
+                Call<GetVehicleModelResponse> mGetModel = mServiceApi._autokattaGetModel(category, subCategory, brandId);
+                mGetModel.enqueue(new Callback<GetVehicleModelResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<GetVehicleModelResponse> call, Response<GetVehicleModelResponse> response) {
 
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<GetVehicleModelResponse> call, Throwable t) {
 
                     }
                 });
@@ -1454,15 +1456,15 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mGetVersion = mServiceApi._autokattaGetVersion(category, subCategory, brandId, modelId);
-                mGetVersion.enqueue(new Callback<String>() {
+                Call<GetVehicleVersionResponse> mGetVersion = mServiceApi._autokattaGetVersion(category, subCategory, brandId, modelId);
+                mGetVersion.enqueue(new Callback<GetVehicleVersionResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<GetVehicleVersionResponse> call, Response<GetVehicleVersionResponse> response) {
 
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<GetVehicleVersionResponse> call, Throwable t) {
 
                     }
                 });
@@ -1963,8 +1965,8 @@ Upload Vehicle
     /*
     Get Group Vehicles...
      */
-    public void getGroupVehicles(String groupId,String brand, String model,String version, String city,String rtoCity,
-                                 String price,String regYear, String mgfYear,String kms, String owners){
+    public void getGroupVehicles(String groupId, String brand, String model, String version, String city, String rtoCity,
+                                 String price, String regYear, String mgfYear, String kms, String owners) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2067,9 +2069,9 @@ Upload Vehicle
     Get Group Contacts
      */
 
-    public void getGroupContacts(String groupId){
+    public void getGroupContacts(String groupId) {
         try {
-            if (mConnectionDetector.isConnectedToInternet()){
+            if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create())
@@ -2088,10 +2090,10 @@ Upload Vehicle
                         mNotifier.notifyError(t);
                     }
                 });
-            }else {
+            } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2142,7 +2144,7 @@ Upload Vehicle
 
     /*Update Company Based Registration */
 
-    public void updateRegistration(String Regid, String page, String area,String bykm ,String bydistrict,
+    public void updateRegistration(String Regid, String page, String area, String bykm, String bydistrict,
                                    String bystate, String company, String designation, String skills, String deals) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
@@ -2158,7 +2160,7 @@ Upload Vehicle
                 Log.i("Regid---->", "->" + Regid);
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateCompanyRegistration(Regid, page, area, bykm,bydistrict,bystate,company,designation,skills,deals);
+                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateCompanyRegistration(Regid, page, area, bykm, bydistrict, bystate, company, designation, skills, deals);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -2181,9 +2183,9 @@ Upload Vehicle
     Get States
      */
 
-    public void getStates(){
+    public void getStates() {
         try {
-            if (mConnectionDetector.isConnectedToInternet()){
+            if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create())
@@ -2202,10 +2204,10 @@ Upload Vehicle
                         mNotifier.notifyError(t);
                     }
                 });
-            }else {
+            } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2214,9 +2216,9 @@ Upload Vehicle
     Get Districts
      */
 
-    public void getDistricts(){
+    public void getDistricts() {
         try {
-            if (mConnectionDetector.isConnectedToInternet()){
+            if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create())
@@ -2235,10 +2237,10 @@ Upload Vehicle
                         mNotifier.notifyError(t);
                     }
                 });
-            }else {
+            } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2528,8 +2530,6 @@ Upload Vehicle
             e.printStackTrace();
         }
     }
-
-
 
 
     /***

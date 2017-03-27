@@ -22,7 +22,9 @@ import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleColor;
 import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
+import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
+import autokatta.com.response.GetVehicleVersionResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoanMelaCreateResponse;
 import autokatta.com.response.LoginResponse;
@@ -229,13 +231,13 @@ public interface ServiceApi {
 
     //Get Model
     @GET("getVehicleModel.php")
-    Call<String> _autokattaGetModel(@Query("category") String category, @Query("subcategory") String subCategory,
-                                    @Query("brand_id") String brandId);
+    Call<GetVehicleModelResponse> _autokattaGetModel(@Query("category") String category, @Query("subcategory") String subCategory,
+                                                     @Query("brand_id") String brandId);
 
     //Get Version
     @GET("getVehicleVersion.php")
-    Call<String> _autokattaGetVersion(@Query("category") String category, @Query("subcategory") String subCategory,
-                                      @Query("brand_id") String brandId, @Query("model_id") String modelId);
+    Call<GetVehicleVersionResponse> _autokattaGetVersion(@Query("category") String category, @Query("subcategory") String subCategory,
+                                                         @Query("brand_id") String brandId, @Query("model_id") String modelId);
 
     //Get Breaks
     @GET("getBrakes.php")
@@ -326,11 +328,11 @@ public interface ServiceApi {
 
     //Get Group Vehicles
     @GET("getGroupVehicles.php")
-    Call<GetGroupVehiclesResponse> _autokattaGetGroupVehicles(@Query("group_id") String groupId,@Query("brand") String brand,
-                                                              @Query("model") String model,@Query("version") String version,
-                                                              @Query("city") String city,@Query("RTOcity") String rtoCity,
-                                                              @Query("price") String price,@Query("reg_year") String regYear,
-                                                              @Query("mgf_year") String mgfYear,@Query("kms") String kms,
+    Call<GetGroupVehiclesResponse> _autokattaGetGroupVehicles(@Query("group_id") String groupId, @Query("brand") String brand,
+                                                              @Query("model") String model, @Query("version") String version,
+                                                              @Query("city") String city, @Query("RTOcity") String rtoCity,
+                                                              @Query("price") String price, @Query("reg_year") String regYear,
+                                                              @Query("mgf_year") String mgfYear, @Query("kms") String kms,
                                                               @Query("owners") String owners);
 
     //Get My Uploaded Vehicle...
@@ -365,10 +367,10 @@ public interface ServiceApi {
     //Update Company Based Registration
     @POST("updateRegistrationInfo.php")
     Call<String> _autokattaUpdateCompanyRegistration(@Query("Regid") String Regid, @Query("page") String page, @Query("area") String area,
-                                              @Query("bykms") String bykms,
-                                              @Query("bydistrict") String bydistrict
-                                                 , @Query("bystate") String bystate, @Query("company") String company,
-                                              @Query("designation") String designation, @Query("skills") String skills, @Query("deals") String deals);
+                                                     @Query("bykms") String bykms,
+                                                     @Query("bydistrict") String bydistrict
+            , @Query("bystate") String bystate, @Query("company") String company,
+                                                     @Query("designation") String designation, @Query("skills") String skills, @Query("deals") String deals);
 
     //Get States
     @GET("getRegisteredStates.php")
@@ -390,11 +392,11 @@ public interface ServiceApi {
     @GET("add_other_dealing.php")
     Call<String> _autokattaAddNewDeal(@Query("deals") String deals);
 
-     //Add New Skill
+    //Add New Skill
     @GET("add_other_skills.php")
     Call<String> _autokattaAddNewSkills(@Query("skill") String deals);
 
- //Get deals
+    //Get deals
     @GET("getRegisteredDeals.php")
     Call<getDealsResponse> _autokattaGetDeals();
 
@@ -402,17 +404,14 @@ public interface ServiceApi {
     @GET("getRegisteredSkills.php")
     Call<GetSkillsResponse> _autokattaGetSkills();
 
-//Get  Designation
+    //Get  Designation
     @GET("getRegisteredDesignation.php")
     Call<GetDesignationResponse> _autokattaGetDesignation();
 
 
-//Get  Company
+    //Get  Company
     @GET("getRegisteredCompanies.php")
     Call<GetCompaniesResponse> _autokattaGetCompany();
-
-
-
 
 
 }
