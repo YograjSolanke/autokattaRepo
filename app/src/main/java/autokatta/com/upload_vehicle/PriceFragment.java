@@ -3,6 +3,8 @@ package autokatta.com.upload_vehicle;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +36,6 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     EditText edtPrice;
     SeekBar priceseekbar;
     TextView txtSugestedPrice, minprice, maxprice;
-    String groupIds, storeIds;
     Button btnUpload;
     List<Integer> priceList = new ArrayList<>();
     ApiCall apiCall;
@@ -179,6 +181,22 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     private void uploadVehicle() {
         //apiCall.uploadMyVehicle();
 
+        if (!strGroupids.equals("") || !strStoreids.equals("")) {
+
+            Bundle b = new Bundle();
+            b.putString("vehicle_id", "1649");
+            VehiclePrivacy frag = new VehiclePrivacy();
+            frag.setArguments(b);
+
+            FragmentManager mFragmentManager;
+            FragmentTransaction mFragmentTransaction;
+
+            mFragmentManager = getActivity().getSupportFragmentManager();
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.vehicle_upload_container, frag).commit();
+
+
+        }
     }
 
     @Override
@@ -265,7 +283,16 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Price Fragment");
+            error.printStackTrace();
+        }
     }
 
     @Override

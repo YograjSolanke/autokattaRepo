@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/TitleRelative"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:id="@+id/scrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/relativegrouplist"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <TextView
+                    android:id="@+id/textgroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Groups Where your vehicles belongs"
+                    android:textStyle="bold" />
+
+
+                <ListView
+                    android:id="@+id/grouplist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textgroup"
+                    android:layout_margin="5dp">
+
+                </ListView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativestorelist"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/relativegrouplist"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/textstore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Stores Where your vehicles belongs"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/storelist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textstore"
+                    android:layout_margin="5dp">
+
+                </ListView>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/scrl">
+
+        <LinearLayout
+            android:id="@+id/relativebtnbottom"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonback"
+                android:text="Ok"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/buttonback"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

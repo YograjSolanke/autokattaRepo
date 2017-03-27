@@ -20,7 +20,9 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +34,10 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.other.MonthYearPicker;
 import autokatta.com.response.GetBreaks;
 import autokatta.com.response.GetPumpResponse;
+import autokatta.com.response.GetVehicleBrandResponse;
+import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
+import autokatta.com.response.GetVehicleVersionResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Response;
@@ -64,6 +69,18 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     List<String> mSubTypeList = new ArrayList<>();
     List<String> parsedData = new ArrayList<>();
     HashMap<String, String> mSubTypeList1 = new HashMap<>();
+    //Brands
+    List<String> mBrandIdList = new ArrayList<>();
+    List<String> brandData = new ArrayList<>();
+    HashMap<String, String> mBrandList1 = new HashMap<>();
+    //Model
+    List<String> mModelIdList = new ArrayList<>();
+    List<String> modelData = new ArrayList<>();
+    HashMap<String, String> mModelList1 = new HashMap<>();
+    //Version
+    List<String> mVersionIdList = new ArrayList<>();
+    List<String> versionData = new ArrayList<>();
+    HashMap<String, String> mVersionList1 = new HashMap<>();
     //Break
     List<String> mBreakList = new ArrayList<>();
     List<String> breakListData = new ArrayList<>();
@@ -74,7 +91,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     HashMap<String, String> mPumpList1 = new HashMap<>();
     //Staring
     List<String> mStaringList = new ArrayList<>();
-    String category, categoryId;
+    String category, categoryId, subcategoryId, brandId, modelId, versionId, brandName = "", modelName = "", versionName = "",
+            subcategoryName, brakeId, brakeName, pumpId, pumpName;
 
     /*
     Year Fragment...
@@ -161,9 +179,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getGroup();
                     getStore();
                     getSubCategoryTask();
-                    getModel();
-                    getVersion();
-
                     getBreaks();
                     getPumps();
 
@@ -345,23 +360,50 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Get Brand
      */
-    private void getBrand(String category, String subcategory) {
+    private void getBrand(String categoryId, String subcategoryId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        //mApiCall.getBrand();
+        mApiCall.getBrand(categoryId, subcategoryId);
     }
 
     /*
     Get Model...
      */
-    private void getModel() {
+    private void getModel(String categoryId, String subCategoryId, String brandId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
 
     /*
     Get Version...
      */
-    private void getVersion() {
+    private void getVersion(String categoryId, String subCategoryId, String brandId, String modelId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
+    }
+
+
+    /*
+    Add Brand
+     */
+    private void AddBrand(String keyword, String title, String categoryId, String subCatID) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.addBrand(keyword, title, categoryId, subCatID);
+    }
+
+    /*
+    Add Model
+     */
+    private void AddModel(String keyword, String title, String categoryId, String subCatID, String brandId) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.addModel(keyword, title, categoryId, subCatID, brandId);
+    }
+
+    /*
+    Add Version
+     */
+    private void AddVersion(String keyword, String title, String categoryId, String subCatID, String brandId, String modelId) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.addVersion(keyword, title, categoryId, subCatID, brandId, modelId);
     }
 
     /*
@@ -550,17 +592,254 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
-                                String subcategory = mSubTypeList1.get(parsedData.get(position));
-                                String subcategoryname = parsedData.get(position);
+                                subcategoryId = mSubTypeList1.get(parsedData.get(position));
+                                subcategoryName = parsedData.get(position);
 
-                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_subCatId", subcategory).apply();
-                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_subCatName", subcategoryname).apply();
+                                System.out.println("Sub cat is::" + subcategoryId);
+                                System.out.println("Sub cat name::" + subcategoryName);
 
-                                System.out.println("Sub cat is::" + subcategory);
-                                System.out.println("Sub cat name::" + subcategoryname);
-
-                                //getBrand();
+                                getBrand(categoryId, subcategoryId);
                             }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } else if (response.body() instanceof GetVehicleBrandResponse) {
+                    Log.e("GetVehicleBrands", "->");
+                    mBrandIdList.clear();
+                    mBrandList1.clear();
+                    brandData.clear();
+
+                    mBrandIdList.add("Select Brands");
+                    GetVehicleBrandResponse getVehicleBrandResponse = (GetVehicleBrandResponse) response.body();
+                    for (GetVehicleBrandResponse.Success brandResponse : getVehicleBrandResponse.getSuccess()) {
+                        brandResponse.setBrandId(brandResponse.getBrandId());
+                        brandResponse.setBrandTitle(brandResponse.getBrandTitle());
+                        mBrandIdList.add(brandResponse.getBrandTitle());
+                        mBrandList1.put(brandResponse.getBrandTitle(), brandResponse.getBrandId());
+                    }
+                    mBrandIdList.add("other");
+                    brandData.addAll(mBrandIdList);
+                    Log.i("ListBrand", "->" + mBrandIdList);
+                    ArrayAdapter<String> adapter =
+                            new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, brandData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mBrandSpinner.setAdapter(adapter);
+                    mModelSpinner.setAdapter(null);
+                    mBrandSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                brandId = mBrandList1.get(brandData.get(position));
+                                brandName = brandData.get(position);
+
+                                System.out.println("Brand id is::" + brandId);
+                                System.out.println("Brand name::" + brandName);
+                            }
+
+                            if (brandData.get(position).equalsIgnoreCase("other")) {
+
+                                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
+                                alertDialog.setTitle("Add Brand");
+                                alertDialog.setMessage("Enter brand name");
+
+                                final EditText input = new EditText(getActivity());
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Brand",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String edbrand = input.getText().toString();
+
+                                                if (edbrand.equals(""))
+                                                    Toast.makeText(getActivity(), "Please enter brand", Toast.LENGTH_LONG).show();
+                                                else
+                                                    AddBrand("Brand", edbrand, categoryId, subcategoryId);
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mBrandSpinner.setSelection(0);
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                alertDialog.show();
+                            } else
+                                getModel(categoryId, subcategoryId, brandId);
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } else if (response.body() instanceof GetVehicleModelResponse) {
+                    Log.e("GetVehicleModel", "->");
+                    mModelIdList.clear();
+                    mModelList1.clear();
+                    modelData.clear();
+
+                    mModelIdList.add("Select Model");
+                    GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
+                    for (GetVehicleModelResponse.Success modelResponse : getVehicleModelResponse.getSuccess()) {
+                        modelResponse.setModelId(modelResponse.getModelId());
+                        modelResponse.setModelTitle(modelResponse.getModelTitle());
+                        mModelIdList.add(modelResponse.getModelTitle());
+                        mModelList1.put(modelResponse.getModelTitle(), modelResponse.getModelId());
+                    }
+                    mModelIdList.add("other");
+                    modelData.addAll(mModelIdList);
+                    Log.i("ListModel", "->" + mModelIdList);
+                    ArrayAdapter<String> adapter =
+                            new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, modelData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mModelSpinner.setAdapter(adapter);
+                    mVersionSpinner.setAdapter(null);
+                    mModelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                modelId = mModelList1.get(modelData.get(position));
+                                modelName = modelData.get(position);
+
+                                System.out.println("Model id is::" + modelId);
+                                System.out.println("Model name::" + modelName);
+                            }
+
+                            if (modelData.get(position).equalsIgnoreCase("other")) {
+
+                                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
+                                alertDialog.setTitle("Add Model");
+                                alertDialog.setMessage("Enter model name");
+
+                                final EditText input = new EditText(getActivity());
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Model",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String edmodel = input.getText().toString();
+
+                                                if (edmodel.equals(""))
+                                                    Toast.makeText(getActivity(), "Please enter model", Toast.LENGTH_LONG).show();
+                                                else
+                                                    AddModel("Model", edmodel, categoryId, subcategoryId, brandId);
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mModelSpinner.setSelection(0);
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                alertDialog.show();
+                            } else
+                                getVersion(categoryId, subcategoryId, brandId, modelId);
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } else if (response.body() instanceof GetVehicleVersionResponse) {
+                    Log.e("GetVehicleVersion", "->");
+                    mVersionIdList.clear();
+                    mVersionList1.clear();
+                    versionData.clear();
+
+                    mVersionIdList.add("Select Version");
+                    GetVehicleVersionResponse getVehicleVersionResponse = (GetVehicleVersionResponse) response.body();
+                    for (GetVehicleVersionResponse.Success versionResponse : getVehicleVersionResponse.getSuccess()) {
+                        versionResponse.setVersionId(versionResponse.getVersionId());
+                        versionResponse.setVersion(versionResponse.getVersion());
+                        mVersionIdList.add(versionResponse.getVersion());
+                        mVersionList1.put(versionResponse.getVersion(), versionResponse.getVersionId());
+                    }
+                    mVersionIdList.add("other");
+                    versionData.addAll(mVersionIdList);
+                    Log.i("ListVersion", "->" + mVersionIdList);
+                    ArrayAdapter<String> adapter =
+                            new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, versionData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mVersionSpinner.setAdapter(adapter);
+                    mVersionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                versionId = mVersionList1.get(versionData.get(position));
+                                versionName = versionData.get(position);
+
+                                System.out.println("Version id is::" + versionId);
+                                System.out.println("Version name::" + versionName);
+                            }
+
+                            if (versionData.get(position).equalsIgnoreCase("other")) {
+
+                                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
+                                alertDialog.setTitle("Add Version");
+                                alertDialog.setMessage("Enter version name");
+
+                                final EditText input = new EditText(getActivity());
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Version",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String edversion = input.getText().toString();
+
+                                                if (edversion.equals(""))
+                                                    Toast.makeText(getActivity(), "Please enter version", Toast.LENGTH_LONG).show();
+                                                else
+                                                    AddVersion("Version", edversion, categoryId, subcategoryId, brandId, modelId);
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mVersionSpinner.setSelection(0);
+                                                dialog.dismiss();
+
+                                            }
+                                        });
+
+                                alertDialog.show();
+                            }
+
+
                         }
 
                         @Override
@@ -586,17 +865,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
-                                String brakeid = mBreakList1.get(breakListData.get(position));
-                                String brakename = breakListData.get(position);
+                                brakeId = mBreakList1.get(breakListData.get(position));
+                                brakeName = breakListData.get(position);
 
-                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeId", brakeid).apply();
-                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeName", brakename).apply();
-
-                                System.out.println("Brake id:" + brakeid);
-                                System.out.println("Brake name::" + brakename);
+                                System.out.println("Brake id:" + brakeId);
+                                System.out.println("Brake name::" + brakeName);
                             }
 
-                            if (mBreakSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+                            if (breakListData.get(position).equalsIgnoreCase("Other")) {
 
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Brakes");
@@ -622,14 +898,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                     addOtherBreak(otherBreak);
 
 
-                                                dialog.cancel();
+                                                dialog.dismiss();
                                             }
                                         });
                                 alertDialog.setNegativeButton("No",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 mBreakSpinner.setSelection(0);
-                                                dialog.cancel();
+                                                dialog.dismiss();
                                             }
                                         });
 
@@ -662,16 +938,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
-                                String pumpId = mPumpList1.get(pumpListData.get(position));
-                                String pumpName = mPumpList1.get(pumpListData.get(position));
-
-                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_pumpId", pumpId).apply();
-                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_pumpName", pumpName).apply();
+                                pumpId = mPumpList1.get(pumpListData.get(position));
+                                pumpName = pumpListData.get(position);
 
                                 System.out.println("pump id::" + pumpId);
                                 System.out.println("pump name::" + pumpName);
                             }
-                            if (mPumpSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+                            if (pumpListData.get(position).equalsIgnoreCase("Other")) {
 
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Pump");
@@ -697,14 +970,15 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                     addOtherPump(otherPump);
 
 
-                                                dialog.cancel();
+                                                dialog.dismiss();
                                             }
                                         });
                                 alertDialog.setNegativeButton("No",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
+
+                                                dialog.dismiss();
                                                 mPumpSpinner.setSelection(0);
-                                                dialog.cancel();
                                             }
                                         });
 
@@ -732,12 +1006,45 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Title Fragment");
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void notifyString(String str) {
 
+        if (str != null) {
+            if (str.equals("success_brand_add")) {
+                CustomToast.customToast(getActivity(), "Brand added successfully");
+                getBrand(categoryId, subcategoryId);
+                Log.i("msg", "Brand added successfully");
+
+            } else if (str.equals("success_model_add")) {
+
+                CustomToast.customToast(getActivity(), "Model added successfully");
+                getModel(categoryId, subcategoryId, brandId);
+            } else if (str.equals("success_version_add")) {
+                CustomToast.customToast(getActivity(), "Version added successfully");
+                getVersion(categoryId, subcategoryId, brandId, modelId);
+            } else if (str.equals("success_break_add")) {
+                CustomToast.customToast(getActivity(), "Break added successfully");
+                getBreaks();
+            } else if (str.equals("success_pump_add")) {
+                CustomToast.customToast(getActivity(), "Pump added successfully");
+                getPumps();
+            }
+
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
     }
 
     /*
@@ -748,20 +1055,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         switch (v.getId()) {
             case R.id.title_next:
 
-               /* vehicleEditor.putString("title", titletext);
-                vehicleEditor.putString("privacy", privacy);
-                vehicleEditor.putString("exchange", exchangeYesNo);
-                vehicleEditor.putString("storeprivacy", storeprivacy);
-                vehicleEditor.putString("financestatus", financests);
-                vehicleEditor.putString("exchangestatus", exchangests);
-                vehicleEditor.putString("OwnerGroupIds", stringgroupids);
-                vehicleEditor.putString("OwnerStoreIds", stringstoreids);
-                vehicleEditor.putString("OwnerGroupName", stringgroupname);
-                vehicleEditor.putString("OwnerStoreName", stringstorename);
-                */
                 String strTitle = "", strGroupPriavcy = "", strStorePrivacy = "", strFinanceStatus = "", strExchangeStatus = "",
                         permit = "", strMakemonth = "", strMakeyear = "", strRegisterMonth = "", strRegisterYear = "",
-                        strHrs = "", strKms = "";
+                        strHrs = "", strKms = "", brandstr = "", modelstr = "", versionstr = "";
 
                 strTitle = title.getText().toString();
                 strMakemonth = mMakeMonth.getText().toString();
@@ -808,33 +1104,66 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         permit = "Private Passing";
                 }
 
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Title", strTitle).apply();
+                try {
+                    brandstr = mBrandSpinner.getSelectedItem().toString();
+                    modelstr = mModelSpinner.getSelectedItem().toString();
+                    versionstr = mVersionSpinner.getSelectedItem().toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_groupPrivacy", strGroupPriavcy).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupIds", stringgroupids).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupNames", stringgroupname).apply();
+                if (brandstr.startsWith("Select") || modelstr.startsWith("Select") || brandstr.equals("") || modelstr.equals("")) {
 
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_storePrivacy", strStorePrivacy).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreIds", stringstoreids).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreNames", stringstorename).apply();
+                    if (brandstr.startsWith("Select")) {
+                        Toast.makeText(getActivity(), "Please select Brand", Toast.LENGTH_SHORT).show();
+                    } else if (modelstr.startsWith("Select")) {
+                        Toast.makeText(getActivity(), "Please select Model", Toast.LENGTH_SHORT).show();
+                    }
+                    CustomToast.customToast(getActivity(), "Brand and Model are compulsory");
+                } else {
 
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_financeStatus", strFinanceStatus).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_exchangeStatus", strExchangeStatus).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brandId", brandId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brandName", brandName).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_modelId", modelId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_modelName", modelName).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_versionId", versionId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_versionName", versionName).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_subCatId", subcategoryId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_subCatName", subcategoryName).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeId", brakeId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeName", brakeName).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_pumpId", pumpId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_pumpName", pumpName).apply();
 
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_permit", permit).apply();
 
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_makeMonth", strMakemonth).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_makeYear", strMakeyear).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_registerMonth", strRegisterMonth).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_registerYear", strRegisterYear).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Title", strTitle).apply();
 
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Hrs", strHrs).apply();
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Kms", strKms).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_groupPrivacy", strGroupPriavcy).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupIds", stringgroupids).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupNames", stringgroupname).apply();
+
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_storePrivacy", strStorePrivacy).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreIds", stringstoreids).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreNames", stringstorename).apply();
+
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_financeStatus", strFinanceStatus).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_exchangeStatus", strExchangeStatus).apply();
+
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_permit", permit).apply();
+
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_makeMonth", strMakemonth).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_makeYear", strMakeyear).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_registerMonth", strRegisterMonth).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_registerYear", strRegisterYear).apply();
+
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Hrs", strHrs).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Kms", strKms).apply();
 
 
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction mTransaction = manager.beginTransaction();
-                mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();
+                    FragmentManager manager = getFragmentManager();
+                    FragmentTransaction mTransaction = manager.beginTransaction();
+                    mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();
+                }
                 break;
         }
     }

@@ -66,7 +66,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
 
     private void getData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getVehicleCount("7841023392");
+        mApiCall.getVehicleCount(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
     }
 
     @Override
@@ -102,6 +102,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
             Log.i("Check Class-", "Vehicle List");
+            error.printStackTrace();
         }
     }
 

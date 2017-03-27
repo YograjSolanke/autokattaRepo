@@ -30,6 +30,7 @@ import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -997,11 +998,31 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Sub Type Fragment");
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void notifyString(String str) {
+
+        if (str != null) {
+
+            if (str.equals("success_body")) {
+                CustomToast.customToast(getActivity(), "Data added successfully");
+                getBodyAndSeatManufacturer();
+            } else if (str.equals("success_body_type_add")) {
+                CustomToast.customToast(getActivity(), "Body type added successfully");
+                getBodyTypes();
+            }
+        } else CustomToast.customToast(getActivity(), getString(R.string.no_response));
 
     }
 
