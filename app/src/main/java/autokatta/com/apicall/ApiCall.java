@@ -1159,12 +1159,12 @@ public class ApiCall {
                 mAddBrand.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1192,12 +1192,12 @@ public class ApiCall {
                 mAddModel.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1226,12 +1226,12 @@ public class ApiCall {
                 mAddVersion.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1259,12 +1259,12 @@ public class ApiCall {
                 mAddBreaks.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1292,12 +1292,12 @@ public class ApiCall {
                 mAddPump.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1325,12 +1325,12 @@ public class ApiCall {
                 mAdd.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1358,12 +1358,12 @@ public class ApiCall {
                 mAddBodyType.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-
+                        mNotifier.notifyString(response.body());
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1394,12 +1394,12 @@ public class ApiCall {
                 mGetBrand.enqueue(new Callback<GetVehicleBrandResponse>() {
                     @Override
                     public void onResponse(Call<GetVehicleBrandResponse> call, Response<GetVehicleBrandResponse> response) {
-
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
                     public void onFailure(Call<GetVehicleBrandResponse> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1427,12 +1427,12 @@ public class ApiCall {
                 mGetModel.enqueue(new Callback<GetVehicleModelResponse>() {
                     @Override
                     public void onResponse(Call<GetVehicleModelResponse> call, Response<GetVehicleModelResponse> response) {
-
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
                     public void onFailure(Call<GetVehicleModelResponse> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
@@ -1460,12 +1460,12 @@ public class ApiCall {
                 mGetVersion.enqueue(new Callback<GetVehicleVersionResponse>() {
                     @Override
                     public void onResponse(Call<GetVehicleVersionResponse> call, Response<GetVehicleVersionResponse> response) {
-
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
                     public void onFailure(Call<GetVehicleVersionResponse> call, Throwable t) {
-
+                        mNotifier.notifyError(t);
                     }
                 });
 
