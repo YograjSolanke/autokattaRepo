@@ -21,10 +21,15 @@ import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
+import autokatta.com.response.GetCompaniesResponse;
+import autokatta.com.response.GetDesignationResponse;
+import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetSkillsResponse;
+import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleColor;
 import autokatta.com.response.GetVehicleImplementsResponse;
@@ -50,6 +55,7 @@ import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
+import autokatta.com.response.getDealsResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -2133,6 +2139,397 @@ Upload Vehicle
             e.printStackTrace();
         }
     }
+
+    /*Update Company Based Registration */
+
+    public void updateRegistration(String Regid, String page, String area,String bykm ,String bydistrict,
+                                   String bystate, String company, String designation, String skills, String deals) {
+        //JSON to Gson conversion
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+                Log.i("Regid---->", "->" + Regid);
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateCompanyRegistration(Regid, page, area, bykm,bydistrict,bystate,company,designation,skills,deals);
+                mUpdateRegistration.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+ /*
+    Get States
+     */
+
+    public void getStates(){
+        try {
+            if (mConnectionDetector.isConnectedToInternet()){
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetStatesResponse> mGetStatesResponseCall = mServiceApi._autokattaGetStates();
+                mGetStatesResponseCall.enqueue(new Callback<GetStatesResponse>() {
+                    @Override
+                    public void onResponse(Call<GetStatesResponse> call, Response<GetStatesResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetStatesResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            }else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Districts
+     */
+
+    public void getDistricts(){
+        try {
+            if (mConnectionDetector.isConnectedToInternet()){
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetDistrictsResponse> mGetDistrictsResponseCall = mServiceApi._autokattaGetDistricts();
+                mGetDistrictsResponseCall.enqueue(new Callback<GetDistrictsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetDistrictsResponse> call, Response<GetDistrictsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetDistrictsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            }else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+      /*Add New Designation */
+
+    public void addNewDesignation(String designationName) {
+        //JSON to Gson conversion
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mAddNewDesignation = serviceApi._autokattaAddNewDesignation(designationName);
+                mAddNewDesignation.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+ /*Add New Designation */
+
+    public void addNewCompany(String companyName) {
+        //JSON to Gson conversion
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mAddNewCompany = serviceApi._autokattaAddNewCompany(companyName);
+                mAddNewCompany.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+ /*Add New Deal */
+
+    public void addNewDeal(String deals) {
+        //JSON to Gson conversion
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mAddNewDeals = serviceApi._autokattaAddNewDeal(deals);
+                mAddNewDeals.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+ /*Add New Skills */
+
+    public void addNewSkills(String skill) {
+        //JSON to Gson conversion
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mAddNewSkills = serviceApi._autokattaAddNewSkills(skill);
+                mAddNewSkills.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+ /*get New Deals */
+
+    public void getDeals() {
+
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<getDealsResponse> mGetDeals = serviceApi._autokattaGetDeals();
+                mGetDeals.enqueue(new Callback<getDealsResponse>() {
+                    @Override
+                    public void onResponse(Call<getDealsResponse> call, Response<getDealsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<getDealsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+ /*get  Skills */
+
+    public void getSkills() {
+
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetSkillsResponse> mGetSkillsResponseCall = serviceApi._autokattaGetSkills();
+                mGetSkillsResponseCall.enqueue(new Callback<GetSkillsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetSkillsResponse> call, Response<GetSkillsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetSkillsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+ /*get  Designation */
+
+    public void getCompany() {
+
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetCompaniesResponse> mGetCompaniesResponseCall = serviceApi._autokattaGetCompany();
+                mGetCompaniesResponseCall.enqueue(new Callback<GetCompaniesResponse>() {
+                    @Override
+                    public void onResponse(Call<GetCompaniesResponse> call, Response<GetCompaniesResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetCompaniesResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+ /*get  Company */
+
+    public void getDesignation() {
+
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetDesignationResponse> mGetDesignationReponseCall = serviceApi._autokattaGetDesignation();
+                mGetDesignationReponseCall.enqueue(new Callback<GetDesignationResponse>() {
+                    @Override
+                    public void onResponse(Call<GetDesignationResponse> call, Response<GetDesignationResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetDesignationResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
     /***

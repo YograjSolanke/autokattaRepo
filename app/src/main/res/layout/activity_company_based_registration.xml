@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <TableRow
+        android:id="@+id/tablerow1"
+        android:layout_height="40dip"
+        android:layout_width="match_parent"
+        >
+        <RelativeLayout
+            android:background="#2C3343"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/text_registration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="Add Profession Details"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+    </TableRow>
+
+    <ScrollView
+        android:layout_below="@+id/tablerow1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:paddingBottom="20dp"
+            >
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/auto1"
+                android:layout_marginTop="10dip"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                >
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/autocompany"
+                    android:hint="Company Name"
+                    android:ems="10"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/auto2"
+                android:layout_below="@+id/auto1"
+                android:layout_marginTop="10dip"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                >
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/autodesignation"
+                    android:hint="Designation"
+                    android:ems="10"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/auto2"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                >
+                <MultiAutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/autoskills"
+                    android:hint="Add Skills"
+                    android:ems="10"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/auto3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/auto"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                >
+                <MultiAutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/autodeals"
+                    android:hint="Dealing With"
+                    android:ems="10"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="#848484"
+                    android:textColor="#2C3343"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/relArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/auto3"
+                android:layout_marginTop="15dp">
+
+
+                <Spinner
+                    android:id="@+id/spinnerArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:entries="@array/areaOptions">
+                </Spinner>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/mainrelSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relArea"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="15dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/relSpinnerKms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/spinnerKms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/kmsOptions">
+                    </Spinner>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relSpinnerDistrict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <com.autokatta.search_vehicle.MultiSelectionSpinner
+                        android:id="@+id/spinnerDistrict"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                    </com.autokatta.search_vehicle.MultiSelectionSpinner>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relSpinnerState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <com.autokatta.search_vehicle.MultiSelectionSpinner
+                        android:id="@+id/spinnerState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                    </com.autokatta.search_vehicle.MultiSelectionSpinner>
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btnnext"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:text="Next"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@color/background"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/mainrelSpinner"
+                android:layout_marginTop="9dp"
+                android:layout_toLeftOf="@+id/btncancel"
+                android:layout_toStartOf="@+id/btncancel"/>
+
+            <Button
+                android:id="@+id/btncancel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Cancel"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@color/background"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/mainrelSpinner"
+                android:layout_margin="9dp"
+                />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

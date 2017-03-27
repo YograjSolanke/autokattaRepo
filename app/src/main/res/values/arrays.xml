@@ -106,4 +106,56 @@
         <item>Bharat stage V</item>
         <item>Bharat stage VI</item>
     </string-array>
+
+    <string-array name="items_array_expandable_level_one">
+        <item>Level 1.1</item>
+        <item>Level 1.2</item>
+        <item>Level 1.3</item>
+    </string-array>
+    <string-array name="items_array_expandable_level_one_one_child">
+        <item>NAME/city</item>
+        <item>NAME/city</item>
+    </string-array>
+    <string-array name="items_array_expandable_level_one_two_child">
+        <item>car requirements</item>
+    </string-array>
+    <string-array name="items_array_expandable_other_child">
+        <item>Second Level 01</item>
+        <item>Second Level 02</item>
+        <item>Second Level 03</item>
+    </string-array>
+    <string-array name="items_array_expandable_level_three">
+        <item>Child Level 01</item>
+        <item>Child Level 02</item>
+    </string-array>
+
+       <string-array name="searchData">
+        <item>-List-</item>
+        <item>Brand</item>
+        <item >Model</item>
+        <item >Version</item>
+        <item >City</item>
+        <item >RTOCity</item>
+        <item >RegistrationYear</item>
+        <item >ManufactureYear</item>
+        <item >Price</item>
+        <item >KmsRunning</item>
+        <item >NoOfOwners</item>
+    </string-array>
+
+    <string-array name="areaOptions">
+        <item>Select Area Of Operations</item>
+        <item>By Kms</item>
+        <item>By District</item>
+        <item>By State</item>
+    </string-array>
+
+    <string-array name="kmsOptions">
+        <item>Select kms</item>
+        <item>5Kms</item>
+        <item>10Kms</item>
+        <item>15Kms</item>
+        <item>20Kms</item>
+        <item>25Kms</item>
+    </string-array>
 </resources>

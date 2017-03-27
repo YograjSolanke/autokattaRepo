@@ -8,11 +8,16 @@ import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
+import autokatta.com.response.GetCompaniesResponse;
+import autokatta.com.response.GetDesignationResponse;
+import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetMyUploadedVehicleResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetSkillsResponse;
+import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleColor;
 import autokatta.com.response.GetVehicleImplementsResponse;
@@ -38,6 +43,7 @@ import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
+import autokatta.com.response.getDealsResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -354,6 +360,59 @@ public interface ServiceApi {
                                               @Query("contact") String contact, @Query("location") String location,
                                               @Query("product_category") String product_category, @Query("special_clauses") String special_clauses,
                                               @Query("openClose") String openClose);
+
+
+    //Update Company Based Registration
+    @POST("updateRegistrationInfo.php")
+    Call<String> _autokattaUpdateCompanyRegistration(@Query("Regid") String Regid, @Query("page") String page, @Query("area") String area,
+                                              @Query("bykms") String bykms,
+                                              @Query("bydistrict") String bydistrict
+                                                 , @Query("bystate") String bystate, @Query("company") String company,
+                                              @Query("designation") String designation, @Query("skills") String skills, @Query("deals") String deals);
+
+    //Get States
+    @GET("getRegisteredStates.php")
+    Call<GetStatesResponse> _autokattaGetStates();
+
+    //Get Districts
+    @GET("getRegisteredDistricts.php")
+    Call<GetDistrictsResponse> _autokattaGetDistricts();
+
+    //Get New Designation
+    @GET("add_other_designations.php")
+    Call<String> _autokattaAddNewDesignation(@Query("designationName") String designationName);
+
+    //Add New Company
+    @GET("add_other_companyNames.php")
+    Call<String> _autokattaAddNewCompany(@Query("companyName") String companyName);
+
+    //Add New Deal
+    @GET("add_other_dealing.php")
+    Call<String> _autokattaAddNewDeal(@Query("deals") String deals);
+
+     //Add New Skill
+    @GET("add_other_skills.php")
+    Call<String> _autokattaAddNewSkills(@Query("skill") String deals);
+
+ //Get deals
+    @GET("getRegisteredDeals.php")
+    Call<getDealsResponse> _autokattaGetDeals();
+
+    //Get  Skills
+    @GET("getRegisteredSkills.php")
+    Call<GetSkillsResponse> _autokattaGetSkills();
+
+//Get  Designation
+    @GET("getRegisteredDesignation.php")
+    Call<GetDesignationResponse> _autokattaGetDesignation();
+
+
+//Get  Company
+    @GET("getRegisteredCompanies.php")
+    Call<GetCompaniesResponse> _autokattaGetCompany();
+
+
+
 
 
 }
