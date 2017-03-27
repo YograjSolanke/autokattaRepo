@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/imgrel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:text="Title : "
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/title_str"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:text="Title : "
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:text="Price : "
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/price_str"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:text="Price : "
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:text="Views :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/views_str"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:text="Views :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:text="Calls :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/call_str"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:text="Calls :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgrel"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/addresstext"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="Location :"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/addressdetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/addresstext"
+                android:text="-----"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/categorytxt"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addressdetails"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:text="Category :"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/categorydetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addressdetails"
+                android:layout_marginTop="2dp"
+                android:layout_toRightOf="@+id/categorytxt"
+                android:text="-----"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/subcategorytxt"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/categorydetails"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:text="SubCategory :"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/subcategorydetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/categorydetails"
+                android:layout_marginTop="2dp"
+                android:layout_toRightOf="@+id/subcategorytxt"
+                android:text="-----"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/brandtxt"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/subcategorydetails"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Brand :"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/branddetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/subcategorydetails"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/brandtxt"
+                android:text="-----"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/textmodel"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/branddetails"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Model :"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/modeldetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/branddetails"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/textmodel"
+                android:text="-----"
+                android:textColor="#2C3343" />
+
+
+            <TextView
+                android:id="@+id/textversion"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/modeldetails"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Version :"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/versiondetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/modeldetails"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/textversion"
+                android:text="-----"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/myear"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/versiondetails"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="Year of mfg :"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/yeardetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/versiondetails"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/myear"
+                android:text="-----"
+                android:textColor="#2C3343" />
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
