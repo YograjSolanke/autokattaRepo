@@ -112,10 +112,10 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
         contact = contactprefs.getString("contact", "");
 //        bundle = getArguments();
         Intent i = getIntent();
-action="ContinueRegisteration";
-        action =i.getStringExtra("action");
+        action = "ContinueRegisteration";
+        action = i.getStringExtra("action");
 
-              edtyear.setOnTouchListener(this);
+        edtyear.setOnTouchListener(this);
         edttax.setOnTouchListener(this);
         edtfit.setOnTouchListener(this);
         edtpermit.setOnTouchListener(this);
@@ -704,8 +704,7 @@ action="ContinueRegisteration";
                 {
                     Toast.makeText(getApplicationContext(), "to Do in Continue Next reg", Toast.LENGTH_LONG).show();
                 }
-            }else if (str.equals("Success"))
-            {/*Response for Add Own*/
+            } else if (str.equals("Success")) {/*Response for Add Own*/
 
                 Toast.makeText(getApplicationContext(), "Your Vehicle added Sucessfully",
                         Toast.LENGTH_LONG).show();
@@ -764,7 +763,7 @@ action="ContinueRegisteration";
 
                                         dialog.cancel();
 //
-                                        Intent i= new Intent(getApplicationContext(),CompanyBasedRegistrationActivity.class);
+                                        Intent i = new Intent(getApplicationContext(), CompanyBasedRegistrationActivity.class);
                                         startActivity(i);
                                         finish();
                                      /*   CompanyBasedRegisteration fr = new CompanyBasedRegisteration();
@@ -789,10 +788,10 @@ action="ContinueRegisteration";
 
             }
 
-            }
-
         }
+
     }
+}
 
 
 

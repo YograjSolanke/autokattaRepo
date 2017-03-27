@@ -16,21 +16,23 @@ import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.fragment.VehicleDetailsSpecifications;
 import autokatta.com.fragment.VehicleDetailsTwo;
 import autokatta.com.fragment.VehicleDetails_Details;
+import autokatta.com.fragment_profile.Event;
+import autokatta.com.fragment_profile.Follow;
+import autokatta.com.fragment_profile.Groups;
+import autokatta.com.fragment_profile.Katta;
 
-public class VehicleDetails extends AppCompatActivity {
+public class OtherProfile extends AppCompatActivity {
 
-    ImageView mVehiclePicture;
-    String mVehicleName;
+    ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vehicle_details);
+        setContentView(R.layout.activity_other_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.like);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,20 +45,17 @@ public class VehicleDetails extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    /*
-                    get Vehicle Data...
-                     */
-                    getVehicleData();
+
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
-                    mVehiclePicture = (ImageView) findViewById(R.id.vehicle_image);
+                    mOtherPicture = (ImageView) findViewById(R.id.other_profile_image);
 
-                    ViewPager viewPager = (ViewPager) findViewById(R.id.vehicle_details_viewpager);
+                    ViewPager viewPager = (ViewPager) findViewById(R.id.other_profile_viewpager);
                     if (viewPager != null) {
                         setupViewPager(viewPager);
                     }
 
-                    TabLayout tabLayout = (TabLayout) findViewById(R.id.vehicle_details_tabs);
+                    TabLayout tabLayout = (TabLayout) findViewById(R.id.other_profile_tabs);
                     tabLayout.setupWithViewPager(viewPager);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -65,18 +64,12 @@ public class VehicleDetails extends AppCompatActivity {
         });
     }
 
-    /*
-    Vehicle Details...
-     */
-    private void getVehicleData() {
-
-    }
-
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new VehicleDetails_Details(), "DETAILS");
-        adapter.addFragment(new VehicleDetailsTwo(), "VEHICLE DETAILS");
-        adapter.addFragment(new VehicleDetailsSpecifications(), "SPECIFICATION");
+        adapter.addFragment(new Groups(), "GROP");
+        adapter.addFragment(new Event(), "EVENT");
+        adapter.addFragment(new Katta(), "KATTA");
+        adapter.addFragment(new Follow(), "FOLLOW");
         viewPager.setAdapter(adapter);
     }
 

@@ -53,11 +53,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     RadioButton rbtmale,rbtfemale;
     ImageView dob_calender;
     RadioGroup rg1;
-    private String[] MODULE = null;
-    private String[] INDUSTRY = null;
+    String[] MODULE = null;
+    String[] INDUSTRY = null;
     ApiCall apiCall;
     GenericFunctions functions;
-    private List<String> resultList=new ArrayList<>();
+    List<String> resultList=new ArrayList<>();
+    private DatePickerDialog datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         otherCategoryLayout = (TextInputLayout) findViewById(R.id.otherCategoryLayout);
         rbtmale = (RadioButton) findViewById(R.id.rbtmale);
         rbtfemale = (RadioButton) findViewById(R.id.rbtfemale);
-        dob_calender=(ImageView)findViewById(R.id.dob_calender);
+  //      dob_calender=(ImageView)findViewById(R.id.dob_calender);
 
         rg1 = (RadioGroup) findViewById(R.id.radiogp1);
         functions=new GenericFunctions();
@@ -99,15 +100,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         usertypeSpinner.setOnItemSelectedListener(this);
         industrySpinner.setOnItemSelectedListener(this);
         moduleSpinner.setOnItemSelectedListener(this);
-        dob_calender.setOnTouchListener(this);
+    //    dob_calender.setOnTouchListener(this);
         dateOfBirth.setOnTouchListener(this);
-
-
+        showDatePicker();
         address.setAdapter(new GooglePlacesAdapter(RegistrationActivity.this, R.layout.simple));
-
         apiCall.Categories();
         apiCall.Industries();
-
 
     }
 
@@ -115,12 +113,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
 
         switch (view.getId()){
-
-
             case (R.id.btnsubmit) :
-
                 Boolean flag = false;
-
                 namestr = personName.getText().toString().trim();
                 contactstr = mobileNo.getText().toString().trim();
                 emailstr = email.getText().toString().trim();
@@ -137,9 +131,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                 apiCall.registrationContactValidation(contactstr);
 
-
                 if (!addressstr.isEmpty()) {
-
                     resultList = GooglePlacesAdapter.getResultList();
                     for (int i = 0; i < resultList.size(); i++) {
                         if (addressstr.equalsIgnoreCase(resultList.get(i))) {
@@ -152,81 +144,67 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 }
 
                 if (namestr.isEmpty()) {
-
                     personName.setError("Enter User Name");
                     personName.requestFocus();
-
-
+                    personName.setFocusable(true);
                 } else if (!namestr.matches("[a-zA-Z ]*")) {
-
                     personName.setError("Enter Valid Name");
                     personName.requestFocus();
-
+                    personName.setFocusable(true);
                 } else if (contactstr.isEmpty()) {
-
                     mobileNo.setError("Enter Contact No");
                     mobileNo.requestFocus();
-
+                    mobileNo.setFocusable(true);
                 } else if (contactstr.matches("[0]+")) {
-
                     mobileNo.setError("Enter Valid Contact");
                     mobileNo.requestFocus();
+                    mobileNo.setFocusable(true);
                 } else if (!contactstr.matches("[0-9]*")) {
-
                     mobileNo.setError("Enter Valid Contact");
                     mobileNo.requestFocus();
-
+                    mobileNo.setFocusable(true);
                 } else if (!(contactstr.length() == 10)) {
-
                     mobileNo.setError("Enter valid contact");
                     mobileNo.requestFocus();
-
+                    mobileNo.setFocusable(true);
                 } else if (emailstr.isEmpty()) {
-
                     email.setError("Enter Email ID");
                     email.requestFocus();
-
+                    email.setFocusable(true);
                 }
                 // Validation for Email is not valid
                 else if (!functions.isValidEmail(emailstr)) {
                     // flag=false;
                     email.setError("Enter Valid Email");
                     email.requestFocus();
-
+                    email.setFocusable(true);
                 } else if (DOBstr.isEmpty()) {
-
                     dateOfBirth.setError("Enter Date Of Birth");
                     dateOfBirth.requestFocus();
-
-
+                    dateOfBirth.setFocusable(true);
                 } else if (!functions.getbirthdate(DOBstr)) {
-
                     dateOfBirth.setError("Minimum 8 Year Age Required");
                     dateOfBirth.requestFocus();
-
+                    dateOfBirth.setFocusable(true);
                 } else if (addressstr.isEmpty()) {
                     address.setError("Enter Address");
-
+                    address.setFocusable(true);
                 } else if (!flag) {
-
                     address.setError("Please Select Address From Dropdown Only");
                     address.requestFocus();
-
+                    address.setFocusable(true);
                 } else if (pincodestr.isEmpty()) {
                     pincode.setError("Enter Pincode");
                     pincode.requestFocus();
-
+                    pincode.setFocusable(true);
                 } else if (!pincodestr.matches("[0-9]*")) {
-
                     pincode.setError("Please enter valid pincode");
                     pincode.requestFocus();
-
-                    Toast.makeText(RegistrationActivity.this, "Please enter valid pincode ", Toast.LENGTH_LONG).show();
-
+                    pincode.setFocusable(true);
                 } else if (pincodestr.length() < 6) {
-
                     pincode.setError("Enter valid pincode");
                     pincode.requestFocus();
+                    pincode.setFocusable(true);
                 } else if (profession.equalsIgnoreCase("Select User Type")) {
                     Toast.makeText(getApplicationContext(), "Please select User type", Toast.LENGTH_LONG).show();
                 } else if ((!profession.equalsIgnoreCase("Student") && strIndustry.equalsIgnoreCase("Select Industry"))) {
@@ -243,50 +221,31 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     otherCategory.setError("Enter  Valid Profession");
                 } else if (passwordstr.isEmpty()) {
                     password.setError("Enter Password");
-
                 } else if (passwordstr.length() < 6) {
-
                     password.setError("Password should be minimum 6 characters");
                     password.requestFocus();
-
-
                 } else if (confirmpassstr.isEmpty()) {
-
                     confirmPassword.setError("Enter Password to confirm");
                     confirmPassword.requestFocus();
-
                 } else if (!passwordstr.equals(confirmpassstr)) {
-
                     confirmPassword.setError("Confirm password is wrong");
                     confirmPassword.requestFocus();
-
                 } else {
-
                     if (sub_profession.equalsIgnoreCase("Other")) {
                         sub_profession = otherCategory.getText().toString().trim();
                         apiCall.addOtherCategory(sub_profession);
-
                     }
                     if (strIndustry.equalsIgnoreCase("Other")) {
                         strIndustry = otherIndustry.getText().toString().trim();
-
                         apiCall.addOtherIndustry(strIndustry);
-
                     }
-
                     if (sub_profession.equalsIgnoreCase("Select Category"))
                         sub_profession="";
                     if (strIndustry.equalsIgnoreCase("Select Industry"))
                         strIndustry="";
-
                     apiCall.registrationAfterOtp(namestr,contactstr,emailstr,DOBstr,genderstr,pincodestr,addressstr,profession,passwordstr,sub_profession,strIndustry);
-
                 }
-
                 break;
-
-
-
 
             case (R.id.btnclear) :
                 personName.setText("");
@@ -309,7 +268,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 industrySpinner.clearFocus();
                 usertypeSpinner.clearFocus();
 
-
                 usertypeSpinner.setSelection(0);
                 industrySpinner.setSelection(0);
                 moduleSpinner.setSelection(0);
@@ -324,11 +282,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 password.setError(null);
                 confirmPassword.setError(null);
                 industrySpinner.setVisibility(View.GONE);
-
                 break;
-
         }
-
     }
 
     @Override
@@ -353,15 +308,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
         switch (adapterView.getId()) {
-
-
             case (R.id.spinnerUsertype):
                 System.out.println("In User Spinner");
-
                 // profession = usertypeSpinner.getSelectedItem().toString();
-
                 if (!usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Student")
                         && !usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Select User Type")) {
                     // otherCategorylayout.setVisibility(View.VISIBLE);
@@ -376,17 +326,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     if (otherIndustryLayout.getVisibility() == View.VISIBLE) {
                         otherIndustryLayout.setVisibility(View.GONE);
                     }
-
                 }
-
-
-
                 break;
             case (R.id.spinnerindustry):
-
-
                 // strIndustry = industrySpinner.getSelectedItem().toString();
-
                 if (industrySpinner.getSelectedItem().toString().equalsIgnoreCase("Automotive and vehicle manufacturing")) {
                     // otherCmoduleSpinner = (Spinner) findViewById(R.id.spinner_cou);ategorylayout.setVisibility(View.VISIBLE);
                     moduleSpinner.setVisibility(View.VISIBLE);
@@ -402,9 +345,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                 break;
             case (R.id.spinnerCategory):
-
                 // sub_profession = moduleSpinner.getSelectedItem().toString();
-
                 if (moduleSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
                     otherCategoryLayout.setVisibility(View.VISIBLE);
                 } else {
@@ -412,9 +353,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 }
 
                 break;
-
-
-
         }
 
     }
@@ -424,12 +362,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 /*
                         Response to get category
                  */
@@ -472,7 +408,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     }
 
                 }
-
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
@@ -558,7 +493,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
         switch (view.getId()) {
-            case (R.id.dob_calender):
+            case R.id.editdob:
+                dateOfBirth.setInputType(InputType.TYPE_NULL);
+                datePicker.show();
+                break;
+            /*case (R.id.dob_calender):
 
                 int action = motionEvent.getAction();
                 if (action == MotionEvent.ACTION_DOWN) {
@@ -576,16 +515,46 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     newFragment.show(getFragmentManager(), "DatePicker");
 
                 }
-                break;
+                break;*/
 
         }
-
-
         return false;
     }
 
+    private void showDatePicker() {
+        Calendar newCalendar = Calendar.getInstance();
+        datePicker = new DatePickerDialog(RegistrationActivity.this, new DatePickerDialog.OnDateSetListener() {
 
-    //date  setting class
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                if (dayOfMonth < 10) {
+                    if ((monthOfYear+1) < 11) {
+                        if ((monthOfYear+1) == 10) {
+                            dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                        }else if(monthOfYear < 10){
+                            dateOfBirth.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                        }
+                    } else {
+                        dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                    }
+                } else if (dayOfMonth >= 10) {
+                    if ((monthOfYear+1) < 11) {
+                        if ((monthOfYear+1) == 10) {
+                            dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        }else if(monthOfYear < 10) {
+                            dateOfBirth.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        }
+                    }else {
+                        dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                    }
+                }
+            }
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    /*//date  setting class
     public class SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -614,5 +583,5 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             dateOfBirth.setText(year + "-" + m + "-" + d);
         }
 
-    }
+    }*/
 }

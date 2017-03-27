@@ -148,9 +148,13 @@
         <activity
             android:name=".view.VehicleDetails"
             android:label="@string/title_activity_vehicle_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Registration.CompanyBasedRegistrationActivity"/>
 
+        <activity
+            android:name=".view.OtherProfile"
+            android:label="@string/title_activity_other_profile"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0310abc2483857212f40bd7bad891e166bf94ec4" />

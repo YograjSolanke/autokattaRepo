@@ -43,6 +43,7 @@ import autokatta.com.view.MySearchActivity;
 import autokatta.com.view.MyStoreListActivity;
 import autokatta.com.view.MyUpcomingEventsTabActivity;
 import autokatta.com.view.MyUploadedVehiclesActivity;
+import autokatta.com.view.OtherProfile;
 import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.UserProfile;
 import autokatta.com.view.VehicleDetails;
@@ -182,7 +183,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                             startActivity(new Intent(AutokattaMainActivity.this, MyBroadcastGroupsActivity.class));
 
                         } else if (menuItem.getItemId() == R.id.my_broadcast_message) {
-
+                            startActivity(new Intent(AutokattaMainActivity.this, OtherProfile.class));
                         } else if (menuItem.getItemId() == R.id.business_Chat) {
 startActivity(new Intent(AutokattaMainActivity.this, VehicleDetails.class));
                         } else if (menuItem.getItemId() == R.id.locality) {

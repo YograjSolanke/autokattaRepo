@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="base_url">http://autokatta.com/mobile/</string>
     <string name="permission">Autokatta allows your permissions to access your data</string>
+    <string name="specification_note">Note:-Standard Specification As Per Manufacturer</string>
 
     <!-- Navigation Drawer Items...-->
     <string name="home">Home</string>
@@ -131,4 +132,5 @@
     <string name="title_activity_my_ended_event">MyEndedEventActivity</string>
     <string name="title_activity_group_tabs">GroupTabs</string>
     <string name="title_activity_vehicle_details">VehicleDetails</string>
+    <string name="title_activity_other_profile">OtherProfile</string>
 </resources>

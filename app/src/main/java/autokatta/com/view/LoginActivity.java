@@ -1,7 +1,10 @@
 package autokatta.com.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -16,9 +19,11 @@ import java.net.SocketTimeoutException;
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.Registration.CompanyBasedRegistrationActivity;
+import autokatta.com.Registration.RegistrationActivity;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.SessionManagement;
 import autokatta.com.response.LoginResponse;
 import retrofit2.Response;
 
@@ -26,32 +31,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText mUserName, mPassword;
     TextView mForgetPassword;
+    SessionManagement session;
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
+    String userName;
+    String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        mUserName = (EditText) findViewById(R.id.username);
-        mPassword = (EditText) findViewById(R.id.password);
-        mForgetPassword= (TextView) findViewById(R.id.forget_password);
-        Button mLogin = (Button) findViewById(R.id.login);
-        Button mRegistration = (Button) findViewById(R.id.register);
-        mLogin.setOnClickListener(this);
-        mRegistration.setOnClickListener(this);
-        mForgetPassword.setOnClickListener(this);
+        session = new SessionManagement(getApplicationContext());
+        if (session.isLoggedIn()) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
+        } else {
+            mUserName = (EditText) findViewById(R.id.username);
+            mPassword = (EditText) findViewById(R.id.password);
+            mForgetPassword = (TextView) findViewById(R.id.forget_password);
+            Button mLogin = (Button) findViewById(R.id.login);
+            Button mRegistration = (Button) findViewById(R.id.register);
+            mLogin.setOnClickListener(this);
+            mRegistration.setOnClickListener(this);
+            mForgetPassword.setOnClickListener(this);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login:
                 login();
                 break;
 
             case R.id.register:
-                startActivity(new Intent(LoginActivity.this, CompanyBasedRegistrationActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+                finish();
                 break;
 
             case R.id.forget_password:
@@ -76,26 +93,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mApiCall.userLogin(userName, password);
         }
     }
+
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
+        if (response != null) {
+            if (response.isSuccessful()) {
                 LoginResponse mLoginResponse = (LoginResponse) response.body();
-                String myContact = mUserName.getText().toString();
-                if (mLoginResponse.getSuccess()!=null){
+                if (mLoginResponse.getSuccess() != null) {
                     String id = mLoginResponse.getSuccess().get(0).getRegID();
-                    Log.i("id","->"+id);
-                    CustomToast.customToast(getApplicationContext(),"Login Successful");
-                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginContact", myContact).apply();
+                    Log.i("id", "->" + id);
+                    CustomToast.customToast(getApplicationContext(), "Login Successful");
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginContact", userName).apply();
+                    session.createLoginSession(userName, password);
                     startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
-                }else{
-                    CustomToast.customToast(getApplicationContext(),mLoginResponse.getError().get(0));
+                } else {
+                    CustomToast.customToast(getApplicationContext(), mLoginResponse.getError().get(0));
                 }
-            }else{
+            } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
-        }else{
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
 
@@ -115,5 +133,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(getString(R.string.alert_title));
+        alert.setMessage(getString(R.string.alert_msg));
+        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                System.exit(0);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+
+        });
+        alert.create();
+        alert.show();
     }
 }
