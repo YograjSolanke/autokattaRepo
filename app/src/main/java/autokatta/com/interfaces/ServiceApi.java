@@ -428,5 +428,10 @@ public interface ServiceApi {
     @POST("getEndedExchangeMela.php")
     Call<MyActiveExchangeMelaResponse> getEndedExchangeMela(@Query("contact") String myContact);
 
+    //set vehicle privacy
+    @POST("vehicle_group_store_ref.php")
+    Call<String> setVehiclePrivacy(@Query("contact") String myContact, @Query("vehicle_id") String vehicleid,
+                                   @Query("group_ids") String groupIds, @Query("store_ids") String storeIds);
+
 
 }
