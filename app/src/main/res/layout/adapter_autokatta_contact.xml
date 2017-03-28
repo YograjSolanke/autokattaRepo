@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/adapter_autokatta_contactCard_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:elevation="14dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/profileImg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/txtname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/profileImg"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/profileImg"
+                android:layout_toStartOf="@+id/callImg"
+                android:text="Name"
+                android:textColor="#2C3343"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtname"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/profileImg"
+                android:layout_toStartOf="@+id/callImg"
+                android:text="Number"
+                android:textColor="#2C3343"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtstatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtnumber"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/profileImg"
+                android:layout_toStartOf="@+id/callImg"
+                android:text="Number"
+                android:textColor="#2C3343"
+                android:textSize="15sp"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:id="@+id/callImg"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="90dp"
+                android:contentDescription="@string/app_name"
+                android:padding="5dp"
+                android:src="@android:drawable/ic_menu_call" />
+
+            <Button
+                android:id="@+id/btnfollow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/buttonback"
+                android:gravity="center"
+                android:text="Follow+"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnunfollow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/buttonback"
+                android:gravity="center"
+                android:text="Unfollow"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
