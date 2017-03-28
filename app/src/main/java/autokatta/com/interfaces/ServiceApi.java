@@ -19,6 +19,7 @@ import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
+import autokatta.com.response.GetVehicleByIdResponse;
 import autokatta.com.response.GetVehicleColor;
 import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
@@ -438,5 +439,8 @@ public interface ServiceApi {
     Call<String> setVehiclePrivacy(@Query("contact") String myContact, @Query("vehicle_id") String vehicleid,
                                    @Query("group_ids") String groupIds, @Query("store_ids") String storeIds);
 
+    //Get Vehicle By Id...
+    @POST("getVehicleById.php")
+    Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("vehicle_id") String vehicleId);
 
 }

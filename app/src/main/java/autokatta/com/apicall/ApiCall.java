@@ -31,6 +31,7 @@ import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
+import autokatta.com.response.GetVehicleByIdResponse;
 import autokatta.com.response.GetVehicleColor;
 import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
@@ -2740,7 +2741,7 @@ Upload Vehicle
     public void getOtherProfile(String myContact, String senderContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
-                  Retrofit retrofit = new Retrofit.Builder()
+                Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
@@ -2751,7 +2752,7 @@ Upload Vehicle
                 profileOther.enqueue(new Callback<ProfileAboutResponse>() {
                     @Override
                     public void onResponse(Call<ProfileAboutResponse> call, Response<ProfileAboutResponse> response) {
-                      mNotifier.notifySuccess(response);
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
@@ -2766,6 +2767,37 @@ Upload Vehicle
         }
     }
 
+    /*
+    Get Vehicle By Id...
+     */
+    public void getVehicleById(String vehicleId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetVehicleByIdResponse> getVehicleById = serviceApi._autokattaGetVehicleById(vehicleId);
+                getVehicleById.enqueue(new Callback<GetVehicleByIdResponse>() {
+                    @Override
+                    public void onResponse(Call<GetVehicleByIdResponse> call, Response<GetVehicleByIdResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetVehicleByIdResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs

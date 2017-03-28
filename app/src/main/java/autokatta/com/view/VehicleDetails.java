@@ -13,14 +13,18 @@ import android.widget.ImageView;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.VehicleDetailsSpecifications;
 import autokatta.com.fragment.VehicleDetailsTwo;
 import autokatta.com.fragment.VehicleDetails_Details;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetVehicleByIdResponse;
+import retrofit2.Response;
 
-public class VehicleDetails extends AppCompatActivity {
+public class VehicleDetails extends AppCompatActivity implements RequestNotifier {
 
     ImageView mVehiclePicture;
-    String mVehicleName;
     CollapsingToolbarLayout collapsingToolbar;
 
     @Override
@@ -38,7 +42,6 @@ public class VehicleDetails extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -46,7 +49,7 @@ public class VehicleDetails extends AppCompatActivity {
                     /*
                     get Vehicle Data...
                      */
-                    getVehicleData();
+                    getVehicleData(getIntent().getExtras().getString("vehicle_id"));
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
                     mVehiclePicture = (ImageView) findViewById(R.id.vehicle_image);
@@ -68,8 +71,9 @@ public class VehicleDetails extends AppCompatActivity {
     /*
     Vehicle Details...
      */
-    private void getVehicleData() {
-
+    private void getVehicleData(String mVehicleId) {
+        ApiCall mApiCall = new ApiCall(VehicleDetails.this, this);
+        mApiCall.getVehicleById(mVehicleId);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -80,4 +84,29 @@ public class VehicleDetails extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    public void notifySuccess(Response<?> response) {
+        if (response!=null){
+            if (response.isSuccessful()){
+                GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
+                for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()){
+
+                }
+            }else {
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            }
+        }else {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+        }
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
+    }
 }
