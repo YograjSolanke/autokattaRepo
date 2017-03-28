@@ -2,12 +2,14 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import autokatta.com.R;
 import autokatta.com.fragment.GroupVehicleList;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
+import autokatta.com.view.OtherProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -203,12 +206,24 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             }
         });
 
-        /*holder.mProfilePic.setOnClickListener(new View.OnClickListener() {
+        holder.mProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.mContact.getText().toString().equals())
+                if (holder.mContact.getText().toString().equals(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                        Context.MODE_PRIVATE).getString("loginContact",""))){
+                    Log.e("You","->");
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("contactOtherProfile", holder.mContact.getText().toString());
+                    bundle.putString("action", "otherProfile");
+
+                    Intent mOtherProfile = new Intent(mActivity, OtherProfile.class);
+                    mOtherProfile.putExtras(bundle);
+                    mActivity.startActivity(mOtherProfile);
+
+                }
             }
-        });*/
+        });
     }
 
     @Override

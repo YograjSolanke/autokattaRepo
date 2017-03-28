@@ -21,21 +21,11 @@ public class Katta extends Fragment {
     public Katta(){
         //empty constructor...
     }
-    public static Katta newInstance(String text) {
-        Katta f = new Katta();
-        Bundle b = new Bundle();
-        b.putString("msg", text);
-        f.setArguments(b);
-        return f;
-    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mKatta = inflater.inflate(R.layout.fragment_profile_katta, container, false);
-        TextView tv = (TextView) mKatta.findViewById(R.id.tvFragFirst);
-        tv.setText(getArguments().getString("msg"));
-
-        //mKatta.findViewById(R.id.root_view).setBackgroundColor(Color.parseColor(getArguments().getString("color")));
         return mKatta;
     }
 }

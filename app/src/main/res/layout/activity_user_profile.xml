@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
@@ -62,10 +63,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-
     <!--<include layout="@layout/nested_scrollview"/>-->
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

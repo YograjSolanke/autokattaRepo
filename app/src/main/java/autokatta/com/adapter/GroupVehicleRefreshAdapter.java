@@ -1,7 +1,9 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -21,6 +23,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.ModelGroups;
+import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -75,7 +78,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     }
 
     @Override
-    public void onBindViewHolder(GroupVehicleRefreshAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(GroupVehicleRefreshAdapter.MyViewHolder holder, final int position) {
         String register = mItemList.get(position).getRegistrationNumber();
         SpannableString sp = new SpannableString(mActivity.getString(R.string.no_register) + register);
         sp.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.no_register).length(),
@@ -146,6 +149,18 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.mCardImage);
         }
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle mBundle = new Bundle();
+                mBundle.putString("vehicle_id", mItemList.get(position).getVehicleId());
+
+                Intent mVehicleDetails = new Intent(mActivity, VehicleDetails.class);
+                mVehicleDetails.putExtras(mBundle);
+                mActivity.startActivity(mVehicleDetails);
+            }
+        });
     }
 
     @Override
