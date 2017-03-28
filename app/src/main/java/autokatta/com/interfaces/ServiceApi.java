@@ -436,11 +436,15 @@ public interface ServiceApi {
 
     //set vehicle privacy
     @POST("vehicle_group_store_ref.php")
-    Call<String> setVehiclePrivacy(@Query("contact") String myContact, @Query("vehicle_id") String vehicleid,
-                                   @Query("group_ids") String groupIds, @Query("store_ids") String storeIds);
+    Call<String> _autokattaSetVehiclePrivacy(@Query("contact") String myContact, @Query("vehicle_id") String vehicleid,
+                                             @Query("group_ids") String groupIds, @Query("store_ids") String storeIds);
 
     //Get Vehicle By Id...
     @POST("getVehicleById.php")
     Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("vehicle_id") String vehicleId);
+
+    //Delete a store...
+    @POST("deleteMyStore.php")
+    Call<String> _autokattaDeleteStore(@Query("store_id") String storeId, @Query("keyword") String keyword);
 
 }
