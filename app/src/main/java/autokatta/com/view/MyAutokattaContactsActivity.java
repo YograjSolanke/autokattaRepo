@@ -3,18 +3,16 @@ package autokatta.com.view;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import autokatta.com.R;
-import autokatta.com.adapter.TabAdapterName;
-import autokatta.com.fragment.AutokattaContactFragment;
-import autokatta.com.fragment.InviteContactFragment;
+import autokatta.com.empty_fragment.MyAutokattaContactFragmentTab;
 
-public class MyAutokattaContacts extends AppCompatActivity {
+public class MyAutokattaContactsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,22 +36,9 @@ public class MyAutokattaContacts extends AppCompatActivity {
             }
         });
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.my_autokatta_contacts_viewpager);
-        if (viewPager != null) {
-            setupViewPager(viewPager);
-        }
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.my_autokatta_contacts_tab);
-        tabLayout.setupWithViewPager(viewPager);
-//        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-//        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new AutokattaContactFragment(), "Autokatta Contacts");
-        adapter.addFragment(new InviteContactFragment(), "Invite Contacts");
-        viewPager.setAdapter(adapter);
+        FragmentManager mFragmentManager = getSupportFragmentManager();
+        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.my_autokattaContact_container, new MyAutokattaContactFragmentTab()).commit();
     }
 
 }

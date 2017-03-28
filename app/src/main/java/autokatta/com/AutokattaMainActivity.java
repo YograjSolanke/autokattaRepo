@@ -35,7 +35,7 @@ import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.Create_Event;
 import autokatta.com.view.GroupTabs;
 import autokatta.com.view.MyActiveEventsTabActivity;
-import autokatta.com.view.MyAutokattaContacts;
+import autokatta.com.view.MyAutokattaContactsActivity;
 import autokatta.com.view.MyBroadcastGroupsActivity;
 import autokatta.com.view.MyEndedEventTabActivity;
 import autokatta.com.view.MySavedAuctionEventActivity;
@@ -142,7 +142,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.profile) {
                             startActivity(new Intent(AutokattaMainActivity.this, UserProfile.class));
                         } else if (menuItem.getItemId() == R.id.my_contacts) {
-                            startActivity(new Intent(AutokattaMainActivity.this, MyAutokattaContacts.class));
+                            startActivity(new Intent(AutokattaMainActivity.this, MyAutokattaContactsActivity.class));
                         } else if (menuItem.getItemId() == R.id.group) {
                             startActivity(new Intent(AutokattaMainActivity.this, GroupTabs.class));
                         } else if (menuItem.getItemId() == R.id.my_store) {
