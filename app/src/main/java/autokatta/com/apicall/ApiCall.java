@@ -2733,6 +2733,39 @@ Upload Vehicle
         }
     }
 
+     /*
+        get Other Profile Data...
+     */
+
+    public void getOtherProfile(String myContact, String senderContact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                  Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ProfileAboutResponse> profileOther = serviceApi._autokattaOtherProfile(myContact, senderContact);
+                profileOther.enqueue(new Callback<ProfileAboutResponse>() {
+                    @Override
+                    public void onResponse(Call<ProfileAboutResponse> call, Response<ProfileAboutResponse> response) {
+                      mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProfileAboutResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs

@@ -202,6 +202,13 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 }
             }
         });
+
+        /*holder.mProfilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.mContact.getText().toString().equals())
+            }
+        });*/
     }
 
     @Override

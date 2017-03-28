@@ -45,11 +45,9 @@ public class OtherProfile extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-
+                    getOtherProfile();
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-
                     mOtherPicture = (ImageView) findViewById(R.id.other_profile_image);
-
                     ViewPager viewPager = (ViewPager) findViewById(R.id.other_profile_viewpager);
                     if (viewPager != null) {
                         setupViewPager(viewPager);
@@ -62,6 +60,13 @@ public class OtherProfile extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /*
+    GET Other Profile...
+     */
+    private void getOtherProfile() {
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
