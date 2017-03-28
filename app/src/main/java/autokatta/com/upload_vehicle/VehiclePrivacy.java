@@ -2,6 +2,7 @@ package autokatta.com.upload_vehicle;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.view.VehicleDetails;
+import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -24,7 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-003 on 27/3/17.
  */
 
-public class VehiclePrivacy extends Fragment {
+public class VehiclePrivacy extends Fragment implements View.OnClickListener, RequestNotifier {
 
     String myContact, vehicle_id, GroupIds = "", StoreIds = "", GroupName = "", StoreName = "";
     View mVehiclePrivacy;
@@ -98,11 +103,19 @@ public class VehiclePrivacy extends Fragment {
         adpstoreAdapter = new CheckedStoreAdapter(getActivity(), storeIdlist, storeTitlelist);
         storelistView.setAdapter(adpstoreAdapter);
 
+        ok.setOnClickListener(this);
+        cancel.setOnClickListener(this);
 
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
+        return mVehiclePrivacy;
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.ok:
                 if (!(groupIdlist.size() == 0) || !(storeIdlist.size() == 0)) {
 
                     GroupIds = "";
@@ -127,47 +140,48 @@ public class VehiclePrivacy extends Fragment {
                         }
 
                     }
-
-
-                    //newtask();
+                    setPrivacy(GroupIds, StoreIds);
 
                 } else {
-
-
-//                    Bundle b=new Bundle();
-//                    b.putString("Vehical_id",vehicle_id);
-//                    Vehical_Details frag=new Vehical_Details();
-//                    frag.setArguments(b);
-//
-//                    FragmentManager mFragmentManager;
-//                    FragmentTransaction mFragmentTransaction;
-//
-//                    mFragmentManager = getActivity().getSupportFragmentManager();
-//                    mFragmentTransaction = mFragmentManager.beginTransaction();
-//                    mFragmentTransaction.replace(R.id.containerView, frag).commit();
+                    Intent intent = new Intent(getActivity(), VehicleDetails.class);
+                    intent.putExtra("vehicle_id", vehicle_id);
+                    getActivity().startActivity(intent);
 
                 }
-            }
-        });
+                break;
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Bundle b=new Bundle();
-//                b.putString("Vehical_id",vehicle_id);
-//                Vehical_Details frag=new Vehical_Details();
-//                frag.setArguments(b);
-//
-//                FragmentManager mFragmentManager;
-//                FragmentTransaction mFragmentTransaction;
-//
-//                mFragmentManager = getActivity().getSupportFragmentManager();
-//                mFragmentTransaction = mFragmentManager.beginTransaction();
-//                mFragmentTransaction.replace(R.id.containerView, frag).commit();
-            }
-        });
+            case R.id.cancel:
+                Intent intent = new Intent(getActivity(), VehicleDetails.class);
+                intent.putExtra("vehicle_id", vehicle_id);
+                getActivity().startActivity(intent);
+                break;
+        }
+    }
 
-        return mVehiclePrivacy;
+    private void setPrivacy(String groupIds, String storeIds) {
+        ApiCall apiCall = new ApiCall(getActivity(), this);
+        apiCall.VehiclePrivacy(myContact, vehicle_id, groupIds, storeIds);
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            if (str.equals("success")) {
+                Intent intent = new Intent(getActivity(), VehicleDetails.class);
+                intent.putExtra("vehicle_id", vehicle_id);
+                getActivity().startActivity(intent);
+            }
+        }
 
     }
 

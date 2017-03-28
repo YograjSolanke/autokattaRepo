@@ -1,5 +1,6 @@
 package autokatta.com.upload_vehicle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,8 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.PriceSuggestionResponse;
+import autokatta.com.response.UploadVehicleResponse;
+import autokatta.com.view.VehicleDetails;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -44,7 +47,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         //empty comstructor
     }
 
-    String strCategoryId = "", strCategoryName = "", strSubcategoryId = "", strSubcategoryName = "", strBrandId = "", strModelId = "", strVersionId = "",
+    String vehicle_id = "", strCategoryId = "", strCategoryName = "", strSubcategoryId = "", strSubcategoryName = "", strBrandId = "", strModelId = "", strVersionId = "",
             strStearing = "", strBrakename = "", strPumpname = "", strTitle = "", strGroupprivacy = "", strGroupids = "", strGroupnames = "",
             strStoreprivacy = "", strStoreids = "", strStorenames = "", strFinancestatus = "", strExhangestatus = "", strPermit = "",
             strMakemonth = "", strMakeyear = "", strRegmonth = "", strRegyear = "", strHrs = "", strKms = "", strInvoice = "", strLocation = "",
@@ -180,23 +183,18 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
     private void uploadVehicle() {
         //apiCall.uploadMyVehicle();
+        /*Bundle b = new Bundle();
+        b.putString("vehicle_id", "1649");
+        VehiclePrivacy frag = new VehiclePrivacy();
+        frag.setArguments(b);
 
-        if (!strGroupids.equals("") || !strStoreids.equals("")) {
+        FragmentManager mFragmentManager;
+        FragmentTransaction mFragmentTransaction;
 
-            Bundle b = new Bundle();
-            b.putString("vehicle_id", "1649");
-            VehiclePrivacy frag = new VehiclePrivacy();
-            frag.setArguments(b);
+        mFragmentManager = getActivity().getSupportFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.replace(R.id.vehicle_upload_container, frag).commit();*/
 
-            FragmentManager mFragmentManager;
-            FragmentTransaction mFragmentTransaction;
-
-            mFragmentManager = getActivity().getSupportFragmentManager();
-            mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.vehicle_upload_container, frag).commit();
-
-
-        }
     }
 
     @Override
@@ -205,16 +203,17 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         if (response != null) {
             if (response.isSuccessful()) {
 
-                PriceSuggestionResponse priceSuggestionResponse = (PriceSuggestionResponse) response.body();
-                Log.i("response", response.body().toString());
-                if (!priceSuggestionResponse.getSuccess().isEmpty()) {
+                if (response.body() instanceof PriceSuggestionResponse) {
+                    PriceSuggestionResponse priceSuggestionResponse = (PriceSuggestionResponse) response.body();
+                    Log.i("response", response.body().toString());
+                    if (!priceSuggestionResponse.getSuccess().isEmpty()) {
 
-                    for (PriceSuggestionResponse.Success success : priceSuggestionResponse.getSuccess()) {
-                        success.setPriceSuggestion(success.getPriceSuggestion());
-                        String i = success.getPriceSuggestion();
-                        if (!i.equals(""))
-                            priceList.add(Integer.valueOf(success.getPriceSuggestion()));
-                    }
+                        for (PriceSuggestionResponse.Success success : priceSuggestionResponse.getSuccess()) {
+                            success.setPriceSuggestion(success.getPriceSuggestion());
+                            String i = success.getPriceSuggestion();
+                            if (!i.equals(""))
+                                priceList.add(Integer.valueOf(success.getPriceSuggestion()));
+                        }
 
 //                    System.out.println("priceSuggestion" + priceList);
 //
@@ -230,49 +229,77 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 //
 //                    System.out.println("priceSuggestion" + priceList);
 
-                    if (priceList.size() != 0) {
+                        if (priceList.size() != 0) {
 
-                        int maxsize = priceList.size();
-                        priceseekbar.setMax(priceList.get(maxsize - 1));
+                            int maxsize = priceList.size();
+                            priceseekbar.setMax(priceList.get(maxsize - 1));
 
-                        minprice.setText(String.valueOf(priceList.get(0)));
-                        maxprice.setText(String.valueOf(priceList.get(maxsize - 1)));
+                            minprice.setText(String.valueOf(priceList.get(0)));
+                            maxprice.setText(String.valueOf(priceList.get(maxsize - 1)));
 
-                        priceseekbar.setProgress(priceList.get(0)); // or any other value
+                            priceseekbar.setProgress(priceList.get(0)); // or any other value
 
-                        priceseekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            priceseekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-                            int seekBarProgress = 0;
+                                int seekBarProgress = 0;
 
-                            @Override
-                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                @Override
+                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                                seekBarProgress = progress;
-                                edtPrice.setText("" + seekBarProgress);
-                            }
+                                    seekBarProgress = progress;
+                                    edtPrice.setText("" + seekBarProgress);
+                                }
 
 
-                            @Override
-                            public void onStartTrackingTouch(SeekBar seekBar) {
-                                edtPrice.setText("" + seekBarProgress);
-                            }
+                                @Override
+                                public void onStartTrackingTouch(SeekBar seekBar) {
+                                    edtPrice.setText("" + seekBarProgress);
+                                }
 
-                            @Override
-                            public void onStopTrackingTouch(SeekBar seekBar) {
+                                @Override
+                                public void onStopTrackingTouch(SeekBar seekBar) {
 
-                                edtPrice.setText("" + seekBarProgress);
-                                CustomToast.customToast(getActivity(), "Progresss" + seekBarProgress);
-                            }
-                        });
-                    } else {
-                        txtSugestedPrice.setVisibility(View.GONE);
-                        priceseekbar.setVisibility(View.GONE);
-                        minprice.setVisibility(View.GONE);
-                        maxprice.setVisibility(View.GONE);
-                    }
+                                    edtPrice.setText("" + seekBarProgress);
+                                    CustomToast.customToast(getActivity(), "Progresss" + seekBarProgress);
+                                }
+                            });
+                        } else {
+                            txtSugestedPrice.setVisibility(View.GONE);
+                            priceseekbar.setVisibility(View.GONE);
+                            minprice.setVisibility(View.GONE);
+                            maxprice.setVisibility(View.GONE);
+                        }
 
-                } else
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+
+                    } else
+                        CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                } else if (response.body() instanceof UploadVehicleResponse) {
+                    UploadVehicleResponse vehicleResponse = (UploadVehicleResponse) response.body();
+                    if (vehicleResponse.getSuccess() != null) {
+                        vehicle_id = vehicleResponse.getSuccess().getVehicleID().toString();
+                        if (!strGroupids.equals("") || !strStoreids.equals("")) {
+
+                            Bundle b = new Bundle();
+                            b.putString("vehicle_id", vehicle_id);
+                            VehiclePrivacy frag = new VehiclePrivacy();
+                            frag.setArguments(b);
+
+                            FragmentManager mFragmentManager;
+                            FragmentTransaction mFragmentTransaction;
+
+                            mFragmentManager = getActivity().getSupportFragmentManager();
+                            mFragmentTransaction = mFragmentManager.beginTransaction();
+                            mFragmentTransaction.replace(R.id.vehicle_upload_container, frag).commit();
+
+
+                        } else {
+                            Intent intent = new Intent(getActivity(), VehicleDetails.class);
+                            intent.putExtra("vehicle_id", vehicle_id);
+                            getActivity().startActivity(intent);
+                        }
+                    } else
+                        CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                }
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));

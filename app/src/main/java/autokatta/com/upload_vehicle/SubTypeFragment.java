@@ -624,7 +624,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         jibstr = edtSetJib.getText().toString();
         boonstr = edtSetBoon.getText().toString();
 
-        if (!bodyManufacturerlist.contains(bodymanufacturerstr) && !seatManufacturerlist.contains(seatmanufacturerstr))
+        if (!bodymanufacturerstr.equals("") || !seatmanufacturerstr.equals("") && (!bodyManufacturerlist.contains(bodymanufacturerstr) && !seatManufacturerlist.contains(seatmanufacturerstr)))
             addBodyAndSeatManufacturers(bodymanufacturerstr, seatmanufacturerstr);
 
         int ownerPos = mOwnerSpinner.getSelectedItemPosition();
