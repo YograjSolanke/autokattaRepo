@@ -1,8 +1,10 @@
 package autokatta.com.fragment_profile;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
@@ -22,8 +24,8 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
-import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.view.Create_Event;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -32,7 +34,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-001 on 18/3/17.
  */
 
-public class Groups extends Fragment implements RequestNotifier {
+public class Groups extends Fragment implements RequestNotifier, View.OnClickListener {
     View mGroups;
 
     ExpandableListView groupExpandableListView;
@@ -42,6 +44,7 @@ public class Groups extends Fragment implements RequestNotifier {
     HashMap<String, List<ModelGroups>> mGroupList;
     List<String> mHeaderList;
     GroupsExpandableListAdapter adapter;
+    FloatingActionButton mCreateGroup;
 
     public Groups() {
      //empty constructor...
@@ -53,6 +56,7 @@ public class Groups extends Fragment implements RequestNotifier {
         mGroups = inflater.inflate(R.layout.fragment_profile_group, container, false);
 
         groupExpandableListView = (ExpandableListView) mGroups.findViewById(R.id.groupexpanablelistview);
+        mCreateGroup = (FloatingActionButton) mGroups.findViewById(R.id.create_group);
 
         ViewCompat.setNestedScrollingEnabled(groupExpandableListView, true);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
@@ -118,12 +122,21 @@ public class Groups extends Fragment implements RequestNotifier {
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Login Activity");
+            Log.i("Check Class-", "Groups Fragment");
         }
     }
 
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.create_event:
+                startActivity(new Intent(getActivity(), Create_Event.class));
+                break;
+        }
     }
 }

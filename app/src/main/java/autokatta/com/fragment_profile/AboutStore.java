@@ -4,20 +4,21 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.ProfileMyStoreAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.ProfileAboutResponse;
+import autokatta.com.response.GetStoreProfileInfoResponse;
 import retrofit2.Response;
 
 /**
@@ -27,6 +28,8 @@ import retrofit2.Response;
 public class AboutStore extends Fragment implements RequestNotifier {
     View mAboutStore;
     ListView mListView;
+    List<GetStoreProfileInfoResponse.Success> mSuccesses = new ArrayList<>();
+    ProfileMyStoreAdapter myStoreAdapter;
 
     public AboutStore(){
         //empty constructor...
@@ -38,7 +41,7 @@ public class AboutStore extends Fragment implements RequestNotifier {
         mAboutStore = inflater.inflate(R.layout.fragment_store_layout, container, false);
 
         mListView = (ListView) mAboutStore.findViewById(R.id.store_list);
-
+        ViewCompat.setNestedScrollingEnabled(mListView, true);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -61,7 +64,18 @@ public class AboutStore extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
+                GetStoreProfileInfoResponse mStoreProfileInfoResponse = (GetStoreProfileInfoResponse) response.body();
+                for (GetStoreProfileInfoResponse.Success infoResponse : mStoreProfileInfoResponse.getSuccess()) {
+                    infoResponse.setStoreId(infoResponse.getStoreId());
+                    infoResponse.setStoreName(infoResponse.getStoreName());
+                    infoResponse.setLocation(infoResponse.getLocation());
+                    infoResponse.setStoreLogo(infoResponse.getStoreLogo());
+                    infoResponse.setStoreType(infoResponse.getStoreType());
+                    mSuccesses.add(infoResponse);
+                }
+                myStoreAdapter = new ProfileMyStoreAdapter(getActivity(), mSuccesses);
+                mListView.setAdapter(myStoreAdapter);
+                myStoreAdapter.notifyDataSetChanged();
             } else {
                 //       Snackbar.make(findViewById(R.id.user_profile), getString(R.string._404), Snackbar.LENGTH_LONG).show();
             }

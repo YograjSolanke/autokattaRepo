@@ -47,6 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_tooltip_edit" />
 
 </android.support.design.widget.CoordinatorLayout>
