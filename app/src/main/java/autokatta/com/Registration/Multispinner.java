@@ -7,14 +7,15 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import java.util.List;
 
 /**
  * Created by ak-002 on 5/4/16.
  */
-public class Multispinner extends android.support.v7.widget.AppCompatSpinner implements
-        OnMultiChoiceClickListener, OnCancelListener {
+public class Multispinner extends Spinner implements
+        OnMultiChoiceClickListener, OnCancelListener  {
 
     private List<String> items;
     private boolean[] selected;

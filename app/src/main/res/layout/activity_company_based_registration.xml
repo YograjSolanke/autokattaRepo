@@ -176,12 +176,12 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
-                    <com.autokatta.Registration.MultiSelectionSpinner
+                    <autokatta.com.Registration.MultiSelectionSpinner
                         android:id="@+id/spinnerDistrict"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         >
-                    </com.autokatta.Registration.MultiSelectionSpinner>
+                    </autokatta.com.Registration.MultiSelectionSpinner>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -190,13 +190,10 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone">
 
-                    <com.autokatta.Registration.MultiSelectionSpinner
+                    <autokatta.com.Registration.MultiSelectionSpinner
                         android:id="@+id/spinnerState"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-
-                    </com.autokatta.Registration.MultiSelectionSpinner>
+                        android:layout_height="wrap_content" />
                 </RelativeLayout>
             </RelativeLayout>
 
