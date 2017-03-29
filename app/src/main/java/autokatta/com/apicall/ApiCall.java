@@ -17,6 +17,7 @@ import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
@@ -2852,28 +2853,23 @@ Upload Vehicle
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
-                //JSON to Gson conversion
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> deleteStore = serviceApi._autokattaCreatetore(name, contact, location, website, storetype, lastWord,
+                Call<CreateStoreResponse> deleteStore = serviceApi._autokattaCreatetore(name, contact, location, website, storetype, lastWord,
                         workdays, open, close, category, address, coverlastWord, storeDescription);
-                deleteStore.enqueue(new Callback<String>() {
+                deleteStore.enqueue(new Callback<CreateStoreResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        mNotifier.notifyString(response.body());
+                    public void onResponse(Call<CreateStoreResponse> call, Response<CreateStoreResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<CreateStoreResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -2930,17 +2926,17 @@ Upload Vehicle
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
                 Call<GetStoreProfileInfoResponse> mStoreCall = mServiceApi._autokattaGetProfileInfo(contact);
-               mStoreCall.enqueue(new Callback<GetStoreProfileInfoResponse>() {
-                   @Override
-                   public void onResponse(Call<GetStoreProfileInfoResponse> call, Response<GetStoreProfileInfoResponse> response) {
-                       mNotifier.notifySuccess(response);
-                   }
+                mStoreCall.enqueue(new Callback<GetStoreProfileInfoResponse>() {
+                    @Override
+                    public void onResponse(Call<GetStoreProfileInfoResponse> call, Response<GetStoreProfileInfoResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
 
-                   @Override
-                   public void onFailure(Call<GetStoreProfileInfoResponse> call, Throwable t) {
-                       mNotifier.notifyError(t);
-                   }
-               });
+                    @Override
+                    public void onFailure(Call<GetStoreProfileInfoResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
 
             } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));

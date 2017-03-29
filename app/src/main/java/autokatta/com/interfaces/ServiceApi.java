@@ -4,6 +4,7 @@ import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
@@ -451,13 +452,13 @@ public interface ServiceApi {
 
     //Create a store...
     @POST("createStore.php")
-    Call<String> _autokattaCreatetore(@Query("store_name") String name, @Query("contact_no") String contact,
-                                      @Query("location") String location, @Query("website") String website,
-                                      @Query("store_type") String storetype, @Query("store_image") String lastWord,
-                                      @Query("workingdays") String workdays, @Query("store_open_time") String open,
-                                      @Query("store_close_time") String close, @Query("category") String category,
-                                      @Query("address") String address, @Query("coverImage") String coverlastWord,
-                                      @Query("storeDescription") String storeDescription);
+    Call<CreateStoreResponse> _autokattaCreatetore(@Query("store_name") String name, @Query("contact_no") String contact,
+                                                   @Query("location") String location, @Query("website") String website,
+                                                   @Query("store_type") String storetype, @Query("store_image") String lastWord,
+                                                   @Query("workingdays") String workdays, @Query("store_open_time") String open,
+                                                   @Query("store_close_time") String close, @Query("category") String category,
+                                                   @Query("address") String address, @Query("coverImage") String coverlastWord,
+                                                   @Query("storeDescription") String storeDescription);
 
     //get Contact By Company
     @POST("getContactsBasedOnCompany.php")
