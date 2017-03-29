@@ -1,0 +1,326 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:elevation="14dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativelayoutmain">
+
+                <RelativeLayout
+                    android:gravity="center_horizontal"
+                    android:background="#C8C9CC"
+                    android:id="@+id/rl1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:id="@+id/auctiontitle2"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textStyle="bold"
+                        android:textColor="#808080"
+                        android:text="Loan Title :"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+
+                        android:layout_marginTop="5dp"
+                        android:textColor="#808080"
+                        android:layout_marginLeft="5dp"
+
+                        android:id="@+id/title"
+                        android:hint="-"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/auctiontitle2"
+                        android:layout_toEndOf="@+id/auctiontitle2"
+                        android:enabled="false" />
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:id="@+id/loanmelaimg"
+                    android:layout_below="@+id/rl1" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativelocation"
+                    android:layout_below="@+id/rl1"
+                    android:layout_toRightOf="@+id/loanmelaimg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location :"
+                        android:id="@+id/location"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Set Location :"
+                        android:layout_toRightOf="@+id/location"
+                        android:id="@+id/setlocation"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/relativeaddress"
+                    android:layout_below="@+id/relativelocation"
+                    android:layout_toRightOf="@+id/loanmelaimg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address :"
+                        android:id="@+id/address"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Set Address :"
+                        android:layout_toRightOf="@+id/address"
+                        android:id="@+id/setaddress"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/relativeaddress"
+                    android:id="@+id/rl4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/start2"
+                        android:textStyle="bold"
+                        android:textColor="#808080"
+                        android:text="Start :"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_marginLeft="25dp"
+                        android:layout_toRightOf="@+id/datetime1"
+                        android:text="&amp;"
+                        android:textColor="#808080"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+
+                        android:textColor="#808080"
+                        android:layout_toRightOf="@+id/datetime1"
+                        android:layout_marginLeft="57dp"
+                        android:hint="Time"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editTime"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:enabled="false" />
+
+                    <TextView
+                        android:textColor="#808080"
+                        android:id="@+id/datetime1"
+                        android:hint="Date"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="45dp"
+                        android:layout_marginStart="50dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/start2"
+                        android:layout_toEndOf="@+id/start2"
+                        android:enabled="false" />
+                    />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/rl4"
+                    android:id="@+id/rl5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/end2"
+                        android:textStyle="bold"
+                        android:textColor="#808080"
+                        android:text="End :"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <TextView
+                        android:layout_marginLeft="25dp"
+                        android:layout_toRightOf="@+id/datetime2"
+                        android:text="&amp;"
+                        android:textColor="#808080"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+
+                        android:textColor="#808080"
+                        android:layout_toRightOf="@+id/datetime2"
+                        android:layout_marginLeft="57dp"
+                        android:hint="Time"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editText"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:enabled="false" />
+
+                    <TextView
+                        android:textColor="#808080"
+                        android:id="@+id/datetime2"
+                        android:hint="Date"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginStart="50dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/end2"
+                        android:layout_toEndOf="@+id/end2"
+                        android:enabled="false" />
+                    />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@+id/relativelayoutmain">
+
+                <LinearLayout
+
+                    android:orientation="horizontal"
+                    android:background="#80bebebe"
+                    android:id="@+id/relatebutton"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <Button
+                        android:layout_weight="1"
+
+                        android:textColor="@color/white"
+                        android:background="@drawable/button_background"
+                        android:text="Preview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+
+                    <Button
+                        android:layout_marginLeft="1dp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/button_background"
+                        android:layout_weight="1"
+                        android:layout_toRightOf="@+id/going"
+                        android:text="Share"
+                        android:id="@+id/share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <RelativeLayout
+                        android:id="@+id/relativeshare"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_height="40dp">
+                        <!--<ImageButton-->
+                        <!--android:layout_marginLeft="2dp"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:src="@drawable/autoshare"-->
+
+                        <!--android:background="@drawable/button_background"-->
+                        <!--android:textAllCaps="false"-->
+                        <!---->
+                        <!--android:text="Share"-->
+                        <!--android:id="@+id/share1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/textshare"-->
+                        <!--android:text="SHARE"-->
+
+                        <!--android:gravity="center"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:textAllCaps="false"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:background="@drawable/button_background"-->
+                        <!--android:layout_width="50dp"-->
+                        <!--android:layout_toRightOf="@+id/share1"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--/>-->
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/linear_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</RelativeLayout>

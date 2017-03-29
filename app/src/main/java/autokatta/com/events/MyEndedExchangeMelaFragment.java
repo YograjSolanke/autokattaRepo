@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.EndedExchangeAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -66,7 +67,7 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyActiveExchangeMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                apiCall.getEndedExchangeMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
             }
         });
         return mEndedExchange;
@@ -101,8 +102,12 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
                         ExchangeSuccess.setContact(ExchangeSuccess.getContact());
 
                         activeExchangeMelaList.add(ExchangeSuccess);
+
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    EndedExchangeAdapter adapter = new EndedExchangeAdapter(getActivity(), activeExchangeMelaList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     Log.i("size exchange list", String.valueOf(activeExchangeMelaList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));

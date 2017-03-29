@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.EndedLoanMelaAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -66,7 +67,7 @@ public class MyEndedLoanMelaFragment extends Fragment implements SwipeRefreshLay
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyActiveLoanMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                apiCall.getEndedLoanMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
             }
         });
         return mEndedLoan;
@@ -103,6 +104,9 @@ public class MyEndedLoanMelaFragment extends Fragment implements SwipeRefreshLay
                         activeLoanMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    EndedLoanMelaAdapter adapter = new EndedLoanMelaAdapter(getActivity(), activeLoanMelaResponseList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     Log.i("size loan list", String.valueOf(activeLoanMelaResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));

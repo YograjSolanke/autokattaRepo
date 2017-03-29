@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.EndedAuctionAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -35,6 +36,7 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
+    String myContact;
     List<MyActiveAuctionResponse.Success.Auction> myActiveAuctionResponseList = new ArrayList<>();
     List<MyActiveAuctionResponse.Success.Vehicle> myVehicleResponseList;
 
@@ -68,8 +70,8 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyActiveAuction(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"),
-                        "ACTIVE");
+                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+                apiCall.getMyEndedAuction(myContact);
             }
         });
         return mMyEndedAuction;
@@ -79,15 +81,20 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
     public void notifySuccess(Response<?> response) {
 
         if (response != null) {
+            System.out.println("hiii");
 
             if (response.isSuccessful()) {
+                System.out.println("hiii1");
 
                 MyActiveAuctionResponse myActiveAuctionResponse = (MyActiveAuctionResponse) response.body();
                 if (!myActiveAuctionResponse.getSuccess().getAuction().isEmpty()) {
+                    System.out.println("hiii2");
+
+                    myActiveAuctionResponseList = new ArrayList<>();
 
                     for (MyActiveAuctionResponse.Success.Auction auctionSuccess : myActiveAuctionResponse.getSuccess().getAuction()) {
 
-                        myVehicleResponseList = new ArrayList<>();
+                        System.out.println("hiii3");
 
                         auctionSuccess.setAuctionId(auctionSuccess.getAuctionId());
                         auctionSuccess.setActionTitle(auctionSuccess.getActionTitle());
@@ -96,37 +103,24 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
                         auctionSuccess.setEndTime(auctionSuccess.getEndTime());
                         auctionSuccess.setStartDate(auctionSuccess.getStartDate());
                         auctionSuccess.setStartTime(auctionSuccess.getStartTime());
-                        auctionSuccess.setStartDateTime(auctionSuccess.getStartDateTime());
-                        auctionSuccess.setEndDateTime(auctionSuccess.getEndDateTime());
                         auctionSuccess.setSpecialClauses(auctionSuccess.getSpecialClauses());
                         auctionSuccess.setAuctionType(auctionSuccess.getAuctionType());
                         auctionSuccess.setGoingcount(auctionSuccess.getGoingcount());
-/*
-                       // loop to add vehicle depend on auction
-
-                        for (MyActiveAuctionResponse.Success.Vehicle vehicle : myActiveAuctionResponse.getSuccess().getVehicles()){
-                            if (auctionSuccess.getAuctionId().equals(vehicle.getAuctionId())){
-                                myVehicleResponseList.add(vehicle);
-                            }
-                        }
-
-                        auctionSuccess.setVehicles(myVehicleResponseList);
                         myActiveAuctionResponseList.add(auctionSuccess);
-
-                        Log.i("size", String.valueOf(myActiveAuctionResponseList.size()));
-                        Log.i("Vsize", String.valueOf(myVehicleResponseList.size()));*/
-
                     }
+                    System.out.println("Esize=" + myActiveAuctionResponseList.size());
                     mSwipeRefreshLayout.setRefreshing(false);
-                    Log.i("size auction list", String.valueOf(myActiveAuctionResponseList.size()));
-                } else
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-
+                    EndedAuctionAdapter adapter = new EndedAuctionAdapter(getActivity(), myActiveAuctionResponseList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    Log.i("size ended auction list", String.valueOf(myActiveAuctionResponseList.size()));
+                }
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
 
-        } else
-            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+        } else {
+        }
+        // CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
 
     }
 
