@@ -22,6 +22,7 @@ import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
 import autokatta.com.response.GetCompaniesResponse;
+import autokatta.com.response.GetContactByCompanyResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetGroupContactsResponse;
@@ -2838,6 +2839,40 @@ Upload Vehicle
             e.printStackTrace();
         }
     }
+
+    /*
+ Get Contact By Company
+    */
+    public void getContactByCompany(String page, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetContactByCompanyResponse> mGetContactByCompany = mServiceApi._autokattaGetContactByCompany(page, contact);
+                mGetContactByCompany.enqueue(new Callback<GetContactByCompanyResponse>() {
+                    @Override
+                    public void onResponse(Call<GetContactByCompanyResponse> call, Response<GetContactByCompanyResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetContactByCompanyResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs

@@ -1,9 +1,12 @@
 package autokatta.com.Registration;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -113,7 +116,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
 
         prefs = getApplicationContext().getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);
-        RegiId = prefs.getString("RegID", "");
+        //RegiId = prefs.getString("RegID", "");
         System.out.println("Registration id in company based registeration" + RegiId);
 
         mApiCall.getCompany();
@@ -378,34 +381,85 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     @Override
     public void notifyString(String str) {
         if (!str.equals("null")) {
-            Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
+            if (str.equals("success")) {
+                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
 
-            Skills = autoSkills.getText().toString().trim();
-            Deals = autoDeals.getText().toString().trim();
-            if (strArea.equalsIgnoreCase("Select Area Of Operations"))
-                strArea = "";
-            if (strKms.equalsIgnoreCase("Select kms"))
-                strKms = "";
-            if (strDistrict.equalsIgnoreCase("Select District"))
-                strDistrict = "";
-            if (strState.equalsIgnoreCase("Select State"))
-                strState = "";
+                Skills = autoSkills.getText().toString().trim();
+                Deals = autoDeals.getText().toString().trim();
+                if (strArea.equalsIgnoreCase("Select Area Of Operations"))
+                    strArea = "";
+                if (strKms.equalsIgnoreCase("By Kms"))
+                    strKms = "";
+                if (strDistrict.equalsIgnoreCase("By District"))
+                    strDistrict = "";
+                if (strState.equalsIgnoreCase("By State"))
+                    strState = "";
 
-            strDistrict = strDistrict.replaceAll(" ", "");
-            strState = strState.replaceAll(" ", "");
-            Skills = Skills.replaceAll(" ", "");
-            // Deals = Deals.replaceAll(" ","");
+                strDistrict = strDistrict.replaceAll(" ", "");
+                strState = strState.replaceAll(" ", "");
+                Skills = Skills.replaceAll(" ", "");
+                // Deals = Deals.replaceAll(" ","");
 
-            spinArea.setSelection(0);
-            spinKms.setSelection(0);
-            spinDistrict.setSelection(0);
-            spinState.setSelection(0);
+                spinArea.setSelection(0);
+                spinKms.setSelection(0);
+                spinDistrict.setSelection(0);
+                spinState.setSelection(0);
 
-        }else
-        {
-            Toast.makeText(getApplicationContext(), "Somthing went wrong", Toast.LENGTH_LONG).show();
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+                // set title
+                alertDialogBuilder.setTitle("Intrest Area ");
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("Create Business Profile ?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+
+                                   /* Bundle b = new Bundle();
+                                    b.putString("call","interestbased");
+                                    StoreFragment fr = new StoreFragment();
+                                    fr.setArguments(b);
+                                    dialog.cancel();
+
+                                    Send to Create Store
+
+*/
+                                    }
+                                })
+                        .setNegativeButton("No",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+
+                                        dialog.cancel();
+
+                                        Intent i = new Intent(getApplicationContext(), CompanyBasedInvitation.class);
+                                        startActivity(i);
+                                        finish();
+
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
+            } else {
+                Toast.makeText(getApplicationContext(), "Please Check Whether all Fields Are filled ", Toast.LENGTH_LONG).show();
+
+            }
+        }else {
+            Toast.makeText(getApplicationContext(), "Somthing went wrong no response", Toast.LENGTH_LONG).show();
 
         }
+
     }
 
     @Override
@@ -414,9 +468,6 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
             case R.id.btnnext:
                 try {
                     strArea = spinArea.getSelectedItem().toString();
-                    //strKms = spinKms.getSelectedItem().toString();
-                    //strDistrict = spinDistrict.getSelectedItem().toString();
-                    //strState = spinState.getSelectedItem().toString();
 
                     System.out.println("***************Area Before:" + strArea + "Kms:" + strKms + "District:" + strDistrict + "State:" + strState);
                     if (strArea.equalsIgnoreCase("Select Area Of Operations")) {
@@ -427,18 +478,17 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                     } else {
                         strArea = spinArea.getSelectedItem().toString();
 
-                        if (strKms.equalsIgnoreCase("Select kms")) {
+                        if (!strArea.equals("By Kms")) {
                             strKms = "";
                         } else {
                             strKms = spinKms.getSelectedItem().toString();
                         }
-
-                        if (strDistrict.equalsIgnoreCase("Select District")) {
+                        if (!strArea.equals("By District")) {
                             strDistrict = "";
                         } else {
                             strDistrict = spinDistrict.getSelectedItem().toString();
                         }
-                        if (strState.equalsIgnoreCase("Select State")) {
+                        if (!strArea.equals("By State")) {
                             strState = "";
                         } else {
                             strState = spinState.getSelectedItem().toString();
@@ -487,10 +537,8 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
                 System.out.println("skillnames array before change***************" + mSkillList);
                 //new getSkils().execute();
-
                 mApiCall.getSkills();
                 // getskills();
-
 
                 for (int i = 0; i < skillList.size(); i++) {
 
@@ -588,8 +636,6 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                 if (!autoDeals.getText().toString().equalsIgnoreCase("") && Deidlist.length() > 0) {
                     Deidlist = Deidlist.substring(1);
                     System.out.println("substring idddddddddd=" + Deidlist);
-
-
                 }
                 if (dealflag) {
                     dealid = dealid.substring(1);
@@ -616,8 +662,6 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                     // addnewcompanyName(updatecompany);
                     mApiCall.addNewCompany(updatecompany);
                     //addNewCompanyName(updatecompany);
-
-
                     strCompany = autoCompany.getText().toString();
                     //***************************************************************
                     String splChrs = "-/@#$%^&_+=()";
@@ -655,14 +699,21 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                         autoCompany.requestFocus();
                     }
 
-//
-//
                     else if (found1) {
 
                         autoDesignation.setError("Please enter valid designation");
                         autoDesignation.requestFocus();
-                    } else {
-                        mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState, autoCompany.getText().toString(), autoDesignation.getText().toString(), Skills, Deals);
+                    } else
+                    if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
+                        autoDesignation.setError("Enter Designation Name");
+                        autoDesignation.requestFocus();
+                    }else if (strSkill.equals("") || strSkill.equals("null") || strSkill.equals(null)) {
+                        autoSkills.setError("Enter Skills Name");
+                        autoSkills.requestFocus();
+                    }else if (strDeal.equals("") || strDeal.equals("null") || strDeal.equals(null)) {
+                        autoDeals.setError("Enter Deals Name");
+                        autoDeals.requestFocus();
+                    }
 
 
                         // updateRegisteration(strArea, strKms, strDistrict, strState);
@@ -670,7 +721,10 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 //                            Intent i = new Intent(CompanyBasedRegisteration.this,InterestBasedRegisteration.class);
 //                            startActivity(i);
                         //Toast.makeText(getActivity(), "Success all", Toast.LENGTH_SHORT).show();
-                    }
+
+                }else
+                {
+                    mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState, autoCompany.getText().toString(), autoDesignation.getText().toString(), Skills, Deals);
                 }
 
                 break;
@@ -699,4 +753,12 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     public void onItemsSelected(boolean[] selected) {
 
     }
-}
+    public void onBackPressed()
+    {
+        Intent i=new Intent(getApplicationContext(),ContinueNextRegistration.class);
+        startActivity(i);
+        finish();
+        }
+
+    }
+

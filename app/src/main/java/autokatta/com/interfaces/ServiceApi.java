@@ -9,6 +9,7 @@ import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
 import autokatta.com.response.GetCompaniesResponse;
+import autokatta.com.response.GetContactByCompanyResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetGroupContactsResponse;
@@ -446,5 +447,9 @@ public interface ServiceApi {
     //Delete a store...
     @POST("deleteMyStore.php")
     Call<String> _autokattaDeleteStore(@Query("store_id") String storeId, @Query("keyword") String keyword);
+
+    //get Contact By Company
+    @POST("getContactsBasedOnCompany.php")
+    Call<GetContactByCompanyResponse> _autokattaGetContactByCompany(@Query("page") String page, @Query("mycontact") String contact);
 
 }

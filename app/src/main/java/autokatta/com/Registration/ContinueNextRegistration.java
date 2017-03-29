@@ -791,6 +791,13 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
         }
 
     }
+    public void onBackPressed()
+    {
+        Intent i=new Intent(getApplicationContext(),ContinueRegistration.class);
+        startActivity(i);
+        finish();
+    }
+
 }
 
 
