@@ -1,8 +1,6 @@
 package autokatta.com.Registration;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -104,7 +102,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         dateOfBirth.setOnTouchListener(this);
         showDatePicker();
         address.setAdapter(new GooglePlacesAdapter(RegistrationActivity.this, R.layout.simple));
-        apiCall.Categories();
+        apiCall.Categories("");
         apiCall.Industries();
 
     }

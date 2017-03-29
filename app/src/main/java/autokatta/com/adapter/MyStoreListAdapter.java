@@ -159,7 +159,10 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        deleteStore(position, mStoreList.get(position).getId());
+                                        deleteStore(mStoreList.get(position).getId());
+                                        mStoreList.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyItemRangeChanged(position, mStoreList.size());
 
                                     }
                                 })
@@ -316,7 +319,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         }
     }
 
-    private void deleteStore(int pos, String storeId) {
+    private void deleteStore(String storeId) {
 
         ApiCall apiCall = new ApiCall(mActivity, this);
         apiCall.DeleteStore(storeId, "delete");
@@ -347,7 +350,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         if (str != null) {
             if (str.startsWith("success")) {
                 CustomToast.customToast(mActivity, "Store deleted");
-                notifyDataSetChanged();
+                //mStoreList.remove(getAdapterPosition());
             }
 
         }

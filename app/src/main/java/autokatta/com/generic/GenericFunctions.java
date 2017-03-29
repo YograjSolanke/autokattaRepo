@@ -6,6 +6,8 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -18,12 +20,9 @@ import java.util.regex.Pattern;
 public class GenericFunctions {
 
 
-
-
     //email validation method defination
 
-    public boolean isValidEmail(String email)
-    {
+    public boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -33,9 +32,8 @@ public class GenericFunctions {
     }
 
     //function to valid birth date
-    public Boolean getbirthdate(String dob)
-    {
-        Boolean flag=true;
+    public Boolean getbirthdate(String dob) {
+        Boolean flag = true;
         long date = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
         String dateString = sdf.format(date);
@@ -59,37 +57,32 @@ public class GenericFunctions {
             System.out.println("year checking");
             System.out.println("valid user ");
 
-        }
-        else if (currentyear - useryear < 8) {
+        } else if (currentyear - useryear < 8) {
 
-            flag=false;
+            flag = false;
 
             System.out.println("year checking");
             System.out.println("invalid user ");
             // dobtext.setError("Minimum 8 year age required");
-        }
-        else if (currentyear - useryear == 8) {
+        } else if (currentyear - useryear == 8) {
 
             System.out.println("year checking");
             if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) > 0) {
                 System.out.println("Mothns checking");
                 System.out.println("valid user ");
-            }
-            else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) < 0) {
-                flag=false;
+            } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) < 0) {
+                flag = false;
                 System.out.println("Mothns checking");
                 System.out.println("Months checked invalid user ");
                 //dobtext.setError("Minimum 8 year age required");
-            }
-            else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) == 0) {
+            } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) == 0) {
 
                 System.out.println("Mothns checking");
                 if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) > 0) {
                     System.out.println("day checking");
                     System.out.println("date checked valid user ");
-                }
-                else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) <= 0) {
-                    flag=false;
+                } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) <= 0) {
+                    flag = false;
                     System.out.println("day checking");
                     System.out.println("date checked invalid user ");
                     //dobtext.setError("Minimum 8 year age required");
@@ -97,11 +90,12 @@ public class GenericFunctions {
             }
 
         }
-        return  flag;
+        return flag;
     }
+
     public Bitmap decodeFile(String filePath) {
 
-        System.out.println("filePath: "+filePath);
+        System.out.println("filePath: " + filePath);
 
         BitmapFactory.Options o = new BitmapFactory.Options();
         o.inJustDecodeBounds = true;
@@ -139,7 +133,6 @@ public class GenericFunctions {
         Matrix matrix = new Matrix();
         matrix.setRotate(rotationAngle, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, o2.outWidth, o2.outHeight, matrix, true);
-
 
 
         return rotatedBitmap;
@@ -302,6 +295,45 @@ public class GenericFunctions {
             second = String.valueOf(selectedSecond);
 
         return hour + ":" + minute + ":" + second;
+    }
+
+    public Boolean compareTime(String st, String end) {
+
+        Boolean flagtime = false;
+        Time startTime = null, endTime = null;
+
+        try {
+            SimpleDateFormat ra = new SimpleDateFormat("hh:mm");
+            Date yourDate = null;
+            Date yourdate2 = null;
+            yourDate = ra.parse(st);
+            yourdate2 = ra.parse(end);
+
+
+            startTime = new Time(yourDate.getTime());
+            endTime = new Time(yourdate2.getTime());
+
+
+            if (endTime.before(startTime)) {
+                System.out.println("wrng time!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                flagtime = true;
+
+            } else {
+                flagtime = false;
+                System.out.println("right time!!!!!!!!!!!!!!!!!!!!!");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return flagtime;
+    }
+
+    public boolean isValidUrl(String url) {
+
+        Pattern regex = Pattern.compile("^(WWW|www)\\.+[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|in|IN|COM|ORG|NET|MIL|EDU)$");
+        Matcher matcher = regex.matcher(url);
+        return matcher.matches();
+
     }
 
 }

@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import autokatta.com.R;
-import autokatta.com.empty_fragment.MyAutokattaContactFragmentTab;
+import autokatta.com.initial_fragment.MyAutokattaContactFragmentTab;
 
 public class MyAutokattaContactsActivity extends AppCompatActivity {
 

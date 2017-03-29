@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 
 import autokatta.com.R;
-import autokatta.com.empty_fragment.MyStoreListFragment;
+import autokatta.com.initial_fragment.MyStoreListFragment;
 import autokatta.com.response.MyStoreResponse;
 
 public class MyStoreListActivity extends AppCompatActivity {

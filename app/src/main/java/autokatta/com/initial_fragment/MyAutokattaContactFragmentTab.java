@@ -1,4 +1,4 @@
-package autokatta.com.empty_fragment;
+package autokatta.com.initial_fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

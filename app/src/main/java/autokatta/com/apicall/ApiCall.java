@@ -322,7 +322,7 @@ public class ApiCall {
     getCategories
      */
 
-    public void Categories() {
+    public void Categories(String type) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -332,7 +332,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<CategoryResponse> categoryResponseCall = serviceApi._autokattaGetCategories();
+                Call<CategoryResponse> categoryResponseCall = serviceApi._autokattaGetCategories(type);
                 categoryResponseCall.enqueue(new Callback<CategoryResponse>() {
                     @Override
                     public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {

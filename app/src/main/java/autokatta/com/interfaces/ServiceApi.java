@@ -89,7 +89,7 @@ public interface ServiceApi {
 
     //Get Category...
     @GET("getModule.php")
-    Call<CategoryResponse> _autokattaGetCategories();
+    Call<CategoryResponse> _autokattaGetCategories(@Query("type") String type);
 
     //Forgot Password
     @POST("getContactForgotPass.php")

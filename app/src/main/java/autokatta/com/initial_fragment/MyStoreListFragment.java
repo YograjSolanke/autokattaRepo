@@ -1,4 +1,4 @@
-package autokatta.com.empty_fragment;
+package autokatta.com.initial_fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import autokatta.com.R;
 import autokatta.com.adapter.MyStoreListAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment_profile.About;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.my_store.CreateStoreFragment;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyStoreResponse;
 import retrofit2.Response;
@@ -151,10 +151,13 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
 
             case R.id.fabCreateStore:
-                About about = new About();
+                Bundle bundle = new Bundle();
+                bundle.putString("call", "mystorelist");
+                CreateStoreFragment createStoreFragment = new CreateStoreFragment();
+                createStoreFragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.myStoreListFrame, about).commit();
+                fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment).addToBackStack("mystorelist").commit();
 
         }
     }

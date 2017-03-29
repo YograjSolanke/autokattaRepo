@@ -88,7 +88,7 @@ public class SearchStoreActivity extends AppCompatActivity implements View.OnCli
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnRadius.setAdapter(adapter);
         //getCategories
-        apiCall.Categories();
+        apiCall.Categories("");
     }
 
     @Override
