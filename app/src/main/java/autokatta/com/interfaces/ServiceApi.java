@@ -19,6 +19,7 @@ import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
+import autokatta.com.response.GetStoreProfileInfoResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleByIdResponse;
 import autokatta.com.response.GetVehicleColor;
@@ -462,4 +463,7 @@ public interface ServiceApi {
     @POST("getContactsBasedOnCompany.php")
     Call<GetContactByCompanyResponse> _autokattaGetContactByCompany(@Query("page") String page, @Query("mycontact") String contact);
 
+    //Get Store Profile Info...
+    @POST("getStoreProfileInfo.php")
+    Call<GetStoreProfileInfoResponse> _autokattaGetProfileInfo(@Query("contact") String contact);
 }

@@ -31,6 +31,7 @@ import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
+import autokatta.com.response.GetStoreProfileInfoResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleByIdResponse;
 import autokatta.com.response.GetVehicleColor;
@@ -2907,6 +2908,39 @@ Upload Vehicle
                         mNotifier.notifyError(t);
                     }
                 });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+ Get Store Profile Info
+    */
+    public void getStoreProfileInfo(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetStoreProfileInfoResponse> mStoreCall = mServiceApi._autokattaGetProfileInfo(contact);
+               mStoreCall.enqueue(new Callback<GetStoreProfileInfoResponse>() {
+                   @Override
+                   public void onResponse(Call<GetStoreProfileInfoResponse> call, Response<GetStoreProfileInfoResponse> response) {
+                       mNotifier.notifySuccess(response);
+                   }
+
+                   @Override
+                   public void onFailure(Call<GetStoreProfileInfoResponse> call, Throwable t) {
+                       mNotifier.notifyError(t);
+                   }
+               });
 
             } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));

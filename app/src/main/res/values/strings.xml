@@ -4,6 +4,7 @@
     <string name="base_url">http://autokatta.com/mobile/</string>
     <string name="permission">Autokatta allows your permissions to access your data</string>
     <string name="specification_note">Note:-Standard Specification As Per Manufacturer</string>
+    <string name="not_mentioned">Not Mentioned</string>
 
     <!-- Navigation Drawer Items...-->
     <string name="home">Home</string>

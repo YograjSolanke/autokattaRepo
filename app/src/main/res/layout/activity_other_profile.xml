@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -67,22 +68,61 @@
 
     <!--<include layout="@layout/content_other_profile" />-->
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/follow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@mipmap/ic_follow"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right|end" />
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu_red"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@mipmap/like"
-        app:layout_anchorGravity="bottom|left|start"
-        app:layout_anchor="@id/appbar"/>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/call_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_call"
+            fab:fab_size="mini"
+            fab:fab_label="Call" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/like_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/like"
+            fab:fab_size="mini"
+            fab:fab_label="Like" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/follow_f"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_follow"
+            fab:fab_size="mini"
+            fab:fab_label="Follow" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+
+    <!-- <android.support.design.widget.FloatingActionButton
+         android:id="@+id/follow"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/fab_margin"
+         app:srcCompat="@mipmap/ic_follow"
+         app:layout_anchor="@id/appbar"
+         app:layout_anchorGravity="bottom|right|end" />
+
+     <android.support.design.widget.FloatingActionButton
+         android:id="@+id/like"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/fab_margin"
+         app:srcCompat="@mipmap/like"
+         app:layout_anchorGravity="bottom|left|start"
+         app:layout_anchor="@id/appbar"/>-->
 
 </android.support.design.widget.CoordinatorLayout>

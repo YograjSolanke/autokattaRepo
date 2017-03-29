@@ -1,5 +1,6 @@
 package autokatta.com.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetVehicleByIdResponse;
+import autokatta.com.view.VehicleDetails;
+import retrofit2.Response;
 
 /**
  * Created by ak-001 on 27/3/17.
  */
 
-public class VehicleDetails_Details extends Fragment {
+public class VehicleDetails_Details extends Fragment implements RequestNotifier {
 
     View mVehicleDetails;
     TextView mTitleStr, mPriceStr, mViewsStr, mCallStr;
@@ -37,6 +44,97 @@ public class VehicleDetails_Details extends Fragment {
         mVersionDetails = (TextView) mVehicleDetails.findViewById(R.id.versiondetails);
         mYearDetails = (TextView) mVehicleDetails.findViewById(R.id.yeardetails);
 
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getVehicleData(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("vehicle_id",""));
+            }
+        });
+
         return mVehicleDetails;
+    }
+
+    /*
+    Vehicle Details...
+     */
+    private void getVehicleData(String mVehicleId) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getVehicleById(mVehicleId);
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
+                for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()) {
+                    datum.setVehicleId(datum.getVehicleId());
+                    mTitleStr.setText(datum.getTitle());
+                    mPriceStr.setText(datum.getPrice());
+                    mCategoryDetails.setText(datum.getCategory());
+                    mSubCatDetails.setText(datum.getSubCategory());
+                    mModelDetails.setText(datum.getModel());
+                    mBrandDetails.setText(datum.getBrand());
+                    datum.setRTOCity(datum.getRTOCity());
+                    mAddressDetails.setText(datum.getLocationCity());
+                    datum.setLocationState(datum.getLocationState());
+                    datum.setLocationCountry(datum.getLocationCountry());
+                    datum.setLocationAddress(datum.getLocationAddress());
+                    datum.setYearOfRegistration(datum.getYearOfRegistration());
+                    mYearDetails.setText(datum.getYearOfManufacture());
+                    datum.setColor(datum.getColor());
+                    datum.setRegistrationNumber(datum.getRegistrationNumber());
+                    datum.setRcAvailable(datum.getRcAvailable());
+                    datum.setInsuranceValid(datum.getInsuranceValid());
+                    datum.setInsuranceIdv(datum.getInsuranceIdv());
+                    datum.setTaxValidity(datum.getTaxValidity());
+                    datum.setFitnessValidity(datum.getFitnessValidity());
+                    datum.setPermitValidity(datum.getPermitValidity());
+                    datum.setFualType(datum.getFualType());
+                    datum.setSeatingCapacity(datum.getSeatingCapacity());
+                    datum.setPermit(datum.getPermit());
+                    datum.setKmsRunning(datum.getKmsRunning());
+                    datum.setNoOfOwners(datum.getNoOfOwners());
+                    datum.setHypothication(datum.getHypothication());
+                    datum.setEngineNo(datum.getEngineNo());
+                    datum.setChassisNo(datum.getChassisNo());
+                    datum.setImage(datum.getImage());
+                    datum.setDrive(datum.getDrive());
+                    datum.setTransmission(datum.getTransmission());
+                    datum.setBodyType(datum.getBodyType());
+                    datum.setBoatType(datum.getBoatType());
+                    datum.setRvType(datum.getRvType());
+                    datum.setTyreCondition(datum.getTyreCondition());
+                    datum.setBusType(datum.getBusType());
+                    datum.setAirCondition(datum.getAirCondition());
+                    datum.setInvoice(datum.getInvoice());
+                    datum.setImplements(datum.getImplements());
+                    datum.setApplication(datum.getApplication());
+                    datum.setContact(datum.getContact());
+                    mViewsStr.setText(datum.getViews());
+                    mViewsStr.setText(datum.getCalls());
+                    datum.setBodyManufacturer(datum.getBodyManufacturer());
+                    datum.setSeatManufacturer(datum.getSeatManufacturer());
+                    datum.setUsername(datum.getUsername());
+                    datum.setStoreId(datum.getStoreId());
+                    datum.setStatus(datum.getStatus());
+                }
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 }

@@ -216,7 +216,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     Bundle bundle = new Bundle();
                     bundle.putString("contactOtherProfile", holder.mContact.getText().toString());
                     bundle.putString("action", "otherProfile");
-
+                    Log.i("Contact","->"+holder.mContact.getText().toString());
                     Intent mOtherProfile = new Intent(mActivity, OtherProfile.class);
                     mOtherProfile.putExtras(bundle);
                     mActivity.startActivity(mOtherProfile);

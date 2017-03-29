@@ -8,8 +8,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -26,6 +30,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
     ImageView mVehiclePicture;
     CollapsingToolbarLayout collapsingToolbar;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         setContentView(R.layout.activity_vehicle_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +46,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -49,6 +54,8 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     /*
                     get Vehicle Data...
                      */
+                    getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).edit()
+                            .putString("vehicle_id",getIntent().getExtras().getString("vehicle_id")).apply();
                     getVehicleData(getIntent().getExtras().getString("vehicle_id"));
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
@@ -61,7 +68,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
                     TabLayout tabLayout = (TabLayout) findViewById(R.id.vehicle_details_tabs);
                     tabLayout.setupWithViewPager(viewPager);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -86,17 +93,25 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
+        if (response != null) {
+            if (response.isSuccessful()) {
                 GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
-                for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()){
-
+                for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()) {
+                    String dp = datum.getImage();
+                    name = datum.getUsername();
+                    String dp_path = "http://autokatta.com/mobile/uploads/" + dp;
+                    Glide.with(this)
+                            .load(dp_path)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(mVehiclePicture);
+                    collapsingToolbar.setTitle(name);
                 }
-            }else {
+            } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
-        }else {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
 
