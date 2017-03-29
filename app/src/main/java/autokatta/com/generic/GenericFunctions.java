@@ -318,6 +318,8 @@ public class GenericFunctions {
                 System.out.println("wrng time!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 flagtime = true;
 
+            } else if (startTime.equals(endTime)) {
+                flagtime = true;
             } else {
                 flagtime = false;
                 System.out.println("right time!!!!!!!!!!!!!!!!!!!!!");

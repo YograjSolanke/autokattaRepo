@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.Registration.MultiSelectionSpinner;
 import autokatta.com.Registration.Multispinner;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
@@ -40,25 +43,26 @@ import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.CreateStoreResponse;
 import retrofit2.Response;
 
 /**
  * Created by ak-003 on 29/3/17.
  */
 
-public class CreateStoreFragment extends Fragment implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, RequestNotifier {
+public class CreateStoreFragment extends Fragment implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier {
 
     View mCreateStore;
     TextView textstore, storetypetext;
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice;
-    String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "";
+    String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
+            storetype = "";
     Multispinner weekspn;
     MultiAutoCompleteTextView multiautotext;
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
     AutoCompleteTextView storelocation;
-    //variable for web service
-    String name, location, contact, website, storetype = "", workdays, open, close, category, address, storeDescription;
+
     Boolean typeproduct = false;
     Boolean typeservice = false;
     Bundle bundle = new Bundle();
@@ -106,7 +110,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         callFrom = bundle.getString("call");
         System.out.println("Call from in Store Fragment" + callFrom);
 
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("logiContact", "");
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -172,7 +176,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 Boolean flag = false;
                 Boolean flagtime = false;
                 String address = "", name = "", contact = "", location = "", website = "", storeDescription = "", workdays = "",
-                        stropen = "", strclose = "", category = "", storetype = "";
+                        stropen = "", strclose = "", category = "";
 
                 List<String> resultList = new ArrayList<>();
 
@@ -203,17 +207,12 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 category = category.trim();
 
 
-                try {
+                if (!location.isEmpty()) {
 
-
+                    resultList = GooglePlacesAdapter.getResultList();
                     for (int i = 0; i < resultList.size(); i++) {
 
-                        System.out.println("resultlist " + i + "item=" + resultList.get(i));
-
                         if (location.equalsIgnoreCase(resultList.get(i))) {
-
-                            System.out.println("user selected location===" + location);
-                            System.out.println(" user selected google location" + resultList.get(i));
                             flag = true;
                             break;
 
@@ -222,8 +221,6 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             flag = false;
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
                 //time validation
 
@@ -268,10 +265,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 //Validation for website is not valid
                 else if (!website.equals("") && !(genericFunctions.isValidUrl(website))) {
                     storewebsite.setError("Enter valid website");
-                } else if (open.equals("")) {
+                } else if (stropen.equals("")) {
                     // opentime.setError("Enter open time");
                     Toast.makeText(getActivity(), "Enter Open Time", Toast.LENGTH_SHORT).show();
-                } else if (close.equals("")) {
+                } else if (strclose.equals("")) {
                     // closetime.setError("Enter close time");
                     Toast.makeText(getActivity(), "Enter Close Time", Toast.LENGTH_SHORT).show();
                 } else if (opentime.getText().toString().contains("PM") && closetime.getText().toString().contains("AM")) {
@@ -492,7 +489,12 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         mApiCall.Categories(type);
     }
 
-    private void createStore(String name, String contact, String location, String website, String storetype, String lastWord, String workdays, String open, String close, String category, String address, String coverlastWord, String storeDescription) {
+    private void createStore(String name, String contact, String location, String website, String storetype, String lastWord,
+                             String workdays, String open, String close, String category, String address,
+                             String coverlastWord, String storeDescription) {
+
+        mApiCall.CreateStore(name, contact, location, website, storetype, lastWord, workdays, open, close, category, address, coverlastWord,
+                storeDescription);
 
     }
 
@@ -519,6 +521,33 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, module);
                         multiautotext.setAdapter(dataadapter);
+                    } else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                }
+
+                 /*
+                        Response after creating store
+                 */
+                if (response.body() instanceof CreateStoreResponse) {
+                    CreateStoreResponse createStoreResponse = (CreateStoreResponse) response.body();
+
+                    if (createStoreResponse.getSuccess() != null) {
+                        String id = createStoreResponse.getSuccess().getStoreID().toString();
+                        Log.i("StoreId", "->" + id);
+                        CustomToast.customToast(getActivity(), "Store Created Successfully");
+
+                        bundle = new Bundle();
+                        bundle.putString("store_id", id);
+                        bundle.putString("call", callFrom);
+                        bundle.putString("storetype", storetype);
+
+                        AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
+                        addAdmin.setArguments(bundle);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+
+
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }

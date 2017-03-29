@@ -60,7 +60,25 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         String startTime = valid.getTimeFormat(i, i1, myCalendar.get(Calendar.SECOND));
 
-        editText.setText(startTime);
+        final String AM_PM, hour;
+
+        if (i < 12) {
+            AM_PM = "AM";
+            if (i < 10) {
+                hour = "0" + String.valueOf(i);
+            } else
+                hour = "0" + String.valueOf(i);
+
+        } else {
+            AM_PM = "PM";
+            i = i - 12;
+            if (i < 10) {
+                hour = "0" + String.valueOf(i);
+            } else
+                hour = "0" + String.valueOf(i);
+        }
+
+        editText.setText(hour + ":" + i1 + ":" + AM_PM);
 
     }
 }
