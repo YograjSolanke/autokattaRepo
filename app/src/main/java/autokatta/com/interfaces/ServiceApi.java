@@ -448,6 +448,16 @@ public interface ServiceApi {
     @POST("deleteMyStore.php")
     Call<String> _autokattaDeleteStore(@Query("store_id") String storeId, @Query("keyword") String keyword);
 
+    //Create a store...
+    @POST("createStore.php")
+    Call<String> _autokattaCreatetore(@Query("store_name") String name, @Query("contact_no") String contact,
+                                      @Query("location") String location, @Query("website") String website,
+                                      @Query("store_type") String storetype, @Query("store_image") String lastWord,
+                                      @Query("workingdays") String workdays, @Query("store_open_time") String open,
+                                      @Query("store_close_time") String close, @Query("category") String category,
+                                      @Query("address") String address, @Query("coverImage") String coverlastWord,
+                                      @Query("storeDescription") String storeDescription);
+
     //get Contact By Company
     @POST("getContactsBasedOnCompany.php")
     Call<GetContactByCompanyResponse> _autokattaGetContactByCompany(@Query("page") String page, @Query("mycontact") String contact);

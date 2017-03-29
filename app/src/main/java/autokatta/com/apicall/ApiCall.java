@@ -2841,6 +2841,49 @@ Upload Vehicle
     }
 
     /*
+        Create a store
+     */
+
+    public void CreateStore(String name, String contact, String location, String website, String storetype, String lastWord,
+                            String workdays, String open, String close, String category, String address,
+                            String coverlastWord, String storeDescription) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> deleteStore = serviceApi._autokattaCreatetore(name, contact, location, website, storetype, lastWord,
+                        workdays, open, close, category, address, coverlastWord, storeDescription);
+                deleteStore.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
  Get Contact By Company
     */
     public void getContactByCompany(String page, String contact) {
@@ -2887,6 +2930,5 @@ Upload Vehicle
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
-
 
 }
