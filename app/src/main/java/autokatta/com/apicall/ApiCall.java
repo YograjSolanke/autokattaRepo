@@ -61,6 +61,7 @@ import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
+import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.getDealsResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -2870,6 +2871,41 @@ Upload Vehicle
 
                     @Override
                     public void onFailure(Call<CreateStoreResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+        Get a store admins
+     */
+
+    public void StoreAdmin(String store_id) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<StoreOldAdminResponse> adminResponse = serviceApi._autokattaGetStoreAdmin(store_id);
+                adminResponse.enqueue(new Callback<StoreOldAdminResponse>() {
+                    @Override
+                    public void onResponse(Call<StoreOldAdminResponse> call, Response<StoreOldAdminResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<StoreOldAdminResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

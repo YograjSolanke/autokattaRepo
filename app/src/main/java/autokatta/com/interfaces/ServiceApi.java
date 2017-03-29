@@ -49,6 +49,7 @@ import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
+import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.getDealsResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -459,6 +460,10 @@ public interface ServiceApi {
                                                    @Query("store_close_time") String close, @Query("category") String category,
                                                    @Query("address") String address, @Query("coverImage") String coverlastWord,
                                                    @Query("storeDescription") String storeDescription);
+
+    //Get Store Admins...
+    @POST("getStoreAdmin.php")
+    Call<StoreOldAdminResponse> _autokattaGetStoreAdmin(@Query("store_id") String store_id);
 
     //get Contact By Company
     @POST("getContactsBasedOnCompany.php")
