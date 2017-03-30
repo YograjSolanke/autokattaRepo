@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.ActiveLoanMelaAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -34,7 +35,7 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
-    List<MyActiveLoanMelaResponse.Success> activeLoanMelaResponseList = new ArrayList<>();
+    List<MyActiveLoanMelaResponse.Success> activeLoanMelaResponseList;
 
     public MyActiveLoanMelaFragment() {
         //empty constructor
@@ -84,6 +85,7 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
 
                 MyActiveLoanMelaResponse myActiveLoanMelaResponse = (MyActiveLoanMelaResponse) response.body();
                 if (!myActiveLoanMelaResponse.getSuccess().isEmpty()) {
+                    activeLoanMelaResponseList = new ArrayList<>();
 
                     for (MyActiveLoanMelaResponse.Success loanSuccess : myActiveLoanMelaResponse.getSuccess()) {
 
@@ -102,6 +104,10 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
                         activeLoanMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    ActiveLoanMelaAdapter adapter = new ActiveLoanMelaAdapter(getActivity(), activeLoanMelaResponseList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
                     Log.i("size loan list", String.valueOf(activeLoanMelaResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));

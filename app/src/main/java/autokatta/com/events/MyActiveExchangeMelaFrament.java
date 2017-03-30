@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.ActiveExchangeMelaAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -102,6 +103,9 @@ public class MyActiveExchangeMelaFrament extends Fragment implements SwipeRefres
                         activeExchangeMelaList.add(ExchangeSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    ActiveExchangeMelaAdapter adapter = new ActiveExchangeMelaAdapter(getActivity(), activeExchangeMelaList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     Log.i("size exchange list", String.valueOf(activeExchangeMelaList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));

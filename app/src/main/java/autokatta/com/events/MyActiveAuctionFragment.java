@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.ActiveAuctionAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -83,10 +84,10 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
 
                 MyActiveAuctionResponse myActiveAuctionResponse = (MyActiveAuctionResponse) response.body();
                 if (!myActiveAuctionResponse.getSuccess().getAuction().isEmpty()) {
-
+                    myActiveAuctionResponseList = new ArrayList<>();
                     for (MyActiveAuctionResponse.Success.Auction auctionSuccess : myActiveAuctionResponse.getSuccess().getAuction()) {
 
-                        myVehicleResponseList = new ArrayList<>();
+
 
                         auctionSuccess.setAuctionId(auctionSuccess.getAuctionId());
                         auctionSuccess.setActionTitle(auctionSuccess.getActionTitle());
@@ -100,6 +101,7 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
                         auctionSuccess.setSpecialClauses(auctionSuccess.getSpecialClauses());
                         auctionSuccess.setAuctionType(auctionSuccess.getAuctionType());
                         auctionSuccess.setGoingcount(auctionSuccess.getGoingcount());
+                        myActiveAuctionResponseList.add(auctionSuccess);
 /*
                        // loop to add vehicle depend on auction
 
@@ -117,6 +119,9 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
 
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    ActiveAuctionAdapter adapter = new ActiveAuctionAdapter(getActivity(), myActiveAuctionResponseList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     Log.i("size auction list", String.valueOf(myActiveAuctionResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));

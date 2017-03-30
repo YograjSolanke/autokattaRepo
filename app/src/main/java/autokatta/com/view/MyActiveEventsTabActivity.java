@@ -3,23 +3,19 @@ package autokatta.com.view;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import autokatta.com.R;
-import autokatta.com.adapter.TabAdapterName;
-import autokatta.com.events.MyActiveAuctionFragment;
-import autokatta.com.events.MyActiveExchangeMelaFrament;
-import autokatta.com.events.MyActiveLoanMelaFragment;
+import autokatta.com.initial_fragment.MyActiveEventsTabFragment;
 
 public class MyActiveEventsTabActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    ViewPager mViewPager;
-    TabLayout mTabLayout;
+
     FloatingActionButton fab;
 
     @Override
@@ -27,8 +23,7 @@ public class MyActiveEventsTabActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_active_events_tab);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mViewPager = (ViewPager) findViewById(R.id.activity_myactive_event_viewpager);
-        mTabLayout = (TabLayout) findViewById(R.id.activity_myactive_event_tab);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         this.runOnUiThread(new Runnable() {
@@ -42,17 +37,6 @@ public class MyActiveEventsTabActivity extends AppCompatActivity {
                         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     }
 
-
-                    if (mViewPager != null) {
-                        setUpPager(mViewPager);
-                    }
-
-
-                    mTabLayout.setupWithViewPager(mViewPager);
-                    //        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-                    //        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
-
-
                     fab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -60,20 +44,18 @@ public class MyActiveEventsTabActivity extends AppCompatActivity {
                                     .setAction("Action", null).show();
                         }
                     });
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.activeeventframe, new MyActiveEventsTabFragment()).commit();
+
     }
 
-    private void setUpPager(ViewPager viewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getSupportFragmentManager());
-        tabAdapterName.addFragment(new MyActiveAuctionFragment(), "Auction");
-        tabAdapterName.addFragment(new MyActiveLoanMelaFragment(), "Loan Mela");
-        tabAdapterName.addFragment(new MyActiveExchangeMelaFrament(), "Exchange Mela");
-
-        viewPager.setAdapter(tabAdapterName);
-    }
 }
