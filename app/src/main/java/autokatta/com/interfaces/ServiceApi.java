@@ -6,6 +6,7 @@ import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.response.GetAutokattaContactResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
@@ -472,4 +473,9 @@ public interface ServiceApi {
     //Get Store Profile Info...
     @POST("getStoreProfileInfo.php")
     Call<GetStoreProfileInfoResponse> _autokattaGetProfileInfo(@Query("contact") String contact);
+
+    //Get My Autokatta Contacts...
+    @POST("getAutokattaContact.php")
+    Call<GetAutokattaContactResponse> getAutokattaContact(@Query("mycontact") String contact, @Query("numberstring") String number,
+                                                          @Query("namestring") String name);
 }

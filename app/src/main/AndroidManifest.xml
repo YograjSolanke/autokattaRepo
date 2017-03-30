@@ -155,6 +155,11 @@
             android:label="@string/title_activity_other_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <!-- Service for Background task  -->
+        <service
+            android:name="autokatta.com.broadcastreceiver.BackgroundService"
+            android:exported="false" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0310abc2483857212f40bd7bad891e166bf94ec4"/>

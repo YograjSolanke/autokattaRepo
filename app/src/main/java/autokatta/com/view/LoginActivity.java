@@ -20,6 +20,7 @@ import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.Registration.CompanyBasedInvitation;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.SessionManagement;
@@ -105,6 +106,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     CustomToast.customToast(getApplicationContext(), "Login Successful");
                     getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginContact", myContact).apply();
                     session.createLoginSession(userName, password);
+                    Intent is = new Intent(LoginActivity.this, BackgroundService.class);
+                    startService(is);
                     startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
                 } else {
                     CustomToast.customToast(getApplicationContext(), mLoginResponse.getError().get(0));

@@ -1,13 +1,17 @@
 package autokatta.com.view;
 
 import android.app.ActivityOptions;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -15,9 +19,14 @@ import android.view.View;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
+import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.GroupMyJoined;
 
+import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
+
 public class GroupTabs extends AppCompatActivity {
+
+    boolean isNetworkAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +34,17 @@ public class GroupTabs extends AppCompatActivity {
         setContentView(R.layout.activity_group_tabs);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
+                String networkStatus = isNetworkAvailable ? "Connected" : "Disconnected";
+                Snackbar.make(findViewById(R.id.activity_group_tabs), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
+            }
+        }, intentFilter);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setIcon(R.mipmap.ic_launcher);

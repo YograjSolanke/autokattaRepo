@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import java.util.HashMap;
 
+import autokatta.com.R;
 import autokatta.com.view.LoginActivity;
 
 /**
@@ -27,7 +28,7 @@ public class SessionManagement {
 
     public SessionManagement(Context context) {
         this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        pref = _context.getSharedPreferences(context.getString(R.string.my_preference), PRIVATE_MODE);
         editor = pref.edit();
     }
 
