@@ -13,4 +13,10 @@ public class DbQuery {
             "(" + DbConstants.id + " integer primary key autoincrement," + DbConstants.userName + " text," +
             DbConstants.profilePic + " text," + DbConstants.contact + " text," + DbConstants.followStatus + " text,"
             + DbConstants.myStatus + " text)";
+
+    protected static final String checkPresentNumber = "Select * from " + DbConstants.tableMyAutokattaContacts +
+            " where " + DbConstants.contact + "='";
+
+    protected static final String getAutokattaContact = "select * from " + DbConstants.tableMyAutokattaContacts;
+
 }

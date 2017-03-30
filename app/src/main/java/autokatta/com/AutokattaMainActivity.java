@@ -72,7 +72,16 @@ public class AutokattaMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-
+       /* DbOperation dbAdpter = new DbOperation(getApplicationContext());
+        dbAdpter.OPEN();
+        Cursor cursor = dbAdpter.getAutokattaContact();
+        if (cursor.getCount()>0){
+            cursor.moveToFirst();
+            do {
+                Log.i(DbConstants.TAG,cursor.getString(cursor.getColumnIndex(DbConstants.userName))+" = "+cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+            }while (cursor.moveToNext());
+        }
+        dbAdpter.CLOSE();*/
         /*final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.mipmap.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);*/
