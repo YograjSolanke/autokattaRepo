@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
+import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetAutokattaContactResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -34,6 +36,7 @@ public class BackgroundService extends Service {
     List<String> names = new ArrayList<>();
     List<String> numbers = new ArrayList<>();
     String numberstring = "", namestring = "";
+    DbOperation operation;
 
     IBinder mIBinder = new LocalBinder();
 
@@ -100,9 +103,6 @@ public class BackgroundService extends Service {
     Get Autokatta Contacts...
      */
     private void getAutokattaContacts() {
-        /*ApiCall mApiCall = new ApiCall((Activity) getApplicationContext(), this);
-        mApiCall.getAutokattaContact(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact",""),numberstring, namestring);*/
         try {
             Retrofit mRetrofit = new Retrofit.Builder()
                     .baseUrl(getApplicationContext().getString(R.string.base_url))
@@ -117,9 +117,26 @@ public class BackgroundService extends Service {
                 @Override
                 public void onResponse(Call<GetAutokattaContactResponse> call, Response<GetAutokattaContactResponse> response) {
                     if (response.isSuccessful()) {
-                        Log.i("response", "->" + response.body());
-                    } else {
+                        long result = 0;
+                        GetAutokattaContactResponse mContactResponse = response.body();
+                        for (GetAutokattaContactResponse.Success success : mContactResponse.getSuccess()) {
+                            success.setUserName(success.getUserName());
+                            success.setProfilePic(success.getProfilePic());
+                            success.setContact(success.getContact());
+                            success.setFollowStatus(success.getFollowStatus());
+                            success.setMystatus(success.getMystatus());
 
+                            operation = new DbOperation(getApplicationContext());
+                            operation.OPEN();
+                            result = operation.addMyAutokattaContact(success.getUserName(), success.getProfilePic(),
+                                    String.valueOf(success.getContact()), success.getFollowStatus(), success.getMystatus());
+                        }
+                        if (result > 0) {
+                            Log.i("TAG", "Record Inserted Successfully");
+                        }
+                        operation.CLOSE();
+                    } else {
+                        CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                     }
                 }
 

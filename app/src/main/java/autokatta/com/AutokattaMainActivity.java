@@ -30,6 +30,7 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
+import autokatta.com.other.SessionManagement;
 import autokatta.com.view.BlackListedMemberActivity;
 import autokatta.com.view.Create_Event;
 import autokatta.com.view.GroupTabs;
@@ -54,6 +55,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     boolean isNetworkAvailable;
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        session = new SessionManagement(getApplicationContext());
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -186,7 +189,7 @@ startActivity(new Intent(AutokattaMainActivity.this, VehicleDetails.class));
                         } else if (menuItem.getItemId() == R.id.locality) {
 
                         } else if (menuItem.getItemId() == R.id.sign_out) {
-
+                            session.logoutUser();
                         }
                         return true;
                     }

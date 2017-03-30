@@ -16,7 +16,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        try {
+            db.execSQL(DbQuery.create_table_AutokattaContact);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
