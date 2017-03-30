@@ -158,4 +158,14 @@
         <item>20Kms</item>
         <item>25Kms</item>
     </string-array>
+
+    <string-array name="roletype">
+        <item>-Select Role-</item>
+        <item>Seller</item>
+        <item>Buyer</item>
+        <item>Dealer</item>
+        <item>Financer</item>
+        <item>Auction Organiser</item>
+        <item>User</item>
+    </string-array>
 </resources>

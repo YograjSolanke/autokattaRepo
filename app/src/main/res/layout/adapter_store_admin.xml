@@ -5,63 +5,59 @@
     android:background="@color/white"
     android:descendantFocusability="blocksDescendants">
 
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:padding="5dp">-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
 
-    <!--<TextView-->
-    <!--android:id="@+id/txtname"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignTop="@+id/profileImg"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_toLeftOf="@+id/check"-->
-    <!--android:layout_toRightOf="@+id/profileImg"-->
-    <!--android:text="Name"-->
-    <!--android:textColor="#2C3343"-->
-    <!--android:textSize="16dp"-->
-    <!--android:textStyle="bold" />-->
+        <TextView
+            android:id="@+id/txtname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toStartOf="@+id/check"
+            android:text="Name"
+            android:textColor="#2C3343"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <!--<TextView-->
-    <!--android:id="@+id/txtnumber"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/txtname"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_toLeftOf="@+id/check"-->
-    <!--android:layout_toRightOf="@+id/profileImg"-->
-    <!--android:text="Number"-->
+        <TextView
+            android:id="@+id/txtnumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtname"
+            android:layout_marginStart="5dp"
+            android:layout_toStartOf="@+id/check"
+            android:text="Number"
+            android:textColor="#2C3343"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <!--android:textColor="#2C3343"-->
-    <!--android:textSize="15dp"-->
-    <!--android:textStyle="bold" />-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtnumber"
+            android:layout_centerHorizontal="true">
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/txtnumber"-->
-    <!--android:layout_centerHorizontal="true">-->
+            <Spinner
+                android:id="@+id/spntest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/roletype"
+                android:visibility="gone">
 
-    <!--<Spinner-->
-    <!--android:id="@+id/spntest"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:entries="@array/roletype"-->
-    <!--android:visibility="gone">-->
-
-    <!--</Spinner>-->
-    <!--</LinearLayout>-->
+            </Spinner>
+        </LinearLayout>
 
 
-    <!--<CheckBox-->
-    <!--android:id="@+id/check"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_marginRight="5dp" />-->
+        <CheckBox
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp" />
 
 
-    <!--</RelativeLayout>-->
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -304,7 +304,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             }
         });
 
-
+        Log.i("img", "adapter->" + mStoreList.get(position).getStoreImage() + "-" + position);
         if (mStoreList.get(position).getStoreImage().equals("") || mStoreList.get(position).getStoreImage().equals(null) ||
                 mStoreList.get(position).getStoreImage().equals("null")) {
             holder.img.setBackgroundResource(R.mipmap.ic_launcher);

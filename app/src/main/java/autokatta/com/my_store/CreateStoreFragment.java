@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +41,21 @@ import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.generic.SetMyDateAndTime;
+import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by ak-003 on 29/3/17.
@@ -52,7 +63,7 @@ import retrofit2.Response;
 
 public class CreateStoreFragment extends Fragment implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier {
 
-    View mCreateStore;
+    private View mCreateStore;
     TextView textstore, storetypetext;
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice;
@@ -63,11 +74,11 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
     AutoCompleteTextView storelocation;
 
-    Boolean typeproduct = false;
-    Boolean typeservice = false;
+    Boolean typeproduct = false, typeservice = false;
     Bundle bundle = new Bundle();
-    ApiCall mApiCall;
-    GenericFunctions genericFunctions;
+    private ApiCall mApiCall;
+    private GenericFunctions genericFunctions;
+    private ImageUpload mImageUpload;
 
     public CreateStoreFragment() {
         //empty constructor
@@ -105,6 +116,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
         mApiCall = new ApiCall(getActivity(), this);
         genericFunctions = new GenericFunctions();
+        /*
+        Image upload to server
+         */
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        // Change base URL to your upload server URL.
+        mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
 
         bundle = getArguments();
         callFrom = bundle.getString("call");
@@ -178,7 +198,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 String address = "", name = "", contact = "", location = "", website = "", storeDescription = "", workdays = "",
                         stropen = "", strclose = "", category = "";
 
-                List<String> resultList = new ArrayList<>();
+                List<String> resultList;
 
                 address = storeaddress.getText().toString();
                 name = storename.getText().toString();
@@ -251,26 +271,40 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
                 if (name.equals("")) {
                     storename.setError("Enter Name");
+                    storename.setFocusable(true);
+                    storename.requestFocus();
                 } else if (!name.matches("[a-zA-Z ]*")) {
                     storename.setError("Enter Valid Name");
+                    storename.setFocusable(true);
+                    storename.requestFocus();
                 } else if (location.equals("")) {
                     storelocation.setError("Enter location");
+                    storelocation.setFocusable(true);
+                    storelocation.requestFocus();
                 } else if (!flag) {
-
                     storelocation.setError("Please Select Address From Dropdown Only");
+                    storelocation.setFocusable(true);
+                    storelocation.requestFocus();
                 } else if (address.equals("")) {
                     storeaddress.setError("Enter address");
+                    storeaddress.setFocusable(true);
+                    storeaddress.requestFocus();
                 }
-
                 //Validation for website is not valid
                 else if (!website.equals("") && !(genericFunctions.isValidUrl(website))) {
                     storewebsite.setError("Enter valid website");
+                    storewebsite.setFocusable(true);
+                    storewebsite.requestFocus();
                 } else if (stropen.equals("")) {
-                    // opentime.setError("Enter open time");
-                    Toast.makeText(getActivity(), "Enter Open Time", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Enter Open Time", Toast.LENGTH_SHORT).show();
+                    opentime.setError("Enter Open Time");
+                    opentime.setFocusable(true);
+                    opentime.requestFocus();
                 } else if (strclose.equals("")) {
-                    // closetime.setError("Enter close time");
-                    Toast.makeText(getActivity(), "Enter Close Time", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Enter Close Time", Toast.LENGTH_SHORT).show();
+                    closetime.setError("Enter Close Time");
+                    closetime.setFocusable(true);
+                    closetime.requestFocus();
                 } else if (opentime.getText().toString().contains("PM") && closetime.getText().toString().contains("AM")) {
 //                    opentime.setError("Wrong Time");
 //                    closetime.setError("Wrong Time");
@@ -279,30 +313,12 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     Toast.makeText(getActivity(), "Close Time Should Be Graeter Than Open Time", Toast.LENGTH_SHORT).show();
                 } else if (workdays.equals("")) {
                     Toast.makeText(getActivity(), "Please select Working Days", Toast.LENGTH_LONG).show();
-
                 } else if (category.equalsIgnoreCase("-select category-") || category.equalsIgnoreCase("")) {
-
                     Toast.makeText(getActivity(), "Please select category", Toast.LENGTH_LONG).show();
-
                 } else if (storetype.equalsIgnoreCase("")) {
                     Toast.makeText(getActivity(), "Please select store type", Toast.LENGTH_LONG).show();
                 } else {
 
-                    /*if(!finaladmins.equalsIgnoreCase(""))
-                        contact=contact+","+finaladmins;
-                    params.put("store_name", name);
-                    params.put("contact_no", contact);
-                    params.put("location", location);
-                    params.put("website", website);
-                    params.put("store_type", storetype);
-                    params.put("store_image", lastWord);
-                    params.put("workingdays", workdays);
-                    params.put("store_open_time", open);
-                    params.put("store_close_time", close);
-                    params.put("category", category);
-                    params.put("address", address);
-                    params.put("coverImage", coverlastWord);
-                    params.put("storeDescription", storeDescription);*/
                     createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription);
                 }
 
@@ -353,11 +369,12 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Bitmap bitmap;
+
         String result = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("imageCallStore", "");
         System.out.println("call from button" + result);
         if (data != null) {
 
+            Bitmap bitmap;
             if (result.equalsIgnoreCase("addProfile")) {
                 if (userSelected.equals("camera")) {
                     Bundle b = data.getExtras();
@@ -403,7 +420,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     System.out.println("rutu-------cover---------" + coverpicturePath);
 
                     coverlastWord = coverpicturePath.substring(coverpicturePath.lastIndexOf("/") + 1);
-                    Log.i("Cover camera:", "->" + lastWord);
+                    Log.i("Cover camera:", "->" + coverlastWord);
                 }
                 //Image Upload from gallery
                 else if (userSelected == "gallery") {
@@ -425,7 +442,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
                     System.out.println(coverpicturePath);
                     coverlastWord = coverpicturePath.substring(coverpicturePath.lastIndexOf("/") + 1);
-                    Log.i("Cover gallery:", "->" + lastWord);
+                    Log.i("Cover gallery:", "->" + coverlastWord);
                 }
             }
 
@@ -457,7 +474,6 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
             case R.id.editopen:
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     opentime.setInputType(InputType.TYPE_NULL);
                     opentime.setError(null);
                     new SetMyDateAndTime("time", opentime, getActivity());
@@ -466,7 +482,6 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
             case R.id.editclose:
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     closetime.setInputType(InputType.TYPE_NULL);
                     closetime.setError(null);
                     new SetMyDateAndTime("time", closetime, getActivity());
@@ -536,6 +551,9 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         Log.i("StoreId", "->" + id);
                         CustomToast.customToast(getActivity(), "Store Created Successfully");
 
+                        upload(picturePath);
+                        upload(coverpicturePath);
+
                         bundle = new Bundle();
                         bundle.putString("store_id", id);
                         bundle.putString("call", callFrom);
@@ -578,6 +596,40 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
     @Override
     public void notifyString(String str) {
+
+    }
+
+    //upload image to server
+
+    public void upload(String picturePath) {
+
+        System.out.println("picturePath while upload image:" + picturePath);
+        try {
+
+            File file = new File(picturePath);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file.getPath());
+            MultipartBody.Part body = MultipartBody.Part.createFormData("club_image", file.getName(), reqFile);
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
+
+            retrofit2.Call<okhttp3.ResponseBody> req = mImageUpload.postStoreImage(body, name);
+            req.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    CustomToast.customToast(getActivity(), "Image Uploaded");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+
+        } catch (Exception e) {
+
+            Log.e(e.getClass().getName(), e.getMessage(), e);
+
+        }
+
 
     }
 }

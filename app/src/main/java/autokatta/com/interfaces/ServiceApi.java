@@ -466,6 +466,10 @@ public interface ServiceApi {
     @POST("getStoreAdmin.php")
     Call<StoreOldAdminResponse> _autokattaGetStoreAdmin(@Query("store_id") String store_id);
 
+    //Add new Store Admins...
+    @POST("addStoreAdmin.php")
+    Call<String> _autokattaAddNewStoreAdmin(@Query("store_id") String store_id, @Query("adminContact") String admins);
+
     //get Contact By Company
     @POST("getContactsBasedOnCompany.php")
     Call<GetContactByCompanyResponse> _autokattaGetContactByCompany(@Query("page") String page, @Query("mycontact") String contact);

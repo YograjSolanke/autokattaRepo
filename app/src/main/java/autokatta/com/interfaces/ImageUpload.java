@@ -23,4 +23,9 @@ public interface ImageUpload {
     @Multipart
     @POST("upload_loanExchangepics.php")
     Call<ResponseBody> postLoanAndExchangeImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
+
+    //Upload Store image
+    @Multipart
+    @POST("upload_store_profile.php")
+    Call<ResponseBody> postStoreImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
 }
