@@ -81,10 +81,12 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             e.printStackTrace();
         }
 
+
         DbOperation dbAdpter = new DbOperation(getActivity());
         dbAdpter.OPEN();
         Cursor cursor = dbAdpter.getAutokattaContact();
         if (cursor.getCount() > 0) {
+            contactdata.clear();
             cursor.moveToFirst();
             do {
                 Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));

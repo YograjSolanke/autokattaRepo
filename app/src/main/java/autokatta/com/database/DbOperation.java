@@ -92,4 +92,23 @@ public class DbOperation {
         }
         return cursor;
     }
+
+    /*
+        Update My Autokatta Contact follow status...
+    */
+    public int updateAutoContacts(String contact, String status) {
+        int result = 0;
+        try {
+
+            //String query = "update table " + DbConstants.table_site + " set " + DbConstants.SiteSimNo + " = '" + no + "' where " + DbConstants.id + "='" + sid + "'";
+            ContentValues values = new ContentValues();
+            values.put(DbConstants.followStatus, status);
+            result = db.update(DbConstants.tableMyAutokattaContacts, values, DbConstants.contact + "='" + contact + "'", null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

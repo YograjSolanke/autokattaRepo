@@ -35,9 +35,14 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
     String mOtherContact, mLoginContact;
+    Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     FloatingActionButton mCall, mLike, mFollow;
     List<FloatingActionMenu> menus = new ArrayList<>();
+    Groups mGroupsFrag;
+    Event mEventFrag;
+    Katta mKattaFrag;
+    Follow mFollowFrag;
     //private Handler mUiHandler = new Handler();
 
     @Override
@@ -56,6 +61,8 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
 
+
+
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.like);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +75,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         /*
         Get Bundle Data...
          */
-        mOtherContact = getIntent().getExtras().getString("contactOtherProfile");
+
         mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
@@ -86,6 +93,20 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
                     TabLayout tabLayout = (TabLayout) findViewById(R.id.other_profile_tabs);
                     tabLayout.setupWithViewPager(viewPager);
+
+                    mOtherContact = getIntent().getExtras().getString("contactOtherProfile");
+                    mBundle.putString("otherContact", mOtherContact);
+
+                    mGroupsFrag = new Groups();
+                    mGroupsFrag.setArguments(mBundle);
+                    mEventFrag = new Event();
+                    mEventFrag.setArguments(mBundle);
+                    mKattaFrag = new Katta();
+                    mKattaFrag.setArguments(mBundle);
+                    mFollowFrag = new Follow();
+                    mFollowFrag.setArguments(mBundle);
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -103,10 +124,10 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new Groups(), "GROUP");
-        adapter.addFragment(new Event(), "EVENT");
-        adapter.addFragment(new Katta(), "KATTA");
-        adapter.addFragment(new Follow(), "FOLLOW");
+        adapter.addFragment(mGroupsFrag, "GROUP");
+        adapter.addFragment(mEventFrag, "EVENT");
+        adapter.addFragment(mKattaFrag, "KATTA");
+        adapter.addFragment(mFollowFrag, "FOLLOW");
         viewPager.setAdapter(adapter);
     }
 

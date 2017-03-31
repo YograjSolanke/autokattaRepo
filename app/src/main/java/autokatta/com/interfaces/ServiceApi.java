@@ -492,4 +492,14 @@ public interface ServiceApi {
     //create User.
     @POST("createDefaultUser.php")
     Call<CreateUserResponse> _autokattaCreateUser(@Query("username") String username, @Query("contact") String contact);
+
+    //Follow
+    @POST("newfollow.php")
+    Call<String> _autokattaFollow(@Query("sender_contact") String senderContact, @Query("receiver_contact") String receiverContact,
+                                  @Query("layout") String layout);
+
+    //Un Follow
+    @POST("newUnfollow.php")
+    Call<String> _autokattaUnfollow(@Query("sender_contact") String senderContact, @Query("receiver_contact") String receiverContact,
+                                    @Query("layout") String layout);
 }

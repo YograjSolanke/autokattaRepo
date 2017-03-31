@@ -45,9 +45,10 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     List<String> mHeaderList;
     GroupsExpandableListAdapter adapter;
     FloatingActionButton mCreateGroup;
+    String contact;
 
     public Groups() {
-     //empty constructor...
+        //empty constructor...
     }
 
     @Nullable
@@ -60,11 +61,23 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
 
         ViewCompat.setNestedScrollingEnabled(groupExpandableListView, true);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        String contact = mSharedPreferences.getString("loginContact", "");
 
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            contact = bundle.getString("otherContact");
+            Log.i("Other", "->" + contact);
+            getGroups();
+        } else {
+            contact = mSharedPreferences.getString("loginContact", "");
+            Log.i("User", "->" + contact);
+        }
+
+        return mGroups;
+    }
+
+    private void getGroups() {
         ApiCall apiCall = new ApiCall(getActivity(), this);
         apiCall.profileGroup(contact);
-        return mGroups;
     }
 
     @Override
@@ -95,7 +108,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
                     modelGroups.setGroupCount(joinedGroup.getGroupcount());
                     modelGroups.setVehicleCount(joinedGroup.getVehiclecount());
                     list1.add(modelGroups);
-                    Log.i("list1","->"+list1.get(0).getTitle());
+                    Log.i("list1", "->" + list1.get(0).getTitle());
                 }
                 mGroupList = new HashMap<>();
                 mGroupList.put(mHeaderList.get(0), list);
