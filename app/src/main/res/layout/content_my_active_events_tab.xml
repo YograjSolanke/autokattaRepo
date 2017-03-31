@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="autokatta.com.view.MyAutokattaContactsActivity"
+    tools:context="autokatta.com.view.MyActiveEventsTabActivity"
     tools:showIn="@layout/activity_my_active_events_tab">
 
     <FrameLayout

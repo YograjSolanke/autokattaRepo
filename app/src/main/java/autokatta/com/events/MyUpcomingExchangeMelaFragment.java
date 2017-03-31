@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.UpcomingExchangeAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -101,6 +102,9 @@ public class MyUpcomingExchangeMelaFragment extends Fragment implements SwipeRef
 
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    UpcomingExchangeAdapter adapter = new UpcomingExchangeAdapter(getActivity(), upcomingExchangeResponseList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     Log.i("size exchange list up", String.valueOf(upcomingExchangeResponseList.size()));
 
                 } else

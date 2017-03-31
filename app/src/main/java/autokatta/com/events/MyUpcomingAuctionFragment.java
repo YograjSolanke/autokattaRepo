@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.UpcomingAuctionAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -100,22 +101,11 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
 
                         upcomingAuctionResponseList.add(successAuction);
 
-                        /*
-                             // loop to add vehicle depend on auction
-
-                        for (MyUpcomingAuctionResponse.Success.Vehicle successVehicle : myUpcomingAuctionResponse.getSuccess().getVehicles()) {
-
-                            if (successAuction.getAuctionId().equals(successVehicle.getAuctionId())) {
-                                upcomingVehicleResponseList.add(successVehicle);
-                            }
-                        }
-                        successAuction.setVehicles(upcomingVehicleResponseList);
-                        upcomingAuctionResponseList.add(successAuction);
-
-                        Log.i("size", String.valueOf(upcomingAuctionResponseList.size()));
-                        Log.i("Vsize", String.valueOf(upcomingVehicleResponseList.size()));*/
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    UpcomingAuctionAdapter adapter = new UpcomingAuctionAdapter(getActivity(), upcomingAuctionResponseList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     Log.i("size auction list up", String.valueOf(upcomingAuctionResponseList.size()));
 
                 } else

@@ -449,7 +449,9 @@
                     android:layout_width="1dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:background="#cccccc"></View>
+                    android:background="#cccccc">
+
+                </View>
 
 
                 <LinearLayout

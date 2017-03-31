@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="autokatta.com.view.MySavedAuctionEventActivity"
-    tools:showIn="@layout/activity_my_saved_auction_event">
+    tools:context="autokatta.com.view.MyUpcomingEventsTabActivity"
+    tools:showIn="@layout/activity_my_upcoming_events_tab">
 
     <FrameLayout
+        android:id="@+id/upcomingEventFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/saved_auctionFrame">
-
-</FrameLayout>
+        android:layout_height="match_parent"></FrameLayout>
 
 </RelativeLayout>

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.UpcomingLoanMelaAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -101,6 +102,9 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
 
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    UpcomingLoanMelaAdapter adapter = new UpcomingLoanMelaAdapter(getActivity(), upcomingLoanMelaResponseList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     Log.i("size loan list up", String.valueOf(upcomingLoanMelaResponseList.size()));
 
                 } else
