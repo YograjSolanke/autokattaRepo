@@ -26,6 +26,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.my_store.CreateStoreFragment;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
@@ -420,15 +421,13 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
 
-                                   /* Bundle b = new Bundle();
+                                    Bundle b = new Bundle();
                                     b.putString("call","interestbased");
-                                    StoreFragment fr = new StoreFragment();
+                                    CreateStoreFragment fr = new CreateStoreFragment();
                                     fr.setArguments(b);
+                                        finish();
                                     dialog.cancel();
 
-                                    Send to Create Store
-
-*/
                                     }
                                 })
                         .setNegativeButton("No",

@@ -1,6 +1,5 @@
 package autokatta.com.Registration;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,11 @@ import autokatta.com.response.GetContactByCompanyResponse;
 import autokatta.com.response.GetContactByCompanyResponse.Success;
 import retrofit2.Response;
 
-public class CompanyBasedInvitation extends AppCompatActivity implements RequestNotifier {
+public class SkillsBasedInvitation  extends AppCompatActivity implements RequestNotifier {
     private ListView lv;
     EditText inputSearch;
     ApiCall mApiCall;
-    String page="1";
+    String page="2";
     List<Success> invitationDataArrayList = new ArrayList<>();
     CompanyBasedInvitationAdapter adapter;
     String Contact="7841023392";
@@ -34,12 +34,12 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
     Button Next;
 
     SharedPreferences prefs ;
-  //  public static final String MyProfilePREFERENCES = "contact No" ;
+    //  public static final String MyProfilePREFERENCES = "contact No" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_based_invitation);
+        setContentView(R.layout.activity_skills_based_invitation);
 
         mApiCall=new ApiCall(this, this);
 
@@ -50,15 +50,15 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
 
 
 
-            //***** Shared Preference For Contact
+        //***** Shared Preference For Contact
         //    prefs = getApplicationContext().getSharedPreferences(MyProfilePREFERENCES, Context.MODE_PRIVATE);
-           // Contact=prefs.getString("contact", "");
-            System.out.println("Contact is ::"+Contact);
-            /////////
+        // Contact=prefs.getString("contact", "");
+        System.out.println("Contact is ::"+Contact);
+        /////////
 
-             mApiCall.getContactByCompany(page,Contact);
-              //  getcontactsbyCompany();
-                //getContactsbyCompany();
+        mApiCall.getContactByCompany(page,Contact);
+        //  getcontactsbyCompany();
+        //getContactsbyCompany();
 
 
         inputSearch.addTextChangedListener(new TextWatcher() {
@@ -80,17 +80,19 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
             public void afterTextChanged(Editable s) {
             }
         });
-            Next.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent i =new Intent(getApplicationContext(),SkillsBasedInvitation.class);
-                    startActivity(i);
-                    finish();
-                }
-            });
+        Next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(getApplication(),"Next",Toast.LENGTH_SHORT).show();
+              /*  Invitefriends fr = new Invitefriends();
+                mFragmentManager = getActivity().getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.containerView, fr).addToBackStack("invitefriends").commit();*/
+            }
+        });
 
-        }
+    }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -107,7 +109,7 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
 
             }
             System.out.println("data size"+invitationDataArrayList.size());
-            adapter = new CompanyBasedInvitationAdapter(CompanyBasedInvitation.this, invitationDataArrayList);
+            adapter = new CompanyBasedInvitationAdapter(SkillsBasedInvitation.this, invitationDataArrayList);
             lv.setAdapter( adapter);
             adapter.notifyDataSetChanged();
         }
@@ -123,3 +125,4 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
 
     }
 }
+

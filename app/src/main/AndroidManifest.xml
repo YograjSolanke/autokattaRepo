@@ -155,16 +155,18 @@
             android:label="@string/title_activity_other_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <!-- Service for Background task  -->
+        <!-- Service for Background task -->
         <service
-            android:name="autokatta.com.broadcastreceiver.BackgroundService"
-            android:exported="false" />
+            android:name=".broadcastreceiver.BackgroundService"
+            android:exported="false"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0310abc2483857212f40bd7bad891e166bf94ec4"/>
 
         <activity android:name=".Registration.CompanyBasedInvitation">
+        </activity>
+        <activity android:name=".Registration.SkillsBasedInvitation">
         </activity>
     </application>
 

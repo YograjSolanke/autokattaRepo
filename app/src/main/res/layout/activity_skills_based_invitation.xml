@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+    <TableRow
+        android:id="@+id/tablerow1"
+        android:layout_height="40dp"
+        android:layout_width="match_parent">
+
+        <RelativeLayout
+            android:background="#2C3343"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/text_registration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="Lets Connect - Suggestions based on Skills"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </RelativeLayout>
+    </TableRow>
+    <!-- Editext for Search -->
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_below="@+id/tablerow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@color/background"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:text="Next"
+            android:layout_margin="5dp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/inputSearch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search Contacts.."
+        android:layout_below="@+id/rl"
+        android:paddingLeft="5dp"
+        android:textColorHint="#848484"
+        android:textColor="#2C3343"
+        android:inputType="textVisiblePassword" />
+
+    <!-- List View -->
+
+
+        <ListView
+            android:id="@+id/l1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputSearch" />
+
+
+</RelativeLayout>
