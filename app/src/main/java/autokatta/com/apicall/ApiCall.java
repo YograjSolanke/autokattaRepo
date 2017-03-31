@@ -18,6 +18,7 @@ import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
+import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
@@ -3068,27 +3069,22 @@ Upload Vehicle
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
-                //JSON to Gson conversion
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mRegisteredContactResponse = serviceApi._autokattaCreateUser(username, contact);
-                mRegisteredContactResponse.enqueue(new Callback<String>() {
+                Call<CreateUserResponse> mCreateUserResponse = serviceApi._autokattaCreateUser(username, contact);
+                mCreateUserResponse.enqueue(new Callback<CreateUserResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        mNotifier.notifyString(response.body());
+                    public void onResponse(Call<CreateUserResponse> call, Response<CreateUserResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<CreateUserResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

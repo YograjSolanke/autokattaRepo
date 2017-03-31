@@ -5,6 +5,7 @@ import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
+import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetAutokattaContactResponse;
 import autokatta.com.response.GetBodyTypeResponse;
@@ -490,5 +491,5 @@ public interface ServiceApi {
 
     //create User.
     @POST("createDefaultUser.php")
-    Call<String> _autokattaCreateUser(String username, String contact);
+    Call<CreateUserResponse> _autokattaCreateUser(String username, String contact);
 }
