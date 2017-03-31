@@ -30,6 +30,7 @@ import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetRegisteredContactsResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetStoreProfileInfoResponse;
@@ -3021,6 +3022,83 @@ Upload Vehicle
             e.printStackTrace();
         }
     }
+
+      /*
+       Get Registered Contacts
+     */
+
+    public void getRegisteredContacts() {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetRegisteredContactsResponse> mGetRegisteredContact = serviceApi._autokattaGetRegisteredContact();
+                mGetRegisteredContact.enqueue(new Callback<GetRegisteredContactsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetRegisteredContactsResponse> call, Response<GetRegisteredContactsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetRegisteredContactsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+      /*
+       Create User
+     */
+
+    public void createUser(String username, String contact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mRegisteredContactResponse = serviceApi._autokattaCreateUser(username, contact);
+                mRegisteredContactResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /***

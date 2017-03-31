@@ -168,6 +168,8 @@
         </activity>
         <activity android:name=".Registration.SkillsBasedInvitation">
         </activity>
+        <activity android:name=".Registration.InviteFriends">
+        </activity>
     </application>
 
 </manifest>

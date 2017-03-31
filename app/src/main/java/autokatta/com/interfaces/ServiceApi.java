@@ -19,6 +19,7 @@ import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetMyUploadedVehicleResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
+import autokatta.com.response.GetRegisteredContactsResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetStoreProfileInfoResponse;
@@ -482,4 +483,12 @@ public interface ServiceApi {
     @POST("getAutokattaContact.php")
     Call<GetAutokattaContactResponse> getAutokattaContact(@Query("mycontact") String contact, @Query("numberstring") String number,
                                                           @Query("namestring") String name);
+
+    //Get My Registered Contacts...
+    @POST("getAllContactResistered.php")
+    Call<GetRegisteredContactsResponse> _autokattaGetRegisteredContact();
+
+    //create User.
+    @POST("createDefaultUser.php")
+    Call<String> _autokattaCreateUser(String username, String contact);
 }
