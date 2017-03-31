@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
                         android:layout_marginTop="10dp"
-                        android:text="Name"
+                        android:text="Store Actions"
                         android:textColor="#2C3343" />
 
                     <TextView
@@ -63,6 +63,36 @@
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rating_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/relContact">
+
+                    <ImageButton
+                        android:id="@+id/call"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/card_title_height"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/text_margin_top"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/button_grey"
+                        app:srcCompat="@android:drawable/ic_menu_call" />
+
+                    <RatingBar
+                        android:id="@+id/ratingbar"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/call"
+                        android:numStars="5"
+                        android:stepSize="1.0"
+                        android:theme="@style/RatingBar" />
 
                 </RelativeLayout>
 
@@ -86,7 +116,7 @@
                 tools:src="@mipmap/demo" />
 
             <TextView
-                android:id="@+id/card_title"
+                android:id="@+id/store_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_title_height"
                 android:layout_alignBottom="@+id/card_image"
@@ -94,27 +124,26 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"
                 android:textStyle="italic"
-                tools:text="Title" />
+                tools:text="Store Name" />
 
             <LinearLayout
                 android:id="@+id/linear_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/card_title"
+                android:layout_below="@+id/store_name"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/profilenamerel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/imgnotilike">
+                    android:layout_marginStart="5dp">
 
                     <TextView
                         android:id="@+id/storenametxt"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Name :"
+                        android:text="Store Name :"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -122,7 +151,7 @@
                         android:id="@+id/username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/storenametxt"
+                        android:layout_toEndOf="@+id/storenametxt"
                         android:hint="name"
                         android:textColor="#808080" />
 
@@ -132,14 +161,13 @@
                     android:id="@+id/profileworkrel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/imgnotilike">
+                    android:layout_marginStart="5dp">
 
                     <TextView
                         android:id="@+id/storelocationtxt"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Worked at : "
+                        android:text="Store Type: "
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -147,7 +175,7 @@
                         android:id="@+id/profileworkat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/storelocationtxt"
+                        android:layout_toEndOf="@+id/storelocationtxt"
                         android:hint="work at"
                         android:textColor="#808080" />
 
@@ -157,8 +185,7 @@
                     android:id="@+id/profilewebsiterel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/imgnotilike">
+                    android:layout_marginStart="5dp">
 
                     <TextView
                         android:id="@+id/storewebsitetxt"
@@ -172,7 +199,7 @@
                         android:id="@+id/profilewebsite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/storewebsitetxt"
+                        android:layout_toEndOf="@+id/storewebsitetxt"
                         android:hint="website"
                         android:textColor="#808080" />
 
@@ -180,10 +207,58 @@
 
 
                 <RelativeLayout
+                    android:id="@+id/time_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp">
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="Timing : "
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/store_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/time"
+                        android:hint="Timing"
+                        android:textColor="#808080" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/working_day_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp">
+
+                    <TextView
+                        android:id="@+id/workingDay"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="Working Day : "
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/working_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/workingDay"
+                        android:hint="Working Day"
+                        android:textColor="#808080" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/profilelocationrel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp">
+                    android:layout_marginStart="5dp">
 
                     <TextView
                         android:id="@+id/storetypetxt"
@@ -197,7 +272,7 @@
                         android:id="@+id/profilelocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/storetypetxt"
+                        android:layout_toEndOf="@+id/storetypetxt"
                         android:hint="location"
                         android:textColor="#808080" />
 
@@ -210,7 +285,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linear_card"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -218,9 +293,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/dot2"
+                    android:layout_toEndOf="@+id/dot2"
                     android:gravity="center"
                     android:text="follower"
                     android:textColor="#808080"
@@ -230,8 +305,8 @@
                     android:id="@+id/dot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/likes"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/likes"
                     android:text="."
                     android:textStyle="bold" />
 
@@ -249,9 +324,9 @@
                     android:id="@+id/share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/dot"
+                    android:layout_toEndOf="@+id/dot"
                     android:text="Share"
                     android:textColor="#808080"
                     android:textSize="12sp" />
@@ -260,8 +335,8 @@
                     android:id="@+id/dot2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/share"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/share"
                     android:text="."
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -291,7 +366,7 @@
                 app:srcCompat="@android:drawable/ic_menu_share" />
 
             <ImageButton
-                android:id="@+id/call"
+                android:id="@+id/follow_store"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="@dimen/cards_button_width"
                 android:layout_height="@dimen/cards_button_height"
@@ -300,7 +375,7 @@
                 android:layout_toStartOf="@id/share_other"
                 android:contentDescription="@string/app_name"
                 android:tint="@color/button_grey"
-                app:srcCompat="@android:drawable/ic_menu_call" />
+                app:srcCompat="@mipmap/ic_follow" />
 
             <ImageButton
                 android:id="@+id/like"
@@ -309,10 +384,10 @@
                 android:layout_height="@dimen/cards_button_height"
                 android:layout_below="@+id/linear_card"
                 android:layout_marginEnd="@dimen/text_margin_top"
-                android:layout_toStartOf="@id/call"
+                android:layout_toStartOf="@id/follow_store"
                 android:contentDescription="@string/app_name"
                 android:tint="@color/button_grey"
-                app:srcCompat="@android:drawable/ic_btn_speak_now" />
+                app:srcCompat="@mipmap/like" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

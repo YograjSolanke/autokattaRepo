@@ -31,8 +31,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mWallNotify = inflater.inflate(R.layout.fragment_wall_notification, container, false);
 
-        mRecyclerView = (RecyclerView) mWallNotify.findViewById(R.id.rv_recycler_view);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mWallNotify.findViewById(R.id.swipeRefreshLayout);
+        mRecyclerView = (RecyclerView) mWallNotify.findViewById(R.id.wall_recycler_view);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mWallNotify.findViewById(R.id.wall_swipe_refresh_layout);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);

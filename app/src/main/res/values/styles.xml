@@ -30,4 +30,9 @@
         <item name="android:minHeight">30dip</item>
 
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/background</item>
+        <item name="colorControlActivated">@color/orange</item>
+    </style>
 </resources>

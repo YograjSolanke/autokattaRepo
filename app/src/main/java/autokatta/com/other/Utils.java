@@ -1,9 +1,15 @@
 package autokatta.com.other;
 
+import android.content.Context;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.WindowManager;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public class Utils {
+    private static int screenHeight = 0;
     public static void CopyStream(InputStream is, OutputStream os)
     {
         final int buffer_size=1024;
@@ -24,5 +30,17 @@ public class Utils {
             }
         }
         catch(Exception ex){}
+    }
+
+    public static int getScreenHeight(Context c) {
+        if (screenHeight == 0) {
+            WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            screenHeight = size.y;
+        }
+
+        return screenHeight;
     }
 }
