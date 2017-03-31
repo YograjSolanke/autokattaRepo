@@ -491,5 +491,5 @@ public interface ServiceApi {
 
     //create User.
     @POST("createDefaultUser.php")
-    Call<CreateUserResponse> _autokattaCreateUser(String username, String contact);
+    Call<CreateUserResponse> _autokattaCreateUser(@Query("username") String username, @Query("contact") String contact);
 }
