@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!-- <FrameLayout
+         android:id="@+id/content_frame"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">-->
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
@@ -30,21 +30,25 @@
                     app:layout_scrollFlags="scroll|enterAlways|snap"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </android.support.design.widget.AppBarLayout>
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                app:tabGravity="fill"
-                app:tabMode="fixed"
-                app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium" />
-            <!--  <RelativeLayout
+    <!--<android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium" />-->
+    <RelativeLayout
                   android:id="@+id/autokatta_main"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"
@@ -52,10 +56,10 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        </LinearLayout>
-    </FrameLayout>
+        <!--</LinearLayout>
+    </FrameLayout>-->
 
-    <!--  </RelativeLayout>-->
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

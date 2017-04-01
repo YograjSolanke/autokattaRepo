@@ -57,7 +57,14 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
 
-
+        mGroupsFrag = new Groups();
+        mGroupsFrag.setArguments(mBundle);
+        mEventFrag = new Event();
+        mEventFrag.setArguments(mBundle);
+        mKattaFrag = new Katta();
+        mKattaFrag.setArguments(mBundle);
+        mFollowFrag = new Follow();
+        mFollowFrag.setArguments(mBundle);
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.like);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -94,16 +101,6 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
                     TabLayout tabLayout = (TabLayout) findViewById(R.id.other_profile_tabs);
                     tabLayout.setupWithViewPager(viewPager);
-
-                    mGroupsFrag = new Groups();
-                    mGroupsFrag.setArguments(mBundle);
-                    mEventFrag = new Event();
-                    mEventFrag.setArguments(mBundle);
-                    mKattaFrag = new Katta();
-                    mKattaFrag.setArguments(mBundle);
-                    mFollowFrag = new Follow();
-                    mFollowFrag.setArguments(mBundle);
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
