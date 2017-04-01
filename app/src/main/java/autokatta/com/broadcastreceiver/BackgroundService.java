@@ -85,10 +85,13 @@ public class BackgroundService extends Service {
             autokattaApplication.setName(names);
             autokattaApplication.setNumber(numbers);
             Log.i("Back Name", "->" + names);
-            Log.i("Back Number", "->" + numbers);
-            Log.i("Back Name from app", "->" + autokattaApplication.getName());
-            Log.i("Back Number from app", "->" + autokattaApplication.getNumber());
-
+            Log.i("Back Name", "->" + names);
+            Log.i("Back Name", "->" + names);
+            Log.i("Back Name", "->" + names);
+            System.out.println("rutu-------------------- names -arrylist--" + names);
+            System.out.println("rutu-------------------- numbers arrylist--  -" + numbers);
+            System.out.println("rutu-------------------- numbers arrylist 1--  -" + autokattaApplication.getName());
+            System.out.println("rutu-------------------- numbers arrylist 1--  -" + autokattaApplication.getNumber());
             if (!(numbers.size() == 0)) {
                 for (int i = 0; i < numbers.size(); i++) {
                     if (i == 0 && numberstring.equalsIgnoreCase("") && namestring.equalsIgnoreCase("")) {

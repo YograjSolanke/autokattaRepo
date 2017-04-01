@@ -9,25 +9,22 @@ import java.util.List;
  */
 
 public class AutokattaApplication extends Application {
-    private List<String> name;
+    private static List<String> name;
+    private static List<String> number;
 
-    public List<String> getName() {
+    public static List<String> getName() {
         return name;
     }
 
-    public void setName(List<String> name) {
-        this.name = name;
+    public static void setName(List<String> name) {
+        AutokattaApplication.name = name;
     }
 
-    public List<String> getNumber() {
+    public static List<String> getNumber() {
         return number;
     }
 
-    public void setNumber(List<String> number) {
-        this.number = number;
+    public static void setNumber(List<String> number) {
+        AutokattaApplication.number = number;
     }
-
-    private List<String> number;
-
-
 }
