@@ -1,17 +1,13 @@
 package autokatta.com;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import autokatta.com.adapter.TabAdapter;
-import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.AuctionNotification;
 import autokatta.com.fragment.SocialFragment;
 import autokatta.com.fragment.StoreNotification;
@@ -48,8 +43,6 @@ import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.UserProfile;
 import autokatta.com.view.VehicleDetails;
 import autokatta.com.view.VehicleUpload;
-
-import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
 public class AutokattaMainActivity extends AppCompatActivity {
 
@@ -86,7 +79,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
         ab.setHomeAsUpIndicator(R.mipmap.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);*/
 
-        IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
+        /*IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -94,7 +87,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                 String networkStatus = isNetworkAvailable ? "Connected" : "Disconnected";
                 Snackbar.make(findViewById(R.id.autokatta_main), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
             }
-        }, intentFilter);
+        }, intentFilter);*/
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 

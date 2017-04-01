@@ -3,7 +3,6 @@ package autokatta.com.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -28,10 +26,9 @@ import autokatta.com.adapter.GroupVehicleRefreshAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.EndlessRecyclerOnScrollListener;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import retrofit2.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-001 on 24/3/17.
@@ -39,7 +36,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mGroupVehicleList;
-    ListView mListView;
     String brand = "", model = "", version = "", city = "", RTOcity = "", reg_year = "",
             mgf_year = "", price = "", kmsrunning = "", no_of_owner = "";
     EditText editbrand,editmodel,editversion,editcity,editregyr,editmgfyr,editprice,editkms,editowner;
@@ -50,6 +46,11 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     GroupVehicleRefreshAdapter mGroupVehicleRefreshAdapter;
+    LinearLayoutManager mLayoutManager;
+    // on scroll
+    private static int current_page = 1;
+    private int ival = 1;
+    private int loadLimit = 10;
 
     @Nullable
     @Override
@@ -71,7 +72,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mGroupVehicleList.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -118,6 +119,16 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 mgf_year = editmgfyr.getText().toString();
                 kmsrunning = editkms.getText().toString();
                 no_of_owner = editowner.getText().toString();
+
+                /*
+                Recycler View OnScrollChanged Listener...
+                 */
+                mRecyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager) {
+                    @Override
+                    public void onLoadMore(int current_page) {
+                        Log.i("Loading", "->");
+                    }
+                });
             }
         });
         return mGroupVehicleList;

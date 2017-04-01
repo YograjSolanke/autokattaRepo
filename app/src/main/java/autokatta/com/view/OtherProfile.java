@@ -15,9 +15,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
@@ -38,7 +35,6 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     FloatingActionButton mCall, mLike, mFollow;
-    List<FloatingActionMenu> menus = new ArrayList<>();
     Groups mGroupsFrag;
     Event mEventFrag;
     Katta mKattaFrag;
@@ -83,7 +79,12 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
             @Override
             public void run() {
                 try {
-                    getOtherProfile();
+                    if (getIntent().getExtras() != null) {
+                        mOtherContact = getIntent().getExtras().getString("contactOtherProfile");
+                    }
+                    mBundle.putString("otherContact", mOtherContact);
+
+                    getOtherProfile(mOtherContact);
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
                     mOtherPicture = (ImageView) findViewById(R.id.other_profile_image);
                     ViewPager viewPager = (ViewPager) findViewById(R.id.other_profile_viewpager);
@@ -93,9 +94,6 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
                     TabLayout tabLayout = (TabLayout) findViewById(R.id.other_profile_tabs);
                     tabLayout.setupWithViewPager(viewPager);
-
-                    mOtherContact = getIntent().getExtras().getString("contactOtherProfile");
-                    mBundle.putString("otherContact", mOtherContact);
 
                     mGroupsFrag = new Groups();
                     mGroupsFrag.setArguments(mBundle);
@@ -117,9 +115,9 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     /*
     GET Other Profile...
      */
-    private void getOtherProfile() {
+    private void getOtherProfile(String contact) {
         ApiCall mApiCall = new ApiCall(OtherProfile.this, this);
-        mApiCall.getOtherProfile(mOtherContact, mLoginContact);
+        mApiCall.profileAbout(contact);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -177,13 +175,13 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                     mLike.setLabelText("Like");
                     mLike.setLabelTextColor(Color.WHITE);
                     menuRed.setClosedOnTouchOutside(true);
-                }else {
+                } else {
                     mLike.setLabelText("Liked");
                     mLike.setLabelTextColor(Color.RED);
                     menuRed.setClosedOnTouchOutside(true);
                 }
 
-            break;
+                break;
             case R.id.follow_f:
 
                 break;

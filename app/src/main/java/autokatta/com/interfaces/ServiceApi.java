@@ -73,10 +73,10 @@ public interface ServiceApi {
     @GET("getProfileData.php")
     Call<ProfileAboutResponse> _autokattaProfileAbout(@Query("contact") String contact);
 
-    //Get Profile Data...
+    /*//Get Profile Data...
     @GET("getProfileData.php")
     Call<ProfileAboutResponse> _autokattaOtherProfile(@Query("contact") String contact,
-                                                      @Query("sender_contact") String senderContact);
+                                                      @Query("sender_contact") String senderContact);*/
 
     //Get Groups...
     @GET("getGroups.php")

@@ -127,6 +127,7 @@ public class ApiCall {
      */
 
     public void profileAbout(String contact) {
+        Log.i("Profile", "--->" + contact);
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2744,7 +2745,7 @@ Upload Vehicle
         get Other Profile Data...
      */
 
-    public void getOtherProfile(String myContact, String senderContact) {
+    public void getOtherProfile(String myContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -2754,7 +2755,7 @@ Upload Vehicle
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ProfileAboutResponse> profileOther = serviceApi._autokattaOtherProfile(myContact, senderContact);
+                Call<ProfileAboutResponse> profileOther = serviceApi._autokattaProfileAbout(myContact);
                 profileOther.enqueue(new Callback<ProfileAboutResponse>() {
                     @Override
                     public void onResponse(Call<ProfileAboutResponse> call, Response<ProfileAboutResponse> response) {

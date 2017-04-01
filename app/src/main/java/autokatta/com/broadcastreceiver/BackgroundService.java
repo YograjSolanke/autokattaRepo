@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import autokatta.com.AutokattaApplication;
 import autokatta.com.R;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.ServiceApi;
@@ -40,7 +39,6 @@ public class BackgroundService extends Service {
     DbOperation operation;
 
     IBinder mIBinder = new LocalBinder();
-    AutokattaApplication autokattaApplication = new AutokattaApplication();
 
     private class LocalBinder extends Binder {
         BackgroundService getService() {
@@ -82,16 +80,6 @@ public class BackgroundService extends Service {
                     numbers.add(number);
                 }
             } while (people.moveToNext());
-            autokattaApplication.setName(names);
-            autokattaApplication.setNumber(numbers);
-            Log.i("Back Name", "->" + names);
-            Log.i("Back Name", "->" + names);
-            Log.i("Back Name", "->" + names);
-            Log.i("Back Name", "->" + names);
-            System.out.println("rutu-------------------- names -arrylist--" + names);
-            System.out.println("rutu-------------------- numbers arrylist--  -" + numbers);
-            System.out.println("rutu-------------------- numbers arrylist 1--  -" + autokattaApplication.getName());
-            System.out.println("rutu-------------------- numbers arrylist 1--  -" + autokattaApplication.getNumber());
             if (!(numbers.size() == 0)) {
                 for (int i = 0; i < numbers.size(); i++) {
                     if (i == 0 && numberstring.equalsIgnoreCase("") && namestring.equalsIgnoreCase("")) {

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import autokatta.com.AutokattaApplication;
 import autokatta.com.R;
 import autokatta.com.adapter.InviteContactAdapter;
 import autokatta.com.database.DbConstants;
@@ -41,7 +40,6 @@ public class InviteContactFragment extends Fragment {
     List<String> finalContacts;
     List<String> names = new ArrayList<>();
     List<String> numbers = new ArrayList<>();
-    AutokattaApplication autokattaApplication;
     InviteContactAdapter inviteContactAdapter;
     String myContact;
     String[] products;
@@ -59,7 +57,6 @@ public class InviteContactFragment extends Fragment {
         edtSearchContact = (EditText) mInviteContact.findViewById(R.id.inputSearch);
         mRecyclerView = (RecyclerView) mInviteContact.findViewById(R.id.rv_recycler_view);
 
-        autokattaApplication = (AutokattaApplication) getActivity().getApplicationContext();
 
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
