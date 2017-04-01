@@ -35,6 +35,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.IndustryResponse;
+import autokatta.com.view.LoginActivity;
 import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener,
@@ -434,56 +435,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (str != null) {
             getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
             CustomToast.customToast(getApplicationContext(), "Registration Successfully");
-            Intent i = new Intent(RegistrationActivity.this, ContinueRegistration.class);
+            Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
             startActivity(i);
            finish();
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
-
-  /*      i.putExtra("username", namestr);
-        i.putExtra("contact", contactstr);
-        i.putExtra("email", emailstr);
-        i.putExtra("pincode", pincodestr);
-        i.putExtra("city", addressstr);
-        i.putExtra("password", passwordstr);
-        i.putExtra("dob", DOBstr);
-        i.putExtra("gender", genderstr);
-        i.putExtra("call", "register");*/
-/*
-
-        if (sub_profession.equalsIgnoreCase("Other")) {
-            sub_profession = otherCategory.getText().toString().trim();
-            i.putExtra("sub_profession", sub_profession);
-            apiCall.addOtherCategory(sub_profession);
-
-        } else {
-            i.putExtra("sub_profession", sub_profession);
-        }
-
-        if (strIndustry.equalsIgnoreCase("Other")) {
-            strIndustry = otherIndustry.getText().toString().trim();
-            i.putExtra("industry", strIndustry);
-
-            apiCall.addOtherIndustry(strIndustry);
-
-        } else {
-            i.putExtra("industry", strIndustry);
-        }
-
-        i.putExtra("profession", profession);
-
-*/
-
-
-
-   /*     if (str.equalsIgnoreCase("Success")) {
-
-
-            mobileNo.setError("Contact Already Exists!!!!!!!");
-            mobileNo.requestFocus();
-        }
-*/
 
     }
 
@@ -495,26 +452,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 dateOfBirth.setInputType(InputType.TYPE_NULL);
                 datePicker.show();
                 break;
-            /*case (R.id.dob_calender):
-
-                int action = motionEvent.getAction();
-                if (action == MotionEvent.ACTION_DOWN) {
-                    DialogFragment newFragment = new SelectDateFragment();
-                    newFragment.show(getFragmentManager(), "DatePicker");
-
-                }
-                break;
-
-            case (R.id.editdob):
-
-                int action1 = motionEvent.getAction();
-                if (action1 == MotionEvent.ACTION_DOWN) {
-                    DialogFragment newFragment = new SelectDateFragment();
-                    newFragment.show(getFragmentManager(), "DatePicker");
-
-                }
-                break;*/
-
         }
         return false;
     }
@@ -551,35 +488,4 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
-
-    /*//date  setting class
-    public class SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar calendar = Calendar.getInstance();
-            int yy = calendar.get(Calendar.YEAR);
-            int mm = calendar.get(Calendar.MONTH);
-            int dd = calendar.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(), this, yy, mm, dd);
-        }
-
-        public void onDateSet(DatePicker view, int yy, int mm, int dd) {
-            populateSetDate(yy, mm + 1, dd);
-        }
-
-        public void populateSetDate(int year, int month, int day) {
-            String m = String.valueOf(month);
-            String d = String.valueOf(day);
-            if (d.length() < 2) {
-                d = "0" + d;
-            }
-            if (m.length() < 2) {
-                m = "0" + m;
-            }
-            //dobtext.setText(d+"-"+m+"-"+year);
-            dateOfBirth.setText(year + "-" + m + "-" + d);
-        }
-
-    }*/
 }

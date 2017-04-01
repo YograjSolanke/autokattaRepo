@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 
@@ -96,7 +95,7 @@ public class NewPassword extends AppCompatActivity implements View.OnClickListen
         if (str != null) {
             Log.i("String-----", "->" + str);
             if (str.equals("Success")) {
-                Toast.makeText(getApplicationContext(), "Your password has been changed successfully ", Toast.LENGTH_LONG).show();
+                CustomToast.customToast(getApplicationContext(),"Your password has been changed successfully ");
                 Intent intent = new Intent(NewPassword.this, LoginActivity.class);
                 intent.putExtra("call", "forgot");
                 startActivity(intent);

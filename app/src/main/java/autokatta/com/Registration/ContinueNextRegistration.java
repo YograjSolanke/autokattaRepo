@@ -1,10 +1,12 @@
 package autokatta.com.Registration;
 
+import android.app.AlertDialog.Builder;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,11 +22,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.InputStream;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -34,8 +39,12 @@ import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
+import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
+import autokatta.com.response.GetVehicleVersionResponse;
 import retrofit2.Response;
 
 /**
@@ -50,21 +59,29 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     Spinner mSpinnerVehitype, mSpinnerModel, mSpinnerBrand, mSpinnerVersion, mSpinnerSubType;
 
     RelativeLayout relavite3;
-    String whichclick = "";
+    String whichclick = "", subcategoryId, subcategoryName;
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
-    final ArrayList<String> parsedData1 = new ArrayList<>();
-    List<String> parsedData = new ArrayList<>();
-    List<String> mSubTypeList = new ArrayList<>();
-    HashMap<String, String> mSubTypeList1 = new HashMap<>();
     HashMap<String, String> mVehicleTypeList1 = new HashMap<>();
-    final ArrayList<String> brands = new ArrayList<String>();
-    final ArrayList<String> models = new ArrayList<String>();
-    final ArrayList<String> versions = new ArrayList<String>();
-
-
-    InputStream is = null;
+    List<String> parsedData1 = new ArrayList<>();
+    //SubType
+    List<String> mSubTypeList = new ArrayList<>();
+    List<String> parsedData = new ArrayList<>();
+    HashMap<String, String> mSubTypeList1 = new HashMap<>();
+    //Brands
+    List<String> mBrandIdList = new ArrayList<>();
+    List<String> brandData = new ArrayList<>();
+    HashMap<String, String> mBrandList1 = new HashMap<>();
+    //Model
+    List<String> mModelIdList = new ArrayList<>();
+    List<String> modelData = new ArrayList<>();
+    HashMap<String, String> mModelList1 = new HashMap<>();
+    //Version
+    List<String> mVersionIdList = new ArrayList<>();
+    List<String> versionData = new ArrayList<>();
+    HashMap<String, String> mVersionList1 = new HashMap<>();
 
     Bundle bundle = new Bundle();
+    String vehicle_idD, brandId, brandName, modelId, modelName, versionId, versionName;
     ApiCall mApicall;
 
     String action = "", vehiType = "", vehiYear = "", vehiBrand = "", vehiModel = "", vehiVersion = "", vehiSubcat = "", ids = "", vehino = "",
@@ -208,11 +225,6 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
         switch (v.getId()) {
             case R.id.btnSub:
 
-                if (edtvehicleno.equals("")) {
-                    edtvehicleno.setError("Enter Vehicle Number");
-                    edtvehicleno.requestFocus();
-                }
-
                 vehiclenotext = edtvehicleno.getText().toString();
                 vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
                 subcattext = mSpinnerSubType.getSelectedItem().toString();
@@ -240,6 +252,12 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     edtyear.setError("Please prodive purchase date");
                 }
 
+                if (!vehiclenotext.equalsIgnoreCase("")) {
+                    Toast.makeText(ContinueNextRegistration.this,
+                            "Please Enter Vehicle Number", Toast.LENGTH_LONG)
+                            .show();
+
+                }
 
                 if (!taxvaltext.equalsIgnoreCase("")) {
                     if (!isValidDate(taxvaltext, yeartext)) {
@@ -310,6 +328,13 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
 
                 }
 
+
+                if (edtvehicleno.equals("")) {
+                    edtvehicleno.setError("Enter Vehicle Number");
+                    edtvehicleno.requestFocus();
+                    flag=0;
+                }
+
                 if (flag == 1 && !action.equalsIgnoreCase("MyVehicles")) {
                     /*Response is Success*/
                     mApicall.addOwn(contact, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
@@ -320,12 +345,11 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     /*Response is success*/
                     mApicall.uploadVehicle(ids, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                             taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
-                    Toast.makeText(ContinueNextRegistration.this,
-                            "Vehicle uploaded Successfully !!", Toast.LENGTH_LONG)
-                            .show();
+                    CustomToast.customToast(getApplicationContext(),"Vehicle Uploaded Successfully!!!");
+
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error please provide all details!!!", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getApplicationContext(),"Error please provide all details Correct!!!");
                 }
 
 
@@ -377,8 +401,6 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
 
     public Boolean isValidDate(String datetocheck, String yeartextdate) {
         Boolean flag1 = true;
-
-        System.out.println("Result here==================================================");
 
         String[] partc = datetocheck.split("-");
 
@@ -583,6 +605,9 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
             if (response.isSuccessful()) {
                 Log.i("select--->", "vehicle" + response.body());
                 if (response.body() instanceof GetVehicleListResponse) {
+                    mVehicleTypeList.clear();
+                    mVehicleTypeList1.clear();
+                    parsedData1.clear();
                     mVehicleTypeList.add("----Select Vehicle----");
                     GetVehicleListResponse mGetVehicleListResponse = (GetVehicleListResponse) response.body();
                     if (!mGetVehicleListResponse.getSuccess().isEmpty()) {
@@ -595,24 +620,24 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                             mVehicleTypeList1.put(vehicleTypeResonse.getName(), vehicleTypeResonse.getId());
 
                         }
-                        parsedData.addAll(mVehicleTypeList);
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
+                        parsedData1.addAll(mVehicleTypeList);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData1);
                         dataadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSpinnerVehitype.setAdapter(dataadapter);
                         mSpinnerSubType.setAdapter(null);
                         mSpinnerVehitype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+
+
                                 if (position != 0) {
-                                    String vehicle_idD = mVehicleTypeList1.get(parsedData.get(position));
+                                    vehicle_idD = mVehicleTypeList1.get(parsedData1.get(position));
                                     String Category = mVehicleTypeList.get(position);
-                                    System.out.println("vehicle iddddd in category============" + vehicle_idD);
+                                    ((TextView) mSpinnerVehitype.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
 
-
-                                    mApicall.getVehicleSubtype(vehicle_idD);
+                                    //  mApicall.getVehicleSubtype(vehicle_idD);
                                     // getSubcategory(vehicle_id);
-
-                                    System.out.println("************************************" + Category);
+                                    getSubCategoryTask();
                                     if (Category.equalsIgnoreCase("2 Wheeler")) {
                                         //Toast.makeText(Continue_reg_y.this,"Commercial vehicle is selected",Toast.LENGTH_LONG).show();
 
@@ -625,14 +650,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                         edtfit.setVisibility(View.VISIBLE);
                                     }
 
-                                    System.out.println("vehicle iddddd in category============" + vehicle_idD);
-
-                                } else {
-                                    Toast.makeText(ContinueNextRegistration.this,
-                                            "Please Select the Vehicle type !!", Toast.LENGTH_LONG)
-                                            .show();
                                 }
-
                             }
 
                             @Override
@@ -642,41 +660,275 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                         });
                     }
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
-                    Log.i("me in Sub Cat", "->" + response);
+                    Log.e("GetVehicle sub Types", "->");
                     mSubTypeList.clear();
+                    mSubTypeList1.clear();
+                    parsedData.clear();
+                    mSubTypeList.add("Select Vehicle Sub Types");
                     GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
-                    mSubTypeList.add("Select Sub Vehicle Types");
                     for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
                         subTypeResponse.setId(subTypeResponse.getId());
                         subTypeResponse.setName(subTypeResponse.getName());
                         mSubTypeList.add(subTypeResponse.getName());
-                        mSubTypeList1.put(subTypeResponse.getId(), subTypeResponse.getName());
+                        mSubTypeList1.put(subTypeResponse.getName(), subTypeResponse.getId());
                     }
-                    mSubTypeList.clear();
-                    mSubTypeList1.clear();
-                    parsedData1.clear();
-                    parsedData1.addAll(mSubTypeList);
-                    final ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, parsedData1);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    parsedData.addAll(mSubTypeList);
+                    ArrayAdapter<String> adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_item,parsedData);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerSubType.setAdapter(adapter);
                     mSpinnerSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
-                                String sub_category_id1 = mSubTypeList1.get(parsedData.get(position));
-                                System.out.println("sub_category_id iddddd in Sub category============" + sub_category_id1);
-                                mApicall.getBrandModelVersion(sub_category_id1);
-                            } else {
-                                Toast.makeText(ContinueNextRegistration.this,
-                                        "Please Select the Vehicle Sub type !!", Toast.LENGTH_LONG)
-                                        .show();
+                                subcategoryId = mSubTypeList1.get(parsedData.get(position));
+                                subcategoryName = parsedData.get(position);
+                                ((TextView) mSpinnerSubType.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+                                System.out.println("Sub cat is::" + subcategoryId);
+                                System.out.println("Sub cat name::" + subcategoryName);
+
+                                getBrand(vehicle_idD, subcategoryId);
                             }
                         }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } else if (response.body() instanceof GetVehicleBrandResponse) {
+                    Log.e("GetVehicleBrands", "->");
+                    mBrandIdList.clear();
+                    mBrandList1.clear();
+                    brandData.clear();
+
+                    mBrandIdList.add("Select Brands");
+                    GetVehicleBrandResponse getVehicleBrandResponse = (GetVehicleBrandResponse) response.body();
+                    for (GetVehicleBrandResponse.Success brandResponse : getVehicleBrandResponse.getSuccess()) {
+                        brandResponse.setBrandId(brandResponse.getBrandId());
+                        brandResponse.setBrandTitle(brandResponse.getBrandTitle());
+                        mBrandIdList.add(brandResponse.getBrandTitle());
+                        mBrandList1.put(brandResponse.getBrandTitle(), brandResponse.getBrandId());
+                    }
+                    mBrandIdList.add("other");
+                    brandData.addAll(mBrandIdList);
+                    Log.i("ListBrand", "->" + mBrandIdList);
+                    ArrayAdapter<String> adapter =
+                            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, brandData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSpinnerBrand.setAdapter(adapter);
+                    mSpinnerModel.setAdapter(null);
+                    mSpinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                            if (position != 0) {
+                                brandId = mBrandList1.get(brandData.get(position));
+                                brandName = brandData.get(position);
+                                ((TextView) mSpinnerBrand.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+
+                            }
+
+                            if (brandData.get(position).equalsIgnoreCase("other")) {
+
+                                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(ContinueNextRegistration.this);
+                                //  AlertDialog.Builder alertDialog = new AlertDialog.Builder(ContinueNextRegistration.this);
+                                alertDialog.setTitle("Add Brand");
+                                alertDialog.setMessage("Enter brand name");
+
+
+                                final EditText input = new EditText(getApplicationContext());
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Brand",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String edbrand = input.getText().toString();
+
+                                                if (edbrand.equals(""))
+                                                  CustomToast.customToast(getApplicationContext(), "Please enter brand");
+                                                else
+                                                    AddBrand("Brand", edbrand, vehicle_idD, subcategoryId);
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mSpinnerBrand.setSelection(0);
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                alertDialog.show();
+                            } else
+                                getModel(vehicle_idD, subcategoryId, brandId);
+
+                        }
 
                         @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } else if (response.body() instanceof GetVehicleModelResponse) {
+                    mModelIdList.clear();
+                    mModelList1.clear();
+                    modelData.clear();
+
+                    mModelIdList.add("Select Model");
+                    GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
+                    for (GetVehicleModelResponse.Success modelResponse : getVehicleModelResponse.getSuccess()) {
+                        modelResponse.setModelId(modelResponse.getModelId());
+                        modelResponse.setModelTitle(modelResponse.getModelTitle());
+                        mModelIdList.add(modelResponse.getModelTitle());
+                        mModelList1.put(modelResponse.getModelTitle(), modelResponse.getModelId());
+                    }
+                    mModelIdList.add("other");
+                    modelData.addAll(mModelIdList);
+                    ArrayAdapter<String> adapter =
+                            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, modelData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSpinnerModel.setAdapter(adapter);
+                    mSpinnerVersion.setAdapter(null);
+                    mSpinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                modelId = mModelList1.get(modelData.get(position));
+                                modelName = modelData.get(position);
+                                ((TextView) mSpinnerModel.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+
+
+                            }
+
+                            if (modelData.get(position).equalsIgnoreCase("other")) {
+
+                                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(ContinueNextRegistration.this);
+                                alertDialog.setTitle("Add Model");
+                                alertDialog.setMessage("Enter model name");
+
+                                final EditText input = new EditText(getApplicationContext());
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Model",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String edmodel = input.getText().toString();
+
+                                                if (edmodel.equals(""))
+                                                    Toast.makeText(getApplicationContext(), "Please enter model", Toast.LENGTH_LONG).show();
+                                                else
+                                                    AddModel("Model", edmodel, vehicle_idD, subcategoryId, brandId);
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mSpinnerModel.setSelection(0);
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                alertDialog.show();
+                            } else
+                                getVersion(vehicle_idD, subcategoryId, brandId, modelId);
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } else if (response.body() instanceof GetVehicleVersionResponse) {
+                    Log.e("GetVehicleVersion", "->");
+                    mVersionIdList.clear();
+                    mVersionList1.clear();
+                    versionData.clear();
+
+                    mVersionIdList.add("Select Version");
+                    GetVehicleVersionResponse getVehicleVersionResponse = (GetVehicleVersionResponse) response.body();
+                    for (GetVehicleVersionResponse.Success versionResponse : getVehicleVersionResponse.getSuccess()) {
+                        versionResponse.setVersionId(versionResponse.getVersionId());
+                        versionResponse.setVersion(versionResponse.getVersion());
+                        mVersionIdList.add(versionResponse.getVersion());
+                        mVersionList1.put(versionResponse.getVersion(), versionResponse.getVersionId());
+                    }
+                    mVersionIdList.add("other");
+                    versionData.addAll(mVersionIdList);
+                    Log.i("ListVersion", "->" + mVersionIdList);
+                    ArrayAdapter<String> adapter =
+                            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, versionData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    mSpinnerVersion.setAdapter(adapter);
+                    mSpinnerVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                versionId = mVersionList1.get(versionData.get(position));
+                                versionName = versionData.get(position);
+                                ((TextView) mSpinnerVersion.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+                                System.out.println("Version id is::" + versionId);
+                                System.out.println("Version name::" + versionName);
+                            }
+
+                            if (versionData.get(position).equalsIgnoreCase("other")) {
+
+                                Builder alertDialog = new Builder(ContinueNextRegistration.this);
+                                alertDialog.setTitle("Add Version");
+                                alertDialog.setMessage("Enter version name");
+
+                                final EditText input = new EditText(getApplicationContext());
+                                LayoutParams lp = new LayoutParams(
+                                        LayoutParams.MATCH_PARENT,
+                                        LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Version",
+                                        new OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String edversion = input.getText().toString();
+
+                                                if (edversion.equals(""))
+                                                    Toast.makeText(getApplicationContext(), "Please enter version", Toast.LENGTH_LONG).show();
+                                                else
+                                                    AddVersion("Version", edversion, vehicle_idD, subcategoryId, brandId, modelId);
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mSpinnerVersion.setSelection(0);
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                alertDialog.show();
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
 
                         }
                     });
@@ -688,13 +940,21 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Continue Next Registration");
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void notifyString(String str) {
         if (str != "") {
-            Log.i("upload Sucess", "->");
             if (str.equals("success")) {
                 if (action.equals("ContinueRegisteration")) {
                     Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
@@ -710,7 +970,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                         Toast.LENGTH_LONG).show();
 
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ContinueNextRegistration.this);
 
                 // set title
                 alertDialogBuilder.setTitle("Add Vehicle");
@@ -766,12 +1026,6 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                         Intent i = new Intent(getApplicationContext(), CompanyBasedRegistrationActivity.class);
                                         startActivity(i);
                                         finish();
-                                     /*   CompanyBasedRegisteration fr = new CompanyBasedRegisteration();
-                                        //fr.setArguments(b);
-                                        mFragmentManager = getActivity().getSupportFragmentManager();
-                                        mFragmentTransaction = mFragmentManager.beginTransaction();
-                                        mFragmentTransaction.replace(R.id.containerView, fr).addToBackStack("companybasedreg").commit();
-*/
                                     }
                                 });
 
@@ -782,18 +1036,86 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                 alertDialog.show();
 
 
-            } else {
-                Toast.makeText(getApplicationContext(), "Please try later",
-                        Toast.LENGTH_LONG).show();
+            }
+            if (str != null) {
+                if (str.equals("success_brand_add")) {
+                    CustomToast.customToast(getApplicationContext(), "Brand added successfully");
+                    getBrand(vehicle_idD, subcategoryId);
+                    Log.i("msg", "Brand added successfully");
+
+                } else if (str.equals("success_model_add")) {
+
+                    CustomToast.customToast(getApplicationContext(), "Model added successfully");
+                    getModel(vehicle_idD, subcategoryId, brandId);
+                } else if (str.equals("success_version_add")) {
+                    CustomToast.customToast(getApplicationContext(), "Version added successfully");
+                    getVersion(vehicle_idD, subcategoryId, brandId, modelId);
+                }
 
             }
 
         }
-
     }
-    public void onBackPressed()
-    {
-        Intent i=new Intent(getApplicationContext(),ContinueRegistration.class);
+
+    /*
+   Sub Category...
+    */
+    private void getSubCategoryTask() {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getVehicleSubtype(vehicle_idD);
+    }
+
+    /*
+    Get Brand
+     */
+    private void getBrand(String categoryId, String subcategoryId) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getBrand(categoryId, subcategoryId);
+    }
+
+    /*
+    Get Model...
+     */
+    private void getModel(String categoryId, String subCategoryId, String brandId) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getModel(categoryId, subCategoryId, brandId);
+    }
+
+    /*
+    Get Version...
+     */
+    private void getVersion(String categoryId, String subCategoryId, String brandId, String modelId) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
+    }
+
+
+    /*
+    Add Brand
+     */
+    private void AddBrand(String keyword, String title, String categoryId, String subCatID) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.addBrand(keyword, title, categoryId, subCatID);
+    }
+
+    /*
+    Add Model
+     */
+    private void AddModel(String keyword, String title, String categoryId, String subCatID, String brandId) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.addModel(keyword, title, categoryId, subCatID, brandId);
+    }
+
+    /*
+    Add Version
+     */
+    private void AddVersion(String keyword, String title, String categoryId, String subCatID, String brandId, String modelId) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.addVersion(keyword, title, categoryId, subCatID, brandId, modelId);
+    }
+
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), ContinueRegistration.class);
         startActivity(i);
         finish();
     }

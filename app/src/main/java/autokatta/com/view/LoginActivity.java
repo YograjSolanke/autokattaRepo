@@ -18,7 +18,8 @@ import java.net.SocketTimeoutException;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
-import autokatta.com.Registration.CompanyBasedInvitation;
+import autokatta.com.Registration.ContinueRegistration;
+import autokatta.com.Registration.RegistrationActivity;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.interfaces.RequestNotifier;
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.register:
-                startActivity(new Intent(LoginActivity.this, CompanyBasedInvitation.class));
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
                 finish();
                 break;
 
@@ -108,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     session.createLoginSession(userName, password);
                     Intent is = new Intent(LoginActivity.this, BackgroundService.class);
                     startService(is);
-                    startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), ContinueRegistration.class));
                 } else {
                     CustomToast.customToast(getApplicationContext(), mLoginResponse.getError().get(0));
                 }

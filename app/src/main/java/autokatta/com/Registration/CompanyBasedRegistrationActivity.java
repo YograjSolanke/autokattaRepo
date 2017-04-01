@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +29,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.my_store.CreateStoreFragment;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
@@ -376,7 +379,16 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Company Based Registration");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -407,7 +419,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                 spinState.setSelection(0);
 
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CompanyBasedRegistrationActivity.this);
 
                 // set title
                 alertDialogBuilder.setTitle("Intrest Area ");
@@ -607,12 +619,8 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                         // addnewDealsVolley(dealpart);
                         mApiCall.addNewDeal(dealpart);
                     }
-
-
                 }
 
-                // System.out.println("skillnames array before change***************" + dealNames);
-                //new getSkils().execute();
                 mApiCall.getDeals();
                 //  getDealsVolley();
 
@@ -714,12 +722,6 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                         autoDeals.requestFocus();
                     }
 
-
-                        // updateRegisteration(strArea, strKms, strDistrict, strState);
-
-//                            Intent i = new Intent(CompanyBasedRegisteration.this,InterestBasedRegisteration.class);
-//                            startActivity(i);
-                        //Toast.makeText(getActivity(), "Success all", Toast.LENGTH_SHORT).show();
 
                 }else
                 {

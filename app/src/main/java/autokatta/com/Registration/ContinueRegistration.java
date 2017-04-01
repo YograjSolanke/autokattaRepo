@@ -9,8 +9,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -74,9 +72,6 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
     String imageName = "";
     ListView li;
     Button btnsub;
-    Bundle b= new Bundle();
-    FragmentManager mFragmentManager;
-    FragmentTransaction mFragmentTransaction;
 
     String abouttext, websitetext;
 

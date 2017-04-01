@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
     <TableRow
         android:id="@+id/tablerow1"
@@ -23,7 +23,7 @@
                 android:text="Add Owned Vehicle Details"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
         </RelativeLayout>
     </TableRow>
@@ -33,7 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tablerow1">
-
 
         <RelativeLayout
 
@@ -60,7 +59,7 @@
                     android:gravity="center"
                     android:text="Add Vehicle details"
                     android:textColor="@color/white"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
 
                 <EditText
@@ -75,23 +74,16 @@
                     android:hint="@string/vehicle_no"
                     android:inputType="text"
                     android:textAlignment="center"
-                    android:textColor="#2C3343" />
+                    android:textColor="#2C3343"/>
 
                 <Spinner
                     android:id="@+id/spinner_vehi_type"
                     android:layout_width="fill_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:layout_below="@+id/editvehicleno"
                     android:layout_marginTop="10dip"
                     android:background="#80bebebe"
-
-                    android:hint="@string/vehicle_type"
-                    android:textAlignment="center">
-
-
-                </Spinner>
+                    android:textAlignment="center"/>
 
 
                 <Spinner
@@ -103,8 +95,19 @@
                     android:layout_below="@+id/spinner_vehi_type"
                     android:layout_marginTop="10dip"
                     android:background="#80bebebe"
-                    android:hint="@string/sub_category"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"/>
+
+
+                <Spinner
+                    android:id="@+id/spinner_brand"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dip"
+                    android:layout_below="@+id/spinner_sub_Type"
+                    android:layout_marginTop="10dip"
+                    android:background="#80bebebe"
+                    android:textAlignment="center">
+
+                </Spinner>
 
 
                 <Spinner
@@ -113,26 +116,9 @@
                     android:layout_height="40dip"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/spinner_sub_Type"
+                    android:layout_below="@+id/spinner_brand"
                     android:layout_marginTop="10dip"
                     android:background="#80bebebe"
-                    android:hint="@string/model_no"
-
-                    android:textAlignment="center">
-
-                </Spinner>
-
-
-                <Spinner
-                    android:id="@+id/spinner_brand"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dip"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/spinner_model"
-                    android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
-                    android:hint="@string/brand"
                     android:textAlignment="center">
 
                 </Spinner>
@@ -144,10 +130,9 @@
                     android:layout_height="40dip"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/spinner_brand"
+                    android:layout_below="@+id/spinner_model"
                     android:layout_marginTop="10dip"
                     android:background="#80bebebe"
-                    android:hint="@string/version"
                     android:textAlignment="center">
 
                 </Spinner>
@@ -167,7 +152,7 @@
                     android:textAlignment="center"
 
                     android:textColor="#2C3343"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
 
                 <EditText
@@ -184,7 +169,7 @@
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
 
                 <EditText
@@ -201,7 +186,7 @@
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
                 <EditText
                     android:id="@+id/editpermitval"
@@ -218,7 +203,7 @@
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
 
                 <EditText
@@ -235,7 +220,7 @@
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
 
                 <EditText
@@ -252,7 +237,7 @@
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
 
                 <EditText
@@ -270,7 +255,7 @@
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
 
                 <EditText
@@ -289,7 +274,7 @@
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
             </RelativeLayout>
 
@@ -314,7 +299,7 @@
                         android:selectAllOnFocus="true"
                         android:text="Submit"
                         android:textColor="@color/white"
-                        android:textSize="16dp" />
+                        android:textSize="16dp"/>
 
 
                     <Button
@@ -327,7 +312,7 @@
                         android:selectAllOnFocus="true"
                         android:text="Cancel"
                         android:textColor="@color/white"
-                        android:textSize="16dp" />
+                        android:textSize="16dp"/>
 
                 </RelativeLayout>
             </LinearLayout>
