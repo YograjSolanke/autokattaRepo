@@ -502,4 +502,11 @@ public interface ServiceApi {
     @POST("newUnfollow.php")
     Call<String> _autokattaUnfollow(@Query("sender_contact") String senderContact, @Query("receiver_contact") String receiverContact,
                                     @Query("layout") String layout);
+
+
+    //remove Contact From blacklist
+    @POST("addRemoveToBlacklist.php")
+    Call<String> removeContactFromBlacklist(@Query("mycontact") String mycontact, @Query("contact") String contact,
+                                            @Query("keyword") String keyword);
+
 }
