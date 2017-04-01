@@ -1,5 +1,7 @@
 package autokatta.com.interfaces;
 
+import autokatta.com.response.AdminExcelSheetResponse;
+import autokatta.com.response.AdminVehiclesResponse;
 import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
@@ -509,4 +511,12 @@ public interface ServiceApi {
     Call<String> removeContactFromBlacklist(@Query("mycontact") String mycontact, @Query("contact") String contact,
                                             @Query("keyword") String keyword);
 
+    //create Excel sheet names from admin
+    @POST("getMyExcelSheetName.php")
+    Call<AdminExcelSheetResponse> _autokattaGetAdminExcelSheetNames(@Query("contact") String contact);
+
+    //get Admin vehicles
+    @POST("getVehiclesFromAdmin.php")
+    Call<AdminVehiclesResponse> _autokattaGetAdminVehicles(@Query("contact") String contact, @Query("filename") String filename,
+                                                           @Query("userid") String userid);
 }

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/editpencil"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_mode_edit_black_24dp" />
+
+        <ImageView
+            android:id="@+id/donecheck"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/check"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/auctiontitletxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="Auction Title: "
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editauctiontitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/auctiontitletxt"
+            android:layout_toStartOf="@+id/editpencil"
+            android:enabled="false"
+            android:hint="Auction Title"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/noofvehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editauctiontitle"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="No.of vehicle"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editNoOfVehicles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editauctiontitle"
+            android:layout_below="@+id/editauctiontitle"
+            android:enabled="false"
+            android:hint="No of vehicle"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/start2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editNoOfVehicles"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="Start:"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/startdate"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editNoOfVehicles"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/start2"
+            android:enabled="false"
+            android:hint="Date"
+            android:inputType="date"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/ampsine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editNoOfVehicles"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/startdate"
+            android:text="&amp;" />
+
+        <EditText
+            android:id="@+id/starttime"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editNoOfVehicles"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/ampsine"
+            android:enabled="false"
+            android:hint="Time"
+            android:inputType="time"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/end2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startdate"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="End:"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startdate"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/enddate"
+            android:text="&amp;" />
+
+        <EditText
+            android:id="@+id/endtime"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/starttime"
+            android:layout_below="@+id/startdate"
+            android:layout_toEndOf="@+id/enddate"
+            android:enabled="false"
+            android:hint="Time"
+            android:inputType="time"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/enddate"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/startdate"
+            android:layout_below="@+id/startdate"
+            android:enabled="false"
+            android:hint="Date"
+            android:inputType="date"
+            android:textSize="12sp" />
+
+        <RelativeLayout
+            android:id="@+id/spinnerrelative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enddate"
+            android:layout_marginBottom="2dp">
+
+            <Button
+                android:id="@+id/btnspecial_clauses"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/button_background"
+                android:enabled="false"
+                android:padding="3dp"
+                android:text="Special clauses"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/uploadvehicle2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonback"
+        android:gravity="center"
+        android:text="Select vehicles"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <Button
+            android:id="@+id/btnbyteam"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="24.85"
+            android:background="@drawable/buttonback"
+            android:text="By Team"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+        </View>
+
+        <Button
+            android:id="@+id/btnbyself"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="24.85"
+            android:background="@drawable/buttonback"
+            android:text="By Self"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+        </View>
+
+        <Button
+            android:id="@+id/btnbyadmin"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="24.85"
+            android:background="@drawable/buttonback"
+            android:text="By Admin"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+        </View>
+
+        <Button
+            android:id="@+id/btnbyreauction"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="24.85"
+            android:background="@drawable/buttonback"
+            android:text="Reauction"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/selectAuctionsSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/orange"
+        android:visibility="gone">
+
+    </Spinner>
+
+    <TextView
+        android:id="@+id/txtSheets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"></TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/byteam_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/buttonnext"
+            android:visibility="visible">
+
+        </ListView>
+
+        <ListView
+            android:id="@+id/byself_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/buttonnext"
+            android:visibility="gone">
+
+        </ListView>
+
+        <ListView
+            android:id="@+id/byadmin_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/buttonnext"
+            android:visibility="gone">
+
+        </ListView>
+
+        <ListView
+            android:id="@+id/reauction_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/buttonnext"
+            android:visibility="gone">
+
+        </ListView>
+
+        <Button
+            android:id="@+id/buttonnext"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button_background"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

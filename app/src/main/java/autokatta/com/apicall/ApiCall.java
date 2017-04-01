@@ -13,6 +13,8 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.AdminExcelSheetResponse;
+import autokatta.com.response.AdminVehiclesResponse;
 import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
@@ -3213,6 +3215,74 @@ remove contact from blacklist contact
         }
     }
 
+    /*
+get Admin Excel file Names for auction
+*/
+    public void ExcelSheetName(String myContact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<AdminExcelSheetResponse> adminExcelSheetNames = serviceApi._autokattaGetAdminExcelSheetNames(myContact);
+                adminExcelSheetNames.enqueue(new Callback<AdminExcelSheetResponse>() {
+                    @Override
+                    public void onResponse(Call<AdminExcelSheetResponse> call, Response<AdminExcelSheetResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AdminExcelSheetResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+get Admin Vehicles for auction
+*/
+    public void AdminVehicles(String myContact, String fileName, String userId) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<AdminVehiclesResponse> adminVehiclesResponseCall = serviceApi._autokattaGetAdminVehicles(myContact, fileName,
+                        userId);
+                adminVehiclesResponseCall.enqueue(new Callback<AdminVehiclesResponse>() {
+                    @Override
+                    public void onResponse(Call<AdminVehiclesResponse> call, Response<AdminVehiclesResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AdminVehiclesResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs
