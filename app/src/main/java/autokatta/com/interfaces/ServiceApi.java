@@ -2,6 +2,7 @@ package autokatta.com.interfaces;
 
 import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
+import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
@@ -525,4 +526,8 @@ public interface ServiceApi {
     @POST("getVehiclesFromAdmin.php")
     Call<AdminVehiclesResponse> _autokattaGetAdminVehicles(@Query("contact") String contact, @Query("filename") String filename,
                                                            @Query("userid") String userid);
+
+    //get All vehicles for Auction
+    @POST("getUploadedAndReauctionVehiclesForAuction.php")
+    Call<AuctionAllVehicleResponse> _autokattaGetAuctionAllVehicles(@Query("contact") String contact);
 }
