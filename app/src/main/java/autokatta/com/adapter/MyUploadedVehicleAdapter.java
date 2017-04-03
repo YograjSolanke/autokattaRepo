@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -206,7 +207,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     } else {
                         keyword = "start";
                         holder.btnnotify.setText("Stop Notification");
-                        holder.btnnotify.setBackgroundResource(R.drawable.button_background);
+                        holder.btnnotify.setBackgroundResource(R.drawable.buttonback);
                     }
                     apiCall.sendNotificationOfUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), keyword);
 
@@ -214,11 +215,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             }
         });
 
-//
-//        holder.vehidetails.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Bundle b = new Bundle();
+
+        holder.vehidetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle b = new Bundle();
 //                Vehical_Details frag = new Vehical_Details();
 //                b.putString("Vehical_id", obj.vehicleId);
 //                frag.setArguments(b);
@@ -228,41 +229,31 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 //                fragmentTransaction.replace(R.id.containerView, frag);
 //                fragmentTransaction.addToBackStack("vehicle_details");
 //                fragmentTransaction.commit();
-//
-//            }
-//        });
-//
-//
-//        holder.mcardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                if (holder.editleads.getText().toString().equalsIgnoreCase("0")) {
-//                    Toast.makeText(activity, "No leads found", Toast.LENGTH_SHORT).show();
-//                } else {
-//
-//                    vehicle_id = obj.vehicleId;
-//                    title = obj.vehicleTitle;
-//                    price = obj.vehiclePrice;
-//                    category = obj.vehicleCategory;
-//                    brand = obj.vehicleBrand;
-//                    model = obj.vehicleModel;
-//                    image = obj.vehicleImages;
-//                    uploaddate = holder.edituploadedon.getText().toString();
-//                    noofleads = obj.vehicelLeadsNo;
-//
-//                    Bundle b = new Bundle();
-//                    b.putString("vehicle_id", vehicle_id);
-//                    b.putString("title", title);
-//                    b.putString("price", price);
-//                    b.putString("category", category);
-//                    b.putString("brand", brand);
-//                    b.putString("model", model);
-//                    b.putString("image", image);
-//                    b.putString("uploaddate", uploaddate);
-//                    b.putString("noofleads", noofleads);
-//                    System.out.println("***************vehicle id*****In Adapter ****************" + vehicle_id);
-//
+
+            }
+        });
+
+
+        holder.mcardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (holder.editleads.getText().toString().equalsIgnoreCase("0")) {
+                    Toast.makeText(activity, "No leads found", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Bundle b = new Bundle();
+                    b.putString("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                    b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
+                    b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
+                    b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
+                    b.putString("brand", mMainList.get(holder.getAdapterPosition()).getManufacturer());
+                    b.putString("model", mMainList.get(holder.getAdapterPosition()).getModel());
+                    b.putString("image", mMainList.get(holder.getAdapterPosition()).getImages());
+                    b.putString("uploaddate", mMainList.get(holder.getAdapterPosition()).getDate());
+                    b.putString("noofleads", mMainList.get(holder.getAdapterPosition()).getBuyerLeads());
+
+
 //                    VehicleBuyerList frag = new VehicleBuyerList();
 //                    frag.setArguments(b);
 //
@@ -271,10 +262,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 //                    fragmentTransaction.replace(R.id.containerView, frag);
 //                    fragmentTransaction.addToBackStack("vehicle_buyer_list");
 //                    fragmentTransaction.commit();
-//                }
-//
-//            }
-//        });
+                }
+
+            }
+        });
 
     }
 
@@ -297,9 +288,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     public void notifyString(String str) {
         if (str != null) {
 
-            if (str.equals("Success")) {
+            if (str.equals("success")) {
                 CustomToast.customToast(activity, "vehicle deleted");
 
+            } else if (str.equals("success_notification")) {
+                CustomToast.customToast(activity, "notification sent");
             }
         }
 
