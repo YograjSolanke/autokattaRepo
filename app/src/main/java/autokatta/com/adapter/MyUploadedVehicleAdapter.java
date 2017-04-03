@@ -1,6 +1,8 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -19,21 +22,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyUploadedVehiclesResponse;
+import retrofit2.Response;
 
 /**
  * Created by ak-004 on 1/4/17.
  */
 
-public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVehicleAdapter.VehicleHolder> {
+public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVehicleAdapter.VehicleHolder> implements RequestNotifier {
 
     Activity activity;
     List<MyUploadedVehiclesResponse.Success> mMainList;
+    ConnectionDetector connectionDetector;
+    ApiCall apiCall;
 
     public MyUploadedVehicleAdapter(Activity activity, List<MyUploadedVehiclesResponse.Success> successList) {
 
         this.activity = activity;
         this.mMainList = successList;
+        connectionDetector = new ConnectionDetector(this.activity);
+        apiCall = new ApiCall(this.activity, this);
     }
 
     @Override
@@ -45,7 +57,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     }
 
     @Override
-    public void onBindViewHolder(MyUploadedVehicleAdapter.VehicleHolder holder, int position) {
+    public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, final int position) {
 
         ArrayList<String> vimages = new ArrayList<>();
 
@@ -140,75 +152,68 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        holder.delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                vehicle_id = obj.vehicleId;
-//
-//                if (!NetworkUtils.isNetworkAvailable()) {
-//                    Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
-//                } else {
-//
-//                    new AlertDialog.Builder(activity)
-//                            .setTitle("Delete?")
-//                            .setMessage("Are You Sure You Want To Delete This Store?")
-//
-//                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//
-//                                    //new deletevehicle().execute();
-//                                    try {
-//                                        deletevehicle();
-//                                    } catch (JSONException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                    vehicledata.remove(position);
-//                                    notifyDataSetChanged();
-//
-//                                }
-//                            })
-//
-//                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//
-//                                }
-//                            })
-//                            .setIcon(android.R.drawable.ic_dialog_alert)
-//                            .show();
-//                }
-//
-//
-//            }
-//        });
-//
-//
-//        holder.btnnotify.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                vehicle_id = obj.vehicleId;
-//                if (!NetworkUtils.isNetworkAvailable()) {
-//                    Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
-//
-//                } else {
-//
-//                    if (holder.btnnotify.getText().toString().equalsIgnoreCase("Stop Notification")) {
-//                        keyword = "stop";
-//                        holder.btnnotify.setText("Start Notification");
-//                        holder.btnnotify.setBackgroundResource(R.color.orange);
-//                    } else {
-//                        keyword = "start";
-//                        holder.btnnotify.setText("Stop Notification");
-//                        holder.btnnotify.setBackgroundResource(R.drawable.button_background);
-//                    }
-//                    try {
-//                        sendnotification();
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if ((!connectionDetector.isConnectedToInternet())) {
+                    Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    new AlertDialog.Builder(activity)
+                            .setTitle("Delete?")
+                            .setMessage("Are You Sure You Want To Delete This Store?")
+
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    apiCall.deleteUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), "delete");
+
+                                    mMainList.remove(holder.getAdapterPosition());
+                                    notifyDataSetChanged();
+
+                                }
+                            })
+
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+
+
+            }
+        });
+
+
+        holder.btnnotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!connectionDetector.isConnectedToInternet()) {
+                    CustomToast.customToast(activity, activity.getString(R.string.no_internet));
+
+                } else {
+                    String keyword;
+
+                    if (holder.btnnotify.getText().toString().equalsIgnoreCase("Stop Notification")) {
+                        keyword = "stop";
+                        holder.btnnotify.setText("Start Notification");
+                        holder.btnnotify.setBackgroundResource(R.color.orange);
+                    } else {
+                        keyword = "start";
+                        holder.btnnotify.setText("Stop Notification");
+                        holder.btnnotify.setBackgroundResource(R.drawable.button_background);
+                    }
+                    apiCall.sendNotificationOfUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), keyword);
+
+                }
+            }
+        });
+
 //
 //        holder.vehidetails.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -276,6 +281,28 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     @Override
     public int getItemCount() {
         return mMainList.size();
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+
+            if (str.equals("Success")) {
+                CustomToast.customToast(activity, "vehicle deleted");
+
+            }
+        }
+
     }
 
     static class VehicleHolder extends RecyclerView.ViewHolder {

@@ -530,4 +530,9 @@ public interface ServiceApi {
     //get All vehicles for Auction
     @POST("getUploadedAndReauctionVehiclesForAuction.php")
     Call<AuctionAllVehicleResponse> _autokattaGetAuctionAllVehicles(@Query("contact") String contact);
+
+
+    //send notification of upload vehicle
+    @POST("uploaded_vehicle_notification.php")
+    Call<String> sendNotificationOfUploadedVehicle(@Query("vehicle_id") String vehicle_id, @Query("keyword") String keyword);
 }
