@@ -4,6 +4,7 @@ import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionCreateResponse;
+import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
@@ -530,6 +531,11 @@ public interface ServiceApi {
     //get All vehicles for Auction
     @POST("getUploadedAndReauctionVehiclesForAuction.php")
     Call<AuctionAllVehicleResponse> _autokattaGetAuctionAllVehicles(@Query("contact") String contact);
+
+    //get All vehicles for Auction
+    @POST("getReauctionVehicleByNameAndContact.php")
+    Call<AuctionReauctionVehicleResponse> _autokattaGetReauctionedVehicle(@Query("contact") String contact,
+                                                                          @Query("auctionID") String auctionID);
 
 
     //send notification of upload vehicle

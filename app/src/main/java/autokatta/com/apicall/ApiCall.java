@@ -17,6 +17,7 @@ import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionCreateResponse;
+import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.CategoryResponse;
@@ -3356,6 +3357,39 @@ get All Vehicles for auction
         }
     }
 
+    /*
+get Reauctioned Vehicles for auction
+*/
+    public void ReauctionedVehicles(String myContact, String AuctionId) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<AuctionReauctionVehicleResponse> auctionVehiclesResponseCall = serviceApi._autokattaGetReauctionedVehicle(myContact, AuctionId);
+                auctionVehiclesResponseCall.enqueue(new Callback<AuctionReauctionVehicleResponse>() {
+                    @Override
+                    public void onResponse(Call<AuctionReauctionVehicleResponse> call, Response<AuctionReauctionVehicleResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AuctionReauctionVehicleResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /*
 send uploaded vehicle start and stop notification
