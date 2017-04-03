@@ -511,6 +511,12 @@ public interface ServiceApi {
     Call<String> removeContactFromBlacklist(@Query("mycontact") String mycontact, @Query("contact") String contact,
                                             @Query("keyword") String keyword);
 
+
+    //delete uploaded vehicle
+    @POST("deleteMyUploadedVehicles.php")
+    Call<String> deleteUploadedVehicles(@Query("vehicle_id") String vehicle_id, @Query("keyword") String keyword);
+
+
     //create Excel sheet names from admin
     @POST("getMyExcelSheetName.php")
     Call<AdminExcelSheetResponse> _autokattaGetAdminExcelSheetNames(@Query("contact") String contact);
