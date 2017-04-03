@@ -541,4 +541,14 @@ public interface ServiceApi {
     //send notification of upload vehicle
     @POST("uploaded_vehicle_notification.php")
     Call<String> sendNotificationOfUploadedVehicle(@Query("vehicle_id") String vehicle_id, @Query("keyword") String keyword);
+
+
+    //Edit Group
+    @GET("updateGroupProfile.php")
+    Call<String> editGroup(@Query("groupname") String groupname,@Query("group_id") String group_id,@Query("profile") String profile);
+
+    //Delete Group
+    @GET("deleteMyGroups.php")
+    Call<String> deleteGroup(@Query("group_id") String group_id,@Query("keyword") String keyword,@Query("contact") String contact);
+
 }
