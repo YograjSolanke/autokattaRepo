@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/auction_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/card_margin">
+
+        <ImageView
+            android:id="@+id/auctioneventimage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/auction" />
+
+        <TextView
+            android:id="@+id/auctionevent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/auctioneventimage"
+            android:text="AUCTION EVENT"
+            android:textColor="#2C3343" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:text="count"
+            android:textColor="#2C3343" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/auction_event"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:id="@+id/event_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/view1"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/horizontal_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/loan_mela_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_horizontal"
+        android:layout_marginTop="@dimen/card_margin">
+
+        <ImageView
+            android:id="@+id/loan_mela_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/loan_mela" />
+
+        <TextView
+            android:id="@+id/loan_mela"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/loan_mela_image"
+            android:text="Loan Mela"
+            android:textColor="#2C3343" />
+
+        <TextView
+            android:id="@+id/loan_mela_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:text="count"
+            android:textColor="#2C3343" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/loan_mela_layout"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:id="@+id/loan_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/view2"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/loan_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/exchange_event_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loan_horizontal"
+        android:layout_marginTop="@dimen/card_margin">
+
+        <ImageView
+            android:id="@+id/exchange_event_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/exchange_event" />
+
+        <TextView
+            android:id="@+id/exchange_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/exchange_event_image"
+            android:text="Exchange Event"
+            android:textColor="#2C3343" />
+
+        <TextView
+            android:id="@+id/exchange_event_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:text="count"
+            android:textColor="#2C3343" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/exchange_event_layout"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:id="@+id/exchange_event_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/view3"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/exchange_event_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>

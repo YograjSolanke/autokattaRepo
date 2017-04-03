@@ -134,4 +134,9 @@
     <string name="title_activity_group_tabs">GroupTabs</string>
     <string name="title_activity_vehicle_details">VehicleDetails</string>
     <string name="title_activity_other_profile">OtherProfile</string>
+
+    <!--Status -->
+    <string name="likes">Likes</string>
+    <string name="share">Share</string>
+    <string name="follower">Followers</string>
 </resources>

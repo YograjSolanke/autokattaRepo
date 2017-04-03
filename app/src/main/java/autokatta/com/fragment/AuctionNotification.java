@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import autokatta.com.R;
-import autokatta.com.adapter.TabAdapter;
+import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.auction.GoingFragment;
+import autokatta.com.auction.LiveFragment;
+import autokatta.com.auction.UpComingFragment;
 
 /**
  * Created by ak-001 on 17/3/17.
@@ -18,6 +21,7 @@ import autokatta.com.adapter.TabAdapter;
 
 public class AuctionNotification extends Fragment {
     View mAuctionNotification;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,17 +34,14 @@ public class AuctionNotification extends Fragment {
 
         TabLayout tabLayout = (TabLayout) mAuctionNotification.findViewById(R.id.auction_tab);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
-        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);
         return mAuctionNotification;
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        TabAdapter adapter = new TabAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new WallNotificationFragment());
-        adapter.addFragment(new SocialFragment());
-        adapter.addFragment(new UpdatesFragment());
+        TabAdapterName adapter = new TabAdapterName(getActivity().getSupportFragmentManager());
+        adapter.addFragment(new LiveFragment(), "LIVE");
+        adapter.addFragment(new GoingFragment(), "GOING");
+        adapter.addFragment(new UpComingFragment(), "UPCOMING");
         viewPager.setAdapter(adapter);
     }
 

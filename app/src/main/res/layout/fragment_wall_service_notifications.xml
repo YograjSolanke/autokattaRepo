@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/pro_pic"
+                        android:id="@+id/service_pro_pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -47,7 +47,7 @@
                     android:layout_toEndOf="@+id/relImg">
 
                     <TextView
-                        android:id="@+id/names"
+                        android:id="@+id/service_action_names"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -56,10 +56,10 @@
                         android:textColor="#2C3343" />
 
                     <TextView
-                        android:id="@+id/contact"
+                        android:id="@+id/service_action_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/names"
+                        android:layout_below="@+id/service_action_names"
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
@@ -73,7 +73,7 @@
                     android:layout_toEndOf="@+id/relContact">
 
                     <ImageButton
-                        android:id="@+id/vehicle_favourite"
+                        android:id="@+id/service_favourite"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="@dimen/cards_button_width"
                         android:layout_height="@dimen/card_title_height"
@@ -85,12 +85,12 @@
 
 
                     <RatingBar
-                        android:id="@+id/ratingbar"
+                        android:id="@+id/service_rating"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/vehicle_favourite"
+                        android:layout_below="@+id/service_favourite"
                         android:numStars="5"
                         android:stepSize="1.0"
                         android:theme="@style/RatingBar" />
@@ -108,7 +108,7 @@
                 android:background="#cccccc" />
 
             <ImageView
-                android:id="@+id/card_image"
+                android:id="@+id/service_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_image_height"
                 android:layout_below="@+id/view1"
@@ -117,10 +117,10 @@
                 tools:src="@mipmap/demo" />
 
             <TextView
-                android:id="@+id/store_name"
+                android:id="@+id/service_title"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_title_height"
-                android:layout_alignBottom="@+id/card_image"
+                android:layout_alignBottom="@+id/service_image"
                 android:layout_marginStart="@dimen/fab_margin"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"
@@ -131,7 +131,7 @@
                 android:id="@+id/linear_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/store_name"
+                android:layout_below="@+id/service_title"
                 android:orientation="vertical">
 
                 <RelativeLayout

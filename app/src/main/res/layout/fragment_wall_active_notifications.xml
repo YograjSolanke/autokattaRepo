@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/pro_pic"
+                        android:id="@+id/auction_pro_pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -46,7 +46,7 @@
                     android:layout_toEndOf="@+id/relImg">
 
                     <TextView
-                        android:id="@+id/names"
+                        android:id="@+id/auction_action_names"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -55,10 +55,10 @@
                         android:textColor="#2C3343" />
 
                     <TextView
-                        android:id="@+id/contact"
+                        android:id="@+id/auction_action_times"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/names"
+                        android:layout_below="@+id/auction_action_names"
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
@@ -72,7 +72,7 @@
                     android:layout_toEndOf="@+id/relContact">
 
                     <ImageButton
-                        android:id="@+id/vehicle_favourite"
+                        android:id="@+id/auction_favourite"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="@dimen/cards_button_width"
                         android:layout_height="@dimen/card_title_height"
@@ -213,7 +213,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/search_year"
+                        android:id="@+id/auction_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/type"

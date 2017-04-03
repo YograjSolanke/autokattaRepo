@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/auction_card_view"
+        android:id="@+id/share_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/pro_pic"
+                        android:id="@+id/share_pro_pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -46,7 +46,7 @@
                     android:layout_toEndOf="@+id/relImg">
 
                     <TextView
-                        android:id="@+id/names"
+                        android:id="@+id/share_action_names"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -55,10 +55,10 @@
                         android:textColor="#2C3343" />
 
                     <TextView
-                        android:id="@+id/contact"
+                        android:id="@+id/share_action_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/names"
+                        android:layout_below="@+id/share_action_names"
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
@@ -72,7 +72,7 @@
                     android:layout_toEndOf="@+id/relContact">
 
                     <ImageButton
-                        android:id="@+id/vehicle_favourite"
+                        android:id="@+id/share_favourite"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="@dimen/cards_button_width"
                         android:layout_height="@dimen/card_title_height"
@@ -107,7 +107,7 @@
                     android:id="@+id/profilerel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:id="@+id/profilenamerel"
@@ -123,7 +123,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/username"
+                            android:id="@+id/share_profile_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/profilenametxt"
@@ -147,7 +147,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/profilelocation"
+                            android:id="@+id/share_profilelocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/profiletypetxt"
@@ -171,7 +171,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/profileworkat"
+                            android:id="@+id/share_profileworkat"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/profilelocationtxt"
@@ -195,7 +195,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/profilewebsite"
+                            android:id="@+id/share_profilewebsite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/profilewebsitetxt"
@@ -211,7 +211,7 @@
                     android:id="@+id/storerel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:id="@+id/storenamerel"
@@ -228,7 +228,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/storename"
+                            android:id="@+id/share_storename"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/storenametxt"
@@ -253,7 +253,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/storetype"
+                            android:id="@+id/share_storetype"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/storetypetxt"
@@ -277,7 +277,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/location"
+                            android:id="@+id/share_location"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/storelocationtxt"
@@ -301,7 +301,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/website"
+                            android:id="@+id/share_website"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/storewebsitetxt"
@@ -325,7 +325,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/timing"
+                            android:id="@+id/share_timing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/storetimetxt"
@@ -349,7 +349,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/workday"
+                            android:id="@+id/share_workday"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/storeworkdaytxt"
@@ -366,7 +366,7 @@
                     android:id="@+id/productrel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:id="@+id/productnamerel"
@@ -383,7 +383,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/productname"
+                            android:id="@+id/share_productname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/productnametxt"
@@ -407,7 +407,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/producttype"
+                            android:id="@+id/share_producttype"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/producttypetxt"
@@ -422,7 +422,7 @@
                     android:id="@+id/servicerel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:id="@+id/servicenamerel"
@@ -439,7 +439,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/servicename"
+                            android:id="@+id/share_servicename"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/servicenametxt"
@@ -463,7 +463,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/servicetype"
+                            android:id="@+id/share_servicetype"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/servicetypetxt"
@@ -479,7 +479,7 @@
                     android:id="@+id/vehiclerel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:id="@+id/vehiclenamerel"
@@ -496,7 +496,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/title"
+                            android:id="@+id/share_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/vehiclenametxt"
@@ -520,7 +520,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/price"
+                            android:id="@+id/share_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/pricetxt"
@@ -544,7 +544,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/brand"
+                            android:id="@+id/share_brand"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/brandtxt"
@@ -568,7 +568,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/model"
+                            android:id="@+id/share_model"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/modeltxt"
@@ -592,7 +592,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/year"
+                            android:id="@+id/share_year"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/yeartxt"
@@ -616,7 +616,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/km_hrs"
+                            android:id="@+id/share_km_hrs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/kmtxt"
@@ -640,7 +640,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/RTO"
+                            android:id="@+id/share_RTO"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/RTOtxt"
@@ -664,7 +664,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/registrationNo"
+                            android:id="@+id/share_registrationNo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/regtxt"
@@ -688,7 +688,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/vehilocation"
+                            android:id="@+id/share_vehilocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/locationtxt"
@@ -705,7 +705,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -717,7 +717,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/mysearch_category"
+                        android:id="@+id/share_mysearch_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
@@ -737,7 +737,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/mysearch_brand"
+                        android:id="@+id/share_mysearch_brand"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/textView3"
@@ -757,7 +757,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/mysearch_model"
+                        android:id="@+id/share_mysearch_model"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/textView5"
@@ -777,7 +777,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/mysearch_price"
+                        android:id="@+id/share_mysearch_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/textView6"
@@ -797,7 +797,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/mysearch_year"
+                        android:id="@+id/share_mysearch_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/textView7"
@@ -817,7 +817,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/searchdate"
+                        android:id="@+id/share_searchdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/textView8"
@@ -830,7 +830,7 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_below="@+id/searchdate"
+                        android:layout_below="@+id/share_searchdate"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dip"
                         android:text="Search Leads :"
@@ -838,7 +838,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/buyerleads"
+                        android:id="@+id/share_buyerleads"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/textView9"
@@ -855,7 +855,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:id="@+id/auctitletext"
@@ -867,7 +867,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/auc_name"
+                        android:id="@+id/share_auc_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
@@ -888,7 +888,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/auc_noofvehicle"
+                        android:id="@+id/share_auc_noofvehicle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/vehiclenotext"
@@ -903,13 +903,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/vehiclenotext"
-                        android:layout_marginStart="5dp"
                         android:text="End Date :"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/auc_enddate"
+                        android:id="@+id/share_auc_enddate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/enddatetext"
@@ -929,7 +928,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/auc_endtime"
+                        android:id="@+id/share_auc_endtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/endtimetext"
@@ -950,7 +949,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/auc_type"
+                        android:id="@+id/share_auc_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/typetext"
@@ -975,7 +974,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/going_cnt"
+                            android:id="@+id/share_going_cnt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@+id/goingtext"
@@ -1002,7 +1001,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/ignore_cnt"
+                            android:id="@+id/share_ignore_cnt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@+id/ignoretext"
@@ -1019,10 +1018,10 @@
                     android:id="@+id/postrel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
-                        android:id="@+id/statustxt"
+                        android:id="@+id/share_statustxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"

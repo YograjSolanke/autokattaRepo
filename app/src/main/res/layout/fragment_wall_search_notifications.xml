@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/pro_pic"
+                        android:id="@+id/search_pro_pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -46,7 +46,7 @@
                     android:layout_toEndOf="@+id/relImg">
 
                     <TextView
-                        android:id="@+id/names"
+                        android:id="@+id/search_action_names"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -55,10 +55,10 @@
                         android:textColor="#2C3343" />
 
                     <TextView
-                        android:id="@+id/contact"
+                        android:id="@+id/search_action_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/names"
+                        android:layout_below="@+id/search_action_names"
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
@@ -247,7 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/leads"
-                        android:hint="brand"
+                        android:hint="leads"
                         android:textColor="#808080" />
 
                 </RelativeLayout>

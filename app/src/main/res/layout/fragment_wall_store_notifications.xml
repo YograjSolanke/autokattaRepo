@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+        android:id="@+id/store_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/pro_pic"
+                        android:id="@+id/store_pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -47,7 +47,7 @@
                     android:layout_toEndOf="@+id/relImg">
 
                     <TextView
-                        android:id="@+id/names"
+                        android:id="@+id/store_action_names"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -56,10 +56,10 @@
                         android:textColor="#2C3343" />
 
                     <TextView
-                        android:id="@+id/contact"
+                        android:id="@+id/store_action_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/names"
+                        android:layout_below="@+id/store_action_names"
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
@@ -84,7 +84,7 @@
                         app:srcCompat="@android:drawable/ic_menu_call" />
 
                     <RatingBar
-                        android:id="@+id/ratingbar"
+                        android:id="@+id/store_rating"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                 android:background="#cccccc" />
 
             <ImageView
-                android:id="@+id/card_image"
+                android:id="@+id/store_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_image_height"
                 android:layout_below="@+id/view1"
@@ -119,7 +119,7 @@
                 android:id="@+id/store_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_title_height"
-                android:layout_alignBottom="@+id/card_image"
+                android:layout_alignBottom="@+id/store_image"
                 android:layout_marginStart="@dimen/fab_margin"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"
@@ -148,7 +148,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/username"
+                        android:id="@+id/store_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storenametxt"
@@ -172,7 +172,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/profileworkat"
+                        android:id="@+id/store_workat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storelocationtxt"
@@ -196,7 +196,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/profilewebsite"
+                        android:id="@+id/store_website"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storewebsitetxt"
@@ -245,7 +245,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/working_day"
+                        android:id="@+id/store_working_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/workingDay"
@@ -269,7 +269,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/profilelocation"
+                        android:id="@+id/store_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storetypetxt"
