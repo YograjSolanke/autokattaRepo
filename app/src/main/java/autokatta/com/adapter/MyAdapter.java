@@ -2,16 +2,22 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -20,20 +26,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.fragment.GroupEditFragment;
 import autokatta.com.fragment.GroupNextTabFragment;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+
 
 /**
  * Created by ak-001 on 24/3/17.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements RequestNotifier {
+ApiCall mApiCall;
     private Activity mActivity;
     Context mContext;
     private List<ModelGroups> mItemList = new ArrayList<>();
-    String GroupType;
+    String GroupType, keyword, mGroupid,mGroupName,mGroupImage;
+ String mycontact="8007855589";
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -54,6 +69,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             mGroupIcon = (ImageView) itemView.findViewById(R.id.group_icon);
             mGroupEdit = (ImageView) itemView.findViewById(R.id.group_edit);
             mGroupDelete = (ImageView) itemView.findViewById(R.id.group_delete);
+
         }
     }
 
@@ -82,22 +98,79 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(MyAdapter.MyViewHolder holder, final int position) {
         holder.mGroupTitleID.setText(mItemList.get(position).getTitle());
         holder.mEditMemberCount.setText(mItemList.get(position).getGroupCount());
+
+
+        holder.mGroupEdit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGroupid = mItemList.get(position).getId();
+                mGroupName=mItemList.get(position).getTitle();
+                mGroupImage=mItemList.get(position).getImage();
+
+                GroupEditFragment frag = new GroupEditFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("bundle_id", mGroupid);
+                bundle.putString("bundle_name", mGroupName);
+                bundle.putString("bundle_image", mGroupImage);
+                Log.i("value","->"+mGroupid+"grpname"+mGroupName+"grp img"+mGroupImage);
+                frag.setArguments(bundle);
+
+                FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
+                FragmentTransaction mTransaction = fragmentManager.beginTransaction();
+                mTransaction.replace(R.id.group_container, frag).commit();
+
+            }
+        });
+        mApiCall=new ApiCall(mActivity,this);
+
+        holder.mGroupDelete.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGroupid = mItemList.get(position).getId();
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Delete")
+                        .setMessage("Are you sure you want to delete this Group?")
+
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+//                                groups = obj.groupId;
+                                keyword = "delete";
+                                //new DeleteGroup().execute();
+                                mApiCall.deleteGroup( mGroupid, keyword,mycontact);
+//                                grouplist.remove(position);
+//                                notifyDataSetChanged();
+                            }
+                        })
+
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+            }
+
+        });
+        //holder.mGroupEdit.setOnClickListener(this);
 //        holder.mEditVehicleCount.setText(mItemList.get(position).getVehicleCount());
 
         /***Card Click Listener***/
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
-                        .putString("group_id", mItemList.get(position).getId()).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
+                        .putString("group_id", mGroupid).apply();
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
                         .putString("group_type", GroupType).apply();
                 FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
                 FragmentTransaction mTransaction = fragmentManager.beginTransaction();
                 mTransaction.replace(R.id.group_container, new GroupNextTabFragment()).commit();
             }
         });
-
         if (GroupType.equals("JoinedGroups")) {
             holder.mGroupEdit.setVisibility(View.GONE);
             holder.mGroupDelete.setVisibility(View.GONE);
@@ -118,8 +191,54 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
+    public int getCount() {
+        return mItemList.size();
+    }
+
+//
+
+    public Object getItem(int position) {
+        return position;
+    }
+
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
     @Override
     public int getItemCount() {
         return mItemList.size();
     }
+
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != "") {
+            if (str.equals("success")) {
+                CustomToast.customToast(mContext, "Group Deleted Successfuly !!!");
+            } else {
+                CustomToast.customToast(mContext, "Group Not Deleted !!!");
+
+            }
+        } else {
+            Toast.makeText(mContext, mContext.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
 }
