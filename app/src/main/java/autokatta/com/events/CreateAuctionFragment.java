@@ -9,6 +9,9 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -352,13 +355,13 @@ public class CreateAuctionFragment extends Fragment
     }
 
     @Override
-    public void notifySuccess(Response<?> response) {
+    public void notifySuccess(final Response<?> response) {
 
         if (response != null) {
             if (response.isSuccessful()) {
 
                 /*
-                        Response to get category
+                        AuctionAllVehicleData to get category
                  */
                 if (response.body() instanceof SpecialClauseGetResponse) {
                     SpecialClauseGetResponse moduleResponse = (SpecialClauseGetResponse) response.body();
@@ -390,9 +393,59 @@ public class CreateAuctionFragment extends Fragment
                 } else if (response.body() instanceof AuctionCreateResponse) {
                     AuctionCreateResponse createResponse = (AuctionCreateResponse) response.body();
                     if (createResponse.getSuccess() != null) {
-                        String id = createResponse.getSuccess().getAuctionID().toString();
-                        Log.i("AuctId", "->" + id);
+                        final String Aucid = createResponse.getSuccess().getAuctionID().toString();
+                        Log.i("AuctId", "->" + Aucid);
                         CustomToast.customToast(getActivity(), "Auction Created Successfully");
+
+                        if (!Aucid.equals("")) {
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                    getActivity());
+
+                            alertDialogBuilder
+                                    .setMessage("Do you want to upload vehicle(s)?")
+                                    .setCancelable(false)
+                                    .setPositiveButton("Now", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                            Bundle b = new Bundle();
+
+                                            b.putString("auction_id", Aucid);
+                                            b.putString("title", name);
+                                            b.putString("startdate", stdate);
+                                            b.putString("starttime", sttime);
+                                            b.putString("enddate", eddate);
+                                            b.putString("endtime", edtime);
+                                            b.putString("cluase", cluases);
+                                            b.putString("ids", ids);
+                                            b.putString("cluases", cluases);
+                                            b.putBooleanArray("positionArray", positionArray);
+
+                                            AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();
+
+                                            frag.setArguments(b);
+                                            FragmentManager fragmentManager = getFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                            fragmentTransaction.replace(R.id.createEventFrame, frag);
+                                            fragmentTransaction.addToBackStack("AddVehiclesForAuction");
+                                            fragmentTransaction.commit();
+
+                                        }
+                                    })
+                                    .setNegativeButton("Later", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                            Toast.makeText(getActivity(), "Auction saved in my saved event", Toast.LENGTH_LONG).show();
+
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            // create alert dialog
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+
+                            alertDialog.show();
+                        }
+
 
                     }
 

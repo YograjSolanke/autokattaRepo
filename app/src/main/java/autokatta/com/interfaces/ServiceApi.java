@@ -21,6 +21,7 @@ import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
+import autokatta.com.response.GetLiveEventsResponse;
 import autokatta.com.response.GetMyUploadedVehicleResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
@@ -551,11 +552,15 @@ public interface ServiceApi {
     @GET("deleteMyGroups.php")
     Call<String> deleteGroup(@Query("group_id") String group_id,@Query("keyword") String keyword,@Query("contact") String contact);
 
-    //Update Auction
-    @GET("UpdateAuctionCreation.php")
-    Call<String> _autokattaUpdateAuctionCreation(@Query("auction_id") String auction_id, @Query("title") String title,
-                                                 @Query("start_date") String start_date, @Query("start_time") String start_time,
-                                                 @Query("end_date") String end_date, @Query("end_time") String end_time,
-                                                 @Query("special_clauses") String special_clauses);
+    //All Live Events
+    @GET("getAllLiveEvents.php")
+    Call<GetLiveEventsResponse> getLiveEvents(@Query("contact") String userName);
+
+    //All Live Loan Events...
+
+
+    //delete my search item
+    @GET("deleteUpdateMysearch.php")
+    Call<String> deleteMySearch(@Query("search_id") String search_id, @Query("keyword") String keyword);
 
 }

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayoutself1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayoutself2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <!--<TextView-->
+        <!--android:id="@+id/tv"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/byselfimage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/checkbox"
+            android:layout_toRightOf="@+id/checkbox"
+            android:background="@drawable/vehiimg" />
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutself3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/byselftitle"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehicletitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselftitle"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutself3"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/byselfcategory"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehiclecategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselfcategory"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutbrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutcategory"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage">
+
+            <TextView
+                android:id="@+id/byselfbrand"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="Brand"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehiclebrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselfbrand"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutself4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutbrand"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage">
+
+            <TextView
+                android:id="@+id/byselfmodel"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="Model"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehiclemodel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselfmodel"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutself5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutself4"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage">
+
+            <TextView
+                android:id="@+id/byselfrtocity"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="City"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehiclertocity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselfrtocity"
+                android:text="- "
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutself6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutself5"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage">
+
+            <TextView
+                android:id="@+id/byselfcolor"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="Color"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehiclecolor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselfcolor"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutself7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutself6"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage">
+
+            <TextView
+                android:id="@+id/byselfreg"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:text="Reg. No"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehiclereg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselfreg"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutself8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutself7"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage">
+
+            <TextView
+                android:id="@+id/byselfrepo"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Repo Date"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehiclerepo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselfrepo"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutself9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutself8"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage">
+
+            <TextView
+                android:id="@+id/byselfyard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yard rent per day "
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehicleyard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/byselfyard"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutself10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RelativeLayoutself9"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/byselfimage">
+
+            <TextView
+                android:id="@+id/manufactureyeartext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manufacture Year"
+                android:textColor="#848484"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehicle_manu_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/manufactureyeartext"
+                android:text="-"
+                android:textColor="#848484"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -33,6 +33,7 @@ import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
+import autokatta.com.response.GetLiveEventsResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
@@ -277,7 +278,7 @@ public class ApiCall {
                 groupResponseCall.enqueue(new Callback<ProfileGroupResponse>() {
                     @Override
                     public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
-                        Log.i("AuctionAllVehicleData", "Groups->" + response);
+                        Log.i("Response", "Groups->" + response);
                         mNotifier.notifySuccess(response);
                     }
 
@@ -312,7 +313,7 @@ public class ApiCall {
                 storeResponseCall.enqueue(new Callback<MyStoreResponse>() {
                     @Override
                     public void onResponse(Call<MyStoreResponse> call, Response<MyStoreResponse> response) {
-                        Log.i("AuctionAllVehicleData", "Store->" + response);
+                        Log.i("Response", "Store->" + response);
                         mNotifier.notifySuccess(response);
                     }
 
@@ -574,7 +575,7 @@ public class ApiCall {
                 otpResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Log.i("AuctionAllVehicleData", "OTP->" + response);
+                        Log.i("Response", "OTP->" + response);
                         mNotifier.notifyString(response.body());
                     }
 
@@ -615,7 +616,7 @@ public class ApiCall {
                 afterOtpRegistrationResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Log.i("AuctionAllVehicleData", "Registration->" + response);
+                        Log.i("Response", "Registration->" + response);
                         mNotifier.notifyString(response.body());
                     }
 
@@ -1052,7 +1053,7 @@ public class ApiCall {
     }
 
     /*
-    Get Vehicle Type AuctionAllVehicleData...
+    Get Vehicle Type Response...
      */
 
     public void getVehicleSubtype(String vehicleId) {
@@ -3358,8 +3359,8 @@ get All Vehicles for auction
     }
 
     /*
-get Reauctioned Vehicles for auction
-*/
+     get Reauctioned Vehicles for auction
+    */
     public void ReauctionedVehicles(String myContact, String AuctionId) {
 
         try {
@@ -3392,8 +3393,8 @@ get Reauctioned Vehicles for auction
     }
 
     /*
-send uploaded vehicle start and stop notification
-*/
+    send uploaded vehicle start and stop notification
+    */
     public void sendNotificationOfUploadedVehicle(String vehicle_id, String keyword) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
@@ -3465,8 +3466,8 @@ send uploaded vehicle start and stop notification
 
 
     /*
-Edit Group
-*/
+     Edit Group
+    */
     public void editGroup(String groupname, String group_id, String profile) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
@@ -3501,25 +3502,61 @@ Edit Group
     }
 
     /*
-        Update Auction data
-    */
-    public void UpdateAuction(String auction_id, String auctionTitleUpdate, String startDateUpdate, String startTimeUpdate,
-                              String endDateUpdate, String endTimeUpdate, String specialClausesIDUpdate) {
-        //JSON to Gson conversion
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+    Get All Live Events...
+     */
+    public void getLiveAuctionEvents(String userName) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetLiveEventsResponse> mLiveEvents = serviceApi.getLiveEvents(userName);
+                mLiveEvents.enqueue(new Callback<GetLiveEventsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetLiveEventsResponse> call, Response<GetLiveEventsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetLiveEventsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+      /*
+       Follow
+     */
+
+    public void deleteMySearch(String search_id, String keyword) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .client(initLog().build())
                         .build();
+
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateAuction = serviceApi._autokattaUpdateAuctionCreation(auction_id, auctionTitleUpdate, startDateUpdate,
-                        startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesIDUpdate);
-                mUpdateAuction.enqueue(new Callback<String>() {
+                Call<String> mFollowResponse = serviceApi.deleteMySearch(search_id, keyword);
+                mFollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         mNotifier.notifyString(response.body());
@@ -3530,7 +3567,6 @@ Edit Group
                         mNotifier.notifyError(t);
                     }
                 });
-
             } else
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
         } catch (Exception e) {
@@ -3552,6 +3588,5 @@ Edit Group
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
-
 
 }
