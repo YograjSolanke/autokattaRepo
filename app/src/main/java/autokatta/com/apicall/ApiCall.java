@@ -277,7 +277,7 @@ public class ApiCall {
                 groupResponseCall.enqueue(new Callback<ProfileGroupResponse>() {
                     @Override
                     public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
-                        Log.i("Response", "Groups->" + response);
+                        Log.i("AuctionAllVehicleData", "Groups->" + response);
                         mNotifier.notifySuccess(response);
                     }
 
@@ -312,7 +312,7 @@ public class ApiCall {
                 storeResponseCall.enqueue(new Callback<MyStoreResponse>() {
                     @Override
                     public void onResponse(Call<MyStoreResponse> call, Response<MyStoreResponse> response) {
-                        Log.i("Response", "Store->" + response);
+                        Log.i("AuctionAllVehicleData", "Store->" + response);
                         mNotifier.notifySuccess(response);
                     }
 
@@ -574,7 +574,7 @@ public class ApiCall {
                 otpResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Log.i("Response", "OTP->" + response);
+                        Log.i("AuctionAllVehicleData", "OTP->" + response);
                         mNotifier.notifyString(response.body());
                     }
 
@@ -615,7 +615,7 @@ public class ApiCall {
                 afterOtpRegistrationResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        Log.i("Response", "Registration->" + response);
+                        Log.i("AuctionAllVehicleData", "Registration->" + response);
                         mNotifier.notifyString(response.body());
                     }
 
@@ -1052,7 +1052,7 @@ public class ApiCall {
     }
 
     /*
-    Get Vehicle Type Response...
+    Get Vehicle Type AuctionAllVehicleData...
      */
 
     public void getVehicleSubtype(String vehicleId) {
@@ -3426,10 +3426,11 @@ send uploaded vehicle start and stop notification
             e.printStackTrace();
         }
     }
+
     /*
    Delete Group
    */
-    public void deleteGroup(String group_id, String keyword,String contact) {
+    public void deleteGroup(String group_id, String keyword, String contact) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -3442,7 +3443,7 @@ send uploaded vehicle start and stop notification
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi.deleteGroup(group_id, keyword,contact);
+                Call<String> mUpdateRegistration = serviceApi.deleteGroup(group_id, keyword, contact);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3466,7 +3467,7 @@ send uploaded vehicle start and stop notification
     /*
 Edit Group
 */
-    public void editGroup(String groupname, String group_id,String profile) {
+    public void editGroup(String groupname, String group_id, String profile) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -3479,7 +3480,7 @@ Edit Group
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi.editGroup(groupname, group_id,profile);
+                Call<String> mUpdateRegistration = serviceApi.editGroup(groupname, group_id, profile);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3499,7 +3500,43 @@ Edit Group
         }
     }
 
+    /*
+        Update Auction data
+    */
+    public void UpdateAuction(String auction_id, String auctionTitleUpdate, String startDateUpdate, String startTimeUpdate,
+                              String endDateUpdate, String endTimeUpdate, String specialClausesIDUpdate) {
+        //JSON to Gson conversion
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mUpdateAuction = serviceApi._autokattaUpdateAuctionCreation(auction_id, auctionTitleUpdate, startDateUpdate,
+                        startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesIDUpdate);
+                mUpdateAuction.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
 
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /***
@@ -3515,5 +3552,6 @@ Edit Group
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
 
 }

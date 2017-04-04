@@ -440,10 +440,10 @@ public class AuctionAllVehicleResponse {
             private String model;
             @SerializedName("version")
             @Expose
-            private Object version;
+            private String version;
             @SerializedName("rto_city")
             @Expose
-            private Object rtoCity;
+            private String rtoCity;
             @SerializedName("location_city")
             @Expose
             private String locationCity;
@@ -530,19 +530,19 @@ public class AuctionAllVehicleResponse {
                 this.model = model;
             }
 
-            public Object getVersion() {
+            public String getVersion() {
                 return version;
             }
 
-            public void setVersion(Object version) {
+            public void setVersion(String version) {
                 this.version = version;
             }
 
-            public Object getRtoCity() {
+            public String getRtoCity() {
                 return rtoCity;
             }
 
-            public void setRtoCity(Object rtoCity) {
+            public void setRtoCity(String rtoCity) {
                 this.rtoCity = rtoCity;
             }
 
