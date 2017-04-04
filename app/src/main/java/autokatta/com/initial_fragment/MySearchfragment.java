@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.MySearchAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -106,8 +107,11 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
 
                         mySearchResponseList.add(mySearchSuccess);
                     }
-                    Log.i("size", String.valueOf(mySearchResponseList.size()));
+                    Log.i("sizeS", String.valueOf(mySearchResponseList.size()));
                     mSwipeRefreshLayout.setRefreshing(false);
+                    MySearchAdapter adapter = new MySearchAdapter(getActivity(), mySearchResponseList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 }
 

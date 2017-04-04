@@ -305,7 +305,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:text="Start Notification"
-                    android:background="@drawable/buttonback"
+                    android:background="@drawable/orange_back"
                     android:textColor="@color/black"
                     android:textAllCaps="false"
                     android:padding="5dp"

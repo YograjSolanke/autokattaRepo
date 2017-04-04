@@ -27,6 +27,7 @@ import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.other.SessionManagement;
 import autokatta.com.view.BlackListedMemberActivity;
+import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.Create_Event;
 import autokatta.com.view.GroupTabs;
 import autokatta.com.view.MyActiveEventsTabActivity;
@@ -151,6 +152,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.my_store) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyStoreListActivity.class));
                         } else if (menuItem.getItemId() == R.id.browse_store) {
+                            startActivity(new Intent(AutokattaMainActivity.this, BrowseStoreActivity.class));
                         } else if (menuItem.getItemId() == R.id.search_store) {
                             startActivity(new Intent(AutokattaMainActivity.this, SearchStoreActivity.class));
                         } else if (menuItem.getItemId() == R.id.upload_vehicle) {
