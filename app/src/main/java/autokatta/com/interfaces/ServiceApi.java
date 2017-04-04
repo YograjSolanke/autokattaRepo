@@ -557,4 +557,10 @@ public interface ServiceApi {
     Call<GetLiveEventsResponse> getLiveEvents(@Query("contact") String userName);
 
     //All Live Loan Events...
+
+
+    //delete my search item
+    @GET("deleteUpdateMysearch.php")
+    Call<String> deleteMySearch(@Query("search_id") String search_id, @Query("keyword") String keyword);
+
 }
