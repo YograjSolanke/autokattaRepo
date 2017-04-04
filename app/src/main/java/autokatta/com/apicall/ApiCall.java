@@ -3574,6 +3574,44 @@ get All Vehicles for auction
         }
     }
 
+    /*
+        Update Auction data
+    */
+    public void UpdateAuction(String auction_id, String auctionTitleUpdate, String startDateUpdate, String startTimeUpdate,
+                              String endDateUpdate, String endTimeUpdate, String specialClausesIDUpdate) {
+        //JSON to Gson conversion
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mUpdateAuction = serviceApi._autokattaUpdateAuctionCreation(auction_id, auctionTitleUpdate, startDateUpdate,
+                        startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesIDUpdate);
+                mUpdateAuction.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs

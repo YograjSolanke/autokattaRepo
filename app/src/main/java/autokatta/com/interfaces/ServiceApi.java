@@ -563,4 +563,11 @@ public interface ServiceApi {
     @GET("deleteUpdateMysearch.php")
     Call<String> deleteMySearch(@Query("search_id") String search_id, @Query("keyword") String keyword);
 
+    //Update Auction
+    @GET("UpdateAuctionCreation.php")
+    Call<String> _autokattaUpdateAuctionCreation(@Query("auction_id") String auction_id, @Query("title") String title,
+                                                 @Query("start_date") String start_date, @Query("start_time") String start_time,
+                                                 @Query("end_date") String end_date, @Query("end_time") String end_time,
+                                                 @Query("special_clauses") String special_clauses);
+
 }
