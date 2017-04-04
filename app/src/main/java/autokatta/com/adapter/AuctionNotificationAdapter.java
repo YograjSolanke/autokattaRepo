@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -24,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import autokatta.com.R;
+import autokatta.com.containers.AuctionContainer;
 import autokatta.com.response.GetLiveEventsResponse;
 
 /**
@@ -168,6 +170,14 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                         dialog.dismiss();
                     }
                 }).show();
+            }
+        });
+
+        //preview...
+        holder.mAuctionPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.startActivity(new Intent(mActivity, AuctionContainer.class));
             }
         });
     }

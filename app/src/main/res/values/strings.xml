@@ -139,4 +139,5 @@
     <string name="likes">Likes</string>
     <string name="share">Share</string>
     <string name="follower">Followers</string>
+    <string name="title_activity_auction_container">AuctionContainer</string>
 </resources>
