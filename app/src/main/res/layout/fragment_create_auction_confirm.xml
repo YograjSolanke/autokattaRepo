@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/IV2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_mode_edit_black_24dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/auctiontitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="Auction Title: "
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/typeofauction2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/auctiontitle2"
+            android:layout_toStartOf="@+id/IV2"
+            android:enabled="false"
+            android:hint="Type of Auction"
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/noofvehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/typeofauction2"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="No.of vehicle"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editvehicle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/typeofauction2"
+            android:layout_below="@+id/typeofauction2"
+            android:enabled="false"
+            android:hint="No of vehicle"
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/start2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editvehicle"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="Start:"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/startdate"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editvehicle"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/start2"
+            android:enabled="false"
+            android:hint="Date"
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/ampsine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editvehicle"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/startdate"
+            android:text="&amp;"
+            android:textColor="#808080" />
+
+        <EditText
+            android:id="@+id/stattime"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editvehicle"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/ampsine"
+            android:enabled="false"
+            android:hint="Time"
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/end2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/start2"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="End:"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/start2"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/enddate"
+            android:text="&amp;"
+            android:textColor="#808080" />
+
+        <EditText
+            android:id="@+id/endtime"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/stattime"
+            android:layout_below="@+id/start2"
+            android:layout_toEndOf="@+id/enddate"
+            android:enabled="false"
+            android:hint="Time"
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/enddate"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/startdate"
+            android:layout_below="@+id/start2"
+            android:enabled="false"
+            android:hint="Date"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:id="@+id/spinnerrelative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/enddate"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/btnspecial_clauses"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/button_background"
+                android:text="Special clauses"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/upload"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/main"
+        android:layout_marginTop="4dp"
+        android:background="#2C3343">
+
+        <TextView
+            android:id="@+id/uploadvehicle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Confirm vehicles"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/upload"
+        android:layout_marginBottom="5dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Do you want show start price?"
+            android:textColor="@color/red"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rgshowhide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/text"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/showprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Show"
+                android:textColor="@color/red" />
+
+            <RadioButton
+                android:id="@+id/hideprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hide"
+                android:textColor="@color/red" />
+        </RadioGroup>
+
+    </RelativeLayout>
+
+
+    <ListView
+        android:id="@+id/vehiclelistview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnconfirm"
+        android:layout_below="@+id/rel">
+
+    </ListView>
+
+
+    <Button
+        android:id="@+id/btnconfirm"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/buttonback"
+        android:text="Confirm"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>

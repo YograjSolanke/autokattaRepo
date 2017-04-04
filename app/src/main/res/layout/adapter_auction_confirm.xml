@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/mainrelative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true" />
+
+                <ImageView
+                    android:id="@+id/vehicleimage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/checkbox"
+                    android:contentDescription="@string/app_name" />
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutself3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/vehicleimage">
+
+                    <TextView
+                        android:id="@+id/byselftitle"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="Title"
+                        android:textColor="#848484"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vehicletitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/byselftitle"
+                        android:text="title"
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutcategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/RelativeLayoutself3"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/vehicleimage">
+
+                    <TextView
+                        android:id="@+id/byselfcategory"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textColor="#848484"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vehiclecategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/byselfcategory"
+                        android:text="category"
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutbrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/RelativeLayoutcategory"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/vehicleimage">
+
+                    <TextView
+                        android:id="@+id/byselfbrand"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="Brand"
+                        android:textColor="#848484"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vehiclebrand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/byselfbrand"
+                        android:text="brand"
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutself4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/RelativeLayoutbrand"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/vehicleimage">
+
+                    <TextView
+                        android:id="@+id/byselfmodel"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="Model"
+                        android:textColor="#848484"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vehiclemodel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/byselfmodel"
+                        android:text="model"
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutself5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/RelativeLayoutself4"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/vehicleimage">
+
+                    <TextView
+                        android:id="@+id/byselfrtocity"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textColor="#848484"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vehiclertocity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/byselfrtocity"
+                        android:text="city "
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutself6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/RelativeLayoutself5"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/vehicleimage">
+
+                    <TextView
+                        android:id="@+id/byselfcolor"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="Color"
+                        android:textColor="#848484"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vehiclecolor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/byselfcolor"
+                        android:text="color"
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayoutself7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/RelativeLayoutself6"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/vehicleimage">
+
+                    <TextView
+                        android:id="@+id/byselfmfgyr"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:text="Mfg Year"
+                        android:textColor="#848484"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vehicle_manu_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/byselfmfgyr"
+                        android:text="mfg year"
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/c2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mainrelative">
+
+                <TextView
+                    android:id="@+id/add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="Add Price:"
+                    android:textColor="#2C3343"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/linearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/add"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <EditText
+                        android:id="@+id/startprice1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:layout_weight="33"
+                        android:digits="0123456789"
+                        android:hint="start price"
+                        android:inputType="number"
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/amp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="0"
+                        android:digits="0123456789"
+                        android:text="&amp;" />
+
+                    <EditText
+                        android:id="@+id/reserveprice1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:layout_weight="33"
+                        android:hint="reserve price"
+                        android:inputType="number"
+                        android:textColor="#848484"
+                        android:textSize="12sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33">
+
+                        <Button
+                            android:id="@+id/btnsave"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_centerVertical="true"
+                            android:background="@color/red"
+                            android:text="Save"
+                            android:textColor="@color/white" />
+
+                        <Button
+                            android:id="@+id/btnedit"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_centerVertical="true"
+                            android:background="@color/red"
+                            android:text="Edit"
+                            android:textColor="@color/white"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

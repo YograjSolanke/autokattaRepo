@@ -3577,8 +3577,16 @@ get All Vehicles for auction
     /*
         Update Auction data
     */
+    /*
+params.put("auction_id", bundleAuctionId);
+                params.put("vehicle_ids", stringVehicleIds);
+                params.put("status", SaveActivate);
+                params.put("ShowHide", ShowHide);
+                params.put("NoVehicle", stringNoofVehicle);
+ */
     public void UpdateAuction(String auction_id, String auctionTitleUpdate, String startDateUpdate, String startTimeUpdate,
-                              String endDateUpdate, String endTimeUpdate, String specialClausesIDUpdate) {
+                              String endDateUpdate, String endTimeUpdate, String specialClausesIDUpdate, String vehicle_ids,
+                              String status, String ShowHide, String NoVehicle) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -3592,7 +3600,8 @@ get All Vehicles for auction
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mUpdateAuction = serviceApi._autokattaUpdateAuctionCreation(auction_id, auctionTitleUpdate, startDateUpdate,
-                        startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesIDUpdate);
+                        startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesIDUpdate, vehicle_ids, status,
+                        ShowHide, NoVehicle);
                 mUpdateAuction.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

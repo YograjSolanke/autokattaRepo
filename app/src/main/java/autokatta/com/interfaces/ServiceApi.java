@@ -568,6 +568,8 @@ public interface ServiceApi {
     Call<String> _autokattaUpdateAuctionCreation(@Query("auction_id") String auction_id, @Query("title") String title,
                                                  @Query("start_date") String start_date, @Query("start_time") String start_time,
                                                  @Query("end_date") String end_date, @Query("end_time") String end_time,
-                                                 @Query("special_clauses") String special_clauses);
+                                                 @Query("special_clauses") String special_clauses, @Query("vehicle_ids") String vehicle_ids,
+                                                 @Query("status") String status, @Query("ShowHide") String ShowHide,
+                                                 @Query("NoVehicle") String NoVehicle);
 
 }
