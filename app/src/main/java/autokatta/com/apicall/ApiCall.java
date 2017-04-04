@@ -33,6 +33,7 @@ import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
+import autokatta.com.response.GetLiveEventsResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
@@ -3358,8 +3359,8 @@ get All Vehicles for auction
     }
 
     /*
-get Reauctioned Vehicles for auction
-*/
+     get Reauctioned Vehicles for auction
+    */
     public void ReauctionedVehicles(String myContact, String AuctionId) {
 
         try {
@@ -3392,8 +3393,8 @@ get Reauctioned Vehicles for auction
     }
 
     /*
-send uploaded vehicle start and stop notification
-*/
+    send uploaded vehicle start and stop notification
+    */
     public void sendNotificationOfUploadedVehicle(String vehicle_id, String keyword) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
@@ -3426,10 +3427,11 @@ send uploaded vehicle start and stop notification
             e.printStackTrace();
         }
     }
+
     /*
    Delete Group
    */
-    public void deleteGroup(String group_id, String keyword,String contact) {
+    public void deleteGroup(String group_id, String keyword, String contact) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -3442,7 +3444,7 @@ send uploaded vehicle start and stop notification
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi.deleteGroup(group_id, keyword,contact);
+                Call<String> mUpdateRegistration = serviceApi.deleteGroup(group_id, keyword, contact);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3464,9 +3466,9 @@ send uploaded vehicle start and stop notification
 
 
     /*
-Edit Group
-*/
-    public void editGroup(String groupname, String group_id,String profile) {
+     Edit Group
+    */
+    public void editGroup(String groupname, String group_id, String profile) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -3479,7 +3481,7 @@ Edit Group
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi.editGroup(groupname, group_id,profile);
+                Call<String> mUpdateRegistration = serviceApi.editGroup(groupname, group_id, profile);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3499,8 +3501,37 @@ Edit Group
         }
     }
 
+    /*
+    Get All Live Events...
+     */
+    public void getLiveAuctionEvents(String userName) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetLiveEventsResponse> mLiveEvents = serviceApi.getLiveEvents(userName);
+                mLiveEvents.enqueue(new Callback<GetLiveEventsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetLiveEventsResponse> call, Response<GetLiveEventsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
 
+                    @Override
+                    public void onFailure(Call<GetLiveEventsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
 
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs

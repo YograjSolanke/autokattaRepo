@@ -43,12 +43,12 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements RequestNotifier {
-ApiCall mApiCall;
+    private ApiCall mApiCall;
     private Activity mActivity;
-    Context mContext;
+    private Context mContext;
     private List<ModelGroups> mItemList = new ArrayList<>();
-    String GroupType, keyword, mGroupid,mGroupName,mGroupImage;
- String mycontact="8007855589";
+    private String GroupType, keyword, mGroupid, mGroupName, mGroupImage;
+    private String mycontact = "8007855589";
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -104,8 +104,8 @@ ApiCall mApiCall;
             @Override
             public void onClick(View view) {
                 mGroupid = mItemList.get(position).getId();
-                mGroupName=mItemList.get(position).getTitle();
-                mGroupImage=mItemList.get(position).getImage();
+                mGroupName = mItemList.get(position).getTitle();
+                mGroupImage = mItemList.get(position).getImage();
 
                 GroupEditFragment frag = new GroupEditFragment();
 
@@ -113,7 +113,7 @@ ApiCall mApiCall;
                 bundle.putString("bundle_id", mGroupid);
                 bundle.putString("bundle_name", mGroupName);
                 bundle.putString("bundle_image", mGroupImage);
-                Log.i("value","->"+mGroupid+"grpname"+mGroupName+"grp img"+mGroupImage);
+                Log.i("value", "->" + mGroupid + "grpname" + mGroupName + "grp img" + mGroupImage);
                 frag.setArguments(bundle);
 
                 FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
@@ -122,7 +122,7 @@ ApiCall mApiCall;
 
             }
         });
-        mApiCall=new ApiCall(mActivity,this);
+        mApiCall = new ApiCall(mActivity, this);
 
         holder.mGroupDelete.setOnClickListener(new OnClickListener() {
             @Override
@@ -138,7 +138,7 @@ ApiCall mApiCall;
 //                                groups = obj.groupId;
                                 keyword = "delete";
                                 //new DeleteGroup().execute();
-                                mApiCall.deleteGroup( mGroupid, keyword,mycontact);
+                                mApiCall.deleteGroup(mGroupid, keyword, mycontact);
 //                                grouplist.remove(position);
 //                                notifyDataSetChanged();
                             }
@@ -210,6 +210,7 @@ ApiCall mApiCall;
 
         return position;
     }
+
     @Override
     public int getItemCount() {
         return mItemList.size();
