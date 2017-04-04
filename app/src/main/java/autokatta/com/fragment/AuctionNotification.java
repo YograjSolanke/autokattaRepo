@@ -22,23 +22,26 @@ import autokatta.com.auction.UpComingFragment;
 public class AuctionNotification extends Fragment {
     View mAuctionNotification;
 
+    public AuctionNotification() {
+        //empty constructor...
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAuctionNotification = inflater.inflate(R.layout.fragment_auction_notification, container, false);
 
         ViewPager viewPager = (ViewPager) mAuctionNotification.findViewById(R.id.auction_view_pager);
+        TabLayout tabLayout = (TabLayout) mAuctionNotification.findViewById(R.id.auction_tab);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
-
-        TabLayout tabLayout = (TabLayout) mAuctionNotification.findViewById(R.id.auction_tab);
         tabLayout.setupWithViewPager(viewPager);
         return mAuctionNotification;
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        TabAdapterName adapter = new TabAdapterName(getActivity().getSupportFragmentManager());
+        TabAdapterName adapter = new TabAdapterName(getChildFragmentManager());
         adapter.addFragment(new LiveFragment(), "LIVE");
         adapter.addFragment(new GoingFragment(), "GOING");
         adapter.addFragment(new UpComingFragment(), "UPCOMING");

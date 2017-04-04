@@ -109,7 +109,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Member List Fragment");
+            Log.i("Check Class-", "MemberList Fragment");
         }
     }
 

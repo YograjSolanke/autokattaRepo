@@ -218,7 +218,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
             Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
-                    , "Group Vehicle List");
+                    , "GroupVehicle List");
         }
     }
 

@@ -26,10 +26,11 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/auctioneventimage"
             android:text="AUCTION EVENT"
-            android:textColor="#2C3343" />
+            android:textColor="#2C3343"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/count"
+            android:id="@+id/event_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -57,7 +58,7 @@
         android:visibility="gone">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/horizontal_recycler_view"
+            android:id="@+id/event_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -117,7 +118,7 @@
         android:visibility="gone">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/loan_recycler_view"
+            android:id="@+id/loan_mela_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
