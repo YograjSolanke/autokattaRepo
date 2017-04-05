@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -25,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 import autokatta.com.R;
-import autokatta.com.containers.AuctionContainer;
+import autokatta.com.auction.PreviewLiveEvents;
 import autokatta.com.response.GetLiveEventsResponse;
 
 /**
@@ -175,9 +176,31 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
         //preview...
         holder.mAuctionPreview.setOnClickListener(new View.OnClickListener() {
+            Bundle bundle = new Bundle();
             @Override
             public void onClick(View v) {
-                mActivity.startActivity(new Intent(mActivity, AuctionContainer.class));
+                bundle.putString("auctioneer", mItemList.get(position).getAuctioneer());
+                bundle.putString("auction_id", mItemList.get(position).getAuctionId());
+                bundle.putString("action_title", mItemList.get(position).getActionTitle());
+                bundle.putString("auction_startdate", mItemList.get(position).getStartDate());
+                bundle.putString("auction_starttime", mItemList.get(position).getStartTime());
+                bundle.putString("auction_enddate", mItemList.get(position).getEndDate());
+                bundle.putString("auction_endtime", mItemList.get(position).getEndTime());
+                bundle.putString("no_of_vehicles", mItemList.get(position).getNoOfVehicles());
+                bundle.putString("auction_type", mItemList.get(position).getAuctionType());
+                bundle.putString("auctioncontact", mItemList.get(position).getContact());
+                bundle.putString("ignoreGoingStatus", mItemList.get(position).getIgnoreGoingStatus());
+                bundle.putString("startDateTime", mItemList.get(position).getStartDateTime());
+                bundle.putString("endDateTime", mItemList.get(position).getEndDateTime());
+                bundle.putString("specialcluases", mItemList.get(position).getSpecialClauses());
+                bundle.putString("blackListStatus", mItemList.get(position).getBlackListStatus());
+                bundle.putString("openClose", mItemList.get(position).getOpenClose());
+                bundle.putString("showPrice", mItemList.get(position).getShowPrice());
+                bundle.putString("keyword", mItemList.get(position).getKeyWord());
+
+                Intent intent = new Intent(mActivity, PreviewLiveEvents.class);
+                intent.putExtras(bundle);
+                mActivity.startActivity(intent);
             }
         });
     }

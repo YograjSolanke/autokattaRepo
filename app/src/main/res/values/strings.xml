@@ -140,4 +140,8 @@
     <string name="share">Share</string>
     <string name="follower">Followers</string>
     <string name="title_activity_auction_container">AuctionContainer</string>
+    <string name="title_activity_preview_live_events">PreviewLiveEvents</string>
+
+    <!-- AuctionType -->
+    <string name="live_auction">Live Events</string>
 </resources>

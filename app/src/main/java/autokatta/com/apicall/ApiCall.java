@@ -25,6 +25,7 @@ import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.response.GetAuctionEventResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
 import autokatta.com.response.GetBreaks;
@@ -3665,17 +3666,13 @@ params.put("auction_id", bundleAuctionId);
     //Browse store
 
     public void getBrowseStores(String contact, String keyword) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
-
-
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
-
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<BrowseStoreResponse> mFollowResponse = serviceApi.getBrowseStores(contact, keyword);
                 mFollowResponse.enqueue(new Callback<BrowseStoreResponse>() {
@@ -3689,13 +3686,47 @@ params.put("auction_id", bundleAuctionId);
                         mNotifier.notifyError(t);
                     }
                 });
-            } else
+            } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
+    /*
+    Get Auction Event
+     */
+    public void getAuctionEvent(String auctionId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetAuctionEventResponse> mAuctionEvent = serviceApi.getAuctionEvent(auctionId);
+                mAuctionEvent.enqueue(new Callback<GetAuctionEventResponse>() {
+                    @Override
+                    public void onResponse(Call<GetAuctionEventResponse> call, Response<GetAuctionEventResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetAuctionEventResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs

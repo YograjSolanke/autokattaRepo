@@ -12,6 +12,7 @@ import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.response.GetAuctionEventResponse;
 import autokatta.com.response.GetAutokattaContactResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
@@ -582,5 +583,7 @@ public interface ServiceApi {
     @GET("getBrowseStores.php")
     Call<BrowseStoreResponse> getBrowseStores(@Query("yourcontact") String yourcontact, @Query("keyword") String keyword);
 
-
+    //Get Auction Preview By Id...
+    @GET("getAuctionEvent_Details.php")
+    Call<GetAuctionEventResponse> getAuctionEvent(@Query("auction_id") String auctionId);
 }

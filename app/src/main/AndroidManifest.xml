@@ -164,12 +164,16 @@
             android:name="io.fabric.ApiKey"
             android:value="0310abc2483857212f40bd7bad891e166bf94ec4" />
 
-        <activity android:name=".Registration.CompanyBasedInvitation"></activity>
-        <activity android:name=".Registration.SkillsBasedInvitation"></activity>
-        <activity android:name=".Registration.InviteFriends"></activity>
+        <activity android:name=".Registration.CompanyBasedInvitation" />
+        <activity android:name=".Registration.SkillsBasedInvitation" />
+        <activity android:name=".Registration.InviteFriends" />
         <activity
             android:name=".containers.AuctionContainer"
             android:label="@string/title_activity_auction_container"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".auction.PreviewLiveEvents"
+            android:label="@string/title_activity_preview_live_events"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
