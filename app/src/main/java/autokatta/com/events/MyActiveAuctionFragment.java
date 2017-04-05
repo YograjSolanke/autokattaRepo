@@ -123,8 +123,10 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     Log.i("size auction list", String.valueOf(myActiveAuctionResponseList.size()));
-                } else
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                }
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));

@@ -41,6 +41,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
@@ -65,15 +66,15 @@ public class CreateAuctionFragment extends Fragment
     SpecialCluasesAdapter adapter;
     boolean positionArray[];
     String recieve = null;
-    ArrayList<Integer> checkedids = new ArrayList<>();
-    ArrayList<String> checkedspecialclauses = new ArrayList<>();
+    List<Integer> checkedids = new ArrayList<>();
+    List<String> checkedspecialclauses = new ArrayList<>();
     View createAuctionView;
     ListView clauseList;
     ApiCall apiCall;
     String Radiobtn_click = "";
     GenericFunctions validObj;
     String ids = "", cluases = "", name, stdate, sttime, eddate, edtime, type, location;
-    private List<String> resultList = new ArrayList<>();
+    private ConnectionDetector mConnectionDetector;
 
     public CreateAuctionFragment() {
         //empty constructor
@@ -84,7 +85,7 @@ public class CreateAuctionFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         createAuctionView = inflater.inflate(R.layout.fragment_create_auction, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
+        mConnectionDetector = new ConnectionDetector(getActivity());
 
         auctioname = (EditText) createAuctionView.findViewById(R.id.editauctionname);
         startdate = (EditText) createAuctionView.findViewById(R.id.auctionstartdate);
@@ -166,129 +167,133 @@ public class CreateAuctionFragment extends Fragment
                 break;
 
             case (R.id.btncreate):
+                if (!mConnectionDetector.isConnectedToInternet()) {
+                    CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
-                Boolean flag = false;
-
-                name = auctioname.getText().toString();
-                stdate = startdate.getText().toString();
-                sttime = starttime.getText().toString();
-                eddate = enddate.getText().toString();
-                edtime = endtime.getText().toString();
-                location = address.getText().toString();
-
-
-                if (!location.isEmpty()) {
-
-                    resultList = GooglePlacesAdapter.getResultList();
-                    for (int i = 0; i < resultList.size(); i++) {
-
-                        if (location.equalsIgnoreCase(resultList.get(i))) {
-                            flag = true;
-                            break;
-
-                        } else {
-
-                            flag = false;
-                        }
-                    }
-                }
-
-                type = ((RadioButton) createAuctionView.findViewById(rgauctiontype.getCheckedRadioButtonId())).getText().toString();
-
-                if (name.equals("")) {
-                    auctioname.setError("Enter auction title");
-                    auctioname.requestFocus();
-                    Toast.makeText(getActivity(), "Enter auction title", Toast.LENGTH_LONG).show();
-//                    auctioname.setFocusable(true);
-                } else if (stdate.equals("")) {
-                    startdate.requestFocus();
-//                    startdate.setError("Enter start date");
-                    Toast.makeText(getActivity(), "Enter start date", Toast.LENGTH_LONG).show();
-                } else if (sttime.equals("")) {
-                    starttime.requestFocus();
-//                    starttime.setError("Enter start time");
-                    Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
-                } else if (eddate.equals("")) {
-                    enddate.requestFocus();
-//                    enddate.setError("Enter end date");
-                    Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
-                } else if (edtime.equals("")) {
-                    endtime.requestFocus();
-//                    endtime.setError("Enter end time");
-                    Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
-                } else if (!validObj.startDateValidatioon(stdate)) {
-                    startdate.setError("Enter valid Date");
-                    startdate.requestFocus();
-                } else if (!validObj.startDateEndDateValidation(eddate, stdate)) {
-                    enddate.requestFocus();
-                    enddate.setError("Enter valid Date");
-                } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
-                    endtime.setError("Enter valid time");
-                    endtime.requestFocus();
-
-                } else if (address.getVisibility() == View.VISIBLE && location.isEmpty()) {
-                    address.setError("Enter Location");
-                    address.requestFocus();
-
-                } else if (address.getVisibility() == View.VISIBLE && !flag) {
-                    address.setError("Please Select Location From Dropdown Only");
-                    address.requestFocus();
                 } else {
+                    Boolean flag = false;
 
-                    checkedids = adapter.checkedids();
-                    checkedspecialclauses = adapter.checkedspecialclauses();
-                    positionArray = adapter.positionArray();
+                    name = auctioname.getText().toString();
+                    stdate = startdate.getText().toString();
+                    sttime = starttime.getText().toString();
+                    eddate = enddate.getText().toString();
+                    edtime = endtime.getText().toString();
+                    location = address.getText().toString();
 
-                    for (int i = 0; i < checkedids.size(); i++) {
-                        int idint = checkedids.get(i);
-                        if (idint != 0) {
-                            if (ids.equals(""))
-                                ids = String.valueOf(idint);
-                            else
-                                ids = ids + "," + String.valueOf(idint);
-                        }
-                    }
 
-                    for (int i = 0; i < checkedspecialclauses.size(); i++) {
-                        if (!checkedspecialclauses.get(i).equals("0")) {
-                            if (cluases.equals(""))
-                                cluases = checkedspecialclauses.get(i);
-                            else
-                                cluases = cluases + "," + checkedspecialclauses.get(i);
-                        }
-                    }
+                    if (!location.isEmpty()) {
 
-                    System.out.println(checkedids + "positionArray " + positionArray.length);
+                        List<String> resultList = GooglePlacesAdapter.getResultList();
+                        for (int i = 0; i < resultList.size(); i++) {
 
-                    if (ids.equals(""))
-                        Toast.makeText(getActivity(), "Please select atleast single clause", Toast.LENGTH_LONG).show();
-                    else {
-                        final Dialog dialog = new Dialog(getActivity());
-                        dialog.setTitle("Auction");
-                        dialog.setContentView(R.layout.dailogbox);
+                            if (location.equalsIgnoreCase(resultList.get(i))) {
+                                flag = true;
+                                break;
 
-                        final RadioGroup radiogroup = (RadioGroup) dialog.findViewById(R.id.radiogroup);
-                        Button okbtn = (Button) dialog.findViewById(R.id.okbtn);
-                        Button canclebtn = (Button) dialog.findViewById(R.id.canclebtn);
+                            } else {
 
-                        okbtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Radiobtn_click = ((RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId())).getText().toString();
-                                dialog.dismiss();
-                                apiCall.createAuction(name, stdate, sttime, eddate, edtime, type, myContact, location, "", ids, Radiobtn_click);
+                                flag = false;
                             }
-                        });
+                        }
+                    }
 
-                        canclebtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                    type = ((RadioButton) createAuctionView.findViewById(rgauctiontype.getCheckedRadioButtonId())).getText().toString();
+
+                    if (name.equals("")) {
+                        auctioname.setError("Enter auction title");
+                        auctioname.requestFocus();
+                        Toast.makeText(getActivity(), "Enter auction title", Toast.LENGTH_LONG).show();
+//                    auctioname.setFocusable(true);
+                    } else if (stdate.equals("")) {
+                        startdate.requestFocus();
+//                    startdate.setError("Enter start date");
+                        Toast.makeText(getActivity(), "Enter start date", Toast.LENGTH_LONG).show();
+                    } else if (sttime.equals("")) {
+                        starttime.requestFocus();
+//                    starttime.setError("Enter start time");
+                        Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                    } else if (eddate.equals("")) {
+                        enddate.requestFocus();
+//                    enddate.setError("Enter end date");
+                        Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
+                    } else if (edtime.equals("")) {
+                        endtime.requestFocus();
+//                    endtime.setError("Enter end time");
+                        Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
+                    } else if (!validObj.startDateValidatioon(stdate)) {
+                        startdate.setError("Enter valid Date");
+                        startdate.requestFocus();
+                    } else if (!validObj.startDateEndDateValidation(eddate, stdate)) {
+                        enddate.requestFocus();
+                        enddate.setError("Enter valid Date");
+                    } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
+                        endtime.setError("Enter valid time");
+                        endtime.requestFocus();
+
+                    } else if (address.getVisibility() == View.VISIBLE && location.isEmpty()) {
+                        address.setError("Enter Location");
+                        address.requestFocus();
+
+                    } else if (address.getVisibility() == View.VISIBLE && !flag) {
+                        address.setError("Please Select Location From Dropdown Only");
+                        address.requestFocus();
+                    } else {
+
+                        checkedids = adapter.checkedids();
+                        checkedspecialclauses = adapter.checkedspecialclauses();
+                        positionArray = adapter.positionArray();
+
+                        for (int i = 0; i < checkedids.size(); i++) {
+                            int idint = checkedids.get(i);
+                            if (idint != 0) {
+                                if (ids.equals(""))
+                                    ids = String.valueOf(idint);
+                                else
+                                    ids = ids + "," + String.valueOf(idint);
+                            }
+                        }
+
+                        for (int i = 0; i < checkedspecialclauses.size(); i++) {
+                            if (!checkedspecialclauses.get(i).equals("0")) {
+                                if (cluases.equals(""))
+                                    cluases = checkedspecialclauses.get(i);
+                                else
+                                    cluases = cluases + "," + checkedspecialclauses.get(i);
+                            }
+                        }
+
+                        System.out.println(checkedids + "positionArray " + positionArray.length);
+
+                        if (ids.equals(""))
+                            Toast.makeText(getActivity(), "Please select atleast single clause", Toast.LENGTH_LONG).show();
+                        else {
+                            final Dialog dialog = new Dialog(getActivity());
+                            dialog.setTitle("Auction");
+                            dialog.setContentView(R.layout.dailogbox);
+
+                            final RadioGroup radiogroup = (RadioGroup) dialog.findViewById(R.id.radiogroup);
+                            Button okbtn = (Button) dialog.findViewById(R.id.okbtn);
+                            Button canclebtn = (Button) dialog.findViewById(R.id.canclebtn);
+
+                            okbtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Radiobtn_click = ((RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId())).getText().toString();
+                                    dialog.dismiss();
+                                    apiCall.createAuction(name, stdate, sttime, eddate, edtime, type, myContact, location, "", ids, Radiobtn_click);
+                                }
+                            });
+
+                            canclebtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
 //                                    Radiobtn_click=((RadioButton)dialog.findViewById(radiogroup.getCheckedRadioButtonId())).getText().toString();
-                                dialog.dismiss();
-                            }
-                        });
-                        dialog.show();
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.show();
 
+                        }
                     }
                 }
 
@@ -470,10 +475,9 @@ public class CreateAuctionFragment extends Fragment
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
+            Log.i("Check class", "Create Auction Fragment");
             error.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -590,11 +594,11 @@ public class CreateAuctionFragment extends Fragment
         }
 
 
-        public ArrayList<Integer> checkedids() {
+        private List<Integer> checkedids() {
             return checked_ids;
         }
 
-        public ArrayList<String> checkedspecialclauses() {
+        private List<String> checkedspecialclauses() {
             return checked_clauses;
         }
 

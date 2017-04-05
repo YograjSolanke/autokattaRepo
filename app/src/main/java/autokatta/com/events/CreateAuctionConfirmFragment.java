@@ -1,8 +1,8 @@
 package autokatta.com.events;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +28,8 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionAllVehicleData;
+import autokatta.com.view.MyActiveEventsTabActivity;
+import autokatta.com.view.MySavedAuctionEventActivity;
 import retrofit2.Response;
 
 import static autokatta.com.adapter.AuctionConfirmAdapter.isSave;
@@ -42,7 +44,6 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
         //empty constructor
     }
 
-    Activity activity;
     ListView vehiclelistview;
     Button btnconfirm, btnspecial_clauses;
     RadioGroup rgshowhide;
@@ -143,11 +144,19 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
 
         adapter = new AuctionConfirmAdapter(getActivity(), bundleAuctionId, finalVehiclesData);
         vehiclelistview.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
 
         btnconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean flag = false;
+                int count = 0;
+                for (int i = 0; i < isSave.size(); i++) {
+                    if (isSave.get(i).equals(true)) {
+                        count++;
+                    }
+                }
 
                 stringVehicleIds = "";
                 stringNoofVehicle = editvehicle.getText().toString();
@@ -159,7 +168,9 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
 
                 if (vehicleIdsCame.size() == 0 || ShowHide == null || ShowHide.isEmpty() || ShowHide.equals(""))
                     Toast.makeText(getActivity(), "Please select vehicle to confirm", Toast.LENGTH_LONG).show();
-                else if (isSave.contains(false)) {
+
+
+                else if (vehicleIdsCame.size() != count) {
                     Toast.makeText(getActivity(), "Please save start and reserved price", Toast.LENGTH_LONG).show();
                     //ConfirmVehiclesAdapter.ViewHolder.startprice1.setError("Please provide start price");
                 } else {
@@ -187,8 +198,8 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
                                 public void onClick(DialogInterface dialog, int id) {
 //                                    Toast.makeText(getActivity(), "Auction Activated", Toast.LENGTH_SHORT).show();
                                     SaveActivate = "ACTIVE";
-                                    dialog.cancel();
                                     UpdateAuction();
+                                    dialog.cancel();
 
                                 }
                             })
@@ -196,9 +207,8 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
                                 public void onClick(DialogInterface dialog, int id) {
 
                                     SaveActivate = "SAVE";
-                                    dialog.cancel();
-
                                     UpdateAuction();
+                                    dialog.cancel();
 
                                 }
                             });
@@ -221,70 +231,6 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
 
         mApiCall.UpdateAuction(bundleAuctionId, "", "", "", "",
                 "", "", stringVehicleIds, SaveActivate, ShowHide, stringNoofVehicle);
-        /*RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                "http://autokatta.com/mobile/UpdateAuctionCreation.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String sResponse) {
-                        System.out.println("rutu --------------------update--------- auctin create confirm:" + sResponse);
-                        System.out.println("onResponse:UpdateAuction:" + sResponse);
-                        final String response = sResponse.trim();
-
-                        if (response.startsWith("Success")) {
-                            Toast.makeText(getActivity(), "Auction Created Successfully",
-                                    Toast.LENGTH_LONG).show();
-
-                            //Update data in SqLite
-                            sqlite_obj.open();
-                            SQlitewallDB.DatabaseHelper obg = new SQlitewallDB.DatabaseHelper(getActivity());
-
-
-                            obg.updateAuction(bundleAuctionId, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime,
-                                    bundleAuctionEndDate, bundleAuctionEndTime, bundleSpecialClauses, stringNoofVehicle);
-
-                            sqlite_obj.close();
-
-                            if (SaveActivate.equals("ACTIVE")) {
-                                ActiveEvents fragment = new ActiveEvents();
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, fragment);
-                                fragmentTransaction.commit();
-                            } else {
-                                MySavedEvents fragment = new MySavedEvents();
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, fragment);
-                                fragmentTransaction.commit();
-                            }
-
-                        } else {
-                            Toast.makeText(getActivity(), "Please try later",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("onError:UpdateAuction:" + error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("auction_id", bundleAuctionId);
-                params.put("vehicle_ids", stringVehicleIds);
-                params.put("status", SaveActivate);
-                params.put("ShowHide", ShowHide);
-                params.put("NoVehicle", stringNoofVehicle);
-
-                return params;
-            }
-        };
-
-        requestQueue.add(stringRequest);*/
     }
 
     @Override
@@ -313,6 +259,23 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
             if (str.startsWith("Success")) {
                 Toast.makeText(getActivity(), "Auction Created Successfully",
                         Toast.LENGTH_LONG).show();
+                /*Update data in SqLite
+                sqlite_obj.open();
+                SQlitewallDB.DatabaseHelper obg = new SQlitewallDB.DatabaseHelper(getActivity());
+
+
+                obg.updateAuction(bundleAuctionId, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime,
+                        bundleAuctionEndDate, bundleAuctionEndTime, bundleSpecialClauses, stringNoofVehicle);
+
+                sqlite_obj.close();*/
+
+                if (SaveActivate.equals("ACTIVE")) {
+                    getActivity().finish();
+                    startActivity(new Intent(getActivity(), MyActiveEventsTabActivity.class));
+                } else {
+                    getActivity().finish();
+                    startActivity(new Intent(getActivity(), MySavedAuctionEventActivity.class));
+                }
             }
         }
     }

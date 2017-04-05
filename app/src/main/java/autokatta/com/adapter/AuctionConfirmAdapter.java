@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,34 +14,35 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import org.json.JSONException;
-
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.events.CreateAuctionConfirmFragment;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionAllVehicleData;
+import retrofit2.Response;
 
 /**
  * Created by ak-003 on 4/4/17.
  */
 
-public class AuctionConfirmAdapter extends BaseAdapter {
+public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifier {
 
     Activity activity;
     private LayoutInflater mInflater;
-
     private List<AuctionAllVehicleData> finalVehiclesData;
-
     private List<Boolean> positionArray;
     private List<AuctionAllVehicleData> checkedVehicleData;
-
-    private String auctionId, vehicleId;
+    private String auctionId;
     public static ArrayList<Boolean> isSave;
 
     public AuctionConfirmAdapter(Activity activity, String bundleAuctionId, List<AuctionAllVehicleData> finalVehiclesData) {
@@ -52,6 +54,7 @@ public class AuctionConfirmAdapter extends BaseAdapter {
         positionArray = new ArrayList<>(finalVehiclesData.size());
         checkedVehicleData = new ArrayList<>(finalVehiclesData.size());
         isSave = new ArrayList<>(finalVehiclesData.size());
+        isSave.clear();
 
         for (int i = 0; i < finalVehiclesData.size(); i++) {
             positionArray.add(false);
@@ -160,29 +163,24 @@ public class AuctionConfirmAdapter extends BaseAdapter {
         System.out.println("AAAAAAAAA startprice" + obj.vehicleStartPrice);
         System.out.println("AAAAAAAAA reserveprice" + obj.vehicleReservedPrice);
 
-        vehicleId = obj.vehicleId;
-        System.out.println("AAAAAAAAA id1" + vehicleId);
         if (obj.vehicleId.startsWith("A ")) {
             holder.startprice1.setText(obj.vehicleStartPrice);
             holder.reserveprice1.setText(obj.vehicleReservedPrice);
 
         }
 
-        if (obj.getVehicleSingleImage() != null) {
+        if (obj.getVehicleSingleImage() != null || !obj.getVehicleSingleImage().equals("")) {
 
             Glide.with(activity)
                     .load("http://autokatta.com/mobile/uploads/" + obj.getVehicleSingleImage().replaceAll(" ", "%20"))
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .into(holder.image);
-        } else {
+        } else
             holder.image.setBackgroundResource(R.drawable.vehiimg);
-        }
 
 
         holder.checkBox.setFocusable(false);
-
         holder.checkBox.setChecked(positionArray.get(position));
-
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -193,7 +191,6 @@ public class AuctionConfirmAdapter extends BaseAdapter {
                     CreateAuctionConfirmFragment.editvehicle.setText(String.valueOf(CreateAuctionConfirmFragment.noOfVehicles));
 
                     positionArray.set(position, true);
-
                     checkedVehicleData.add(obj);
 
                 } else {
@@ -214,20 +211,19 @@ public class AuctionConfirmAdapter extends BaseAdapter {
 
                 String startPrice = holder.startprice1.getText().toString();
                 String reservedPrice = holder.reserveprice1.getText().toString();
+                String vehicleId = obj.vehicleId;
 
                 if (startPrice.equals("")) {
                     //isSave.set(position,false);
-                    holder.startprice1.setError("Start price should not empty");
+                    holder.startprice1.setError("Start price should not be empty");
                 } else if (reservedPrice.equals("")) {
                     //isSave.set(position,false);
-                    holder.reserveprice1.setError("Reserved price should not empty");
+                    holder.reserveprice1.setError("Reserved price should not be empty");
                 } else if (!startPrice.equals("") && !reservedPrice.equals("")) {
-                    try {
-                        addPrice(startPrice, reservedPrice);
-                        isSave.set(position, true);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
+                    addPrice(startPrice, reservedPrice, vehicleId);
+                    isSave.set(position, true);
+
 
                     holder.startprice1.setEnabled(false);
                     holder.reserveprice1.setEnabled(false);
@@ -265,39 +261,44 @@ public class AuctionConfirmAdapter extends BaseAdapter {
         return checkedVehicleData;
     }
 
-    private void addPrice(final String startPrice, final String reservedPrice) throws JSONException {
-        /*RequestQueue requestQueue = Volley.newRequestQueue(activity);
-
-        System.out.println("Start-->" + startPrice + " " + "Reserved-->" + reservedPrice);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                "http://autokatta.com/mobile/addStartReservedPrice.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println("onResponse:addPrice" + response);
-
-                        Toast.makeText(activity, "Thank you price save successfully", Toast.LENGTH_LONG).show();
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("onError:addPrice" + error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("auction_id", auctionId);
-                params.put("vehicle_id", vehicleId);
-                params.put("startPrice", startPrice);
-                params.put("reservedPrice", reservedPrice);
-
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);*/
+    private void addPrice(final String startPrice, final String reservedPrice, String vehicleId) {
+        ApiCall apiCall = new ApiCall(activity, this);
+        apiCall.Start_ReservedPrice(auctionId, vehicleId, startPrice, reservedPrice);
     }
 
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(activity, activity.getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else {
+            Log.i("Check class", "Auction Confirm Adapter");
+            error.printStackTrace();
+        }
+    }
+
+    @Override
+    public void notifyString(String str) {
+
+        if (str != null) {
+
+            if (str.equalsIgnoreCase("Success")) {
+                Toast.makeText(activity, "Thank you price save successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(activity, "Price not saved", Toast.LENGTH_SHORT).show();
+                Log.i("Response", "->addPrice:" + str);
+            }
+        } else
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+
+    }
 
 }

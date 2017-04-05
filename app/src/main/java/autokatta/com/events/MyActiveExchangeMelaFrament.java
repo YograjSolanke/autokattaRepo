@@ -107,8 +107,10 @@ public class MyActiveExchangeMelaFrament extends Fragment implements SwipeRefres
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     Log.i("size exchange list", String.valueOf(activeExchangeMelaList.size()));
-                } else
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                }
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));

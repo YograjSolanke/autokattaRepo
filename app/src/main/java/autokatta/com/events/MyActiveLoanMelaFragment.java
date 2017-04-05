@@ -109,8 +109,10 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
                     adapter.notifyDataSetChanged();
 
                     Log.i("size loan list", String.valueOf(activeLoanMelaResponseList.size()));
-                } else
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                }
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));

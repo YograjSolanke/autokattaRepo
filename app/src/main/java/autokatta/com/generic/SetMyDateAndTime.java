@@ -62,14 +62,14 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
 
         final String AM_PM, hour, minute;
 
-        if (i < 12) {
+        /*if (i < 12) {
             AM_PM = "AM";
             if (i < 10) {
                 hour = "0" + String.valueOf(i);
             } else
                 hour = String.valueOf(i);
 
-            if (i1 < 10)
+            if (i1<10)
                 minute = "0" + String.valueOf(i1);
             else
                 minute = String.valueOf(i1);
@@ -82,13 +82,14 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
             } else
                 hour = String.valueOf(i);
 
-            if (i1 < 10)
+            if (i1<10)
                 minute = "0" + String.valueOf(i1);
             else
                 minute = String.valueOf(i1);
         }
 
-        editText.setText(hour + ":" + minute + ":" + AM_PM);
+        editText.setText(hour + ":" + minute + ":" + AM_PM);*/
+        editText.setText(startTime);
 
     }
 }

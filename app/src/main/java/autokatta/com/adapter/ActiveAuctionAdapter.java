@@ -57,6 +57,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 .inflate(R.layout.active_auction_adapter, parent, false);
         // set the view's size, margins, paddings and layout parameters
         AuctionHolder vh = new AuctionHolder(v);
+        handler = new Handler();
         return vh;
     }
 
