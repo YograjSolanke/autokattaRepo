@@ -48,9 +48,6 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         browseTab = (TabLayout) view.findViewById(R.id.browse_store_tab);
         browseViewPager = (ViewPager) view.findViewById(R.id.browse_store_viewpager);
 
-
-        System.out.println("GPSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS ");
-
         if (browseViewPager != null) {
             //custom method
             setupViewPager(browseViewPager);

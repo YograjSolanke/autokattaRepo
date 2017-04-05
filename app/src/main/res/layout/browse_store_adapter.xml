@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="5dp">
+
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/storeprofileimage"
+                android:background="@drawable/store"
+                android:layout_marginLeft="2dp" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:id="@+id/storename"
+                android:textColor="#808080"
+                android:text="Store Name"
+                android:layout_toLeftOf="@+id/call_image"
+                android:layout_toRightOf="@+id/storeprofileimage"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:id="@+id/storelocation"
+                android:textColor="#808080"
+                android:layout_below="@+id/storename"
+                android:text="Location"
+                android:layout_toLeftOf="@+id/call_image"
+                android:layout_toRightOf="@+id/storeprofileimage" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:text="Website"
+                android:textColor="#808080"
+                android:id="@+id/storewebsite"
+                android:layout_toLeftOf="@+id/call_image"
+                android:layout_toRightOf="@+id/storeprofileimage"
+                android:layout_below="@+id/storelocation" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:id="@+id/storetiming"
+                android:textColor="#808080"
+                android:visibility="gone"
+                android:layout_toRightOf="@+id/storeprofileimage"
+                android:layout_toLeftOf="@+id/call_image"
+                android:layout_below="@+id/storewebsite"
+                android:text="Timing" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:text="Working days"
+                android:textColor="#808080"
+                android:id="@+id/storeworkingdays"
+                android:layout_toRightOf="@+id/storeprofileimage"
+                android:layout_below="@+id/storetiming" />
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/call_image"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_above="@+id/storerating"
+                android:src="@drawable/call_icon" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:numStars="5"
+                android:id="@+id/storerating"
+                android:stepSize="0.5"
+                android:layout_below="@+id/storeworkingdays"
+                android:layout_alignParentRight="true"
+                style="@style/foodRatingBar" />
+
+            <!--<ImageView-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_above="@+id/actionlinear"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:src="@drawable/starrating"-->
+            <!--android:id="@+id/starrating1"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:id="@+id/starrating2"-->
+            <!--android:layout_toLeftOf="@+id/starrating1"-->
+            <!--android:layout_above="@+id/actionlinear"-->
+            <!--android:src="@drawable/starrating"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:id="@+id/starrating3"-->
+            <!--android:layout_toLeftOf="@+id/starrating2"-->
+            <!--android:layout_above="@+id/actionlinear"-->
+            <!--android:src="@drawable/starrating"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:id="@+id/starrating4"-->
+            <!--android:layout_toLeftOf="@+id/starrating3"-->
+            <!--android:layout_above="@+id/actionlinear"-->
+            <!--android:src="@drawable/starrating"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:id="@+id/starrating5"-->
+            <!--android:layout_toLeftOf="@+id/starrating4"-->
+            <!--android:layout_above="@+id/actionlinear"-->
+            <!--android:src="@drawable/starrating"/>-->
+
+
+            <RelativeLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/actionlinear"
+                android:layout_below="@+id/storeworkingdays"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Like"
+                    android:id="@+id/like"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:textColor="#808080"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp" />
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toLeftOf="@+id/share"-->
+                <!--android:text="Unlike"-->
+                <!--android:id="@+id/unlike"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:gravity="center"-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginRight="10dp"/>-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/like"
+                    android:text="Follow"
+                    android:textColor="#808080"
+                    android:id="@+id/follow"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp" />
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toLeftOf="@+id/like"-->
+                <!--android:text="Unfollow"-->
+                <!--android:id="@+id/unfollow"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:gravity="center"-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginRight="10dp"/>-->
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+
+                android:layout_below="@+id/actionlinear"
+                android:id="@+id/rel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textSize="16sp"
+                    android:text="Details"
+                    android:id="@+id/details"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:background="@drawable/button_background"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_alignParentLeft="true" />
+
+            </RelativeLayout>
+
+
+            <View
+
+                android:layout_below="@+id/rel"
+
+                android:background="#cccccc"
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp">
+
+            </View>
+
+
+            <LinearLayout
+                android:layout_below="@+id/view"
+
+                android:orientation="horizontal"
+
+                android:id="@+id/relalike2"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/relative"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content">
+
+
+                    <RelativeLayout
+
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+
+                        android:layout_weight="1"
+                        android:id="@+id/linearlike"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:background="@drawable/likeicon"
+                            android:id="@+id/likeimg"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+
+                        <TextView
+
+                            android:layout_toRightOf="@id/likeimg"
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/liketxt"
+                            android:text="Like"
+                            android:textColor="#808080"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:id="@+id/linearunlike"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:background="@drawable/unlikethumb"
+                            android:id="@+id/unlikeimg"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+
+                        <TextView
+                            android:layout_toRightOf="@+id/unlikeimg"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/unliketxt"
+                            android:text="Unlike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_gravity="center"
+                    android:background="#cccccc"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"></View>
+
+                <LinearLayout
+
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/linearshare"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:src="@android:drawable/ic_menu_share"
+                        android:id="@+id/shareimg"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/sharetxt"
+                        android:text="Share"
+                        android:visibility="gone"
+                        android:textColor="#808080"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_gravity="center"
+                    android:background="#cccccc"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"></View>
+
+                <LinearLayout
+
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/linearshare1"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:background="@drawable/autoshare"
+                        android:id="@+id/shareimg1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/sharetxt1"
+                        android:text="Share"
+                        android:visibility="gone"
+                        android:textColor="#808080"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_gravity="center"
+                    android:background="#cccccc"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"></View>
+
+                <RelativeLayout
+
+                    android:id="@+id/relative1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:visibility="visible"
+                        android:id="@+id/linearfollow"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:background="@drawable/followicon"
+                            android:id="@+id/followimg"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+
+                        <TextView
+                            android:layout_toRightOf="@+id/followimg"
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/followtxt"
+                            android:text="Follow"
+                            android:textColor="#808080"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:id="@+id/linearunfollow"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:background="@drawable/followicon"
+                            android:id="@+id/unfollowimg"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
+
+                        <TextView
+                            android:layout_toRightOf="@+id/unfollowimg"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="5dp"
+                            android:id="@+id/unfollowtxt"
+                            android:text="Unfollow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
