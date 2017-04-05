@@ -547,11 +547,11 @@ public interface ServiceApi {
 
     //Edit Group
     @GET("updateGroupProfile.php")
-    Call<String> editGroup(@Query("groupname") String groupname,@Query("group_id") String group_id,@Query("profile") String profile);
+    Call<String> editGroup(@Query("groupname") String groupname, @Query("group_id") String group_id, @Query("profile") String profile);
 
     //Delete Group
     @GET("deleteMyGroups.php")
-    Call<String> deleteGroup(@Query("group_id") String group_id,@Query("keyword") String keyword,@Query("contact") String contact);
+    Call<String> deleteGroup(@Query("group_id") String group_id, @Query("keyword") String keyword, @Query("contact") String contact);
 
     //All Live Events
     @GET("getAllLiveEvents.php")
@@ -573,9 +573,14 @@ public interface ServiceApi {
                                                  @Query("status") String status, @Query("ShowHide") String ShowHide,
                                                  @Query("NoVehicle") String NoVehicle);
 
+    //Addstart and reserved price
+    @GET("addStartReservedPrice.php")
+    Call<String> _autokattaAddStart_ReservedPrice(@Query("auction_id") String auctionId, @Query("vehicle_id") String vehicleId,
+                                                  @Query("startPrice") String startPrice, @Query("reservedPrice") String reservedPrice);
 
     //get Browse store data
     @GET("getBrowseStores.php")
     Call<BrowseStoreResponse> getBrowseStores(@Query("yourcontact") String yourcontact, @Query("keyword") String keyword);
+
 
 }

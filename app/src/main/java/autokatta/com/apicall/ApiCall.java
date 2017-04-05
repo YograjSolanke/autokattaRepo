@@ -3622,9 +3622,9 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
-    //Browse store
+    //Add start and reserved price
 
-    public void getBrowseStores(String contact, String keyword) {
+    public void Start_ReservedPrice(String auctionId, String vehicleId, String startPrice, String reservedPrice) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -3637,6 +3637,42 @@ params.put("auction_id", bundleAuctionId);
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> addPrice = serviceApi._autokattaAddStart_ReservedPrice(auctionId, vehicleId, startPrice,
+                        reservedPrice);
+                addPrice.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //Browse store
+
+    public void getBrowseStores(String contact, String keyword) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
 
@@ -3659,7 +3695,6 @@ params.put("auction_id", bundleAuctionId);
             e.printStackTrace();
         }
     }
-
 
 
     /***
