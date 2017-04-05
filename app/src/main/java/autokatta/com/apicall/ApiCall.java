@@ -20,6 +20,7 @@ import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
+import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
@@ -3620,6 +3621,45 @@ params.put("auction_id", bundleAuctionId);
             e.printStackTrace();
         }
     }
+
+    //Browse store
+
+    public void getBrowseStores(String contact, String keyword) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<BrowseStoreResponse> mFollowResponse = serviceApi.getBrowseStores(contact, keyword);
+                mFollowResponse.enqueue(new Callback<BrowseStoreResponse>() {
+                    @Override
+                    public void onResponse(Call<BrowseStoreResponse> call, Response<BrowseStoreResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<BrowseStoreResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /***

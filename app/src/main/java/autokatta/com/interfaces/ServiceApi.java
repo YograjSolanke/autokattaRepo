@@ -7,6 +7,7 @@ import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
+import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
@@ -571,5 +572,10 @@ public interface ServiceApi {
                                                  @Query("special_clauses") String special_clauses, @Query("vehicle_ids") String vehicle_ids,
                                                  @Query("status") String status, @Query("ShowHide") String ShowHide,
                                                  @Query("NoVehicle") String NoVehicle);
+
+
+    //get Browse store data
+    @GET("getBrowseStores.php")
+    Call<BrowseStoreResponse> getBrowseStores(@Query("yourcontact") String yourcontact, @Query("keyword") String keyword);
 
 }
