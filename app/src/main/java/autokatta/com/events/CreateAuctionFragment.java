@@ -222,11 +222,10 @@ public class CreateAuctionFragment extends Fragment
                 } else if (!validObj.startDateEndDateValidation(eddate, stdate)) {
                     enddate.requestFocus();
                     enddate.setError("Enter valid Date");
-                } else if (stdate.equals(eddate)) {
-                    if (!validObj.startTimeEndTimeValidation(sttime, edtime)) {
-                        endtime.setError("Enter valid time");
-                        endtime.requestFocus();
-                    }
+                } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
+                    endtime.setError("Enter valid time");
+                    endtime.requestFocus();
+
                 } else if (address.getVisibility() == View.VISIBLE && location.isEmpty()) {
                     address.setError("Enter Location");
                     address.requestFocus();

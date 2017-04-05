@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <RelativeLayout
-        android:gravity="center"
         android:id="@+id/relative"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <TextView
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="Do you want to Create Open Auction or Closed Auction?"
             android:id="@+id/text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Do you want to Create Open Auction or Closed Auction?"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
     <RadioGroup
+        android:id="@+id/radiogroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/relative"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
-        android:weightSum="100"
-        android:id="@+id/radiogroup"
-        android:layout_below="@+id/relative">
+        android:weightSum="100">
 
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/openbtn"
-            android:text="Open"
-            android:checked="true"
-            android:textColor="#848484"
-            android:layout_weight="50" />
-
-        <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:checked="true"
+            android:text="Open"
+            android:textColor="#848484" />
+
+        <RadioButton
             android:id="@+id/closedbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
             android:text="Closed"
-            android:textColor="#848484"
-            android:layout_weight="50" />
+            android:textColor="#848484" />
     </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="100"
         android:layout_below="@+id/radiogroup"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
 
         <Button
+            android:id="@+id/okbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"
-            android:id="@+id/okbtn"
+            android:layout_marginEnd="10dp"
             android:layout_weight="50"
-            android:layout_marginRight="10dp"
             android:background="@drawable/buttonback"
+            android:text="OK"
             android:textColor="@color/white" />
 
         <Button
+            android:id="@+id/canclebtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancle"
-            android:id="@+id/canclebtn"
+            android:layout_marginStart="10dp"
             android:layout_weight="50"
-            android:layout_marginLeft="10dp"
             android:background="@drawable/buttonback"
+            android:text="Cancel"
             android:textColor="@color/white" />
     </LinearLayout>
 

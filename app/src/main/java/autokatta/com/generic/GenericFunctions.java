@@ -38,15 +38,8 @@ public class GenericFunctions {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
         String dateString = sdf.format(date);
         System.out.println("current date====" + dateString);
-        // dobtext.getText();
-
-
-        System.out.println("Result here==================================================");
 
         String[] partc = dateString.split("-");
-
-        // dob = dobtext.getText().toString();
-
         String[] partu = dob.split("-");
 
 
@@ -63,7 +56,6 @@ public class GenericFunctions {
 
             System.out.println("year checking");
             System.out.println("invalid user ");
-            // dobtext.setError("Minimum 8 year age required");
         } else if (currentyear - useryear == 8) {
 
             System.out.println("year checking");
@@ -215,7 +207,6 @@ public class GenericFunctions {
     public Boolean startDateEndDateValidation(String endDate, String startDate) {
 
         Boolean flag1 = true;
-        System.out.println("Result here==================================================");
 
         String[] partc = endDate.split("-");
         String[] partu = startDate.split("-");
@@ -232,22 +223,17 @@ public class GenericFunctions {
 
             System.out.println("year checking");
             if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) > 0) {
-                System.out.println("Mothns checking");
                 System.out.println("valid date ");
             } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) < 0) {
                 flag1 = false;
-                System.out.println("Mothns checking");
                 System.out.println("Months checked invalid date ");
                 //dobtext.setError("Minimum 8 year age required");
             } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) == 0) {
 
-                System.out.println("Mothns checking");
                 if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) > 0) {
-                    System.out.println("day checking");
                     System.out.println("daty checked valid date ");
                 } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) < 0) {
                     flag1 = false;
-                    System.out.println("day checking");
                     System.out.println("daty checked invalid date ");
                     //dobtext.setError("Minimum 8 year age required");
                 }
@@ -268,7 +254,7 @@ public class GenericFunctions {
         } else if (Integer.parseInt(startTime1[0]) < Integer.parseInt(endTime1[0])) {
             flag = true;
         } else if (Integer.parseInt(startTime1[0]) == Integer.parseInt(endTime1[0])) {
-            if (Integer.parseInt(startTime1[1]) > Integer.parseInt(endTime1[1])) {
+            if ((Integer.parseInt(startTime1[1]) > Integer.parseInt(endTime1[1])) || (Integer.parseInt(startTime1[1]) == Integer.parseInt(endTime1[1]))) {
                 flag = false;
             }
         }
