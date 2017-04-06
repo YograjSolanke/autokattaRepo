@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -26,7 +26,8 @@ import retrofit2.Response;
 
 public class PreviewLiveEvents extends AppCompatActivity implements RequestNotifier {
 
-    ListView mListView;
+    //ListView mListView;
+    RecyclerView mRecyclerView;
     Button mGoing, mIgnore, mShare, mGoLive;
     CollapsingToolbarLayout mCollapsingToolbar;
     TextView mLiveTimer, mStartDate, mStartTime, mEndDate, mEndTime, mAuctionText, mCloseOpenType;
@@ -67,7 +68,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         showPrice = getIntent().getExtras().getString("showPrice");
         keyword = getIntent().getExtras().getString("keyword");
 
-        mListView = (ListView) findViewById(R.id.listView);
+        //mListView = (ListView) findViewById(R.id.listView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.auction_event_recycler_view);
         mGoing = (Button) findViewById(R.id.btn_going);
         mIgnore = (Button) findViewById(R.id.btn_ignore);
         mShare = (Button) findViewById(R.id.btn_share);
@@ -94,8 +96,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 mStartDate.setText(auction_startdate);
                 mStartTime.setText(auction_starttime);
                 mEndDate.setText(auction_enddate);
-                mEndTime.setText(openClose + "" + auction_endtime);
-                mCloseOpenType.setText(auction_endtime);
+                mEndTime.setText(auction_endtime);
+                mCloseOpenType.setText(openClose + " " + "Type Auction");
                 mAuctionText.setText(getString(R.string.live_auction));
 
                 final TextView tv = mLiveTimer;
@@ -188,7 +190,6 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                     vehicle.setEngineNo(vehicle.getEngineNo());
                     vehicle.setLotNo(vehicle.getLotNo());
                     vehicle.setVehicleStatus(vehicle.getVehicleStatus());
-
                     vehicles.add(vehicle);
                 }
             } else {

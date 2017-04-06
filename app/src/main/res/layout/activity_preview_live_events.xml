@@ -22,12 +22,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ListView
+            <!--<ListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#fff"
-                android:dividerHeight="1dp" />
+                android:dividerHeight="1dp" />-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/auction_event_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
 
         </LinearLayout>
 
