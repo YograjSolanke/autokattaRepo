@@ -178,6 +178,12 @@
         <activity
             android:name=".auction.LiveAuctionEventBiding"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".events.PreviewMyActiveAuctionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".events.PreviewNextMyActiveAuctionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

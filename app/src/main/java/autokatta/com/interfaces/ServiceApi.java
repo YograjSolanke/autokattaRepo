@@ -579,6 +579,10 @@ public interface ServiceApi {
     Call<String> _autokattaAddStart_ReservedPrice(@Query("auction_id") String auctionId, @Query("vehicle_id") String vehicleId,
                                                   @Query("startPrice") String startPrice, @Query("reservedPrice") String reservedPrice);
 
+    //Send Auction mail...
+    @GET("email_v.php")
+    Call<String> _autokattaSendAuctionMail(@Query("contact") String myContact, @Query("auction_id") String strAuctionId);
+
     //get Browse store data
     @GET("getBrowseStores.php")
     Call<BrowseStoreResponse> getBrowseStores(@Query("yourcontact") String yourcontact, @Query("keyword") String keyword);
@@ -586,4 +590,6 @@ public interface ServiceApi {
     //Get Auction Preview By Id...
     @GET("getAuctionEvent_Details.php")
     Call<GetAuctionEventResponse> getAuctionEvent(@Query("auction_id") String auctionId);
+
+
 }
