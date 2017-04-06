@@ -4,10 +4,26 @@
     android:layout_height="match_parent"
     android:background="#cccccc">
 
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:id="@+id/filterimg"
+            android:padding="5dp"
+            android:src="@drawable/filter" />
+
+    </RelativeLayout>
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutBrowseStore"
         android:layout_width="match_parent"
+        android:layout_below="@+id/rel"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView

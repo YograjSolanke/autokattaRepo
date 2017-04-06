@@ -72,6 +72,16 @@ public class BrowseStoreResponse {
         @Expose
         private String rating;
 
+        public boolean isVisibility() {
+            return visibility;
+        }
+
+        public void setVisibility(boolean visibility) {
+            this.visibility = visibility;
+        }
+
+        private boolean visibility;
+
         public String getStoreId() {
             return storeId;
         }
