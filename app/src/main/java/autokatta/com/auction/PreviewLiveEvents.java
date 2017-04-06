@@ -12,6 +12,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -242,8 +243,31 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btngotolive:
-                finish();
-                startActivity(new Intent(getApplicationContext(), LiveAuctionEventBiding.class));
+                if (blackListStatus.equals("Yes")) {
+                    Toast.makeText(getApplicationContext(), "You are blacklist. Please contact to auction holder..!", Toast.LENGTH_LONG).show();
+                } else {
+                    Bundle b1 = new Bundle();
+                    b1.putString("auctioneer", auctioneername);
+                    b1.putString("auction_id", auction_id);
+                    b1.putString("action_title", action_title);
+                    b1.putString("auction_startdate", auction_startdate);
+                    b1.putString("auction_starttime", auction_starttime);
+                    b1.putString("auction_enddate", auction_enddate);
+                    b1.putString("auction_endtime", auction_endtime);
+                    b1.putString("no_of_vehicles", no_of_vehicles);
+                    b1.putString("auction_type", auctiontype);
+                    b1.putString("auctioncontact", auctioncontact);
+                    b1.putString("specialcluases", specialcluases);
+                    b1.putString("startDateTime", startDateTime);
+                    b1.putString("endDateTime", endDateTime);
+                    b1.putString("openClose", openClose);
+                    b1.putString("showPrice", showPrice);
+
+                    Intent intent = new Intent(getApplicationContext(), LiveAuctionEventBiding.class);
+                    intent.putExtras(b1);
+                    startActivity(intent);
+                    finish();
+                }
                 break;
         }
     }
