@@ -28,4 +28,9 @@ public interface ImageUpload {
     @Multipart
     @POST("upload_store_profile.php")
     Call<ResponseBody> postStoreImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
+
+    //Upload Group image
+    @Multipart
+    @POST("upload_profile.php")
+    Call<ResponseBody> postGroupImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
 }

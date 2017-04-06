@@ -591,5 +591,16 @@ public interface ServiceApi {
     @GET("getAuctionEvent_Details.php")
     Call<GetAuctionEventResponse> getAuctionEvent(@Query("auction_id") String auctionId);
 
+    // Create or Update BroadCast Group
+
+    @POST("createBroadcastGroups.php")
+    Call<String> createBroadcastGroup(@Query("title") String title,@Query("owner") String owner,@Query("members") String members
+                                                   ,@Query("keyword") String keyword,@Query("group_id") String groupid);
+
+
+    // Delete BroadCast Group
+
+    @POST("createBroadcastGroups.php")
+    Call<String> deleteBroadcastGroup(@Query("keyword") String keyword,@Query("group_id") String groupid);
 
 }
