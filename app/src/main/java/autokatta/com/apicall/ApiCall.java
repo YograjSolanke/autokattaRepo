@@ -17,6 +17,7 @@ import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionCreateResponse;
+import autokatta.com.response.AuctionParticipantsResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
@@ -79,8 +80,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static autokatta.com.database.DbConstants.contact;
 
 /**
  * Created by ak-001 on 18/3/17.
@@ -3702,6 +3701,39 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
+    /*
+   Get Auction Participants
+    */
+    public void AuctionParticipantData(String myContact, String strAuctionId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<AuctionParticipantsResponse> mAuctionParticipant = serviceApi._autokattaGetAuctionParticipants(myContact, strAuctionId);
+                mAuctionParticipant.enqueue(new Callback<AuctionParticipantsResponse>() {
+                    @Override
+                    public void onResponse(Call<AuctionParticipantsResponse> call, Response<AuctionParticipantsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AuctionParticipantsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //Browse store
 
@@ -3770,7 +3802,7 @@ params.put("auction_id", bundleAuctionId);
 
     //Create Broadcast Group
 
-    public void createBroadcastgroup(String groupTitle,String contact, String finalContacts, String keyword, String groupid) {
+    public void createBroadcastgroup(String groupTitle, String contact, String finalContacts, String keyword, String groupid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -3787,7 +3819,7 @@ params.put("auction_id", bundleAuctionId);
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> sendMail = serviceApi.createBroadcastGroup(groupTitle,contact,finalContacts,keyword,groupid);
+                Call<String> sendMail = serviceApi.createBroadcastGroup(groupTitle, contact, finalContacts, keyword, groupid);
                 sendMail.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3807,10 +3839,9 @@ params.put("auction_id", bundleAuctionId);
     }
 
 
-
     //Delete Broadcast Group
 
-    public void deleteBroadcastgroup( String keyword, String groupid) {
+    public void deleteBroadcastgroup(String keyword, String groupid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -3827,7 +3858,7 @@ params.put("auction_id", bundleAuctionId);
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> sendMail = serviceApi.deleteBroadcastGroup(keyword,groupid);
+                Call<String> sendMail = serviceApi.deleteBroadcastGroup(keyword, groupid);
                 sendMail.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3859,5 +3890,6 @@ params.put("auction_id", bundleAuctionId);
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
 
 }

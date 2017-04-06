@@ -4,6 +4,7 @@ import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionCreateResponse;
+import autokatta.com.response.AuctionParticipantsResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
@@ -583,6 +584,11 @@ public interface ServiceApi {
     @GET("email_v.php")
     Call<String> _autokattaSendAuctionMail(@Query("contact") String myContact, @Query("auction_id") String strAuctionId);
 
+    //get Auction Participants
+    @POST("getAuctionConfirmedparticipants.php")
+    Call<AuctionParticipantsResponse> _autokattaGetAuctionParticipants(@Query("mycontact") String myContact, @Query("auction_id")
+            String strAuctionId);
+
     //get Browse store data
     @GET("getBrowseStores.php")
     Call<BrowseStoreResponse> getBrowseStores(@Query("yourcontact") String yourcontact, @Query("keyword") String keyword);
@@ -594,13 +600,14 @@ public interface ServiceApi {
     // Create or Update BroadCast Group
 
     @POST("createBroadcastGroups.php")
-    Call<String> createBroadcastGroup(@Query("title") String title,@Query("owner") String owner,@Query("members") String members
-                                                   ,@Query("keyword") String keyword,@Query("group_id") String groupid);
+    Call<String> createBroadcastGroup(@Query("title") String title, @Query("owner") String owner, @Query("members") String members
+            , @Query("keyword") String keyword, @Query("group_id") String groupid);
 
 
     // Delete BroadCast Group
 
     @POST("createBroadcastGroups.php")
-    Call<String> deleteBroadcastGroup(@Query("keyword") String keyword,@Query("group_id") String groupid);
+    Call<String> deleteBroadcastGroup(@Query("keyword") String keyword, @Query("group_id") String groupid);
+
 
 }
