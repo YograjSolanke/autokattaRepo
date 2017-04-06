@@ -1,12 +1,15 @@
 package autokatta.com.auction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,13 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.PreviewAuctionAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetAuctionEventResponse;
 import retrofit2.Response;
 
-public class PreviewLiveEvents extends AppCompatActivity implements RequestNotifier {
+public class PreviewLiveEvents extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     //ListView mListView;
     RecyclerView mRecyclerView;
@@ -84,6 +88,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         mAuctionText = (TextView) findViewById(R.id.auction_text);
         mCloseOpenType = (TextView) findViewById(R.id.closeopentxt);
 
+        mGoLive.setOnClickListener(this);
+
         /*
         Set Data from Bundles...
          */
@@ -92,6 +98,13 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
             @Override
             public void run() {
                 getAuctionPreviewById();
+
+                mRecyclerView.setHasFixedSize(true);
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(PreviewLiveEvents.this);
+                mLayoutManager.setReverseLayout(true);
+                mLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+
                 mCollapsingToolbar.setTitle(auctioneername);
                 mStartDate.setText(auction_startdate);
                 mStartTime.setText(auction_starttime);
@@ -152,6 +165,18 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
+                mGoLive.setVisibility(View.VISIBLE);
+                if (ignoreGoingStatus.equals("going")) {
+                    mGoing.setEnabled(false);
+                    mGoLive.setEnabled(true);
+                    mIgnore.setVisibility(View.GONE);
+                    mGoing.setVisibility(View.GONE);
+
+                } else if (ignoreGoingStatus.equals("ignore")) {
+                    mIgnore.setEnabled(false);
+                    mGoing.setEnabled(false);
+                }
             }
         });
     }
@@ -192,6 +217,9 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                     vehicle.setVehicleStatus(vehicle.getVehicleStatus());
                     vehicles.add(vehicle);
                 }
+                PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(PreviewLiveEvents.this, vehicles);
+                mRecyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
@@ -208,5 +236,15 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btngotolive:
+                finish();
+                startActivity(new Intent(getApplicationContext(), LiveAuctionEventBiding.class));
+                break;
+        }
     }
 }

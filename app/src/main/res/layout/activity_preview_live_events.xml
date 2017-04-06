@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context="autokatta.com.auction.PreviewLiveEvents">
 
-    <android.support.v4.widget.NestedScrollView
+    <!--<android.support.v4.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +20,7 @@
             android:id="@+id/linear_layout_android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical">-->
 
             <!--<ListView
                 android:id="@+id/listView"
@@ -33,11 +33,14 @@
                 android:id="@+id/auction_event_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:layout_marginTop="30dp"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        </LinearLayout>
+    <!--</LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+</android.support.v4.widget.NestedScrollView>-->
 
     <LinearLayout
         android:id="@+id/btnlinear"
@@ -246,7 +249,7 @@
                             android:background="@color/medium_sea_green"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
                     </RelativeLayout>
                 </RelativeLayout>
 
