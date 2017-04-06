@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.events.PreviewMyActiveAuctionActivity;
 import autokatta.com.response.MyActiveAuctionResponse;
 
 /**
@@ -34,12 +35,12 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
     private HashMap<TextView, CountDownTimer> counters;
     Activity activity;
-    Handler handler;
+    private Handler handler;
     Runnable runnable;
     String[] st;
-    String special_clause, spcl, allDetails;
+    private String special_clause, spcl, allDetails;
     private static LayoutInflater inflater = null;
-    List<MyActiveAuctionResponse.Success.Auction> auctionDetailsArrayList;
+    private List<MyActiveAuctionResponse.Success.Auction> auctionDetailsArrayList;
 
     public ActiveAuctionAdapter(Activity activity, List<MyActiveAuctionResponse.Success.Auction> itemist) {
         this.activity = activity;
@@ -52,10 +53,10 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
     @Override
     public ActiveAuctionAdapter.AuctionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
+
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.active_auction_adapter, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+
         AuctionHolder vh = new AuctionHolder(v);
         handler = new Handler();
         return vh;
@@ -89,8 +90,6 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
             Date now = new Date();
 
             long difference = futureDate.getTime() - now.getTime();
-            //long diff=now.getTime()-currentDate.getTime();
-            //long abc=difference-diff;
 
             cdt = new CountDownTimer(difference, 1000) {
                 @Override
@@ -165,7 +164,6 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                         LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
                 alertDialog.setView(input);
-                // alertDialog.setIcon(R.drawable.key);
 
                 alertDialog.setNeutralButton("cancel",
                         new DialogInterface.OnClickListener() {
@@ -185,9 +183,9 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
             public void onClick(View v) {
 
                 Bundle b = new Bundle();
-                b.putString("auction_id", auctionDetailsArrayList.get(position).getAuctionId());
-                b.putString("actiontitle", auctionDetailsArrayList.get(position).getActionTitle());
-                b.putString("auctionvehicle", auctionDetailsArrayList.get(position).getNoOfVehicle());
+                b.putString("auctionid", auctionDetailsArrayList.get(position).getAuctionId());
+                b.putString("auctiontitle", auctionDetailsArrayList.get(position).getActionTitle());
+                b.putString("vehicle_count", auctionDetailsArrayList.get(position).getNoOfVehicle());
                 b.putString("auctionstartdate", auctionDetailsArrayList.get(position).getStartDate());
                 b.putString("auctionstarttime", auctionDetailsArrayList.get(position).getStartTime());
                 b.putString("auctionenddate", auctionDetailsArrayList.get(position).getEndDate());
@@ -195,17 +193,14 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 b.putString("specialclauses", auctionDetailsArrayList.get(position).getSpecialClauses());
                 b.putString("enddatetime", auctionDetailsArrayList.get(position).getEndDateTime());
                 b.putString("startdatetime", auctionDetailsArrayList.get(position).getStartDateTime());
-                b.putString("participant", auctionDetailsArrayList.get(position).getGoingcount());
-                b.putString("key", "auction");
+                b.putString("participant_count", auctionDetailsArrayList.get(position).getGoingcount());
 
-//                MyLivePreview fr = new MyLivePreview();
-//                fr.setArguments(b);
-//
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fr);
-//                fragmentTransaction.addToBackStack("mylivepreview");
-//                fragmentTransaction.commit();
+                activity.finish();
+
+                Intent intent = new Intent(activity, PreviewMyActiveAuctionActivity.class);
+                intent.putExtras(b);
+                activity.startActivity(intent);
+
             }
         });
 
@@ -315,50 +310,4 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
     }
 
-
-//
-//    private void mailAuctionData()
-//    {
-//        RequestQueue requestQueue = Volley.newRequestQueue(activity);
-//
-//        final ProgressDialog dialog;
-//        dialog = ProgressDialog.show(activity, "Sending Mail", "Please wait...", true);
-//        dialog.show();
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-//                "http://autokatta.com/mobile/email_v.php",
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        System.out.println("onResponse:mailAuctionData:" + response);
-//                        dialog.dismiss();
-//
-//                        if(response.startsWith("1"))
-//                        {
-//                            Toast.makeText(activity,"Mail Sent Successfully",Toast.LENGTH_SHORT).show();
-//                        }
-//                        else
-//                        {
-//                            Toast.makeText(activity,"Problem in sending mail",Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                System.out.println("onError:mailAuctionData:" + error.toString());
-//                dialog.dismiss();
-//            }
-//        })
-//        {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String,String> params = new HashMap<>();
-//                params.put("auction_id", auctionid);
-//                params.put("contact", contactnumber);
-//                return params;
-//            }
-//        };
-//        requestQueue.add(stringRequest);
-//    }
 }

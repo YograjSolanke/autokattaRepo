@@ -146,7 +146,7 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
             Log.i("Check Class-", "My Active Auction Fragment");
-            error.toString();
+            error.printStackTrace();
         }
     }
 
