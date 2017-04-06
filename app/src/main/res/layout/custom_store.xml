@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearbtn">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cattext"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Categories"
+            android:textStyle="bold" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listview1"
+            android:layout_below="@+id/cattext">
+
+        </ListView>
+
+
+    </RelativeLayout>
+
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearbtn"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+
+        >
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:background="@drawable/buttonback"
+            android:text="Ok"
+            android:id="@+id/btnok"
+            android:textColor="@color/white" />
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:background="@drawable/buttonback"
+            android:text="Cancel"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/btncancel"
+            android:textColor="@color/white" />
+
+
+    </TableRow>
+
+</RelativeLayout>
+
+
+
+
