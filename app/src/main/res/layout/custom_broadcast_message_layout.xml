@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative1"
+        android:padding="10dp">
+
+        <EditText
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/statustext"
+            android:maxLength="200"
+            android:textColor="#2C3343"
+            android:hint="Enter your message"
+            android:textColorHint="#848484"
+            android:background="@android:color/transparent"
+            android:textAlignment="textStart"
+            android:gravity="start"
+            />
+
+
+        <TextView
+            android:id="@+id/counttxt"
+            android:layout_alignParentRight="true"
+            android:text="200"
+            android:textColorHint="#848484"
+            android:layout_below="@+id/statustext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/counttxt"
+            android:background="#999999" />
+
+        <ImageView
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/view"
+            android:src="@drawable/galllry"
+            android:id="@+id/upadateimg"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addimagetext"
+            android:layout_toRightOf="@+id/upadateimg"
+            android:text="Add Image"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/upadateimg"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:id="@+id/btnsend"
+                android:background="@color/background"
+                android:text="Send"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:id="@+id/btncancel"
+                android:background="@color/background"
+                android:text="Cancel"
+                android:layout_toRightOf="@+id/btnsend"
+                android:layout_marginLeft="10dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package autokatta.com.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,15 +12,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import autokatta.com.R;
-import autokatta.com.adapter.BroadcastContactAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
@@ -42,6 +49,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     EditText edittitle;
     ArrayList<String> incomingList = new ArrayList<>();
     ArrayList<String> checkedcontact = new ArrayList<>();
+
 
     ListView memberContactslist;
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
@@ -97,15 +105,15 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                 obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
                 contactdata.add(obj);
             } while (cursor.moveToNext());
-        }else{
-            Log.e("No number","");
+        } else {
+            Log.e("No number", "");
         }
         dbAdpter.CLOSE();
 
         autokattaContactAdapter = new BroadcastContactAdapter(getActivity(), contactdata, checkedcontact);
         memberContactslist.setAdapter(autokattaContactAdapter);
 
-        /*create_broadcast.setOnClickListener(new View.OnClickListener() {
+        create_broadcast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("Hiii Clicked11111111111111111111111111111111111111111111111111111111111");
@@ -127,22 +135,28 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
 
                 }
 
-                if (TextUtils.isEmpty(groupTitle)) {
+                if (groupTitle.equals("")) {
                     Toast.makeText(getActivity(), "Please enter group Title",
                             Toast.LENGTH_LONG).show();
                     return;
                 } else {
                     //Toast.makeText(getActivity(), "Now web service call", Toast.LENGTH_LONG).show();
-                    System.out.println("group id &&&&&ContactList:" + finalContacts);
-                    mApiCall.createBroadcastgroup(groupTitle, contact, finalContacts, calltype, group_id);
-                    //  createBroadcastGroup(groupTitle,finalContacts,group_id);
+                    System.out.println("group id &&&&&ContactList:" + finalContacts + "Groupid" + group_id + "contact" + contact + "calltype" + calltype);
+                    if (calltype.equals("update")) {
+                        mApiCall.updateBroadcastgroup(groupTitle, contact, finalContacts, calltype, group_id);
+
+                        //  createBroadcastGroup(groupTitle,finalContacts,group_id);
+                    } else {
+                        mApiCall.createBroadcastgroup(groupTitle, contact, finalContacts, calltype);
+                    }
                 }
 
             }
-        });*/
+        });
 
         return root;
     }
+
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -151,13 +165,29 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(ctx, getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(ctx, getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(ctx, getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "create BroadcastGroup");
+        }
     }
 
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success")) {
+            if (str.equals("success updation")) {
+                CustomToast.customToast(ctx, "Broadcast Group Updated Successfully");
+                MyBroadcastGroupsFragment broadcastGroup = new MyBroadcastGroupsFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.broadcast_groups_container, broadcastGroup);
+                fragmentTransaction.addToBackStack("rrrrr");
+                fragmentTransaction.commit();
+            } else {
                 CustomToast.customToast(ctx, "Broadcast Group Created Successfully");
                 MyBroadcastGroupsFragment broadcastGroup = new MyBroadcastGroupsFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -165,8 +195,128 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                 fragmentTransaction.replace(R.id.broadcast_groups_container, broadcastGroup);
                 fragmentTransaction.addToBackStack("rrrrr");
                 fragmentTransaction.commit();
-
             }
         }
     }
+
+
+    /***********************************************Adapter*******************************************/
+
+    public class BroadcastContactAdapter extends BaseAdapter {
+
+
+        private ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+        Activity activity;
+        private LayoutInflater inflater;
+        private ArrayList<Boolean> positionArray;
+        private ArrayList<String> contactlist;
+        private ArrayList<String> checkedcontact = new ArrayList<>();
+
+
+        public BroadcastContactAdapter(Activity activity, ArrayList<Db_AutokattaContactResponse> contactdata,
+                                       ArrayList<String> checkedcontact) {
+            this.activity = activity;
+            this.contactdata = contactdata;
+            this.checkedcontact = checkedcontact;
+
+            contactlist = new ArrayList<>(contactdata.size());
+
+            positionArray = new ArrayList<>(contactdata.size());
+            for (int i = 0; i < contactdata.size(); i++) {
+                if (checkedcontact.size() != 0) {
+                    if (checkedcontact.contains(contactdata.get(i).getContact())) {
+                        positionArray.add(true);
+                        contactlist.add(contactdata.get(i).getContact());
+                    } else {
+                        positionArray.add(false);
+                        contactlist.add("0");
+                    }
+                } else {
+                    positionArray.add(false);
+                    contactlist.add("0");
+                }
+            }
+
+        }
+
+        @Override
+        public int getCount() {
+            return contactdata.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return contactdata.get(position).hashCode();
+        }
+
+        @Override
+        public View getView(final int position, View view, ViewGroup viewGroup) {
+            final ViewHolder viewHolder;
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.broadcast_contact_list_adapter, null);
+                viewHolder = new ViewHolder();
+                viewHolder.PersonName = (TextView) view.findViewById(R.id.contact_name);
+                viewHolder.PersonContact = (TextView) view.findViewById(R.id.contact_no);
+                viewHolder.checkBox = (CheckBox) view.findViewById(R.id.checkall);
+
+                view.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            viewHolder.PersonName.setText(contactdata.get(position).getUsername());
+            viewHolder.PersonContact.setText(contactdata.get(position).getContact());
+
+            //  viewHolder.checkBox.setFocusable(false);
+
+            viewHolder.checkBox.setChecked(positionArray.get(position));
+            //  holder.checkBox.setText(filteredData.get(position));
+            viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+
+                        System.out.println(position + "--- :)" + viewHolder.PersonContact.getText().toString());
+
+                        positionArray.set(position, true);
+                        contactlist.set(position, viewHolder.PersonContact.getText().toString());
+
+
+                    } else {
+                        positionArray.set(position, false);
+                        contactlist.set(position, "0");
+                    }
+
+                    if (positionArray.contains(true))
+                        create_broadcast.setEnabled(true);
+                    else
+                        create_broadcast.setEnabled(false);
+
+                }
+
+            });
+
+
+            return view;
+        }
+
+        private ArrayList checkboxselect() {
+            // TODO Auto-generated method stub
+            return contactlist;
+        }
+    }
+
+    static class ViewHolder {
+        TextView PersonName, PersonContact;
+        CheckBox checkBox;
+    }
+
+
 }
