@@ -23,12 +23,15 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionParticipantsResponse;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by ak-003 on 6/4/17.
  */
 
 public class AuctionParticipantsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     public AuctionParticipantsFragment() {
+        //empty constructor
     }
 
     View mAuctionParticipants;
@@ -69,8 +72,7 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-                            /*apiCall.MyActiveAuction(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"),
-                                    "ACTIVE");*/
+
                             getAuctionParticipant(strAuctionId);
                         }
                     });
@@ -89,7 +91,9 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
 
     private void getAuctionParticipant(String strAuctionId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.AuctionParticipantData("9890950817", "1047");
+        apiCall.AuctionParticipantData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""), strAuctionId);
+        // apiCall.AuctionParticipantData("9890950817", "1047");
     }
 
 

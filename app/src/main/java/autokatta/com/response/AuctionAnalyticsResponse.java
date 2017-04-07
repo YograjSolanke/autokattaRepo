@@ -30,10 +30,10 @@ public class AuctionAnalyticsResponse {
         private String reachedCount;
         @SerializedName("going_count")
         @Expose
-        private Integer goingCount;
+        private String goingCount;
         @SerializedName("going_student")
         @Expose
-        private Integer goingStudent;
+        private String goingStudent;
         @SerializedName("going_self_student")
         @Expose
         private String goingSelfStudent;
@@ -64,19 +64,19 @@ public class AuctionAnalyticsResponse {
             this.reachedCount = reachedCount;
         }
 
-        public Integer getGoingCount() {
+        public String getGoingCount() {
             return goingCount;
         }
 
-        public void setGoingCount(Integer goingCount) {
+        public void setGoingCount(String goingCount) {
             this.goingCount = goingCount;
         }
 
-        public Integer getGoingStudent() {
+        public String getGoingStudent() {
             return goingStudent;
         }
 
-        public void setGoingStudent(Integer goingStudent) {
+        public void setGoingStudent(String goingStudent) {
             this.goingStudent = goingStudent;
         }
 
