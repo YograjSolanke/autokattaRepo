@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.ViewSearchedStoreAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -91,7 +92,7 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -126,9 +127,14 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                         searchStoreResponseArrayList.add(searchSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                }
+                    ViewSearchedStoreAdapter adapter = new ViewSearchedStoreAdapter(getActivity(), searchStoreResponseArrayList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else
+                    mSwipeRefreshLayout.setRefreshing(false);
 
             } else {
+
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
