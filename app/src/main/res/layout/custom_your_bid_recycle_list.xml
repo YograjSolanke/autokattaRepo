@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/your_bid_card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/card_margin"
         android:layout_marginLeft="@dimen/card_margin"
         android:layout_marginRight="@dimen/card_margin"
         android:layout_marginTop="@dimen/card_margin"
-        card_view:cardCornerRadius="4dp"
-        android:elevation="3dp"
-        android:foreground="?attr/selectableItemBackground">
+        android:foreground="?attr/selectableItemBackground"
+        card_view:cardCornerRadius="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,17 +53,17 @@
 
                 </RelativeLayout>
 
-                <!--<LinearLayout
+                <LinearLayout
                     android:id="@+id/linearlot"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:background="#006600"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
@@ -74,20 +73,20 @@
 
                     <TextView
                         android:id="@+id/your_bid_setlotno"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
                         android:text="00"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
-                </LinearLayout>-->
+                </LinearLayout>
             </RelativeLayout>
 
             <ImageView
                 android:id="@+id/your_bid_vehicle_image"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/card_image_height"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
                 android:layout_below="@+id/mainrelContact"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
@@ -95,7 +94,7 @@
 
             <TextView
                 android:id="@+id/your_bid_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/card_title_height"
                 android:layout_alignBottom="@+id/your_bid_vehicle_image"
                 android:layout_marginStart="@dimen/fab_margin"
@@ -104,11 +103,178 @@
                 android:textStyle="italic"
                 tools:text="Title" />
 
+            <RelativeLayout
+                android:id="@+id/profilelocationrel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/your_bid_name"
+                android:layout_marginStart="5dp">
+
+                <TextView
+                    android:id="@+id/storetypetxt"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="Location : "
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/your_bid_locations"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/storetypetxt"
+                    android:hint="location"
+                    android:textColor="#808080" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rto_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profilelocationrel"
+                android:layout_marginStart="5dp">
+
+                <TextView
+                    android:id="@+id/rto"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:text="RTO City : "
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/your_bid_rto_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/rto"
+                    android:hint="rtocity"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rto_city"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/current_bid_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Your current bid price"
+                    android:textColor="#808080"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/bidrecieved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Current bid received"
+                    android:textColor="#808080"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/bidderstatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Current bider status"
+                    android:textColor="#808080"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/moredetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="-More details-"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:id="@+id/linearPrices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:baselineAligned="false"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/startpricetxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Start price" />
+
+                        <TextView
+                            android:id="@+id/startprice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Rs. 0000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/minimumbidpricetxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Bid increament" />
+
+                        <TextView
+                            android:id="@+id/bidincreament"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Rs. 0000" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativedetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp">
+
+                    <Button
+                        android:id="@+id/bid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/colorPrimary"
+                        android:padding="5dp"
+                        android:text=" Bid for vehicle "
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/linear_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/your_bid_name"
+                android:layout_below="@+id/mainrelContact"
+                android:layout_toEndOf="@+id/your_bid_vehicle_image"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -230,162 +396,6 @@
                         android:hint="rc"
                         android:textColor="#808080" />
 
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/profilelocationrel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp">
-
-                    <TextView
-                        android:id="@+id/storetypetxt"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:text="Location : "
-                        android:textColor="#808080"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/your_bid_locations"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/storetypetxt"
-                        android:hint="location"
-                        android:textColor="#808080" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rto_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp">
-
-                    <TextView
-                        android:id="@+id/rto"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:text="RTO City : "
-                        android:textColor="#808080"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/your_bid_rto_city"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/rto"
-                        android:hint="rtocity"
-                        android:textColor="#808080" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/current_bid_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Your current bid price"
-                    android:textColor="#808080"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/bidrecieved"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Current bid received"
-                    android:textColor="#808080"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/bidderstatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Current bider status"
-                    android:textColor="#808080"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/moredetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:text="-More details-"
-                    android:textSize="15sp" />
-
-                <LinearLayout
-                    android:id="@+id/linearPrices"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:baselineAligned="false"
-                    android:weightSum="100">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/startpricetxt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Start price" />
-
-                        <TextView
-                            android:id="@+id/startprice"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Rs. 0000" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/minimumbidpricetxt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Bid increament" />
-
-                        <TextView
-                            android:id="@+id/bidincreament"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Rs. 0000" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/relativedetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp">
-
-                    <Button
-                        android:id="@+id/bid"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_centerHorizontal="true"
-                        android:background="@color/colorPrimary"
-                        android:padding="5dp"
-                        android:text=" Bid for vehicle "
-                        android:textColor="@color/white" />
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>

@@ -25,7 +25,8 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
     OutBid mOutBid;
     WatchedItem mWatchedItem;
     YourBid mYourBid;
-    String auctioneername, AuctionId, action_title, auction_startdate, auction_starttime, auction_enddate, auction_endtime, no_of_vehicles, auctioncontact, specialcluases, endDateTime, openClose, auctiontype, showPrice;
+    String auctioneername, AuctionId, action_title, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
+            no_of_vehicles, auctioncontact, specialcluases, endDateTime, openClose, auctiontype, showPrice;
     Boolean isEMDPaid;
     TextView mLiveTitle, mLiveVehicles, mLiveAuctionType, mLiveCurrentlyActive, mEndDate, mEndTime, mLiveTimer;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();

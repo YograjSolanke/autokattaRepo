@@ -639,5 +639,7 @@ public interface ServiceApi {
     @GET("sendBroadcastMessage.php")
     Call<String> broadCastGroupMessage(@Query("grp_id") String groupid, @Query("msgText") String msgText, @Query("msgImage") String lastword);
 
-
+    @POST("addMyBids.php")
+    Call<String> addMyBid(@Query("auction_id") String auctionId, @Query("vehicle_id") String vehicleID,
+                          @Query("bid_amount") String bidAmount, @Query("tabNo") String tabNo, @Query("mycontact") String contact);
 }
