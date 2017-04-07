@@ -50,30 +50,34 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static autokatta.com.R.id.group_image;
+
 /**
  * Created by ak-005 on 3/4/17.
  */
 
 public class GroupEditFragment extends android.support.v4.app.Fragment implements RequestNotifier {
-    ImageView group_image;
+
+    ImageView mGroup_image;
     EditText group_name;
     Button BtnUpdateGroup;
-ApiCall mApiCall;
+    ApiCall mApiCall;
     String group_name_update;
     String bundle_id;
     ImageUpload mImageUpload;
 
-    String picturePath="";
+    String picturePath = "";
     Bitmap bitmap;
-    String userSelected="";
+    String userSelected = "";
 
-    String result=null;
+    String result = null;
     String lastWord = "", localImage;
     String bundle_image;
     FragmentActivity ctx;
+
     @Override
     public void onAttach(Context activity) {
-        ctx=(FragmentActivity)activity;
+        ctx = (FragmentActivity) activity;
 
         super.onAttach(activity);
     }
@@ -83,9 +87,9 @@ ApiCall mApiCall;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group_edit, container, false);
         group_name = (EditText) view.findViewById(R.id.group_name);
-        group_image = (ImageView) view.findViewById(R.id.group_image);
+        mGroup_image = (ImageView) view.findViewById(group_image);
         BtnUpdateGroup = (Button) view.findViewById(R.id.BtnUpdateGroup);
-mApiCall=new ApiCall(ctx,this);
+        mApiCall = new ApiCall(ctx, this);
         Bundle bundle = getArguments();
         //get the values out by key
         bundle_id = bundle.getString("bundle_id");
@@ -96,7 +100,6 @@ mApiCall=new ApiCall(ctx,this);
 
         group_name.setText(bundle_name);
 
-
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -104,26 +107,30 @@ mApiCall=new ApiCall(ctx,this);
         // Change base URL to your upload server URL.
         mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
 
-        if (bundle_image.equals("http://autokatta.com/mobile/group_profile_pics/") || bundle_image.equals(""))
-        {
-            group_image.setBackgroundResource(R.drawable.workers);
-        }
-        else
-        {
-            try {
-                Glide.with(getActivity())
-                        .load("http://autokatta.com/mobile/group_profile_pics/"+bundle_image)
-                        .bitmapTransform(new CropCircleTransformation(getActivity()))
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(group_image);
+        try {
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(getActivity(), "Error uploading image", Toast.LENGTH_LONG).show();
+            if (bundle_image.equals("") || bundle_image.equalsIgnoreCase(null) || bundle_image.equalsIgnoreCase("null")) {
+
+                mGroup_image.setBackgroundResource(R.drawable.profile);
+
             }
+            if (!bundle_image.equals("") || !bundle_image.equalsIgnoreCase(null) || !bundle_image.equalsIgnoreCase("null")) {
+                try {
+                    Glide.with(ctx)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/"+bundle_image)
+                            .bitmapTransform(new CropCircleTransformation(ctx))
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mGroup_image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(ctx, "Error uploading image", Toast.LENGTH_LONG).show();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        group_image.setOnClickListener(new OnClickListener() {
+        mGroup_image.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectImage();
@@ -135,16 +142,13 @@ mApiCall=new ApiCall(ctx,this);
             public void onClick(View v) {
 
                 group_name_update = group_name.getText().toString();
-                if (group_name_update.equals(""))
-                {
-                    Snackbar.make(v,"Please provide group name",Snackbar.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    if (lastWord!="")
-                        mApiCall.editGroup(group_name_update,bundle_id,lastWord);
+                if (group_name_update.equals("")) {
+                    Snackbar.make(v, "Please provide group name", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    if (lastWord != "")
+                        mApiCall.editGroup(group_name_update, bundle_id, lastWord);
                     else
-                    mApiCall.editGroup(group_name_update,bundle_id,bundle_image);
+                        mApiCall.editGroup(group_name_update, bundle_id, bundle_image);
                 }
             }
         });
@@ -200,7 +204,7 @@ mApiCall=new ApiCall(ctx,this);
                 Bundle b = data.getExtras();
 
                 bitmap = (Bitmap) b.get("data");
-                group_image.setImageBitmap(bitmap);
+                mGroup_image.setImageBitmap(bitmap);
                 getImageUri(ctx, bitmap);
                 System.out.println("rutu----------------" + picturePath);
 
@@ -226,7 +230,7 @@ mApiCall=new ApiCall(ctx,this);
                 GenericFunctions obj=new GenericFunctions();
                 Bitmap rotatedBitmap = obj.decodeFile(picturePath);
 
-                group_image.setImageBitmap(rotatedBitmap);
+                mGroup_image.setImageBitmap(rotatedBitmap);
                 //groupimg.setImageBitmap(bitmap);
                 System.out.println(picturePath);
                 lastWord = picturePath.substring(picturePath.lastIndexOf("/")+1);
@@ -257,11 +261,11 @@ mApiCall=new ApiCall(ctx,this);
 
 
             File file = new File(picturePath);
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file.getPath());
+
+              RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file.getPath());
             MultipartBody.Part body = MultipartBody.Part.createFormData("club_image", file.getName(), reqFile);
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
-
-            retrofit2.Call<okhttp3.ResponseBody> req = mImageUpload.postImage(body, name);
+            retrofit2.Call<okhttp3.ResponseBody> req = mImageUpload.postGroupImage(body, name);
             req.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -279,7 +283,10 @@ mApiCall=new ApiCall(ctx,this);
             Log.e(e.getClass().getName(), e.getMessage(), e);
 
         }
+
+
     }
+
 
 
     @Override
@@ -294,7 +301,8 @@ mApiCall=new ApiCall(ctx,this);
 
     @Override
     public void notifyString(String str) {
-if (str!="")
+        Log.i("SStttrrrr","str"+str);
+        if (str!="")
 {
     CustomToast.customToast(ctx,"Group Updated Successfully");
     MyGroupsFragment frag = new MyGroupsFragment();
@@ -302,6 +310,18 @@ if (str!="")
     FragmentTransaction mTransaction = fragmentManager.beginTransaction();
     mTransaction.replace(R.id.group_container, frag).commit();
 
+}else
+if (str.equals("successsuccess1group_profile_pics/"+str))
+{
+    try {
+        Glide.with(ctx)
+                .load("http://autokatta.com/mobile/profile_profile_pics/" + str)
+                .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                .into(mGroup_image);
+    } catch (Exception e) {
+        e.printStackTrace();
+        Toast.makeText(ctx, "Error uploading image", Toast.LENGTH_LONG).show();
+    }
 }
     }
     public void onBackPressed() {

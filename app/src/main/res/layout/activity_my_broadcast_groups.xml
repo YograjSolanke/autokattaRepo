@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="autokatta.com.view.MyBroadcastGroupsActivity">
+    android:id="@+id/activity_my_broadcast_groups"
+  tools:context="autokatta.com.view.MyBroadcastGroupsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -22,12 +24,5 @@
 
     <include layout="@layout/content_my_broadcast_groups" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabCreateBroadcastGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>

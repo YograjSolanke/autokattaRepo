@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter Group Title"
+        android:gravity="center"
+        android:focusable="true"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/edittitle"/>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/group"
+        android:id="@+id/profile"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edittitle"
+        android:layout_marginTop="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addmembertext"
+        android:text="Add Members..."
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"
+        android:layout_below="@+id/edittitle"
+        android:layout_toRightOf="@+id/profile"
+        android:layout_marginTop="12dp"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/broadcastgrplist"
+        android:layout_below="@+id/addmembertext"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/tbl">
+
+    </ListView>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tbl"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btncreate"
+            android:enabled="false"
+            android:background="@color/background"
+            android:text="Create"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            />
+
+    </TableRow>
+
+
+
+</RelativeLayout>
