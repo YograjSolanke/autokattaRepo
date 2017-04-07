@@ -3,6 +3,9 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.events.AddVehiclesForAuctionFragment;
 import autokatta.com.response.MySavedAuctionResponse;
 
 /**
@@ -91,16 +95,16 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
 //                b.putString("ids", ids);
                 b.putString("cluases", mMainlist.get(position).getSpecialClauses());
 //
-//                Boolean [] array=(Boolean[]) mMainlist.get(position).getPositionArray().toArray();
-//                b.putBooleanArray("positionArray",array);
-//
-//                AddVehiclesForAuction frag = new AddVehiclesForAuction();
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                frag.setArguments(b);
-//                fragmentTransaction.replace(R.id.containerView, frag);
-//                fragmentTransaction.addToBackStack("AddVehiclesForAuction");
-//                fragmentTransaction.commit();
+                //Boolean [] array=(Boolean[]) mMainlist.get(position).getPositionArray().toArray();
+                b.putBooleanArray("positionArray", mMainlist.get(position).getPositionArray());
+
+                AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();
+                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                frag.setArguments(b);
+                fragmentTransaction.replace(R.id.saved_auctionFrame, frag);
+                fragmentTransaction.addToBackStack("AddVehiclesForAuction");
+                fragmentTransaction.commit();
 
             }
         });
