@@ -184,6 +184,10 @@
         <activity
             android:name=".events.PreviewNextMyActiveAuctionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.BroadcastMessageActivity"
+            android:label="@string/title_activity_broadcast_message"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
