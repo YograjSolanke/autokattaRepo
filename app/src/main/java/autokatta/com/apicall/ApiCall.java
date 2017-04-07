@@ -4054,15 +4054,12 @@ params.put("auction_id", bundleAuctionId);
 
     // Broadcast Group Message
     public void broadcastGroupMessage(String groupid, String message, String image) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
-
                 //JSON to Gson conversion
                 Gson gson = new GsonBuilder()
                         .setLenient()
                         .create();
-
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create(gson))
