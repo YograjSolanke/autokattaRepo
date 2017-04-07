@@ -603,8 +603,8 @@ public interface ServiceApi {
 
     //get Active Auction high bid
     @POST("auctionHighestBidding.php")
-    Call<MyActiveAuctionHighBidResponse> _autokattaGetActiveAuctionHighBid(@Query("grp_id") String myContact,
-                                                                           @Query("grp_id") String mAuctionId);
+    Call<MyActiveAuctionHighBidResponse> _autokattaGetActiveAuctionHighBid(@Query("contact") String myContact,
+                                                                           @Query("auctionid") String mAuctionId);
 
     //get Browse store data
     @GET("getBrowseStores.php")

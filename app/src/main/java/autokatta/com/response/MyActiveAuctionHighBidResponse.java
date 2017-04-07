@@ -50,145 +50,19 @@ public class MyActiveAuctionHighBidResponse {
             this.biddersList = biddersList;
         }
 
-        public class BiddersList {
-
-            @SerializedName("auctionid")
-            @Expose
-            private String auctionid;
-            @SerializedName("vehicleid")
-            @Expose
-            private String vehicleid;
-            @SerializedName("contact")
-            @Expose
-            private String contact;
-            @SerializedName("bidderName")
-            @Expose
-            private String bidderName;
-            @SerializedName("date")
-            @Expose
-            private String date;
-            @SerializedName("bidPrice")
-            @Expose
-            private String bidPrice;
-            @SerializedName("approvedStatus")
-            @Expose
-            private String approvedStatus;
-            @SerializedName("approvedDate")
-            @Expose
-            private String approvedDate;
-            @SerializedName("rejectStatus")
-            @Expose
-            private String rejectStatus;
-            @SerializedName("counter")
-            @Expose
-            private Integer counter;
-            @SerializedName("blackList")
-            @Expose
-            private String blackList;
-            @SerializedName("noOfBids")
-            @Expose
-            private String noOfBids;
-
-            public String getAuctionid() {
-                return auctionid;
-            }
-
-            public void setAuctionid(String auctionid) {
-                this.auctionid = auctionid;
-            }
-
-            public String getVehicleid() {
-                return vehicleid;
-            }
-
-            public void setVehicleid(String vehicleid) {
-                this.vehicleid = vehicleid;
-            }
-
-            public String getContact() {
-                return contact;
-            }
-
-            public void setContact(String contact) {
-                this.contact = contact;
-            }
-
-            public String getBidderName() {
-                return bidderName;
-            }
-
-            public void setBidderName(String bidderName) {
-                this.bidderName = bidderName;
-            }
-
-            public String getDate() {
-                return date;
-            }
-
-            public void setDate(String date) {
-                this.date = date;
-            }
-
-            public String getBidPrice() {
-                return bidPrice;
-            }
-
-            public void setBidPrice(String bidPrice) {
-                this.bidPrice = bidPrice;
-            }
-
-            public String getApprovedStatus() {
-                return approvedStatus;
-            }
-
-            public void setApprovedStatus(String approvedStatus) {
-                this.approvedStatus = approvedStatus;
-            }
-
-            public String getApprovedDate() {
-                return approvedDate;
-            }
-
-            public void setApprovedDate(String approvedDate) {
-                this.approvedDate = approvedDate;
-            }
-
-            public String getRejectStatus() {
-                return rejectStatus;
-            }
-
-            public void setRejectStatus(String rejectStatus) {
-                this.rejectStatus = rejectStatus;
-            }
-
-            public Integer getCounter() {
-                return counter;
-            }
-
-            public void setCounter(Integer counter) {
-                this.counter = counter;
-            }
-
-            public String getBlackList() {
-                return blackList;
-            }
-
-            public void setBlackList(String blackList) {
-                this.blackList = blackList;
-            }
-
-            public String getNoOfBids() {
-                return noOfBids;
-            }
-
-            public void setNoOfBids(String noOfBids) {
-                this.noOfBids = noOfBids;
-            }
-
-        }
-
-
         public class VehicleList {
+
+            @SerializedName("biddersList")
+            @Expose
+            private List<BiddersList> biddersList = null;
+
+            public List<BiddersList> getBiddersList() {
+                return biddersList;
+            }
+
+            public void setBiddersList(List<BiddersList> biddersList) {
+                this.biddersList = biddersList;
+            }
 
             @SerializedName("auctionid")
             @Expose
@@ -401,5 +275,144 @@ public class MyActiveAuctionHighBidResponse {
             }
 
         }
+
+        public class BiddersList {
+
+            @SerializedName("auctionid")
+            @Expose
+            private String auctionid;
+            @SerializedName("vehicleid")
+            @Expose
+            private String vehicleid;
+            @SerializedName("contact")
+            @Expose
+            private String contact;
+            @SerializedName("bidderName")
+            @Expose
+            private String bidderName;
+            @SerializedName("date")
+            @Expose
+            private String date;
+            @SerializedName("bidPrice")
+            @Expose
+            private String bidPrice;
+            @SerializedName("approvedStatus")
+            @Expose
+            private String approvedStatus;
+            @SerializedName("approvedDate")
+            @Expose
+            private String approvedDate;
+            @SerializedName("rejectStatus")
+            @Expose
+            private String rejectStatus;
+            @SerializedName("counter")
+            @Expose
+            private Integer counter;
+            @SerializedName("blackList")
+            @Expose
+            private String blackList;
+            @SerializedName("noOfBids")
+            @Expose
+            private String noOfBids;
+
+            public String getAuctionid() {
+                return auctionid;
+            }
+
+            public void setAuctionid(String auctionid) {
+                this.auctionid = auctionid;
+            }
+
+            public String getVehicleid() {
+                return vehicleid;
+            }
+
+            public void setVehicleid(String vehicleid) {
+                this.vehicleid = vehicleid;
+            }
+
+            public String getContact() {
+                return contact;
+            }
+
+            public void setContact(String contact) {
+                this.contact = contact;
+            }
+
+            public String getBidderName() {
+                return bidderName;
+            }
+
+            public void setBidderName(String bidderName) {
+                this.bidderName = bidderName;
+            }
+
+            public String getDate() {
+                return date;
+            }
+
+            public void setDate(String date) {
+                this.date = date;
+            }
+
+            public String getBidPrice() {
+                return bidPrice;
+            }
+
+            public void setBidPrice(String bidPrice) {
+                this.bidPrice = bidPrice;
+            }
+
+            public String getApprovedStatus() {
+                return approvedStatus;
+            }
+
+            public void setApprovedStatus(String approvedStatus) {
+                this.approvedStatus = approvedStatus;
+            }
+
+            public String getApprovedDate() {
+                return approvedDate;
+            }
+
+            public void setApprovedDate(String approvedDate) {
+                this.approvedDate = approvedDate;
+            }
+
+            public String getRejectStatus() {
+                return rejectStatus;
+            }
+
+            public void setRejectStatus(String rejectStatus) {
+                this.rejectStatus = rejectStatus;
+            }
+
+            public Integer getCounter() {
+                return counter;
+            }
+
+            public void setCounter(Integer counter) {
+                this.counter = counter;
+            }
+
+            public String getBlackList() {
+                return blackList;
+            }
+
+            public void setBlackList(String blackList) {
+                this.blackList = blackList;
+            }
+
+            public String getNoOfBids() {
+                return noOfBids;
+            }
+
+            public void setNoOfBids(String noOfBids) {
+                this.noOfBids = noOfBids;
+            }
+
+        }
+
+
     }
 }
