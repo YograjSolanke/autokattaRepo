@@ -125,7 +125,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 b.putString("groupmembers","");
                 b.putString("group_id","");
                 Log.e("hiiiii","->");
-                getActivity().finish();
                 CreateBroadcastGroupFragment about = new CreateBroadcastGroupFragment();
                 about.setArguments(b);
                 FragmentManager fragmentManager = getFragmentManager();

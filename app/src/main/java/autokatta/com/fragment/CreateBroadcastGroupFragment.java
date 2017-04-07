@@ -1,30 +1,24 @@
 package autokatta.com.fragment;
 
-import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import autokatta.com.R;
+import autokatta.com.adapter.BroadcastContactAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
@@ -51,7 +45,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
 
     ListView memberContactslist;
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
-    broadcastContactAdapter autokattaContactAdapter;
+    BroadcastContactAdapter autokattaContactAdapter;
     ApiCall mApiCall;
     String contact;
 
@@ -96,10 +90,10 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
             contactdata.clear();
             cursor.moveToFirst();
             do {
-                Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(contact)));
+                //Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(contact)));
                 Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
 
-                obj.setContact(cursor.getString(cursor.getColumnIndex(contact)));
+                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
                 obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
                 contactdata.add(obj);
             } while (cursor.moveToNext());
@@ -108,10 +102,10 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
         }
         dbAdpter.CLOSE();
 
-        autokattaContactAdapter = new broadcastContactAdapter(getActivity(), ctx, contactdata, checkedcontact);
+        autokattaContactAdapter = new BroadcastContactAdapter(getActivity(), contactdata, checkedcontact);
         memberContactslist.setAdapter(autokattaContactAdapter);
 
-        create_broadcast.setOnClickListener(new View.OnClickListener() {
+        /*create_broadcast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("Hiii Clicked11111111111111111111111111111111111111111111111111111111111");
@@ -145,7 +139,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                 }
 
             }
-        });
+        });*/
 
         return root;
     }
@@ -175,130 +169,4 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
             }
         }
     }
-
-
-    //*******************************************adapter**********************************************
-    /*Adapter*/
-
-    class broadcastContactAdapter extends BaseAdapter {
-
-        FragmentActivity fragmentActivity;
-        ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
-        Activity activity;
-        private LayoutInflater inflater;
-        ArrayList<Boolean> positionArray;
-        ArrayList<String> contactlist;
-        ArrayList<String> checkedcontact = new ArrayList<>();
-
-
-        public broadcastContactAdapter(FragmentActivity activity, FragmentActivity ctx, ArrayList<Db_AutokattaContactResponse> contactdata,
-                                       ArrayList<String> checkedcontact) {
-            this.activity = activity;
-            this.fragmentActivity = ctx;
-            this.contactdata = contactdata;
-            this.checkedcontact = checkedcontact;
-
-            contactlist = new ArrayList<>(contactdata.size());
-
-            positionArray = new ArrayList<>(contactdata.size());
-            for (int i = 0; i < contactdata.size(); i++) {
-                if (checkedcontact.size() != 0) {
-                    if (checkedcontact.contains(contactdata.get(i).getContact())) {
-                        positionArray.add(true);
-                        contactlist.add(contactdata.get(i).getContact());
-                    } else {
-                        positionArray.add(false);
-                        contactlist.add("0");
-                    }
-                } else {
-                    positionArray.add(false);
-                    contactlist.add("0");
-                }
-            }
-
-        }
-
-        @Override
-        public int getCount() {
-            return contactdata.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View view, ViewGroup viewGroup) {
-
-            View vi = view;
-            final ViewHolder viewHolder;
-
-            if (view == null) {
-                viewHolder = new ViewHolder();
-                vi = View.inflate(ctx, R.layout.broadcast_contact_list_adapter, null);
-
-                viewHolder.PersonName = (TextView) vi.findViewById(R.id.contact_name);
-                viewHolder.PersonContact = (TextView) vi.findViewById(R.id.contact_no);
-                viewHolder.checkBox = (CheckBox) vi.findViewById(R.id.checkall);
-
-                vi.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) vi.getTag();
-            }
-
-            viewHolder.PersonName.setText(contactdata.get(position).getUsername());
-            viewHolder.PersonContact.setText(contactdata.get(position).getContact());
-
-            //  viewHolder.checkBox.setFocusable(false);
-
-            viewHolder.checkBox.setChecked(positionArray.get(position));
-            //  holder.checkBox.setText(filteredData.get(position));
-            viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-
-                        System.out.println(position + "--- :)");
-
-                        positionArray.set(position, true);
-                        contactlist.set(position, viewHolder.PersonContact.getText().toString());
-
-
-                    } else {
-                        positionArray.set(position, false);
-                        contactlist.set(position, "0");
-                    }
-
-                    if (positionArray.contains(true))
-                        create_broadcast.setEnabled(true);
-                    else
-                        create_broadcast.setEnabled(false);
-
-                }
-
-            });
-
-
-            return vi;
-        }
-
-        private ArrayList checkboxselect() {
-            // TODO Auto-generated method stub
-            return contactlist;
-        }
-
-        private class ViewHolder {
-            TextView PersonName, PersonContact;
-            CheckBox checkBox;
-
-        }
-    }
-
 }
