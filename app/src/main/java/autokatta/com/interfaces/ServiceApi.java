@@ -608,11 +608,11 @@ public interface ServiceApi {
     @GET("getAuctionEvent_Details.php")
     Call<GetAuctionEventResponse> getAuctionEvent(@Query("auction_id") String auctionId);
 
-    // Create or Update BroadCast Group
+    // Create  BroadCast Group
 
     @POST("createBroadcastGroups.php")
     Call<String> createBroadcastGroup(@Query("title") String title, @Query("owner") String owner, @Query("members") String members
-            , @Query("keyword") String keyword, @Query("group_id") String groupid);
+            , @Query("keyword") String keyword);
 
 
     // Delete BroadCast Group
@@ -623,11 +623,15 @@ public interface ServiceApi {
     // Update BroadCast Group
     @POST("createBroadcastGroups.php")
     Call<String> updateBroadcastGroup(@Query("title") String title, @Query("owner") String owner, @Query("members") String members
-            , @Query("keyword") String keyword);
+            , @Query("keyword") String keyword, @Query("group_id") String groupid);
 
     //Get Your Bid Response
     @GET("userYourBid.php")
     Call<YourBidResponse> getYourBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
+
+    //send broadcast message
+    @GET("sendBroadcastMessage.php")
+    Call<String> broadCastGroupMessage(@Query("grp_id") String groupid, @Query("msgText") String msgText, @Query("msgImage") String lastword);
 
 
 }

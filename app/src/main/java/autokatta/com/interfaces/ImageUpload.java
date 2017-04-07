@@ -33,4 +33,9 @@ public interface ImageUpload {
     @Multipart
     @POST("upload_profile.php")
     Call<ResponseBody> postGroupImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
+
+    //Upload Broadmessage image
+    @Multipart
+    @POST("upload_broadcastimages.php")
+    Call<ResponseBody> postBroadcastMessageImage(@Part MultipartBody.Part image, @Part("name") RequestBody name);
 }
