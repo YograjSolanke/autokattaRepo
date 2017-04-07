@@ -1,9 +1,9 @@
 package autokatta.com.auction;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +40,11 @@ public class YourBid extends Fragment implements RequestNotifier {
         showPrice = b.getString("showPrice");
 
         mRecyclerView = (RecyclerView) mYourBid.findViewById(R.id.all_bids);
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -55,8 +60,9 @@ public class YourBid extends Fragment implements RequestNotifier {
     */
     private void getYourBidData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getYourBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", ""));
+        /*mApiCall.getYourBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", ""));*/
+        mApiCall.getYourBid("1047", "9890950817");
     }
 
     @Override
@@ -88,7 +94,7 @@ public class YourBid extends Fragment implements RequestNotifier {
                     success.setBidReceivedPrice(success.getBidReceivedPrice());
                     successes.add(success);
                 }
-                BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes);
+                BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {
