@@ -591,6 +591,11 @@ public interface ServiceApi {
     Call<AuctionParticipantsResponse> _autokattaGetAuctionParticipants(@Query("mycontact") String myContact, @Query("auction_id")
             String strAuctionId);
 
+    //Add/remove blacklist contact
+    @POST("addRemoveToBlacklist.php")
+    Call<String> _autokattaAddRemoveBlacklist(@Query("mycontact") String myContact, @Query("auction_id") String strAuctionId,
+                                              @Query("contact") String rContact, @Query("keyword") String keyword);
+
     // Get Auction Analytics
     @POST("get_analytics_count.php")
     Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("auctionid") String strAuctionId);
@@ -623,5 +628,6 @@ public interface ServiceApi {
     //Get Your Bid Response
     @GET("userYourBid.php")
     Call<YourBidResponse> getYourBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
+
 
 }
