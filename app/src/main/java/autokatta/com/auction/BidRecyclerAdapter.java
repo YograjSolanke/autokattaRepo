@@ -1,5 +1,6 @@
 package autokatta.com.auction;
 
+import android.app.Activity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,13 +10,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import autokatta.com.R;
+import autokatta.com.response.YourBidResponse;
 
 /**
  * Created by ak-001 on 6/4/17.
  */
 
 public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewHolder> {
+
+    private Activity mActivity;
+    private List<YourBidResponse.Success> mItemList = new ArrayList<>();
+
+    public BidRecyclerAdapter(Activity mActivity, List<YourBidResponse.Success> mItemList) {
+        this.mActivity = mActivity;
+        this.mItemList = mItemList;
+    }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;

@@ -62,6 +62,7 @@ import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreOldAdminResponse;
+import autokatta.com.response.YourBidResponse;
 import autokatta.com.response.getDealsResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -619,6 +620,8 @@ public interface ServiceApi {
     Call<String> updateBroadcastGroup(@Query("title") String title, @Query("owner") String owner, @Query("members") String members
             , @Query("keyword") String keyword);
 
-
+    //Get Your Bid Response
+    @GET("userYourBid.php")
+    Call<YourBidResponse> getYourBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
 
 }

@@ -73,6 +73,7 @@ import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreOldAdminResponse;
+import autokatta.com.response.YourBidResponse;
 import autokatta.com.response.getDealsResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -3912,7 +3913,6 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //Update Broadcast Group
-
     public void updateBroadcastgroup(String groupTitle, String contact, String finalContacts, String keyword) {
 
         try {
@@ -3939,6 +3939,38 @@ params.put("auction_id", bundleAuctionId);
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Your Bid data
+     */
+    public void getYourBid(String id, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<YourBidResponse> yourBid = serviceApi.getYourBid(id, contact);
+                yourBid.enqueue(new Callback<YourBidResponse>() {
+                    @Override
+                    public void onResponse(Call<YourBidResponse> call, Response<YourBidResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<YourBidResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
