@@ -67,7 +67,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     Button btnbyteam, btnbyself, btnbyadmin, btnbyreauction, buttonnext;
     ListView byteam_listview, byself_listview, byadmin_listview, byreauction_listview;
     Spinner selectAuctionsSpinner;
-    String auction_id, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate, bundleAuctionEndTime, bundleIds, bundleClause;
+    String className, auction_id, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate, bundleAuctionEndTime, bundleIds, bundleClause;
     boolean bundlepositionArray[];
     String auctionTitleUpdate, startDateUpdate, startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesUpdate, specialClausesIDUpdate;
 
@@ -96,6 +96,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         Bundle b = getArguments();
 
         auction_id = b.getString("auction_id");
+        className = b.getString("className");
         bundleAuctionTitle = b.getString("title");
         bundleAuctionStartDate = b.getString("startdate");
         bundleAuctionStartTime = b.getString("starttime");
@@ -494,13 +495,24 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     bundle.putString("vehiclecount", editNoOfVehicles.getText().toString());
                     bundle.putString("specialClauses", specialClausesUpdate);
 
-                    CreateAuctionConfirmFragment frag = new CreateAuctionConfirmFragment();
-                    frag.setArguments(bundle);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.createEventFrame, frag);
-                    fragmentTransaction.addToBackStack("AuctionCreateConfirm");
-                    fragmentTransaction.commit();
+                    if (className.equals("SavedAuction")) {
+                        CreateAuctionConfirmFragment frag = new CreateAuctionConfirmFragment();
+                        frag.setArguments(bundle);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.saved_auctionFrame, frag);
+                        fragmentTransaction.addToBackStack("AuctionCreateConfirm");
+                        fragmentTransaction.commit();
+                    } else {
+                        CreateAuctionConfirmFragment frag = new CreateAuctionConfirmFragment();
+                        frag.setArguments(bundle);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.createEventFrame, frag);
+                        fragmentTransaction.addToBackStack("AuctionCreateConfirm");
+                        fragmentTransaction.commit();
+                    }
+
 
                 }
                 break;

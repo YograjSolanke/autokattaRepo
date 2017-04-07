@@ -91,6 +91,7 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
                 b.putString("starttime", mMainlist.get(position).getStartTime());
                 b.putString("enddate", mMainlist.get(position).getEndDate());
                 b.putString("endtime", mMainlist.get(position).getEndTime());
+                b.putString("className", "SavedAuction");
 //                b.putString("cluase", cluases);
 //                b.putString("ids", ids);
                 b.putString("cluases", mMainlist.get(position).getSpecialClauses());
