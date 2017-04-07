@@ -614,5 +614,11 @@ public interface ServiceApi {
     @POST("createBroadcastGroups.php")
     Call<String> deleteBroadcastGroup(@Query("keyword") String keyword, @Query("group_id") String groupid);
 
+    // Update BroadCast Group
+    @POST("createBroadcastGroups.php")
+    Call<String> updateBroadcastGroup(@Query("title") String title, @Query("owner") String owner, @Query("members") String members
+            , @Query("keyword") String keyword);
+
+
 
 }
