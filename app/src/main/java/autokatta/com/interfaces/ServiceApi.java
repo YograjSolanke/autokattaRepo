@@ -3,6 +3,7 @@ package autokatta.com.interfaces;
 import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
+import autokatta.com.response.AuctionAnalyticsResponse;
 import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.AuctionParticipantsResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
@@ -588,6 +589,10 @@ public interface ServiceApi {
     @POST("getAuctionConfirmedparticipants.php")
     Call<AuctionParticipantsResponse> _autokattaGetAuctionParticipants(@Query("mycontact") String myContact, @Query("auction_id")
             String strAuctionId);
+
+    // Get Auction Analytics
+    @POST("get_analytics_count.php")
+    Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("auctionid") String strAuctionId);
 
     //get Browse store data
     @GET("getBrowseStores.php")
