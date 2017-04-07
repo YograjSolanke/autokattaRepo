@@ -19,4 +19,11 @@
     <color name="button_grey">#757575</color>
     <color name="red">#FF0000</color>
     <color name="medium_sea_green">#3CB371</color>
+
+    <color name="high_bid">#e0eeee</color>
+    <color name="above_bid">#faebd7</color>
+    <color name="no_bid">#ffe4c4</color>
+    <color name="approved">#DAF7A6</color>
+    <color name="watched_item">#ffffff</color>
+    <color name="your_bid">#ffffb3</color>
 </resources>

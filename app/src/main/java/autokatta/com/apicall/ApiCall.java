@@ -55,6 +55,7 @@ import autokatta.com.response.GetVehicleVersionResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoanMelaCreateResponse;
 import autokatta.com.response.LoginResponse;
+import autokatta.com.response.MyActiveAuctionHighBidResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
 import autokatta.com.response.MyActiveExchangeMelaResponse;
 import autokatta.com.response.MyActiveLoanMelaResponse;
@@ -3806,6 +3807,38 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
+    /*
+        Get Active Auction High Bid
+    */
+    public void ActiveAuctionHighBid(String myContact, String mAuctionId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyActiveAuctionHighBidResponse> mAuctionHighBid = serviceApi._autokattaGetActiveAuctionHighBid(myContact, mAuctionId);
+                mAuctionHighBid.enqueue(new Callback<MyActiveAuctionHighBidResponse>() {
+                    @Override
+                    public void onResponse(Call<MyActiveAuctionHighBidResponse> call, Response<MyActiveAuctionHighBidResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyActiveAuctionHighBidResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     //Browse store
 
@@ -4020,7 +4053,7 @@ params.put("auction_id", bundleAuctionId);
 
 
     // Broadcast Group Message
-    public void broadcastGroupMessage( String groupid,String message,String image) {
+    public void broadcastGroupMessage(String groupid, String message, String image) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4037,7 +4070,7 @@ params.put("auction_id", bundleAuctionId);
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> bgrpmsg = serviceApi.broadCastGroupMessage(groupid,message, image);
+                Call<String> bgrpmsg = serviceApi.broadCastGroupMessage(groupid, message, image);
                 bgrpmsg.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -4069,5 +4102,6 @@ params.put("auction_id", bundleAuctionId);
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
 
 }
