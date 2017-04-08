@@ -18,7 +18,6 @@ import java.net.SocketTimeoutException;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
-import autokatta.com.Registration.ContinueRegistration;
 import autokatta.com.Registration.RegistrationActivity;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.BackgroundService;
@@ -101,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (response.isSuccessful()) {
                 LoginResponse mLoginResponse = (LoginResponse) response.body();
                 String myContact = mUserName.getText().toString();
-                if (mLoginResponse.getSuccess() != null) {
+                if (mLoginResponse.getSuccess() != null || !mLoginResponse.getSuccess().isEmpty()) {
                     String id = mLoginResponse.getSuccess().get(0).getRegID();
                     Log.i("id", "->" + id);
                     CustomToast.customToast(getApplicationContext(), "Login Successful");
@@ -109,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     session.createLoginSession(userName, password);
                     Intent is = new Intent(LoginActivity.this, BackgroundService.class);
                     startService(is);
-                    startActivity(new Intent(getApplicationContext(), ContinueRegistration.class));
+                    startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
                 } else {
                     CustomToast.customToast(getApplicationContext(), mLoginResponse.getError().get(0));
                 }

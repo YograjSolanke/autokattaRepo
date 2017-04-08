@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import autokatta.com.Registration.ContinueRegistration;
 import autokatta.com.adapter.TabAdapter;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.AuctionNotification;
@@ -57,6 +59,8 @@ public class AutokattaMainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     boolean isNetworkAvailable;
     SessionManagement session;
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
+        sharedPreferences = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
        /* DbOperation dbAdpter = new DbOperation(getApplicationContext());
         dbAdpter.OPEN();
         Cursor cursor = dbAdpter.getAutokattaContact();
@@ -264,5 +269,17 @@ startActivity(new Intent(AutokattaMainActivity.this, BussinessChatActivity.class
         });
         alert.create();
         alert.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("firstRun", true)) {
+            //You can perform anything over here. This will call only first time
+            startActivity(new Intent(getApplicationContext(), ContinueRegistration.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("firstRun", false);
+            editor.apply();
+        }
     }
 }

@@ -6,7 +6,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -42,56 +40,55 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         AdapterView.OnItemSelectedListener, android.location.LocationListener, RequestNotifier, View.OnTouchListener {
 
     EditText personName, mobileNo, email, dateOfBirth, pincode, otherIndustry, otherCategory, password, confirmPassword;
-    Spinner moduleSpinner,usertypeSpinner,industrySpinner;
-    Button btnSubmit,btnClear;
+    Spinner moduleSpinner, usertypeSpinner, industrySpinner;
+    Button btnSubmit, btnClear;
     AutoCompleteTextView address;
     TextInputLayout otherIndustryLayout, otherCategoryLayout;
-    String namestr,contactstr,emailstr,DOBstr,pincodestr,passwordstr,confirmpassstr,addressstr,genderstr,
-            profession,sub_profession,strIndustry;
+    String namestr, contactstr, emailstr, DOBstr, pincodestr, passwordstr, confirmpassstr, addressstr, genderstr,
+            profession, sub_profession, strIndustry;
 
-    RadioButton rbtmale,rbtfemale;
-    ImageView dob_calender;
+    RadioButton rbtmale, rbtfemale;
     RadioGroup rg1;
     String[] MODULE = null;
     String[] INDUSTRY = null;
     ApiCall apiCall;
     GenericFunctions functions;
-    List<String> resultList=new ArrayList<>();
+    List<String> resultList = new ArrayList<>();
     private DatePickerDialog datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_registration);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_registration);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         apiCall = new ApiCall(this, this);
 
-        personName=(EditText)findViewById(R.id.editPersonName);
-        mobileNo=(EditText)findViewById(R.id.editMobileNo);
-        email=(EditText)findViewById(R.id.editEmail);
-        dateOfBirth=(EditText)findViewById(R.id.editdob);
-        address=(AutoCompleteTextView) findViewById(R.id.editAddress);
-        pincode=(EditText)findViewById(R.id.editPincode);
+        personName = (EditText) findViewById(R.id.editPersonName);
+        mobileNo = (EditText) findViewById(R.id.editMobileNo);
+        email = (EditText) findViewById(R.id.editEmail);
+        dateOfBirth = (EditText) findViewById(R.id.editdob);
+        address = (AutoCompleteTextView) findViewById(R.id.editAddress);
+        pincode = (EditText) findViewById(R.id.editPincode);
         otherIndustry = (EditText) findViewById(R.id.editOtherTypeIndustry);
         otherCategory = (EditText) findViewById(R.id.editOtherTypeCategory);
-        password=(EditText)findViewById(R.id.editPassword);
-        confirmPassword=(EditText)findViewById(R.id.editConfirmPassword);
-        usertypeSpinner=(Spinner)findViewById(R.id.spinnerUsertype);
-        industrySpinner=(Spinner)findViewById(R.id.spinnerindustry);
-        moduleSpinner=(Spinner)findViewById(R.id.spinnerCategory);
+        password = (EditText) findViewById(R.id.editPassword);
+        confirmPassword = (EditText) findViewById(R.id.editConfirmPassword);
+        usertypeSpinner = (Spinner) findViewById(R.id.spinnerUsertype);
+        industrySpinner = (Spinner) findViewById(R.id.spinnerindustry);
+        moduleSpinner = (Spinner) findViewById(R.id.spinnerCategory);
         otherIndustryLayout = (TextInputLayout) findViewById(R.id.otherIndustryLayout);
         otherCategoryLayout = (TextInputLayout) findViewById(R.id.otherCategoryLayout);
         rbtmale = (RadioButton) findViewById(R.id.rbtmale);
         rbtfemale = (RadioButton) findViewById(R.id.rbtfemale);
-  //      dob_calender=(ImageView)findViewById(R.id.dob_calender);
+        //      dob_calender=(ImageView)findViewById(R.id.dob_calender);
 
         rg1 = (RadioGroup) findViewById(R.id.radiogp1);
-        functions=new GenericFunctions();
+        functions = new GenericFunctions();
 
 
-        btnSubmit=(Button)findViewById(R.id.btnsubmit);
-        btnClear=(Button)findViewById(R.id.btnclear);
+        btnSubmit = (Button) findViewById(R.id.btnsubmit);
+        btnClear = (Button) findViewById(R.id.btnclear);
         btnClear.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         dateOfBirth.setInputType(InputType.TYPE_NULL);
@@ -99,7 +96,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         usertypeSpinner.setOnItemSelectedListener(this);
         industrySpinner.setOnItemSelectedListener(this);
         moduleSpinner.setOnItemSelectedListener(this);
-    //    dob_calender.setOnTouchListener(this);
+        //    dob_calender.setOnTouchListener(this);
         dateOfBirth.setOnTouchListener(this);
         showDatePicker();
         address.setAdapter(new GooglePlacesAdapter(RegistrationActivity.this, R.layout.simple));
@@ -111,8 +108,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()){
-            case (R.id.btnsubmit) :
+        switch (view.getId()) {
+            case (R.id.btnsubmit):
                 Boolean flag = false;
                 namestr = personName.getText().toString().trim();
                 contactstr = mobileNo.getText().toString().trim();
@@ -239,14 +236,14 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         apiCall.addOtherIndustry(strIndustry);
                     }
                     if (sub_profession.equalsIgnoreCase("Select Category"))
-                        sub_profession="";
+                        sub_profession = "";
                     if (strIndustry.equalsIgnoreCase("Select Industry"))
-                        strIndustry="";
-                    apiCall.registrationAfterOtp(namestr,contactstr,emailstr,DOBstr,genderstr,pincodestr,addressstr,profession,passwordstr,sub_profession,strIndustry);
+                        strIndustry = "";
+                    apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry);
                 }
                 break;
 
-            case (R.id.btnclear) :
+            case (R.id.btnclear):
                 personName.setText("");
                 mobileNo.setText("");
                 mobileNo.clearFocus();
@@ -413,8 +410,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
-
-
     }
 
     @Override
@@ -437,7 +432,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             CustomToast.customToast(getApplicationContext(), "Registration Successfully");
             Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
             startActivity(i);
-           finish();
+            finish();
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
@@ -464,23 +459,23 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 if (dayOfMonth < 10) {
-                    if ((monthOfYear+1) < 11) {
-                        if ((monthOfYear+1) == 10) {
+                    if ((monthOfYear + 1) < 11) {
+                        if ((monthOfYear + 1) == 10) {
                             dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                        }else if(monthOfYear < 10){
+                        } else if (monthOfYear < 10) {
                             dateOfBirth.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
                         }
                     } else {
                         dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
                     }
                 } else if (dayOfMonth >= 10) {
-                    if ((monthOfYear+1) < 11) {
-                        if ((monthOfYear+1) == 10) {
+                    if ((monthOfYear + 1) < 11) {
+                        if ((monthOfYear + 1) == 10) {
                             dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                        }else if(monthOfYear < 10) {
+                        } else if (monthOfYear < 10) {
                             dateOfBirth.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
                         }
-                    }else {
+                    } else {
                         dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                     }
                 }

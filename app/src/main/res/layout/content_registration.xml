@@ -139,10 +139,6 @@
                     </RadioGroup>
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -163,21 +159,9 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <!--<ImageView
-                        android:id="@+id/dob_calender"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/calendar" />-->
-
-                </RelativeLayout>
-
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
 
                     <AutoCompleteTextView
                         android:id="@+id/editAddress"
@@ -215,18 +199,14 @@
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
                     android:layout_marginTop="10dp"
-                    android:entries="@array/userType"></Spinner>
+                    android:entries="@array/userType" />
 
                 <Spinner
                     android:id="@+id/spinnerindustry"
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
                     android:layout_marginTop="10dp"
                     android:visibility="gone" />
 
@@ -236,7 +216,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone">
-
 
                     <EditText
                         android:id="@+id/editOtherTypeIndustry"
@@ -257,8 +236,6 @@
                     style="@style/Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
                     android:layout_marginTop="10dp"
                     android:visibility="gone" />
 
@@ -268,7 +245,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone">
-
 
                     <EditText
                         android:id="@+id/editOtherTypeCategory"
@@ -336,21 +312,18 @@
             android:id="@+id/btnsubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:background="@color/background"
             android:text="Submit"
+            style="?android:attr/buttonBarButtonStyle"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnclear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
             android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
             android:background="@color/background"
             android:text="Clear"
             android:textColor="@color/white" />

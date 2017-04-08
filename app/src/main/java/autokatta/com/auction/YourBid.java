@@ -94,7 +94,7 @@ public class YourBid extends Fragment implements RequestNotifier {
                     success.setBidReceivedPrice(success.getBidReceivedPrice());
                     successes.add(success);
                 }
-                BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice);
+                BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice, "0");
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {

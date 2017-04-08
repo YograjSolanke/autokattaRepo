@@ -103,11 +103,14 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
                     tabLayout.setupWithViewPager(viewPager);
 
                     try {
-                        String tabNo = b1.getString("tabNo");
-                        if (tabNo != null || tabNo.equals("null"))
-                            Log.i("TabNo", "->" + tabNo);
-                        viewPager.setCurrentItem(Integer.parseInt(tabNo));
-
+                        if (getIntent().getExtras().getString("tabNo") != null) {
+                            String tabNo = getIntent().getExtras().getString("tabNo");
+                            if (tabNo != null)
+                                Log.i("TabNo", "->" + tabNo);
+                            viewPager.setCurrentItem(Integer.parseInt(tabNo));
+                        } else {
+                            Log.e("Value", "is Null");
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
