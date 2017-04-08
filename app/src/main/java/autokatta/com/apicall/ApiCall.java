@@ -22,6 +22,8 @@ import autokatta.com.response.AuctionParticipantsResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
+import autokatta.com.response.BroadcastReceivedResponse;
+import autokatta.com.response.BroadcastSendResponse;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
@@ -4083,6 +4085,75 @@ params.put("auction_id", bundleAuctionId);
             e.printStackTrace();
         }
     }
+
+    /*
+   Get getBroadcastReceivers data
+    */
+    public void getBroadcastReceivers(String myContact, String product_id, String service_id, String vehicle_id) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<BroadcastReceivedResponse> yourBid = serviceApi.getBroadcastReceivers(myContact, product_id, service_id,
+                        vehicle_id);
+                yourBid.enqueue(new Callback<BroadcastReceivedResponse>() {
+                    @Override
+                    public void onResponse(Call<BroadcastReceivedResponse> call, Response<BroadcastReceivedResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<BroadcastReceivedResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+  Get getBroadcastSenders data
+   */
+    public void getBroadcastSenders(String myContact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<BroadcastSendResponse> yourBid = serviceApi.getBroadcastSenders(myContact);
+                yourBid.enqueue(new Callback<BroadcastSendResponse>() {
+                    @Override
+                    public void onResponse(Call<BroadcastSendResponse> call, Response<BroadcastSendResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<BroadcastSendResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     /***
      * Retrofit Logs
      ***/

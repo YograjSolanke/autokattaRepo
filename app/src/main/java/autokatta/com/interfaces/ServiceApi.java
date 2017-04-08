@@ -9,6 +9,8 @@ import autokatta.com.response.AuctionParticipantsResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
+import autokatta.com.response.BroadcastReceivedResponse;
+import autokatta.com.response.BroadcastSendResponse;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
@@ -642,4 +644,17 @@ public interface ServiceApi {
     @POST("addMyBids.php")
     Call<String> addMyBid(@Query("auction_id") String auctionId, @Query("vehicle_id") String vehicleID,
                           @Query("bid_amount") String bidAmount, @Query("tabNo") String tabNo, @Query("mycontact") String contact);
+
+
+    //get broadcast recievers
+    @GET("getReplySenders.php")
+    Call<BroadcastReceivedResponse> getBroadcastReceivers(@Query("myContact") String myContact, @Query("product_id") String product_id,
+                                                          @Query("service_id") String service_id, @Query("vehicle_id") String vehicle_id);
+
+
+    //Get  broadcast senders
+    @GET("getMySenders.php")
+    Call<BroadcastSendResponse> getBroadcastSenders(@Query("myContact") String myContact);
+
+
 }
