@@ -76,12 +76,14 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
         if (response != null) {
             if (response.isSuccessful()) {
                 mVehicleLists = new ArrayList<>();
+                mVehicleLists.clear();
 
                 MyActiveAuctionHighBidResponse mainSuccess = (MyActiveAuctionHighBidResponse) response.body();
                 MyActiveAuctionHighBidResponse.Success subSuccess = mainSuccess.getSuccess();
                 for (MyActiveAuctionHighBidResponse.VehicleList vehicleList : subSuccess.getVehicleList()) {
 
                     mBiddersLists = new ArrayList<>();
+                    mBiddersLists.clear();
 
                     vehicleList.setVehicleid(vehicleList.getVehicleid());
                     vehicleList.setAuctionid(vehicleList.getAuctionid());

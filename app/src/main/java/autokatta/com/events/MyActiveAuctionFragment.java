@@ -85,6 +85,7 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
                 MyActiveAuctionResponse myActiveAuctionResponse = (MyActiveAuctionResponse) response.body();
                 if (!myActiveAuctionResponse.getSuccess().getAuction().isEmpty()) {
                     myActiveAuctionResponseList = new ArrayList<>();
+                    myActiveAuctionResponseList.clear();
                     for (MyActiveAuctionResponse.Success.Auction auctionSuccess : myActiveAuctionResponse.getSuccess().getAuction()) {
 
 

@@ -76,12 +76,14 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
         if (response != null) {
             if (response.isSuccessful()) {
                 mVehicleLists = new ArrayList<>();
+                mVehicleLists.clear();
 
                 MyActiveAuctionAboveReservedResponse mainSuccess = (MyActiveAuctionAboveReservedResponse) response.body();
                 MyActiveAuctionAboveReservedResponse.Success subSuccess = mainSuccess.getSuccess();
                 for (MyActiveAuctionAboveReservedResponse.VehicleList vehicleList : subSuccess.getVehicleList()) {
 
                     mBiddersLists = new ArrayList<>();
+                    mBiddersLists.clear();
 
                     vehicleList.setVehicleid(vehicleList.getVehicleid());
                     vehicleList.setAuctionid(vehicleList.getAuctionid());

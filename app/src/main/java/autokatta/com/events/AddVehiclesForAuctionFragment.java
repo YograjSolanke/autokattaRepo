@@ -522,7 +522,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
     private void getexcelFilesName() {
 
-        mApiCall.ExcelSheetName("9890950817");
+        mApiCall.ExcelSheetName(contactnumber);
     }
 
     //alert box to get Excel sheet names
@@ -593,7 +593,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
 
     private void getVehiclesByExcelSheet(String ExcelSheetName) {
-        mApiCall.AdminVehicles("1234567890", ExcelSheetName, UserId);
+        mApiCall.AdminVehicles(contactnumber, ExcelSheetName, UserId);
     }
 
     private void getAllVehicles() {
@@ -635,7 +635,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         Uploaded vehicle data
                          */
                     if (!auctionAllVehicleResponse.getSuccess().getUploadedVehicles().isEmpty()) {
-
+                        uploadedVehicleData.clear();
                         for (AuctionAllVehicleResponse.Success.UploadedVehicle uploadSuccess : auctionAllVehicleResponse.getSuccess().getUploadedVehicles()) {
 
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
@@ -676,6 +676,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             Reauctioned vehicle data
                          */
                     if (!auctionAllVehicleResponse.getSuccess().getReauctionVehicles().isEmpty()) {
+                        reauctionAuctionAllVehicleData.clear();
                         for (AuctionAllVehicleResponse.Success.ReauctionVehicle reauctionSuccess : auctionAllVehicleResponse.getSuccess().getReauctionVehicles()) {
 
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
@@ -716,6 +717,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             Admin vehicle data
                          */
                     if (!auctionAllVehicleResponse.getSuccess().getAdminVehicles().isEmpty()) {
+                        adminVehicleData.clear();
                         for (AuctionAllVehicleResponse.Success.AdminVehicle adminSuccess : auctionAllVehicleResponse.getSuccess().getAdminVehicles()) {
 
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
@@ -834,6 +836,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
                     if (!adminResponse.getSuccess().isEmpty()) {
 
+                        adminData.clear();
                         for (AdminVehiclesResponse.Success success : adminResponse.getSuccess()) {
 
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
@@ -890,7 +893,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     AuctionReauctionVehicleResponse reauctionResponse = (AuctionReauctionVehicleResponse) response.body();
                     ArrayList<AuctionAllVehicleData> reaucionData = new ArrayList<>();
                     if (!reauctionResponse.getSuccess().isEmpty()) {
-
+                        reaucionData.clear();
                         for (AuctionReauctionVehicleResponse.Success reauctionSuccess : reauctionResponse.getSuccess()) {
 
 

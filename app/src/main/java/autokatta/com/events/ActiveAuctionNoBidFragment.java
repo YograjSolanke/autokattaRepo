@@ -101,6 +101,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
         if (response != null) {
             if (response.isSuccessful()) {
                 ArrayList<AuctionAllVehicleData> auctionAllVehicleList = new ArrayList<>();
+                auctionAllVehicleList.clear();
                 MyActiveAuctionNoBidResponse noBidResponse = (MyActiveAuctionNoBidResponse) response.body();
 
                 for (MyActiveAuctionNoBidResponse.Success.VehicleList success : noBidResponse.getSuccess().getVehicleList()) {
