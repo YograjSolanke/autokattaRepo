@@ -1,5 +1,6 @@
 package autokatta.com.auction;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -59,9 +60,9 @@ public class HighestBid extends Fragment implements RequestNotifier {
      */
     private void getYourBidData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        /*mApiCall.getHighestBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", ""));*/
-        mApiCall.getHighestBid("1047", "7841023392");
+        mApiCall.getHighestBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", ""));
+        //mApiCall.getHighestBid("1047", "7841023392");
     }
 
     @Override
