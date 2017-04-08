@@ -51,8 +51,8 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
     private Activity mActivity;
     private List<YourBidResponse.Success> mItemList = new ArrayList<>();
     private String auctionId, openClose, showPrice;
-    ConnectionDetector mConnectionDetector;
-    String str;
+    private ConnectionDetector mConnectionDetector;
+    private String result;
 
     public BidRecyclerAdapter(Activity mActivity, List<YourBidResponse.Success> mItemList, String auctionId, String openClose,
                               String showPrice) {
@@ -205,7 +205,8 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
                                         Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
 
                                         if (IntBidAmount >= IntCurrentBidPrice) {
-                                            String result = putMyBidForVehicle(auctionId, mItemList.get(position).getVehicleid(), BidAmount, "0");
+                                            putMyBidForVehicle(auctionId, mItemList.get(position).getVehicleid(), BidAmount, "0");
+
                                             if (result.equals("same")) {
                                                 Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
                                             } else if (result.startsWith("0")) {
@@ -242,7 +243,7 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
     /*
     Add My Bid...
      */
-    private String putMyBidForVehicle(String auctionId, String vehicleid, String bidAmount, String tabNo) {
+    private void putMyBidForVehicle(String auctionId, String vehicleid, String bidAmount, String tabNo) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -261,7 +262,11 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
                 addBid.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        str = response.body();
+                        if (response.isSuccessful()) {
+                            result = response.body();
+                        } else {
+                            Log.e("No", "Response");
+                        }
                     }
 
                     @Override
@@ -274,7 +279,6 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return str;
     }
 
     /*
