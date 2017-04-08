@@ -65,8 +65,8 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
         mAuctionId = bundle.getString("auctionid");
 
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.ActiveAuctionHighBid(myContact, mAuctionId);
         //mApiCall.ActiveAuctionAboveReservedPrice(myContact, "1047");
+        mApiCall.ActiveAuctionAboveReservedPrice(myContact, mAuctionId);
 
         return view;
     }
