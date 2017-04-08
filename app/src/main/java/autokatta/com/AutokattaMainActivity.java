@@ -34,6 +34,7 @@ import autokatta.com.other.SessionManagement;
 import autokatta.com.view.BlackListedMemberActivity;
 import autokatta.com.view.BroadcastMessageActivity;
 import autokatta.com.view.BrowseStoreActivity;
+import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.Create_Event;
 import autokatta.com.view.GroupTabs;
 import autokatta.com.view.MyActiveEventsTabActivity;
@@ -47,7 +48,6 @@ import autokatta.com.view.MyUpcomingEventsTabActivity;
 import autokatta.com.view.MyUploadedVehiclesActivity;
 import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.UserProfile;
-import autokatta.com.view.VehicleDetails;
 import autokatta.com.view.VehicleUpload;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
@@ -198,7 +198,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.my_broadcast_message) {
                             startActivity(new Intent(AutokattaMainActivity.this, BroadcastMessageActivity.class));
                         } else if (menuItem.getItemId() == R.id.business_Chat) {
-startActivity(new Intent(AutokattaMainActivity.this, VehicleDetails.class));
+startActivity(new Intent(AutokattaMainActivity.this, BussinessChatActivity.class));
                         } else if (menuItem.getItemId() == R.id.locality) {
 
                         } else if (menuItem.getItemId() == R.id.sign_out) {

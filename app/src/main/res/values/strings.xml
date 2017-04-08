@@ -145,4 +145,5 @@
     <!-- AuctionType -->
     <string name="live_auction">Live Events</string>
     <string name="title_activity_broadcast_message">BroadcastMessageActivity</string>
+    <string name="title_activity_bussiness_chat">BussinessChatActivity</string>
 </resources>

@@ -68,6 +68,7 @@ import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.YourBidResponse;
+import autokatta.com.response.getBussinessChatResponse;
 import autokatta.com.response.getDealsResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -667,5 +668,8 @@ public interface ServiceApi {
     @GET("getMySenders.php")
     Call<BroadcastSendResponse> getBroadcastSenders(@Query("myContact") String myContact);
 
+
+    @POST("getMyChatDetails.php")
+    Call<getBussinessChatResponse> getBussinessChat(@Query("mycontact") String contact);
 
 }

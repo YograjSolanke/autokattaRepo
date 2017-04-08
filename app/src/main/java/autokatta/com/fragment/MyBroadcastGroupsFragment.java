@@ -103,7 +103,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         imgDeleteGroup.setOnClickListener(this);
         createGroup.setOnClickListener(this);
 
-    apiCall =new  ApiCall(getActivity(),this);
+    apiCall =new  ApiCall(ctx,this);
 
         mRecyclerView.setHasFixedSize(true);
 

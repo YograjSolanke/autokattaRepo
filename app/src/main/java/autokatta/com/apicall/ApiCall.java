@@ -79,6 +79,7 @@ import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.YourBidResponse;
+import autokatta.com.response.getBussinessChatResponse;
 import autokatta.com.response.getDealsResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -4217,6 +4218,38 @@ params.put("auction_id", bundleAuctionId);
             e.printStackTrace();
         }
     }
+    /*Get MyBussinessChat
+ */
+    public void getBussinessChat(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<getBussinessChatResponse> mgetBChat = serviceApi.getBussinessChat(contact);
+                mgetBChat.enqueue(new Callback<getBussinessChatResponse>() {
+                    @Override
+                    public void onResponse(Call<getBussinessChatResponse> call, Response<getBussinessChatResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<getBussinessChatResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /***
