@@ -1,9 +1,9 @@
 package autokatta.com.auction;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +40,11 @@ public class HighestBid extends Fragment implements RequestNotifier {
         showPrice = b.getString("showPrice");
 
         mRecyclerView = (RecyclerView) mHighestBid.findViewById(R.id.all_bids);
-
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -55,8 +59,9 @@ public class HighestBid extends Fragment implements RequestNotifier {
      */
     private void getYourBidData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getHighestBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", ""));
+        /*mApiCall.getHighestBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", ""));*/
+        mApiCall.getHighestBid("1047", "7841023392");
     }
 
     @Override
