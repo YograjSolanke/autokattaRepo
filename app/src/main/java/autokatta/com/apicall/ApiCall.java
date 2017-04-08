@@ -57,7 +57,9 @@ import autokatta.com.response.GetVehicleVersionResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoanMelaCreateResponse;
 import autokatta.com.response.LoginResponse;
+import autokatta.com.response.MyActiveAuctionAboveReservedBidResponse;
 import autokatta.com.response.MyActiveAuctionHighBidResponse;
+import autokatta.com.response.MyActiveAuctionNoBidResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
 import autokatta.com.response.MyActiveExchangeMelaResponse;
 import autokatta.com.response.MyActiveLoanMelaResponse;
@@ -3842,6 +3844,73 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
+    /*
+       Get Active Auction Above reserved price Bid
+   */
+    public void ActiveAuctionAboveReservedPrice(String myContact, String mAuctionId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyActiveAuctionAboveReservedBidResponse> mAuctionAboveReserved = serviceApi._autokattaGetActiveAuctionAboveReservedPrice(myContact, mAuctionId);
+                mAuctionAboveReserved.enqueue(new Callback<MyActiveAuctionAboveReservedBidResponse>() {
+                    @Override
+                    public void onResponse(Call<MyActiveAuctionAboveReservedBidResponse> call, Response<MyActiveAuctionAboveReservedBidResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyActiveAuctionAboveReservedBidResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+       Get Active Auction No bid Bid
+   */
+    public void ActiveAuctionNoBid(String mAuctionId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyActiveAuctionNoBidResponse> mAuctionNoBid = serviceApi._autokattaGetActiveAuctionNoBid(mAuctionId);
+                mAuctionNoBid.enqueue(new Callback<MyActiveAuctionNoBidResponse>() {
+                    @Override
+                    public void onResponse(Call<MyActiveAuctionNoBidResponse> call, Response<MyActiveAuctionNoBidResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyActiveAuctionNoBidResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     //Browse store
 
     public void getBrowseStores(String contact, String keyword) {
@@ -3945,6 +4014,7 @@ params.put("auction_id", bundleAuctionId);
             e.printStackTrace();
         }
     }
+
     /*
     Get Your Bid data
      */
@@ -4013,7 +4083,7 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //Create Broadcast Group
-    public void createBroadcastgroup(String title,String owner,String member,String keyword) {
+    public void createBroadcastgroup(String title, String owner, String member, String keyword) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -4026,8 +4096,8 @@ params.put("auction_id", bundleAuctionId);
                         .client(initLog().build())
                         .build();
 
-                ServiceApi serviceApi=retrofit.create(ServiceApi.class);
-                Call<String>createbrdcstgrp=serviceApi.createBroadcastGroup(title,owner,member,keyword);
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> createbrdcstgrp = serviceApi.createBroadcastGroup(title, owner, member, keyword);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -4039,18 +4109,16 @@ params.put("auction_id", bundleAuctionId);
                         mNotifier.notifyError(t);
                     }
                 });
-            }else
-            {
+            } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //Update Broadcast Group
-    public void updateBroadcastgroup(String title,String owner,String member,String keyword,String groupid) {
+    public void updateBroadcastgroup(String title, String owner, String member, String keyword, String groupid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -4063,8 +4131,8 @@ params.put("auction_id", bundleAuctionId);
                         .client(initLog().build())
                         .build();
 
-                ServiceApi serviceApi=retrofit.create(ServiceApi.class);
-                Call<String>createbrdcstgrp=serviceApi.updateBroadcastGroup(title,owner,member,keyword,groupid);
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> createbrdcstgrp = serviceApi.updateBroadcastGroup(title, owner, member, keyword, groupid);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -4076,12 +4144,10 @@ params.put("auction_id", bundleAuctionId);
                         mNotifier.notifyError(t);
                     }
                 });
-            }else
-            {
+            } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -4153,7 +4219,6 @@ params.put("auction_id", bundleAuctionId);
     }
 
 
-
     /***
      * Retrofit Logs
      ***/
@@ -4167,6 +4232,5 @@ params.put("auction_id", bundleAuctionId);
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
-
 
 }

@@ -46,7 +46,9 @@ import autokatta.com.response.GetVehicleVersionResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoanMelaCreateResponse;
 import autokatta.com.response.LoginResponse;
+import autokatta.com.response.MyActiveAuctionAboveReservedBidResponse;
 import autokatta.com.response.MyActiveAuctionHighBidResponse;
+import autokatta.com.response.MyActiveAuctionNoBidResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
 import autokatta.com.response.MyActiveExchangeMelaResponse;
 import autokatta.com.response.MyActiveLoanMelaResponse;
@@ -607,6 +609,15 @@ public interface ServiceApi {
     @POST("auctionHighestBidding.php")
     Call<MyActiveAuctionHighBidResponse> _autokattaGetActiveAuctionHighBid(@Query("contact") String myContact,
                                                                            @Query("auctionid") String mAuctionId);
+
+    //get Active Auction Above reserved price bid
+    @POST("auctionReservedPrice.php")
+    Call<MyActiveAuctionAboveReservedBidResponse> _autokattaGetActiveAuctionAboveReservedPrice(@Query("contact") String myContact,
+                                                                                               @Query("auctionid") String mAuctionId);
+
+    //get Active Auction No bid
+    @POST("auctionNoBidding.php")
+    Call<MyActiveAuctionNoBidResponse> _autokattaGetActiveAuctionNoBid(@Query("auctionid") String mAuctionId);
 
     //get Browse store data
     @GET("getBrowseStores.php")

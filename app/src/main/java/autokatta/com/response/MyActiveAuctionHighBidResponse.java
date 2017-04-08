@@ -49,6 +49,7 @@ public class MyActiveAuctionHighBidResponse {
         public void setBiddersList(List<BiddersList> biddersList) {
             this.biddersList = biddersList;
         }
+    }
 
         public class VehicleList {
 
@@ -415,4 +416,3 @@ public class MyActiveAuctionHighBidResponse {
 
 
     }
-}
