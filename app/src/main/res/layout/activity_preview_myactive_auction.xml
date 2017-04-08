@@ -264,7 +264,7 @@
             android:id="@+id/gotolive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/event"
+            android:src="@mipmap/auction"
             fab:fab_label="Go Live"
             fab:fab_size="mini" />
 
