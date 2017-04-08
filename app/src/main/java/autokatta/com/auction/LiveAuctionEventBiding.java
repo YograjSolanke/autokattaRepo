@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -31,6 +32,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
     TextView mLiveTitle, mLiveVehicles, mLiveAuctionType, mLiveCurrentlyActive, mEndDate, mEndTime, mLiveTimer;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
     CountDownTimer cdt;
+    Bundle b1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
         showPrice = getIntent().getExtras().getString("showPrice");
         isEMDPaid = getIntent().getExtras().getBoolean("isPayEMD");
 
-        Bundle b1 = new Bundle();
+        b1 = new Bundle();
         b1.putString("auction_id", AuctionId);
         b1.putString("openClose", openClose);
         b1.putString("showPrice", showPrice);
@@ -100,6 +102,15 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
                     TabLayout tabLayout = (TabLayout) findViewById(R.id.bid_tabs);
                     tabLayout.setupWithViewPager(viewPager);
 
+                    try {
+                        String tabNo = b1.getString("tabNo");
+                        if (tabNo != null || tabNo.equals("null"))
+                            Log.i("TabNo", "->" + tabNo);
+                        viewPager.setCurrentItem(Integer.parseInt(tabNo));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     final TextView tv = mLiveTimer;
                     cdt = counters.get(mLiveTimer);
                     if (cdt != null) {

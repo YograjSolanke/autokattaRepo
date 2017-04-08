@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -205,7 +206,7 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
 
                                         if (IntBidAmount >= IntCurrentBidPrice) {
                                             String result = putMyBidForVehicle(auctionId, mItemList.get(position).getVehicleid(), BidAmount, "0");
-                                            if (result.startsWith("same")) {
+                                            if (result.equals("same")) {
                                                 Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
                                             } else if (result.startsWith("0")) {
                                                 Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
@@ -298,7 +299,9 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
         b1.putString("showPrice", strContext.showPrice);
         b1.putString("tabNo", tabNo);
         b1.putBoolean("isPayEMD", true);
+        Log.i("tabNo", "->" + tabNo);
 
+        mActivity.finish();
         Intent intent = new Intent(mActivity, LiveAuctionEventBiding.class);
         intent.putExtras(b1);
         mActivity.startActivity(intent);
