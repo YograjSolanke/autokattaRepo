@@ -649,6 +649,10 @@ public interface ServiceApi {
     @GET("userYourBid.php")
     Call<YourBidResponse> getYourBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
 
+    //Get Highest Bid Response
+    @GET("userHighestBid.php")
+    Call<YourBidResponse> getHighestBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
+
     //send broadcast message
     @GET("sendBroadcastMessage.php")
     Call<String> broadCastGroupMessage(@Query("grp_id") String groupid, @Query("msgText") String msgText, @Query("msgImage") String lastword);
