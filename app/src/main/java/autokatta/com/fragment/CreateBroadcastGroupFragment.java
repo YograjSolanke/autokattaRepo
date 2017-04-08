@@ -131,8 +131,6 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
 
                         }
                     }
-
-
                 }
 
                 if (groupTitle.equals("")) {
