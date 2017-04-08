@@ -3905,44 +3905,6 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
-    //Create Broadcast Group
-
-    public void createBroadcastgroup(String groupTitle, String contact, String finalContacts, String keyword) {
-
-        try {
-            if (mConnectionDetector.isConnectedToInternet()) {
-
-                //JSON to Gson conversion
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .client(initLog().build())
-                        .build();
-
-                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> createbgrp = serviceApi.createBroadcastGroup(groupTitle, contact, finalContacts, keyword);
-                createbgrp.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        mNotifier.notifyString(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        mNotifier.notifyError(t);
-                    }
-                });
-            } else
-                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     //Delete Broadcast Group
 
@@ -3981,44 +3943,6 @@ params.put("auction_id", bundleAuctionId);
             e.printStackTrace();
         }
     }
-
-    //Update Broadcast Group
-    public void updateBroadcastgroup(String groupTitle, String contact, String finalContacts, String keyword, String groupid) {
-
-        try {
-            if (mConnectionDetector.isConnectedToInternet()) {
-
-                //JSON to Gson conversion
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .client(initLog().build())
-                        .build();
-
-                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> updatebgrp = serviceApi.updateBroadcastGroup(groupTitle, contact, finalContacts, keyword, groupid);
-                updatebgrp.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        mNotifier.notifyString(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        mNotifier.notifyError(t);
-                    }
-                });
-            } else
-                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /*
     Get Your Bid data
      */
@@ -4086,6 +4010,79 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
+    //Create Broadcast Group
+    public void createBroadcastgroup(String title,String owner,String member,String keyword) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi=retrofit.create(ServiceApi.class);
+                Call<String>createbrdcstgrp=serviceApi.createBroadcastGroup(title,owner,member,keyword);
+                createbrdcstgrp.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            }else
+            {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //Update Broadcast Group
+    public void updateBroadcastgroup(String title,String owner,String member,String keyword,String groupid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi=retrofit.create(ServiceApi.class);
+                Call<String>createbrdcstgrp=serviceApi.updateBroadcastGroup(title,owner,member,keyword,groupid);
+                createbrdcstgrp.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            }else
+            {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
     /***
      * Retrofit Logs
      ***/
