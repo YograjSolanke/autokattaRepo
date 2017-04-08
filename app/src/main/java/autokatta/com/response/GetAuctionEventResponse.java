@@ -108,7 +108,7 @@ public class GetAuctionEventResponse {
         private Object engineNo;
         @SerializedName("lotNo")
         @Expose
-        private Object lotNo;
+        private String lotNo;
         @SerializedName("vehicleStatus")
         @Expose
         private String vehicleStatus;
@@ -257,11 +257,11 @@ public class GetAuctionEventResponse {
             this.engineNo = engineNo;
         }
 
-        public Object getLotNo() {
+        public String getLotNo() {
             return lotNo;
         }
 
-        public void setLotNo(Object lotNo) {
+        public void setLotNo(String lotNo) {
             this.lotNo = lotNo;
         }
 

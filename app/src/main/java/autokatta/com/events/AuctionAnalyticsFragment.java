@@ -90,8 +90,8 @@ public class AuctionAnalyticsFragment extends Fragment implements SwipeRefreshLa
 
     private void getAuctionAnalytics(String strAuctionId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        //apiCall.AuctionAnalyticsData(strAuctionId);
-        apiCall.AuctionAnalyticsData("1047");
+        apiCall.AuctionAnalyticsData(strAuctionId);
+        //apiCall.AuctionAnalyticsData("1047");
     }
 
 

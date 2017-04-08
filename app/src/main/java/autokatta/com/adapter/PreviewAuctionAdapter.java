@@ -31,7 +31,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
         this.mItemList = mItemList;
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mAuctionCardView;
         ImageView mAuctionVehicleImage;
         TextView mRegistrationNo, mSetLotNo, mVehicleName, mVehicleBrand, mVehicleModel, mVehicleYearOfMfg,
@@ -65,7 +65,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
     }
 
     @Override
-    public void onBindViewHolder(PreviewAuctionAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(PreviewAuctionAdapter.MyViewHolder holder, final int position) {
         if (mItemList.get(position).getImage() != null || mItemList.get(position).getImage().equals("")
                 || mItemList.get(position).getImage().isEmpty()) {
             String images[] = mItemList.get(position).getImage().split(",");
@@ -80,6 +80,47 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
         } else {
             holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.hdlogo);
         }
+
+        holder.mRegistrationNo.setText(mItemList.get(position).getRegNo());
+        holder.mSetLotNo.setText(mItemList.get(position).getLotNo());
+        holder.mVehicleName.setText(mItemList.get(position).getTitle());
+        holder.mVehicleBrand.setText(mItemList.get(position).getBrand());
+        holder.mVehicleModel.setText(mItemList.get(position).getModel());
+        holder.mVehicleYearOfMfg.setText(mItemList.get(position).getYear());
+        holder.mVehicleKmsHrs.setText(mItemList.get(position).getKmsRunning());
+        holder.mVehicleLocation.setText(mItemList.get(position).getLocationCity());
+        holder.mVehicleRtoCity.setText(mItemList.get(position).getRtoCity());
+
+        holder.mViewMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mItemList.get(position).getVehicleId().startsWith("A ")) {
+                                /*Bundle b = new Bundle();
+                                MyAuctionVehicleDetails frag = new MyAuctionVehicleDetails();
+                                b.putString("vehicle_id", VehiId);
+                                b.putString("auction_id", auction_id);
+                                frag.setArguments(b);
+
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.containerView, frag);
+                                fragmentTransaction.addToBackStack("myauctionvehicledetails");
+                                fragmentTransaction.commit();*/
+                } else {
+                                /*Toast.makeText(getActivity(),"Admin vehicle",Toast.LENGTH_SHORT).show();
+                                Bundle b = new Bundle();
+                                b.putString("vehicle_id", VehiId);
+                                b.putString("lotNo", lotNo.getText().toString());
+
+                                AdminVehicleMoreDetails fragment = new AdminVehicleMoreDetails();
+                                fragment.setArguments(b);
+                                FragmentManager mFragmentManagerm = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = mFragmentManagerm.beginTransaction();
+                                fragmentTransaction.replace(R.id.containerView, fragment).addToBackStack("adminvehiclemoredetails").commit();
+*/
+                }
+            }
+        });
     }
 
     @Override

@@ -57,7 +57,7 @@ import autokatta.com.response.GetVehicleVersionResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.LoanMelaCreateResponse;
 import autokatta.com.response.LoginResponse;
-import autokatta.com.response.MyActiveAuctionAboveReservedBidResponse;
+import autokatta.com.response.MyActiveAuctionAboveReservedResponse;
 import autokatta.com.response.MyActiveAuctionHighBidResponse;
 import autokatta.com.response.MyActiveAuctionNoBidResponse;
 import autokatta.com.response.MyActiveAuctionResponse;
@@ -3857,15 +3857,15 @@ params.put("auction_id", bundleAuctionId);
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyActiveAuctionAboveReservedBidResponse> mAuctionAboveReserved = serviceApi._autokattaGetActiveAuctionAboveReservedPrice(myContact, mAuctionId);
-                mAuctionAboveReserved.enqueue(new Callback<MyActiveAuctionAboveReservedBidResponse>() {
+                Call<MyActiveAuctionAboveReservedResponse> mAuctionAboveReserved = serviceApi._autokattaGetActiveAuctionAboveReservedPrice(myContact, mAuctionId);
+                mAuctionAboveReserved.enqueue(new Callback<MyActiveAuctionAboveReservedResponse>() {
                     @Override
-                    public void onResponse(Call<MyActiveAuctionAboveReservedBidResponse> call, Response<MyActiveAuctionAboveReservedBidResponse> response) {
+                    public void onResponse(Call<MyActiveAuctionAboveReservedResponse> call, Response<MyActiveAuctionAboveReservedResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<MyActiveAuctionAboveReservedBidResponse> call, Throwable t) {
+                    public void onFailure(Call<MyActiveAuctionAboveReservedResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

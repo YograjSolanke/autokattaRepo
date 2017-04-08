@@ -40,9 +40,9 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
     ViewPager mViewPager;
     TextView txtVehicle, txtEndDate, txtEndTime, txtStartTime, txtStartDate, txtParticipant, txtTimer;
     FloatingActionButton btnSpecialclause;
-    AuctionVehiclesFragment auctionVehiclesFragment;
-    AuctionParticipantsFragment auctionParticipantsFragment;
-    AuctionAnalyticsFragment auctionAnalyticsFragment;
+    ActiveAuctionHighestBidFragment auctionHighestBid;
+    ActiveAuctionNoBidFragment auctionNoBid;
+    ActiveAuctionAboveReservedFragment auctionAboveReserved;
     Bundle mBundle = new Bundle();
 
     @Override
@@ -81,14 +81,14 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
         btnSpecialclause.setOnClickListener(this);
 
 
-        auctionVehiclesFragment = new AuctionVehiclesFragment();
-        auctionVehiclesFragment.setArguments(mBundle);
+        auctionHighestBid = new ActiveAuctionHighestBidFragment();
+        auctionHighestBid.setArguments(mBundle);
 
-        auctionParticipantsFragment = new AuctionParticipantsFragment();
-        auctionParticipantsFragment.setArguments(mBundle);
+        auctionNoBid = new ActiveAuctionNoBidFragment();
+        auctionNoBid.setArguments(mBundle);
 
-        auctionAnalyticsFragment = new AuctionAnalyticsFragment();
-        auctionAnalyticsFragment.setArguments(mBundle);
+        auctionAboveReserved = new ActiveAuctionAboveReservedFragment();
+        auctionAboveReserved.setArguments(mBundle);
 
 
         runOnUiThread(new Runnable() {
@@ -173,9 +173,9 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(auctionVehiclesFragment, "highest bid");
-        adapter.addFragment(auctionParticipantsFragment, "no bid");
-        adapter.addFragment(auctionAnalyticsFragment, "above reserve price");
+        adapter.addFragment(auctionHighestBid, "highest bid");
+        adapter.addFragment(auctionNoBid, "no bid");
+        adapter.addFragment(auctionAboveReserved, "above reserve price");
         viewPager.setAdapter(adapter);
     }
 
