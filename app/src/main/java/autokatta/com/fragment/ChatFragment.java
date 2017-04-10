@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
+import java.net.SocketTimeoutException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import autokatta.com.R;
+import autokatta.com.adapter.ChatAdapter;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.BroadcastMessageResponse;
 import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
@@ -52,6 +63,8 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
     TextView BrdmessageText, msgFrom, dateNtime;
     String service_id = "", product_id = "", vehicle_id = "";
     ImageView imageView;
+    ApiCall apiCall;
+    ArrayList<BroadcastMessageResponse.Success> chatlist = new ArrayList<>();
 
 
     //  MultipartEntity entity;
@@ -59,7 +72,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
 
     String Sendercontact, sendername;
     private Button buttonRep;
-    // ChatAdapter adapter;
+    ChatAdapter adapter;
 
     String picturePath = "";
     Bitmap bitmap;
@@ -83,6 +96,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
         listView = (ListView) root.findViewById(R.id.msgview);
         msgFrom = (TextView) root.findViewById(R.id.msgFrom);
         chatwithtext = (TextView) root.findViewById(R.id.chatwithtext);
+        apiCall = new ApiCall(getActivity(), this);
 
         Keyword = (TextView) root.findViewById(R.id.keyword);
         Title = (TextView) root.findViewById(R.id.settitle);
@@ -99,6 +113,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
         relativeprofile = (RelativeLayout) root.findViewById(R.id.relativeprofile);
 
         relativeprofile.setOnClickListener(this);
+        buttonRep.setOnClickListener(this);
 
 
         try {
@@ -111,7 +126,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
 
             chatwithtext.setText(sendername);
 
-            //  getMyChat();
+            apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);
 
             if (product_id.equals("") && service_id.equals("") && vehicle_id.equals(""))
                 MainRel.setVisibility(View.GONE);
@@ -150,11 +165,100 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
 
     @Override
     public void notifySuccess(Response<?> response) {
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+        if (response != null) {
+            if (response.isSuccessful()) {
+
+                /*
+                        Response to get chat message
+                 */
+                if (response.body() instanceof BroadcastMessageResponse) {
+                    BroadcastMessageResponse moduleResponse = (BroadcastMessageResponse) response.body();
+
+                    if (!moduleResponse.getSuccess().isEmpty()) {
+
+                        for (BroadcastMessageResponse.Success message : moduleResponse.getSuccess()) {
+                            message.setSender(message.getSender());
+                            message.setReceiver(message.getReceiver());
+                            message.setMessage(message.getMessage());
+                            message.setImage(message.getImage());
+
+                            Date d = null;
+                            try {
+                                d = f.parse(message.getDate());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            message.setNewDate(d);
+
+                            chatlist.add(message);
+
+                        }
+
+                        adapter = new ChatAdapter(getActivity(), myContact, chatlist);
+                        listView.setAdapter(adapter);
+                        listView.setSelection(chatlist.size() - 1);
+
+
+                    } else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                }
+
+                 /*
+                        Response after creating store
+                 */
+//                if (response.body() instanceof CreateStoreResponse) {
+//                    CreateStoreResponse createStoreResponse = (CreateStoreResponse) response.body();
+//
+//                    if (createStoreResponse.getSuccess() != null) {
+//                        String id = createStoreResponse.getSuccess().getStoreID().toString();
+//                        Log.i("StoreId", "->" + id);
+//                        CustomToast.customToast(getActivity(), "Store Created Successfully");
+//
+//                        upload(picturePath);
+//                        upload(coverpicturePath);
+//
+//                        bundle = new Bundle();
+//                        bundle.putString("store_id", id);
+//                        bundle.putString("call", callFrom);
+//                        bundle.putString("storetype", storetype);
+//
+//                        AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
+//                        addAdmin.setArguments(bundle);
+//                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+//
+//
+//                    } else
+//                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//                }
+
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
+
 
     }
 
     @Override
     public void notifyError(Throwable error) {
+
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "ChatFragment");
+            error.printStackTrace();
+        }
 
     }
 

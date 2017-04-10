@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="7dp">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateTextview"
+            android:textSize="10sp"
+            android:background="@drawable/date_textview_back"
+            android:text="Date Of Message" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/maintext"
+        android:layout_gravity="left"
+        android:orientation="vertical"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/chat_textview_left">
+
+        <TextView
+            android:id="@+id/msgr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="Sample"
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date and Time"
+            android:id="@+id/dateNtime"
+            android:textSize="10sp"
+            android:layout_gravity="right"
+            android:layout_below="@+id/msgr" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/imagelayout"
+        android:layout_gravity="left"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/chat_textview_left">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/image"
+            android:layout_below="@+id/maintext"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:id="@+id/imagetime"
+            android:layout_gravity="right"
+            android:textColor="@color/white"
+            android:text="time" />
+    </LinearLayout>
+</LinearLayout>
