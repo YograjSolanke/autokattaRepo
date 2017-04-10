@@ -1,5 +1,6 @@
 package autokatta.com.auction;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -57,15 +58,16 @@ public class WatchedItem extends Fragment implements RequestNotifier {
 
     private void getWatchedData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        /*mApiCall.getYourBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", ""));*/
-        mApiCall.userWatchedItems("1047", "9890950817");
+        mApiCall.userWatchedItems(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", ""));
+        //mApiCall.userWatchedItems("1047", "9890950817");
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                successes.clear();
                 YourBidResponse yourBidResponse = (YourBidResponse) response.body();
                 for (YourBidResponse.Success success : yourBidResponse.getSuccess()) {
                     success.setTitle(success.getTitle());

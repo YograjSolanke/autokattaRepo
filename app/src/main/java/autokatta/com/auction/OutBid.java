@@ -70,6 +70,7 @@ public class OutBid extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                successes.clear();
                 YourBidResponse yourBidResponse = (YourBidResponse) response.body();
                 for (YourBidResponse.Success success : yourBidResponse.getSuccess()) {
                     success.setTitle(success.getTitle());
