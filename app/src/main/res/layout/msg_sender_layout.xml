@@ -10,9 +10,8 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_gravity="center"
-        card_view:cardCornerRadius="4dp"
+        card_view:cardCornerRadius="10dp"
         card_view:contentPadding="5dp">
 
         <RelativeLayout
@@ -24,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Message From"
-
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
                 android:id="@+id/msgFrom" />
 
             <TextView
@@ -33,7 +33,7 @@
                 android:text="Message From Cnt"
                 android:layout_below="@+id/msgFrom"
                 android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/repCount"
+                android:textColor="@color/textColor"
                 android:id="@+id/msgFromCnt" />
 
 

@@ -1,5 +1,6 @@
 package autokatta.com.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
@@ -19,8 +21,11 @@ import java.util.ArrayList;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastReceivedResponse;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-004 on 7/4/17.
@@ -35,9 +40,11 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView recyclerView;
+    String myContact;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<BroadcastReceivedResponse.Success> broadcastMessageArrayList = new ArrayList<>();
     ApiCall apiCall;
+    MsgReplyAdapter msgSenderAdapter;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +57,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
         apiCall = new ApiCall(getActivity(), this);
         mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
         recyclerView.setHasFixedSize(true);
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
 
         //Set animation attribute to each item
@@ -65,7 +73,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                //   getGroupVehicles();
+                apiCall.getBroadcastReceivers(myContact, "", "", "");
             }
         });
         return root;
@@ -74,28 +82,32 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
     @Override
     public void notifySuccess(Response<?> response) {
-//
-//        if (response!=null){
-//            if (response.isSuccessful()){
-//                mSwipeRefreshLayout.setRefreshing(false);
-//                if (response.body() instanceof GetGroupVehiclesResponse){
-//                    GetGroupVehiclesResponse mGetGroupVehiclesResponse = (GetGroupVehiclesResponse) response.body();
-//                    for (GetGroupVehiclesResponse.Success success : mGetGroupVehiclesResponse.getSuccess()){
-//
-//                        mSuccesses.add(success);
-//                    }
-//                    mGroupVehicleRefreshAdapter = new GroupVehicleRefreshAdapter(getActivity(), mSuccesses);
-//                    mRecyclerView.setAdapter(mGroupVehicleRefreshAdapter);
-//                    mGroupVehicleRefreshAdapter.notifyDataSetChanged();
-//                }
-//            }else {
-//                mSwipeRefreshLayout.setRefreshing(false);
-//                CustomToast.customToast(getActivity(), getString(R.string._404));
-//            }
-//        }else {
-//            mSwipeRefreshLayout.setRefreshing(false);
-//            CustomToast.customToast(getActivity(), getString(R.string.no_response));
-//        }
+
+        if (response != null) {
+            if (response.isSuccessful()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+
+                BroadcastReceivedResponse mGetGroupVehiclesResponse = (BroadcastReceivedResponse) response.body();
+                for (BroadcastReceivedResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
+
+                    success.setSender(success.getSender());
+                    success.setSendername(success.getSendername());
+                    broadcastMessageArrayList.add(success);
+                }
+
+                mSwipeRefreshLayout.setRefreshing(false);
+                msgSenderAdapter = new MsgReplyAdapter(getActivity(), broadcastMessageArrayList);
+                recyclerView.setAdapter(msgSenderAdapter);
+                msgSenderAdapter.notifyDataSetChanged();
+
+            } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
 
 
     }
@@ -123,6 +135,93 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
     @Override
     public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    ////////////////////////// Adapter Class /////////////////////////////////////////////
+
+    public class MsgReplyAdapter extends RecyclerView.Adapter<MsgReplyAdapter.MyViewHolder> {
+
+        ArrayList<BroadcastReceivedResponse.Success> broadcastMessageArrayList;
+        Activity activity;
+
+
+        //ViewHolder Class
+        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+
+            TextView msgFrom, msgFromCnt;
+
+
+            public MyViewHolder(View itemView) {
+                super(itemView);
+
+                msgFrom = (TextView) itemView.findViewById(R.id.msgFrom);
+                msgFromCnt = (TextView) itemView.findViewById(R.id.msgFromCnt);
+
+
+                itemView.setOnClickListener(this);
+                itemView.setOnLongClickListener(this);
+            }
+
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(activity,"onClick----",Toast.LENGTH_SHORT).show();
+
+
+//                ChatActivity object = new ChatActivity();
+//                Bundle b = new Bundle();
+//                b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).sender);
+//                b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).sendername);
+//                b.putString("product_id","");
+//                b.putString("service_id","");
+//                b.putString("vehicle_id","");
+//
+//                object.setArguments(b);
+//                FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.containerView, object);
+//                fragmentTransaction.addToBackStack("chatactivity");
+//                fragmentTransaction.commit();
+
+            }
+
+            @Override
+            public boolean onLongClick(View v) {
+                //Toast.makeText(activity,"onLongggClick----",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+
+        //Constructor of Main Adapter
+        public MsgReplyAdapter(Activity activity, ArrayList<BroadcastReceivedResponse.Success>
+                broadcastMessageArrayList) {
+            this.activity = activity;
+            this.broadcastMessageArrayList = broadcastMessageArrayList;
+        }
+
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_sender_layout, parent, false);
+
+            return new MyViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+
+            BroadcastReceivedResponse.Success broadcastMessageObj = broadcastMessageArrayList.get(position);
+
+            holder.msgFromCnt.setText(broadcastMessageObj.getSender());
+            holder.msgFrom.setText(broadcastMessageObj.getSendername());
+        }
+
+        @Override
+        public int getItemCount() {
+            return broadcastMessageArrayList.size();
+        }
+
+
 
     }
 }
