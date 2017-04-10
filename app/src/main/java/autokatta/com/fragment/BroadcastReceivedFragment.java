@@ -3,6 +3,9 @@ package autokatta.com.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -169,20 +172,20 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
                 //Toast.makeText(activity,"onClick----",Toast.LENGTH_SHORT).show();
 
 
-//                ChatActivity object = new ChatActivity();
-//                Bundle b = new Bundle();
-//                b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).sender);
-//                b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).sendername);
-//                b.putString("product_id","");
-//                b.putString("service_id","");
-//                b.putString("vehicle_id","");
-//
-//                object.setArguments(b);
-//                FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, object);
-//                fragmentTransaction.addToBackStack("chatactivity");
-//                fragmentTransaction.commit();
+                ChatFragment object = new ChatFragment();
+                Bundle b = new Bundle();
+                b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).getSender());
+                b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).getSendername());
+                b.putString("product_id", "");
+                b.putString("service_id", "");
+                b.putString("vehicle_id", "");
+
+                object.setArguments(b);
+                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.BrdcastMsgFrame, object);
+                fragmentTransaction.addToBackStack("chatactivity");
+                fragmentTransaction.commit();
 
             }
 

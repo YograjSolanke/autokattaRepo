@@ -9,6 +9,7 @@ import autokatta.com.response.AuctionParticipantsResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
+import autokatta.com.response.BroadcastMessageResponse;
 import autokatta.com.response.BroadcastReceivedResponse;
 import autokatta.com.response.BroadcastSendResponse;
 import autokatta.com.response.BrowseStoreResponse;
@@ -679,5 +680,10 @@ public interface ServiceApi {
 
     @POST("getMyChatDetails.php")
     Call<getBussinessChatResponse> getBussinessChat(@Query("mycontact") String contact);
+
+    //get broadcast recievers
+    @GET("getchatmessage.php")
+    Call<BroadcastMessageResponse> getChatMessageData(@Query("sender_contact") String sender_contact, @Query("receiver_contact") String receiver_contact, @Query("product_id") String product_id,
+                                                      @Query("service_id") String service_id, @Query("vehicle_id") String vehicle_id);
 
 }
