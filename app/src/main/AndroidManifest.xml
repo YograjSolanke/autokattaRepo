@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="autokatta.com">
+    package="autokatta.com">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:name="android.permission.VIBRATE"
-        android:maxSdkVersion="18"/>
+        android:maxSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -33,10 +33,10 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="autokatta.com.broadcastreceiver.Receiver"/>
+                <action android:name="autokatta.com.broadcastreceiver.Receiver" />
             </intent-filter>
         </receiver>
 
@@ -46,153 +46,153 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="autokatta.com.AutokattaMainActivity"/>
+                android:value="autokatta.com.AutokattaMainActivity" />
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+                android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name=".view.UserProfile"
             android:label="@string/title_activity_user_profile"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MyAutokattaContactsActivity"
             android:label="@string/title_activity_my_autokatta_contacts"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".view.UploadVehicleIntro"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.UploadVehicleIntro" />
         <activity
             android:name=".view.MyStoreListActivity"
             android:label="@string/title_activity_my_store_list"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".other.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".view.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Registration.RegistrationActivity"
             android:label="@string/title_activity_registration"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.BrowseStoreActivity"
             android:label="@string/title_activity_browse_store"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.VehicleUpload"
             android:label="@string/title_activity_vehicle_upload"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.SearchStoreActivity"
             android:label="@string/title_activity_search_store"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".view.OTP"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.OTP" />
         <activity
             android:name=".view.MySearchActivity"
             android:label="@string/title_activity_my_search"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.Forget_Password"
             android:label="@string/title_activity_forget__password"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".view.NewPassword"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".view.NewPassword" />
         <activity
             android:name=".view.MyUploadedVehiclesActivity"
             android:label="@string/title_activity_my_uploaded_vehicles"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MyActiveEventsTabActivity"
             android:label="@string/title_activity_my_active_events_tab"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MySavedAuctionEventActivity"
             android:label="@string/title_activity_my_saved_auction_event"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.BlackListedMemberActivity"
             android:label="@string/title_activity_black_listed_member"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Registration.ContinueRegistration"
             android:label="@string/title_activity_continue_registration"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MyUpcomingEventsTabActivity"
             android:label="@string/title_activity_my_upcoming_events_tab"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.Create_Event"
             android:label="@string/title_activity_create_event"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MyBroadcastGroupsActivity"
             android:label="@string/title_activity_my_broadcast_groups"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Registration.ContinueNextRegistration"
             android:label="Continue Next Registration"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MyEndedEventTabActivity"
             android:label="@string/title_activity_my_ended_event"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.GroupTabs"
             android:label="@string/title_activity_group_tabs"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.VehicleDetails"
             android:label="@string/title_activity_vehicle_details"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Registration.CompanyBasedRegistrationActivity"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Registration.CompanyBasedRegistrationActivity" />
         <activity
             android:name=".view.OtherProfile"
             android:label="@string/title_activity_other_profile"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- Service for Background task -->
         <service
             android:name=".broadcastreceiver.BackgroundService"
-            android:exported="false"/>
+            android:exported="false" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="0310abc2483857212f40bd7bad891e166bf94ec4"/>
+            android:value="0310abc2483857212f40bd7bad891e166bf94ec4" />
 
-        <activity android:name=".Registration.CompanyBasedInvitation"/>
-        <activity android:name=".Registration.SkillsBasedInvitation"/>
-        <activity android:name=".Registration.InviteFriends"/>
+        <activity android:name=".Registration.CompanyBasedInvitation" />
+        <activity android:name=".Registration.SkillsBasedInvitation" />
+        <activity android:name=".Registration.InviteFriends" />
         <activity
             android:name=".containers.AuctionContainer"
             android:label="@string/title_activity_auction_container"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".auction.PreviewLiveEvents"
             android:label="@string/title_activity_preview_live_events"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".auction.LiveAuctionEventBiding"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.PreviewMyActiveAuctionActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.PreviewNextMyActiveAuctionActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.BroadcastMessageActivity"
             android:label="@string/title_activity_broadcast_message"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.BussinessChatActivity"
             android:label="@string/title_activity_bussiness_chat"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".events.MyEndedAuctionPreviewActivity"></activity>
     </application>
 
 </manifest>

@@ -5,18 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.github.clans.fab.FloatingActionButton;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,7 +41,6 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                     getString("loginContact", "7841023392");
             mConnectionDetector = new ConnectionDetector(mActivity);
-            this.counters = new HashMap<TextView, CountDownTimer>();
 
         } catch (ClassCastException c) {
             c.printStackTrace();
@@ -74,7 +70,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
         holder.auction_starttime.setText(mMainList.get(position).getStartTime());
 
         spcl = mMainList.get(position).getSpecialClauses().replaceAll(",", "\n");
-        holder.btncluse.setOnClickListener(new View.OnClickListener() {
+        holder.btnCluse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -108,75 +104,12 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             }
         });
 
+        holder.btnPreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        final TextView tv = holder.timer;
-        CountDownTimer cdt = counters.get(holder.timer);
-        if (cdt != null) {
-            cdt.cancel();
-            cdt = null;
-        }
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date futureDate = dateFormat.parse(mMainList.get(position).getEndDate());
-
-            Date currentDate = dateFormat.parse(mMainList.get(position).getStartDate());
-            Date now = new Date();
-
-            long difference = futureDate.getTime() - currentDate.getTime();
-
-            long diff = now.getTime() - currentDate.getTime();
-
-            long abc = difference - diff;
-            cdt = new CountDownTimer(abc, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    int days = 0;
-                    int hours = 0;
-                    int minutes = 0;
-                    int seconds = 0;
-                    String sDate = "";
-
-                    if (millisUntilFinished > DateUtils.DAY_IN_MILLIS) {
-                        days = (int) (millisUntilFinished / DateUtils.DAY_IN_MILLIS);
-                        sDate += days + "d";
-                    }
-
-                    millisUntilFinished -= (days * DateUtils.DAY_IN_MILLIS);
-
-                    if (millisUntilFinished > DateUtils.HOUR_IN_MILLIS) {
-                        hours = (int) (millisUntilFinished / DateUtils.HOUR_IN_MILLIS);
-                    }
-
-                    millisUntilFinished -= (hours * DateUtils.HOUR_IN_MILLIS);
-
-                    if (millisUntilFinished > DateUtils.MINUTE_IN_MILLIS) {
-                        minutes = (int) (millisUntilFinished / DateUtils.MINUTE_IN_MILLIS);
-                    }
-
-                    millisUntilFinished -= (minutes * DateUtils.MINUTE_IN_MILLIS);
-
-                    if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
-                        seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
-                    }
-
-                    sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
-                    tv.setText(sDate.trim());
-                }
-
-                @Override
-                public void onFinish() {
-                    tv.setText("Finished");
-                }
-            };
-
-            counters.put(tv, cdt);
-            cdt.start();
-
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            }
+        });
 
     }
 
@@ -190,7 +123,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
 
         TextView action_title, auction_vehicle, auction_enddate, auction_endtime, auction_startdate, auction_starttime;
         TextView timer;
-        Button preview, btncluse;
+        FloatingActionButton btnPreview, btnCluse;
 
         AuctionHolder(View itemview) {
             super(itemview);
@@ -201,7 +134,8 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             auction_endtime = (TextView) itemview.findViewById(R.id.editText);
             auction_startdate = (TextView) itemview.findViewById(R.id.datetime1);
             auction_starttime = (TextView) itemview.findViewById(R.id.editTime);
-            btncluse = (Button) itemview.findViewById(R.id.btncluse);
+            btnCluse = (FloatingActionButton) itemview.findViewById(R.id.btncluse);
+            btnPreview = (FloatingActionButton) itemview.findViewById(R.id.gotopreview);
             timer = (TextView) itemview.findViewById(R.id.timer);
 
         }
