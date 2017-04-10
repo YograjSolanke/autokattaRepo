@@ -1,269 +1,244 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_gravity="center"
-        android:layout_width="fill_parent"
+        android:id="@+id/auction_card_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        card_view:cardCornerRadius="2dp"
-        card_view:contentPadding="5dp">
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/card_margin"
+        android:layout_marginLeft="@dimen/card_margin"
+        android:layout_marginRight="@dimen/card_margin"
+        android:layout_marginTop="@dimen/card_margin"
+        android:foreground="?attr/selectableItemBackground">
 
         <RelativeLayout
 
+            android:id="@+id/relativelayoutmain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/relativelayoutmain">
-
-            <!--<ImageView-->
-            <!--android:id="@+id/check"-->
-            <!--android:src="@drawable/check"-->
-            <!--android:layout_width="25dp"-->
-            <!--android:layout_height="25dp"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:layout_marginRight="5dp"-->
-            <!--android:visibility="gone"/>-->
+            android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:gravity="center_horizontal"
-                android:background="#C8C9CC"
                 android:id="@+id/rl1"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:background="#C8C9CC"
+                android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/auctiontitle2"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:textColor="#808080"
-                    android:text="Auction Title :"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Auction Title :"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
                 <TextView
 
-                    android:layout_marginTop="5dp"
-                    android:textColor="#808080"
-                    android:layout_marginLeft="5dp"
-
                     android:id="@+id/typeofauction2"
-                    android:hint="-"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/auctiontitle2"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/auctiontitle2"
-                    android:enabled="false" />
+                    android:enabled="false"
+                    android:hint="-"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_below="@+id/rl1"
                 android:id="@+id/rl2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl1">
 
                 <TextView
-                    android:layout_marginLeft="5dp"
-                    android:textColor="#808080"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"
-                    android:text="No.of vehicle :"
                     android:id="@+id/noofvehicle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="No.of vehicle :"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:layout_marginTop="5dp"
-                    android:textColor="#808080"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/noofvehicle"
-                    android:hint="No of vehicle"
                     android:id="@+id/editvehicle"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:enabled="false" />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/noofvehicle"
+                    android:enabled="false"
+                    android:hint="No of vehicle"
+                    android:textColor="#808080" />
             </RelativeLayout>
-            <!--<RelativeLayout-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:layout_below="@+id/rl2"-->
-            <!--android:id="@+id/rl3"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="5dp">-->
 
-            <!--<TextView-->
-            <!--android:textStyle="bold"-->
-            <!--android:textSize="15sp"-->
-            <!--android:text="Currently active"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
-            <!--</RelativeLayout>-->
 
             <RelativeLayout
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/rl2"
                 android:id="@+id/rl4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl2"
+                android:layout_marginTop="5dp">
 
                 <TextView
-                    android:layout_marginLeft="5dp"
                     android:id="@+id/start2"
-                    android:textStyle="bold"
-                    android:textColor="#808080"
-                    android:text="Start :"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:text="Start :"
+                    android:textColor="#808080"
+                    android:textStyle="bold">
 
                 </TextView>
 
                 <TextView
-                    android:layout_marginLeft="25dp"
-                    android:layout_toRightOf="@+id/datetime1"
-                    android:text="&amp;"
-                    android:textColor="#808080"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@+id/datetime1"
+                    android:text="&amp;"
+                    android:textColor="#808080" />
 
                 <TextView
 
-                    android:textColor="#808080"
-                    android:layout_toRightOf="@+id/datetime1"
-                    android:layout_marginLeft="57dp"
-                    android:hint="Time"
+                    android:id="@+id/editTime"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editTime"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:enabled="false" />
+                    android:layout_marginStart="57dp"
+                    android:layout_toEndOf="@+id/datetime1"
+                    android:enabled="false"
+                    android:hint="Time"
+                    android:textColor="#808080" />
 
                 <TextView
-                    android:textColor="#808080"
                     android:id="@+id/datetime1"
-                    android:hint="Date"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-
-                    android:layout_marginLeft="45dp"
-                    android:layout_marginStart="50dp"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/start2"
+                    android:layout_marginStart="45dp"
                     android:layout_toEndOf="@+id/start2"
-                    android:enabled="false" />
-                />
+                    android:enabled="false"
+                    android:hint="Date"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
 
             <RelativeLayout
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/rl4"
                 android:id="@+id/rl5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl4"
+                android:layout_marginTop="5dp">
 
                 <TextView
-                    android:layout_marginLeft="5dp"
                     android:id="@+id/end2"
-                    android:textStyle="bold"
-                    android:textColor="#808080"
-                    android:text="End :"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:text="End :"
+                    android:textColor="#808080"
+                    android:textStyle="bold">
 
                 </TextView>
 
                 <TextView
-                    android:layout_marginLeft="25dp"
-                    android:layout_toRightOf="@+id/datetime2"
-                    android:text="&amp;"
-                    android:textColor="#808080"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_toEndOf="@+id/datetime2"
+                    android:text="&amp;"
+                    android:textColor="#808080" />
 
                 <TextView
-
-                    android:layout_toRightOf="@+id/datetime2"
-                    android:layout_marginLeft="57dp"
-                    android:textColor="#808080"
-                    android:hint="Time"
+                    android:id="@+id/editText"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editText"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:enabled="false" />
+                    android:layout_marginStart="57dp"
+                    android:layout_toEndOf="@+id/datetime2"
+                    android:enabled="false"
+                    android:hint="Time"
+                    android:textColor="#808080" />
 
                 <TextView
-                    android:textColor="#808080"
                     android:id="@+id/datetime2"
-                    android:hint="Date"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginStart="50dp"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/end2"
+                    android:layout_marginStart="50dp"
                     android:layout_toEndOf="@+id/end2"
-                    android:enabled="false" />
-                />
+                    android:enabled="false"
+                    android:hint="Date"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <LinearLayout
-                android:weightSum="1"
-                android:orientation="horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_below="@+id/rl5"
                 android:id="@+id/rl6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl5"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <Button
-
-                    android:text="special clauses"
-                    android:layout_weight="0.50"
-                    android:background="@drawable/buttonback"
-                    android:textColor="@color/white"
-                    android:layout_width="0dp"
-
-                    android:layout_height="35dp"
-                    android:id="@+id/btncluse" />
-
+                android:weightSum="2">
 
                 <TextView
-
-                    android:layout_weight="0.50"
                     android:id="@+id/timer"
-                    android:textStyle="bold"
-                    android:textColor="@color/red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Timer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/button"
-                    android:layout_toStartOf="@+id/button" />
+                    android:textColor="@color/red"
+                    android:textStyle="bold" />
 
+                <com.github.clans.fab.FloatingActionMenu
+                    android:id="@+id/menu_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fab_margin"
+                    app:layout_anchor="@id/appbar"
+                    app:layout_anchorGravity="end|top"
+                    app:menu_fab_size="mini"
+                    fab:menu_labels_singleLine="true"
+                    fab:menu_openDirection="down">
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/gotopreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/auction"
+                        fab:fab_label="Preview"
+                        fab:fab_size="mini" />
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/btncluse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/clauses"
+                        fab:fab_label="Clauses"
+                        fab:fab_size="mini" />
+
+                </com.github.clans.fab.FloatingActionMenu>
 
             </LinearLayout>
 
-
         </RelativeLayout>
+
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>

@@ -3,7 +3,8 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.CountDownTimer;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +15,10 @@ import android.widget.TextView;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.events.MyEndedAuctionPreviewActivity;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.MyActiveAuctionResponse;
 
@@ -31,7 +32,6 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
     private List<MyActiveAuctionResponse.Success.Auction> mMainList = new ArrayList<>();
     private ConnectionDetector mConnectionDetector;
     private String myContact, spcl;
-    private HashMap<TextView, CountDownTimer> counters;
 
 
     public EndedAuctionAdapter(Activity mActivity, List<MyActiveAuctionResponse.Success.Auction> mItemList) {
@@ -59,7 +59,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
     }
 
     @Override
-    public void onBindViewHolder(EndedAuctionAdapter.AuctionHolder holder, int position) {
+    public void onBindViewHolder(EndedAuctionAdapter.AuctionHolder holder, final int position) {
 
 
         holder.action_title.setText(mMainList.get(position).getActionTitle());
@@ -107,7 +107,24 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
         holder.btnPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle b = new Bundle();
+                b.putString("auctionid", mMainList.get(position).getAuctionId());
+                b.putString("auctiontitle", mMainList.get(position).getActionTitle());
+                b.putString("vehicle_count", mMainList.get(position).getNoOfVehicle());
+                b.putString("auctionstartdate", mMainList.get(position).getStartDate());
+                b.putString("auctionstarttime", mMainList.get(position).getStartTime());
+                b.putString("auctionenddate", mMainList.get(position).getEndDate());
+                b.putString("auctionendtime", mMainList.get(position).getEndTime());
+                b.putString("specialclauses", mMainList.get(position).getSpecialClauses());
+                b.putString("enddatetime", mMainList.get(position).getEndDateTime());
+                b.putString("startdatetime", mMainList.get(position).getStartDateTime());
+                b.putString("participant_count", mMainList.get(position).getGoingcount());
 
+                mActivity.finish();
+
+                Intent intent = new Intent(mActivity, MyEndedAuctionPreviewActivity.class);
+                intent.putExtras(b);
+                mActivity.startActivity(intent);
             }
         });
 
