@@ -317,7 +317,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="end|top"
+        app:layout_anchorGravity="end|top|right"
         app:menu_fab_size="mini"
         fab:menu_labels_singleLine="true"
         fab:menu_openDirection="down">
@@ -328,7 +328,7 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_call"
             fab:fab_label="Call"
-            app:layout_anchorGravity="end|top"
+            app:layout_anchorGravity="end|top|right"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -336,7 +336,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_dialog_email"
-            app:layout_anchorGravity="end|top"
+            app:layout_anchorGravity="end|top|right"
             fab:fab_label="Mail"
             fab:fab_size="mini" />
 

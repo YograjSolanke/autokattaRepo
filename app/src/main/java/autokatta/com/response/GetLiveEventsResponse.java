@@ -117,6 +117,9 @@ public class GetLiveEventsResponse {
         @SerializedName("blackListStatus")
         @Expose
         private String blackListStatus;
+        @SerializedName("mycontact")
+        @Expose
+        private String mycontact;
 
         private String keyWord;
 
@@ -376,5 +379,12 @@ public class GetLiveEventsResponse {
             this.keyWord = keyWord;
         }
 
+        public String getMycontact() {
+            return mycontact;
+        }
+
+        public void setMycontact(String mycontact) {
+            this.mycontact = mycontact;
+        }
     }
 }

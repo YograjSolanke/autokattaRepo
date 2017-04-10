@@ -422,6 +422,7 @@ public class CreateAuctionFragment extends Fragment
                                             b.putString("cluase", cluases);
                                             b.putString("ids", ids);
                                             b.putString("cluases", cluases);
+                                            b.putString("className", "CreateAuction");
                                             b.putBooleanArray("positionArray", positionArray);
 
                                             AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();

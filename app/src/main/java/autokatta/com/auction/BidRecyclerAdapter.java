@@ -363,7 +363,7 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
                                         }
                                     } else if (tabNo.equals("3")) {
                                         Long IntBidAmount = Long.parseLong(BidAmount);
-                                        Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
+                                        Long IntCurrentBidPrice = Long.parseLong("0");
                                         if (IntBidAmount >= IntCurrentBidPrice) {
                                             try {
                                                 if (mConnectionDetector.isConnectedToInternet()) {

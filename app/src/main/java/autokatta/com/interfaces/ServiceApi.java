@@ -568,6 +568,10 @@ public interface ServiceApi {
     @GET("getAllLiveEvents.php")
     Call<GetLiveEventsResponse> getLiveEvents(@Query("contact") String userName);
 
+    //All Live Events
+    @GET("getAllGoingEventsByMe.php")
+    Call<GetLiveEventsResponse> getGoingEvents(@Query("contact") String userName);
+
     //All Live Loan Events...
 
 
