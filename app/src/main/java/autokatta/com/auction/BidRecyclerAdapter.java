@@ -135,7 +135,6 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
             holder.mKms.setText(mItemList.get(position).getKmsRunning() + " " + "Hrs");
         }
 
-
         if (openClose.equalsIgnoreCase("Open")) {
             holder.mBidReceive.setVisibility(View.VISIBLE);
             if (mItemList.get(position).getBidReceivedPrice() != null || !mItemList.get(position).getBidReceivedPrice().isEmpty()

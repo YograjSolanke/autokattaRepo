@@ -686,4 +686,8 @@ public interface ServiceApi {
     Call<BroadcastMessageResponse> getChatMessageData(@Query("sender_contact") String sender_contact, @Query("receiver_contact") String receiver_contact, @Query("product_id") String product_id,
                                                       @Query("service_id") String service_id, @Query("vehicle_id") String vehicle_id);
 
+    //Get Ignore Going me...
+    @POST("addIgnoreGoingMe.php")
+    Call<String> addIgnoreGoingMe(@Query("contact") String contact, @Query("auction_id") String auctionId,
+                                  @Query("action") String action);
 }

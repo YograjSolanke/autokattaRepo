@@ -1,6 +1,11 @@
 package autokatta.com.auction;
 
+import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,10 +14,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,19 +32,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.adapter.PreviewAuctionAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetAuctionEventResponse;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PreviewLiveEvents extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     //ListView mListView;
     RecyclerView mRecyclerView;
+    FloatingActionMenu mFloatingActionMenu;
+    FloatingActionButton mCall, mMail;
     Button mGoing, mIgnore, mShare, mGoLive;
     CollapsingToolbarLayout mCollapsingToolbar;
     TextView mLiveTimer, mStartDate, mStartTime, mEndDate, mEndTime, mAuctionText, mCloseOpenType;
@@ -46,6 +70,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
     List<GetAuctionEventResponse.Vehicle> vehicles = new ArrayList<>();
+    Boolean boolGoing = true;
+    private ConnectionDetector mConnectionDetector = new ConnectionDetector(PreviewLiveEvents.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +80,10 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         auctioneername = getIntent().getExtras().getString("auctioneer");
         auction_id = getIntent().getExtras().getString("auction_id");
         action_title = getIntent().getExtras().getString("action_title");
@@ -73,8 +103,12 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         showPrice = getIntent().getExtras().getString("showPrice");
         keyword = getIntent().getExtras().getString("keyword");
 
+        Log.i("ignoreGoingPreview", "->" + ignoreGoingStatus);
         //mListView = (ListView) findViewById(R.id.listView);
         mRecyclerView = (RecyclerView) findViewById(R.id.auction_event_recycler_view);
+        mFloatingActionMenu = (FloatingActionMenu) findViewById(R.id.menu_red);
+        mCall = (FloatingActionButton) findViewById(R.id.call_c);
+        mMail = (FloatingActionButton) findViewById(R.id.mail);
         mGoing = (Button) findViewById(R.id.btn_going);
         mIgnore = (Button) findViewById(R.id.btn_ignore);
         mShare = (Button) findViewById(R.id.btn_share);
@@ -90,7 +124,23 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         mCloseOpenType = (TextView) findViewById(R.id.closeopentxt);
 
         mGoLive.setOnClickListener(this);
+        mGoing.setOnClickListener(this);
 
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && mCall.isShown()) {
+                    mFloatingActionMenu.hideMenuButton(true);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    mFloatingActionMenu.showMenuButton(true);
+                }
+            }
+        });
         /*
         Set Data from Bundles...
          */
@@ -173,7 +223,6 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                     mGoLive.setEnabled(true);
                     mIgnore.setVisibility(View.GONE);
                     mGoing.setVisibility(View.GONE);
-
                 } else if (ignoreGoingStatus.equals("ignore")) {
                     mIgnore.setEnabled(false);
                     mGoing.setEnabled(false);
@@ -262,13 +311,210 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                     b1.putString("endDateTime", endDateTime);
                     b1.putString("openClose", openClose);
                     b1.putString("showPrice", showPrice);
-
+                    b1.putString("ignoreGoingStatus", ignoreGoingStatus);
+                    b1.putString("blackListStatus", blackListStatus);
+                    b1.putString("tabNo", "3");
+                    b1.putBoolean("isPayEMD", boolGoing);
                     Intent intent = new Intent(getApplicationContext(), LiveAuctionEventBiding.class);
                     intent.putExtras(b1);
                     startActivity(intent);
-                    finish();
+                }
+                break;
+
+            case R.id.btn_going:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PreviewLiveEvents.this);
+                alertDialogBuilder
+                        .setMessage("Pay EMD or auction platform fees")
+                        .setCancelable(false)
+                        .setPositiveButton("Now",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        try {
+                                            if (mConnectionDetector.isConnectedToInternet()) {
+                                                //JSON to Gson conversion
+                                                Gson gson = new GsonBuilder()
+                                                        .setLenient()
+                                                        .create();
+                                                Retrofit retrofit = new Retrofit.Builder()
+                                                        .baseUrl(getString(R.string.base_url))
+                                                        .addConverterFactory(GsonConverterFactory.create(gson))
+                                                        .client(initLog().build())
+                                                        .build();
+
+                                                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                                Call<String> add = serviceApi.addIgnoreGoingMe(auction_id, getSharedPreferences(getString(R.string.my_preference),
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), "going");
+                                                add.enqueue(new Callback<String>() {
+                                                    @Override
+                                                    public void onResponse(Call<String> call, Response<String> response) {
+                                                        if (response.isSuccessful()) {
+                                                            if (response.body() != null) {
+                                                                if (response.body().equals("success")) {
+                                                                    mIgnore.setVisibility(View.GONE);
+                                                                    mGoing.setVisibility(View.GONE);
+                                                                    mGoLive.setEnabled(true);
+                                                                    //paymentMethodCall(null, null, "");
+                                                                }
+                                                            }
+                                                        } else {
+                                                            Log.e("No", "Response");
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<String> call, Throwable t) {
+                                                        t.printStackTrace();
+                                                    }
+                                                });
+                                            } else
+                                                CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                })
+                        .setNegativeButton("Later",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        // if this button is clicked, just close
+                                        // the dialog box and do nothing
+                                        //dialog.cancel();
+                                        boolGoing = false;
+                                        try {
+                                            if (mConnectionDetector.isConnectedToInternet()) {
+                                                //JSON to Gson conversion
+                                                Gson gson = new GsonBuilder()
+                                                        .setLenient()
+                                                        .create();
+                                                Retrofit retrofit = new Retrofit.Builder()
+                                                        .baseUrl(getString(R.string.base_url))
+                                                        .addConverterFactory(GsonConverterFactory.create(gson))
+                                                        .client(initLog().build())
+                                                        .build();
+
+                                                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                                Call<String> add = serviceApi.addIgnoreGoingMe(auction_id, getSharedPreferences(getString(R.string.my_preference),
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), "going");
+                                                add.enqueue(new Callback<String>() {
+                                                    @Override
+                                                    public void onResponse(Call<String> call, Response<String> response) {
+                                                        if (response.isSuccessful()) {
+                                                            if (response.body() != null) {
+                                                                if (response.body().equals("success")) {
+                                                                    mIgnore.setVisibility(View.GONE);
+                                                                    mGoing.setVisibility(View.GONE);
+                                                                    mGoLive.setEnabled(true);
+
+                                                                }
+                                                            }
+                                                        } else {
+                                                            Log.e("No", "Response");
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<String> call, Throwable t) {
+                                                        t.printStackTrace();
+                                                    }
+                                                });
+                                            } else
+                                                CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                break;
+
+            case R.id.btn_ignore:
+                try {
+                    if (mConnectionDetector.isConnectedToInternet()) {
+                        //JSON to Gson conversion
+                        Gson gson = new GsonBuilder()
+                                .setLenient()
+                                .create();
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(getString(R.string.base_url))
+                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                .client(initLog().build())
+                                .build();
+
+                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                        Call<String> add = serviceApi.addIgnoreGoingMe(auction_id, getSharedPreferences(getString(R.string.my_preference),
+                                Context.MODE_PRIVATE).getString("loginContact", ""), "going");
+                        add.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                if (response.isSuccessful()) {
+                                    if (response.body() != null) {
+                                        if (response.body().equals("success")) {
+                                            mIgnore.setEnabled(false);
+                                            mGoing.setEnabled(true);
+                                            mGoLive.setEnabled(false);
+                                        }
+                                    }
+                                } else {
+                                    Log.e("No", "Response");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+                    } else
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(PreviewLiveEvents.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
+            finish();
+        } else {
+            finish();
+            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    /***
+     * Retrofit Logs
+     ***/
+    private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
     }
 }

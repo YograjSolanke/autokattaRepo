@@ -1,13 +1,18 @@
 package autokatta.com.auction;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -27,7 +32,8 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
     WatchedItem mWatchedItem;
     YourBid mYourBid;
     String auctioneername, AuctionId, action_title, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
-            no_of_vehicles, auctioncontact, specialcluases, endDateTime, openClose, auctiontype, showPrice;
+            no_of_vehicles, auctioncontact, specialcluases, endDateTime, openClose, auctiontype, showPrice, ignoreGoing,
+            startDateTime, blackListStatus, keyWord;
     Boolean isEMDPaid;
     TextView mLiveTitle, mLiveVehicles, mLiveAuctionType, mLiveCurrentlyActive, mEndDate, mEndTime, mLiveTimer;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
@@ -38,7 +44,13 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_auction_event_biding);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         auctioneername = getIntent().getExtras().getString("auctioneer");
         AuctionId = getIntent().getExtras().getString("auction_id");
         action_title = getIntent().getExtras().getString("action_title");
@@ -54,7 +66,10 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
         openClose = getIntent().getExtras().getString("openClose");
         showPrice = getIntent().getExtras().getString("showPrice");
         isEMDPaid = getIntent().getExtras().getBoolean("isPayEMD");
-
+        ignoreGoing = getIntent().getExtras().getString("ignoreGoingStatus");
+        startDateTime = getIntent().getExtras().getString("startDateTime");
+        blackListStatus = getIntent().getExtras().getString("blackListStatus");
+        keyWord = getIntent().getExtras().getString("keyword");
         b1 = new Bundle();
         b1.putString("auction_id", AuctionId);
         b1.putString("openClose", openClose);
@@ -199,5 +214,74 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
         adapter.addFragment(mWatchedItem, "Watched Item");
         adapter.addFragment(mIncreaseBidLimit, "Increase Bid Limit");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(LiveAuctionEventBiding.this, R.anim.pull_in_left, R.anim.push_out_right);
+            Bundle bundle = new Bundle();
+            bundle.putString("auctioneer", auctioneername);
+            bundle.putString("auction_id", AuctionId);
+            bundle.putString("action_title", action_title);
+            bundle.putString("auction_startdate", auction_startdate);
+            bundle.putString("auction_starttime", auction_starttime);
+            bundle.putString("auction_enddate", auction_enddate);
+            bundle.putString("auction_endtime", auction_endtime);
+            bundle.putString("no_of_vehicles", no_of_vehicles);
+            bundle.putString("auction_type", auctiontype);
+            bundle.putString("auctioncontact", auctioncontact);
+            bundle.putString("ignoreGoingStatus", ignoreGoing);
+            bundle.putString("startDateTime", startDateTime);
+            bundle.putString("endDateTime", endDateTime);
+            bundle.putString("specialcluases", specialcluases);
+            bundle.putString("blackListStatus", blackListStatus);
+            bundle.putString("openClose", openClose);
+            bundle.putString("showPrice", showPrice);
+            bundle.putString("keyword", keyWord);
+            Log.i("ignoreGoingLive", "->" + ignoreGoing);
+            Intent intent = new Intent(getApplicationContext(), PreviewLiveEvents.class);
+            intent.putExtras(bundle);
+            startActivity(intent, options.toBundle());
+            //startActivity(new Intent(getApplicationContext(), PreviewLiveEvents.class), options.toBundle());
+            finish();
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("auctioneer", auctioneername);
+            bundle.putString("auction_id", AuctionId);
+            bundle.putString("action_title", action_title);
+            bundle.putString("auction_startdate", auction_startdate);
+            bundle.putString("auction_starttime", auction_starttime);
+            bundle.putString("auction_enddate", auction_enddate);
+            bundle.putString("auction_endtime", auction_endtime);
+            bundle.putString("no_of_vehicles", no_of_vehicles);
+            bundle.putString("auction_type", auctiontype);
+            bundle.putString("auctioncontact", auctioncontact);
+            bundle.putString("ignoreGoingStatus", ignoreGoing);
+            bundle.putString("startDateTime", startDateTime);
+            bundle.putString("endDateTime", endDateTime);
+            bundle.putString("specialcluases", specialcluases);
+            bundle.putString("blackListStatus", blackListStatus);
+            bundle.putString("openClose", openClose);
+            bundle.putString("showPrice", showPrice);
+            bundle.putString("keyword", keyWord);
+
+            Intent intent = new Intent(getApplicationContext(), PreviewLiveEvents.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+            //startActivity(new Intent(getApplicationContext(), PreviewLiveEvents.class));
+        }
     }
 }

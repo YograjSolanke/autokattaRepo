@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -197,7 +198,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                 bundle.putString("openClose", mItemList.get(position).getOpenClose());
                 bundle.putString("showPrice", mItemList.get(position).getShowPrice());
                 bundle.putString("keyword", mItemList.get(position).getKeyWord());
-
+                Log.i("ignoreGoing", "->" + mItemList.get(position).getIgnoreGoingStatus());
                 Intent intent = new Intent(mActivity, PreviewLiveEvents.class);
                 intent.putExtras(bundle);
                 mActivity.startActivity(intent);
