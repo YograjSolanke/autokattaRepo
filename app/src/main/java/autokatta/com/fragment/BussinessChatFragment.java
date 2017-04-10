@@ -8,14 +8,17 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.BussinessChatAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -28,22 +31,25 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-005 on 8/4/17.
  */
 
-public class BussinessChatFragment extends Fragment implements RequestNotifier,SwipeRefreshLayout.OnRefreshListener{
+public class BussinessChatFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
     View mMychat;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     ApiCall apiCall;
     List<getBussinessChatResponse.Success> mSuccesses = new ArrayList<>();
+    BussinessChatAdapter mBussinessChatAdapter;
+
 
     FragmentActivity ctx;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMychat = inflater.inflate(R.layout.fragment_buissness_chat, container, false);
-        apiCall =new  ApiCall(getActivity(), this);
-        mSwipeRefreshLayout =(SwipeRefreshLayout)mMychat.findViewById(R.id.swipeRefreshLayoutBussinessChat);
+        apiCall = new ApiCall(getActivity(), this);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mMychat.findViewById(R.id.swipeRefreshLayoutBussinessChat);
 
-        mRecyclerView =(RecyclerView) mMychat.findViewById(R.id.recyclerBussinessChat);
+        mRecyclerView = (RecyclerView) mMychat.findViewById(R.id.recyclerBussinessChat);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -57,25 +63,22 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier,S
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new
-
-                                         Runnable() {
+        mSwipeRefreshLayout.post(new Runnable() {
                                              @Override
-                                             public void run () {
-                                                 mSwipeRefreshLayout.setRefreshing(true);
-                                                 apiCall.getBussinessChat(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-                                             }
+                                             public void run() {
+      mSwipeRefreshLayout.setRefreshing(true);
+        apiCall.getBussinessChat(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));}
                                          });
         return mMychat;
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
+        if (response != null) {
+            if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 getBussinessChatResponse mGetBussinessChatResponse = (getBussinessChatResponse) response.body();
-                for (getBussinessChatResponse.Success success : mGetBussinessChatResponse.getSuccess()){
+                for (getBussinessChatResponse.Success success : mGetBussinessChatResponse.getSuccess()) {
                     success.setProductId(success.getProductId());
                     success.setProductName(success.getProductName());
                     success.setImage(success.getImage());
@@ -90,23 +93,29 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier,S
                     success.setModel(success.getModel());
 
                     mSuccesses.add(success);
-
-
                 }
-               // mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses);
-               /// mRecyclerView.setAdapter(mMemberListAdapter);
-              //  mMemberListAdapter.notifyDataSetChanged();
-            }else {
+                mBussinessChatAdapter = new BussinessChatAdapter(getActivity(), mSuccesses);
+                mRecyclerView.setAdapter(mBussinessChatAdapter);
+                mBussinessChatAdapter.notifyDataSetChanged();
+            } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
-        }else {
+        } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(ctx, getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(ctx, getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(ctx, getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Bussiness Chat Fragment");
+        }
     }
 
     @Override
@@ -116,6 +125,8 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier,S
 
     @Override
     public void onRefresh() {
+        apiCall.getBussinessChat(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
     }
+
 }
