@@ -62,7 +62,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-005 on 5/4/17.
  */
 
-public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickListener, RequestNotifier, SwipeRefreshLayout.OnRefreshListener  {
+public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickListener, RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
     View mMyBroadcast;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -73,7 +73,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     Button btnSendMessage;
     ImageView imgDeleteGroup;
     String finalgrpids;
-    ArrayList<String>incominggrpids = new ArrayList<>();
+    ArrayList<String> incominggrpids = new ArrayList<>();
 
     String picturePath = "";
     Bitmap bitmap;
@@ -90,52 +90,42 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyBroadcast = inflater.inflate(R.layout.fragment_mybroadcast_groups, container, false);
 
-    mSwipeRefreshLayout =(SwipeRefreshLayout)mMyBroadcast.findViewById(R.id.swipeRefreshLayoutBGroup);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mMyBroadcast.findViewById(R.id.swipeRefreshLayoutBGroup);
 
-    mRecyclerView =(RecyclerView) mMyBroadcast.findViewById(R.id.recyclerBGroup);
+        mRecyclerView = (RecyclerView) mMyBroadcast.findViewById(R.id.recyclerBGroup);
 
-     btnSendMessage = (Button) mMyBroadcast.findViewById(R.id.btnSendMsg);
-     imgDeleteGroup = (ImageView) mMyBroadcast.findViewById(R.id.deletegroup);
-    FloatingActionButton createGroup = (FloatingActionButton) mMyBroadcast.findViewById(R.id.fabCreateBroadcastGroup);
+        btnSendMessage = (Button) mMyBroadcast.findViewById(R.id.btnSendMsg);
+        imgDeleteGroup = (ImageView) mMyBroadcast.findViewById(R.id.deletegroup);
+        FloatingActionButton createGroup = (FloatingActionButton) mMyBroadcast.findViewById(R.id.fabCreateBroadcastGroup);
 
 
         btnSendMessage.setOnClickListener(this);
         imgDeleteGroup.setOnClickListener(this);
         createGroup.setOnClickListener(this);
 
-    apiCall =new  ApiCall(ctx,this);
+        apiCall = new ApiCall(ctx, this);
 
         mRecyclerView.setHasFixedSize(true);
 
-    LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-    android.R.color.holo_green_light,
-    android.R.color.holo_orange_light,
-    android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new
-
-    Runnable() {
-        @Override
-        public void run () {
-            mSwipeRefreshLayout.setRefreshing(true);
-            apiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-        }
-    });
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+               mSwipeRefreshLayout.post(new Runnable() {
+                                             @Override
+                                             public void run() {
+                                                 mSwipeRefreshLayout.setRefreshing(true);
+                                                 apiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+                                             }
+                                         });
         return mMyBroadcast;
     }
-
-    @Override
-    public void onAttach(Context activity) {
-        ctx = (FragmentActivity) activity;
-
-        super.onAttach(activity);
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -159,22 +149,22 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
                 }
 
-                    CustomToast.customToast(ctx, "Please Select Group");
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
+                CustomToast.customToast(ctx, "Please Select Group");
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
 
-                    sendmessage(finalgrpids);
+                sendmessage(finalgrpids);
 
-                    break;
+                break;
             case R.id.deletegroup:
                 deleteGroups();
                 break;
             case R.id.fabCreateBroadcastGroup:
-                Bundle b=new Bundle();
-                b.putString("calltype","create");
-                b.putString("groupname","");
-                b.putString("groupmembers","");
-                b.putString("group_id","");
-                Log.e("hiiiii","->");
+                Bundle b = new Bundle();
+                b.putString("calltype", "create");
+                b.putString("groupname", "");
+                b.putString("groupmembers", "");
+                b.putString("group_id", "");
+                Log.e("hiiiii", "->");
                 CreateBroadcastGroupFragment about = new CreateBroadcastGroupFragment();
                 about.setArguments(b);
                 FragmentManager fragmentManager = getFragmentManager();
@@ -198,7 +188,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             public void onClick(DialogInterface dialog, int which) {
 
 
-
                 finalgrpids = "";
                 incominggrpids.clear();
 
@@ -218,7 +207,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
                 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
 
-                apiCall.deleteBroadcastgroup("delete",finalgrpids);
+                apiCall.deleteBroadcastgroup("delete", finalgrpids);
                /* try {
                     //deletegroup(finalgrpids);
                 } catch (JSONException e) {
@@ -250,6 +239,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             if (response.isSuccessful()) {
 
                 broadcastGroupsResponseList.clear();
+                mSwipeRefreshLayout.setRefreshing(false);
                 MyBroadcastGroupsResponse myBroadcastGroupsResponse = (MyBroadcastGroupsResponse) response.body();
 
                 if (!myBroadcastGroupsResponse.getSuccess().isEmpty()) {
@@ -268,7 +258,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
                     adapter = new MyBroadcastGroupsAdapter(getActivity(), ctx, broadcastGroupsResponseList);
-                  mRecyclerView.setAdapter(adapter);
+                    mRecyclerView.setAdapter(adapter);
                     adapter.notifyItemRangeChanged(0, adapter.getItemCount());
 
                     Log.i("size broadcast group", String.valueOf(broadcastGroupsResponseList.size()));
@@ -298,14 +288,13 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success"))
-            {
+            if (str.equals("success")) {
                 CustomToast.customToast(getActivity(), "BroadCast Message Successfully");
                 MyBroadcastGroupsFragment about = new MyBroadcastGroupsFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();
-            }else {
+            } else {
                 CustomToast.customToast(getActivity(), "Group Deleted Successfully");
                 MyBroadcastGroupsFragment about = new MyBroadcastGroupsFragment();
                 FragmentManager fragmentManager = getFragmentManager();
@@ -317,6 +306,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
     @Override
     public void onRefresh() {
+        apiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
     }
 
@@ -350,7 +340,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         public MyBroadcastGroupsAdapter(Activity activity, FragmentActivity fragmentActivity, List<MyBroadcastGroupsResponse.Success> broadcastlist) {
             ctx = fragmentActivity;
             this.mItemList = broadcastlist;
-            System.out.println("rutu------------------itemlist size"+mItemList.size());
+            System.out.println("rutu------------------itemlist size" + mItemList.size());
             this.activity = activity;
             contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
@@ -385,11 +375,11 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 @Override
                 public void onClick(View view) {
 
-                    Bundle b=new Bundle();
-                    b.putString("calltype","update");
-                    b.putString("groupname",mItemList.get(position).getGroupTitle());
-                    b.putString("groupmembers",mItemList.get(position).getGroupMemberContacts());
-                    b.putString("group_id",mItemList.get(position).getGroupId());
+                    Bundle b = new Bundle();
+                    b.putString("calltype", "update");
+                    b.putString("groupname", mItemList.get(position).getGroupTitle());
+                    b.putString("groupmembers", mItemList.get(position).getGroupMemberContacts());
+                    b.putString("group_id", mItemList.get(position).getGroupId());
                     CreateBroadcastGroupFragment broadcastGroup = new CreateBroadcastGroupFragment();
                     broadcastGroup.setArguments(b);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -418,8 +408,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     if (positionArray.contains(true)) {
                         btnSendMessage.setEnabled(true);
                         imgDeleteGroup.setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         btnSendMessage.setEnabled(false);
                         imgDeleteGroup.setVisibility(View.GONE);
                     }
@@ -441,6 +430,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
             return position;
         }
+
         private ArrayList checkboxselect() {
             // TODO Auto-generated method stub
             return grpidslist;
@@ -506,8 +496,8 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             @Override
             public void onClick(View v) {
 
-                apiCall.broadcastGroupMessage(groupids,message.getText().toString(),lastWord);
-                    //sendDataToWeb(message.getText().toString(), groupids);
+                apiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
+                //sendDataToWeb(message.getText().toString(), groupids);
                 alert.dismiss();
             }
         });
@@ -524,9 +514,9 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     }
 
     private void selectImage() {
-        Log.i("In select image","");
+        Log.i("In select image", "");
 
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setTitle("Add Photo!");
@@ -538,14 +528,14 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
                 if (options[item].equals("Take Photo")) {
 
-                    userSelected="camera";
+                    userSelected = "camera";
 
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, 1);
 
                 } else if (options[item].equals("Choose from Gallery")) {
 
-                    userSelected="gallery";
+                    userSelected = "gallery";
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);
 
@@ -563,10 +553,9 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data!=null){
+        if (data != null) {
             ////image upload from camera
-            if(userSelected=="camera")
-            {
+            if (userSelected == "camera") {
                 Bundle b = data.getExtras();
 
                 bitmap = (Bitmap) b.get("data");
@@ -575,16 +564,15 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 System.out.println("rutu----------------" + picturePath);
 
                 lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
-                System.out.println("lastword camera->"+lastWord);
+                System.out.println("lastword camera->" + lastWord);
                 upload(picturePath);
             }
             //Image Upload from gallery
-            else if(userSelected=="gallery")
-            {
-                System.out.println("rutu= userselected in gallery==========:"+userSelected);
+            else if (userSelected == "gallery") {
+                System.out.println("rutu= userselected in gallery==========:" + userSelected);
 
-                Uri selectedImage =  data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 cursor.moveToFirst();
@@ -593,19 +581,20 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 picturePath = cursor.getString(columnIndex);
                 cursor.close();
 
-                GenericFunctions obj=new GenericFunctions();
+                GenericFunctions obj = new GenericFunctions();
                 Bitmap rotatedBitmap = obj.decodeFile(picturePath);
 
                 uploadImage.setImageBitmap(rotatedBitmap);
                 //groupimg.setImageBitmap(bitmap);
                 System.out.println(picturePath);
-                lastWord = picturePath.substring(picturePath.lastIndexOf("/")+1);
-                System.out.println("lastword gallery->"+lastWord);
+                lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
+                System.out.println("lastword gallery->" + lastWord);
                 upload(picturePath);
             }
 
         }
     }
+
     //Code for getting uri from bitmap image only if image is set in ImageView
     public Uri getImageUri(Context inContext, Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -616,8 +605,8 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
     public void upload(String picturePath) {
 
-        System.out.println("picturePath while upload image:"+picturePath);
-        System.out.println("rutu= userselected in upload==========:"+userSelected);
+        System.out.println("picturePath while upload image:" + picturePath);
+        System.out.println("rutu= userselected in upload==========:" + userSelected);
 
         try {
 
@@ -635,7 +624,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             req.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    CustomToast.customToast(getActivity(),"Image Upladed");
+                    CustomToast.customToast(getActivity(), "Image Upladed");
                 }
 
                 @Override
