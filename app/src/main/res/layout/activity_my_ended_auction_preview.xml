@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Active Auction"
+                    android:text="Ended Auction"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Timer"
+                    android:text="Finished"
                     android:textColor="@color/red"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -261,7 +261,7 @@
         fab:menu_openDirection="down">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/gotolive"
+            android:id="@+id/gotoauction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/auction"

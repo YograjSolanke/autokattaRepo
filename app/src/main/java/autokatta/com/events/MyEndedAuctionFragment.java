@@ -38,7 +38,6 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
     ApiCall apiCall;
     String myContact;
     List<MyActiveAuctionResponse.Success.Auction> myActiveAuctionResponseList = new ArrayList<>();
-    List<MyActiveAuctionResponse.Success.Vehicle> myVehicleResponseList;
 
     public MyEndedAuctionFragment() {
         //empty constructor
@@ -78,23 +77,24 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
     }
 
     @Override
+    public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
     public void notifySuccess(Response<?> response) {
 
         if (response != null) {
-            System.out.println("hiii");
 
             if (response.isSuccessful()) {
-                System.out.println("hiii1");
 
                 MyActiveAuctionResponse myActiveAuctionResponse = (MyActiveAuctionResponse) response.body();
                 if (!myActiveAuctionResponse.getSuccess().getAuction().isEmpty()) {
-                    System.out.println("hiii2");
 
                     myActiveAuctionResponseList = new ArrayList<>();
 
                     for (MyActiveAuctionResponse.Success.Auction auctionSuccess : myActiveAuctionResponse.getSuccess().getAuction()) {
 
-                        System.out.println("hiii3");
 
                         auctionSuccess.setAuctionId(auctionSuccess.getAuctionId());
                         auctionSuccess.setActionTitle(auctionSuccess.getActionTitle());
@@ -108,7 +108,6 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
                         auctionSuccess.setGoingcount(auctionSuccess.getGoingcount());
                         myActiveAuctionResponseList.add(auctionSuccess);
                     }
-                    System.out.println("Esize=" + myActiveAuctionResponseList.size());
                     mSwipeRefreshLayout.setRefreshing(false);
                     EndedAuctionAdapter adapter = new EndedAuctionAdapter(getActivity(), myActiveAuctionResponseList);
                     mRecyclerView.setAdapter(adapter);
@@ -133,8 +132,8 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "My Active Auction Fragment");
-            error.toString();
+            Log.i("Check Class-", "My Ended Auction Fragment");
+            error.printStackTrace();
         }
     }
 
@@ -143,8 +142,5 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
 
     }
 
-    @Override
-    public void onRefresh() {
 
-    }
 }

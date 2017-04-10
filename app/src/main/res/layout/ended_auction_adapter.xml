@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/tools"
+    android:id="@+id/rela"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentStart="true">
@@ -202,43 +203,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="Timer"
+                    android:text="Finished"
                     android:textColor="@color/red"
                     android:textStyle="bold" />
-
-                <com.github.clans.fab.FloatingActionMenu
-                    android:id="@+id/menu_red"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
-                    app:layout_anchor="@id/appbar"
-                    app:layout_anchorGravity="end|top"
-                    app:menu_fab_size="mini"
-                    fab:menu_labels_singleLine="true"
-                    fab:menu_openDirection="down">
-
-                    <com.github.clans.fab.FloatingActionButton
-                        android:id="@+id/gotopreview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/auction"
-                        fab:fab_label="Preview"
-                        fab:fab_size="mini" />
-
-                    <com.github.clans.fab.FloatingActionButton
-                        android:id="@+id/btncluse"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/clauses"
-                        fab:fab_label="Clauses"
-                        fab:fab_size="mini" />
-
-                </com.github.clans.fab.FloatingActionMenu>
-
             </LinearLayout>
 
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/menu_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="@dimen/fab_margin"
+                app:layout_anchor="@id/rl6"
+                app:layout_anchorGravity="end|top"
+                app:menu_fab_size="mini"
+                fab:menu_labels_singleLine="true"
+                fab:menu_openDirection="up">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/gotopreview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/auction"
+                    fab:fab_label="Preview"
+                    fab:fab_size="mini" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/btncluse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/clauses"
+                    fab:fab_label="Clauses"
+                    fab:fab_size="mini" />
+
+            </com.github.clans.fab.FloatingActionMenu>
+
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
-
 </RelativeLayout>

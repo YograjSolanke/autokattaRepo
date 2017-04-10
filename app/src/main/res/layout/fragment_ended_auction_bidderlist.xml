@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/auction_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/text_margin_top"
+        android:layout_marginLeft="@dimen/text_margin_top"
+        android:layout_marginRight="@dimen/text_margin_top"
+        android:layout_marginTop="@dimen/text_margin_top"
+        android:foreground="?attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:id="@+id/relativemain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:padding="5dp">
+
+            <RelativeLayout
+                android:id="@+id/relativename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_toStartOf="@+id/approve">
+
+                <TextView
+                    android:id="@+id/nametxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name:"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/nametxt"
+                    android:text="Name"
+                    android:textColor="#808080" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativebidprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativename"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@+id/approve">
+
+
+                <TextView
+                    android:id="@+id/bidpricetxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bid price:"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/bidprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/bidpricetxt"
+                    android:text="Bid price"
+                    android:textColor="#808080" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativevehicle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativebidprice"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+
+                <TextView
+                    android:id="@+id/vehicletxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No.of vehicles bid:"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/no_of_vehicle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/vehicletxt"
+                    android:text="vehicle"
+                    android:textColor="#808080" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relativevehicle"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/approve"
+                    android:text="Approve"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:background="@drawable/buttonback"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/call" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="2dp"></View>
+
+                <Button
+                    android:id="@+id/reject"
+                    android:text="Reject"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:background="@drawable/buttonback"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/call" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"></View>
+
+                <Button
+                    android:id="@+id/backlist"
+                    android:text="Add To Backlist"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:background="@drawable/buttonback"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/call"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/backlist1"
+                    android:text="Remove From Backlist"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:background="@drawable/buttonback"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/call" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/call"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@android:drawable/ic_menu_call"
+                android:contentDescription="@string/app_name" />
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
