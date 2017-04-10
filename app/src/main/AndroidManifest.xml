@@ -192,8 +192,12 @@
             android:name=".view.BussinessChatActivity"
             android:label="@string/title_activity_bussiness_chat"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".events.MyEndedAuctionPreviewActivity" />
-        <activity android:name=".events.MyEndedAuctionPreviewNextActivity"></activity>
+        <activity
+            android:name=".events.MyEndedAuctionPreviewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".events.MyEndedAuctionPreviewNextActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
