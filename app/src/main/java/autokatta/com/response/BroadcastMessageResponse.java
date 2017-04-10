@@ -3,6 +3,7 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,6 +57,16 @@ public class BroadcastMessageResponse {
         @SerializedName("date")
         @Expose
         private String date;
+
+        public Date getNewDate() {
+            return newDate;
+        }
+
+        public void setNewDate(Date newDate) {
+            this.newDate = newDate;
+        }
+
+        private Date newDate;
 
         public String getMsgId() {
             return msgId;
