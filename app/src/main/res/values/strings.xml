@@ -5,6 +5,10 @@
     <string name="permission">Autokatta allows your permissions to access your data</string>
     <string name="specification_note">Note:-Standard Specification As Per Manufacturer</string>
     <string name="not_mentioned">Not Mentioned</string>
+    <string name="Rs">\u20B9</string>
+    <string name="bid_increment">000000Rs</string>
+    <string name="bid_received">Bid not received yet</string>
+    <string name="bid_status">You are not highest bidder for this vehicle</string>
 
     <!-- Navigation Drawer Items...-->
     <string name="home">Home</string>

@@ -113,7 +113,7 @@
                         android:id="@+id/type"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="No Of Vehicles :"
+                        android:text="Auction Type :"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -159,15 +159,15 @@
                     android:id="@+id/rl3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginStart="5dp">
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="@dimen/margin_small">
 
                     <TextView
                         android:id="@+id/end2"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:text="End:"
                         android:gravity="bottom"
+                        android:text="End:"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -201,12 +201,12 @@
                         android:id="@+id/live_timer"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:layout_gravity="end"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
                         android:text="Timer"
-                        android:layout_alignParentEnd="true"
                         android:textColor="@color/white"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -214,12 +214,12 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/bidlimitation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="3"
-                    android:baselineAligned="false"
                     android:layout_marginTop="5dp"
-                    android:id="@+id/bidlimitation">
+                    android:baselineAligned="false"
+                    android:weightSum="3">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -228,18 +228,18 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/limitforbidtxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Limit for bid"
                             android:gravity="center"
-                            android:id="@+id/limitforbidtxt" />
+                            android:text="Limit for bid" />
 
                         <TextView
+                            android:id="@+id/limitforbid"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rs. 000"
                             android:gravity="center"
-                            android:id="@+id/limitforbid" />
+                            android:text="Rs. 000" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -249,18 +249,18 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/highbidtotaltxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="High bid total"
                             android:gravity="center"
-                            android:id="@+id/highbidtotaltxt" />
+                            android:text="High bid total" />
 
                         <TextView
+                            android:id="@+id/highbidtotal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rs. 000"
                             android:gravity="center"
-                            android:id="@+id/highbidtotal" />
+                            android:text="Rs. 000" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -270,18 +270,18 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/remaininglimittxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Total remains"
                             android:gravity="center"
-                            android:id="@+id/remaininglimittxt" />
+                            android:text="Total remains" />
 
                         <TextView
+                            android:id="@+id/remaininglimit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rs. 000"
                             android:gravity="center"
-                            android:id="@+id/remaininglimit" />
+                            android:text="Rs. 000" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -327,8 +327,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_call"
-            fab:fab_label="Call"
             app:layout_anchorGravity="end|top|right"
+            fab:fab_label="Call"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton

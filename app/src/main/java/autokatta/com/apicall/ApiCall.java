@@ -3547,7 +3547,7 @@ get All Vehicles for auction
     }
 
     /*
-    Get All Live Events...
+    Get Going Events...
      */
     public void geGoingAuctionEvents(String userName) {
         try {
@@ -3559,6 +3559,38 @@ get All Vehicles for auction
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<GetLiveEventsResponse> mLiveEvents = serviceApi.getGoingEvents(userName);
+                mLiveEvents.enqueue(new Callback<GetLiveEventsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetLiveEventsResponse> call, Response<GetLiveEventsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetLiveEventsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Upcoming Events...
+     */
+    public void getUpcomingEvents(String userName) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetLiveEventsResponse> mLiveEvents = serviceApi.getUpcomingEvents(userName);
                 mLiveEvents.enqueue(new Callback<GetLiveEventsResponse>() {
                     @Override
                     public void onResponse(Call<GetLiveEventsResponse> call, Response<GetLiveEventsResponse> response) {

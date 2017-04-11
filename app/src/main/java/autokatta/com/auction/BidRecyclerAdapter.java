@@ -46,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by ak-001 on 6/4/17.
  */
 
-public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewHolder> {
+class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewHolder> {
 
     private Activity mActivity;
     private List<YourBidResponse.Success> mItemList = new ArrayList<>();
@@ -54,15 +54,17 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
     private ConnectionDetector mConnectionDetector;
     private String result;
     private String tabNo;
+    private TextView mLimitForBid;
 
-    public BidRecyclerAdapter(Activity mActivity, List<YourBidResponse.Success> mItemList, String auctionId, String openClose,
-                              String showPrice, String tabNo) {
+    BidRecyclerAdapter(Activity mActivity, List<YourBidResponse.Success> mItemList, String auctionId, String openClose,
+                       String showPrice, String tabNo, TextView limitForBid) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
         this.auctionId = auctionId;
         this.openClose = openClose;
         this.showPrice = showPrice;
         this.tabNo = tabNo;
+        this.mLimitForBid = limitForBid;
         mConnectionDetector = new ConnectionDetector(mActivity);
     }
 
@@ -124,10 +126,10 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
         holder.mBidPrice.setText(mItemList.get(position).getCurrentBidPrice());
         holder.mBidReceive.setText(mItemList.get(position).getBidReceivedPrice());
         holder.mStartPrice.setText(mItemList.get(position).getStartPrice());
-        holder.mBidIncrement.setText("000000Rs");
+        holder.mBidIncrement.setText(mActivity.getString(R.string.bid_increment));
 
         holder.mBidStatus.setVisibility(View.VISIBLE);
-        holder.mBidStatus.setText("You are not highest bidder for this vehicle");
+        holder.mBidStatus.setText(mActivity.getString(R.string.bid_status));
 
         if (mItemList.get(position).getKmsRunning() != null || !mItemList.get(position).getKmsRunning().equals("")) {
             holder.mKms.setText(mItemList.get(position).getKmsRunning() + " " + "Kms");
@@ -139,9 +141,10 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
             holder.mBidReceive.setVisibility(View.VISIBLE);
             if (mItemList.get(position).getBidReceivedPrice() != null || !mItemList.get(position).getBidReceivedPrice().isEmpty()
                     || !mItemList.get(position).getBidReceivedPrice().equals("0") || !mItemList.get(position).getBidReceivedPrice().equals("null"))
-                holder.mBidReceive.setText("Bid received Rs. " + mItemList.get(position).getBidReceivedPrice());
+                holder.mBidReceive.setText("Bid received" + mActivity.getString(R.string.Rs)
+                        + mItemList.get(position).getBidReceivedPrice());
             else
-                holder.mBidReceive.setText("Bid not received yet");
+                holder.mBidReceive.setText(mActivity.getString(R.string.bid_received));
         } else
             holder.mBidReceive.setVisibility(View.GONE);
 
@@ -159,7 +162,7 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
         holder.mBidPrice.setText("Your current bid price Rs." + " " + mItemList.get(position).getCurrentBidPrice());
 
         if (mItemList.get(position).getImage() == null || mItemList.get(position).getImage().equals("") ||
-                mItemList.get(position).getImage().equals(null)) {
+                mItemList.get(position).getImage().equals("null")) {
             holder.mImageView.setBackgroundResource(R.drawable.vehiimg);
         } else {
             String images[] = mItemList.get(position).getImage().split(",");
@@ -174,266 +177,266 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
         holder.mBid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (limitforbid.getText().toString().equals("0")) {
-                    // Toast.makeText(activity,"Your bid limit is 0, please pay EMD",Toast.LENGTH_LONG).show();
-                    paymentMethodCall();
-                } else {*/
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity);
-                alertDialog.setTitle("Bid for vehicle");
-                alertDialog.setMessage("Enter bid amount");
+                if (mLimitForBid.getText().toString().equals("0")) {
+                    Toast.makeText(mActivity, "Your bid limit is 0, please pay EMD", Toast.LENGTH_LONG).show();
+                    //paymentMethodCall();
+                } else {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity);
+                    alertDialog.setTitle("Bid for vehicle");
+                    alertDialog.setMessage("Enter bid amount");
 
-                final EditText input = new EditText(mActivity);
-                input.setHint("Amount");
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    final EditText input = new EditText(mActivity);
+                    input.setHint("Amount");
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
-                input.setLayoutParams(lp);
-                alertDialog.setView(input);
-                // alertDialog.setIcon(R.drawable.key);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT);
+                    input.setLayoutParams(lp);
+                    alertDialog.setView(input);
+                    // alertDialog.setIcon(R.drawable.key);
 
-                alertDialog.setPositiveButton("Bid",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                try {
-                                    String BidAmount = input.getText().toString();
-                                    if (BidAmount.equals("")) {
-                                        input.setError("Please Enter Amount");
-                                        Toast.makeText(mActivity, "Price should not be empty", Toast.LENGTH_LONG).show();
-                                    } else if (tabNo.equals("0")) {
-                                        Long IntBidAmount = Long.parseLong(BidAmount);
-                                        Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
-                                        if (IntBidAmount >= IntCurrentBidPrice) {
-                                            try {
-                                                if (mConnectionDetector.isConnectedToInternet()) {
-                                                    //JSON to Gson conversion
-                                                    Gson gson = new GsonBuilder()
-                                                            .setLenient()
-                                                            .create();
-                                                    Retrofit retrofit = new Retrofit.Builder()
-                                                            .baseUrl(mActivity.getString(R.string.base_url))
-                                                            .addConverterFactory(GsonConverterFactory.create(gson))
-                                                            .client(initLog().build())
-                                                            .build();
+                    alertDialog.setPositiveButton("Bid",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        String BidAmount = input.getText().toString();
+                                        if (BidAmount.equals("")) {
+                                            input.setError("Please Enter Amount");
+                                            Toast.makeText(mActivity, "Price should not be empty", Toast.LENGTH_LONG).show();
+                                        } else if (tabNo.equals("0")) {
+                                            Long IntBidAmount = Long.parseLong(BidAmount);
+                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
+                                            if (IntBidAmount >= IntCurrentBidPrice) {
+                                                try {
+                                                    if (mConnectionDetector.isConnectedToInternet()) {
+                                                        //JSON to Gson conversion
+                                                        Gson gson = new GsonBuilder()
+                                                                .setLenient()
+                                                                .create();
+                                                        Retrofit retrofit = new Retrofit.Builder()
+                                                                .baseUrl(mActivity.getString(R.string.base_url))
+                                                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                                                .client(initLog().build())
+                                                                .build();
 
-                                                    ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                    Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
-                                                            BidAmount, "0", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                                                                    Context.MODE_PRIVATE).getString("loginContact", ""));
-                                                    addBid.enqueue(new Callback<String>() {
-                                                        @Override
-                                                        public void onResponse(Call<String> call, Response<String> response) {
-                                                            if (response.isSuccessful()) {
-                                                                result = response.body();
-                                                                if (result.equals("same")) {
-                                                                    Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
-                                                                } else if (result.startsWith("0")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("0");
-                                                                } else if (result.startsWith("1")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("1");
+                                                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
+                                                                BidAmount, "0", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                                                                        Context.MODE_PRIVATE).getString("loginContact", ""));
+                                                        addBid.enqueue(new Callback<String>() {
+                                                            @Override
+                                                            public void onResponse(Call<String> call, Response<String> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    result = response.body();
+                                                                    if (result.equals("same")) {
+                                                                        Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
+                                                                    } else if (result.startsWith("0")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("0");
+                                                                    } else if (result.startsWith("1")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("1");
+                                                                    } else {
+                                                                        Toast.makeText(mActivity, "Bid should be greater than your previous bid!", Toast.LENGTH_LONG).show();
+                                                                    }
                                                                 } else {
-                                                                    Toast.makeText(mActivity, "Bid should be greater than your previous bid!", Toast.LENGTH_LONG).show();
+                                                                    Log.e("No", "Response");
                                                                 }
-                                                            } else {
-                                                                Log.e("No", "Response");
                                                             }
-                                                        }
 
-                                                        @Override
-                                                        public void onFailure(Call<String> call, Throwable t) {
-                                                            t.printStackTrace();
-                                                        }
-                                                    });
-                                                } else
-                                                    CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
+                                                            @Override
+                                                            public void onFailure(Call<String> call, Throwable t) {
+                                                                t.printStackTrace();
+                                                            }
+                                                        });
+                                                    } else
+                                                        CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            } else {
+                                                Toast.makeText(mActivity, "Bid should not be reverse", Toast.LENGTH_LONG).show();
                                             }
-                                        } else {
-                                            Toast.makeText(mActivity, "Bid should not be reverse", Toast.LENGTH_LONG).show();
-                                        }
-                                    } else if (tabNo.equals("1")) {
-                                        Long IntBidAmount = Long.parseLong(BidAmount);
-                                        Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
-                                        if (IntBidAmount >= IntCurrentBidPrice) {
-                                            try {
-                                                if (mConnectionDetector.isConnectedToInternet()) {
-                                                    //JSON to Gson conversion
-                                                    Gson gson = new GsonBuilder()
-                                                            .setLenient()
-                                                            .create();
-                                                    Retrofit retrofit = new Retrofit.Builder()
-                                                            .baseUrl(mActivity.getString(R.string.base_url))
-                                                            .addConverterFactory(GsonConverterFactory.create(gson))
-                                                            .client(initLog().build())
-                                                            .build();
-                                                    ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                    Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
-                                                            BidAmount, "1", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                                                                    Context.MODE_PRIVATE).getString("loginContact", ""));
-                                                    addBid.enqueue(new Callback<String>() {
-                                                        @Override
-                                                        public void onResponse(Call<String> call, Response<String> response) {
-                                                            if (response.isSuccessful()) {
-                                                                result = response.body();
-                                                                if (result.startsWith("same"))
-                                                                    Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
-                                                                else if (result.startsWith("1")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("1");
+                                        } else if (tabNo.equals("1")) {
+                                            Long IntBidAmount = Long.parseLong(BidAmount);
+                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
+                                            if (IntBidAmount >= IntCurrentBidPrice) {
+                                                try {
+                                                    if (mConnectionDetector.isConnectedToInternet()) {
+                                                        //JSON to Gson conversion
+                                                        Gson gson = new GsonBuilder()
+                                                                .setLenient()
+                                                                .create();
+                                                        Retrofit retrofit = new Retrofit.Builder()
+                                                                .baseUrl(mActivity.getString(R.string.base_url))
+                                                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                                                .client(initLog().build())
+                                                                .build();
+                                                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
+                                                                BidAmount, "1", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                                                                        Context.MODE_PRIVATE).getString("loginContact", ""));
+                                                        addBid.enqueue(new Callback<String>() {
+                                                            @Override
+                                                            public void onResponse(Call<String> call, Response<String> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    result = response.body();
+                                                                    if (result.startsWith("same"))
+                                                                        Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
+                                                                    else if (result.startsWith("1")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("1");
+                                                                    } else {
+                                                                        Toast.makeText(mActivity, "Bid should be greater than your previous bid!", Toast.LENGTH_LONG).show();
+                                                                    }
                                                                 } else {
-                                                                    Toast.makeText(mActivity, "Bid should be greater than your previous bid!", Toast.LENGTH_LONG).show();
+                                                                    Log.e("No", "Response");
                                                                 }
-                                                            } else {
-                                                                Log.e("No", "Response");
                                                             }
-                                                        }
 
-                                                        @Override
-                                                        public void onFailure(Call<String> call, Throwable t) {
-                                                            t.printStackTrace();
-                                                        }
-                                                    });
-                                                } else
-                                                    CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
+                                                            @Override
+                                                            public void onFailure(Call<String> call, Throwable t) {
+                                                                t.printStackTrace();
+                                                            }
+                                                        });
+                                                    } else
+                                                        CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            } else {
+                                                Toast.makeText(mActivity, "Bid should not be reverse", Toast.LENGTH_LONG).show();
                                             }
-                                        } else {
-                                            Toast.makeText(mActivity, "Bid should not be reverse", Toast.LENGTH_LONG).show();
-                                        }
-                                    } else if (tabNo.equals("2")) {
-                                        Long IntBidAmount = Long.parseLong(BidAmount);
-                                        Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
-                                        if (IntBidAmount >= IntCurrentBidPrice) {
-                                            try {
-                                                if (mConnectionDetector.isConnectedToInternet()) {
-                                                    //JSON to Gson conversion
-                                                    Gson gson = new GsonBuilder()
-                                                            .setLenient()
-                                                            .create();
-                                                    Retrofit retrofit = new Retrofit.Builder()
-                                                            .baseUrl(mActivity.getString(R.string.base_url))
-                                                            .addConverterFactory(GsonConverterFactory.create(gson))
-                                                            .client(initLog().build())
-                                                            .build();
-                                                    ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                    Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
-                                                            BidAmount, "2", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                                                                    Context.MODE_PRIVATE).getString("loginContact", ""));
-                                                    addBid.enqueue(new Callback<String>() {
-                                                        @Override
-                                                        public void onResponse(Call<String> call, Response<String> response) {
-                                                            if (response.isSuccessful()) {
-                                                                result = response.body();
-                                                                if (result.startsWith("same"))
-                                                                    Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
-                                                                else if (result.startsWith("0")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("2");
-                                                                } else if (result.startsWith("1")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("1");
-                                                                } else if (result.startsWith("2")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("2");
+                                        } else if (tabNo.equals("2")) {
+                                            Long IntBidAmount = Long.parseLong(BidAmount);
+                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
+                                            if (IntBidAmount >= IntCurrentBidPrice) {
+                                                try {
+                                                    if (mConnectionDetector.isConnectedToInternet()) {
+                                                        //JSON to Gson conversion
+                                                        Gson gson = new GsonBuilder()
+                                                                .setLenient()
+                                                                .create();
+                                                        Retrofit retrofit = new Retrofit.Builder()
+                                                                .baseUrl(mActivity.getString(R.string.base_url))
+                                                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                                                .client(initLog().build())
+                                                                .build();
+                                                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
+                                                                BidAmount, "2", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                                                                        Context.MODE_PRIVATE).getString("loginContact", ""));
+                                                        addBid.enqueue(new Callback<String>() {
+                                                            @Override
+                                                            public void onResponse(Call<String> call, Response<String> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    result = response.body();
+                                                                    if (result.startsWith("same"))
+                                                                        Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
+                                                                    else if (result.startsWith("0")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("2");
+                                                                    } else if (result.startsWith("1")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("1");
+                                                                    } else if (result.startsWith("2")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("2");
+                                                                    } else {
+                                                                        Toast.makeText(mActivity, "Bid should be greater than your previous bid!", Toast.LENGTH_LONG).show();
+                                                                    }
                                                                 } else {
-                                                                    Toast.makeText(mActivity, "Bid should be greater than your previous bid!", Toast.LENGTH_LONG).show();
+                                                                    Log.e("No", "Response");
                                                                 }
-                                                            } else {
-                                                                Log.e("No", "Response");
                                                             }
-                                                        }
 
-                                                        @Override
-                                                        public void onFailure(Call<String> call, Throwable t) {
-                                                            t.printStackTrace();
-                                                        }
-                                                    });
-                                                } else
-                                                    CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
+                                                            @Override
+                                                            public void onFailure(Call<String> call, Throwable t) {
+                                                                t.printStackTrace();
+                                                            }
+                                                        });
+                                                    } else
+                                                        CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            } else {
+                                                Toast.makeText(mActivity, "Bid should not be reverse", Toast.LENGTH_LONG).show();
                                             }
-                                        } else {
-                                            Toast.makeText(mActivity, "Bid should not be reverse", Toast.LENGTH_LONG).show();
-                                        }
-                                    } else if (tabNo.equals("3")) {
-                                        Long IntBidAmount = Long.parseLong(BidAmount);
-                                        Long IntCurrentBidPrice = Long.parseLong("0");
-                                        if (IntBidAmount >= IntCurrentBidPrice) {
-                                            try {
-                                                if (mConnectionDetector.isConnectedToInternet()) {
-                                                    //JSON to Gson conversion
-                                                    Gson gson = new GsonBuilder()
-                                                            .setLenient()
-                                                            .create();
-                                                    Retrofit retrofit = new Retrofit.Builder()
-                                                            .baseUrl(mActivity.getString(R.string.base_url))
-                                                            .addConverterFactory(GsonConverterFactory.create(gson))
-                                                            .client(initLog().build())
-                                                            .build();
-                                                    ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                    Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
-                                                            BidAmount, "0", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                                                                    Context.MODE_PRIVATE).getString("loginContact", ""));
-                                                    addBid.enqueue(new Callback<String>() {
-                                                        @Override
-                                                        public void onResponse(Call<String> call, Response<String> response) {
-                                                            if (response.isSuccessful()) {
-                                                                result = response.body();
-                                                                if (result.startsWith("same"))
-                                                                    Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
-                                                                else if (result.startsWith("0")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("0");
-                                                                } else if (result.startsWith("1")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("1");
-                                                                } else if (result.startsWith("2")) {
-                                                                    Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
-                                                                    callToLiveAuctionBidding("2");
+                                        } else if (tabNo.equals("3")) {
+                                            Long IntBidAmount = Long.parseLong(BidAmount);
+                                            Long IntCurrentBidPrice = Long.parseLong("0");
+                                            if (IntBidAmount >= IntCurrentBidPrice) {
+                                                try {
+                                                    if (mConnectionDetector.isConnectedToInternet()) {
+                                                        //JSON to Gson conversion
+                                                        Gson gson = new GsonBuilder()
+                                                                .setLenient()
+                                                                .create();
+                                                        Retrofit retrofit = new Retrofit.Builder()
+                                                                .baseUrl(mActivity.getString(R.string.base_url))
+                                                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                                                .client(initLog().build())
+                                                                .build();
+                                                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
+                                                                BidAmount, "0", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                                                                        Context.MODE_PRIVATE).getString("loginContact", ""));
+                                                        addBid.enqueue(new Callback<String>() {
+                                                            @Override
+                                                            public void onResponse(Call<String> call, Response<String> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    result = response.body();
+                                                                    if (result.startsWith("same"))
+                                                                        Toast.makeText(mActivity, "Same bid amount not acceptable..!", Toast.LENGTH_LONG).show();
+                                                                    else if (result.startsWith("0")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("0");
+                                                                    } else if (result.startsWith("1")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("1");
+                                                                    } else if (result.startsWith("2")) {
+                                                                        Toast.makeText(mActivity, "Thanks for your bid", Toast.LENGTH_LONG).show();
+                                                                        callToLiveAuctionBidding("2");
+                                                                    } else {
+                                                                        Toast.makeText(mActivity, "Bid should be greater than your previous bid!", Toast.LENGTH_LONG).show();
+                                                                    }
                                                                 } else {
-                                                                    Toast.makeText(mActivity, "Bid should be greater than your previous bid!", Toast.LENGTH_LONG).show();
+                                                                    Log.e("No", "Response");
                                                                 }
-                                                            } else {
-                                                                Log.e("No", "Response");
                                                             }
-                                                        }
 
-                                                        @Override
-                                                        public void onFailure(Call<String> call, Throwable t) {
-                                                            t.printStackTrace();
-                                                        }
-                                                    });
-                                                } else
-                                                    CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
+                                                            @Override
+                                                            public void onFailure(Call<String> call, Throwable t) {
+                                                                t.printStackTrace();
+                                                            }
+                                                        });
+                                                    } else
+                                                        CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            } else {
+                                                Toast.makeText(mActivity, "Bid should not be reverse", Toast.LENGTH_LONG).show();
                                             }
-                                        } else {
-                                            Toast.makeText(mActivity, "Bid should not be reverse", Toast.LENGTH_LONG).show();
                                         }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                        });
-                alertDialog.setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener()
+                            });
+                    alertDialog.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener()
 
-                        {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                            {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                alertDialog.show();
-                // }
+                    alertDialog.show();
+                }
             }
         });
     }
@@ -441,6 +444,7 @@ public class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.
     /*
     Call To Live Auction Biding...
      */
+
     private void callToLiveAuctionBidding(String tabNo) {
         LiveAuctionEventBiding strContext = (LiveAuctionEventBiding) mActivity;
         Bundle b1 = new Bundle();

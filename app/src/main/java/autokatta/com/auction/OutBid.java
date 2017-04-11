@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class OutBid extends Fragment implements RequestNotifier {
     String auctionId, showPrice, openClose;
     RecyclerView mRecyclerView;
     List<YourBidResponse.Success> successes = new ArrayList<>();
+    TextView mLimitBid;
 
     @Nullable
     @Override
@@ -40,6 +42,7 @@ public class OutBid extends Fragment implements RequestNotifier {
         openClose = b.getString("openClose");
         showPrice = b.getString("showPrice");
 
+        mLimitBid = (TextView) getActivity().findViewById(R.id.limitforbid);
         mRecyclerView = (RecyclerView) mOutBid.findViewById(R.id.all_bids);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -99,7 +102,7 @@ public class OutBid extends Fragment implements RequestNotifier {
                     }
                     successes.add(success);
                 }
-                BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice, "0");
+                BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice, "0", mLimitBid);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {

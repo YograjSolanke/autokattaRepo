@@ -573,8 +573,9 @@ public interface ServiceApi {
     @GET("getAllGoingEventsByMe.php")
     Call<GetLiveEventsResponse> getGoingEvents(@Query("contact") String userName);
 
-    //All Live Loan Events...
-
+    //All Upcoming Events
+    @GET("getAllUpcomingEventsUpto50kms.php")
+    Call<GetLiveEventsResponse> getUpcomingEvents(@Query("contact") String userName);
 
     //delete my search item
     @GET("deleteUpdateMysearch.php")

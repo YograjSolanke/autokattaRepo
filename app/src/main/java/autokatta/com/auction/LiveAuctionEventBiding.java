@@ -36,6 +36,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
             startDateTime, blackListStatus, keyWord;
     Boolean isEMDPaid;
     TextView mLiveTitle, mLiveVehicles, mLiveAuctionType, mLiveCurrentlyActive, mEndDate, mEndTime, mLiveTimer;
+    TextView mLimitForBid, mHighBidTotal, mTotalRemains;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
     CountDownTimer cdt;
     Bundle b1;
@@ -82,6 +83,9 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
         mEndDate = (TextView) findViewById(R.id.end_date);
         mEndTime = (TextView) findViewById(R.id.end_time);
         mLiveTimer = (TextView) findViewById(R.id.live_timer);
+        mLimitForBid = (TextView) findViewById(R.id.limitforbid);
+        mHighBidTotal = (TextView) findViewById(R.id.highbidtotal);
+        mTotalRemains = (TextView) findViewById(R.id.remaininglimit);
 
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.live_auction_collapsing_toolbar);
         mHighestBid = new HighestBid();
@@ -108,6 +112,12 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
                     mEndDate.setText(auction_enddate);
                     mEndTime.setText(auction_endtime);
                     //mLiveTimer.setText(action_title);
+                    if (isEMDPaid) {
+                        mLimitForBid.setText("lmt");
+                    } else {
+                        mLimitForBid.setText(getString(R.string.Rs) + " " + "0");
+                    }
+                    mTotalRemains.setText("rem");
 
                     ViewPager viewPager = (ViewPager) findViewById(R.id.bid_viewpager);
                     if (viewPager != null) {

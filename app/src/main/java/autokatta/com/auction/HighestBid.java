@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class HighestBid extends Fragment implements RequestNotifier {
     String auctionId, showPrice, openClose;
     RecyclerView mRecyclerView;
     List<YourBidResponse.Success> successes = new ArrayList<>();
+    TextView mHighTotal, mLimitBid;
 
     @Nullable
     @Override
@@ -40,6 +42,8 @@ public class HighestBid extends Fragment implements RequestNotifier {
         openClose = b.getString("openClose");
         showPrice = b.getString("showPrice");
 
+        mHighTotal = (TextView) getActivity().findViewById(R.id.highbidtotal);
+        mLimitBid = (TextView) getActivity().findViewById(R.id.limitforbid);
         mRecyclerView = (RecyclerView) mHighestBid.findViewById(R.id.all_bids);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -98,9 +102,10 @@ public class HighestBid extends Fragment implements RequestNotifier {
                     if (success.getStartPrice().equals("")) {
                         success.setStartPrice("0");
                     }
+                    mHighTotal.setText(getString(R.string.Rs) + " " + highestBidTotal);
                     successes.add(success);
                 }
-                BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice, "1");
+                BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice, "1", mLimitBid);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {
