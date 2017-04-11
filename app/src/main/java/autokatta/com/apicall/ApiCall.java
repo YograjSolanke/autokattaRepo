@@ -4115,6 +4115,38 @@ params.put("auction_id", bundleAuctionId);
     }
 
     /*
+    Get Out Bid data
+     */
+    public void getOutBid(String id, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<YourBidResponse> yourBid = serviceApi.getOutBid(id, contact);
+                yourBid.enqueue(new Callback<YourBidResponse>() {
+                    @Override
+                    public void onResponse(Call<YourBidResponse> call, Response<YourBidResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<YourBidResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
     Get Highest Bid data
      */
     public void getHighestBid(String id, String contact) {

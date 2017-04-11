@@ -62,7 +62,7 @@ public class OutBid extends Fragment implements RequestNotifier {
      */
     private void getOutBidData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getYourBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
+        mApiCall.getOutBid(auctionId, getActivity().getSharedPreferences(getString(R.string.my_preference),
                 Context.MODE_PRIVATE).getString("loginContact", ""));
     }
 
@@ -94,6 +94,9 @@ public class OutBid extends Fragment implements RequestNotifier {
                     success.setDate(success.getDate());
                     success.setAuctionBidId(success.getAuctionBidId());
                     success.setBidReceivedPrice(success.getBidReceivedPrice());
+                    if (success.getStartPrice().equals("")) {
+                        success.setStartPrice("0");
+                    }
                     successes.add(success);
                 }
                 BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice, "0");

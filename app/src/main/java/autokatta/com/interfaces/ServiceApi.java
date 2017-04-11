@@ -660,6 +660,10 @@ public interface ServiceApi {
     @GET("userYourBid.php")
     Call<YourBidResponse> getYourBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
 
+    //Get Out Bid Response
+    @GET("userOutBid.php")
+    Call<YourBidResponse> getOutBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
+
     //Get Highest Bid Response
     @GET("userHighestBid.php")
     Call<YourBidResponse> getHighestBid(@Query("auctionId") String id, @Query("userContactNo") String contact);

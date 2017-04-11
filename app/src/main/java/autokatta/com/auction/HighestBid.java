@@ -70,6 +70,7 @@ public class HighestBid extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 successes.clear();
+                int highestBidTotal = 0;
                 YourBidResponse yourBidResponse = (YourBidResponse) response.body();
                 for (YourBidResponse.Success success : yourBidResponse.getSuccess()) {
                     success.setTitle(success.getTitle());
@@ -93,6 +94,10 @@ public class HighestBid extends Fragment implements RequestNotifier {
                     success.setDate(success.getDate());
                     success.setAuctionBidId(success.getAuctionBidId());
                     success.setBidReceivedPrice(success.getBidReceivedPrice());
+                    highestBidTotal = highestBidTotal + Integer.parseInt(success.getCurrentBidPrice());
+                    if (success.getStartPrice().equals("")) {
+                        success.setStartPrice("0");
+                    }
                     successes.add(success);
                 }
                 BidRecyclerAdapter adapter = new BidRecyclerAdapter(getActivity(), successes, auctionId, openClose, showPrice, "1");
