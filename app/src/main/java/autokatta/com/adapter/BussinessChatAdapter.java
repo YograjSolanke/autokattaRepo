@@ -46,7 +46,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
         this.mItemList = mItemList;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView mKeyword, mTitle, mCategory, mBrand, mModel, mPrice;
         ImageView mImage;
         RelativeLayout mRelCategory, mRelBrand, mRelModel, mRelPrice;
@@ -66,6 +66,37 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
             mRelBrand = (RelativeLayout) itemView.findViewById(R.id.relative3);
             mRelModel = (RelativeLayout) itemView.findViewById(R.id.relative4);
             mRelPrice = (RelativeLayout) itemView.findViewById(R.id.relative5);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Bundle b = new Bundle();
+
+            if (   mKeyword.getText().toString().equals("Product")) {
+                b.putString("product_id", mItemList.get(getAdapterPosition()).getProductId());
+                b.putString("service_id", "");
+                b.putString("vehicle_id", "");
+            }
+            if (   mKeyword.getText().toString().equals("Service")) {
+                b.putString("product_id", "");
+                b.putString("service_id", mItemList.get(getAdapterPosition()).getStoreId());
+                b.putString("vehicle_id", "");
+            }
+
+            if (   mKeyword.getText().toString().equals("Vehicle")) {
+                b.putString("product_id", "");
+                b.putString("service_id", "");
+                b.putString("vehicle_id", mItemList.get(getAdapterPosition()).getVehicleId());
+            }
+
+            BussinessMsgSenders obj = new BussinessMsgSenders();
+            obj.setArguments(b);
+            FragmentManager fragmentManager = mActivity.getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.bussines_chat_container, obj);
+            fragmentTransaction.addToBackStack("chatactivity");
+            fragmentTransaction.commit();
 
         }
     }
@@ -130,39 +161,6 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
             holder.mRelBrand.setVisibility(View.GONE);
             holder.mRelModel.setVisibility(View.GONE);
         }
-
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Bundle b = new Bundle();
-                if (holder.mKeyword.equals("Product")) {
-                    b.putString("product_id", mItemList.get(position).getProductId());
-                    b.putString("service_id", "");
-                    b.putString("vehicle_id", "");
-                }
-                if (holder.mKeyword.equals("Service")) {
-                    b.putString("product_id", "");
-                    b.putString("service_id", mItemList.get(position).getStoreId());
-                    b.putString("vehicle_id", "");
-                }
-
-                if (holder.mKeyword.equals("Vehicle")) {
-                    b.putString("product_id", "");
-                    b.putString("service_id", "");
-                    b.putString("vehicle_id", mItemList.get(position).getVehicleId());
-                }
-                mActivity.finish();
-                BussinessMsgSenders obj = new BussinessMsgSenders();
-                obj.setArguments(b);
-                FragmentManager fragmentManager = mActivity.getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.bussines_chat_container, obj);
-                fragmentTransaction.addToBackStack("chatactivity");
-                fragmentTransaction.commit();
-
-            }
-        });
 
     }
 

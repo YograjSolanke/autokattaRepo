@@ -76,6 +76,7 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mSuccesses.clear();
                 mSwipeRefreshLayout.setRefreshing(false);
                 getBussinessChatResponse mGetBussinessChatResponse = (getBussinessChatResponse) response.body();
                 for (getBussinessChatResponse.Success success : mGetBussinessChatResponse.getSuccess()) {

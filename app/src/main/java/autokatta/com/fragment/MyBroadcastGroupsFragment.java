@@ -66,7 +66,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     View mMyBroadcast;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    ApiCall apiCall;
+    ApiCall mApiCall;
     List<Success> broadcastGroupsResponseList = new ArrayList<>();
     MyBroadcastGroupsAdapter adapter;
     FragmentActivity ctx;
@@ -79,7 +79,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     Bitmap bitmap;
     String userSelected = "";
     String lastWord = "";
-    ImageView uploadImage, deleteBrdGroup;
+    ImageView uploadImage;
     AlertDialog alert;
     TextView addimagetext;
     ImageUpload mImageUpload;
@@ -103,7 +103,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         imgDeleteGroup.setOnClickListener(this);
         createGroup.setOnClickListener(this);
 
-        apiCall = new ApiCall(ctx, this);
+        mApiCall = new ApiCall(getActivity(), this);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -117,13 +117,13 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-               mSwipeRefreshLayout.post(new Runnable() {
-                                             @Override
-                                             public void run() {
-                                                 mSwipeRefreshLayout.setRefreshing(true);
-                                                 apiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-                                             }
-                                         });
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                mApiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+            }
+        });
         return mMyBroadcast;
     }
 
@@ -134,7 +134,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             case R.id.btnSendMsg:
                 finalgrpids = "";
                 incominggrpids.clear();
-
                 incominggrpids = adapter.checkboxselect();
                 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Checked grp id====" + incominggrpids);
 
@@ -148,12 +147,12 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     }
 
                 }
-
-                CustomToast.customToast(ctx, "Please Select Group");
                 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
-
-                sendmessage(finalgrpids);
-
+                if ( finalgrpids.equals("")) {
+                    CustomToast.customToast(getActivity(), "Please Select Group to Send Message");
+                } else {
+                    sendmessage(finalgrpids);
+                }
                 break;
             case R.id.deletegroup:
                 deleteGroups();
@@ -164,7 +163,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 b.putString("groupname", "");
                 b.putString("groupmembers", "");
                 b.putString("group_id", "");
-                Log.e("hiiiii", "->");
+
                 CreateBroadcastGroupFragment about = new CreateBroadcastGroupFragment();
                 about.setArguments(b);
                 FragmentManager fragmentManager = getFragmentManager();
@@ -178,57 +177,55 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
     private void deleteGroups() {
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-        alert.setTitle("Delete");
-        alert.setMessage("Are you sure you want to delete this group?");
-        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+        finalgrpids = "";
+        incominggrpids.clear();
 
-        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        incominggrpids = adapter.checkboxselect();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Checked grp id====" + incominggrpids);
 
-
-                finalgrpids = "";
-                incominggrpids.clear();
-
-                incominggrpids = adapter.checkboxselect();
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Checked grp id====" + incominggrpids);
-
-                for (int i = 0; i < incominggrpids.size(); i++) {
-                    if (!incominggrpids.get(i).equals("0")) {
-                        if (finalgrpids.equals(""))
-                            finalgrpids = incominggrpids.get(i);
-                        else
-                            finalgrpids = finalgrpids + "," + incominggrpids.get(i);
-
-                    }
-
-                }
-
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
-
-                apiCall.deleteBroadcastgroup("delete", finalgrpids);
-               /* try {
-                    //deletegroup(finalgrpids);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-*/
-                dialog.dismiss();
+        for (int i = 0; i < incominggrpids.size(); i++) {
+            if (!incominggrpids.get(i).equals("0")) {
+                if (finalgrpids.equals(""))
+                    finalgrpids = incominggrpids.get(i);
+                else
+                    finalgrpids = finalgrpids + "," + incominggrpids.get(i);
 
             }
-        });
 
-        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
+        }
 
-        });
-        alert.create();
-        alert.show();
+        if ( finalgrpids.equals("")) {
+            CustomToast.customToast(getActivity(), "Please Select Group to Delete");
+        } else {
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            alert.setTitle("Delete");
+            alert.setMessage("Are you sure you want to delete this group?");
+            alert.setIconAttribute(android.R.attr.alertDialogIcon);
 
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+
+                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
+
+                    mApiCall.deleteBroadcastgroup("delete", finalgrpids);
+
+                    dialog.dismiss();
+
+                }
+            });
+
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+
+            });
+            alert.create();
+            alert.show();
+        }
     }
 
     @Override
@@ -257,7 +254,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                         broadcastGroupsResponseList.add(success);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    adapter = new MyBroadcastGroupsAdapter(getActivity(), ctx, broadcastGroupsResponseList);
+                    adapter = new MyBroadcastGroupsAdapter(getActivity(), broadcastGroupsResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyItemRangeChanged(0, adapter.getItemCount());
 
@@ -288,29 +285,31 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success")) {
-                CustomToast.customToast(getActivity(), "BroadCast Message Successfully");
+            if (str.equals("success_deletion")) {
+                CustomToast.customToast(getActivity(), "BroadCast Group Deleted Successfully");
                 MyBroadcastGroupsFragment about = new MyBroadcastGroupsFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();
             } else {
-                CustomToast.customToast(getActivity(), "Group Deleted Successfully");
-                MyBroadcastGroupsFragment about = new MyBroadcastGroupsFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();
+                if (str.equals("successsuccesssuccess")) {
+                    CustomToast.customToast(getActivity(), "BroadCast Message Send Successfully");
+                    MyBroadcastGroupsFragment about = new MyBroadcastGroupsFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();
+                }
             }
         }
     }
 
     @Override
     public void onRefresh() {
-        apiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+        mApiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
     }
 
-     /*Adapter for broadcast group*/
+    /***********************Adapter for broadcast group*********************************/
 
     public class MyBroadcastGroupsAdapter extends RecyclerView.Adapter<MyBroadcastGroupsAdapter.MyViewHolder> {
         //  private LayoutInflater inflater = null;
@@ -337,10 +336,8 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         }
 
 
-        public MyBroadcastGroupsAdapter(Activity activity, FragmentActivity fragmentActivity, List<MyBroadcastGroupsResponse.Success> broadcastlist) {
-            ctx = fragmentActivity;
+        public MyBroadcastGroupsAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> broadcastlist) {
             this.mItemList = broadcastlist;
-            System.out.println("rutu------------------itemlist size" + mItemList.size());
             this.activity = activity;
             contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
@@ -496,7 +493,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             @Override
             public void onClick(View v) {
 
-                apiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
+                mApiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
                 //sendDataToWeb(message.getText().toString(), groupids);
                 alert.dismiss();
             }

@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-
+    android:layout_height="wrap_content">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutBGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_above="@+id/button"
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerBGroup"
@@ -20,41 +17,44 @@
             android:scrollbars="vertical"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-        <LinearLayout
-            android:id="@+id/button"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/btnSendMsg"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_weight="2"
+            android:background="@color/background"
+            android:text="Send Message"
+            android:textAllCaps="false"
+            android:textColor="@color/white"/>
 
-            <ImageView
-                android:id="@+id/deletegroup"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="@string/app_name"
-                android:src="@android:drawable/ic_menu_delete"
-                android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/deletegroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_delete"
+            android:visibility="visible"/>
 
-            <Button
-                android:id="@+id/btnSendMsg"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.78"
-                android:background="@color/background"
-                android:text="Send Message"
-                android:textAllCaps="false"
-                android:textColor="@color/white"/>
+    </LinearLayout>
 
-        </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabCreateBroadcastGroup"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        android:layout_marginLeft="300dp"
-        android:layout_marginRight="20dp"
-        android:layout_above="@+id/button"/>
+        android:layout_above="@+id/button"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@mipmap/ic_account_multiple_plus"/>
 </RelativeLayout>

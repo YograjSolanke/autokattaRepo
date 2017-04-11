@@ -98,6 +98,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
     public void notifySuccess(Response<?> response) {
         if (response!=null){
             if (response.isSuccessful()){
+                mSuccesses.clear();
                 mSwipeRefreshLayout.setRefreshing(false);
                 BroadcastReceivedResponse mGetBroadcastReceiver = (BroadcastReceivedResponse) response.body();
                 for (BroadcastReceivedResponse.Success msenders : mGetBroadcastReceiver.getSuccess()){
@@ -105,7 +106,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     msenders.setSendername(msenders.getSendername());
                     mSuccesses.add(msenders);
                 }
-                mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses);
+                mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses,product_id,service_id,vehicle_id);
                 mRecyclerView.setAdapter(mMsgReplyAdapter);
                 mMsgReplyAdapter.notifyDataSetChanged();
             }else {
