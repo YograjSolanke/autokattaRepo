@@ -633,7 +633,7 @@ public interface ServiceApi {
 
     //add vehicle for reauction
     @GET("addToReauction.php")
-    Call<String> _autokattaAddVehicleToReauction(String vehicleid, String mAuctionId);
+    Call<String> _autokattaAddVehicleToReauction(@Query("vehicle_id") String vehicleid, @Query("auctionid") String mAuctionId);
 
     //get Browse store data
     @GET("getBrowseStores.php")
