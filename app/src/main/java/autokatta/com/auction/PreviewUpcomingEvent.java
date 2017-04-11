@@ -51,9 +51,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PreviewGoingEvents extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
+public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
-    //ListView mListView;
     RecyclerView mRecyclerView;
     FloatingActionMenu mFloatingActionMenu;
     FloatingActionButton mCall, mMail;
@@ -71,7 +70,7 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
     List<GetAuctionEventResponse.Vehicle> vehicles = new ArrayList<>();
     Boolean boolGoing = true;
-    private ConnectionDetector mConnectionDetector = new ConnectionDetector(PreviewGoingEvents.this);
+    private ConnectionDetector mConnectionDetector = new ConnectionDetector(PreviewUpcomingEvent.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +102,8 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
         showPrice = getIntent().getExtras().getString("showPrice");
         keyword = getIntent().getExtras().getString("keyword");
 
+        Log.i("ignoreUpcomingPreview", "->" + ignoreGoingStatus);
+        //mListView = (ListView) findViewById(R.id.listView);
         mRecyclerView = (RecyclerView) findViewById(R.id.auction_event_recycler_view);
         mFloatingActionMenu = (FloatingActionMenu) findViewById(R.id.menu_red);
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
@@ -123,11 +124,6 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
 
         mGoLive.setOnClickListener(this);
         mGoing.setOnClickListener(this);
-
-        mLiveTimer.setVisibility(View.GONE);
-        mIgnore.setVisibility(View.GONE);
-        mGoing.setVisibility(View.GONE);
-        mGoLive.setVisibility(View.GONE);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -154,7 +150,7 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                 getAuctionPreviewById();
 
                 mRecyclerView.setHasFixedSize(true);
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(PreviewGoingEvents.this);
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(PreviewUpcomingEvent.this);
                 mLayoutManager.setReverseLayout(true);
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
@@ -165,7 +161,7 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                 mEndDate.setText(auction_enddate);
                 mEndTime.setText(auction_endtime);
                 mCloseOpenType.setText(openClose + " " + "Type Auction");
-                mAuctionText.setText(getString(R.string.going_auction));
+                mAuctionText.setText(getString(R.string.upcoming_auction));
 
                 final TextView tv = mLiveTimer;
                 cdt = counters.get(mLiveTimer);
@@ -220,21 +216,17 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                     e.printStackTrace();
                 }
 
+                if (ignoreGoingStatus.equals("going")) {
+                    mGoing.setEnabled(false);
+                } else if (ignoreGoingStatus.equals("ignore")) {
+                    mIgnore.setEnabled(false);
+                }
+
                 if (getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", "").equals(auctioncontact)) {
                     whoseAuction = "myauction";
                 } else
                     whoseAuction = "otherauction";
-                //mGoLive.setVisibility(View.VISIBLE);
-                /*if (ignoreGoingStatus.equals("going")) {
-                    mGoing.setEnabled(false);
-                    mGoLive.setEnabled(true);
-                    mIgnore.setVisibility(View.GONE);
-                    mGoing.setVisibility(View.GONE);
-                } else if (ignoreGoingStatus.equals("ignore")) {
-                    mIgnore.setEnabled(false);
-                    mGoing.setEnabled(false);
-                }*/
             }
         });
     }
@@ -243,7 +235,7 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
     Get Auction Preview By Id...
      */
     private void getAuctionPreviewById() {
-        ApiCall mApiCall = new ApiCall(PreviewGoingEvents.this, this);
+        ApiCall mApiCall = new ApiCall(PreviewUpcomingEvent.this, this);
         mApiCall.getAuctionEvent(auction_id);
     }
 
@@ -275,7 +267,7 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                     vehicle.setVehicleStatus(vehicle.getVehicleStatus());
                     vehicles.add(vehicle);
                 }
-                PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(PreviewGoingEvents.this, vehicles);
+                PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(PreviewUpcomingEvent.this, vehicles);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {
@@ -321,8 +313,8 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                     b1.putString("showPrice", showPrice);
                     b1.putString("ignoreGoingStatus", ignoreGoingStatus);
                     b1.putString("blackListStatus", blackListStatus);
-                    /*b1.putString("tabNo", "3");
-                    b1.putBoolean("isPayEMD", boolGoing);*/
+                    b1.putString("tabNo", "3");
+                    b1.putBoolean("isPayEMD", boolGoing);
                     Intent intent = new Intent(getApplicationContext(), LiveAuctionEventBiding.class);
                     intent.putExtras(b1);
                     startActivity(intent);
@@ -330,7 +322,7 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                 break;
 
             case R.id.btn_going:
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PreviewGoingEvents.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PreviewUpcomingEvent.this);
                 alertDialogBuilder
                         .setMessage("Pay EMD or auction platform fees")
                         .setCancelable(false)
@@ -414,7 +406,6 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                                                                     mIgnore.setVisibility(View.GONE);
                                                                     mGoing.setVisibility(View.GONE);
                                                                     mGoLive.setEnabled(true);
-
                                                                 }
                                                             }
                                                         } else {
@@ -498,7 +489,7 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
     public void onBackPressed() {
         super.onBackPressed();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(PreviewGoingEvents.this, R.anim.pull_in_left, R.anim.push_out_right);
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(PreviewUpcomingEvent.this, R.anim.pull_in_left, R.anim.push_out_right);
             startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
             finish();
         } else {
