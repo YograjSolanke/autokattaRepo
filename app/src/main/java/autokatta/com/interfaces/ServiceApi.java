@@ -695,7 +695,7 @@ public interface ServiceApi {
     @POST("getMyChatDetails.php")
     Call<getBussinessChatResponse> getBussinessChat(@Query("mycontact") String contact);
 
-    //get broadcast recievers
+    //get Chat message
     @GET("getchatmessage.php")
     Call<BroadcastMessageResponse> getChatMessageData(@Query("sender_contact") String sender_contact, @Query("receiver_contact") String receiver_contact, @Query("product_id") String product_id,
                                                       @Query("service_id") String service_id, @Query("vehicle_id") String vehicle_id);
@@ -704,5 +704,12 @@ public interface ServiceApi {
     @POST("addIgnoreGoingMe.php")
     Call<String> addIgnoreGoingMe(@Query("contact") String contact, @Query("auction_id") String auctionId,
                                   @Query("action") String action);
+
+
+    //send Chat Message
+    @GET("savechatmessage.php")
+    Call<String> sendChatMessage(@Query("sender_contact") String sender_contact, @Query("receiver_contact") String receiver_contact,
+                                 @Query("message") String message, @Query("image") String image,
+                                 @Query("product_id") String product_id, @Query("service_id") String service_id, @Query("vehicle_id") String vehicle_id);
 
 }

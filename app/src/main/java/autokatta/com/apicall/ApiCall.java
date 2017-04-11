@@ -4448,6 +4448,46 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
+    //save chat message at server side
+
+    //Update Broadcast Group
+    public void sendChatMessage(String sender_contact, String receiver_contact,
+                                String message, String image, String product_id,
+                                String service_id, String vehicle_id) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> createbrdcstgrp = serviceApi.sendChatMessage(sender_contact, receiver_contact, message,
+                        image, product_id, service_id, vehicle_id);
+                createbrdcstgrp.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs
