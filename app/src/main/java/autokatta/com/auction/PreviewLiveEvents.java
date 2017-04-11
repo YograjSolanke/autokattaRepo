@@ -227,6 +227,11 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                     mIgnore.setEnabled(false);
                     mGoing.setEnabled(false);
                 }
+                if (getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", "").equals(auctioncontact)) {
+                    whoseAuction = "myauction";
+                } else
+                    whoseAuction = "otherauction";
             }
         });
     }

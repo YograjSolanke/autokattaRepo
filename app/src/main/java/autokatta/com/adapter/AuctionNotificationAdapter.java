@@ -30,6 +30,7 @@ import java.util.Set;
 import autokatta.com.R;
 import autokatta.com.auction.PreviewGoingEvents;
 import autokatta.com.auction.PreviewLiveEvents;
+import autokatta.com.auction.PreviewUpcomingEvent;
 import autokatta.com.response.GetLiveEventsResponse;
 
 /**
@@ -224,6 +225,10 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                     mActivity.startActivity(intent);
                 } else if (auctionType.equals("Going")) {
                     Intent intent = new Intent(mActivity, PreviewGoingEvents.class);
+                    intent.putExtras(bundle);
+                    mActivity.startActivity(intent);
+                } else if (auctionType.equals("Upcoming")) {
+                    Intent intent = new Intent(mActivity, PreviewUpcomingEvent.class);
                     intent.putExtras(bundle);
                     mActivity.startActivity(intent);
                 }

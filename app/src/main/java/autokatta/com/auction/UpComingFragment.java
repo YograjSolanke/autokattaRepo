@@ -145,7 +145,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         mLiveEventList.add(success);
                     }
                     mEventCount.setText(String.valueOf(mLiveEventList.size()));
-                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Upcoming");
                     mEventRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
