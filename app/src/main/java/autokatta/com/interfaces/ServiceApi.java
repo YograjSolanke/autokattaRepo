@@ -631,6 +631,10 @@ public interface ServiceApi {
     Call<EndedAuctionApprovedVehiResponse> _autokattaGetEndedApproveVehi(@Query("contact") String myContact,
                                                                          @Query("auctionid") String mAuctionId);
 
+    //add vehicle for reauction
+    @GET("addToReauction.php")
+    Call<String> _autokattaAddVehicleToReauction(String vehicleid, String mAuctionId);
+
     //get Browse store data
     @GET("getBrowseStores.php")
     Call<BrowseStoreResponse> getBrowseStores(@Query("yourcontact") String yourcontact, @Query("keyword") String keyword);
