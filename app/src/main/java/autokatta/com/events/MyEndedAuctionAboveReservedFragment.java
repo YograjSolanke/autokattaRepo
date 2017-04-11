@@ -496,7 +496,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check class", "Active Auction HighesBid Fragment");
+            Log.i("Check class", "Ended Auction Above Resreved Fragment");
             error.printStackTrace();
         }
     }

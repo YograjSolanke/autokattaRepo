@@ -493,7 +493,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check class", "Active Auction HighesBid Fragment");
+            Log.i("Check class", "Ended Auction HighesBid Fragment");
             error.printStackTrace();
         }
     }
