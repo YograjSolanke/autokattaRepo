@@ -2,7 +2,6 @@ package autokatta.com.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +17,12 @@ import java.net.SocketTimeoutException;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
-import autokatta.com.Registration.RegistrationActivity;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.SessionManagement;
+import autokatta.com.register.Registration;
 import autokatta.com.response.LoginResponse;
 import retrofit2.Response;
 
@@ -32,8 +31,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText mUserName, mPassword;
     TextView mForgetPassword;
     SessionManagement session;
-    SharedPreferences sharedPreferences = null;
-    SharedPreferences.Editor editor;
     String userName;
     String password;
 
@@ -67,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.register:
-                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+                startActivity(new Intent(LoginActivity.this, Registration.class));
                 finish();
                 break;
 
@@ -100,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (response.isSuccessful()) {
                 LoginResponse mLoginResponse = (LoginResponse) response.body();
                 String myContact = mUserName.getText().toString();
-                if (mLoginResponse.getSuccess() != null || !mLoginResponse.getSuccess().isEmpty()) {
+                if (!mLoginResponse.getSuccess().isEmpty()) {
                     String id = mLoginResponse.getSuccess().get(0).getRegID();
                     Log.i("id", "->" + id);
                     CustomToast.customToast(getApplicationContext(), "Login Successful");
@@ -108,6 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     session.createLoginSession(userName, password);
                     Intent is = new Intent(LoginActivity.this, BackgroundService.class);
                     startService(is);
+                    finish();
                     startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
                 } else {
                     CustomToast.customToast(getApplicationContext(), mLoginResponse.getError().get(0));

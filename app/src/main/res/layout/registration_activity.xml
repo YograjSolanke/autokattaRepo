@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="autokatta.com.register.Registration">
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:id="@+id/form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height">
+
+                <EditText
+                    android:id="@+id/editPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Full Name"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:drawableStart="@mipmap/ic_account"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height">
+
+                <EditText
+                    android:id="@+id/editMobileNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile No"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:drawableStart="@mipmap/ic_contacts"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height">
+
+                <EditText
+                    android:id="@+id/editEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:drawableStart="@mipmap/ic_contact_mail"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/textgender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Gender"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp" />
+
+                <RadioGroup
+                    android:id="@+id/radiogp1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/textgender"
+                    android:gravity="center|start"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbtfemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Female"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbtmale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Male"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height">
+
+                <EditText
+                    android:id="@+id/editdob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Date of Birth"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:textColor="@color/textColor"
+                    android:drawableStart="@mipmap/ic_calendar"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height">
+
+                <AutoCompleteTextView
+                    android:id="@+id/editAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:drawableStart="@mipmap/ic_map_marker"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editPincode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/cards_button_height"
+                    android:hint="Pin Code"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:drawableStart="@mipmap/ic_dialpad"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spinnerUsertype"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height"
+                android:layout_marginTop="10dp"
+                android:entries="@array/userType" />
+
+            <Spinner
+                android:id="@+id/spinnerindustry"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/otherIndustryLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/editOtherTypeIndustry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Your Industry"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:drawableStart="@mipmap/ic_factory"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/otherCategoryLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/editOtherTypeCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Your Profession"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:drawableStart="@mipmap/ic_account_star"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height"
+                app:passwordToggleEnabled="true">
+
+                <EditText
+                    android:id="@+id/editPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:minEms="6"
+                    android:drawableStart="@mipmap/ic_lock"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/cards_button_height"
+                app:passwordToggleEnabled="true">
+
+
+                <EditText
+                    android:id="@+id/editConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:minEms="6"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:drawableStart="@mipmap/ic_lock"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnsubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:text="Submit"
+            style="?android:attr/buttonBarButtonStyle"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnclear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="@color/background"
+            android:text="Clear"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package autokatta.com.Registration;
+package autokatta.com.register;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -36,7 +36,7 @@ import autokatta.com.response.IndustryResponse;
 import autokatta.com.view.LoginActivity;
 import retrofit2.Response;
 
-public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener,
+public class Registration extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener, android.location.LocationListener, RequestNotifier, View.OnTouchListener {
 
     EditText personName, mobileNo, email, dateOfBirth, pincode, otherIndustry, otherCategory, password, confirmPassword;
@@ -59,9 +59,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setContentView(R.layout.registration_activity);
         apiCall = new ApiCall(this, this);
 
         personName = (EditText) findViewById(R.id.editPersonName);
@@ -99,7 +97,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         //    dob_calender.setOnTouchListener(this);
         dateOfBirth.setOnTouchListener(this);
         showDatePicker();
-        address.setAdapter(new GooglePlacesAdapter(RegistrationActivity.this, R.layout.simple));
+        address.setAdapter(new GooglePlacesAdapter(Registration.this, R.layout.simple));
         apiCall.Categories("");
         apiCall.Industries();
 
@@ -204,13 +202,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 } else if (profession.equalsIgnoreCase("Select User Type")) {
                     Toast.makeText(getApplicationContext(), "Please select User type", Toast.LENGTH_LONG).show();
                 } else if ((!profession.equalsIgnoreCase("Student") && strIndustry.equalsIgnoreCase("Select Industry"))) {
-                    Toast.makeText(RegistrationActivity.this, "Please select industry", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Registration.this, "Please select industry", Toast.LENGTH_LONG).show();
                 } else if (strIndustry.equalsIgnoreCase("Other") && otherIndustry.getText().toString().trim().equalsIgnoreCase("")) {
                     otherIndustry.setError("Enter Industry");
                 } else if (strIndustry.equalsIgnoreCase("Other") && !otherIndustry.getText().toString().matches("[a-zA-Z ]*")) {
                     otherIndustry.setError("Enter  Valid Industry");
                 } else if (strIndustry.equalsIgnoreCase("Automotive and vehicle manufacturing") && sub_profession.equalsIgnoreCase("Select Category")) {
-                    Toast.makeText(RegistrationActivity.this, "Please select category", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Registration.this, "Please select category", Toast.LENGTH_LONG).show();
                 } else if (sub_profession.equalsIgnoreCase("other") && otherCategory.getText().toString().equalsIgnoreCase("")) {
                     otherCategory.setError("Enter Profession");
                 } else if (sub_profession.equalsIgnoreCase("other") && !otherCategory.getText().toString().matches("[a-zA-Z ]*")) {
@@ -226,18 +224,20 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 } else if (!passwordstr.equals(confirmpassstr)) {
                     confirmPassword.setError("Confirm password is wrong");
                     confirmPassword.requestFocus();
-                } else if (sub_profession.equalsIgnoreCase("Other")) {
-                    sub_profession = otherCategory.getText().toString().trim();
-                    apiCall.addOtherCategory(sub_profession);
-                } else if (strIndustry.equalsIgnoreCase("Other")) {
-                    strIndustry = otherIndustry.getText().toString().trim();
-                    apiCall.addOtherIndustry(strIndustry);
-                } else if (sub_profession.equalsIgnoreCase("Select Category")) {
-                    sub_profession = "";
-                } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
-                    strIndustry = "";
                 } else {
-                    apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry);
+                    if (sub_profession.equalsIgnoreCase("Other")) {
+                        sub_profession = otherCategory.getText().toString().trim();
+                        apiCall.addOtherCategory(sub_profession);
+                    } else if (strIndustry.equalsIgnoreCase("Other")) {
+                        strIndustry = otherIndustry.getText().toString().trim();
+                        apiCall.addOtherIndustry(strIndustry);
+                    } else if (sub_profession.equalsIgnoreCase("Select Category")) {
+                        sub_profession = "";
+                    } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
+                        strIndustry = "";
+                    } else {
+                        apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry);
+                    }
                 }
                 break;
 
@@ -278,7 +278,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 industrySpinner.setVisibility(View.GONE);
                 break;
         }
-
     }
 
     @Override
@@ -305,7 +304,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
             case (R.id.spinnerUsertype):
-                System.out.println("In User Spinner");
                 // profession = usertypeSpinner.getSelectedItem().toString();
                 if (!usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Student")
                         && !usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Select User Type")) {
@@ -429,7 +427,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         if (str != null) {
             getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
             CustomToast.customToast(getApplicationContext(), "Registration Successfully");
-            Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
+            Intent i = new Intent(Registration.this, LoginActivity.class);
             startActivity(i);
             finish();
         } else {
@@ -452,7 +450,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     private void showDatePicker() {
         Calendar newCalendar = Calendar.getInstance();
-        datePicker = new DatePickerDialog(RegistrationActivity.this, new DatePickerDialog.OnDateSetListener() {
+        datePicker = new DatePickerDialog(Registration.this, new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
@@ -483,3 +481,4 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 }
+

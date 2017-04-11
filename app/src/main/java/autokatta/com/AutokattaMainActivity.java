@@ -68,7 +68,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_autokatta_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         session = new SessionManagement(getApplicationContext());
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
@@ -77,7 +77,6 @@ public class AutokattaMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-        sharedPreferences = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
        /* DbOperation dbAdpter = new DbOperation(getApplicationContext());
         dbAdpter.OPEN();
         Cursor cursor = dbAdpter.getAutokattaContact();
@@ -135,6 +134,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
         tabLayout.getTabAt(5).setIcon(R.mipmap.ic_account_multiple);
         tabLayout.getTabAt(6).setIcon(R.mipmap.ic_heart);
     }
+
     private void setupViewPager(ViewPager viewPager) {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new WallNotificationFragment());
@@ -203,7 +203,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
                         } else if (menuItem.getItemId() == R.id.my_broadcast_message) {
                             startActivity(new Intent(AutokattaMainActivity.this, BroadcastMessageActivity.class));
                         } else if (menuItem.getItemId() == R.id.business_Chat) {
-startActivity(new Intent(AutokattaMainActivity.this, BussinessChatActivity.class));
+                            startActivity(new Intent(AutokattaMainActivity.this, BussinessChatActivity.class));
                         } else if (menuItem.getItemId() == R.id.locality) {
 
                         } else if (menuItem.getItemId() == R.id.sign_out) {
