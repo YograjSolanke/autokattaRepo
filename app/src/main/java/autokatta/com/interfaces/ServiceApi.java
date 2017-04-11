@@ -16,6 +16,7 @@ import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
+import autokatta.com.response.EndedAuctionApprovedVehiResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetAuctionEventResponse;
 import autokatta.com.response.GetAutokattaContactResponse;
@@ -625,6 +626,11 @@ public interface ServiceApi {
     @POST("auctionNoBidding.php")
     Call<MyActiveAuctionNoBidResponse> _autokattaGetActiveAuctionNoBid(@Query("auctionid") String mAuctionId);
 
+    //Get Approve vehicle
+    @POST("auctionApprovedVehicles.php")
+    Call<EndedAuctionApprovedVehiResponse> _autokattaGetEndedApproveVehi(@Query("contact") String myContact,
+                                                                         @Query("auctionid") String mAuctionId);
+
     //get Browse store data
     @GET("getBrowseStores.php")
     Call<BrowseStoreResponse> getBrowseStores(@Query("yourcontact") String yourcontact, @Query("keyword") String keyword);
@@ -694,4 +700,5 @@ public interface ServiceApi {
     @POST("addIgnoreGoingMe.php")
     Call<String> addIgnoreGoingMe(@Query("contact") String contact, @Query("auction_id") String auctionId,
                                   @Query("action") String action);
+
 }

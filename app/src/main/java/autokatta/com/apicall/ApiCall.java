@@ -29,6 +29,7 @@ import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
+import autokatta.com.response.EndedAuctionApprovedVehiResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import autokatta.com.response.GetAuctionEventResponse;
 import autokatta.com.response.GetBodyTypeResponse;
@@ -3944,6 +3945,38 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
+    /*
+   Get Approved vehicle Bid data
+    */
+    public void EndedAuctionApprovedVehi(String myContact, String mAuctionId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<EndedAuctionApprovedVehiResponse> yourBid = serviceApi._autokattaGetEndedApproveVehi(myContact, mAuctionId);
+                yourBid.enqueue(new Callback<EndedAuctionApprovedVehiResponse>() {
+                    @Override
+                    public void onResponse(Call<EndedAuctionApprovedVehiResponse> call, Response<EndedAuctionApprovedVehiResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<EndedAuctionApprovedVehiResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //Browse store
 
@@ -4397,5 +4430,6 @@ params.put("auction_id", bundleAuctionId);
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
 
 }
