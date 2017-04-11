@@ -22,6 +22,10 @@ import autokatta.com.fragment.BroadcastSendFragment;
 
 public class BroadcastMessageFragment extends Fragment {
 
+    public BroadcastMessageFragment() {
+
+    }
+
 
     View view;
     TabLayout broadcast_message_tab;

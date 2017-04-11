@@ -28,6 +28,7 @@ import autokatta.com.response.BroadcastReceivedResponse;
 import autokatta.com.response.BroadcastSendResponse;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.ChatElementDetails;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.EndedAuctionApprovedVehiResponse;
@@ -4586,6 +4587,39 @@ params.put("auction_id", bundleAuctionId);
             } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+Get ChatElementData
+ */
+    public void getChatElementData(String product_id, String service_id, String vehicle_id) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ChatElementDetails> yourBid = serviceApi.getChatElementData(product_id, service_id, vehicle_id);
+                yourBid.enqueue(new Callback<ChatElementDetails>() {
+                    @Override
+                    public void onResponse(Call<ChatElementDetails> call, Response<ChatElementDetails> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ChatElementDetails> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
         } catch (Exception e) {
             e.printStackTrace();
         }

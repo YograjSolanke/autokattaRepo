@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -37,11 +38,21 @@ import autokatta.com.R;
 import autokatta.com.adapter.ChatAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
+import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastMessageResponse;
 import autokatta.com.view.OtherProfile;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -58,6 +69,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
 
     private ListView listView;
     ImageView uploadImage;
+    ImageUpload mImageUpload;
     TextView addimagetext;
     AlertDialog alert;
     TextView BrdmessageText, msgFrom, dateNtime;
@@ -91,6 +103,13 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
         final View root = inflater.inflate(R.layout.chat_fragment, null);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+
+        // Change base URL to your upload server URL.
+        mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
 
         buttonRep = (Button) root.findViewById(R.id.replay);
         listView = (ListView) root.findViewById(R.id.msgview);
@@ -175,6 +194,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
                  */
                 if (response.body() instanceof BroadcastMessageResponse) {
                     BroadcastMessageResponse moduleResponse = (BroadcastMessageResponse) response.body();
+                    chatlist.clear();
 
                     if (!moduleResponse.getSuccess().isEmpty()) {
 
@@ -264,6 +284,19 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
 
     @Override
     public void notifyString(String str) {
+        if (str != null) {
+            if (str.equalsIgnoreCase("success")) {
+                upload(picturePath);
+                listView.setAdapter(null);
+
+                apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);
+
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
 
     }
 
@@ -329,7 +362,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
             @Override
             public void onClick(View v) {
 
-                //  sendMyChat(message.getText().toString());
+                apiCall.sendChatMessage(myContact, Sendercontact, message.getText().toString(), lastWord, product_id, service_id, vehicle_id);
                 alert.dismiss();
 
             }
@@ -344,6 +377,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
         });
 
     }
+
 
     private void selectImage() {
 
@@ -434,5 +468,47 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         picturePath = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), bitmap, "Title", null);
         return Uri.parse(picturePath);
+    }
+
+
+    //upload image to server
+
+    public void upload(String picturePath) {
+
+        System.out.println("picturePath while upload image:" + picturePath);
+        System.out.println("rutu= userselected in upload==========:" + userSelected);
+
+        try {
+
+            // HttpPost httpPost = new HttpPost("http://www.autokatta.com/mobile/upload_profile_profile_pics.php"); // serverupdate_profile.php
+            lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
+            System.out.println(lastWord);
+
+
+            File file = new File(picturePath);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file.getPath());
+            MultipartBody.Part body = MultipartBody.Part.createFormData("club_image", file.getName(), reqFile);
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
+
+            retrofit2.Call<okhttp3.ResponseBody> req = mImageUpload.postBroadcastMessageImage(body, name);
+            req.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    CustomToast.customToast(getActivity(), "Image Upladed");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+
+        } catch (Exception e) {
+
+            Log.e(e.getClass().getName(), e.getMessage(), e);
+
+        }
+
+
     }
 }
