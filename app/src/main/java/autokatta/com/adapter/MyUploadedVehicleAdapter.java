@@ -3,6 +3,9 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +27,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.fragment.UploadedVehicleBuyerList;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -254,14 +258,14 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     b.putString("noofleads", mMainList.get(holder.getAdapterPosition()).getBuyerLeads());
 
 
-//                    VehicleBuyerList frag = new VehicleBuyerList();
-//                    frag.setArguments(b);
-//
-//                    FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.containerView, frag);
-//                    fragmentTransaction.addToBackStack("vehicle_buyer_list");
-//                    fragmentTransaction.commit();
+                    UploadedVehicleBuyerList frag = new UploadedVehicleBuyerList();
+                    frag.setArguments(b);
+
+                    FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.myUploadedVehicleFrame, frag);
+                    fragmentTransaction.addToBackStack("vehicle_buyer_list");
+                    fragmentTransaction.commit();
                 }
 
             }

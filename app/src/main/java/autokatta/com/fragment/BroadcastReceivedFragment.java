@@ -225,6 +225,5 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
         }
 
 
-
     }
 }

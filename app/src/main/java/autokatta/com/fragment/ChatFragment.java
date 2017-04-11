@@ -25,6 +25,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.net.SocketTimeoutException;
@@ -42,7 +45,9 @@ import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastMessageResponse;
+import autokatta.com.response.ChatElementDetails;
 import autokatta.com.view.OtherProfile;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -143,6 +148,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
             service_id = b.getString("service_id");
             vehicle_id = b.getString("vehicle_id");
 
+            product_id = "325";
             chatwithtext.setText(sendername);
 
             apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);
@@ -150,8 +156,9 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
             if (product_id.equals("") && service_id.equals("") && vehicle_id.equals(""))
                 MainRel.setVisibility(View.GONE);
             else {
+
+                apiCall.getChatElementData(product_id, service_id, vehicle_id);
             }
-            // getChatAllData();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -227,34 +234,92 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
                 }
 
                  /*
-                        Response after creating store
+                      Chat Element  Response
                  */
-//                if (response.body() instanceof CreateStoreResponse) {
-//                    CreateStoreResponse createStoreResponse = (CreateStoreResponse) response.body();
-//
-//                    if (createStoreResponse.getSuccess() != null) {
-//                        String id = createStoreResponse.getSuccess().getStoreID().toString();
-//                        Log.i("StoreId", "->" + id);
-//                        CustomToast.customToast(getActivity(), "Store Created Successfully");
-//
-//                        upload(picturePath);
-//                        upload(coverpicturePath);
-//
-//                        bundle = new Bundle();
-//                        bundle.putString("store_id", id);
-//                        bundle.putString("call", callFrom);
-//                        bundle.putString("storetype", storetype);
-//
-//                        AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-//                        addAdmin.setArguments(bundle);
-//                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
-//
-//
-//                    } else
-//                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
-//                }
+                if (response.body() instanceof ChatElementDetails) {
+                    ChatElementDetails chatElementDetails = (ChatElementDetails) response.body();
+
+                    if (chatElementDetails.getSuccess() != null) {
+                        if (!chatElementDetails.getSuccess().getProduct().isEmpty()) {
+                            for (ChatElementDetails.Success.Product product : chatElementDetails.getSuccess().getProduct()) {
+
+
+                                Keyword.setText(product.getKeyword());
+                                Title.setText(product.getProductName());
+                                price.setText(product.getPrice());
+                                fullpath = prduct_img_url + product.getImages();
+
+                                fullpath = fullpath.replaceAll(" ", "%20");
+
+
+                                Glide.with(getActivity())
+                                        .load(fullpath)
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                        .placeholder(R.drawable.logo)
+                                        .into(Image);
+
+
+                                relCategory.setVisibility(View.GONE);
+                                relBrand.setVisibility(View.GONE);
+                                relModel.setVisibility(View.GONE);
+                            }
+
+
+                        } else if (!chatElementDetails.getSuccess().getService().isEmpty()) {
+                            for (ChatElementDetails.Success.Service service : chatElementDetails.getSuccess().getService()) {
+
+
+                                Keyword.setText(service.getKeyword());
+                                Title.setText(service.getName());
+                                price.setText(service.getPrice());
+                                fullpath = service_img_url + service.getImages();
+
+                                fullpath = fullpath.replaceAll(" ", "%20");
+
+
+                                Glide.with(getActivity())
+                                        .load(fullpath)
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                        .placeholder(R.drawable.logo)
+                                        .into(Image);
+
+
+                                relCategory.setVisibility(View.GONE);
+                                relBrand.setVisibility(View.GONE);
+                                relModel.setVisibility(View.GONE);
+                            }
+
+                        } else if (!chatElementDetails.getSuccess().getVehicle().isEmpty()) {
+                            for (ChatElementDetails.Success.Vehicle vehicle : chatElementDetails.getSuccess().getVehicle()) {
+
+
+                                Keyword.setText(vehicle.getKeyword());
+                                Title.setText(vehicle.getTitle());
+                                price.setText(vehicle.getPrice());
+                                Category.setText(vehicle.getCategory());
+                                Brand.setText(vehicle.getManufacturer());
+                                Model.setText(vehicle.getModel());
+                                fullpath = vehi_img_url + vehicle.getImage();
+
+                                fullpath = fullpath.replaceAll(" ", "%20");
+
+
+                                Glide.with(getActivity())
+                                        .load(fullpath)
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                        .placeholder(R.drawable.logo)
+                                        .into(Image);
+
+                            }
+
+
+                        }
+                    } else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                }
 
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

@@ -1000,208 +1000,210 @@ public class ChatElementDetails {
             }
 
         }
+
+        public class Product {
+
+            @SerializedName("product_id")
+            @Expose
+            private String productId;
+            @SerializedName("store_id")
+            @Expose
+            private String storeId;
+            @SerializedName("product_type")
+            @Expose
+            private String productType;
+            @SerializedName("status")
+            @Expose
+            private String status;
+            @SerializedName("images")
+            @Expose
+            private String images;
+            @SerializedName("product_name")
+            @Expose
+            private String productName;
+            @SerializedName("price")
+            @Expose
+            private String price;
+            @SerializedName("category")
+            @Expose
+            private String category;
+            @SerializedName("product_details")
+            @Expose
+            private String productDetails;
+            @SerializedName("product_tags")
+            @Expose
+            private String productTags;
+            @SerializedName("brandtags")
+            @Expose
+            private String brandtags;
+            @SerializedName("ratings")
+            @Expose
+            private String ratings;
+            @SerializedName("created_date")
+            @Expose
+            private String createdDate;
+            @SerializedName("modified_date")
+            @Expose
+            private String modifiedDate;
+            @SerializedName("price_rating")
+            @Expose
+            private String priceRating;
+            @SerializedName("quality_rating")
+            @Expose
+            private String qualityRating;
+            @SerializedName("stock_rating")
+            @Expose
+            private String stockRating;
+            @SerializedName("keyword")
+            @Expose
+            private String keyword;
+
+            public String getProductId() {
+                return productId;
+            }
+
+            public void setProductId(String productId) {
+                this.productId = productId;
+            }
+
+            public String getStoreId() {
+                return storeId;
+            }
+
+            public void setStoreId(String storeId) {
+                this.storeId = storeId;
+            }
+
+            public String getProductType() {
+                return productType;
+            }
+
+            public void setProductType(String productType) {
+                this.productType = productType;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getImages() {
+                return images;
+            }
+
+            public void setImages(String images) {
+                this.images = images;
+            }
+
+            public String getProductName() {
+                return productName;
+            }
+
+            public void setProductName(String productName) {
+                this.productName = productName;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getCategory() {
+                return category;
+            }
+
+            public void setCategory(String category) {
+                this.category = category;
+            }
+
+            public String getProductDetails() {
+                return productDetails;
+            }
+
+            public void setProductDetails(String productDetails) {
+                this.productDetails = productDetails;
+            }
+
+            public String getProductTags() {
+                return productTags;
+            }
+
+            public void setProductTags(String productTags) {
+                this.productTags = productTags;
+            }
+
+            public String getBrandtags() {
+                return brandtags;
+            }
+
+            public void setBrandtags(String brandtags) {
+                this.brandtags = brandtags;
+            }
+
+            public String getRatings() {
+                return ratings;
+            }
+
+            public void setRatings(String ratings) {
+                this.ratings = ratings;
+            }
+
+            public String getCreatedDate() {
+                return createdDate;
+            }
+
+            public void setCreatedDate(String createdDate) {
+                this.createdDate = createdDate;
+            }
+
+            public String getModifiedDate() {
+                return modifiedDate;
+            }
+
+            public void setModifiedDate(String modifiedDate) {
+                this.modifiedDate = modifiedDate;
+            }
+
+            public String getPriceRating() {
+                return priceRating;
+            }
+
+            public void setPriceRating(String priceRating) {
+                this.priceRating = priceRating;
+            }
+
+            public String getQualityRating() {
+                return qualityRating;
+            }
+
+            public void setQualityRating(String qualityRating) {
+                this.qualityRating = qualityRating;
+            }
+
+            public String getStockRating() {
+                return stockRating;
+            }
+
+            public void setStockRating(String stockRating) {
+                this.stockRating = stockRating;
+            }
+
+            public String getKeyword() {
+                return keyword;
+            }
+
+            public void setKeyword(String keyword) {
+                this.keyword = keyword;
+            }
+
+        }
     }
 
-    public class Product {
 
-        @SerializedName("product_id")
-        @Expose
-        private String productId;
-        @SerializedName("store_id")
-        @Expose
-        private String storeId;
-        @SerializedName("product_type")
-        @Expose
-        private String productType;
-        @SerializedName("status")
-        @Expose
-        private String status;
-        @SerializedName("images")
-        @Expose
-        private String images;
-        @SerializedName("product_name")
-        @Expose
-        private String productName;
-        @SerializedName("price")
-        @Expose
-        private String price;
-        @SerializedName("category")
-        @Expose
-        private String category;
-        @SerializedName("product_details")
-        @Expose
-        private String productDetails;
-        @SerializedName("product_tags")
-        @Expose
-        private String productTags;
-        @SerializedName("brandtags")
-        @Expose
-        private String brandtags;
-        @SerializedName("ratings")
-        @Expose
-        private String ratings;
-        @SerializedName("created_date")
-        @Expose
-        private String createdDate;
-        @SerializedName("modified_date")
-        @Expose
-        private String modifiedDate;
-        @SerializedName("price_rating")
-        @Expose
-        private String priceRating;
-        @SerializedName("quality_rating")
-        @Expose
-        private String qualityRating;
-        @SerializedName("stock_rating")
-        @Expose
-        private String stockRating;
-        @SerializedName("keyword")
-        @Expose
-        private String keyword;
-
-        public String getProductId() {
-            return productId;
-        }
-
-        public void setProductId(String productId) {
-            this.productId = productId;
-        }
-
-        public String getStoreId() {
-            return storeId;
-        }
-
-        public void setStoreId(String storeId) {
-            this.storeId = storeId;
-        }
-
-        public String getProductType() {
-            return productType;
-        }
-
-        public void setProductType(String productType) {
-            this.productType = productType;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getImages() {
-            return images;
-        }
-
-        public void setImages(String images) {
-            this.images = images;
-        }
-
-        public String getProductName() {
-            return productName;
-        }
-
-        public void setProductName(String productName) {
-            this.productName = productName;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public String getProductDetails() {
-            return productDetails;
-        }
-
-        public void setProductDetails(String productDetails) {
-            this.productDetails = productDetails;
-        }
-
-        public String getProductTags() {
-            return productTags;
-        }
-
-        public void setProductTags(String productTags) {
-            this.productTags = productTags;
-        }
-
-        public String getBrandtags() {
-            return brandtags;
-        }
-
-        public void setBrandtags(String brandtags) {
-            this.brandtags = brandtags;
-        }
-
-        public String getRatings() {
-            return ratings;
-        }
-
-        public void setRatings(String ratings) {
-            this.ratings = ratings;
-        }
-
-        public String getCreatedDate() {
-            return createdDate;
-        }
-
-        public void setCreatedDate(String createdDate) {
-            this.createdDate = createdDate;
-        }
-
-        public String getModifiedDate() {
-            return modifiedDate;
-        }
-
-        public void setModifiedDate(String modifiedDate) {
-            this.modifiedDate = modifiedDate;
-        }
-
-        public String getPriceRating() {
-            return priceRating;
-        }
-
-        public void setPriceRating(String priceRating) {
-            this.priceRating = priceRating;
-        }
-
-        public String getQualityRating() {
-            return qualityRating;
-        }
-
-        public void setQualityRating(String qualityRating) {
-            this.qualityRating = qualityRating;
-        }
-
-        public String getStockRating() {
-            return stockRating;
-        }
-
-        public void setStockRating(String stockRating) {
-            this.stockRating = stockRating;
-        }
-
-        public String getKeyword() {
-            return keyword;
-        }
-
-        public void setKeyword(String keyword) {
-            this.keyword = keyword;
-        }
-
-    }
 }
