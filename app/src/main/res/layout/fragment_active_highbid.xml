@@ -102,6 +102,17 @@
                 android:textStyle="italic"
                 tools:text="Title" />
 
+            <TextView
+                android:id="@+id/view_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBottom="@+id/vehicle_name"
+                android:layout_marginStart="@dimen/card_margin"
+                android:text="View More"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:id="@+id/linear_card"
                 android:layout_width="match_parent"
@@ -322,7 +333,7 @@
                         android:textColor="#808080" />
                 </RelativeLayout>
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/view_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -330,7 +341,7 @@
                     android:layout_marginTop="@dimen/card_margin"
                     android:text="View More"
                     android:textColor="@color/colorPrimary"
-                    android:textStyle="bold" />
+                    android:textStyle="bold" />-->
 
                 <Button
                     android:id="@+id/bidderbtn"

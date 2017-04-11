@@ -52,6 +52,8 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
     LinearLayout mLinearScrollSecond[];
     boolean isFirstViewClick[];
     List<String> vehiImgList = new ArrayList<>();
+    ApiCall mApiCall;
+    Bundle bundle;
 
     @Nullable
     @Override
@@ -61,12 +63,25 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
         mLinearLayout = (LinearLayout) view.findViewById(R.id.linear_Layout);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
 
-        Bundle bundle = getArguments();
-        mAuctionId = bundle.getString("auctionid");
+        bundle = getArguments();
 
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.ActiveAuctionHighBid(myContact, mAuctionId);
-        //mApiCall.ActiveAuctionHighBid(myContact, "1047");
+
+        mApiCall = new ApiCall(getActivity(), this);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mAuctionId = bundle.getString("auctionid");
+
+
+                    mApiCall.ActiveAuctionHighBid(myContact, mAuctionId);
+                    //mApiCall.ActiveAuctionHighBid(myContact, "1047");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         return view;
     }

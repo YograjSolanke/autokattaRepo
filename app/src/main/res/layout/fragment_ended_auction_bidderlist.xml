@@ -24,10 +24,9 @@
 
             <RelativeLayout
                 android:id="@+id/relativename"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_toStartOf="@+id/approve">
+                android:layout_marginStart="5dp">
 
                 <TextView
                     android:id="@+id/nametxt"
@@ -47,6 +46,16 @@
                     android:textColor="#808080" />
 
 
+                <ImageView
+                    android:id="@+id/call"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@android:drawable/ic_menu_call"
+                    android:contentDescription="@string/app_name" />
+
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -55,8 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativename"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toStartOf="@+id/approve">
+                android:layout_marginTop="5dp">
 
 
                 <TextView
@@ -109,84 +117,69 @@
 
             </RelativeLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/fab_size_normal"
                 android:layout_below="@id/relativevehicle"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/text_margin_top"
+                android:weightSum="3">
 
                 <Button
                     android:id="@+id/approve"
-                    android:text="Approve"
-                    android:layout_weight="1"
-                    android:textAllCaps="false"
-                    android:background="@drawable/buttonback"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/call" />
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonback"
+                    android:text="Approve"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="2dp"></View>
+                    android:layout_height="2dp">
+
+                </View>
 
                 <Button
                     android:id="@+id/reject"
-                    android:text="Reject"
-                    android:layout_weight="1"
-                    android:textAllCaps="false"
-                    android:background="@drawable/buttonback"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/call" />
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonback"
+                    android:text="Reject"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="wrap_content"></View>
+                    android:layout_height="wrap_content">
+
+                </View>
 
                 <Button
                     android:id="@+id/backlist"
-                    android:text="Add To Backlist"
-                    android:layout_weight="1"
-                    android:textAllCaps="false"
-                    android:background="@drawable/buttonback"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/call"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonback"
+                    android:text="Add To Backlist"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
                     android:visibility="visible" />
 
                 <Button
                     android:id="@+id/backlist1"
-                    android:text="Remove From Backlist"
-                    android:layout_weight="1"
-                    android:textAllCaps="false"
-                    android:background="@drawable/buttonback"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/call" />
+                    android:layout_weight="1"
+                    android:background="@drawable/orange_back"
+                    android:text="Remove From Backlist"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/call"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@android:drawable/ic_menu_call"
-                android:contentDescription="@string/app_name" />
 
 
         </RelativeLayout>

@@ -135,7 +135,7 @@
                         android:id="@+id/end_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/start_date"
+                        android:layout_alignStart="@+id/start_date"
                         android:layout_below="@+id/start_date"
                         android:layout_toEndOf="@+id/end2"
                         android:text="Date"

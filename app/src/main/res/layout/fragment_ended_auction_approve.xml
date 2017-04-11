@@ -102,6 +102,18 @@
                 android:textStyle="italic"
                 tools:text="Title" />
 
+
+            <TextView
+                android:id="@+id/view_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBottom="@+id/vehicle_name"
+                android:layout_marginStart="@dimen/card_margin"
+                android:text="View More"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:id="@+id/linear_card"
                 android:layout_width="match_parent"
@@ -342,12 +354,12 @@
                         android:id="@+id/apprDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:layout_toEndOf="@+id/approve_text"
                         android:padding="2dp"
                         android:text="-"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -366,15 +378,6 @@
                         android:textColor="@color/red"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/view_more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/card_margin"
-                        android:layout_toEndOf="@+id/reauct_text"
-                        android:text="View More"
-                        android:textColor="@color/colorPrimary"
-                        android:textStyle="bold" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -393,7 +396,7 @@
 
                     <Button
                         android:id="@+id/reaucti"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="2dp"
                         android:layout_weight="1"
