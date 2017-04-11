@@ -2,6 +2,7 @@ package autokatta.com.interfaces;
 
 import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
+import autokatta.com.response.ApprovedVehicleResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionAnalyticsResponse;
 import autokatta.com.response.AuctionCreateResponse;
@@ -635,6 +636,12 @@ public interface ServiceApi {
     //add vehicle for reauction
     @GET("addToReauction.php")
     Call<String> _autokattaAddVehicleToReauction(@Query("vehicle_id") String vehicleid, @Query("auctionid") String mAuctionId);
+
+    //Approve an vehicle
+    @POST("addToApprovedVehicles.php")
+    Call<ApprovedVehicleResponse> _autokattaApproveAnVehiclewithBid(@Query("auctionid") String mAuctionId, @Query("keyword") String keyword1,
+                                                                    @Query("vehicleid") String vehicleid, @Query("biddercontact") String bidderContact,
+                                                                    @Query("bidamount") String bidPrice);
 
     //get Browse store data
     @GET("getBrowseStores.php")

@@ -15,6 +15,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
+import autokatta.com.response.ApprovedVehicleResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionAnalyticsResponse;
 import autokatta.com.response.AuctionCreateResponse;
@@ -4045,6 +4046,41 @@ params.put("auction_id", bundleAuctionId);
             e.printStackTrace();
         }
     }
+
+    //approve auction vehicle with bid
+    public void ApproveVehicle(String mAuctionId, String keyword1, String vehicleid, String bidderContact, String bidPrice) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ApprovedVehicleResponse> addRemoveBlacklist = serviceApi._autokattaApproveAnVehiclewithBid(mAuctionId, keyword1, vehicleid,
+                        bidderContact, bidPrice);
+                addRemoveBlacklist.enqueue(new Callback<ApprovedVehicleResponse>() {
+                    @Override
+                    public void onResponse(Call<ApprovedVehicleResponse> call, Response<ApprovedVehicleResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApprovedVehicleResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //Browse store
 
     public void getBrowseStores(String contact, String keyword) {
@@ -4569,6 +4605,5 @@ params.put("auction_id", bundleAuctionId);
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
-
 
 }
