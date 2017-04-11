@@ -198,6 +198,10 @@
         <activity
             android:name=".events.MyEndedAuctionPreviewNextActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".auction.PreviewGoingEvents"
+            android:label="@string/title_activity_preview_going_events"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

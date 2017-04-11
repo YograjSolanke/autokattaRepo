@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +10,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -27,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 import autokatta.com.R;
+import autokatta.com.auction.PreviewGoingEvents;
 import autokatta.com.auction.PreviewLiveEvents;
 import autokatta.com.response.GetLiveEventsResponse;
 
@@ -38,7 +40,8 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
     Activity mActivity;
     private List<GetLiveEventsResponse.Success> mItemList = new ArrayList<>();
-    private String auctionType;
+    private String auctionType, whoseAuction = "";
+    ;
     private HashMap<TextView, CountDownTimer> counters;
 
     public AuctionNotificationAdapter(Activity mActivity, List<GetLiveEventsResponse.Success> mItemList, String auctionType) {
@@ -53,6 +56,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         TextView mAuctioneer, mAuctioneerTitle, mAuctioneerNoOfVehicles, mAuctioneerType, mTimer, mStartDate, mStartTime,
                 mEndDate, mEndTime;
         Button mSpecialClauses, mAuctionPreview, mShare;
+        ImageView mStamp;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -70,6 +74,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             mSpecialClauses = (Button) itemView.findViewById(R.id.btnspecial_clauses);
             mAuctionPreview = (Button) itemView.findViewById(R.id.auction_preview);
             mShare = (Button) itemView.findViewById(R.id.auction_share);
+            mStamp = (ImageView) itemView.findViewById(R.id.stamp);
         }
     }
 
@@ -153,6 +158,20 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             e.printStackTrace();
         }
 
+        if (auctionType.equals("Upcoming")) {
+            holder.mTimer.setVisibility(View.GONE);
+            holder.mStamp.setVisibility(View.VISIBLE);
+            holder.mStamp.setImageResource(R.mipmap.upcomingstamp);
+        } else if (auctionType.equals("Going")) {
+            holder.mTimer.setVisibility(View.VISIBLE);
+        }
+
+        if (mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", "").equals(mItemList.get(position).getContact())) {
+            whoseAuction = "myauction";
+        } else {
+            whoseAuction = "otherauction";
+        }
         //buttons...
         holder.mSpecialClauses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,10 +217,16 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                 bundle.putString("openClose", mItemList.get(position).getOpenClose());
                 bundle.putString("showPrice", mItemList.get(position).getShowPrice());
                 bundle.putString("keyword", mItemList.get(position).getKeyWord());
-                Log.i("ignoreGoing", "->" + mItemList.get(position).getIgnoreGoingStatus());
-                Intent intent = new Intent(mActivity, PreviewLiveEvents.class);
-                intent.putExtras(bundle);
-                mActivity.startActivity(intent);
+
+                if (auctionType.equals("Live")) {
+                    Intent intent = new Intent(mActivity, PreviewLiveEvents.class);
+                    intent.putExtras(bundle);
+                    mActivity.startActivity(intent);
+                } else if (auctionType.equals("Going")) {
+                    Intent intent = new Intent(mActivity, PreviewGoingEvents.class);
+                    intent.putExtras(bundle);
+                    mActivity.startActivity(intent);
+                }
             }
         });
     }

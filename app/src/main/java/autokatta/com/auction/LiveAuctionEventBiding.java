@@ -251,7 +251,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
             bundle.putString("showPrice", showPrice);
             bundle.putString("keyword", keyWord);
             Log.i("ignoreGoingLive", "->" + ignoreGoing);
-            Intent intent = new Intent(getApplicationContext(), PreviewLiveEvents.class);
+            Intent intent = new Intent(getApplicationContext(), PreviewGoingEvents.class);
             intent.putExtras(bundle);
             startActivity(intent, options.toBundle());
             //startActivity(new Intent(getApplicationContext(), PreviewLiveEvents.class), options.toBundle());
@@ -277,7 +277,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
             bundle.putString("showPrice", showPrice);
             bundle.putString("keyword", keyWord);
 
-            Intent intent = new Intent(getApplicationContext(), PreviewLiveEvents.class);
+            Intent intent = new Intent(getApplicationContext(), PreviewGoingEvents.class);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
