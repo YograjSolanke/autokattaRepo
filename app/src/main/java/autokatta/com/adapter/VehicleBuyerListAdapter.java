@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,35 +17,48 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.BuyerResponse;
 import autokatta.com.view.OtherProfile;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-004 on 12/4/17.
  */
 
-public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerListAdapter.BuyerHolder> {
+public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerListAdapter.BuyerHolder> implements RequestNotifier {
     Activity activity;
     List<BuyerResponse.Success.Found> foundList;
     String vcategory, brand, vmodel, manufacture_year, rto_city;
     String vehicle_id, recieverContact, srchid, BuyerId;
     String calldate;
+    String myContact;
+    ApiCall apicall;
 
-    public VehicleBuyerListAdapter(Activity activity, List<BuyerResponse.Success.Found> foundList,
+    public VehicleBuyerListAdapter(Activity activity, List<BuyerResponse.Success.Found> foundList, String vehicle_id,
                                    String vcategory, String brand, String vmodel, String manufacture_year, String rto_city) {
         this.activity = activity;
         this.foundList = foundList;
         this.vcategory = vcategory;
         this.brand = brand;
         this.vmodel = vmodel;
+        this.vehicle_id = vehicle_id;
         this.manufacture_year = manufacture_year;
         this.rto_city = rto_city;
+        apicall = new ApiCall(activity, this);
+        myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "");
 
 
     }
@@ -195,11 +209,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(recieverContact));
 
-//                try {
-//                    sendcalldate();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                apicall.sendLastCallDate(myContact, recieverContact, calldate, "1");
 
 
             }
@@ -219,7 +229,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
 
                 srchid = object.getSearchId();
                 BuyerId = vehicle_id + "," + srchid;
-                //  AddToFavourite();
+                apicall.addRemovefavouriteStatus(myContact, BuyerId);
                 holder.favoritebuyer.setImageResource(R.drawable.fav2);
 
                 object.setFavstatus("yes");
@@ -233,6 +243,46 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
     @Override
     public int getItemCount() {
         return foundList.size();
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(activity, activity.getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "VehicleBuyerListAdapter");
+            error.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
+        if (str != null) {
+
+            if (str.equals("success")) {
+                CustomToast.customToast(activity, "Call date Submitted");
+            } else if (str.equals("success_favourite")) {
+                CustomToast.customToast(activity, "favourite data submitted");
+
+            }
+
+
+        } else {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        }
+
+
     }
 
     static class BuyerHolder extends RecyclerView.ViewHolder {

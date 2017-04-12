@@ -220,7 +220,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
                 }
 
                 mSwipeRefreshLayout.setRefreshing(false);
-                adapter = new VehicleBuyerListAdapter(getActivity(), myUploadedVehiclesResponseList, vcategory, brand, vmodel, manufacture_year, rto_city);
+                adapter = new VehicleBuyerListAdapter(getActivity(), myUploadedVehiclesResponseList, vehicle_id, vcategory, brand, vmodel, manufacture_year, rto_city);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 
