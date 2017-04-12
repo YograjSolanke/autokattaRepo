@@ -17,6 +17,7 @@ import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.BuyerResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.ChatElementDetails;
+import autokatta.com.response.ColorResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.EndedAuctionApprovedVehiResponse;
@@ -748,6 +749,7 @@ public interface ServiceApi {
                                                     @Query("user_type") String user_type,@Query("sub_profession") String sub_profession,
                                                  @Query("gender") String gender,@Query("reg_id") String reg_id);
 
-
-
+    //Update Profile
+    @POST("getColors.php")
+    Call<ColorResponse> _autokattaGetAllColor();
 }

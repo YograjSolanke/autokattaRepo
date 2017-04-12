@@ -30,6 +30,7 @@ import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.response.BuyerResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.ChatElementDetails;
+import autokatta.com.response.ColorResponse;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.EndedAuctionApprovedVehiResponse;
@@ -4699,6 +4700,37 @@ Get uploaded Vehicle Buyer list
         }
     }
 
+    /*
+    Get Colors
+    */
+    public void getColor() {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ColorResponse> yourBid = serviceApi._autokattaGetAllColor();
+                yourBid.enqueue(new Callback<ColorResponse>() {
+                    @Override
+                    public void onResponse(Call<ColorResponse> call, Response<ColorResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ColorResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs
@@ -4713,5 +4745,6 @@ Get uploaded Vehicle Buyer list
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
 
 }
