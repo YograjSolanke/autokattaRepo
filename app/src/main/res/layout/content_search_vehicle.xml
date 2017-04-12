@@ -22,19 +22,19 @@
 
             <RelativeLayout
                 android:id="@+id/rowFinacial"
-                android:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="visible">
 
                 <TextView
+                    android:id="@+id/financetxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@+id/finacialEdit1"
                     android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/finacialEdit1"
                     android:text="Finance Required:"
-                    android:textColor="#2C3343"
-                    android:id="@+id/financetxt" />
+                    android:textColor="#2C3343" />
 
                 <Spinner
                     android:id="@+id/finacialEdit1"
@@ -42,9 +42,9 @@
                     android:layout_height="40dip"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:entries="@array/finacial"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:entries="@array/finacial" />
             </RelativeLayout>
 
 
@@ -58,8 +58,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@+id/allCategory1"
                     android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/allCategory1"
                     android:text="Category:"
                     android:textColor="#2C3343"
                     android:textSize="15dp" />
@@ -84,25 +84,25 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/subCategory"
                     android:text="Sub category:"
                     android:textColor="#2C3343"
-                    android:layout_toLeftOf="@+id/subCategory"
                     android:textSize="15dp" />
 
                 <Spinner
                     android:id="@+id/subCategory"
                     android:layout_width="200dip"
                     android:layout_height="40dip"
-                    android:background="#80bebebe"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"
+                    android:background="#80bebebe" />
             </RelativeLayout>
 
 
             <RelativeLayout
                 android:id="@+id/rowPermit"
-                android:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/group_title_id"
@@ -147,15 +147,15 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/brandtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@+id/BrandEdit1"
                     android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/BrandEdit1"
                     android:text="Brand:"
                     android:textColor="#2C3343"
-                    android:textSize="15dp"
-                    android:id="@+id/brandtxt" />
+                    android:textSize="15dp" />
 
                 <Spinner
                     android:id="@+id/BrandEdit1"
@@ -174,15 +174,15 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/modeltxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@+id/ModelEdit1"
                     android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/ModelEdit1"
                     android:text="Model:"
                     android:textColor="#2C3343"
-                    android:textSize="15dp"
-                    android:id="@+id/modeltxt" />
+                    android:textSize="15dp" />
 
                 <Spinner
                     android:id="@+id/ModelEdit1"
@@ -201,6 +201,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/versiontxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -208,8 +209,7 @@
                     android:layout_toLeftOf="@+id/VersionEdit1"
                     android:text="Version:"
                     android:textColor="#2C3343"
-                    android:textSize="15dp"
-                    android:id="@+id/versiontxt" />
+                    android:textSize="15dp" />
 
                 <Spinner
                     android:id="@+id/VersionEdit1"
@@ -228,108 +228,108 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:text="Location city:"
                     android:textColor="#2C3343"
-                    android:textSize="15dp"
-                    android:id="@+id/textView" />
+                    android:textSize="15dp" />
 
                 <Button
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_background"
                     android:id="@+id/btncity"
                     android:layout_width="70dip"
                     android:layout_height="40dip"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textView"
+                    android:layout_marginTop="10dip"
+                    android:background="@drawable/button_background"
                     android:text="+ City"
                     android:textAllCaps="false"
-                    android:textSize="15dip"
-                    android:layout_marginTop="10dip"
-                    android:layout_below="@+id/textView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:textColor="@color/white"
+                    android:textSize="15dip" />
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit"
                     android:layout_width="205dip"
                     android:layout_height="40dp"
-                    android:textColor="#2C3343"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/btncity"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:layout_alignTop="@+id/btncity"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:textColor="#2C3343" />
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit1"
                     android:layout_width="205dip"
                     android:layout_height="40dp"
-                    android:textColor="#2C3343"
-                    android:background="#80bebebe"
-                    android:layout_marginTop="10dip"
-                    android:ems="10"
-                    android:visibility="gone"
-                    android:layout_below="@+id/cityEdit"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_below="@+id/cityEdit"
+                    android:layout_marginTop="10dip"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit2"
                     android:layout_width="205dip"
                     android:layout_height="40dip"
-                    android:textColor="#2C3343"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/cityEdit1"
+                    android:layout_marginTop="10dip"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:layout_below="@+id/cityEdit1"
-                    android:visibility="gone"
-                    android:layout_marginTop="10dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit3"
                     android:layout_width="205dip"
                     android:layout_height="40dip"
-                    android:textColor="#2C3343"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/cityEdit2"
+                    android:layout_marginTop="10dip"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:visibility="gone"
-                    android:layout_marginTop="10dip"
-                    android:layout_below="@+id/cityEdit2"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
 
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit4"
                     android:layout_width="205dip"
                     android:layout_height="40dip"
-                    android:textColor="#2C3343"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/cityEdit3"
+                    android:layout_marginTop="10dip"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:layout_marginTop="10dip"
-                    android:visibility="gone"
-                    android:layout_below="@+id/cityEdit3"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/black"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:background="@color/black" />
 
 
             <RelativeLayout
                 android:id="@+id/rowRTO"
-                android:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/RTOText"
@@ -346,24 +346,24 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/RTOText"
+                    android:layout_toLeftOf="@+id/rtoEdit"
                     android:text="Unregitsered"
                     android:textColor="#2C3343"
-                    android:layout_toLeftOf="@+id/rtoEdit"
                     android:textSize="10sp" />
 
                 <Button
                     android:id="@+id/btnrto"
                     android:layout_width="wrap_content"
                     android:layout_height="40dip"
-                    android:text="+RTOcity"
-                    android:textSize="15dp"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/checkRTO"
                     android:layout_marginTop="20dip"
                     android:background="@drawable/button_background"
-                    android:layout_below="@+id/checkRTO"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:text="+RTOcity"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit"
@@ -371,71 +371,71 @@
                     android:layout_height="40dip"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="20dp"
-                    android:ems="10"
                     android:background="#80bebebe"
+                    android:ems="10"
                     android:textColor="#2C3343"></AutoCompleteTextView>
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit1"
                     android:layout_width="205dip"
                     android:layout_height="40dip"
-                    android:textColor="#2C3343"
-                    android:background="#80bebebe"
-                    android:layout_marginTop="10dip"
-                    android:ems="10"
-                    android:visibility="gone"
-                    android:layout_below="@+id/rtoEdit"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_below="@+id/rtoEdit"
+                    android:layout_marginTop="10dip"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit2"
                     android:layout_width="205dip"
                     android:layout_height="40dip"
-                    android:textColor="#2C3343"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/rtoEdit1"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dip"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:layout_below="@+id/rtoEdit1"
-                    android:visibility="gone"
-                    android:layout_marginTop="10dip"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit3"
                     android:layout_width="205dip"
                     android:layout_height="40dip"
-                    android:textColor="#2C3343"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/rtoEdit2"
+                    android:layout_marginTop="10dip"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:visibility="gone"
-                    android:layout_marginTop="10dip"
-                    android:layout_below="@+id/rtoEdit2"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit4"
                     android:layout_width="205dip"
                     android:layout_height="40dip"
-                    android:textColor="#2C3343"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/rtoEdit3"
+                    android:layout_marginTop="10dip"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:layout_marginTop="10dip"
-                    android:visibility="gone"
-                    android:layout_below="@+id/rtoEdit3"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:textColor="#2C3343"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/black"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:background="@color/black" />
 
             <!-- Table row for manufacture yr -->
 
@@ -479,11 +479,11 @@
 
 
             <LinearLayout
-                android:layout_marginTop="5dip"
                 android:id="@+id/manYRLinear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="1dip"
+                android:layout_marginTop="5dip"
                 android:orientation="vertical"></LinearLayout>
 
 
@@ -492,9 +492,9 @@
 
             <RelativeLayout
                 android:id="@+id/rowPrice"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/price_text"
@@ -527,20 +527,20 @@
 
 
             <LinearLayout
-                android:layout_marginTop="1dip"
                 android:id="@+id/PriceLinear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="1dip"
                 android:orientation="vertical"></LinearLayout>
 
             <!-- KMS -->
 
             <RelativeLayout
                 android:id="@+id/rowKms"
-                android:layout_marginTop="10dp"
-                android:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/kms_hrs_running_text"
@@ -574,10 +574,10 @@
 
 
             <LinearLayout
-                android:layout_marginTop="1dp"
                 android:id="@+id/kmsLinear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
                 android:orientation="vertical"></LinearLayout>
 
 
@@ -586,10 +586,10 @@
 
             <RelativeLayout
                 android:id="@+id/rowhrs"
-                android:visibility="visible"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/textViewh"
@@ -625,8 +625,8 @@
                 android:id="@+id/rowhrstb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="1dip">
+                android:layout_marginTop="1dip"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/hrslinear"
@@ -640,9 +640,9 @@
 
             <RelativeLayout
                 android:id="@+id/rowhpcapacity"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/minhpcapacity"
@@ -660,8 +660,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="45dip"
                     android:layout_toRightOf="@+id/minhpcapacity"
-                    android:textColor="#2C3343"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/maxhpcapcity"
@@ -670,16 +670,16 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginRight="22dp"
-                    android:textColor="#2C3343"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#2C3343" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rowhpcap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="1dip">
+                android:layout_marginTop="1dip"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/hpcaplinear"
@@ -692,29 +692,29 @@
 
 
             <RelativeLayout
-                android:layout_marginTop="10dp"
                 android:id="@+id/rowowners"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
 
                 <TextView
+                    android:id="@+id/ownertxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/ownerEdit"
                     android:text="Owners"
                     android:textColor="#2C3343"
-                    android:textSize="15dip"
-                    android:layout_toLeftOf="@+id/ownerEdit"
-                    android:id="@+id/ownertxt" />
+                    android:textSize="15dip" />
 
                 <Spinner
                     android:id="@+id/ownerEdit"
                     android:layout_width="200dip"
                     android:layout_height="40dip"
-                    android:entries="@array/owners"
                     android:layout_alignParentRight="true"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10"
+                    android:entries="@array/owners" />
 
             </RelativeLayout>
 
@@ -723,48 +723,48 @@
 
             <RelativeLayout
                 android:id="@+id/rowadd"
-                android:layout_marginTop="10dip"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dip"
                 android:gravity="center">
 
                 <Button
-                    android:background="@drawable/button_background"
                     android:id="@+id/BtnMoreOptions"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:background="@drawable/button_background"
+                    android:ems="10"
                     android:text="More Options"
-                    android:textSize="15sp"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:ems="10" />
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
 
             <LinearLayout
+                android:id="@+id/moresearchlinear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/moresearchlinear">
+                android:orientation="vertical">
 
                 <!-- Invoice -->
 
 
                 <RelativeLayout
                     android:id="@+id/rowInvoice"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/invoiceEdit"
                         android:text="Invoice Available :"
-                        android:layout_centerVertical="true"
                         android:textColor="#2C3343" />
 
                     <Spinner
@@ -773,9 +773,9 @@
                         android:layout_height="40dip"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:entries="@array/invoice"
                         android:background="#80bebebe"
-                        android:ems="10" />
+                        android:ems="10"
+                        android:entries="@array/invoice" />
                 </RelativeLayout>
 
                 <!-- Bus type -->
@@ -783,19 +783,19 @@
 
                 <RelativeLayout
                     android:id="@+id/rowbustype"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/bustypeEdit"
                         android:text="Bus Type :"
-                        android:textColor="#2C3343"
-                        android:layout_toLeftOf="@+id/bustypeEdit" />
+                        android:textColor="#2C3343" />
 
                     <Spinner
                         android:id="@+id/bustypeEdit"
@@ -803,9 +803,9 @@
                         android:layout_height="40dip"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:entries="@array/bustype"
                         android:background="#80bebebe"
-                        android:ems="10" />
+                        android:ems="10"
+                        android:entries="@array/bustype" />
                 </RelativeLayout>
 
 
@@ -814,19 +814,19 @@
 
                 <RelativeLayout
                     android:id="@+id/rowaircondition"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/aircondEdit"
                         android:text="Air Condition :"
-                        android:textColor="#2C3343"
-                        android:layout_toLeftOf="@+id/aircondEdit" />
+                        android:textColor="#2C3343" />
 
                     <Spinner
                         android:id="@+id/aircondEdit"
@@ -835,18 +835,18 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
-                        android:entries="@array/air"
-                        android:ems="10" />
+                        android:ems="10"
+                        android:entries="@array/air" />
                 </RelativeLayout>
 
                 <!-- Body type -->
 
                 <RelativeLayout
                     android:id="@+id/rowbody"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
 
                     <TextView
@@ -865,8 +865,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
-                        android:textColor="#2C3343"
-                        android:ems="10" />
+                        android:ems="10"
+                        android:textColor="#2C3343" />
                 </RelativeLayout>
 
                 <!-- Boat type -->
@@ -874,19 +874,19 @@
 
                 <RelativeLayout
                     android:id="@+id/rowboattype"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/boatEdit1"
                         android:text="Boat Type :"
                         android:textColor="#2C3343"
-                        android:layout_toLeftOf="@+id/boatEdit1"
                         android:textSize="15dp" />
 
                     <EditText
@@ -896,8 +896,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
-                        android:textColor="#2C3343"
-                        android:ems="10" />
+                        android:ems="10"
+                        android:textColor="#2C3343" />
                 </RelativeLayout>
 
 
@@ -906,19 +906,19 @@
 
                 <RelativeLayout
                     android:id="@+id/rowrvtype"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/rvEdit1"
                         android:text="RV Type :"
                         android:textColor="#2C3343"
-                        android:layout_toLeftOf="@+id/rvEdit1"
                         android:textSize="15dp" />
 
                     <EditText
@@ -928,498 +928,452 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
-                        android:textColor="#2C3343"
-                        android:ems="10" />
+                        android:ems="10"
+                        android:textColor="#2C3343" />
                 </RelativeLayout>
 
 
                 <!--Color  -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowcolor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Color :"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Color :"
-                            android:textColor="#2C3343" />
-
-                        <com.autokatta.search_vehicle.Multispinner
-                            android:id="@+id/colorEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:background="#80bebebe"
-                            android:ems="10" />
+                    <com.autokatta.search_vehicle.Multispinner
+                        android:id="@+id/colorEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10" />
 
 
-                    </RelativeLayout>
-                </TableRow>
+                </RelativeLayout>
 
                 <!-- RC Avbl -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowrc"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/rcEdit1"
+                        android:text="RC Available :"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="RC Available :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/rcEdit1" />
+                    <Spinner
+                        android:id="@+id/rcEdit1"
+                        android:layout_width="200dp"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:entries="@array/RC_avl" />
+                </RelativeLayout>
 
-                        <Spinner
-                            android:id="@+id/rcEdit1"
-                            android:layout_width="200dp"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:entries="@array/RC_avl"
-                            android:background="#80bebebe"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
 
                 <!-- Insurance -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowinsurance1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/insEdit1"
+                        android:text="Insurance Valid:"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Insurance Valid:"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/insEdit1" />
+                    <Spinner
+                        android:id="@+id/insEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:entries="@array/ins" />
+                </RelativeLayout>
 
-                        <Spinner
-                            android:id="@+id/insEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:entries="@array/ins"
-                            android:background="#80bebebe"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
-                <!--<TableRow-->
-                <!--android:id="@+id/rowinsurance2"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:visibility="gone">-->
-                <!--</TableRow>-->
 
-                <!-- Hypothetication -->
-                <TableRow
+                <RelativeLayout
                     android:id="@+id/rowhypo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/hypoEdit1"
+                        android:text="Hypothecation:"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Hypothecation:"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/hypoEdit1" />
+                    <Spinner
+                        android:id="@+id/hypoEdit1"
+                        android:layout_width="200dp"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:entries="@array/hypo" />
+                </RelativeLayout>
 
-                        <Spinner
-                            android:id="@+id/hypoEdit1"
-                            android:layout_width="200dp"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:entries="@array/hypo"
-                            android:background="#80bebebe"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
 
                 <!-- Tax -->
-                <TableRow
+                <RelativeLayout
                     android:id="@+id/rowtax"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Tax Validity :"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Tax Validity :"
-                            android:textColor="#2C3343" />
-
-                        <Spinner
-                            android:id="@+id/taxEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:entries="@array/tax"
-                            android:background="#80bebebe"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
+                    <Spinner
+                        android:id="@+id/taxEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:entries="@array/tax" />
+                </RelativeLayout>
 
                 <!-- Fitness -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowfitness"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/fitnessEdit1"
+                        android:text="Fitness Validity :"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Fitness Validity :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/fitnessEdit1" />
+                    <Spinner
+                        android:id="@+id/fitnessEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:entries="@array/fitness" />
+                </RelativeLayout>
 
-                        <Spinner
-                            android:id="@+id/fitnessEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:entries="@array/fitness"
-                            android:background="#80bebebe"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
 
                 <!-- Permit -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowpermit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/permitEdit1"
+                        android:text="Permit Validity :"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Permit Validity :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/permitEdit1" />
-
-                        <Spinner
-                            android:id="@+id/permitEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:entries="@array/permit"
-                            android:background="#80bebebe"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
+                    <Spinner
+                        android:id="@+id/permitEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:entries="@array/permit" />
+                </RelativeLayout>
 
                 <!-- fuel -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowfual"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/fualEdit1"
+                        android:text="Fuel Type :"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Fuel Type :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/fualEdit1" />
+                    <com.autokatta.search_vehicle.MultiSelectionSpinner
+                        android:id="@+id/fualEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
 
-                        <com.autokatta.search_vehicle.MultiSelectionSpinner
-                            android:id="@+id/fualEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:background="#80bebebe"
+                        android:ems="10" />
 
-                            android:ems="10" />
+                </RelativeLayout>
 
-                    </RelativeLayout>
-                </TableRow>
 
                 <!-- Seating Capacity -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowseat"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/seatsEdit1"
+                        android:text="Seating Capacity :"
+                        android:textColor="#2C3343"
+                        android:textSize="15dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Seating Capacity :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/seatsEdit1"
-                            android:textSize="15dp" />
+                    <EditText
+                        android:id="@+id/seatsEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textColor="#2C3343" />
+                </RelativeLayout>
 
-                        <EditText
-                            android:id="@+id/seatsEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:background="#80bebebe"
-                            android:inputType="number"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
-                    </RelativeLayout>
-
-                </TableRow>
 
                 <!-- Drive type -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowdrive"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/driveEdit1"
+                        android:text="Drive Type :"
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Drive Type :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/driveEdit1" />
+                    <Spinner
+                        android:id="@+id/driveEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:entries="@array/drive" />
+                </RelativeLayout>
 
-                        <Spinner
-                            android:id="@+id/driveEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:entries="@array/drive"
-                            android:background="#80bebebe"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
 
                 <!-- Transmission -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowtransmission"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/transEdit1"
+                        android:text="Transmission"
+                        android:textColor="#2C3343"
+                        android:textSize="15dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Transmission"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/transEdit1"
-                            android:textSize="15dp" />
+                    <EditText
+                        android:id="@+id/transEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:textColor="#2C3343" />
+                </RelativeLayout>
 
-                        <EditText
-                            android:id="@+id/transEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:background="#80bebebe"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
 
                 <!-- Application -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowuse"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/useEdit1"
+                        android:text="Use/Application"
+                        android:textColor="#2C3343"
+                        android:textSize="15dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Use/Application"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/useEdit1"
-                            android:textSize="15dp" />
-
-                        <EditText
-                            android:id="@+id/useEdit1"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:background="#80bebebe"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
+                    <EditText
+                        android:id="@+id/useEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:textColor="#2C3343" />
+                </RelativeLayout>
 
                 <!-- Implements -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowimpl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/implEdit"
+                        android:text="Implements :"
+                        android:textColor="#2C3343"
+                        android:textSize="15dp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Implements :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/implEdit"
-                            android:textSize="15dp" />
-
-                        <EditText
-                            android:id="@+id/implEdit"
-                            android:layout_width="200dip"
-                            android:layout_height="40dip"
-                            android:textColor="#2C3343"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:background="#80bebebe"
-                            android:ems="10" />
-                    </RelativeLayout>
-                </TableRow>
+                    <EditText
+                        android:id="@+id/implEdit"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:textColor="#2C3343" />
+                </RelativeLayout>
 
                 <!-- tyre -->
-                <TableRow
+
+
+                <RelativeLayout
                     android:id="@+id/rowtyre"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="30dip"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dip">
-
-                        <TextView
-                            android:id="@+id/textViewt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="Tyre Condition :"
-                            android:textColor="#2C3343"
-                            android:textSize="15dp" />
+                    <TextView
+                        android:id="@+id/textViewt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Tyre Condition :"
+                        android:textColor="#2C3343"
+                        android:textSize="15dp" />
 
 
-                        <TextView
-                            android:id="@+id/tyreText1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:textColor="#2C3343"
-                            android:layout_marginLeft="20dip"
-                            android:layout_toRightOf="@+id/textViewt"
-                            android:text="" />
+                    <TextView
+                        android:id="@+id/tyreText1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="20dip"
+                        android:layout_toRightOf="@+id/textViewt"
+                        android:text=""
+                        android:textColor="#2C3343" />
 
-                        <TextView
-                            android:id="@+id/tyreText2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
-                            android:textColor="#2C3343"
-                            android:layout_marginRight="22dp"
-                            android:text="" />
+                    <TextView
+                        android:id="@+id/tyreText2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="22dp"
+                        android:text=""
+                        android:textColor="#2C3343" />
 
-                    </RelativeLayout>
+                </RelativeLayout>
 
-                </TableRow>
 
                 <TableRow
                     android:id="@+id/rowtyrerange"
@@ -1441,46 +1395,42 @@
             </LinearLayout>
 
             <!-- row buttons -->
-            <TableRow
-                android:id="@+id/rowButtons"
+
+
+            <LinearLayout
+                android:id="@+id/linear"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="10dip">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-                <LinearLayout
-                    android:weightSum="1"
-                    android:orientation="horizontal"
-                    android:id="@+id/linear"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/BtnRefresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.50"
+                    android:background="@drawable/buttonback"
+                    android:text="Refresh"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
 
-                    <Button
-                        android:layout_weight="0.50"
-                        android:textColor="@color/white"
-                        android:id="@+id/BtnRefresh"
-                        android:layout_height="40dp"
-                        android:layout_width="wrap_content"
-                        android:textAllCaps="false"
-                        android:textSize="15dp"
-                        android:background="@drawable/button_background"
-                        android:text="Refresh" />
+                <Button
+                    android:id="@+id/BtnApplySearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="0.50"
+                    android:background="@drawable/buttonback"
+                    android:text="Apply Search"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
 
-                    <Button
-                        android:layout_marginLeft="1dp"
-                        android:layout_weight="0.50"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false"
-                        android:textSize="15dp"
-                        android:id="@+id/BtnApplySearch"
-                        android:layout_height="40dp"
-                        android:layout_width="wrap_content"
-                        android:background="@drawable/button_background"
-                        android:layout_marginBottom="5dip"
-                        android:text="Apply Search" />
+            </LinearLayout>
 
-                </LinearLayout>
-            </TableRow>
 
         </LinearLayout>
 

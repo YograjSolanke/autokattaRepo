@@ -168,4 +168,10 @@
         <item>Auction Organiser</item>
         <item>User</item>
     </string-array>
+
+    <string-array name="finacial">
+        <item>-Select Finance-</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
 </resources>
