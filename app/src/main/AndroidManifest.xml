@@ -201,7 +201,11 @@
             android:name=".auction.PreviewUpcomingEvent"
             android:label="@string/title_activity_preview_upcoming_events"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".register.Registration"></activity>
+        <activity android:name=".register.Registration" />
+        <activity
+            android:name=".view.SearchVehicleActivity"
+            android:label="@string/title_activity_search_vehicle"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

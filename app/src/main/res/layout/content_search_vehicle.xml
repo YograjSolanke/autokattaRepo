@@ -1,0 +1,1489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="autokatta.com.view.SearchVehicleActivity"
+    tools:showIn="@layout/activity_search_vehicle">
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dip">
+
+
+            <RelativeLayout
+                android:id="@+id/rowFinacial"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/finacialEdit1"
+                    android:layout_centerVertical="true"
+                    android:text="Finance Required:"
+                    android:textColor="#2C3343"
+                    android:id="@+id/financetxt" />
+
+                <Spinner
+                    android:id="@+id/finacialEdit1"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:entries="@array/finacial"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rowCategory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/messageText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/allCategory1"
+                    android:layout_centerVertical="true"
+                    android:text="Category:"
+                    android:textColor="#2C3343"
+                    android:textSize="15dp" />
+
+                <Spinner
+                    android:id="@+id/allCategory1"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="#80bebebe" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rowSubcat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/messageText1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="Sub category:"
+                    android:textColor="#2C3343"
+                    android:layout_toLeftOf="@+id/subCategory"
+                    android:textSize="15dp" />
+
+                <Spinner
+                    android:id="@+id/subCategory"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:background="#80bebebe"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rowPermit"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/group_title_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="Permit/Private "
+                    android:textColor="@color/black" />
+
+                <RadioGroup
+                    android:id="@+id/radiopermit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="36dp"
+                    android:layout_toRightOf="@+id/group_title_id">
+
+                    <RadioButton
+                        android:id="@+id/tourist_passing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="Tourist Passing" />
+
+                    <RadioButton
+                        android:id="@+id/private_passing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/tourist_passing"
+                        android:text="Private" />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rowBrand"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/BrandEdit1"
+                    android:layout_centerVertical="true"
+                    android:text="Brand:"
+                    android:textColor="#2C3343"
+                    android:textSize="15dp"
+                    android:id="@+id/brandtxt" />
+
+                <Spinner
+                    android:id="@+id/BrandEdit1"
+                    android:layout_width="200dp"
+                    android:layout_height="40dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rowModel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/ModelEdit1"
+                    android:layout_centerVertical="true"
+                    android:text="Model:"
+                    android:textColor="#2C3343"
+                    android:textSize="15dp"
+                    android:id="@+id/modeltxt" />
+
+                <Spinner
+                    android:id="@+id/ModelEdit1"
+                    android:layout_width="200dp"
+                    android:layout_height="40dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rowVersion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/VersionEdit1"
+                    android:text="Version:"
+                    android:textColor="#2C3343"
+                    android:textSize="15dp"
+                    android:id="@+id/versiontxt" />
+
+                <Spinner
+                    android:id="@+id/VersionEdit1"
+                    android:layout_width="200dp"
+                    android:layout_height="40dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rowCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Location city:"
+                    android:textColor="#2C3343"
+                    android:textSize="15dp"
+                    android:id="@+id/textView" />
+
+                <Button
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_background"
+                    android:id="@+id/btncity"
+                    android:layout_width="70dip"
+                    android:layout_height="40dip"
+                    android:text="+ City"
+                    android:textAllCaps="false"
+                    android:textSize="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_below="@+id/textView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/cityEdit"
+                    android:layout_width="205dip"
+                    android:layout_height="40dp"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:layout_alignTop="@+id/btncity"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/cityEdit1"
+                    android:layout_width="205dip"
+                    android:layout_height="40dp"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:layout_marginTop="10dip"
+                    android:ems="10"
+                    android:visibility="gone"
+                    android:layout_below="@+id/cityEdit"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/cityEdit2"
+                    android:layout_width="205dip"
+                    android:layout_height="40dip"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:layout_below="@+id/cityEdit1"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/cityEdit3"
+                    android:layout_width="205dip"
+                    android:layout_height="40dip"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dip"
+                    android:layout_below="@+id/cityEdit2"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/cityEdit4"
+                    android:layout_width="205dip"
+                    android:layout_height="40dip"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:layout_marginTop="10dip"
+                    android:visibility="gone"
+                    android:layout_below="@+id/cityEdit3"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_marginTop="5dp" />
+
+
+            <RelativeLayout
+                android:id="@+id/rowRTO"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/RTOText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="RTO City:"
+                    android:textColor="#2C3343" />
+
+                <CheckBox
+                    android:id="@+id/checkRTO"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/RTOText"
+                    android:text="Unregitsered"
+                    android:textColor="#2C3343"
+                    android:layout_toLeftOf="@+id/rtoEdit"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/btnrto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:text="+RTOcity"
+                    android:textSize="15dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dip"
+                    android:background="@drawable/button_background"
+                    android:layout_below="@+id/checkRTO"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/rtoEdit"
+                    android:layout_width="205dip"
+                    android:layout_height="40dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:ems="10"
+                    android:background="#80bebebe"
+                    android:textColor="#2C3343"></AutoCompleteTextView>
+
+                <AutoCompleteTextView
+                    android:id="@+id/rtoEdit1"
+                    android:layout_width="205dip"
+                    android:layout_height="40dip"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:layout_marginTop="10dip"
+                    android:ems="10"
+                    android:visibility="gone"
+                    android:layout_below="@+id/rtoEdit"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/rtoEdit2"
+                    android:layout_width="205dip"
+                    android:layout_height="40dip"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:layout_below="@+id/rtoEdit1"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dip"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/rtoEdit3"
+                    android:layout_width="205dip"
+                    android:layout_height="40dip"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dip"
+                    android:layout_below="@+id/rtoEdit2"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/rtoEdit4"
+                    android:layout_width="205dip"
+                    android:layout_height="40dip"
+                    android:textColor="#2C3343"
+                    android:background="#80bebebe"
+                    android:ems="10"
+                    android:layout_marginTop="10dip"
+                    android:visibility="gone"
+                    android:layout_below="@+id/rtoEdit3"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_marginTop="5dp" />
+
+            <!-- Table row for manufacture yr -->
+
+
+            <RelativeLayout
+                android:id="@+id/rowManyr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/man_year_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Manufacture Year :"
+                    android:textColor="#2C3343"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/ManufactureFromText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dip"
+                    android:layout_toRightOf="@+id/man_year_text"
+                    android:text=""
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/ManufactureToText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="22dp"
+                    android:text=""
+                    android:textColor="#2C3343" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="5dip"
+                android:id="@+id/manYRLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="1dip"
+                android:orientation="vertical"></LinearLayout>
+
+
+            <!-- Price -->
+
+
+            <RelativeLayout
+                android:id="@+id/rowPrice"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/price_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Price :"
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/PriceFromText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="95dip"
+                    android:text=""
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/PriceToText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="22dp"
+                    android:text=""
+                    android:textColor="#2C3343" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="1dip"
+                android:id="@+id/PriceLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+            <!-- KMS -->
+
+            <RelativeLayout
+                android:id="@+id/rowKms"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/kms_hrs_running_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Kms Running:"
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/KmsFromText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="45dip"
+                    android:layout_toRightOf="@+id/kms_hrs_running_text"
+                    android:text=""
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/KmsToText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="22dp"
+                    android:text=""
+                    android:textColor="#2C3343" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="1dp"
+                android:id="@+id/kmsLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+
+            <!-- HRS -->
+
+
+            <RelativeLayout
+                android:id="@+id/rowhrs"
+                android:visibility="visible"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Hours Running:"
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/hrsFromText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="45dip"
+                    android:layout_toRightOf="@+id/textViewh"
+                    android:text=""
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/hrsToText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="22dp"
+                    android:text=""
+                    android:textColor="#2C3343" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rowhrstb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginTop="1dip">
+
+                <LinearLayout
+                    android:id="@+id/hrslinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"></LinearLayout>
+            </RelativeLayout>
+
+            <!--hp capacity-->
+
+
+            <RelativeLayout
+                android:id="@+id/rowhpcapacity"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/minhpcapacity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Hp or Capacity"
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/minihpcapacity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="45dip"
+                    android:layout_toRightOf="@+id/minhpcapacity"
+                    android:textColor="#2C3343"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/maxhpcapcity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="22dp"
+                    android:textColor="#2C3343"
+                    android:text="" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rowhpcap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginTop="1dip">
+
+                <LinearLayout
+                    android:id="@+id/hpcaplinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"></LinearLayout>
+            </RelativeLayout>
+
+            <!-- owners -->
+
+
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/rowowners"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Owners"
+                    android:textColor="#2C3343"
+                    android:textSize="15dip"
+                    android:layout_toLeftOf="@+id/ownerEdit"
+                    android:id="@+id/ownertxt" />
+
+                <Spinner
+                    android:id="@+id/ownerEdit"
+                    android:layout_width="200dip"
+                    android:layout_height="40dip"
+                    android:entries="@array/owners"
+                    android:layout_alignParentRight="true"
+                    android:background="#80bebebe"
+                    android:ems="10" />
+
+            </RelativeLayout>
+
+            <!-- more details button row -->
+
+
+            <RelativeLayout
+                android:id="@+id/rowadd"
+                android:layout_marginTop="10dip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:background="@drawable/button_background"
+                    android:id="@+id/BtnMoreOptions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="More Options"
+                    android:textSize="15sp"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:ems="10" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/moresearchlinear">
+
+                <!-- Invoice -->
+
+
+                <RelativeLayout
+                    android:id="@+id/rowInvoice"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toLeftOf="@+id/invoiceEdit"
+                        android:text="Invoice Available :"
+                        android:layout_centerVertical="true"
+                        android:textColor="#2C3343" />
+
+                    <Spinner
+                        android:id="@+id/invoiceEdit"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:entries="@array/invoice"
+                        android:background="#80bebebe"
+                        android:ems="10" />
+                </RelativeLayout>
+
+                <!-- Bus type -->
+
+
+                <RelativeLayout
+                    android:id="@+id/rowbustype"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Bus Type :"
+                        android:textColor="#2C3343"
+                        android:layout_toLeftOf="@+id/bustypeEdit" />
+
+                    <Spinner
+                        android:id="@+id/bustypeEdit"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:entries="@array/bustype"
+                        android:background="#80bebebe"
+                        android:ems="10" />
+                </RelativeLayout>
+
+
+                <!-- Air condition -->
+
+
+                <RelativeLayout
+                    android:id="@+id/rowaircondition"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Air Condition :"
+                        android:textColor="#2C3343"
+                        android:layout_toLeftOf="@+id/aircondEdit" />
+
+                    <Spinner
+                        android:id="@+id/aircondEdit"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:entries="@array/air"
+                        android:ems="10" />
+                </RelativeLayout>
+
+                <!-- Body type -->
+
+                <RelativeLayout
+                    android:id="@+id/rowbody"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Body type:"
+                        android:textColor="#2C3343"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/bodyEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:textColor="#2C3343"
+                        android:ems="10" />
+                </RelativeLayout>
+
+                <!-- Boat type -->
+
+
+                <RelativeLayout
+                    android:id="@+id/rowboattype"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Boat Type :"
+                        android:textColor="#2C3343"
+                        android:layout_toLeftOf="@+id/boatEdit1"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/boatEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:textColor="#2C3343"
+                        android:ems="10" />
+                </RelativeLayout>
+
+
+                <!-- Type of RV -->
+
+
+                <RelativeLayout
+                    android:id="@+id/rowrvtype"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="RV Type :"
+                        android:textColor="#2C3343"
+                        android:layout_toLeftOf="@+id/rvEdit1"
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/rvEdit1"
+                        android:layout_width="200dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="#80bebebe"
+                        android:textColor="#2C3343"
+                        android:ems="10" />
+                </RelativeLayout>
+
+
+                <!--Color  -->
+                <TableRow
+                    android:id="@+id/rowcolor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Color :"
+                            android:textColor="#2C3343" />
+
+                        <com.autokatta.search_vehicle.Multispinner
+                            android:id="@+id/colorEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+
+
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- RC Avbl -->
+                <TableRow
+                    android:id="@+id/rowrc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="RC Available :"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/rcEdit1" />
+
+                        <Spinner
+                            android:id="@+id/rcEdit1"
+                            android:layout_width="200dp"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:entries="@array/RC_avl"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- Insurance -->
+                <TableRow
+                    android:id="@+id/rowinsurance1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Insurance Valid:"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/insEdit1" />
+
+                        <Spinner
+                            android:id="@+id/insEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:entries="@array/ins"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+                <!--<TableRow-->
+                <!--android:id="@+id/rowinsurance2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:visibility="gone">-->
+                <!--</TableRow>-->
+
+                <!-- Hypothetication -->
+                <TableRow
+                    android:id="@+id/rowhypo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Hypothecation:"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/hypoEdit1" />
+
+                        <Spinner
+                            android:id="@+id/hypoEdit1"
+                            android:layout_width="200dp"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:entries="@array/hypo"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- Tax -->
+                <TableRow
+                    android:id="@+id/rowtax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Tax Validity :"
+                            android:textColor="#2C3343" />
+
+                        <Spinner
+                            android:id="@+id/taxEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:entries="@array/tax"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- Fitness -->
+                <TableRow
+                    android:id="@+id/rowfitness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Fitness Validity :"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/fitnessEdit1" />
+
+                        <Spinner
+                            android:id="@+id/fitnessEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:entries="@array/fitness"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- Permit -->
+                <TableRow
+                    android:id="@+id/rowpermit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Permit Validity :"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/permitEdit1" />
+
+                        <Spinner
+                            android:id="@+id/permitEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:entries="@array/permit"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- fuel -->
+                <TableRow
+                    android:id="@+id/rowfual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Fuel Type :"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/fualEdit1" />
+
+                        <com.autokatta.search_vehicle.MultiSelectionSpinner
+                            android:id="@+id/fualEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="#80bebebe"
+
+                            android:ems="10" />
+
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- Seating Capacity -->
+                <TableRow
+                    android:id="@+id/rowseat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Seating Capacity :"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/seatsEdit1"
+                            android:textSize="15dp" />
+
+                        <EditText
+                            android:id="@+id/seatsEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="#80bebebe"
+                            android:inputType="number"
+                            android:textColor="#2C3343"
+                            android:ems="10" />
+                    </RelativeLayout>
+
+                </TableRow>
+
+                <!-- Drive type -->
+                <TableRow
+                    android:id="@+id/rowdrive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Drive Type :"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/driveEdit1" />
+
+                        <Spinner
+                            android:id="@+id/driveEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:entries="@array/drive"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- Transmission -->
+                <TableRow
+                    android:id="@+id/rowtransmission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Transmission"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/transEdit1"
+                            android:textSize="15dp" />
+
+                        <EditText
+                            android:id="@+id/transEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="#80bebebe"
+                            android:textColor="#2C3343"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- Application -->
+                <TableRow
+                    android:id="@+id/rowuse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Use/Application"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/useEdit1"
+                            android:textSize="15dp" />
+
+                        <EditText
+                            android:id="@+id/useEdit1"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="#80bebebe"
+                            android:textColor="#2C3343"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- Implements -->
+                <TableRow
+                    android:id="@+id/rowimpl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dip">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Implements :"
+                            android:textColor="#2C3343"
+                            android:layout_toLeftOf="@+id/implEdit"
+                            android:textSize="15dp" />
+
+                        <EditText
+                            android:id="@+id/implEdit"
+                            android:layout_width="200dip"
+                            android:layout_height="40dip"
+                            android:textColor="#2C3343"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="#80bebebe"
+                            android:ems="10" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <!-- tyre -->
+                <TableRow
+                    android:id="@+id/rowtyre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dip">
+
+                        <TextView
+                            android:id="@+id/textViewt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="Tyre Condition :"
+                            android:textColor="#2C3343"
+                            android:textSize="15dp" />
+
+
+                        <TextView
+                            android:id="@+id/tyreText1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:textColor="#2C3343"
+                            android:layout_marginLeft="20dip"
+                            android:layout_toRightOf="@+id/textViewt"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/tyreText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:textColor="#2C3343"
+                            android:layout_marginRight="22dp"
+                            android:text="" />
+
+                    </RelativeLayout>
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/rowtyrerange"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rowRegyr"
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/tyreLinear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="1dip"
+                        android:orientation="vertical"></LinearLayout>
+
+                </TableRow>
+
+            </LinearLayout>
+
+            <!-- row buttons -->
+            <TableRow
+                android:id="@+id/rowButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dip">
+
+                <LinearLayout
+                    android:weightSum="1"
+                    android:orientation="horizontal"
+                    android:id="@+id/linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:layout_weight="0.50"
+                        android:textColor="@color/white"
+                        android:id="@+id/BtnRefresh"
+                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:textAllCaps="false"
+                        android:textSize="15dp"
+                        android:background="@drawable/button_background"
+                        android:text="Refresh" />
+
+                    <Button
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="0.50"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:textSize="15dp"
+                        android:id="@+id/BtnApplySearch"
+                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/button_background"
+                        android:layout_marginBottom="5dip"
+                        android:text="Apply Search" />
+
+                </LinearLayout>
+            </TableRow>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
