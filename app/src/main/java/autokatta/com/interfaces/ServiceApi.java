@@ -761,4 +761,16 @@ public interface ServiceApi {
     @POST("retrofit_example/upload_image.php")
     Call uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
+
+    //send buyer call date
+    @POST("send_buyer_calldate.php")
+    Call<String> sendLastCallDate(@Query("caller") String caller,
+                                  @Query("callie") String callie,
+                                  @Query("calldate") String calldate,
+                                  @Query("callcount") String callcount);
+
+
+    //add remove favourite status
+    @POST("addRemooveMyFavourites.php")
+    Call<String> addRemovefavouriteStatus(@Query("contact") String contact, @Query("buyer_vehicle_id") String buyer_vehicle_id);
 }

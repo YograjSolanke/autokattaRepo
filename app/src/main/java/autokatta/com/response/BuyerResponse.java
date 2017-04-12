@@ -3,6 +3,7 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +32,8 @@ public class BuyerResponse {
         private List<Vehicle> vehicles = null;
 
         @SerializedName("Found")
+        @Expose
+        private List<Found> found = null;
 
 
         public List<Vehicle> getVehicles() {
@@ -41,7 +44,7 @@ public class BuyerResponse {
             this.vehicles = vehicles;
         }
 
-        private List<Found> found = null;
+
 
         public List<Found> getFound() {
             return found;
@@ -51,9 +54,21 @@ public class BuyerResponse {
             this.found = found;
         }
 
+
         public class Found {
 
+            private Date lastCallDateNew;
+
+            public Date getLastCallDateNew() {
+                return lastCallDateNew;
+            }
+
+            public void setLastCallDateNew(Date lastCallDateNew) {
+                this.lastCallDateNew = lastCallDateNew;
+            }
+
             @SerializedName("search_id")
+
             @Expose
             private String searchId;
             @SerializedName("contact_no")
@@ -1458,7 +1473,9 @@ public class BuyerResponse {
             }
 
         }
+
     }
+
 }
 
 

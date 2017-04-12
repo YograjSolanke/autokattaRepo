@@ -256,6 +256,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     b.putString("image", mMainList.get(holder.getAdapterPosition()).getImages());
                     b.putString("uploaddate", mMainList.get(holder.getAdapterPosition()).getDate());
                     b.putString("noofleads", mMainList.get(holder.getAdapterPosition()).getBuyerLeads());
+                    b.putString("rto_city", mMainList.get(holder.getAdapterPosition()).getRtoCity());
+                    b.putString("manufacture_year", mMainList.get(holder.getAdapterPosition()).getYearOfManufacture());
 
 
                     UploadedVehicleBuyerList frag = new UploadedVehicleBuyerList();
