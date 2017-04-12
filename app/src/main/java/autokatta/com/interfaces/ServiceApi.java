@@ -736,6 +736,18 @@ public interface ServiceApi {
     @POST("get_Buyer_notification.php")
     Call<BuyerResponse> getUploadedVehicleBuyerlist(@Query("contact") String contact);
 
+    //Update Profile
+    @GET("update_profile.php")
+    Call<String> _autokattaUpdateProfile(@Query("email") String email, @Query("contact") String contact,
+                                                 @Query("website") String website, @Query("profession") String profession,
+                                                 @Query("companyNames") String companyNames, @Query("designation") String designation,
+                                                 @Query("skills") String skills, @Query("city") String city,
+                                                 @Query("username") String username, @Query("profile") String profile,
+                                                 @Query("dob") String dob,@Query("country") String country,
+                                                @Query("state") String state,
+                                                    @Query("user_type") String user_type,@Query("sub_profession") String sub_profession,
+                                                 @Query("gender") String gender,@Query("reg_id") String reg_id);
+
 
 
 }

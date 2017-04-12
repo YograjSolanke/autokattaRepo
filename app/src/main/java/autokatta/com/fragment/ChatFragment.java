@@ -148,7 +148,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
             service_id = b.getString("service_id");
             vehicle_id = b.getString("vehicle_id");
 
-            product_id = "325";
+
             chatwithtext.setText(sendername);
 
             apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);

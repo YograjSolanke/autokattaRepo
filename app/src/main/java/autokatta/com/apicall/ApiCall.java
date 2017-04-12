@@ -4659,6 +4659,46 @@ Get uploaded Vehicle Buyer list
         }
     }
 
+      /*
+       Update Profile
+     */
+
+    public void updateProfile(String email,String contact,String website,String profesion,String company,String designation,String skills,String city,String username,String profile,String dob,String country,String state,String usertype,String subprofesion,String gender,String regid) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(email,contact,website,profesion,company,designation,skills,city,username,profile,dob,country,state,usertype,subprofesion,gender,regid);
+                setVehiclePrivacy.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs

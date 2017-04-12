@@ -135,11 +135,11 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
 
 
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Vehicle"))
-            fullpath = vehi_img_url + mItemList.get(position).getImage();
+            fullpath = vehi_img_url + mItemList.get(position).getImages();
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Product"))
-            fullpath = prduct_img_url + mItemList.get(position).getImage();
+            fullpath = prduct_img_url + mItemList.get(position).getImages();
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Service"))
-            fullpath = service_img_url + mItemList.get(position).getImage();
+            fullpath = service_img_url + mItemList.get(position).getImages();
 
 
         fullpath = fullpath.replaceAll(" ", "%20");
