@@ -14,6 +14,7 @@ import autokatta.com.response.BroadcastMessageResponse;
 import autokatta.com.response.BroadcastReceivedResponse;
 import autokatta.com.response.BroadcastSendResponse;
 import autokatta.com.response.BrowseStoreResponse;
+import autokatta.com.response.BuyerResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.ChatElementDetails;
 import autokatta.com.response.CreateStoreResponse;
@@ -729,5 +730,12 @@ public interface ServiceApi {
     //get Chat message elements details
     @GET("getMyChatAllData.php")
     Call<ChatElementDetails> getChatElementData(@Query("product_id") String product_id, @Query("service_id") String service_id, @Query("vehicle_id") String vehicle_id);
+
+
+    //get Uploaded vehicle buyer list
+    @POST("get_Buyer_notification.php")
+    Call<BuyerResponse> getUploadedVehicleBuyerlist(@Query("contact") String contact);
+
+
 
 }

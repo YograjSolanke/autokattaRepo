@@ -27,6 +27,7 @@ import autokatta.com.response.BroadcastMessageResponse;
 import autokatta.com.response.BroadcastReceivedResponse;
 import autokatta.com.response.BroadcastSendResponse;
 import autokatta.com.response.BrowseStoreResponse;
+import autokatta.com.response.BuyerResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.ChatElementDetails;
 import autokatta.com.response.CreateStoreResponse;
@@ -4615,6 +4616,39 @@ Get ChatElementData
 
                     @Override
                     public void onFailure(Call<ChatElementDetails> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+Get uploaded Vehicle Buyer list
+*/
+    public void getUploadedVehicleBuyerlist(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<BuyerResponse> yourBid = serviceApi.getUploadedVehicleBuyerlist(contact);
+                yourBid.enqueue(new Callback<BuyerResponse>() {
+                    @Override
+                    public void onResponse(Call<BuyerResponse> call, Response<BuyerResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<BuyerResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
