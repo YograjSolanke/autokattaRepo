@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin">
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +20,7 @@
             android:text="@string/about"
             android:layout_marginBottom="@dimen/text_about"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
 
         <LinearLayout
             style="@style/Widget.CardContent"
@@ -38,7 +39,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="@dimen/text_about"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_briefcase" />
 
                 <TextView
                     android:id="@+id/worked_at"
@@ -46,12 +47,57 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/text_about"
                     android:gravity="start"
+                    android:textColor="@color/black"
                     android:layout_toEndOf="@+id/image1"
                     android:text="@string/worked_at"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
             </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiolayout"
+            android:layout_below="@+id/workedat"
+            android:visibility="gone"
+
+            android:layout_marginTop="2dp">
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:id="@+id/usertype"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/student"
+                    android:text="Student"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/employee"
+                    android:text="Employee"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/selfemployee"
+                    android:text="Self Employee"/>
+
+            </RadioGroup>
+        </RelativeLayout>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:id="@+id/spinner"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:layout_below="@+id/radiolayout"
+            android:visibility="gone">
+        </Spinner>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -65,15 +111,17 @@
                     android:layout_gravity="start"
                     android:layout_marginStart="@dimen/text_about"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/livein" />
 
-                <TextView
+                <AutoCompleteTextView
                     android:id="@+id/address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/text_about"
                     android:layout_toEndOf="@+id/image2"
                     android:gravity="start"
+                    android:textColor="@color/black"
+
                     android:text="@string/address"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
@@ -91,14 +139,15 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="@dimen/text_about"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/company_name" />
 
-                <TextView
+                <AutoCompleteTextView
                     android:id="@+id/company_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/image3"
                     android:gravity="start"
+                    android:textColor="@color/black"
                     android:layout_marginStart="@dimen/text_about"
                     android:text="@string/company_name"
                     android:textSize="@dimen/text_about"
@@ -117,15 +166,16 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="@dimen/text_about"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_atom" />
 
-                <TextView
+                <AutoCompleteTextView
                     android:id="@+id/designation"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/image4"
                     android:gravity="start"
                     android:layout_marginStart="@dimen/text_about"
+                    android:textColor="@color/black"
                     android:text="@string/designation"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
@@ -143,14 +193,15 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="@dimen/text_about"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_diamond" />
 
-                <TextView
+                <MultiAutoCompleteTextView
                     android:id="@+id/skills"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/image5"
                     android:layout_marginStart="@dimen/text_about"
+                    android:textColor="@color/black"
                     android:gravity="start"
                     android:text="@string/skills"
                     android:textSize="@dimen/text_about"
@@ -169,7 +220,8 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="@dimen/text_about"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher" />
+                    android:textColor="@color/black"
+                    android:src="@mipmap/mobile" />
 
                 <TextView
                     android:id="@+id/contact_no"
@@ -178,6 +230,7 @@
                     android:layout_marginStart="@dimen/text_about"
                     android:layout_toEndOf="@+id/image6"
                     android:gravity="start"
+                    android:textColor="@color/black"
                     android:text="@string/contact_no"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
@@ -195,16 +248,18 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="@dimen/text_about"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/email" />
 
-                <TextView
+                <EditText
                     android:id="@+id/email"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/text_about"
                     android:layout_toEndOf="@+id/image7"
                     android:gravity="start"
                     android:text="@string/email"
+                    android:textColor="@color/black"
+
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -221,22 +276,54 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="@dimen/text_about"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/web" />
 
-                <TextView
+                <EditText
                     android:id="@+id/website"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/text_about"
                     android:layout_toEndOf="@+id/image8"
                     android:gravity="start"
                     android:text="@string/website"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:layout_below="@+id/web"
+                android:id="@+id/rel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                >
+
+                <Button
+                    android:textSize="15dp"
+                    android:textAllCaps="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="Done"
+                    android:id="@+id/done"
+                    android:background="@color/background"
+                    android:textColor="@color/white"
+                    />
+
+
+            </RelativeLayout>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/edit"
+            android:layout_width="25dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/whitepencil"
+           />
 
     </android.support.v7.widget.CardView>
 
