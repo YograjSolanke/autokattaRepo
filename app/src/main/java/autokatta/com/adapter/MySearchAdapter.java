@@ -26,6 +26,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MySearchResponse;
+import autokatta.com.view.SearchVehicleActivity;
 import retrofit2.Response;
 
 /**
@@ -120,7 +121,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("action", "update");
+                bundle.putString("className", "MySearchAdapter");
                 bundle.putString("category", holder.textcategory.getText().toString());
                 bundle.putString("brand", holder.textbrand.getText().toString());
                 bundle.putString("model", holder.textmodel.getText().toString());
@@ -128,13 +129,11 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 bundle.putString("year", holder.textyear.getText().toString());
                 bundle.putString("search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId());
 
-//                FilterActivity fragment = new FilterActivity();
-//                fragment.setArguments(bundle);
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fragment);
-//                fragmentTransaction.addToBackStack("filteractivity");
-//                fragmentTransaction.commit();
+                activity.finish();
+                Intent intent = new Intent(activity, SearchVehicleActivity.class);
+                intent.putExtras(bundle);
+                activity.startActivity(intent);
+
             }
         });
 

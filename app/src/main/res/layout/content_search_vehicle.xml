@@ -143,7 +143,8 @@
             <RelativeLayout
                 android:id="@+id/rowBrand"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dip">
 
                 <TextView
                     android:id="@+id/brandtxt"
@@ -570,15 +571,22 @@
                     android:textColor="#2C3343" />
             </RelativeLayout>
 
-
-            <LinearLayout
-                android:id="@+id/kmsLinear"
+            <RelativeLayout
+                android:id="@+id/rowkms1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:orientation="vertical">
+                android:visibility="visible">
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/kmsLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </RelativeLayout>
 
 
             <!-- HRS -->

@@ -73,6 +73,8 @@
     <string name="title_activity_my_store_list">MyStoreListActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="search_button">Search</string>
+    <string name="demo_min_label">Min</string>
+    <string name="demo_max_label">MAx</string>
 
     <!--Login Activity -->
     <string name="username">Mobile Number</string>
