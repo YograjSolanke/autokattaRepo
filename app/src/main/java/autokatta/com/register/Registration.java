@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,10 +17,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -47,6 +50,10 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     String namestr, contactstr, emailstr, DOBstr, pincodestr, passwordstr, confirmpassstr, addressstr, genderstr,
             profession, sub_profession, strIndustry;
 
+    LinearLayout mLinear;
+    ScrollView mScrollView;
+    Button mNext;
+    String mSuccess = "";
     RadioButton rbtmale, rbtfemale;
     RadioGroup rg1;
     String[] MODULE = null;
@@ -79,8 +86,10 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         otherCategoryLayout = (TextInputLayout) findViewById(R.id.otherCategoryLayout);
         rbtmale = (RadioButton) findViewById(R.id.rbtmale);
         rbtfemale = (RadioButton) findViewById(R.id.rbtfemale);
-        //      dob_calender=(ImageView)findViewById(R.id.dob_calender);
 
+        mLinear = (LinearLayout) findViewById(R.id.linear);
+        mNext = (Button) findViewById(R.id.next);
+        mScrollView = (ScrollView) findViewById(R.id.scroll_view);
         rg1 = (RadioGroup) findViewById(R.id.radiogp1);
         functions = new GenericFunctions();
 
@@ -89,12 +98,12 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         btnClear = (Button) findViewById(R.id.btnclear);
         btnClear.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        mNext.setOnClickListener(this);
         dateOfBirth.setInputType(InputType.TYPE_NULL);
 
         usertypeSpinner.setOnItemSelectedListener(this);
         industrySpinner.setOnItemSelectedListener(this);
         moduleSpinner.setOnItemSelectedListener(this);
-        //    dob_calender.setOnTouchListener(this);
         dateOfBirth.setOnTouchListener(this);
         showDatePicker();
         address.setAdapter(new GooglePlacesAdapter(Registration.this, R.layout.simple));
@@ -107,10 +116,25 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case (R.id.btnsubmit):
+
+            case R.id.next:
+                contactstr = mobileNo.getText().toString().trim();
+                if (TextUtils.isEmpty(mobileNo.getText().toString().trim())) {
+                    mobileNo.setError("Enter Contact No");
+                    mobileNo.requestFocus();
+                    mobileNo.setFocusable(true);
+                } else if (!(contactstr.length() == 10)) {
+                    mobileNo.setError("not valid");
+                    mobileNo.requestFocus();
+                    mobileNo.setFocusable(true);
+                } else {
+                    apiCall.registrationContactValidation(contactstr);
+                }
+                break;
+
+            case R.id.btnsubmit:
                 Boolean flag = false;
                 namestr = personName.getText().toString().trim();
-                contactstr = mobileNo.getText().toString().trim();
                 emailstr = email.getText().toString().trim();
                 DOBstr = dateOfBirth.getText().toString().trim();
                 addressstr = address.getText().toString().trim();
@@ -122,8 +146,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 profession = usertypeSpinner.getSelectedItem().toString().trim();
                 strIndustry = industrySpinner.getSelectedItem().toString().trim();
                 sub_profession = moduleSpinner.getSelectedItem().toString().trim();
-
-                apiCall.registrationContactValidation(contactstr);
 
                 if (!addressstr.isEmpty()) {
                     resultList = GooglePlacesAdapter.getResultList();
@@ -141,45 +163,15 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     personName.setError("Enter User Name");
                     personName.requestFocus();
                     personName.setFocusable(true);
-                } else if (!namestr.matches("[a-zA-Z ]*")) {
-                    personName.setError("Enter Valid Name");
-                    personName.requestFocus();
-                    personName.setFocusable(true);
-                } else if (contactstr.isEmpty()) {
-                    mobileNo.setError("Enter Contact No");
-                    mobileNo.requestFocus();
-                    mobileNo.setFocusable(true);
-                } else if (contactstr.matches("[0]+")) {
-                    mobileNo.setError("Enter Valid Contact");
-                    mobileNo.requestFocus();
-                    mobileNo.setFocusable(true);
-                } else if (!contactstr.matches("[0-9]*")) {
-                    mobileNo.setError("Enter Valid Contact");
-                    mobileNo.requestFocus();
-                    mobileNo.setFocusable(true);
-                } else if (!(contactstr.length() == 10)) {
-                    mobileNo.setError("Enter valid contact");
-                    mobileNo.requestFocus();
-                    mobileNo.setFocusable(true);
                 } else if (emailstr.isEmpty()) {
                     email.setError("Enter Email ID");
                     email.requestFocus();
                     email.setFocusable(true);
-                }
-                // Validation for Email is not valid
-                else if (!functions.isValidEmail(emailstr)) {
+                } else if (!functions.isValidEmail(emailstr)) {
                     // flag=false;
                     email.setError("Enter Valid Email");
                     email.requestFocus();
                     email.setFocusable(true);
-                } else if (DOBstr.isEmpty()) {
-                    dateOfBirth.setError("Enter Date Of Birth");
-                    dateOfBirth.requestFocus();
-                    dateOfBirth.setFocusable(true);
-                } else if (!functions.getbirthdate(DOBstr)) {
-                    dateOfBirth.setError("Minimum 8 Year Age Required");
-                    dateOfBirth.requestFocus();
-                    dateOfBirth.setFocusable(true);
                 } else if (addressstr.isEmpty()) {
                     address.setError("Enter Address");
                     address.setFocusable(true);
@@ -191,28 +183,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     pincode.setError("Enter Pincode");
                     pincode.requestFocus();
                     pincode.setFocusable(true);
-                } else if (!pincodestr.matches("[0-9]*")) {
-                    pincode.setError("Please enter valid pincode");
-                    pincode.requestFocus();
-                    pincode.setFocusable(true);
-                } else if (pincodestr.length() < 6) {
-                    pincode.setError("Enter valid pincode");
-                    pincode.requestFocus();
-                    pincode.setFocusable(true);
-                } else if (profession.equalsIgnoreCase("Select User Type")) {
-                    Toast.makeText(getApplicationContext(), "Please select User type", Toast.LENGTH_LONG).show();
-                } else if ((!profession.equalsIgnoreCase("Student") && strIndustry.equalsIgnoreCase("Select Industry"))) {
-                    Toast.makeText(Registration.this, "Please select industry", Toast.LENGTH_LONG).show();
-                } else if (strIndustry.equalsIgnoreCase("Other") && otherIndustry.getText().toString().trim().equalsIgnoreCase("")) {
-                    otherIndustry.setError("Enter Industry");
-                } else if (strIndustry.equalsIgnoreCase("Other") && !otherIndustry.getText().toString().matches("[a-zA-Z ]*")) {
-                    otherIndustry.setError("Enter  Valid Industry");
-                } else if (strIndustry.equalsIgnoreCase("Automotive and vehicle manufacturing") && sub_profession.equalsIgnoreCase("Select Category")) {
-                    Toast.makeText(Registration.this, "Please select category", Toast.LENGTH_LONG).show();
-                } else if (sub_profession.equalsIgnoreCase("other") && otherCategory.getText().toString().equalsIgnoreCase("")) {
-                    otherCategory.setError("Enter Profession");
-                } else if (sub_profession.equalsIgnoreCase("other") && !otherCategory.getText().toString().matches("[a-zA-Z ]*")) {
-                    otherCategory.setError("Enter  Valid Profession");
                 } else if (passwordstr.isEmpty()) {
                     password.setError("Enter Password");
                 } else if (passwordstr.length() < 6) {
@@ -225,23 +195,12 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     confirmPassword.setError("Confirm password is wrong");
                     confirmPassword.requestFocus();
                 } else {
-                    if (sub_profession.equalsIgnoreCase("Other")) {
-                        sub_profession = otherCategory.getText().toString().trim();
-                        apiCall.addOtherCategory(sub_profession);
-                    } else if (strIndustry.equalsIgnoreCase("Other")) {
-                        strIndustry = otherIndustry.getText().toString().trim();
-                        apiCall.addOtherIndustry(strIndustry);
-                    } else if (sub_profession.equalsIgnoreCase("Select Category")) {
-                        sub_profession = "";
-                    } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
-                        strIndustry = "";
-                    } else {
-                        apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry);
-                    }
+                    apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry);
                 }
+
                 break;
 
-            case (R.id.btnclear):
+            case R.id.btnclear:
                 personName.setText("");
                 mobileNo.setText("");
                 mobileNo.clearFocus();
@@ -424,12 +383,25 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void notifyString(String str) {
+        mSuccess = str;
+        Log.i("Success", "->" + mSuccess);
         if (str != null) {
-            getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
-            CustomToast.customToast(getApplicationContext(), "Registration Successfully");
-            Intent i = new Intent(Registration.this, LoginActivity.class);
-            startActivity(i);
-            finish();
+            if (str.equalsIgnoreCase("Success")) {
+                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
+                CustomToast.customToast(getApplicationContext(), "Already Registered...Please Sign In");
+                Intent i = new Intent(Registration.this, LoginActivity.class);
+                startActivity(i);
+                finish();
+            } else if (str.equalsIgnoreCase("Fail")) {
+                mScrollView.setVisibility(View.VISIBLE);
+                mLinear.setVisibility(View.GONE);
+            } else {
+                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
+                CustomToast.customToast(getApplicationContext(), "Registered");
+                Intent i = new Intent(Registration.this, LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }

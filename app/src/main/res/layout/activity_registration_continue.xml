@@ -20,7 +20,7 @@
             android:scaleType="centerCrop" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/click"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/editabt"
+                android:id="@+id/about_us"
                 android:layout_width="fill_parent"
                 android:layout_height="100dip"
                 android:hint="About Us"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/editwebsite"
+                android:id="@+id/website"
                 android:layout_width="fill_parent"
                 android:layout_height="40dip"
                 android:layout_weight="1"

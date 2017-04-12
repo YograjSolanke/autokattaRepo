@@ -38,7 +38,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         private ProfileNotifications(View profileView) {
             super(profileView);
             mProfileCardView = (CardView) profileView.findViewById(R.id.profile_card_view);
-            mProfilePic = (ImageView) profileView.findViewById(R.id.profile_pic);
+            mProfilePic = (ImageView) profileView.findViewById(R.id.pro_pic);
             mProfileName = (TextView) profileView.findViewById(R.id.profile_name);
             mProfileContact = (TextView) profileView.findViewById(R.id.profile_time);
             mProfileTitle = (TextView) profileView.findViewById(R.id.profile_title);

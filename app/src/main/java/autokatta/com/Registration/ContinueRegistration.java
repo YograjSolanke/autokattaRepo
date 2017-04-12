@@ -90,19 +90,15 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
         setSupportActionBar(toolbar);
 
         registrationtext = (TextView) findViewById(R.id.text_registration);
-        uploadtxt= (TextView) findViewById(R.id.upload);
         about = (EditText) findViewById(R.id.editabt);
         website = (EditText) findViewById(R.id.editwebsite);
-        groupimg = (ImageView) findViewById(R.id.profile_pic);
 
-        btnadd = (Button) findViewById(R.id.btnadd);
         btnadd.setVisibility(View.GONE);
 
         btnsub = (Button) findViewById(R.id.btnSub);
         btnsub.setOnClickListener(this);
         uploadtxt.setOnClickListener(this);
 
-        li = (ListView) findViewById(R.id.vehicle_list);
 
 
         prefs = getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);

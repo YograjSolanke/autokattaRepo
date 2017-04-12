@@ -116,6 +116,7 @@ public class ApiCall {
         return new Retrofit.Builder()
                 .baseUrl("http://autokatta.com/mobile/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(initLogs().build())
                 .build();
     }
     /*
@@ -4814,6 +4815,17 @@ Get uploaded Vehicle Buyer list
      * Retrofit Logs
      ***/
     private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
+    }
+
+    private static OkHttpClient.Builder initLogs() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);

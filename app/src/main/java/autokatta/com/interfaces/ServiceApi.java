@@ -758,8 +758,8 @@ public interface ServiceApi {
     Call<ColorResponse> _autokattaGetAllColor();
 
     @Multipart
-    @POST("retrofit_example/upload_image.php")
-    Call uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+    @POST("upload_profile_profile_pics.php")
+    Call<String> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
 
     //send buyer call date
