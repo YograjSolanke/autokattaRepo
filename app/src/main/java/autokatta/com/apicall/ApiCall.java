@@ -112,6 +112,12 @@ public class ApiCall {
 
     }
 
+    public static Retrofit getRetrofit() {
+        return new Retrofit.Builder()
+                .baseUrl("http://autokatta.com/mobile/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
     /*
     Login Api Call
      */

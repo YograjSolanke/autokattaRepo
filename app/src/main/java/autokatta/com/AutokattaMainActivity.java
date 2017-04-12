@@ -23,7 +23,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import autokatta.com.Registration.ContinueRegistration;
 import autokatta.com.adapter.TabAdapter;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.AuctionNotification;
@@ -33,6 +32,7 @@ import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.other.SessionManagement;
+import autokatta.com.register.RegistrationContinue;
 import autokatta.com.view.BlackListedMemberActivity;
 import autokatta.com.view.BroadcastMessageActivity;
 import autokatta.com.view.BrowseStoreActivity;
@@ -277,7 +277,7 @@ public class AutokattaMainActivity extends AppCompatActivity {
         super.onResume();
         if (sharedPreferences.getBoolean("firstRun", true)) {
             //You can perform anything over here. This will call only first time
-            startActivity(new Intent(getApplicationContext(), ContinueRegistration.class));
+            startActivity(new Intent(getApplicationContext(), RegistrationContinue.class));
             editor = sharedPreferences.edit();
             editor.putBoolean("firstRun", false);
             editor.apply();
