@@ -1,7 +1,6 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,6 +30,8 @@ import autokatta.com.response.MySearchResponse;
 import autokatta.com.view.SearchVehicleActivity;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by ak-004 on 3/4/17.
  */
@@ -40,12 +43,15 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
     List<MySearchResponse.Success> mMainlist;
     int flag = 0;
     ApiCall apiCall;
+    String myContact;
 
 
     public MySearchAdapter(Activity activity, List<MySearchResponse.Success> successList) {
         this.activity = activity;
         this.mMainlist = successList;
         apiCall = new ApiCall(activity, this);
+        myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "");
     }
     @Override
     public SearchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -157,13 +163,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                                 mMainlist.remove(position);
                                 notifyDataSetChanged();
 
-//                                MySearchFragment fragment = new MySearchFragment();
-//                                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                                fragmentTransaction.replace(R.id.containerView, fragment);
-//                                fragmentTransaction.addToBackStack("mysearchfragment");
-//                                fragmentTransaction.commit();
-
                             }
                         })
 
@@ -183,15 +182,15 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
 
-//                SearchId = obj.searchId;
-//
-//                AddToFav(obj.searchId);
-//                holder.favImg.setVisibility(View.INVISIBLE);
-//                holder.unfavImg.setVisibility(View.VISIBLE);
-//                mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
-//
-//                mMainlist.set(position,mMainlist.get(holder.getAdapterPosition()));
-//                // obj.searchFavouritestatus.set(position, "yes");
+                SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
+
+                apiCall.addRemovefavouriteStatus(myContact, "", SearchId);
+                holder.favImg.setVisibility(View.INVISIBLE);
+                holder.unfavImg.setVisibility(View.VISIBLE);
+                mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
+
+                mMainlist.set(position, mMainlist.get(holder.getAdapterPosition()));
+                // obj.searchFavouritestatus.set(position, "yes");
 
             }
         });
@@ -286,11 +285,11 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                         mMainlist.get(holder.getAdapterPosition()).getBuyerLeads();
 
 
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_keyword", "mysearch").apply();
 
 
@@ -336,11 +335,11 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                         mMainlist.get(holder.getAdapterPosition()).getBuyerLeads();
 
 
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_keyword", "mysearch").apply();
 
 
@@ -446,6 +445,17 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
     @Override
     public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(activity, activity.getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "MySearchAdapter");
+            error.printStackTrace();
+        }
+
 
     }
 
@@ -460,6 +470,8 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 CustomToast.customToast(activity, "Notification Stopped");
             } else if (str.equals("successstart")) {
                 CustomToast.customToast(activity, "Notification Started");
+            } else if (str.equals("success_favourite")) {
+                CustomToast.customToast(activity, "Favourite data send");
             }
 
         }
