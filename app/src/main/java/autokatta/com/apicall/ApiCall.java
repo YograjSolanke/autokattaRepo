@@ -4749,7 +4749,7 @@ Get uploaded Vehicle Buyer list
                              String permit_validity1, String fual1, String seating1, String permit1, String hypo1,
                              String drive1, String finance1, String transmission1, String body1, String boat1, String rv1,
                              String use1, String implement1, String bus_type1, String air1, String invoice1, String action,
-                             String sid) {
+                             String sid, String callPermission) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -4767,7 +4767,7 @@ Get uploaded Vehicle Buyer list
                         model1, version1, color1, mfgYear, insurance1, Kms, Hrs, hpCap, owner1, price, tyre, city1, city11, city12,
                         city13, city14, city2, city21, city22, city23, city24, rc1, insurance11, tax_validity1, fitness_validity1,
                         permit_validity1, fual1, seating1, permit1, hypo1, drive1, finance1, transmission1, body1, boat1, rv1, use1,
-                        implement1, bus_type1, air1, invoice1, action, sid);
+                        implement1, bus_type1, air1, invoice1, action, sid, callPermission);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

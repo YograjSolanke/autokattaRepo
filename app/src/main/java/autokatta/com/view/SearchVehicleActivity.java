@@ -1,8 +1,10 @@
 package autokatta.com.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -50,31 +52,30 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
     EditText useEdit, seatingEdit, transmissionEdit, impletementEdit, bodyEdit, boatEdit, rvEdit;
     Button BtnRefresh, BtnApplySearch, BtnMoreOptions, btnCity, btnRto;
-    Spinner rc, insurance, owner, hypo, brand, model, allcategory, subcategory, version;
-    Spinner tax_validity, fitness_validity, permit_validity, drive, bus_type, air, invoice, finance;
+    Spinner rcSpinner, insuranceSpinner, ownerSpinner, hypoSpinner, brandSpinner, modelSpinner, allcategorySpinner, subcategorySpinner, versionSpinner,
+            tax_validitySpinner, fitness_validitySpinner, permit_validitySpinner, driveSpinner, bus_typeSpinner, airSpinner, invoiceSpinner, financeSpinner;
     MultiSelectionSpinner spinnerfual;
 
-    TextView man_yr_from, man_yr_to, tyre_from, tyre_to, reg_yr_from, reg_yr_to, kms_from, kms_to, pricefrom, priceto, hrs_from, hrs_to, minihpcapacity, maxhpcapcity;
+    TextView man_yr_fromTxt, man_yr_toTxt, tyre_fromTxt, tyre_toTxt, kms_fromTxt, kms_toTxt, pricefromTxt, pricetoTxt,
+            hrs_fromTxt, hrs_toTxt, maxhpcapcityTxt, maxhpcapcity;
 
-    AutoCompleteTextView autoCity, autoRTO, autoCity1, autoCity2, autoCity3, autoCity4, autoRTO1, autoRTO2, autoRTO3, autoRTO4;
+    AutoCompleteTextView autoCity, autoRTO, autoCity1, autoCity2, autoCity3, autoCity4, autoRTO1, autoRTO2, autoRTO3,
+            autoRTO4;
     CheckBox checkRTO;
     private RadioGroup radioPermitGroup;
     private RadioButton radioPermitButton;
     Multispinner multiSpinnercolor;
     LinearLayout moresearchlinear;
 
-    RelativeLayout rowFinacial, rowCategory, rowSubcat, rowPermit, rowBrand, rowModel, rowVersion, rowCity, rowRTO, rowManyr, rowmanyr1, rowREGyr, rowREGyr1, rowPrice, rowprice1, rowKms, rowkms1, rowhrs, rowhrstb, rowhpcapacity, rowhpcap, rowowners;
-
-    RelativeLayout rowInvoice, rowbustype, rowaircondition, rowbody, rowboattype, rowrvtype, rowcolor, rowrc, rowinsurance1, rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre, rowtyrerange;
+    RelativeLayout rowPermit, rowRTO, rowManyr, rowPrice, rowKms, rowkms1, rowhrs, rowhrstb, rowhpcapacity, rowhpcap,
+            rowInvoice, rowbustype, rowaircondition, rowbody, rowboattype, rowrvtype, rowcolor, rowrc, rowinsurance1,
+            rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre;
 
     String action = "", Scategory, Sbrand, Smodel, Sprice, Syear, Sid = "", Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
     String vehicle_id, sub_category_id, position_brand_id, position_model_id;
-    String spinnervalues[];
-
-    String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, reg_yr1, reg1, reg_yr2, rc1, insurance1, kms1, kms2, hypo1, owner1, price1, price2;
+    String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, rc1, insurance1, kms1, kms2, hypo1, owner1, price1, price2;
     String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1;
-
-    String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2;
+    String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2, callPermission = "";
     int count = 0;
 
     List<String> fuals = new ArrayList<>();
@@ -145,24 +146,24 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         multiSpinnercolor = (Multispinner) findViewById(R.id.colorEdit1);
         spinnerfual = (MultiSelectionSpinner) findViewById(R.id.fualEdit1);
 
-        finance = (Spinner) findViewById(R.id.finacialEdit1);
-        allcategory = (Spinner) findViewById(R.id.allCategory1);
-        subcategory = (Spinner) findViewById(R.id.subCategory);
-        brand = (Spinner) findViewById(R.id.BrandEdit1);
-        model = (Spinner) findViewById(R.id.ModelEdit1);
-        version = (Spinner) findViewById(R.id.VersionEdit1);
-        owner = (Spinner) findViewById(R.id.ownerEdit);
+        financeSpinner = (Spinner) findViewById(R.id.finacialEdit1);
+        allcategorySpinner = (Spinner) findViewById(R.id.allCategory1);
+        subcategorySpinner = (Spinner) findViewById(R.id.subCategory);
+        brandSpinner = (Spinner) findViewById(R.id.BrandEdit1);
+        modelSpinner = (Spinner) findViewById(R.id.ModelEdit1);
+        versionSpinner = (Spinner) findViewById(R.id.VersionEdit1);
+        ownerSpinner = (Spinner) findViewById(R.id.ownerEdit);
 
-        invoice = (Spinner) findViewById(R.id.invoiceEdit);
-        bus_type = (Spinner) findViewById(R.id.bustypeEdit);
-        air = (Spinner) findViewById(R.id.aircondEdit);
-        rc = (Spinner) findViewById(R.id.rcEdit1);
-        insurance = (Spinner) findViewById(R.id.insEdit1);
-        hypo = (Spinner) findViewById(R.id.hypoEdit1);
-        tax_validity = (Spinner) findViewById(R.id.taxEdit1);
-        fitness_validity = (Spinner) findViewById(R.id.fitnessEdit1);
-        permit_validity = (Spinner) findViewById(R.id.permitEdit1);
-        drive = (Spinner) findViewById(R.id.driveEdit1);
+        invoiceSpinner = (Spinner) findViewById(R.id.invoiceEdit);
+        bus_typeSpinner = (Spinner) findViewById(R.id.bustypeEdit);
+        airSpinner = (Spinner) findViewById(R.id.aircondEdit);
+        rcSpinner = (Spinner) findViewById(R.id.rcEdit1);
+        insuranceSpinner = (Spinner) findViewById(R.id.insEdit1);
+        hypoSpinner = (Spinner) findViewById(R.id.hypoEdit1);
+        tax_validitySpinner = (Spinner) findViewById(R.id.taxEdit1);
+        fitness_validitySpinner = (Spinner) findViewById(R.id.fitnessEdit1);
+        permit_validitySpinner = (Spinner) findViewById(R.id.permitEdit1);
+        driveSpinner = (Spinner) findViewById(R.id.driveEdit1);
 
         checkRTO = (CheckBox) findViewById(R.id.checkRTO);
         autoCity = (AutoCompleteTextView) findViewById(R.id.cityEdit);
@@ -187,17 +188,17 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         useEdit = (EditText) findViewById(R.id.useEdit1);
         impletementEdit = (EditText) findViewById(R.id.implEdit);
 
-        man_yr_from = (TextView) findViewById(R.id.ManufactureFromText);
-        man_yr_to = (TextView) findViewById(R.id.ManufactureToText);
-        kms_from = (TextView) findViewById(R.id.KmsFromText);
-        kms_to = (TextView) findViewById(R.id.KmsToText);
-        hrs_from = (TextView) findViewById(R.id.hrsFromText);
-        hrs_to = (TextView) findViewById(R.id.hrsToText);
-        pricefrom = (TextView) findViewById(R.id.PriceFromText);
-        priceto = (TextView) findViewById(R.id.PriceToText);
-        tyre_from = (TextView) findViewById(R.id.tyreText1);
-        tyre_to = (TextView) findViewById(R.id.tyreText2);
-        minihpcapacity = (TextView) findViewById(R.id.minihpcapacity);
+        man_yr_fromTxt = (TextView) findViewById(R.id.ManufactureFromText);
+        man_yr_toTxt = (TextView) findViewById(R.id.ManufactureToText);
+        kms_fromTxt = (TextView) findViewById(R.id.KmsFromText);
+        kms_toTxt = (TextView) findViewById(R.id.KmsToText);
+        hrs_fromTxt = (TextView) findViewById(R.id.hrsFromText);
+        hrs_toTxt = (TextView) findViewById(R.id.hrsToText);
+        pricefromTxt = (TextView) findViewById(R.id.PriceFromText);
+        pricetoTxt = (TextView) findViewById(R.id.PriceToText);
+        tyre_fromTxt = (TextView) findViewById(R.id.tyreText1);
+        tyre_toTxt = (TextView) findViewById(R.id.tyreText2);
+        maxhpcapcityTxt = (TextView) findViewById(R.id.minihpcapacity);
         maxhpcapcity = (TextView) findViewById(R.id.maxhpcapcity);
 
         runOnUiThread(new Runnable() {
@@ -208,16 +209,16 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     financetxt.setText(Html.fromHtml("Finance Required:" + text));
                     messageText.setText(Html.fromHtml("Category:" + text));
                     messageText1.setText(Html.fromHtml("Sub category:" + text));
-                    brandtxt.setText(Html.fromHtml("Brand:" + text));
-                    modeltxt.setText(Html.fromHtml("Model:" + text));
+                    brandtxt.setText(Html.fromHtml("brandSpinner:" + text));
+                    modeltxt.setText(Html.fromHtml("modelSpinner:" + text));
 
 
                     action = getIntent().getExtras().getString("className");
                     System.out.println("className: " + action);
                     if (action.equalsIgnoreCase("MySearchAdapter")) {
                         Scategory = getIntent().getExtras().getString("category");
-                        Sbrand = getIntent().getExtras().getString("brand");
-                        Smodel = getIntent().getExtras().getString("model");
+                        Sbrand = getIntent().getExtras().getString("brandSpinner");
+                        Smodel = getIntent().getExtras().getString("modelSpinner");
                         Sprice = getIntent().getExtras().getString("price");
                         Syear = getIntent().getExtras().getString("year");
                         Sid = getIntent().getExtras().getString("search_id");
@@ -264,8 +265,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                man_yr_from.setText("" + minValue);
-                man_yr_to.setText("" + maxValue);
+                man_yr_fromTxt.setText("" + minValue);
+                man_yr_toTxt.setText("" + maxValue);
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -311,8 +312,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                pricefrom.setText("" + minValue);
-                priceto.setText("" + maxValue);
+                pricefromTxt.setText("" + minValue);
+                pricetoTxt.setText("" + maxValue);
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -336,8 +337,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                kms_from.setText("" + minValue);
-                kms_to.setText("" + maxValue);
+                kms_fromTxt.setText("" + minValue);
+                kms_toTxt.setText("" + maxValue);
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -361,8 +362,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                hrs_from.setText("" + minValue);
-                hrs_to.setText("" + maxValue);
+                hrs_fromTxt.setText("" + minValue);
+                hrs_toTxt.setText("" + maxValue);
                 Log.i("Range is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -385,7 +386,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                minihpcapacity.setText("" + minValue);
+                maxhpcapcityTxt.setText("" + minValue);
                 maxhpcapcity.setText("" + maxValue);
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
@@ -408,8 +409,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
-                tyre_from.setText("" + minValue);
-                tyre_to.setText("" + maxValue);
+                tyre_fromTxt.setText("" + minValue);
+                tyre_toTxt.setText("" + maxValue);
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -483,9 +484,9 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         });
 
         if (action.equalsIgnoreCase("MySearchAdapter")) {
-            allcategory.setSelection(getIndex(allcategory, Scategory));
-            brand.setSelection(getIndex(brand, Sbrand));
-            model.setSelection(getIndex(model, Smodel));
+            allcategorySpinner.setSelection(getIndex(allcategorySpinner, Scategory));
+            brandSpinner.setSelection(getIndex(brandSpinner, Sbrand));
+            modelSpinner.setSelection(getIndex(modelSpinner, Smodel));
 
         }
 
@@ -537,7 +538,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     if (count % 2 == 1) {
 
                         moresearchlinear.setVisibility(View.VISIBLE);
-                        Category = allcategory.getSelectedItem().toString();
+                        Category = allcategorySpinner.getSelectedItem().toString();
 
                         switch (Category) {
                             case "Bus":
@@ -575,7 +576,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                                 break;
                             case " Construction Equipment ":
 
-                                String subCategory = subcategory.getSelectedItem().toString();
+                                String subCategory = subcategorySpinner.getSelectedItem().toString();
 
                                 rowbustype.setVisibility(View.GONE);
                                 rowaircondition.setVisibility(View.GONE);
@@ -683,23 +684,23 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                finance.setSelection(0);
-                allcategory.setSelection(0);
-                subcategory.setSelection(0);
-                brand.setSelection(0);
-                model.setSelection(0);
-                version.setSelection(0);
-                rc.setSelection(0);
-                insurance.setSelection(0);
-                owner.setSelection(0);
-                hypo.setSelection(0);
-                tax_validity.setSelection(0);
-                fitness_validity.setSelection(0);
-                permit_validity.setSelection(0);
-                drive.setSelection(0);
-                bus_type.setSelection(0);
-                air.setSelection(0);
-                invoice.setSelection(0);
+                financeSpinner.setSelection(0);
+                allcategorySpinner.setSelection(0);
+                subcategorySpinner.setSelection(0);
+                brandSpinner.setSelection(0);
+                modelSpinner.setSelection(0);
+                versionSpinner.setSelection(0);
+                rcSpinner.setSelection(0);
+                insuranceSpinner.setSelection(0);
+                ownerSpinner.setSelection(0);
+                hypoSpinner.setSelection(0);
+                tax_validitySpinner.setSelection(0);
+                fitness_validitySpinner.setSelection(0);
+                permit_validitySpinner.setSelection(0);
+                driveSpinner.setSelection(0);
+                bus_typeSpinner.setSelection(0);
+                airSpinner.setSelection(0);
+                invoiceSpinner.setSelection(0);
 
                 //AutoCompleteTextView  , autoRTO,,,autoCity3,autoCity4,autoRTO1,,,;
 
@@ -735,8 +736,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             @Override
             public void onClick(View v) {
 
-                finance1 = finance.getSelectedItem().toString();
-                Category = allcategory.getSelectedItem().toString();
+                finance1 = financeSpinner.getSelectedItem().toString();
+                Category = allcategorySpinner.getSelectedItem().toString();
 
                 try {
                     if (Category.equalsIgnoreCase("Car")) {
@@ -754,14 +755,14 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                 } else if (Category.equalsIgnoreCase("Select Category")) {
                     Toast.makeText(getApplicationContext(), "select category", Toast.LENGTH_LONG).show();
 
-                } else if (subcategory.getSelectedItem().toString().equalsIgnoreCase("Select subcategory")) {
-                    Toast.makeText(getApplicationContext(), "select subcategory", Toast.LENGTH_LONG).show();
+                } else if (subcategorySpinner.getSelectedItem().toString().equalsIgnoreCase("Select subcategorySpinner")) {
+                    Toast.makeText(getApplicationContext(), "select subcategorySpinner", Toast.LENGTH_LONG).show();
 
-                } else if (brand.getSelectedItem().toString().equalsIgnoreCase("Select Brands")) {
-                    Toast.makeText(getApplicationContext(), "select brand", Toast.LENGTH_LONG).show();
+                } else if (brandSpinner.getSelectedItem().toString().equalsIgnoreCase("Select Brands")) {
+                    Toast.makeText(getApplicationContext(), "select brandSpinner", Toast.LENGTH_LONG).show();
 
-                } else if (model.getSelectedItem().toString().equalsIgnoreCase("Select Model")) {
-                    Toast.makeText(getApplicationContext(), "select model", Toast.LENGTH_LONG).show();
+                } else if (modelSpinner.getSelectedItem().toString().equalsIgnoreCase("Select modelSpinner")) {
+                    Toast.makeText(getApplicationContext(), "select modelSpinner", Toast.LENGTH_LONG).show();
 
                 } else {
                     applySearch();
@@ -777,42 +778,42 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         System.out.println("inside apply search ");
         try {
 
-            brand1 = brand.getSelectedItem().toString();
-            Category = allcategory.getSelectedItem().toString();
-            subCategory = subcategory.getSelectedItem().toString();
-            model1 = model.getSelectedItem().toString();
-            version1 = version.getSelectedItem().toString();
-            man_yr1 = man_yr_from.getText().toString();
-            man_yr2 = man_yr_to.getText().toString();
+            brand1 = brandSpinner.getSelectedItem().toString();
+            Category = allcategorySpinner.getSelectedItem().toString();
+            subCategory = subcategorySpinner.getSelectedItem().toString();
+            model1 = modelSpinner.getSelectedItem().toString();
+            version1 = versionSpinner.getSelectedItem().toString();
+            man_yr1 = man_yr_fromTxt.getText().toString();
+            man_yr2 = man_yr_toTxt.getText().toString();
 
-            rc1 = rc.getSelectedItem().toString();
-            insurance1 = insurance.getSelectedItem().toString();
-            tax_validity1 = tax_validity.getSelectedItem().toString();
-            permit_validity1 = permit_validity.getSelectedItem().toString();
-            fitness_validity1 = fitness_validity.getSelectedItem().toString();
+            rc1 = rcSpinner.getSelectedItem().toString();
+            insurance1 = insuranceSpinner.getSelectedItem().toString();
+            tax_validity1 = tax_validitySpinner.getSelectedItem().toString();
+            permit_validity1 = permit_validitySpinner.getSelectedItem().toString();
+            fitness_validity1 = fitness_validitySpinner.getSelectedItem().toString();
             fual1 = spinnerfual.getSelectedItem().toString();
             color1 = multiSpinnercolor.getSelectedItem().toString();
 
-            hypo1 = hypo.getSelectedItem().toString();
-            drive1 = drive.getSelectedItem().toString();
-            bus_type1 = bus_type.getSelectedItem().toString();
-            air1 = air.getSelectedItem().toString();
-            invoice1 = invoice.getSelectedItem().toString();
+            hypo1 = hypoSpinner.getSelectedItem().toString();
+            drive1 = driveSpinner.getSelectedItem().toString();
+            bus_type1 = bus_typeSpinner.getSelectedItem().toString();
+            air1 = airSpinner.getSelectedItem().toString();
+            invoice1 = invoiceSpinner.getSelectedItem().toString();
 
-            tyre1 = tyre_from.getText().toString();
-            tyre2 = tyre_to.getText().toString();
+            tyre1 = tyre_fromTxt.getText().toString();
+            tyre2 = tyre_toTxt.getText().toString();
 
-            kms1 = kms_from.getText().toString();
-            kms2 = kms_to.getText().toString();
+            kms1 = kms_fromTxt.getText().toString();
+            kms2 = kms_toTxt.getText().toString();
 
-            hrs1 = hrs_from.getText().toString();
-            hrs2 = hrs_to.getText().toString();
-            hpcap1 = minihpcapacity.getText().toString();
+            hrs1 = hrs_fromTxt.getText().toString();
+            hrs2 = hrs_toTxt.getText().toString();
+            hpcap1 = maxhpcapcityTxt.getText().toString();
             hpcap2 = maxhpcapcity.getText().toString();
 
-            owner1 = owner.getSelectedItem().toString();
-            price1 = pricefrom.getText().toString();
-            price2 = priceto.getText().toString();
+            owner1 = ownerSpinner.getSelectedItem().toString();
+            price1 = pricefromTxt.getText().toString();
+            price2 = pricetoTxt.getText().toString();
             city2 = autoRTO.getText().toString();
             city21 = autoRTO1.getText().toString();
             city22 = autoRTO2.getText().toString();
@@ -843,31 +844,31 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             if (rc1.startsWith("-Select")) {
                 rc1 = "";
             } else {
-                rc1 = rc.getSelectedItem().toString();
+                rc1 = rcSpinner.getSelectedItem().toString();
             }
 
             if (insurance1.startsWith("-Select")) {
                 insurance1 = "";
             } else {
-                insurance1 = insurance.getSelectedItem().toString();
+                insurance1 = insuranceSpinner.getSelectedItem().toString();
             }
 
             if (tax_validity1.startsWith("-Select")) {
                 tax_validity1 = "";
             } else {
-                tax_validity1 = tax_validity.getSelectedItem().toString();
+                tax_validity1 = tax_validitySpinner.getSelectedItem().toString();
             }
 
             if (permit_validity1.startsWith("-Select")) {
                 permit_validity1 = "";
             } else {
-                permit_validity1 = permit_validity.getSelectedItem().toString();
+                permit_validity1 = permit_validitySpinner.getSelectedItem().toString();
             }
 
             if (fitness_validity1.startsWith("-Select")) {
                 fitness_validity1 = "";
             } else {
-                fitness_validity1 = fitness_validity.getSelectedItem().toString();
+                fitness_validity1 = fitness_validitySpinner.getSelectedItem().toString();
             }
 
             if (fual1.startsWith("-Select")) {
@@ -879,38 +880,38 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             if (hypo1.startsWith("-Select")) {
                 hypo1 = "";
             } else {
-                hypo1 = hypo.getSelectedItem().toString();
+                hypo1 = hypoSpinner.getSelectedItem().toString();
             }
 
             if (drive1.startsWith("-Select")) {
                 drive1 = "";
             } else {
-                drive1 = drive.getSelectedItem().toString();
+                drive1 = driveSpinner.getSelectedItem().toString();
             }
 
 
             if (finance1.startsWith("-Select")) {
                 finance1 = "";
             } else {
-                finance1 = finance.getSelectedItem().toString();
+                finance1 = financeSpinner.getSelectedItem().toString();
             }
 
             if (bus_type1.startsWith("-Select")) {
                 bus_type1 = "";
             } else {
-                bus_type1 = bus_type.getSelectedItem().toString();
+                bus_type1 = bus_typeSpinner.getSelectedItem().toString();
             }
 
             if (air1.startsWith("-Select")) {
                 air1 = "";
             } else {
-                air1 = air.getSelectedItem().toString();
+                air1 = airSpinner.getSelectedItem().toString();
             }
 
             if (invoice1.startsWith("-Select")) {
                 invoice1 = "";
             } else {
-                invoice1 = invoice.getSelectedItem().toString();
+                invoice1 = invoiceSpinner.getSelectedItem().toString();
             }
 
         } catch (Exception e) {
@@ -918,9 +919,39 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
         }
 
+        RequestAlertBox();
 
-        SaveSearchTask();
 
+    }
+
+    private void RequestAlertBox() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SearchVehicleActivity.this);
+
+
+        alertDialogBuilder
+                .setMessage("Want a call back ?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        callPermission = "Yes";
+                        SaveSearchTask();
+                        dialog.cancel();
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        callPermission = "No";
+                        SaveSearchTask();
+                        dialog.cancel();
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void SaveSearchTask() {
@@ -929,7 +960,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                 hrs1 + "-" + hrs2, hpcap1 + "-" + hpcap2, owner1, price1 + "-" + price2, tyre1 + "-" + tyre2,
                 city1, city11, city12, city13, city14, city2, city21, city22, city23, city24, rc1, insurance1,
                 tax_validity1, fitness_validity1, permit_validity1, fual1, seating1, permit1, hypo1, drive1, finance1, transmission1,
-                body1, boat1, rv1, use1, implement1, bus_type1, air1, invoice1, action, Sid);
+                body1, boat1, rv1, use1, implement1, bus_type1, air1, invoice1, action, Sid, callPermission);
+
 
     }
 
@@ -946,14 +978,14 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
     }
 
     /*
-    Get Brand
+    Get brandSpinner
      */
     private void getBrand(String categoryId, String subcategoryId) {
         mApiCall.getBrand(categoryId, subcategoryId);
     }
 
     /*
-    Get Model...
+    Get modelSpinner...
      */
     private void getModel(String categoryId, String subCategoryId, String brandId) {
         mApiCall.getModel(categoryId, subCategoryId, brandId);
@@ -1032,8 +1064,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                         ArrayAdapter<String> adapter =
                                 new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, parsedData);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        allcategory.setAdapter(adapter);
-                        allcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        allcategorySpinner.setAdapter(adapter);
+                        allcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 if (position != 0) {
@@ -1088,7 +1120,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     final List<String> parsedData = new ArrayList<>();
                     final HashMap<String, String> mSubTypeMap = new HashMap<>();
 
-                    mSubTypeList.add("Select subcategory");
+                    mSubTypeList.add("Select subcategorySpinner");
                     GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
                         subTypeResponse.setId(subTypeResponse.getId());
@@ -1100,9 +1132,9 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, parsedData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    subcategory.setAdapter(adapter);
-                    brand.setAdapter(null);
-                    subcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    subcategorySpinner.setAdapter(adapter);
+                    brandSpinner.setAdapter(null);
+                    subcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
@@ -1134,7 +1166,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                         }
                     });
                 }
-                //Vehicle Brand
+                //Vehicle brandSpinner
                 else if (response.body() instanceof GetVehicleBrandResponse) {
                     Log.e("GetVehicleBrands", "->");
                     List<String> mBrandList = new ArrayList<>();
@@ -1155,17 +1187,17 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, brandData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    brand.setAdapter(adapter);
-                    model.setAdapter(null);
-                    brand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    brandSpinner.setAdapter(adapter);
+                    modelSpinner.setAdapter(null);
+                    brandSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
                                 position_brand_id = mBrandMap.get(brandData.get(position));
                                 String brandName = brandData.get(position);
 
-                                System.out.println("Brand id is::" + position_brand_id);
-                                System.out.println("Brand name::" + brandName);
+                                System.out.println("brandSpinner id is::" + position_brand_id);
+                                System.out.println("brandSpinner name::" + brandName);
 
                                 getModel(vehicle_id, sub_category_id, position_brand_id);
                             }
@@ -1177,14 +1209,14 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                         }
                     });
                 }
-                //Vehicle Model
+                //Vehicle modelSpinner
                 else if (response.body() instanceof GetVehicleModelResponse) {
                     Log.e("GetVehicleModel", "->");
                     List<String> mModelList = new ArrayList<>();
                     final List<String> modelData = new ArrayList<>();
                     final HashMap<String, String> mModelMap = new HashMap<>();
 
-                    mModelList.add("Select Model");
+                    mModelList.add("Select modelSpinner");
                     GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
                     for (GetVehicleModelResponse.Success modelResponse : getVehicleModelResponse.getSuccess()) {
                         modelResponse.setModelId(modelResponse.getModelId());
@@ -1198,17 +1230,17 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, modelData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    model.setAdapter(adapter);
-                    version.setAdapter(null);
-                    model.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    modelSpinner.setAdapter(adapter);
+                    versionSpinner.setAdapter(null);
+                    modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
                                 position_model_id = mModelMap.get(modelData.get(position));
                                 String modelName = modelData.get(position);
 
-                                System.out.println("Model id is::" + position_model_id);
-                                System.out.println("Model name::" + modelName);
+                                System.out.println("modelSpinner id is::" + position_model_id);
+                                System.out.println("modelSpinner name::" + modelName);
 
                                 getVersion(vehicle_id, sub_category_id, position_brand_id, position_model_id);
                             }
@@ -1241,8 +1273,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, versionData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    version.setAdapter(adapter);
-                    version.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    versionSpinner.setAdapter(adapter);
+                    versionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {

@@ -786,7 +786,7 @@ public interface ServiceApi {
                                         @Query("transmission") String transmission1, @Query("body_type") String body1, @Query("boat_type") String boat1,
                                         @Query("rv_type") String rv1, @Query("application") String use1, @Query("implements") String implement1,
                                         @Query("bus_type") String bus_type1, @Query("air_condition") String air1, @Query("invoice") String invoice1,
-                                        @Query("keyword") String action, @Query("search_id") String sid);
+                                        @Query("keyword") String action, @Query("search_id") String sid, @Query("callPermission") String callPermission);
 
 
     //get Uploaded vehicle buyer list
