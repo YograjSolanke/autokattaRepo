@@ -81,8 +81,8 @@ public class About extends Fragment implements RequestNotifier {
     Spinner spinner;
     RadioGroup usertype;
     RadioButton student, employee, selfemployee;
-    RelativeLayout rel;
-    String Sharedcontact;
+    RelativeLayout mrel;
+    String Sharedcontact,RegId;
     String spinnervalue = "";
     ApiCall mApiCall;
 
@@ -91,6 +91,8 @@ public class About extends Fragment implements RequestNotifier {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAbout = inflater.inflate(R.layout.fragment_profile_about, container, false);
         Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+        // RegId=getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", "");
+        System.out.println("REGID--------------------------->"+RegId);
         mContact = (TextView) mAbout.findViewById(R.id.contact_no);
         mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
         mEmail = (EditText) mAbout.findViewById(R.id.email);
@@ -107,9 +109,8 @@ public class About extends Fragment implements RequestNotifier {
         selfemployee = (RadioButton) mAbout.findViewById(R.id.selfemployee);
         radiolayout = (RelativeLayout) mAbout.findViewById(R.id.radiolayout);
         spinner = (Spinner) mAbout.findViewById(R.id.spinner);
-        rel = (RelativeLayout) mAbout.findViewById(R.id.rel);
+        mrel = (RelativeLayout) mAbout.findViewById(R.id.rel);
         spinner.setVisibility(View.GONE);
-
         /*Get Designation,Skills,Company From web service*/
         mApiCall = new ApiCall(getActivity(), this);
         mApiCall.profileAbout(Sharedcontact);
@@ -165,7 +166,7 @@ public class About extends Fragment implements RequestNotifier {
 
             @Override
             public void onClick(View view) {
-                mDone.setVisibility(View.VISIBLE);
+                mrel.setVisibility(View.VISIBLE);
                 if (student.isChecked()) {
                     spinner.setVisibility(View.GONE);
                 } else if (employee.isChecked()) {
@@ -221,7 +222,7 @@ public class About extends Fragment implements RequestNotifier {
                 spinnervalue = spinner.getSelectedItem().toString();
                 mUpdatedCompany = mCompany.getText().toString();
                 mUpdatedDesignation = mDesignation.getText().toString();
-                mUpdatedSkills = mSkills.getText().toString();
+                mUpdatedSkills = mSkills.getText().toString().trim();
 
                 webflag = mUpdatedWebsite.equalsIgnoreCase("");
 
@@ -309,8 +310,9 @@ public class About extends Fragment implements RequestNotifier {
                     boolean found1 = strDesignation.matches("["
                             + splChrs + "]+");
                     /*Skills*/
+
                     mSkills.clearFocus();
-                    newskills = mSkills.getText().toString();
+                    newskills = mSkills.getText().toString().trim();
 
                     try {
 
@@ -322,7 +324,8 @@ public class About extends Fragment implements RequestNotifier {
                         e.printStackTrace();
                     }
 
-                    strskills = mSkills.getText().toString();
+                    strskills = mSkills.getText().toString().trim();
+
                     //***************************************************************
                     splChrs = "-/@#$%^&_+=()";
                     boolean found2 = strCompany.matches("["
@@ -347,10 +350,10 @@ public class About extends Fragment implements RequestNotifier {
                         mSkills.setError("Enter Skills Name");
                         mSkills.requestFocus();
                     } else {
-                        // mApiCall.updateProfile(mUpdatedEmail, Sharedcontact, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedCity, userName, "", "", "", "", mUpdatedProfession, spinnervalue, "", "");
+                        mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedCity,spinnervalue,RegId);
                         // submitData();
                     }
-
+                    mrel.setVisibility(View.GONE);
                 }
             }
         });
@@ -406,6 +409,7 @@ public class About extends Fragment implements RequestNotifier {
                         websitestr = mProfileAboutResponse.getSuccess().get(0).getWebsite();
                         city = mProfileAboutResponse.getSuccess().get(0).getCity();
                         skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
+                        RegId=mProfileAboutResponse.getSuccess().get(0).getRegId();
 
                         mContact.setText(contact);
                         mProfession.setText(profession);
@@ -414,6 +418,8 @@ public class About extends Fragment implements RequestNotifier {
                         mCity.setText(city);
                         mCompany.setText(company);
                         mDesignation.setText(designation);
+                        if (skills.endsWith(","))
+                            skills = skills.substring(0, skills.length() - 1);
                         mSkills.setText(skills);
                     }
                 } else if (response.body() instanceof GetCompaniesResponse) {
@@ -525,6 +531,6 @@ public class About extends Fragment implements RequestNotifier {
                 CustomToast.customToast(getActivity(), "Profile Updated Successfully");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
             }
-            }
+        }
     }
 }
