@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +28,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.Registration.MultiSelectionSpinner;
 import autokatta.com.Registration.Multispinner;
@@ -209,19 +211,19 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     brandtxt.setText(Html.fromHtml("Brand:" + text));
                     modeltxt.setText(Html.fromHtml("Model:" + text));
 
-                    if (getIntent().getExtras() != null) {
-                        action = getIntent().getExtras().getString("className");
-                        System.out.println("className: " + action);
-                        if (action.equalsIgnoreCase("MySearchAdapter")) {
-                            Scategory = getIntent().getExtras().getString("category");
-                            Sbrand = getIntent().getExtras().getString("brand");
-                            Smodel = getIntent().getExtras().getString("model");
-                            Sprice = getIntent().getExtras().getString("price");
-                            Syear = getIntent().getExtras().getString("year");
-                            Sid = getIntent().getExtras().getString("search_id");
-                            System.out.println("Search Id....: " + Sid);
-                        }
+
+                    action = getIntent().getExtras().getString("className");
+                    System.out.println("className: " + action);
+                    if (action.equalsIgnoreCase("MySearchAdapter")) {
+                        Scategory = getIntent().getExtras().getString("category");
+                        Sbrand = getIntent().getExtras().getString("brand");
+                        Smodel = getIntent().getExtras().getString("model");
+                        Sprice = getIntent().getExtras().getString("price");
+                        Syear = getIntent().getExtras().getString("year");
+                        Sid = getIntent().getExtras().getString("search_id");
+                        System.out.println("Search Id....: " + Sid);
                     }
+
 
                     getVehicleCategory();
                     getRTOCity();
@@ -747,13 +749,13 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                 }
 
                 if (finance1.startsWith("-Select")) {
-                    Toast.makeText(getApplicationContext(), "Please provide fianance required or not", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please provide finanace required or not", Toast.LENGTH_LONG).show();
 
                 } else if (Category.equalsIgnoreCase("Select Category")) {
-                    Toast.makeText(getApplicationContext(), "select catagory", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "select category", Toast.LENGTH_LONG).show();
 
                 } else if (subcategory.getSelectedItem().toString().equalsIgnoreCase("Select subcategory")) {
-                    Toast.makeText(getApplicationContext(), "select subcatagory", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "select subcategory", Toast.LENGTH_LONG).show();
 
                 } else if (brand.getSelectedItem().toString().equalsIgnoreCase("Select Brands")) {
                     Toast.makeText(getApplicationContext(), "select brand", Toast.LENGTH_LONG).show();
@@ -782,8 +784,6 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             version1 = version.getSelectedItem().toString();
             man_yr1 = man_yr_from.getText().toString();
             man_yr2 = man_yr_to.getText().toString();
-            reg_yr1 = reg_yr_from.getText().toString();
-            reg_yr2 = reg_yr_to.getText().toString();
 
             rc1 = rc.getSelectedItem().toString();
             insurance1 = insurance.getSelectedItem().toString();
@@ -919,7 +919,17 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         }
 
 
-        //SaveSearchTask();
+        SaveSearchTask();
+
+    }
+
+    private void SaveSearchTask() {
+        mApiCall.saveMySearch(myContact, Category, subCategory, brand1, model1, version1, color1,
+                man_yr1 + "-" + man_yr2, insurance1, kms1 + "-" + kms2,
+                hrs1 + "-" + hrs2, hpcap1 + "-" + hpcap2, owner1, price1 + "-" + price2, tyre1 + "-" + tyre2,
+                city1, city11, city12, city13, city14, city2, city21, city22, city23, city24, rc1, insurance1,
+                tax_validity1, fitness_validity1, permit_validity1, fual1, seating1, permit1, hypo1, drive1, finance1, transmission1,
+                body1, boat1, rv1, use1, implement1, bus_type1, air1, invoice1, action, Sid);
 
     }
 
@@ -1258,7 +1268,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     /*final List<String> versionData = new ArrayList<>();
                     final HashMap<String, String> mVersionMap = new HashMap<>();*/
 
-                    mColorList.add("Select Color");
+                    //mColorList.add("Select Color");
                     ColorResponse getVehicleVersionResponse = (ColorResponse) response.body();
                     for (ColorResponse.Success colorResponse : getVehicleVersionResponse.getSuccess()) {
                         colorResponse.setTitle(colorResponse.getTitle());
@@ -1269,11 +1279,12 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     /*mVersionIdList.add("other");
                     versionData.addAll(mVersionIdList);*/
                     Log.i("ListColor", "->" + mColorList);
-                    ArrayAdapter<String> adapter =
+                    /*ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, mColorList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    multiSpinnercolor.setAdapter(adapter);
-                    multiSpinnercolor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    multiSpinnercolor.setAdapter(adapter);*/
+                    multiSpinnercolor.setItems(mColorList, "-Select Color-", SearchVehicleActivity.this);
+                    /*multiSpinnercolor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
@@ -1287,7 +1298,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                         public void onNothingSelected(AdapterView<?> parent) {
 
                         }
-                    });
+                    });*/
                 }
 
                 //Rto city
@@ -1337,6 +1348,14 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
     @Override
     public void notifyString(String str) {
+        if (str != null) {
 
+            if (str.startsWith("success")) {
+                Toast.makeText(getApplicationContext(), "Your search saved successfully! you will get notification soon..!", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(SearchVehicleActivity.this, AutokattaMainActivity.class));
+            }
+
+        }
     }
 }

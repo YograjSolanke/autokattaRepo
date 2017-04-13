@@ -174,7 +174,9 @@ public class AutokattaMainActivity extends AppCompatActivity {
                             Intent intent = new Intent(AutokattaMainActivity.this, VehicleUpload.class);
                             startActivity(intent);
                         } else if (menuItem.getItemId() == R.id.search_vehicle) {
-                            startActivity(new Intent(AutokattaMainActivity.this, SearchVehicleActivity.class));
+                            Bundle bundle = new Bundle();
+                            bundle.putString("className", "Main");
+                            startActivity(new Intent(AutokattaMainActivity.this, SearchVehicleActivity.class).putExtras(bundle));
                         } else if (menuItem.getItemId() == R.id.my_search) {
                             startActivity(new Intent(AutokattaMainActivity.this, MySearchActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {

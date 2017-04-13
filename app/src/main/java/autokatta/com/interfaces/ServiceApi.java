@@ -743,10 +743,10 @@ public interface ServiceApi {
 
     //Update Profile
     @GET("update_profile.php")
-    Call<String> _autokattaUpdateProfile(@Query("email") String email,@Query("website") String website, @Query("profession") String profession,
-                                                 @Query("companyNames") String companyNames, @Query("designation") String designation,
-                                                 @Query("skills") String skills, @Query("city") String city,
-                                               @Query("sub_profession") String sub_profession,@Query("reg_id") String reg_id);
+    Call<String> _autokattaUpdateProfile(@Query("email") String email, @Query("website") String website, @Query("profession") String profession,
+                                         @Query("companyNames") String companyNames, @Query("designation") String designation,
+                                         @Query("skills") String skills, @Query("city") String city,
+                                         @Query("sub_profession") String sub_profession, @Query("reg_id") String reg_id);
 
     //Update Profile
     @POST("getColors.php")
@@ -768,4 +768,22 @@ public interface ServiceApi {
     //add remove favourite status
     @POST("addRemooveMyFavourites.php")
     Call<String> addRemovefavouriteStatus(@Query("contact") String contact, @Query("buyer_vehicle_id") String buyer_vehicle_id, @Query("search_id") String search_id);
+
+    //Save My Search
+    @POST("saveSearch.php")
+    Call<String> _autokattaSaveMySearch(@Query("contact") String myContact, @Query("category") String category, @Query("subcategory") String subCategory,
+                                        @Query("brand") String brand1, @Query("model") String model1, @Query("version") String version1,
+                                        @Query("color") String color1, @Query("man_year") String mfgYear, @Query("insurance") String insurance1,
+                                        @Query("kms_running") String kms, @Query("hrs_running") String hrs, @Query("hpcapacity") String hpCap, @Query("owners") String owner1,
+                                        @Query("price") String price, @Query("tyre_condition") String tyre, @Query("city") String city1, @Query("city1") String city11,
+                                        @Query("city2") String city12, @Query("city3") String city13, @Query("city4") String city14, @Query("RTO_city") String city2,
+                                        @Query("RTO_city1") String city21, @Query("RTO_city2") String city22, @Query("RTO_city3") String city23,
+                                        @Query("RTO_city4") String city24, @Query("rc_available") String rc1, @Query("ins_valid") String insurance11,
+                                        @Query("tax_validity") String tax_validity1, @Query("fitness_validity") String fitness_validity1, @Query("permit_validity") String permit_validity1,
+                                        @Query("fual") String fual1, @Query("seat_cap") String seating1, @Query("permit") String permit1,
+                                        @Query("hypothetication") String hypo1, @Query("drive") String drive1, @Query("finance") String finance1,
+                                        @Query("transmission") String transmission1, @Query("body_type") String body1, @Query("boat_type") String boat1,
+                                        @Query("rv_type") String rv1, @Query("application") String use1, @Query("implements") String implement1,
+                                        @Query("bus_type") String bus_type1, @Query("air_condition") String air1, @Query("invoice") String invoice1,
+                                        @Query("keyword") String action, @Query("search_id") String sid);
 }

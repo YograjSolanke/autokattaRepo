@@ -4739,6 +4739,52 @@ Get uploaded Vehicle Buyer list
         }
     }
 
+    //Save My Search
+    public void saveMySearch(String myContact, String category, String subCategory, String brand1, String model1,
+                             String version1, String color1, String mfgYear, String insurance1, String Kms, String Hrs,
+                             String hpCap, String owner1, String price, String tyre, String city1, String city11, String city12,
+                             String city13, String city14, String city2, String city21, String city22, String city23,
+                             String city24, String rc1, String insurance11, String tax_validity1, String fitness_validity1,
+                             String permit_validity1, String fual1, String seating1, String permit1, String hypo1,
+                             String drive1, String finance1, String transmission1, String body1, String boat1, String rv1,
+                             String use1, String implement1, String bus_type1, String air1, String invoice1, String action,
+                             String sid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> createbrdcstgrp = serviceApi._autokattaSaveMySearch(myContact, category, subCategory, brand1,
+                        model1, version1, color1, mfgYear, insurance1, Kms, Hrs, hpCap, owner1, price, tyre, city1, city11, city12,
+                        city13, city14, city2, city21, city22, city23, city24, rc1, insurance11, tax_validity1, fitness_validity1,
+                        permit_validity1, fual1, seating1, permit1, hypo1, drive1, finance1, transmission1, body1, boat1, rv1, use1,
+                        implement1, bus_type1, air1, invoice1, action, sid);
+                createbrdcstgrp.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     //send buyer call date
     public void sendLastCallDate(String caller, String callie, String calldate, String callcount) {
