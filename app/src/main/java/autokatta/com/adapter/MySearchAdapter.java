@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +27,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.fragment.SavedSearchSellerListFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MySearchResponse;
@@ -368,15 +372,15 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                     SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
                     Bundle b = new Bundle();
                     b.putString("search_id", SearchId);
-//                    MySearchSellerList frag2 = new MySearchSellerList();    // Call Another Fragment
-//                    frag2.setArguments(b);
-//
-//                    FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.containerView, frag2);
-//                    //content_frame is a Id  of Frame Layout
-//                    fragmentTransaction.addToBackStack("mysearchsellerlist");
-//                    fragmentTransaction.commit(); //
+                    SavedSearchSellerListFragment frag2 = new SavedSearchSellerListFragment();    // Call Another Fragment
+                    frag2.setArguments(b);
+
+                    FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.mysearchFrame, frag2);
+                    //content_frame is a Id  of Frame Layout
+                    fragmentTransaction.addToBackStack("mysearchsellerlist");
+                    fragmentTransaction.commit(); //
                 }
             }
         });

@@ -70,6 +70,7 @@ import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
+import autokatta.com.response.SellerResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreOldAdminResponse;
@@ -786,4 +787,10 @@ public interface ServiceApi {
                                         @Query("rv_type") String rv1, @Query("application") String use1, @Query("implements") String implement1,
                                         @Query("bus_type") String bus_type1, @Query("air_condition") String air1, @Query("invoice") String invoice1,
                                         @Query("keyword") String action, @Query("search_id") String sid);
+
+
+    //get Uploaded vehicle buyer list
+    @POST("get_seller_notification.php")
+    Call<SellerResponse> getSavedSearchSellerList(@Query("contact") String contact);
+
 }

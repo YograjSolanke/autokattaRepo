@@ -347,7 +347,7 @@ public class About extends Fragment implements RequestNotifier {
                         mSkills.setError("Enter Skills Name");
                         mSkills.requestFocus();
                     } else {
-                        mApiCall.updateProfile(mUpdatedEmail, Sharedcontact, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedCity, userName, "", "", "", "", mUpdatedProfession, spinnervalue, "", "");
+                        // mApiCall.updateProfile(mUpdatedEmail, Sharedcontact, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedCity, userName, "", "", "", "", mUpdatedProfession, spinnervalue, "", "");
                         // submitData();
                     }
 

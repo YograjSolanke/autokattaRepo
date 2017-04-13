@@ -81,6 +81,7 @@ import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchStoreResponse;
+import autokatta.com.response.SellerResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreOldAdminResponse;
@@ -4856,6 +4857,40 @@ Get uploaded Vehicle Buyer list
             e.printStackTrace();
         }
     }
+
+
+    /*
+Get saved search Seller list
+*/
+    public void getSavedSearchSellerList(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<SellerResponse> yourBid = serviceApi.getSavedSearchSellerList(contact);
+                yourBid.enqueue(new Callback<SellerResponse>() {
+                    @Override
+                    public void onResponse(Call<SellerResponse> call, Response<SellerResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<SellerResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs
