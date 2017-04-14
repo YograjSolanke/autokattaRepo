@@ -55,7 +55,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
     class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mAuctionCardView;
         TextView mAuctioneer, mAuctioneerTitle, mAuctioneerNoOfVehicles, mAuctioneerType, mTimer, mStartDate, mStartTime,
-                mEndDate, mEndTime;
+                mEndDate, mEndTime, mAuction_category, mStockLocation;
         Button mSpecialClauses, mAuctionPreview, mShare;
         ImageView mStamp;
 
@@ -71,6 +71,8 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             mStartTime = (TextView) itemView.findViewById(R.id.start_time);
             mEndDate = (TextView) itemView.findViewById(R.id.end_date);
             mEndTime = (TextView) itemView.findViewById(R.id.end_time);
+            mAuction_category = (TextView) itemView.findViewById(R.id.auction_category);
+            mStockLocation = (TextView) itemView.findViewById(R.id.stockLocation);
 
             mSpecialClauses = (Button) itemView.findViewById(R.id.btnspecial_clauses);
             mAuctionPreview = (Button) itemView.findViewById(R.id.auction_preview);
@@ -96,6 +98,8 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         holder.mStartTime.setText(mItemList.get(position).getStartTime());
         holder.mEndDate.setText(mItemList.get(position).getEndDate());
         holder.mEndTime.setText(mItemList.get(position).getEndTime());
+        holder.mAuction_category.setText(mItemList.get(position).getAuctioncategory());
+        holder.mStockLocation.setText(mItemList.get(position).getStockLocation());
 
         final TextView tv = holder.mTimer;
         CountDownTimer cdt = counters.get(tv);

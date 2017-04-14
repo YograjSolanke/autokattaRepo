@@ -145,6 +145,14 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                         success.setShowPrice(success.getShowPrice());
                         success.setBlackListStatus(success.getBlackListStatus());
                         success.setMycontact(success.getMycontact());
+                        success.setAuctioncategory(success.getAuctioncategory());
+
+
+                        if (success.getStockLocation().equals(""))
+                            success.setStockLocation(success.getLocation());
+                        else
+                            success.setStockLocation(success.getStockLocation());
+
                         success.setKeyWord("auction");
                         mLiveEventList.add(success);
                     }
