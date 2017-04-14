@@ -1,7 +1,6 @@
 package autokatta.com.view;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -19,14 +17,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.fragment_profile.AboutStore;
 import autokatta.com.fragment_profile.Event;
-import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
 import autokatta.com.fragment_profile.Katta;
 import autokatta.com.fragment_profile.Modules;
+import autokatta.com.fragment_profile.MyVehicles;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ProfileAboutResponse;
@@ -97,8 +94,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         adapter.addFragment(new Event(), "EVENT");
         adapter.addFragment(new Katta(), "KATTA");
         adapter.addFragment(new Modules(), "MODULE");
-        adapter.addFragment(new Follow(), "FOLLOW");
-        adapter.addFragment(new UpdatesFragment(), "MY VEHICLES");
+       // adapter.addFragment(new Follow(), "FOLLOW");
+        adapter.addFragment(new MyVehicles(), "MY VEHICLES");
         viewPager.setAdapter(adapter);
     }
 

@@ -109,7 +109,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         mSpinnerVersion = (Spinner) findViewById(R.id.spinner_version);
 
         Intent i = getIntent();
-        action = "ContinueRegistration";
         action = i.getStringExtra("action");
 
         edtyear.setOnTouchListener(this);
@@ -128,22 +127,22 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
 
         try {
             if (action.equalsIgnoreCase("MyVehicles")) {
-                vehiType = bundle.getString("vehicletype");
-                vehiYear = bundle.getString("vehicleyear");
-                vehiBrand = bundle.getString("vehiclebrand");
-                vehiModel = bundle.getString("vehiclemodel");
-                vehiVersion = bundle.getString("vehicleversion");
-                vehiSubcat = bundle.getString("vehiclesubcategory");
+                vehiType = i.getStringExtra("vehicletype");
+                vehiYear =i.getStringExtra("vehicleyear");
+                vehiBrand = i.getStringExtra("vehiclebrand");
+                vehiModel = i.getStringExtra("vehiclemodel");
+                vehiVersion = i.getStringExtra("vehicleversion");
+                vehiSubcat = i.getStringExtra("vehiclesubcategory");
 
-                ids = bundle.getString("idss");
-                vehino = bundle.getString("vehicleno");
-                vehitaxValidity = bundle.getString("taxvalidity");
-                vehifitnessValidity = bundle.getString("fitnessvalidity");
-                vehipermitValidity = bundle.getString("permitvalidity");
-                vehiinsurance = bundle.getString("insurance");
-                vehipuc = bundle.getString("puc");
-                vehilastServicedate = bundle.getString("lastservice");
-                vehinextservicedate = bundle.getString("nextservice");
+                ids = i.getStringExtra("idss");
+                vehino = i.getStringExtra("vehicleno");
+                vehitaxValidity = i.getStringExtra("taxvalidity");
+                vehifitnessValidity = i.getStringExtra("fitnessvalidity");
+                vehipermitValidity = i.getStringExtra("permitvalidity");
+                vehiinsurance = i.getStringExtra("insurance");
+                vehipuc = i.getStringExtra("puc");
+                vehilastServicedate = i.getStringExtra("lastservice");
+                vehinextservicedate = i.getStringExtra("nextservice");
                 btnsub.setText("Update");
             }
         } catch (Exception e) {
@@ -222,12 +221,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 } else {
                     flag = 0;
                     edtyear.setError("Please prodive purchase date");
-                }
-
-                if (!vehiclenotext.equals("")) {
-                    Toast.makeText(getApplicationContext(),
-                            "Please Enter Vehicle Number", Toast.LENGTH_LONG)
-                            .show();
                 }
 
                 if (!taxvaltext.equalsIgnoreCase("")) {
@@ -777,7 +770,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     startActivity(i);
                     finish();
                 } else if (action.equals("MyVehicles")) {
-                    Toast.makeText(getApplicationContext(), "to Do in Continue Next reg", Toast.LENGTH_LONG).show();
+                    Intent i=new Intent(getApplicationContext(),AutokattaMainActivity.class);
+                    finish();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
                 Toast.makeText(getApplicationContext(), "Your Vehicle added Sucessfully",
