@@ -103,13 +103,14 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.textyear.setText(mMainlist.get(position).getYearOfManufactur());
         holder.BuyerLeads.setText(mMainlist.get(position).getBuyerLeads());
 
+
         //To set Date
         try {
 
             DateFormat date = new SimpleDateFormat(" MMM dd ");
             DateFormat time = new SimpleDateFormat(" hh:mm a");
-            holder.textsearchdate.setText(date.format(mMainlist.get(position).getSearchdate()) +
-                    time.format(mMainlist.get(position).getSearchdate()));
+            holder.textsearchdate.setText(date.format(mMainlist.get(position).getSearchDateNew()) +
+                    time.format(mMainlist.get(position).getSearchDateNew()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,8 +121,8 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
             DateFormat date1 = new SimpleDateFormat(" MMM dd ");
             DateFormat time1 = new SimpleDateFormat(" hh:mm a");
-            holder.Stopdate.setText(date1.format(mMainlist.get(position).getStopdate()) +
-                    time1.format(mMainlist.get(position).getStopdate()));
+            holder.Stopdate.setText(date1.format(mMainlist.get(position).getStopDateNew()) +
+                    time1.format(mMainlist.get(position).getStopDateNew()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -188,7 +189,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
 
-                apiCall.addRemovefavouriteStatus(myContact, "", SearchId);
+                apiCall.addRemovefavouriteStatus(myContact, "", SearchId, "");
                 holder.favImg.setVisibility(View.INVISIBLE);
                 holder.unfavImg.setVisibility(View.VISIBLE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
@@ -372,6 +373,12 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                     SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
                     Bundle b = new Bundle();
                     b.putString("search_id", SearchId);
+                    b.putString("category", holder.textcategory.getText().toString());
+                    b.putString("brand", holder.textbrand.getText().toString());
+                    b.putString("model", holder.textmodel.getText().toString());
+                    b.putString("price", holder.textprice.getText().toString());
+                    b.putString("year", holder.textyear.getText().toString());
+                    b.putString("rto_city", mMainlist.get(holder.getAdapterPosition()).getRtoCity());
                     SavedSearchSellerListFragment frag2 = new SavedSearchSellerListFragment();    // Call Another Fragment
                     frag2.setArguments(b);
 

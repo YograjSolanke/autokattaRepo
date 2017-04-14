@@ -14,7 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import autokatta.com.R;
@@ -84,6 +88,7 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void notifySuccess(Response<?> response) {
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
         if (response != null) {
 
@@ -102,8 +107,20 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
                         mySearchSuccess.setSearchstatus(mySearchSuccess.getSearchstatus());
                         mySearchSuccess.setBuyerLeads(mySearchSuccess.getBuyerLeads());
                         mySearchSuccess.setMysearchstatus(mySearchSuccess.getMysearchstatus());
-                        mySearchSuccess.setSearchdate(mySearchSuccess.getSearchdate());
-                        mySearchSuccess.setStopdate(mySearchSuccess.getStopdate());
+//                        mySearchSuccess.setSearchdate(mySearchSuccess.getSearchdate());
+//                        mySearchSuccess.setStopdate(mySearchSuccess.getStopdate());
+
+
+                        Date d = null, d1 = null;
+                        try {
+                            d = f.parse(mySearchSuccess.getSearchdate());
+                            d1 = f.parse(mySearchSuccess.getStopdate());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        mySearchSuccess.setSearchDateNew(d);
+                        mySearchSuccess.setStopDateNew(d1);
 
                         mySearchResponseList.add(mySearchSuccess);
                     }

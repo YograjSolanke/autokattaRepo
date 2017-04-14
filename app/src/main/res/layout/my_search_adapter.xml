@@ -63,7 +63,7 @@
                     android:id="@+id/editpen"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:padding="7dp"
                     android:src="@drawable/ic_mode_edit_black_24dp" />
 
@@ -71,46 +71,50 @@
                     android:id="@+id/deletevehi"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/editpen"
                     android:padding="7dp"
                     android:src="@drawable/ic_delete" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:id="@+id/sharesearch"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:padding="7dp"
                     android:layout_below="@+id/deletevehi"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@android:drawable/ic_menu_share" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:id="@+id/sharesearch1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:padding="7dp"
                     android:layout_below="@+id/sharesearch"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/autoshare" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:visibility="gone"
                     android:id="@+id/favsearch"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_below="@+id/sharesearch1"
                     android:padding="7dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/fav1" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:id="@+id/unfavsearch"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_below="@+id/sharesearch1"
                     android:padding="7dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:visibility="visible"
                     android:src="@drawable/fav2" />
 

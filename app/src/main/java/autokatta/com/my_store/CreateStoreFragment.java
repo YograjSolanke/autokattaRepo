@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -560,10 +558,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         bundle.putString("storetype", storetype);
 
                         AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-                        addAdmin.setArguments(bundle);
+                        /*addAdmin.setArguments(bundle);
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();*/
 
 
                     } else

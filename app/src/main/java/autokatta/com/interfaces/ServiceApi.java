@@ -32,6 +32,7 @@ import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetContactByCompanyResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
+import autokatta.com.response.GetFollowersResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetLiveEventsResponse;
@@ -770,7 +771,10 @@ public interface ServiceApi {
 
     //add remove favourite status
     @POST("addRemooveMyFavourites.php")
-    Call<String> addRemovefavouriteStatus(@Query("contact") String contact, @Query("buyer_vehicle_id") String buyer_vehicle_id, @Query("search_id") String search_id);
+    Call<String> addRemovefavouriteStatus(@Query("contact") String contact,
+                                          @Query("buyer_vehicle_id") String buyer_vehicle_id,
+                                          @Query("search_id") String search_id,
+                                          @Query("seller_vehicle_id") String seller_vehicle_id);
 
     //Save My Search
     @POST("saveSearch.php")
@@ -802,4 +806,8 @@ public interface ServiceApi {
     //get All States
     @POST("getStates.php")
     Call<AllStatesResponse> _autokattaGetAllStates();
+
+    //get Followers
+    @POST("getFollowers.php")
+    Call<GetFollowersResponse> _autokattaGetFollowers(@Query("id") String contact);
 }

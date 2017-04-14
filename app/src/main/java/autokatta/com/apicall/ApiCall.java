@@ -44,6 +44,7 @@ import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetContactByCompanyResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
+import autokatta.com.response.GetFollowersResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetLiveEventsResponse;
@@ -4859,7 +4860,7 @@ Get uploaded Vehicle Buyer list
 
 
     //add remove favourite status
-    public void addRemovefavouriteStatus(String contact, String buyer_vehicle_id, String search_id) {
+    public void addRemovefavouriteStatus(String contact, String buyer_vehicle_id, String search_id, String seller_vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -4873,7 +4874,7 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> createbrdcstgrp = serviceApi.addRemovefavouriteStatus(contact, buyer_vehicle_id, search_id);
+                Call<String> createbrdcstgrp = serviceApi.addRemovefavouriteStatus(contact, buyer_vehicle_id, search_id, seller_vehicle_id);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -4948,6 +4949,40 @@ Get saved search Seller list
 
                     @Override
                     public void onFailure(Call<GetOwnVehiclesResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Followers.
+     */
+
+    public void getFollowers(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetFollowersResponse> mGetfollowers = mServiceApi._autokattaGetFollowers(contact);
+                mGetfollowers.enqueue(new Callback<GetFollowersResponse>() {
+                    @Override
+                    public void onResponse(Call<GetFollowersResponse> call, Response<GetFollowersResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetFollowersResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
