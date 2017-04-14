@@ -158,4 +158,5 @@
     <string name="title_activity_broadcast_message">BroadcastMessageActivity</string>
     <string name="title_activity_bussiness_chat">BussinessChatActivity</string>
     <string name="title_activity_search_vehicle">SearchVehicleActivity</string>
+    <string name="title_activity_other_store_view">OtherStoreView</string>
 </resources>

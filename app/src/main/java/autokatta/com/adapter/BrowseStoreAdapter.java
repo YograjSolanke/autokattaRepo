@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.BrowseStoreResponse;
+import autokatta.com.view.OtherStoreView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -123,7 +125,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     .into(holder.store_image);
         }
 
-        holder.btndetail.setOnClickListener(new View.OnClickListener() {
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -131,6 +133,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 b.putString("action", "wall");
                 b.putString("contact", success.getContactNo());
                 b.putString("store_id", success.getStoreId());
+                Intent intent = new Intent(activity, OtherStoreView.class);
+                activity.startActivity(intent);
 
 //                StoreviewFragment fragment = new StoreviewFragment();
 //                fragment.setArguments(b);
@@ -344,6 +348,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         RelativeLayout linearlike, linearunlike, linearfollow, linearunfollow;
         LinearLayout linearshare, linearshare1;
         Button btndetail;
+        CardView mCardView;
 
         public StoreHolder(View itemView) {
             super(itemView);
@@ -365,7 +370,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             linearunlike = (RelativeLayout) itemView.findViewById(R.id.linearunlike);
             linearfollow = (RelativeLayout) itemView.findViewById(R.id.linearfollow);
             linearunfollow = (RelativeLayout) itemView.findViewById(R.id.linearunfollow);
-
+            mCardView = (CardView) itemView.findViewById(R.id.card_view);
 
             btndetail = (Button) itemView.findViewById(R.id.details);
             storerating = (RatingBar) itemView.findViewById(R.id.storerating);
