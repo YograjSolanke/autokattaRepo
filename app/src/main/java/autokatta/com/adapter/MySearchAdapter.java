@@ -103,13 +103,14 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.textyear.setText(mMainlist.get(position).getYearOfManufactur());
         holder.BuyerLeads.setText(mMainlist.get(position).getBuyerLeads());
 
+
         //To set Date
         try {
 
             DateFormat date = new SimpleDateFormat(" MMM dd ");
             DateFormat time = new SimpleDateFormat(" hh:mm a");
-            holder.textsearchdate.setText(date.format(mMainlist.get(position).getSearchdate()) +
-                    time.format(mMainlist.get(position).getSearchdate()));
+            holder.textsearchdate.setText(date.format(mMainlist.get(position).getSearchDateNew()) +
+                    time.format(mMainlist.get(position).getSearchDateNew()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,8 +121,8 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
             DateFormat date1 = new SimpleDateFormat(" MMM dd ");
             DateFormat time1 = new SimpleDateFormat(" hh:mm a");
-            holder.Stopdate.setText(date1.format(mMainlist.get(position).getStopdate()) +
-                    time1.format(mMainlist.get(position).getStopdate()));
+            holder.Stopdate.setText(date1.format(mMainlist.get(position).getStopDateNew()) +
+                    time1.format(mMainlist.get(position).getStopDateNew()));
 
         } catch (Exception e) {
             e.printStackTrace();

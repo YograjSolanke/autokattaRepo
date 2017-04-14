@@ -214,7 +214,8 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
                             b_category, b_brand, b_model, b_manu_year, b_rto_city);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                }
+                } else
+                    CustomToast.customToast(getActivity(), "No Seller Leads Found");
 
 
             } else {

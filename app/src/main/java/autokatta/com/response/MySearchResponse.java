@@ -3,6 +3,7 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +26,27 @@ public class MySearchResponse {
 
     public class Success {
 
+        private Date searchDateNew;
+        private Date stopDateNew;
+
+        public Date getSearchDateNew() {
+            return searchDateNew;
+        }
+
+        public void setSearchDateNew(Date searchDateNew) {
+            this.searchDateNew = searchDateNew;
+        }
+
+        public Date getStopDateNew() {
+            return stopDateNew;
+        }
+
+        public void setStopDateNew(Date stopDateNew) {
+            this.stopDateNew = stopDateNew;
+        }
+
         @SerializedName("search_id")
+
         @Expose
         private String searchId;
         @SerializedName("category")
