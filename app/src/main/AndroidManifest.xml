@@ -312,10 +312,11 @@
             android:name=".register.CreateStoreContainer"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".auction.MyAuctionVehicleDetails" />
         <activity
             android:name=".view.OtherStoreView"
             android:label="@string/title_activity_other_store_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
