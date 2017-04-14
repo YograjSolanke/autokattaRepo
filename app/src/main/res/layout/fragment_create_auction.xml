@@ -175,7 +175,7 @@
                 android:textColorHint="@color/hintColor"
                 android:visibility="gone" />
 
-            <Spinner
+            <!--<Spinner
                 android:id="@+id/auctionCategory"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -188,9 +188,43 @@
                 android:textAlignment="center"
                 android:visibility="visible">
 
-            </Spinner>
+            </Spinner>-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="@dimen/card_margin">
 
-            <autokatta.com.Registration.Multispinner
+                <Spinner
+                    android:id="@+id/auctionCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:entries="@array/Auction_Category"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:layout_marginStart="5dp"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+
+            <!--<autokatta.com.Registration.Multispinner
                 android:id="@+id/stockLocation"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -200,7 +234,41 @@
                 android:background="#80bebebe"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:ems="10" />
+                android:ems="10" />-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="@dimen/card_margin">
+
+                <autokatta.com.Registration.Multispinner
+                    android:id="@+id/stockLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:layout_marginStart="5dp"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/relative1"

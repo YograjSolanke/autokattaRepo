@@ -32,11 +32,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/finacialEdit1"
                     android:text="Finance Required:"
                     android:textColor="#2C3343" />
 
-                <Spinner
+                <!--<Spinner
                     android:id="@+id/finacialEdit1"
                     android:layout_width="200dip"
                     android:layout_height="40dip"
@@ -44,7 +43,41 @@
                     android:layout_alignParentTop="true"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:entries="@array/finacial" />
+                    android:entries="@array/finacial" />-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:background="@drawable/spinner_background"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:paddingStart="@dimen/card_margin">
+
+                    <Spinner
+                        android:id="@+id/finacialEdit1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:color/transparent"
+                        android:entries="@array/finacial"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_down" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
 
@@ -60,18 +93,51 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/allCategory1"
                     android:text="Category:"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
-                <Spinner
+                <!--<Spinner
                     android:id="@+id/allCategory1"
                     android:layout_width="200dip"
                     android:layout_height="40dip"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:background="#80bebebe" />
+                    android:background="#80bebebe" />-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:background="@drawable/spinner_background"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:paddingStart="@dimen/card_margin">
+
+                    <Spinner
+                        android:id="@+id/allCategory1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_down" />
+
+                </RelativeLayout>
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -86,17 +152,49 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/subCategory"
                     android:text="Sub category:"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
-                <Spinner
+                <!--<Spinner
                     android:id="@+id/subCategory"
                     android:layout_width="200dip"
                     android:layout_height="40dip"
                     android:layout_alignParentEnd="true"
-                    android:background="#80bebebe" />
+                    android:background="#80bebebe" />-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:background="@drawable/spinner_background"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:paddingStart="@dimen/card_margin">
+
+                    <Spinner
+                        android:id="@+id/subCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_down" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
 
@@ -152,19 +250,51 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/BrandEdit1"
                     android:text="Brand:"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
-                <Spinner
+                <!--<Spinner
                     android:id="@+id/BrandEdit1"
                     android:layout_width="200dp"
                     android:layout_height="40dip"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10" />-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:background="@drawable/spinner_background"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:paddingStart="@dimen/card_margin">
+
+                    <Spinner
+                        android:id="@+id/BrandEdit1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_down" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
 
@@ -180,19 +310,51 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/ModelEdit1"
                     android:text="Model:"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
-                <Spinner
+                <!--<Spinner
                     android:id="@+id/ModelEdit1"
                     android:layout_width="200dp"
                     android:layout_height="40dip"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10" />-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:background="@drawable/spinner_background"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:paddingStart="@dimen/card_margin">
+
+                    <Spinner
+                        android:id="@+id/ModelEdit1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_down" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
 
@@ -208,19 +370,51 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/VersionEdit1"
                     android:text="Version:"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
-                <Spinner
+                <!--Spinner
                     android:id="@+id/VersionEdit1"
                     android:layout_width="200dp"
                     android:layout_height="40dip"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:background="#80bebebe"
-                    android:ems="10" />
+                    android:ems="10" />-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:background="@drawable/spinner_background"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:paddingStart="@dimen/card_margin">
+
+                    <Spinner
+                        android:id="@+id/VersionEdit1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_down" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
 
@@ -254,62 +448,86 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignTop="@+id/btncity"
-                    android:background="#80bebebe"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:textColor="#2C3343" />
+                    android:hint="Enter city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
+                    android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor" />
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit1"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/cityEdit"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
+                    android:hint="Enter city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor"
                     android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit2"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/cityEdit1"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
+                    android:hint="Enter city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor"
                     android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit3"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/cityEdit2"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
+                    android:hint="Enter city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor"
                     android:visibility="gone" />
 
 
                 <AutoCompleteTextView
                     android:id="@+id/cityEdit4"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/cityEdit3"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
+                    android:hint="Enter city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor"
                     android:visibility="gone" />
 
             </RelativeLayout>
@@ -343,7 +561,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/RTOText"
-                    android:layout_toStartOf="@+id/rtoEdit"
                     android:text="Unregitsered"
                     android:textColor="#2C3343"
                     android:textSize="12sp" />
@@ -363,64 +580,88 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="20dp"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:textColor="#2C3343">
+                    android:hint="Enter Rto city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
+                    android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor">
 
                 </AutoCompleteTextView>
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit1"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/rtoEdit"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
+                    android:hint="Enter Rto city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor"
                     android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit2"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/rtoEdit1"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
+                    android:hint="Enter Rto city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor"
                     android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit3"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/rtoEdit2"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
+                    android:hint="Enter Rto city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor"
                     android:visibility="gone" />
 
                 <AutoCompleteTextView
                     android:id="@+id/rtoEdit4"
-                    android:layout_width="205dip"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/rtoEdit3"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
                     android:layout_marginTop="10dip"
-                    android:background="#80bebebe"
+                    android:background="@drawable/spinner_background"
                     android:ems="10"
+                    android:hint="Enter Rto city"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343"
+                    android:textColorHint="@color/hintColor"
                     android:visibility="gone" />
 
             </RelativeLayout>
@@ -714,19 +955,52 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/ownerEdit"
                     android:text="Owners"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
-                <Spinner
+                <!--<Spinner
                     android:id="@+id/ownerEdit"
                     android:layout_width="200dip"
                     android:layout_height="40dip"
                     android:layout_alignParentEnd="true"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:entries="@array/owners" />
+                    android:entries="@array/owners" />-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="150dp"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:background="@drawable/spinner_background"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:paddingStart="@dimen/card_margin">
+
+                    <Spinner
+                        android:id="@+id/ownerEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:color/transparent"
+                        android:entries="@array/owners"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_down" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -776,11 +1050,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/invoiceEdit"
                         android:text="Invoice Available :"
                         android:textColor="#2C3343" />
 
-                    <Spinner
+                    <!--<Spinner
                         android:id="@+id/invoiceEdit"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
@@ -788,7 +1061,41 @@
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:entries="@array/invoice" />
+                        android:entries="@array/invoice" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/invoiceEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/invoice"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <!-- Bus type -->
@@ -806,11 +1113,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/bustypeEdit"
                         android:text="Bus Type :"
                         android:textColor="#2C3343" />
 
-                    <Spinner
+                    <!--<Spinner
                         android:id="@+id/bustypeEdit"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
@@ -818,7 +1124,41 @@
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:entries="@array/bustype" />
+                        android:entries="@array/bustype" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/bustypeEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/bustype"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -837,11 +1177,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/aircondEdit"
                         android:text="Air Condition :"
                         android:textColor="#2C3343" />
 
-                    <Spinner
+                    <!--<Spinner
                         android:id="@+id/aircondEdit"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
@@ -849,7 +1188,41 @@
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:entries="@array/air" />
+                        android:entries="@array/air" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/aircondEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/air"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <!-- Body type -->
@@ -873,13 +1246,15 @@
 
                     <EditText
                         android:id="@+id/bodyEdit1"
-                        android:layout_width="200dip"
+                        android:layout_width="match_parent"
                         android:layout_height="40dip"
-                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:background="@drawable/spinner_background"
                         android:ems="10"
                         android:hint="Body type:"
+                        android:textAlignment="center"
                         android:textColor="#2C3343" />
                 </RelativeLayout>
 
@@ -898,20 +1273,23 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/boatEdit1"
                         android:text="Boat Type :"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/boatEdit1"
-                        android:layout_width="200dip"
+                        android:layout_width="match_parent"
                         android:layout_height="40dip"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:background="@drawable/spinner_background"
                         android:ems="10"
                         android:hint="Boat Type :"
+                        android:padding="5dp"
+                        android:textAlignment="textStart"
                         android:textColor="#2C3343" />
                 </RelativeLayout>
 
@@ -931,20 +1309,23 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/rvEdit1"
                         android:text="RV Type :"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/rvEdit1"
-                        android:layout_width="200dip"
+                        android:layout_width="match_parent"
                         android:layout_height="40dip"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:background="@drawable/spinner_background"
                         android:ems="10"
                         android:hint="RV Type :"
+                        android:padding="5dp"
+                        android:textAlignment="textStart"
                         android:textColor="#2C3343" />
                 </RelativeLayout>
 
@@ -967,14 +1348,48 @@
                         android:text="Color :"
                         android:textColor="#2C3343" />
 
-                    <autokatta.com.Registration.Multispinner
-                        android:id="@+id/colorEdit1"
-                        android:layout_width="200dip"
-                        android:layout_height="40dip"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
-                        android:ems="10" />
+                    <!-- <autokatta.com.Registration.Multispinner
+                         android:id="@+id/colorEdit1"
+                         android:layout_width="200dip"
+                         android:layout_height="40dip"
+                         android:layout_alignParentEnd="true"
+                         android:layout_alignParentTop="true"
+                         android:background="#80bebebe"
+                         android:ems="10" />-->
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <autokatta.com.Registration.Multispinner
+                            android:id="@+id/colorEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
 
 
                 </RelativeLayout>
@@ -994,19 +1409,52 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/rcEdit1"
                         android:text="RC Available :"
                         android:textColor="#2C3343" />
 
-                    <Spinner
-                        android:id="@+id/rcEdit1"
-                        android:layout_width="200dp"
-                        android:layout_height="40dip"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
-                        android:ems="10"
-                        android:entries="@array/RC_avl" />
+                    <!--<Spinner-->
+                    <!--android:id="@+id/rcEdit1"-->
+                    <!--android:layout_width="200dp"-->
+                    <!--android:layout_height="40dip"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:background="#80bebebe"-->
+                    <!--android:ems="10"-->
+                    <!--android:entries="@array/RC_avl" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/rcEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/RC_avl"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -1025,11 +1473,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/insEdit1"
                         android:text="Insurance Valid:"
                         android:textColor="#2C3343" />
 
-                    <Spinner
+                    <!--Spinner
                         android:id="@+id/insEdit1"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
@@ -1037,7 +1484,41 @@
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:entries="@array/ins" />
+                        android:entries="@array/ins" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/insEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/ins"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -1053,11 +1534,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/hypoEdit1"
                         android:text="Hypothecation:"
                         android:textColor="#2C3343" />
 
-                    <Spinner
+                    <!--<Spinner
                         android:id="@+id/hypoEdit1"
                         android:layout_width="200dp"
                         android:layout_height="40dip"
@@ -1065,7 +1545,41 @@
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:entries="@array/hypo" />
+                        android:entries="@array/hypo" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/hypoEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/hypo"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -1085,7 +1599,7 @@
                         android:text="Tax Validity :"
                         android:textColor="#2C3343" />
 
-                    <Spinner
+                    <!--<Spinner
                         android:id="@+id/taxEdit1"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
@@ -1093,7 +1607,41 @@
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:entries="@array/tax" />
+                        android:entries="@array/tax" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/taxEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/tax"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <!-- Fitness -->
@@ -1111,11 +1659,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/fitnessEdit1"
                         android:text="Fitness Validity :"
                         android:textColor="#2C3343" />
 
-                    <Spinner
+                    <!--<Spinner
                         android:id="@+id/fitnessEdit1"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
@@ -1123,7 +1670,41 @@
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:entries="@array/fitness" />
+                        android:entries="@array/fitness" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/fitnessEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/fitness"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -1142,19 +1723,52 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/permitEdit1"
                         android:text="Permit Validity :"
                         android:textColor="#2C3343" />
 
-                    <Spinner
-                        android:id="@+id/permitEdit1"
-                        android:layout_width="200dip"
-                        android:layout_height="40dip"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
-                        android:ems="10"
-                        android:entries="@array/permit" />
+                    <!-- <Spinner
+                         android:id="@+id/permitEdit1"
+                         android:layout_width="200dip"
+                         android:layout_height="40dip"
+                         android:layout_alignParentEnd="true"
+                         android:layout_alignParentTop="true"
+                         android:background="#80bebebe"
+                         android:ems="10"
+                         android:entries="@array/permit" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/permitEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/permit"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <!-- fuel -->
@@ -1172,19 +1786,50 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/fualEdit1"
                         android:text="Fuel Type :"
                         android:textColor="#2C3343" />
 
-                    <autokatta.com.Registration.MultiSelectionSpinner
+                    <!--<autokatta.com.Registration.MultiSelectionSpinner
                         android:id="@+id/fualEdit1"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
+                        android:ems="10" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
 
-                        android:ems="10" />
+                        <autokatta.com.Registration.MultiSelectionSpinner
+                            android:id="@+id/fualEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
@@ -1204,20 +1849,22 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/seatsEdit1"
                         android:text="Seating Capacity :"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/seatsEdit1"
-                        android:layout_width="200dip"
+                        android:layout_width="match_parent"
                         android:layout_height="40dip"
-                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:background="@drawable/spinner_background"
                         android:ems="10"
                         android:inputType="number"
+                        android:padding="5dp"
+                        android:textAlignment="textStart"
                         android:textColor="#2C3343" />
                 </RelativeLayout>
 
@@ -1237,11 +1884,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/driveEdit1"
                         android:text="Drive Type :"
                         android:textColor="#2C3343" />
 
-                    <Spinner
+                    <!--<Spinner
                         android:id="@+id/driveEdit1"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
@@ -1249,7 +1895,41 @@
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:entries="@array/drive" />
+                        android:entries="@array/drive" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:background="@drawable/spinner_background"
+                        android:orientation="horizontal"
+                        android:paddingEnd="@dimen/card_margin"
+                        android:paddingStart="@dimen/card_margin">
+
+                        <Spinner
+                            android:id="@+id/driveEdit1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:background="@android:color/transparent"
+                            android:entries="@array/drive"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/app_name"
+                            android:src="@mipmap/ic_down" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -1268,20 +1948,22 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/transEdit1"
                         android:text="Transmission"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/transEdit1"
-                        android:layout_width="200dip"
+                        android:layout_width="match_parent"
                         android:layout_height="40dip"
-                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:background="@drawable/spinner_background"
                         android:ems="10"
                         android:hint="Transmission"
+                        android:padding="5dp"
+                        android:textAlignment="textStart"
                         android:textColor="#2C3343" />
                 </RelativeLayout>
 
@@ -1301,20 +1983,22 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/useEdit1"
                         android:text="Use/Application"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/useEdit1"
-                        android:layout_width="200dip"
+                        android:layout_width="match_parent"
                         android:layout_height="40dip"
-                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:background="@drawable/spinner_background"
                         android:ems="10"
                         android:hint="Use/Application"
+                        android:padding="5dp"
+                        android:textAlignment="textStart"
                         android:textColor="#2C3343" />
                 </RelativeLayout>
 
@@ -1333,20 +2017,22 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/implEdit"
                         android:text="Implements :"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/implEdit"
-                        android:layout_width="200dip"
+                        android:layout_width="match_parent"
                         android:layout_height="40dip"
-                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:background="#80bebebe"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="150dp"
+                        android:background="@drawable/spinner_background"
                         android:ems="10"
                         android:hint="Implements :"
+                        android:padding="5dp"
+                        android:textAlignment="textStart"
                         android:textColor="#2C3343" />
                 </RelativeLayout>
 
