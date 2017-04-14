@@ -1,4 +1,4 @@
-package autokatta.com.Registration;
+package autokatta.com.register;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -17,26 +17,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.Registration.SkillsBasedInvitation;
 import autokatta.com.adapter.CompanyBasedInvitationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.register.InvitationCompanyBased;
 import autokatta.com.response.GetContactByCompanyResponse;
-import autokatta.com.response.GetContactByCompanyResponse.Success;
 import retrofit2.Response;
 
-public class SkillsBasedInvitation extends AppCompatActivity implements RequestNotifier {
+public class InvitationCompanyBased extends AppCompatActivity implements RequestNotifier {
+
     private ListView lv;
     EditText inputSearch;
-    String page = "2";
-    List<Success> invitationDataArrayList = new ArrayList<>();
+    String page = "1";
+    List<GetContactByCompanyResponse.Success> invitationDataArrayList = new ArrayList<>();
     CompanyBasedInvitationAdapter adapter;
     Button Next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_skills_based_invitation);
+        setContentView(R.layout.activity_invitation_company_based);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -47,7 +47,7 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         Next = (Button) findViewById(R.id.next);
 
-        ApiCall mApiCall = new ApiCall(this, this);
+        ApiCall mApiCall = new ApiCall(InvitationCompanyBased.this, this);
         mApiCall.getContactByCompany(page, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", ""));
 
@@ -66,31 +66,32 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), InviteFriends.class);
+                Intent i = new Intent(getApplicationContext(), SkillsBasedInvitation.class);
                 startActivity(i);
                 finish();
             }
         });
-
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
         if (response.isSuccessful()) {
+
             GetContactByCompanyResponse mgetContactByCompanyResponse = (GetContactByCompanyResponse) response.body();
+
             for (GetContactByCompanyResponse.Success contactbycompany : mgetContactByCompanyResponse.getSuccess()) {
                 contactbycompany.setContact(contactbycompany.getContact());
                 contactbycompany.setUsername(contactbycompany.getUsername());
                 contactbycompany.setProfilePic(contactbycompany.getProfilePic());
                 invitationDataArrayList.add(contactbycompany);
             }
-
-            adapter = new CompanyBasedInvitationAdapter(SkillsBasedInvitation.this, invitationDataArrayList);
+            adapter = new CompanyBasedInvitationAdapter(InvitationCompanyBased.this, invitationDataArrayList);
             lv.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
@@ -120,13 +121,12 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
     public void onBackPressed() {
         super.onBackPressed();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(SkillsBasedInvitation.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), InvitationCompanyBased.class), options.toBundle());
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(InvitationCompanyBased.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), RegistrationCompanyBased.class), options.toBundle());
             finish();
         } else {
-            startActivity(new Intent(getApplicationContext(), InvitationCompanyBased.class));
+            startActivity(new Intent(getApplicationContext(), RegistrationCompanyBased.class));
             finish();
         }
     }
 }
-

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/scroll"
@@ -26,7 +25,6 @@
                 android:background="#2C3343"
                 android:gravity="center"
                 android:text="Add Vehicle details"
-                android:textColor="@color/white"
                 android:visibility="gone" />
 
             <EditText
@@ -37,44 +35,204 @@
                 android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM- "
                 android:ems="10"
                 android:hint="@string/vehicle_no"
+                android:background="@drawable/spinner_background"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
                 android:inputType="text"
                 android:textColor="#2C3343" />
 
-            <Spinner
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:layout_marginTop="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/spinner_vehi_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+
+            <!--<Spinner
                 android:id="@+id/spinner_vehi_type"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
+                style="@style/Base.TextAppearance.AppCompat.Widget.DropDownItem"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_title_height"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp" />-->
 
-            <Spinner
+            <!--<Spinner
                 android:id="@+id/spinner_sub_Type"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_title_height"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp" />-->
 
-            <Spinner
-                android:id="@+id/spinner_brand"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/card_title_height"
-                android:layout_marginTop="10dp" />
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/spinner_background"
+                android:layout_marginTop="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spinner_model"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
+                <Spinner
+                    android:id="@+id/spinner_sub_Type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+            <!-- <Spinner
+                 android:id="@+id/spinner_brand"
+                 style="@style/Widget.AppCompat.Spinner.Underlined"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/card_title_height"
+                 android:layout_marginTop="10dp" />-->
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/card_title_height"
-                android:layout_marginTop="10dp" />
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/spinner_background"
+                android:layout_marginTop="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:orientation="horizontal">
 
+                <Spinner
+                    android:id="@+id/spinner_brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:spinnerMode="dropdown" />
 
-            <Spinner
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+            <!-- <Spinner
+                 android:id="@+id/spinner_model"
+                 style="@style/Widget.AppCompat.Spinner.Underlined"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/card_title_height"
+                 android:layout_marginTop="10dp" />-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/spinner_background"
+                android:layout_marginTop="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner_model"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+
+            <!--<Spinner
                 android:id="@+id/spinner_version"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_title_height"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp" />-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:background="@drawable/spinner_background"
+                android:layout_marginTop="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
 
             <EditText
                 android:id="@+id/edityear"
@@ -85,8 +243,10 @@
                 android:ems="10"
                 android:hint="@string/purchase_date"
                 android:textColor="#2C3343"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
                 android:visibility="visible" />
-
 
             <EditText
                 android:id="@+id/edittaxval"
@@ -97,7 +257,9 @@
                 android:ems="10"
                 android:hint="@string/tax_validity"
                 android:textColor="#2C3343"
-                android:textColorHint="#848484"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
                 android:visibility="visible" />
 
 
@@ -109,8 +271,10 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/fitness_validity"
+                android:background="@drawable/spinner_background"
                 android:textColor="#2C3343"
-                android:textColorHint="#848484"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
                 android:visibility="visible" />
 
             <EditText
@@ -120,9 +284,11 @@
                 android:layout_marginTop="10dip"
                 android:layout_weight="1"
                 android:ems="10"
+                android:background="@drawable/spinner_background"
                 android:hint="@string/permit_validity"
                 android:textColor="#2C3343"
-                android:textColorHint="#848484"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
                 android:visibility="visible" />
 
 
@@ -135,7 +301,9 @@
                 android:ems="10"
                 android:hint="@string/insurance_date"
                 android:textColor="#2C3343"
-                android:textColorHint="#848484"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
                 android:visibility="visible" />
 
 
@@ -148,7 +316,9 @@
                 android:ems="10"
                 android:hint="@string/puc"
                 android:textColor="#2C3343"
-                android:textColorHint="#848484"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
                 android:visibility="visible" />
 
             <EditText
@@ -159,8 +329,10 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/last_service_date"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
                 android:textColor="#2C3343"
-                android:textColorHint="#848484"
                 android:visibility="visible" />
 
 
@@ -172,8 +344,10 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/next_service_date"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
                 android:textColor="#2C3343"
-                android:textColorHint="#848484"
                 android:visibility="visible" />
 
         </LinearLayout>
@@ -188,6 +362,18 @@
         android:weightSum="2">
 
         <Button
+            android:id="@+id/btnCancle"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:selectAllOnFocus="true"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <Button
             android:id="@+id/btnSub"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
@@ -199,17 +385,6 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/btnCancle"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/background"
-            android:selectAllOnFocus="true"
-            android:text="Cancel"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/next_cancel"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/auto1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dip">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autocompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Company Name"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/auto2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/auto1"
+                android:layout_marginTop="10dip">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autodesignation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Designation"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/auto2">
+
+                <MultiAutoCompleteTextView
+                    android:id="@+id/autoskills"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Add Skills"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/auto3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/auto">
+
+                <MultiAutoCompleteTextView
+                    android:id="@+id/autodeals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Dealing With"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+            </android.support.design.widget.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/relArea"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_below="@+id/auto3"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/spinnerArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/areaOptions" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+
+            <!--<RelativeLayout
+                android:id="@+id/relArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/auto3"
+                android:layout_marginTop="15dp">
+
+                <Spinner
+                    android:id="@+id/spinnerArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:entries="@array/areaOptions"></Spinner>
+            </RelativeLayout>-->
+
+            <RelativeLayout
+                android:id="@+id/mainrelSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relArea"
+                android:layout_marginTop="15dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/relSpinnerKms"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spinner_height"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:background="@drawable/spinner_background"
+                    android:orientation="horizontal"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/spinnerKms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/kmsOptions" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_down" />
+
+                </RelativeLayout>
+                <!--<RelativeLayout
+                    android:id="@+id/relSpinnerKms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <Spinner
+                        android:id="@+id/spinnerKms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/kmsOptions" />
+
+                </RelativeLayout>-->
+
+                <RelativeLayout
+                    android:id="@+id/relSpinnerDistrict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <autokatta.com.Registration.MultiSelectionSpinner
+                        android:id="@+id/spinnerDistrict"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </autokatta.com.Registration.MultiSelectionSpinner>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relSpinnerState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <autokatta.com.Registration.MultiSelectionSpinner
+                        android:id="@+id/spinnerState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/next_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btncancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnnext"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+</RelativeLayout>

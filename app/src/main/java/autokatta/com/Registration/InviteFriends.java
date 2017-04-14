@@ -1,19 +1,20 @@
 package autokatta.com.Registration;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
@@ -27,37 +28,30 @@ import retrofit2.Response;
 public class InviteFriends extends AppCompatActivity implements RequestNotifier {
 
     private ListView lv;
-
-
     EditText inputSearch;
-    Button invite,skip;
-
-    InputStream is;
-    String result;
-    ArrayList<String> names = new ArrayList<String>();
-    List<String> numbers = new ArrayList<String>();
-
+    Button invite, skip;
     InviteFriendsAdapter adapter;
-    String products[] ;
-
     ArrayList<Success> webcontact;
     ArrayList<String> finalcontacts;
-
-    ApiCall mApiCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_friends);
 
-        mApiCall=new ApiCall(this, this);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        invite=(Button)findViewById(R.id.invite);
-        skip=(Button)findViewById(R.id.skip);
-        lv = (ListView)findViewById(R.id.l1);
-        inputSearch = (EditText)findViewById(R.id.inputSearch);
+        invite = (Button) findViewById(R.id.invite);
+        skip = (Button) findViewById(R.id.skip);
+        lv = (ListView) findViewById(R.id.l1);
+        inputSearch = (EditText) findViewById(R.id.inputSearch);
 
-mApiCall.getRegisteredContacts();
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getRegisteredContacts();
+
         invite.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,9 +63,8 @@ mApiCall.getRegisteredContacts();
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
-                ///i.putExtra("from","invite");
                 startActivity(i);
-                //Invitefriends.this.finish();
+                finish();
             }
         });
 
@@ -80,8 +73,6 @@ mApiCall.getRegisteredContacts();
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("Text [" + s + "]");
-
                 adapter.getFilter().filter(s.toString());
             }
 
@@ -101,22 +92,17 @@ mApiCall.getRegisteredContacts();
     @Override
     public void notifySuccess(Response<?> response) {
         if (response.isSuccessful()) {
-            webcontact=new ArrayList<>();
-            finalcontacts=new ArrayList<>();
-
+            webcontact = new ArrayList<>();
+            finalcontacts = new ArrayList<>();
             GetRegisteredContactsResponse mGetRegisteredContactsResponse = (GetRegisteredContactsResponse) response.body();
-
             for (GetRegisteredContactsResponse.Success contactRegistered : mGetRegisteredContactsResponse.getSuccess()) {
                 contactRegistered.setContact(contactRegistered.getContact());
                 contactRegistered.setUsername(contactRegistered.getUsername());
-
-
                 webcontact.add(contactRegistered);
-
             }
-            System.out.println("data size"+webcontact.size());
+
             adapter = new InviteFriendsAdapter(InviteFriends.this, webcontact);
-            lv.setAdapter( adapter);
+            lv.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
     }
@@ -131,14 +117,28 @@ mApiCall.getRegisteredContacts();
 
     }
 
-
-
-    public void onBackPressed()
-    {
-       Intent i=new Intent(getApplicationContext(),CompanyBasedInvitation.class);
-        startActivity(i);
-        finish();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(InviteFriends.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), SkillsBasedInvitation.class), options.toBundle());
+            finish();
+        } else {
+            startActivity(new Intent(getApplicationContext(), SkillsBasedInvitation.class));
+            finish();
+        }
+    }
 
 }
 

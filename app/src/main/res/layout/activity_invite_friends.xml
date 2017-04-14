@@ -1,74 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:background="@color/white">
-
-    <!-- Editext for Search -->
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/inputSearch"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tableRow1"
-        android:hint="Search Contacts.."
-        android:textColorHint="#848484"
-        android:paddingLeft="5dp"
+        android:inputType="textVisiblePassword"
+        android:labelFor="@+id/inputSearch"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
         android:textColor="#2C3343"
-        android:inputType="textVisiblePassword" />
-
-    <!-- List View -->
+        android:textColorHint="#848484" />
 
     <ListView
         android:id="@+id/l1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/inputSearch" />
-
-    <TableRow
-        android:id="@+id/tableRow1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="#2C3343"
-        >
+        android:layout_above="@+id/layout"
+        android:layout_below="@+id/inputSearch" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/invite"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            >
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:selectAllOnFocus="true"
+            android:text="Invite friends"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/invite"
-                android:background="@android:color/transparent"
-                android:text="Invite friends"
-                android:textSize="16sp"
-                android:textColor="#ffffff"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+        <Button
+            android:id="@+id/skip"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:selectAllOnFocus="true"
+            android:text="Skip"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Skip"
-                android:textColor="#ffffff"
-                android:id="@+id/skip"
-                android:textSize="16sp"
-                android:selectAllOnFocus="true"
-                android:background="@color/background"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-        </RelativeLayout>
-
-    </TableRow>
+    </LinearLayout>
 
 </RelativeLayout>

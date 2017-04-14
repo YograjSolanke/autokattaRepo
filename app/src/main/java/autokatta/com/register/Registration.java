@@ -1,14 +1,17 @@
 package autokatta.com.register;
 
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -69,6 +72,11 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.registration_activity);
         apiCall = new ApiCall(this, this);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         personName = (EditText) findViewById(R.id.editPersonName);
         mobileNo = (EditText) findViewById(R.id.editMobileNo);
         email = (EditText) findViewById(R.id.editEmail);
@@ -110,6 +118,16 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         apiCall.Categories("");
         apiCall.Industries();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -451,6 +469,19 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(Registration.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class), options.toBundle());
+            finish();
+        } else {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
+        }
     }
 }
 

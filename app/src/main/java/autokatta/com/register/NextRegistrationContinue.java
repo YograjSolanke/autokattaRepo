@@ -1,13 +1,15 @@
 package autokatta.com.register;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +28,6 @@ import java.util.List;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
-import autokatta.com.Registration.CompanyBasedRegistrationActivity;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
@@ -45,7 +45,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     EditText edtvehicleno, edtfit, edtyear, edttax, edtpermit, edtinsurance, edtpuc, edtlastservice, edtnextservice;
     Spinner mSpinnerVehitype, mSpinnerModel, mSpinnerBrand, mSpinnerVersion, mSpinnerSubType;
 
-    RelativeLayout relavite3;
+    LinearLayout relavite3;
     String whichclick = "", subcategoryId, subcategoryName;
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
     HashMap<String, String> mVehicleTypeList1 = new HashMap<>();
@@ -80,16 +80,18 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
             insurance = "", puc = "", lastservice = "", nextservice = "", subcattext = "", brandtext = "", modeltext = "",
             versiontext = "", yeartext = "", contact;
 
-    public static final String MyContactPREFERENCES = "contact No";
-    SharedPreferences contactprefs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next_registration_continue);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         edtvehicleno = (EditText) findViewById(R.id.editvehicleno);
-        relavite3 = (RelativeLayout) findViewById(R.id.RelativeLayout3);
+        relavite3 = (LinearLayout) findViewById(R.id.RelativeLayout3);
         edttax = (EditText) findViewById(R.id.edittaxval);
         edtfit = (EditText) findViewById(R.id.editfitval);
         edtpermit = (EditText) findViewById(R.id.editpermitval);
@@ -222,7 +224,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     edtyear.setError("Please prodive purchase date");
                 }
 
-                if (!vehiclenotext.equalsIgnoreCase("")) {
+                if (!vehiclenotext.equals("")) {
                     Toast.makeText(getApplicationContext(),
                             "Please Enter Vehicle Number", Toast.LENGTH_LONG)
                             .show();
@@ -519,7 +521,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         mSubTypeList1.put(subTypeResponse.getName(), subTypeResponse.getId());
                     }
                     parsedData.addAll(mSubTypeList);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, parsedData);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerSubType.setAdapter(adapter);
                     mSpinnerSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -557,7 +559,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     brandData.addAll(mBrandIdList);
                     Log.i("ListBrand", "->" + mBrandIdList);
                     ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, brandData);
+                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerBrand.setAdapter(adapter);
                     mSpinnerModel.setAdapter(null);
@@ -625,7 +627,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     mModelIdList.add("other");
                     modelData.addAll(mModelIdList);
                     ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, modelData);
+                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerModel.setAdapter(adapter);
                     mSpinnerVersion.setAdapter(null);
@@ -694,7 +696,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     versionData.addAll(mVersionIdList);
                     Log.i("ListVersion", "->" + mVersionIdList);
                     ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, versionData);
+                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, versionData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerVersion.setAdapter(adapter);
                     mSpinnerVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -823,7 +825,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
                                         dialog.cancel();
-                                        Intent i = new Intent(getApplicationContext(), CompanyBasedRegistrationActivity.class);
+                                        Intent i = new Intent(getApplicationContext(), RegistrationCompanyBased.class);
                                         startActivity(i);
                                         finish();
                                     }
@@ -904,5 +906,28 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     private void AddVersion(String keyword, String title, String categoryId, String subCatID, String brandId, String modelId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addVersion(keyword, title, categoryId, subCatID, brandId, modelId);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(NextRegistrationContinue.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), RegistrationContinue.class), options.toBundle());
+            finish();
+        } else {
+            startActivity(new Intent(getApplicationContext(), RegistrationContinue.class));
+            finish();
+        }
     }
 }

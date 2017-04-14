@@ -207,7 +207,9 @@
             android:label="@string/title_activity_search_vehicle"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".register.RegistrationContinue" />
-        <activity android:name=".register.NextRegistrationContinue"></activity>
+        <activity android:name=".register.NextRegistrationContinue" />
+        <activity android:name=".register.RegistrationCompanyBased" />
+        <activity android:name=".register.InvitationCompanyBased"></activity>
     </application>
 
 </manifest>

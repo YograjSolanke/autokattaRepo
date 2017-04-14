@@ -8,10 +8,10 @@
         android:id="@+id/text_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lets Connect - Suggestions based on Skills"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/background"
-        android:textSize="14sp" />
+        android:text="Lets Connect - Suggestions based on Company"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="14sp"
+        android:textColor="@color/background" />
 
     <LinearLayout
         android:id="@+id/rl"
@@ -19,17 +19,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_registration"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/card_margin"
         android:weightSum="2">
 
         <EditText
             android:id="@+id/inputSearch"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
             android:hint="Search Contacts.."
+            android:layout_weight="1.5"
             android:inputType="textVisiblePassword"
-            android:paddingEnd="5dp"
             android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:textColor="#2C3343"
             android:textColorHint="#848484" />
 
@@ -46,7 +47,7 @@
 
     <ListView
         android:id="@+id/l1"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl" />
 
