@@ -141,6 +141,15 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         success.setOpenClose(success.getOpenClose());
                         success.setShowPrice(success.getShowPrice());
                         success.setBlackListStatus(success.getBlackListStatus());
+
+                        success.setAuctioncategory(success.getAuctioncategory());
+
+
+                        if (success.getStockLocation().equals(""))
+                            success.setStockLocation(success.getLocation());
+                        else
+                            success.setStockLocation(success.getStockLocation());
+
                         success.setKeyWord("auction");
                         mLiveEventList.add(success);
                     }
