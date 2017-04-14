@@ -32,7 +32,6 @@ import autokatta.com.Registration.MultiSelectionSpinner;
 import autokatta.com.Registration.Multispinner;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.my_store.CreateStoreFragment;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
@@ -402,12 +401,15 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
-
                                         Bundle b = new Bundle();
                                         b.putString("call", "interestbased");
-                                        CreateStoreFragment fr = new CreateStoreFragment();
-                                        fr.setArguments(b);
+                                        Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
+                                        intent.putExtras(b);
+                                        startActivity(intent);
                                         finish();
+                                        /*CreateStoreFragment fr = new CreateStoreFragment();
+                                        fr.setArguments(b);
+                                        finish();*/
                                         dialog.cancel();
                                     }
                                 })

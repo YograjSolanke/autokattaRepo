@@ -209,7 +209,8 @@
         <activity android:name=".register.RegistrationContinue" />
         <activity android:name=".register.NextRegistrationContinue" />
         <activity android:name=".register.RegistrationCompanyBased" />
-        <activity android:name=".register.InvitationCompanyBased"></activity>
+        <activity android:name=".register.InvitationCompanyBased" />
+        <activity android:name=".register.CreateStoreContainer"></activity>
     </application>
 
 </manifest>
