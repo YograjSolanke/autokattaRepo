@@ -2,6 +2,7 @@ package autokatta.com.interfaces;
 
 import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
+import autokatta.com.response.AllStatesResponse;
 import autokatta.com.response.ApprovedVehicleResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionAnalyticsResponse;
@@ -798,4 +799,7 @@ public interface ServiceApi {
     @POST("getOwnVehicles.php")
     Call<GetOwnVehiclesResponse> _autokattaGetOwnVehicles(@Query("contact") String contact);
 
+    //get All States
+    @POST("getStates.php")
+    Call<AllStatesResponse> _autokattaGetAllStates();
 }

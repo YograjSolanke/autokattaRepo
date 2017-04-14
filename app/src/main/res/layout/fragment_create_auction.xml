@@ -168,25 +168,39 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-                android:background="#D2E28B"
+                android:background="#80bebebe"
                 android:gravity="center"
                 android:hint="Address/Location"
                 android:textAlignment="center"
-                android:textColorHint="#000000"
+                android:textColorHint="@color/hintColor"
                 android:visibility="gone" />
 
             <Spinner
-                android:id="@+id/spnproductcategory"
+                android:id="@+id/auctionCategory"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-                android:background="#D2E28B"
+                android:background="#80bebebe"
+                android:entries="@array/Auction_Category"
                 android:gravity="center"
-                android:visibility="gone">
+                android:textAlignment="center"
+                android:visibility="visible">
 
             </Spinner>
+
+            <autokatta.com.Registration.Multispinner
+                android:id="@+id/stockLocation"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:background="#80bebebe"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:ems="10" />
 
             <RelativeLayout
                 android:id="@+id/relative1"

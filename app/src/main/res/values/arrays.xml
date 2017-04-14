@@ -174,4 +174,14 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+
+    <string-array name="Auction_Category">
+        <item>-Select Auction Category-</item>
+        <item>Finance/Repo</item>
+        <item>Insurance Salvage</item>
+        <item>Scrapped</item>
+        <item>Dealer Stock</item>
+        <item>Market Place</item>
+    </string-array>
+
 </resources>

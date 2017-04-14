@@ -15,6 +15,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AdminExcelSheetResponse;
 import autokatta.com.response.AdminVehiclesResponse;
+import autokatta.com.response.AllStatesResponse;
 import autokatta.com.response.ApprovedVehicleResponse;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionAnalyticsResponse;
@@ -2230,6 +2231,39 @@ Upload Vehicle
                     }
                 });
 
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+     /*
+    Get  All States
+     */
+
+    public void getAllStates() {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<AllStatesResponse> mGetStatesResponseCall = mServiceApi._autokattaGetAllStates();
+                mGetStatesResponseCall.enqueue(new Callback<AllStatesResponse>() {
+                    @Override
+                    public void onResponse(Call<AllStatesResponse> call, Response<AllStatesResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AllStatesResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
             } else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }
@@ -4950,6 +4984,5 @@ Get saved search Seller list
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
-
 
 }
