@@ -3,6 +3,7 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -653,6 +654,26 @@ public class SellerResponse {
         }
 
         public class MatchedResult {
+
+
+            private Date lastCallDateNew;
+            private Date uploaddate;
+
+            public Date getLastCallDateNew() {
+                return lastCallDateNew;
+            }
+
+            public Date getUploaddate() {
+                return uploaddate;
+            }
+
+            public void setUploaddate(Date uploaddate) {
+                this.uploaddate = uploaddate;
+            }
+
+            public void setLastCallDateNew(Date lastCallDateNew) {
+                this.lastCallDateNew = lastCallDateNew;
+            }
 
             @SerializedName("search_id")
             @Expose

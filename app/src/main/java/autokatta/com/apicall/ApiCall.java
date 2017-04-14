@@ -4859,7 +4859,7 @@ Get uploaded Vehicle Buyer list
 
 
     //add remove favourite status
-    public void addRemovefavouriteStatus(String contact, String buyer_vehicle_id, String search_id) {
+    public void addRemovefavouriteStatus(String contact, String buyer_vehicle_id, String search_id, String seller_vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -4873,7 +4873,7 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> createbrdcstgrp = serviceApi.addRemovefavouriteStatus(contact, buyer_vehicle_id, search_id);
+                Call<String> createbrdcstgrp = serviceApi.addRemovefavouriteStatus(contact, buyer_vehicle_id, search_id, seller_vehicle_id);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

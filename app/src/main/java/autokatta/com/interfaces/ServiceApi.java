@@ -770,7 +770,10 @@ public interface ServiceApi {
 
     //add remove favourite status
     @POST("addRemooveMyFavourites.php")
-    Call<String> addRemovefavouriteStatus(@Query("contact") String contact, @Query("buyer_vehicle_id") String buyer_vehicle_id, @Query("search_id") String search_id);
+    Call<String> addRemovefavouriteStatus(@Query("contact") String contact,
+                                          @Query("buyer_vehicle_id") String buyer_vehicle_id,
+                                          @Query("search_id") String search_id,
+                                          @Query("seller_vehicle_id") String seller_vehicle_id);
 
     //Save My Search
     @POST("saveSearch.php")
