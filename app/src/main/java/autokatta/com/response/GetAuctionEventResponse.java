@@ -304,9 +304,9 @@ public class GetAuctionEventResponse {
         @SerializedName("location")
         @Expose
         private String location;
-        @SerializedName("product_category")
+        @SerializedName("auction_category")
         @Expose
-        private String productCategory;
+        private String auctionCategory;
         @SerializedName("startDateTime")
         @Expose
         private String startDateTime;
@@ -325,6 +325,18 @@ public class GetAuctionEventResponse {
         @SerializedName("special_clauses")
         @Expose
         private String specialClauses;
+
+        @SerializedName("stockLocation")
+        @Expose
+        private String stockLocation;
+
+        public String getStockLocation() {
+            return stockLocation;
+        }
+
+        public void setStockLocation(String stockLocation) {
+            this.stockLocation = stockLocation;
+        }
 
         public String getAuctionId() {
             return auctionId;
@@ -398,12 +410,12 @@ public class GetAuctionEventResponse {
             this.location = location;
         }
 
-        public String getProductCategory() {
-            return productCategory;
+        public String getAuctionCategory() {
+            return auctionCategory;
         }
 
-        public void setProductCategory(String productCategory) {
-            this.productCategory = productCategory;
+        public void setAuctionCategory(String auctionCategory) {
+            this.auctionCategory = auctionCategory;
         }
 
         public String getStartDateTime() {

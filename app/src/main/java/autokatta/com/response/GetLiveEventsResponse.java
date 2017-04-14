@@ -51,9 +51,7 @@ public class GetLiveEventsResponse {
         @SerializedName("location")
         @Expose
         private String location;
-        @SerializedName("product_category")
-        @Expose
-        private String productCategory;
+
         @SerializedName("special_clauses")
         @Expose
         private String specialClauses;
@@ -120,6 +118,30 @@ public class GetLiveEventsResponse {
         @SerializedName("mycontact")
         @Expose
         private String mycontact;
+
+        @SerializedName("auction_category")
+        @Expose
+        private String auctionCategory;
+
+        @SerializedName("stockLocation")
+        @Expose
+        private String stockLocation;
+
+        public String getStockLocation() {
+            return stockLocation;
+        }
+
+        public void setStockLocation(String stockLocation) {
+            this.stockLocation = stockLocation;
+        }
+
+        public String getAuctioncategory() {
+            return auctionCategory;
+        }
+
+        public void setAuctioncategory(String auctionCategory) {
+            this.auctionCategory = auctionCategory;
+        }
 
         private String keyWord;
 
@@ -195,13 +217,6 @@ public class GetLiveEventsResponse {
             this.location = location;
         }
 
-        public String getProductCategory() {
-            return productCategory;
-        }
-
-        public void setProductCategory(String productCategory) {
-            this.productCategory = productCategory;
-        }
 
         public String getSpecialClauses() {
             return specialClauses;

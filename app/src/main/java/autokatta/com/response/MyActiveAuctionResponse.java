@@ -89,9 +89,7 @@ public class MyActiveAuctionResponse {
             @SerializedName("location")
             @Expose
             private String location;
-            @SerializedName("product_category")
-            @Expose
-            private String productCategory;
+
             @SerializedName("special_clauses")
             @Expose
             private String specialClauses;
@@ -110,6 +108,30 @@ public class MyActiveAuctionResponse {
             @SerializedName("goingcount")
             @Expose
             private String goingcount;
+
+            @SerializedName("auction_category")
+            @Expose
+            private String auctionCategory;
+
+            @SerializedName("stockLocation")
+            @Expose
+            private String stockLocation;
+
+            public String getStockLocation() {
+                return stockLocation;
+            }
+
+            public void setStockLocation(String stockLocation) {
+                this.stockLocation = stockLocation;
+            }
+
+            public String getAuctioncategory() {
+                return auctionCategory;
+            }
+
+            public void setAuctioncategory(String auctionCategory) {
+                this.auctionCategory = auctionCategory;
+            }
 
             public String getAuctionId() {
                 return auctionId;
@@ -175,13 +197,6 @@ public class MyActiveAuctionResponse {
                 this.location = location;
             }
 
-            public String getProductCategory() {
-                return productCategory;
-            }
-
-            public void setProductCategory(String productCategory) {
-                this.productCategory = productCategory;
-            }
 
             public String getSpecialClauses() {
                 return specialClauses;

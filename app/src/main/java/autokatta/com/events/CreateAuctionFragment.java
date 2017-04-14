@@ -190,7 +190,7 @@ public class CreateAuctionFragment extends Fragment
                     location = address.getText().toString();
 
                     final String auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
-                    final String stockLocation = stockLocationSpinner.getSelectedItem().toString();
+                    final String stockLocation = stockLocationSpinner.getSelectedItem().toString().replaceAll(" ", "");
                     Log.i("category", "->" + auctionCategory);
                     Log.i("states", "->" + stockLocation);
 
