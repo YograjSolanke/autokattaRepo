@@ -69,7 +69,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
         SampleResponse sampleResponse = new SampleResponse("8007855589","0");
-        Call<FavouriteResponse> addBid = serviceApi.getMyFavourites("8007855589","0");
+        Call<FavouriteResponse> addBid = serviceApi.getMyFavourites(sampleResponse);
         addBid.enqueue(new Callback<FavouriteResponse>() {
             @Override
             public void onResponse(Call<FavouriteResponse> call, Response<FavouriteResponse> response) {
