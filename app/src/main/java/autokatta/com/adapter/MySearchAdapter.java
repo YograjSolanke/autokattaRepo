@@ -188,7 +188,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
 
-                apiCall.addRemovefavouriteStatus(myContact, "", SearchId);
+                apiCall.addRemovefavouriteStatus(myContact, "", SearchId, "");
                 holder.favImg.setVisibility(View.INVISIBLE);
                 holder.unfavImg.setVisibility(View.VISIBLE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
@@ -372,6 +372,12 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                     SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
                     Bundle b = new Bundle();
                     b.putString("search_id", SearchId);
+                    b.putString("category", holder.textcategory.getText().toString());
+                    b.putString("brand", holder.textbrand.getText().toString());
+                    b.putString("model", holder.textmodel.getText().toString());
+                    b.putString("price", holder.textprice.getText().toString());
+                    b.putString("year", holder.textyear.getText().toString());
+                    b.putString("rto_city", mMainlist.get(holder.getAdapterPosition()).getRtoCity());
                     SavedSearchSellerListFragment frag2 = new SavedSearchSellerListFragment();    // Call Another Fragment
                     frag2.setArguments(b);
 
