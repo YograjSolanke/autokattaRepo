@@ -298,8 +298,7 @@
                 android:id="@+id/rel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                >
+                android:visibility="gone">
 
                 <Button
                     android:textSize="15dp"

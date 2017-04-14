@@ -62,7 +62,7 @@ public class About extends Fragment implements RequestNotifier {
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
 
     String userName, email, contact, profession, company, designation, subProfession, websitestr, city, skills;
-    String mUpdatedEmail, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedCity, mUpdatedWebsite;
+    String mUpdatedEmail, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills,mUpdatedSkills1, mUpdatedCity, mUpdatedWebsite;
 
     final ArrayList<String> mSkillList = new ArrayList<>();
     final HashMap<String, String> mSkillList1 = new HashMap<>();
@@ -85,6 +85,7 @@ public class About extends Fragment implements RequestNotifier {
     String Sharedcontact,RegId;
     String spinnervalue = "";
     ApiCall mApiCall;
+    String[] parts;
 
     @Nullable
     @Override
@@ -223,6 +224,8 @@ public class About extends Fragment implements RequestNotifier {
                 mUpdatedCompany = mCompany.getText().toString();
                 mUpdatedDesignation = mDesignation.getText().toString();
                 mUpdatedSkills = mSkills.getText().toString().trim();
+                if (mUpdatedSkills.endsWith(","))
+                    mUpdatedSkills1 = mUpdatedSkills.substring(0, mUpdatedSkills.length() - 1);
 
                 webflag = mUpdatedWebsite.equalsIgnoreCase("");
 
@@ -313,17 +316,20 @@ public class About extends Fragment implements RequestNotifier {
 
                     mSkills.clearFocus();
                     newskills = mSkills.getText().toString().trim();
+                    if (newskills.endsWith(","))
+                        newskills = newskills.substring(0, newskills.length() - 1);
+                    parts = newskills.split(",");
+                    for (int i=0;i<parts.length;i++) {
+                        try {
 
-                    try {
-
-                        if (!mSkillList.contains(newskills)) {
-                            mApiCall.addNewSkills(newskills);
-                            //addNewCompanyName(updatecompany);
+                            if (!mSkillList.contains(parts[i])) {
+                                mApiCall.addNewSkills(parts[i]);
+                                //addNewCompanyName(updatecompany);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-
                     strskills = mSkills.getText().toString().trim();
 
                     //***************************************************************
@@ -350,7 +356,7 @@ public class About extends Fragment implements RequestNotifier {
                         mSkills.setError("Enter Skills Name");
                         mSkills.requestFocus();
                     } else {
-                        mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedCity,spinnervalue,RegId);
+                        mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1, mUpdatedCity,spinnervalue,RegId);
                         // submitData();
                     }
                     mrel.setVisibility(View.GONE);
@@ -383,7 +389,7 @@ public class About extends Fragment implements RequestNotifier {
         System.out.println("texttttttttttttttttt Skills" + text.substring(0, text.length() - 1));
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
-        String[] parts = text.split(",");
+         parts = text.split(",");
         System.out.println("size of partssssssssssssssssss skills" + parts.length);
         if (parts.length > 5) {
             mSkills.setError("You can add maximum five skills");
@@ -418,8 +424,6 @@ public class About extends Fragment implements RequestNotifier {
                         mCity.setText(city);
                         mCompany.setText(company);
                         mDesignation.setText(designation);
-                        if (skills.endsWith(","))
-                            skills = skills.substring(0, skills.length() - 1);
                         mSkills.setText(skills);
                     }
                 } else if (response.body() instanceof GetCompaniesResponse) {

@@ -46,6 +46,7 @@ import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetLiveEventsResponse;
+import autokatta.com.response.GetOwnVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
@@ -4891,6 +4892,39 @@ Get saved search Seller list
         }
     }
 
+ /*
+    Get Own Vehicles.
+     */
+
+    public void getOwnVehicles(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetOwnVehiclesResponse> mGetOwnVehicles = mServiceApi._autokattaGetOwnVehicles(contact);
+                mGetOwnVehicles.enqueue(new Callback<GetOwnVehiclesResponse>() {
+                    @Override
+                    public void onResponse(Call<GetOwnVehiclesResponse> call, Response<GetOwnVehiclesResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetOwnVehiclesResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs

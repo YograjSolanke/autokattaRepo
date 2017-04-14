@@ -35,6 +35,7 @@ import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetLiveEventsResponse;
 import autokatta.com.response.GetMyUploadedVehicleResponse;
+import autokatta.com.response.GetOwnVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
@@ -792,5 +793,9 @@ public interface ServiceApi {
     //get Uploaded vehicle buyer list
     @POST("get_seller_notification.php")
     Call<SellerResponse> getSavedSearchSellerList(@Query("contact") String contact);
+
+  //get Own Vehicles
+    @POST("getOwnVehicles.php")
+    Call<GetOwnVehiclesResponse> _autokattaGetOwnVehicles(@Query("contact") String contact);
 
 }
