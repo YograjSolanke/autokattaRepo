@@ -43,7 +43,9 @@
         <activity
             android:name=".AutokattaMainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="autokatta.com.AutokattaMainActivity" />
@@ -51,108 +53,192 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
         <activity
             android:name=".view.UserProfile"
             android:label="@string/title_activity_user_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.MyAutokattaContactsActivity"
             android:label="@string/title_activity_my_autokatta_contacts"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.UploadVehicleIntro" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".view.UploadVehicleIntro"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.MyStoreListActivity"
             android:label="@string/title_activity_my_store_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".other.SplashActivity">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".other.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".view.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".Registration.RegistrationActivity"
-            android:label="@string/title_activity_registration" />
+            android:label="@string/title_activity_registration"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.BrowseStoreActivity"
             android:label="@string/title_activity_browse_store"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.VehicleUpload"
             android:label="@string/title_activity_vehicle_upload"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.SearchStoreActivity"
             android:label="@string/title_activity_search_store"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity android:name=".view.OTP" />
+
         <activity
             android:name=".view.MySearchActivity"
             android:label="@string/title_activity_my_search"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.Forget_Password"
             android:label="@string/title_activity_forget__password"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".view.NewPassword" />
+            android:theme="@style/AppTheme"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".view.NewPassword"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.MyUploadedVehiclesActivity"
             android:label="@string/title_activity_my_uploaded_vehicles"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.MyActiveEventsTabActivity"
             android:label="@string/title_activity_my_active_events_tab"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.MySavedAuctionEventActivity"
             android:label="@string/title_activity_my_saved_auction_event"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.BlackListedMemberActivity"
             android:label="@string/title_activity_black_listed_member"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Registration.ContinueRegistration"
             android:label="@string/title_activity_continue_registration"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.MyUpcomingEventsTabActivity"
             android:label="@string/title_activity_my_upcoming_events_tab"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.Create_Event"
             android:label="@string/title_activity_create_event"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.MyBroadcastGroupsActivity"
             android:label="@string/title_activity_my_broadcast_groups"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Registration.ContinueNextRegistration"
             android:label="Continue Next Registration"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.MyEndedEventTabActivity"
             android:label="@string/title_activity_my_ended_event"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.GroupTabs"
             android:label="@string/title_activity_group_tabs"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.VehicleDetails"
             android:label="@string/title_activity_vehicle_details"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Registration.CompanyBasedRegistrationActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".Registration.CompanyBasedRegistrationActivity"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.OtherProfile"
             android:label="@string/title_activity_other_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- Service for Background task -->
         <service
@@ -169,48 +255,104 @@
         <activity
             android:name=".auction.PreviewLiveEvents"
             android:label="@string/title_activity_preview_live_events"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".auction.LiveAuctionEventBiding"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".events.PreviewMyActiveAuctionActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".events.PreviewNextMyActiveAuctionActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.BroadcastMessageActivity"
             android:label="@string/title_activity_broadcast_message"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.BussinessChatActivity"
             android:label="@string/title_activity_bussiness_chat"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".events.MyEndedAuctionPreviewActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".events.MyEndedAuctionPreviewNextActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".auction.PreviewGoingEvents"
             android:label="@string/title_activity_preview_going_events"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".auction.PreviewUpcomingEvent"
             android:label="@string/title_activity_preview_upcoming_events"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".register.Registration" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".register.Registration"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".view.SearchVehicleActivity"
             android:label="@string/title_activity_search_vehicle"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".register.RegistrationContinue" />
-        <activity android:name=".register.NextRegistrationContinue" />
-        <activity android:name=".register.RegistrationCompanyBased" />
-        <activity android:name=".register.InvitationCompanyBased" />
-        <activity android:name=".register.CreateStoreContainer"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".register.RegistrationContinue"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".register.NextRegistrationContinue"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".register.RegistrationCompanyBased"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".register.InvitationCompanyBased"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".register.CreateStoreContainer"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+
     </application>
 
 </manifest>
