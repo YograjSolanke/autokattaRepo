@@ -396,14 +396,14 @@ public interface ServiceApi {
     Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("group_id") String groupId);
 
 
-    //Get Group Vehicles
+    //Create an Auction
     @GET("createAuction.php")
     Call<AuctionCreateResponse> createAuction(@Query("title") String title, @Query("start_date") String start_date,
                                               @Query("start_time") String start_time, @Query("end_date") String end_date,
                                               @Query("end_time") String end_time, @Query("auction_type") String auction_type,
                                               @Query("contact") String contact, @Query("location") String location,
-                                              @Query("product_category") String product_category, @Query("special_clauses") String special_clauses,
-                                              @Query("openClose") String openClose);
+                                              @Query("auction_category") String product_category, @Query("special_clauses") String special_clauses,
+                                              @Query("openClose") String openClose, @Query("stockLocation") String stockLocation);
 
 
     //Update Company Based Registration

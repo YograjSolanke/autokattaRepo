@@ -2203,8 +2203,8 @@ Upload Vehicle
                               String start_time, String end_date,
                               String end_time, String auction_type,
                               String contact, String location,
-                              String product_category, String special_clauses,
-                              String openClose) {
+                              String auction_category, String special_clauses,
+                              String openClose, String stockLocation) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2217,8 +2217,8 @@ Upload Vehicle
                         start_time, end_date,
                         end_time, auction_type,
                         contact, location,
-                        product_category, special_clauses,
-                        openClose);
+                        auction_category, special_clauses,
+                        openClose, stockLocation);
                 mVehiclesResponse.enqueue(new Callback<AuctionCreateResponse>() {
                     @Override
                     public void onResponse(Call<AuctionCreateResponse> call, Response<AuctionCreateResponse> response) {

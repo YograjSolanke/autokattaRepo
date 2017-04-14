@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.Registration.Multispinner;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
@@ -43,6 +45,7 @@ import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.AllStatesResponse;
 import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
@@ -55,7 +58,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class CreateAuctionFragment extends Fragment
-        implements View.OnClickListener, RequestNotifier, View.OnTouchListener, RadioGroup.OnCheckedChangeListener {
+        implements View.OnClickListener, RequestNotifier, View.OnTouchListener, RadioGroup.OnCheckedChangeListener, Multispinner.MultiSpinnerListener {
 
     EditText auctioname, startdate, starttime, enddate, endtime;
     AutoCompleteTextView address;
@@ -70,6 +73,8 @@ public class CreateAuctionFragment extends Fragment
     List<String> checkedspecialclauses = new ArrayList<>();
     View createAuctionView;
     ListView clauseList;
+    Spinner auctionCategorySpinner;
+    Multispinner stockLocationSpinner;
     ApiCall apiCall;
     String Radiobtn_click = "";
     GenericFunctions validObj;
@@ -100,6 +105,9 @@ public class CreateAuctionFragment extends Fragment
         addmore = (Button) createAuctionView.findViewById(R.id.btnaddmore);
         create = (Button) createAuctionView.findViewById(R.id.btncreate);
         clauseList = (ListView) createAuctionView.findViewById(R.id.list_view);
+        auctionCategorySpinner = (Spinner) createAuctionView.findViewById(R.id.auctionCategory);
+        stockLocationSpinner = (Multispinner) createAuctionView.findViewById(R.id.stockLocation);
+
         apiCall = new ApiCall(getActivity(), this);
         validObj = new GenericFunctions();
 
@@ -116,8 +124,9 @@ public class CreateAuctionFragment extends Fragment
         address.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
         apiCall.getSpecialClauses("getClause");
 
+        apiCall.getAllStates();
 
-        
+
         return createAuctionView;
     }
 
@@ -180,6 +189,11 @@ public class CreateAuctionFragment extends Fragment
                     edtime = endtime.getText().toString();
                     location = address.getText().toString();
 
+                    final String auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
+                    final String stockLocation = stockLocationSpinner.getSelectedItem().toString();
+                    Log.i("category", "->" + auctionCategory);
+                    Log.i("states", "->" + stockLocation);
+
 
                     if (!location.isEmpty()) {
 
@@ -237,6 +251,13 @@ public class CreateAuctionFragment extends Fragment
                     } else if (address.getVisibility() == View.VISIBLE && !flag) {
                         address.setError("Please Select Location From Dropdown Only");
                         address.requestFocus();
+                    } else if (address.getVisibility() == View.GONE && stockLocation.isEmpty()) {
+                        Toast.makeText(getActivity(), "Please select states ", Toast.LENGTH_LONG).show();
+                        stockLocationSpinner.requestFocus();
+
+                    } else if (auctionCategory.equalsIgnoreCase("-Select Auction Category-")) {
+                        Toast.makeText(getActivity(), "Please select category of auction", Toast.LENGTH_LONG).show();
+                        auctionCategorySpinner.requestFocus();
                     } else {
 
                         checkedids = adapter.checkedids();
@@ -280,7 +301,8 @@ public class CreateAuctionFragment extends Fragment
                                 public void onClick(View v) {
                                     Radiobtn_click = ((RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId())).getText().toString();
                                     dialog.dismiss();
-                                    apiCall.createAuction(name, stdate, sttime, eddate, edtime, type, myContact, location, "", ids, Radiobtn_click);
+                                    apiCall.createAuction(name, stdate, sttime, eddate, edtime, type, myContact, location, auctionCategory, ids,
+                                            Radiobtn_click, stockLocation);
                                 }
                             });
 
@@ -456,6 +478,39 @@ public class CreateAuctionFragment extends Fragment
 
                 }
 
+                //Color Response
+
+                else if (response.body() instanceof AllStatesResponse) {
+                    Log.e("GetAllStates", "->");
+                    final List<String> mStateList = new ArrayList<>();
+
+                    AllStatesResponse getStateResponse = (AllStatesResponse) response.body();
+                    for (AllStatesResponse.Success success : getStateResponse.getSuccess()) {
+                        success.setCountryId(success.getCountryId());
+                        success.setStateId(success.getStateId());
+                        success.setStateName(success.getStateName());
+                        mStateList.add(success.getStateName());
+                    }
+                    Log.i("ListState", "->" + mStateList);
+
+                    stockLocationSpinner.setItems(mStateList, "-Select State-", CreateAuctionFragment.this);
+                    /*multiSpinnercolor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                String ColorName = multiSpinnercolor.getSelectedItem().toString();
+
+                                System.out.println("Color name::" + ColorName);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });*/
+                }
+
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
@@ -494,6 +549,11 @@ public class CreateAuctionFragment extends Fragment
         } else {
             address.setVisibility(View.GONE);
         }
+
+    }
+
+    @Override
+    public void onItemsSelected(boolean[] selected) {
 
     }
 
