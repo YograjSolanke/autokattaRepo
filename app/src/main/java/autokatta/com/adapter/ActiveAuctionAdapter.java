@@ -71,6 +71,8 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
         holder.auction_endtime.setText(auctionDetailsArrayList.get(position).getEndTime());
         holder.auction_startdate.setText(auctionDetailsArrayList.get(position).getStartDate());
         holder.auction_starttime.setText(auctionDetailsArrayList.get(position).getStartTime());
+        holder.mAuction_category.setText(auctionDetailsArrayList.get(position).getAuctioncategory());
+        holder.mStockLocation.setText(auctionDetailsArrayList.get(position).getStockLocation());
 
 
         final TextView tv = holder.timer;
@@ -194,6 +196,8 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 b.putString("enddatetime", auctionDetailsArrayList.get(position).getEndDateTime());
                 b.putString("startdatetime", auctionDetailsArrayList.get(position).getStartDateTime());
                 b.putString("participant_count", auctionDetailsArrayList.get(position).getGoingcount());
+                b.putString("category", auctionDetailsArrayList.get(position).getAuctioncategory());
+                b.putString("location", auctionDetailsArrayList.get(position).getStockLocation());
 
                 activity.finish();
 
@@ -284,7 +288,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
     static class AuctionHolder extends RecyclerView.ViewHolder {
 
         TextView action_title, auction_vehicle, auction_enddate, auction_endtime, auction_startdate,
-                auction_starttime;
+                auction_starttime, mAuction_category, mStockLocation;
         TextView timer;
         Button preview, btnshare, btnclause;
         RelativeLayout relativeshare;
@@ -306,6 +310,8 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
             timer = (TextView) view.findViewById(R.id.timer);
             btnclause = (Button) view.findViewById(R.id.btnclauses);
+            mAuction_category = (TextView) view.findViewById(R.id.auction_category);
+            mStockLocation = (TextView) view.findViewById(R.id.stockLocation);
         }
 
     }

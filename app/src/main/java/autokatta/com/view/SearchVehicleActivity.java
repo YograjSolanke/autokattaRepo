@@ -209,8 +209,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     financetxt.setText(Html.fromHtml("Finance Required:" + text));
                     messageText.setText(Html.fromHtml("Category:" + text));
                     messageText1.setText(Html.fromHtml("Sub category:" + text));
-                    brandtxt.setText(Html.fromHtml("brandSpinner:" + text));
-                    modeltxt.setText(Html.fromHtml("modelSpinner:" + text));
+                    brandtxt.setText(Html.fromHtml("Brand:" + text));
+                    modeltxt.setText(Html.fromHtml("Model:" + text));
 
 
                     action = getIntent().getExtras().getString("className");

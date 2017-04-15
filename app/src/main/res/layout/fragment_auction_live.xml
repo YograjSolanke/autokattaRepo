@@ -53,7 +53,7 @@
     <LinearLayout
         android:id="@+id/event_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/view1"
         android:visibility="gone">
 
@@ -113,7 +113,7 @@
     <LinearLayout
         android:id="@+id/loan_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/view2"
         android:visibility="gone">
 
@@ -172,7 +172,7 @@
     <LinearLayout
         android:id="@+id/exchange_event_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/view3"
         android:visibility="gone">
 

@@ -59,13 +59,13 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
     FloatingActionButton mCall, mMail;
     Button mGoing, mIgnore, mShare, mGoLive;
     CollapsingToolbarLayout mCollapsingToolbar;
-    TextView mLiveTimer, mStartDate, mStartTime, mEndDate, mEndTime, mAuctionText, mCloseOpenType;
+    TextView mLiveTimer, mStartDate, mStartTime, mEndDate, mEndTime, mAuctionText, mCloseOpenType, mCategory, mLocation;
     String allDetails = "", keyword;
 
     String auction_id = "", whoseAuction = "";
     String contact = "", auctioneername, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
             no_of_vehicles, auctioncontact, action_title, ignoreGoingStatus, startDateTime, endDateTime, specialcluases,
-            blackListStatus, openClose, auctiontype, showPrice;
+            blackListStatus, openClose, auctiontype, showPrice, strCategory, strLocation;
 
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
@@ -102,6 +102,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         openClose = getIntent().getExtras().getString("openClose");
         showPrice = getIntent().getExtras().getString("showPrice");
         keyword = getIntent().getExtras().getString("keyword");
+        strCategory = getIntent().getExtras().getString("category");
+        strLocation = getIntent().getExtras().getString("location");
 
         Log.i("ignoreGoingPreview", "->" + ignoreGoingStatus);
         //mListView = (ListView) findViewById(R.id.listView);
@@ -122,6 +124,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         mEndTime = (TextView) findViewById(R.id.end_time);
         mAuctionText = (TextView) findViewById(R.id.auction_text);
         mCloseOpenType = (TextView) findViewById(R.id.closeopentxt);
+        mCategory = (TextView) findViewById(R.id.category);
+        mLocation = (TextView) findViewById(R.id.location);
 
         mGoLive.setOnClickListener(this);
         mGoing.setOnClickListener(this);
@@ -163,6 +167,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 mEndTime.setText(auction_endtime);
                 mCloseOpenType.setText(openClose + " " + "Type Auction");
                 mAuctionText.setText(getString(R.string.live_auction));
+                mCategory.setText(strCategory);
+                mLocation.setText(strLocation);
 
                 final TextView tv = mLiveTimer;
                 cdt = counters.get(mLiveTimer);
@@ -320,6 +326,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                     b1.putString("blackListStatus", blackListStatus);
                     b1.putString("tabNo", "3");
                     b1.putBoolean("isPayEMD", boolGoing);
+                    b1.putString("category", strCategory);
+                    b1.putString("location", strLocation);
                     Intent intent = new Intent(getApplicationContext(), LiveAuctionEventBiding.class);
                     intent.putExtras(b1);
                     startActivity(intent);

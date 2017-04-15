@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -41,8 +41,8 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
     Activity mActivity;
     private List<GetLiveEventsResponse.Success> mItemList = new ArrayList<>();
-    private String auctionType, whoseAuction = "";
-    ;
+    private String auctionType, whoseAuction = "", special_clause;
+
     private HashMap<TextView, CountDownTimer> counters;
 
     public AuctionNotificationAdapter(Activity mActivity, List<GetLiveEventsResponse.Success> mItemList, String auctionType) {
@@ -177,13 +177,17 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         } else {
             whoseAuction = "otherauction";
         }
+
+        special_clause = mItemList.get(position).getClausesNames();
+
         //buttons...
         holder.mSpecialClauses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 String clauses[] = new String[0];
                 try {
-                    clauses = mItemList.get(position).getSpecialClauses().split(",");
+                    clauses = mItemList.get(position).getClausesNames().split(",");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -195,13 +199,34 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                     public void onClick(DialogInterface dialog, int item) {
                         dialog.dismiss();
                     }
-                }).show();
+                }).show();*/
+                final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(mActivity);
+                alertDialog.setTitle("Special Clauses");
+
+                final TextView input = new TextView(mActivity);
+                input.setText(special_clause.replaceAll(",", "\n"));
+
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                alertDialog.setView(input);
+
+                alertDialog.setNeutralButton("cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                alertDialog.show();
             }
         });
 
         //preview...
         holder.mAuctionPreview.setOnClickListener(new View.OnClickListener() {
             Bundle bundle = new Bundle();
+
             @Override
             public void onClick(View v) {
                 bundle.putString("auctioneer", mItemList.get(position).getAuctioneer());
@@ -222,6 +247,8 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                 bundle.putString("openClose", mItemList.get(position).getOpenClose());
                 bundle.putString("showPrice", mItemList.get(position).getShowPrice());
                 bundle.putString("keyword", mItemList.get(position).getKeyWord());
+                bundle.putString("category", mItemList.get(position).getAuctioncategory());
+                bundle.putString("location", mItemList.get(position).getStockLocation());
 
                 if (auctionType.equals("Live")) {
                     Intent intent = new Intent(mActivity, PreviewLiveEvents.class);

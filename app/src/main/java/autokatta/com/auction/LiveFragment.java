@@ -153,7 +153,7 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                         success.setEndTime(success.getEndTime());
                         success.setAuctionType(success.getAuctionType());
                         success.setLocation(success.getLocation());
-                        success.setSpecialClauses(success.getSpecialClauses());
+                        success.setSpecialClauses(success.getClausesNames());
                         success.setVehicleIds(success.getVehicleIds());
                         success.setNoOfVehicles(success.getNoOfVehicles());
                         success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());

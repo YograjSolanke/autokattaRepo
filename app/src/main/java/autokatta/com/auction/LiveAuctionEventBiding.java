@@ -33,7 +33,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
     YourBid mYourBid;
     String auctioneername, AuctionId, action_title, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
             no_of_vehicles, auctioncontact, specialcluases, endDateTime, openClose, auctiontype, showPrice, ignoreGoing,
-            startDateTime, blackListStatus, keyWord;
+            startDateTime, blackListStatus, keyWord, strCategory, strLocation;
     Boolean isEMDPaid;
     TextView mLiveTitle, mLiveVehicles, mLiveAuctionType, mLiveCurrentlyActive, mEndDate, mEndTime, mLiveTimer;
     TextView mLimitForBid, mHighBidTotal, mTotalRemains;
@@ -71,6 +71,8 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
         startDateTime = getIntent().getExtras().getString("startDateTime");
         blackListStatus = getIntent().getExtras().getString("blackListStatus");
         keyWord = getIntent().getExtras().getString("keyword");
+        strCategory = getIntent().getExtras().getString("category");
+        strLocation = getIntent().getExtras().getString("location");
         b1 = new Bundle();
         b1.putString("auction_id", AuctionId);
         b1.putString("openClose", openClose);

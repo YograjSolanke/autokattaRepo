@@ -251,7 +251,7 @@ public class CreateAuctionFragment extends Fragment
                     } else if (address.getVisibility() == View.VISIBLE && !flag) {
                         address.setError("Please Select Location From Dropdown Only");
                         address.requestFocus();
-                    } else if (address.getVisibility() == View.GONE && stockLocation.equalsIgnoreCase("-Select State-")) {
+                    } else if (address.getVisibility() == View.GONE && stockLocation.equalsIgnoreCase("-SelectState-")) {
                         Toast.makeText(getActivity(), "Please select states ", Toast.LENGTH_LONG).show();
                         stockLocationSpinner.requestFocus();
 

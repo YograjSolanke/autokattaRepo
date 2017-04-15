@@ -59,13 +59,13 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
     FloatingActionButton mCall, mMail;
     Button mGoing, mIgnore, mShare, mGoLive;
     CollapsingToolbarLayout mCollapsingToolbar;
-    TextView mLiveTimer, mStartDate, mStartTime, mEndDate, mEndTime, mAuctionText, mCloseOpenType;
+    TextView mLiveTimer, mStartDate, mStartTime, mEndDate, mEndTime, mAuctionText, mCloseOpenType, mCategory, mLocation;
     String allDetails = "", keyword;
 
     String auction_id = "", whoseAuction = "";
     String contact = "", auctioneername, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
             no_of_vehicles, auctioncontact, action_title, ignoreGoingStatus, startDateTime, endDateTime, specialcluases,
-            blackListStatus, openClose, auctiontype, showPrice;
+            blackListStatus, openClose, auctiontype, showPrice, strCategory, strLocation;
 
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
@@ -102,6 +102,8 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
         openClose = getIntent().getExtras().getString("openClose");
         showPrice = getIntent().getExtras().getString("showPrice");
         keyword = getIntent().getExtras().getString("keyword");
+        strCategory = getIntent().getExtras().getString("category");
+        strLocation = getIntent().getExtras().getString("location");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.auction_event_recycler_view);
         mFloatingActionMenu = (FloatingActionMenu) findViewById(R.id.menu_red);
@@ -120,6 +122,8 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
         mEndTime = (TextView) findViewById(R.id.end_time);
         mAuctionText = (TextView) findViewById(R.id.auction_text);
         mCloseOpenType = (TextView) findViewById(R.id.closeopentxt);
+        mCategory = (TextView) findViewById(R.id.category);
+        mLocation = (TextView) findViewById(R.id.location);
 
         mGoLive.setOnClickListener(this);
         mGoing.setOnClickListener(this);
@@ -166,6 +170,8 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                 mEndTime.setText(auction_endtime);
                 mCloseOpenType.setText(openClose + " " + "Type Auction");
                 mAuctionText.setText(getString(R.string.going_auction));
+                mCategory.setText(strCategory);
+                mLocation.setText(strLocation);
 
                 final TextView tv = mLiveTimer;
                 cdt = counters.get(mLiveTimer);
@@ -321,6 +327,8 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                     b1.putString("showPrice", showPrice);
                     b1.putString("ignoreGoingStatus", ignoreGoingStatus);
                     b1.putString("blackListStatus", blackListStatus);
+                    b1.putString("category", strCategory);
+                    b1.putString("location", strLocation);
                     /*b1.putString("tabNo", "3");
                     b1.putBoolean("isPayEMD", boolGoing);*/
                     Intent intent = new Intent(getApplicationContext(), LiveAuctionEventBiding.class);
