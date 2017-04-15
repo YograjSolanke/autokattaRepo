@@ -36,6 +36,7 @@ import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.EndedAuctionApprovedVehiResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.response.GetAdminVehicleResponse;
 import autokatta.com.response.GetAuctionEventResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetBrandModelVersionResponse;
@@ -5036,7 +5037,7 @@ Get saved search Seller list
     }
 
     /*
-    Get Store response.
+    Get Vehicle Auction response.
      */
 
     public void getVehicleAuction(String auctionId, String vehicleId, String contact) {
@@ -5057,6 +5058,40 @@ Get saved search Seller list
 
                     @Override
                     public void onFailure(Call<GetVehicleForAuctionResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Admin Auction response.
+     */
+
+    public void getAdminAuction(String vehicleId, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetAdminVehicleResponse> mGetAuction = mServiceApi.getAdminAuction(vehicleId, contact);
+                mGetAuction.enqueue(new Callback<GetAdminVehicleResponse>() {
+                    @Override
+                    public void onResponse(Call<GetAdminVehicleResponse> call, Response<GetAdminVehicleResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetAdminVehicleResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

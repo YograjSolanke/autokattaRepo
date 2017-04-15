@@ -23,6 +23,7 @@ import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.EndedAuctionApprovedVehiResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.response.GetAdminVehicleResponse;
 import autokatta.com.response.GetAuctionEventResponse;
 import autokatta.com.response.GetAutokattaContactResponse;
 import autokatta.com.response.GetBodyTypeResponse;
@@ -821,4 +822,7 @@ public interface ServiceApi {
     @GET("getVehicleForAuction.php")
     Call<GetVehicleForAuctionResponse> getVehicleAuction(@Query("auction_id") String auctionId, @Query("vehicle_id") String vehicleId,
                                                          @Query("contact") String contact);
+
+    @GET("adminVehicleMoreDetails.php")
+    Call<GetAdminVehicleResponse> getAdminAuction(@Query("vehicleid") String vehicleId, @Query("contact") String contact);
 }

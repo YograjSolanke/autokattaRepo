@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.auction.AdminVehicleDetails;
 import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.response.GetAuctionEventResponse;
 
@@ -80,7 +81,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
     }
 
     @Override
-    public void onBindViewHolder(PreviewAuctionAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final PreviewAuctionAdapter.MyViewHolder holder, final int position) {
         if (mItemList.get(position).getImage() != null || mItemList.get(position).getImage().equals("")
                 || mItemList.get(position).getImage().isEmpty()) {
             String images[] = mItemList.get(position).getImage().split(",");
@@ -148,9 +149,9 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
                 } else {
                     Bundle b = new Bundle();
                     b.putString("vehicle_id", mItemList.get(position).getVehicleId());
-                    b.putString("auction_id", auctionId);
+                    b.putString("lotNo", holder.mSetLotNo.getText().toString());
 
-                    Intent intent = new Intent(mActivity, MyAuctionVehicleDetails.class);
+                    Intent intent = new Intent(mActivity, AdminVehicleDetails.class);
                     intent.putExtras(b);
                     mActivity.startActivity(intent);
                     mActivity.finish();

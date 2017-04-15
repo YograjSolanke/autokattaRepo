@@ -1,10 +1,12 @@
 package autokatta.com.auction;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,9 +14,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
@@ -24,33 +27,17 @@ import retrofit2.Response;
 
 public class MyAuctionVehicleDetails extends AppCompatActivity implements RequestNotifier {
 
-    String str1, contactnumber, auction_id, vehicle_id;
-
-    private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
-    Handler handler;
-    CountDownTimer cdt;
-
-    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
+    String contactnumber, auction_id, vehicle_id;
     //String aauction_id, action_title, auctioncontact, start_date, start_time, end_date, end_time, auction_type, location, special_clauses, no_of_vehicles, endDateTime, highbid;
-
     //String vvehicle_id, title, contact_no, category, sub_category, model, manufacturer, Version, rto_city, location_city, year_of_registration, year_of_manufacture, colorr, registration_number, rc_available, kms_running, Hrs_running, no_of_owners, fual_type, seating_capacity, hypothication, engine_no, chassis_no, price, image, body_type, boat_type, bus_type, implementsd, finance_req, hp_capacity, JIB, Boon, tyre_condition, insurance_valid, insurance_idv, fitness_validity, permit_validity, air_condition, rv_type, transmission, tax_validity, application, permit_yesno, drive, lotNostr;
-
     //String CurrentBid_price;
 
-
     TextView vehiclemodel, vehicletitle, vehiclebrand, vehicleyear, vehicle_km_hrs, vehiclerc_invoice, vehicle_rto_city, vehicle_location, current_bid, moredetail, startpricetxt, startprice, lotNo;
-
     TextView categorydetails, regyeardetails, insurencedetails, ownerdetails, rc_availabledetails, ins_validitydetails, tax_validitydetails, fitness_validitydetails, permit_validitydetails, fueldetails, seatingdetails, hypodetails, permitdetails, drivedetails, transmissiondetails, bodydetails, boatdetails, rvdetails, applicationdetails, colordetails, tyredetails, bustypedetails, airdetails, registrationdetails, enginedetails, implementationdetails, chassicdetails, hpcapacitydetails, jibdetails, boondetails;
-
     ImageView vehicleImage;
-
-
     View vhapcapacity, vimplement, vair, vbus, vapp, vboat, vbody, vtrans, vdrive, vseat, vboon, vjib, vrv, vfuel, vhypo, vtyre, vengine, vchassic;
-
     TextView hpcapacitytxt, jibtxt, boontxt, bustext, airtext, seatcaptxt, implimentstext, applicationtext, transmissiontext, drivetext, bodytext, boattext, rvtext;
     TextView cameracount;
-
     String sendImage = "", Allimages = "";
     ArrayList<String> iname = new ArrayList<>();
 
@@ -59,8 +46,11 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_auction_vehicle_details);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         contactnumber = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
         vehicletitle = (TextView) findViewById(R.id.vehicletitle);
         vehiclemodel = (TextView) findViewById(R.id.vehiclemodel);
         vehiclebrand = (TextView) findViewById(R.id.vehiclebrand);
@@ -74,7 +64,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
         startpricetxt = (TextView) findViewById(R.id.startpricetxt);
         startprice = (TextView) findViewById(R.id.startprice);
         vehicleImage = (ImageView) findViewById(R.id.auctionimage);
-        lotNo = (TextView) findViewById(R.id.setlotno);
+        //lotNo = (TextView) findViewById(R.id.setlotno);
 
         categorydetails = (TextView) findViewById(R.id.categorydetails);
         regyeardetails = (TextView) findViewById(R.id.regyeardetails);
@@ -166,7 +156,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
                 GetVehicleForAuctionResponse auctionResponse = (GetVehicleForAuctionResponse) response.body();
                 for (GetVehicleForAuctionResponse.Vehicle auction : auctionResponse.getSuccess().getVehicle()) {
 
-                    lotNo.setText(auction.getLotNo());
+//                    lotNo.setText(auction.getLotNo());
                     chassicdetails.setText(auction.getChassisNo());
                     vehicle_km_hrs.setText(auction.getKmsRunning());
                     vehicle_rto_city.setText(auction.getRtoCity());
@@ -327,11 +317,43 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "My Auction Vehicle Details Activity");
+        }
     }
 
     @Override
     public void notifyString(String str) {
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(MyAuctionVehicleDetails.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
+            finish();
+        } else {
+            finish();
+            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
+        }
+    }
 }
+

@@ -312,11 +312,22 @@
             android:name=".register.CreateStoreContainer"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".auction.MyAuctionVehicleDetails" />
+        <activity
+            android:name=".auction.MyAuctionVehicleDetails"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan"
+            android:label="@string/title_activity_my_auction_vehicle_details" />
         <activity
             android:name=".view.OtherStoreView"
             android:label="@string/title_activity_other_store_view"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".auction.AdminVehicleDetails"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:windowSoftInputMode="adjustPan"
+            android:label="@string/title_activity_admin_vehicle_details" />
     </application>
 
 </manifest>
