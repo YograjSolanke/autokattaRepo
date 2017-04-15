@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/profile_card_view"
+    android:layout_marginBottom="@dimen/card_margin"
+    android:layout_marginEnd="@dimen/card_margin"
+    android:layout_marginStart="@dimen/card_margin"
+    android:layout_marginTop="@dimen/card_margin"
+    android:foreground="?attr/selectableItemBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativedetail">
+
+        <TextView
+            android:id="@+id/categorytxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Category :"
+            android:textColor="#2C3343" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="1dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/regyear"
+            android:background="@color/black"
+            android:textSize="16sp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/categorydetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/categorytxt"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/view3"
+            android:text="-----"
+            android:textColor="#2C3343" />
+
+        <View
+            android:id="@+id/vcat"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/categorydetails"
+            android:layout_marginTop="2dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/regyear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vcat"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Registration Year :"
+            android:textColor="#2C3343" />
+
+        <TextView
+            android:id="@+id/regyeardetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/regyear"
+            android:layout_below="@+id/categorydetails"
+            android:text="-----"
+            android:textColor="#2C3343" />
+
+        <View
+            android:id="@+id/vryear"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/regyeardetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/insurencetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vryear"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Insurence : "
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/insurencedetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/insurencetext"
+            android:layout_below="@+id/regyeardetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vinsurence"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/insurencedetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/ownertext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vinsurence"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Owner : "
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/ownerdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/ownertext"
+            android:layout_below="@+id/insurencedetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vowner"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/ownerdetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/rc_availabletxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vowner"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="RC Available :"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/rc_availabledetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/rc_availabletxt"
+            android:layout_below="@+id/ownerdetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vrc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/rc_availabledetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/ins_validitytext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vrc"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Insurence Validity :"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/ins_validitydetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/ins_validitytext"
+            android:layout_below="@+id/rc_availabledetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vinsval"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/ins_validitydetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/tax_validitytext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vinsval"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Tax Validity : "
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tax_validitydetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/tax_validitytext"
+            android:layout_below="@+id/ins_validitydetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vtaxval"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tax_validitydetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/fitness_validitytext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vtaxval"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Fitness Validity :"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/fitness_validitydetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/fitness_validitytext"
+            android:layout_below="@+id/tax_validitydetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vfitval"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/fitness_validitydetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/permit_validitytext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vfitval"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Permit Validity :"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/permit_validitydetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/permit_validitytext"
+            android:layout_below="@+id/fitness_validitydetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vperval"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/permit_validitydetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/fueltxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vperval"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Fuel :"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/fueldetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/fueltxt"
+            android:layout_below="@+id/permit_validitydetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vfuel"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/fueldetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/seatcaptxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vfuel"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Seating Capacity :"
+            android:textColor="#2C3343"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/seatingdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/seatcaptxt"
+            android:layout_below="@+id/fueldetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/vseat"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/seatingdetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc"></View>
+
+        <TextView
+            android:id="@+id/permittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vseat"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Permit : "
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/permitdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/categorydetails"
+            android:layout_alignTop="@+id/permittext"
+            android:layout_below="@+id/seatingdetails"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vpermit"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/permitdetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

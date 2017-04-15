@@ -47,6 +47,7 @@ import autokatta.com.response.GetStoreProfileInfoResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleByIdResponse;
 import autokatta.com.response.GetVehicleColor;
+import autokatta.com.response.GetVehicleForAuctionResponse;
 import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleModelResponse;
@@ -816,4 +817,8 @@ public interface ServiceApi {
     //get single store info
     @POST("getStoreInfo.php")
     Call<StoreResponse> getStoreData(@Query("mycontact") String contact, @Query("store_id") String store_id);
+
+    @GET("getVehicleForAuction.php")
+    Call<GetVehicleForAuctionResponse> getVehicleAuction(@Query("auction_id") String auctionId, @Query("vehicle_id") String vehicleId,
+                                                         @Query("contact") String contact);
 }

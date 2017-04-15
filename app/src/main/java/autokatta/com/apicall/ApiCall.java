@@ -58,6 +58,7 @@ import autokatta.com.response.GetStoreProfileInfoResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleByIdResponse;
 import autokatta.com.response.GetVehicleColor;
+import autokatta.com.response.GetVehicleForAuctionResponse;
 import autokatta.com.response.GetVehicleImplementsResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleModelResponse;
@@ -5022,6 +5023,40 @@ Get saved search Seller list
 
                     @Override
                     public void onFailure(Call<StoreResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Store response.
+     */
+
+    public void getVehicleAuction(String auctionId, String vehicleId, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetVehicleForAuctionResponse> mGetAuction = mServiceApi.getVehicleAuction(auctionId, vehicleId, contact);
+                mGetAuction.enqueue(new Callback<GetVehicleForAuctionResponse>() {
+                    @Override
+                    public void onResponse(Call<GetVehicleForAuctionResponse> call, Response<GetVehicleForAuctionResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetVehicleForAuctionResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

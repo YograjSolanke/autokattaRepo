@@ -1,12 +1,15 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.response.GetAuctionEventResponse;
 
 /**
@@ -25,17 +29,23 @@ import autokatta.com.response.GetAuctionEventResponse;
 public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAdapter.MyViewHolder> {
     private Activity mActivity;
     private List<GetAuctionEventResponse.Vehicle> mItemList = new ArrayList<>();
+    private String auctionId, showPrice, contact;
 
-    public PreviewAuctionAdapter(Activity mActivity, List<GetAuctionEventResponse.Vehicle> mItemList) {
+    public PreviewAuctionAdapter(Activity mActivity, List<GetAuctionEventResponse.Vehicle> mItemList, String auctionId
+            , String showPrice, String contact) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
+        this.auctionId = auctionId;
+        this.showPrice = showPrice;
+        this.contact = contact;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mAuctionCardView;
         ImageView mAuctionVehicleImage;
         TextView mRegistrationNo, mSetLotNo, mVehicleName, mVehicleBrand, mVehicleModel, mVehicleYearOfMfg,
-                mVehicleKmsHrs, mVehicleLocation, mVehicleRtoCity, mViewMore;
+                mVehicleKmsHrs, mKmsHrs, mVehicleLocation, mVehicleRtoCity, mViewMore, mStartPrice, mReceivePrice;
+        LinearLayout mLinear, mLinearReserve;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -49,9 +59,14 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
             mVehicleModel = (TextView) itemView.findViewById(R.id.vehicle_model);
             mVehicleYearOfMfg = (TextView) itemView.findViewById(R.id.vehicle_year_of_mfg);
             mVehicleKmsHrs = (TextView) itemView.findViewById(R.id.vehicle_kms_hrs);
+            mKmsHrs = (TextView) itemView.findViewById(R.id.kms_hrs);
             mVehicleLocation = (TextView) itemView.findViewById(R.id.vehicle_locations);
             mVehicleRtoCity = (TextView) itemView.findViewById(R.id.vehicle_rto_city);
+            mStartPrice = (TextView) itemView.findViewById(R.id.startprice);
+            mReceivePrice = (TextView) itemView.findViewById(R.id.reserveprice);
             mViewMore = (TextView) itemView.findViewById(R.id.view_more);
+            mLinear = (LinearLayout) itemView.findViewById(R.id.vrl3);
+            mLinearReserve = (LinearLayout) itemView.findViewById(R.id.linearreserve);
         }
     }
 
@@ -91,22 +106,54 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
         holder.mVehicleLocation.setText(mItemList.get(position).getLocationCity());
         holder.mVehicleRtoCity.setText(mItemList.get(position).getRtoCity());
 
+
+        if (mItemList.get(position).getKmsRunning().equals(""))
+            holder.mVehicleKmsHrs.setText(mItemList.get(position).getKmsRunning() + "" + "Hrs");
+        else
+            holder.mVehicleKmsHrs.setText(mItemList.get(position).getKmsRunning() + "" + "Kms");
+
+        if (showPrice.equalsIgnoreCase("Show")) {
+            holder.mLinear.setVisibility(View.VISIBLE);
+            holder.mLinearReserve.setVisibility(View.GONE);
+            holder.mStartPrice.setText(mItemList.get(position).getStartPrice());
+            holder.mReceivePrice.setText(mItemList.get(position).getReservePrice());
+        } else
+            holder.mLinear.setVisibility(View.GONE);
+
+
+        if (mItemList.get(position).getStartPrice().equals(""))
+            holder.mStartPrice.setText("NA");
+
+        if (mItemList.get(position).getReservePrice().equals(""))
+            holder.mReceivePrice.setText("NA");
+
         holder.mViewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mItemList.get(position).getVehicleId().startsWith("A ")) {
-                                /*Bundle b = new Bundle();
-                                MyAuctionVehicleDetails frag = new MyAuctionVehicleDetails();
-                                b.putString("vehicle_id", VehiId);
-                                b.putString("auction_id", auction_id);
-                                frag.setArguments(b);
+                    Bundle b = new Bundle();
+                    b.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                    b.putString("auction_id", auctionId);
 
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    Intent intent = new Intent(mActivity, MyAuctionVehicleDetails.class);
+                    intent.putExtras(b);
+                    mActivity.startActivity(intent);
+                    mActivity.finish();
+                                /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.containerView, frag);
                                 fragmentTransaction.addToBackStack("myauctionvehicledetails");
                                 fragmentTransaction.commit();*/
+
                 } else {
+                    Bundle b = new Bundle();
+                    b.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                    b.putString("auction_id", auctionId);
+
+                    Intent intent = new Intent(mActivity, MyAuctionVehicleDetails.class);
+                    intent.putExtras(b);
+                    mActivity.startActivity(intent);
+                    mActivity.finish();
                                 /*Toast.makeText(getActivity(),"Admin vehicle",Toast.LENGTH_SHORT).show();
                                 Bundle b = new Bundle();
                                 b.putString("vehicle_id", VehiId);

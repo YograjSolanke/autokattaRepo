@@ -273,7 +273,8 @@ public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNo
                     vehicle.setVehicleStatus(vehicle.getVehicleStatus());
                     vehicles.add(vehicle);
                 }
-                PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(PreviewUpcomingEvent.this, vehicles);
+                PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(PreviewUpcomingEvent.this, vehicles, auction_id, showPrice,
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {

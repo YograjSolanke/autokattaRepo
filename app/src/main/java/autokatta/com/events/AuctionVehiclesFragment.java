@@ -1,5 +1,6 @@
 package autokatta.com.events;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -125,7 +126,9 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
                     vehicles.add(vehicle);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
-                PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(getActivity(), vehicles);
+                PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(getActivity(), vehicles, strAuctionId, "0",
+                        getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                .getString("loginContact", ""));
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {

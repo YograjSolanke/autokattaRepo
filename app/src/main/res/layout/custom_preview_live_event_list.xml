@@ -2,18 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/auction_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/card_margin"
         android:layout_marginLeft="@dimen/card_margin"
         android:layout_marginRight="@dimen/card_margin"
         android:layout_marginTop="@dimen/card_margin"
-        android:layout_marginBottom="@dimen/card_margin"
         android:foreground="?attr/selectableItemBackground">
 
         <RelativeLayout
@@ -63,9 +63,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
                         android:text="Lot No."
                         android:textColor="#2C3343"
-                        android:layout_marginStart="7dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -248,14 +248,75 @@
                         android:textColor="#808080" />
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:id="@+id/vrl3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:visibility="gone"
+                    android:weightSum="100">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/startpricetxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Start price"
+                            android:textColor="#808080"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/startprice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="0000Rs"
+                            android:textColor="#808080" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearreserve"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/reservepricetxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Reserve price"
+                            android:textColor="#808080"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/reserveprice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="0000Rs"
+                            android:textColor="#808080" />
+                    </LinearLayout>
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/view_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View More"
                     android:layout_marginStart="@dimen/card_margin"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimary" />
+                    android:text="View More"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>

@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:id="@+id/card_view1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/card_view"
+    android:layout_marginBottom="@dimen/card_margin"
+    android:layout_marginEnd="@dimen/card_margin"
+    android:layout_marginStart="@dimen/card_margin"
+    android:layout_marginTop="@dimen/card_margin"
+    android:foreground="?attr/selectableItemBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativedetail">
+
+        <TextView
+            android:id="@+id/hypotext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Hypothetication : "
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="1dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/hypotext"
+            android:background="@color/black"
+            android:textSize="16sp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/hypodetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/hypotext"
+            android:layout_toEndOf="@+id/view4"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vhypo"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/hypodetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/drivetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vhypo"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Drive Type : "
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/drivedetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/drivetext"
+            android:layout_below="@+id/hypodetails"
+            android:layout_toEndOf="@+id/view4"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vdrive"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/drivedetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc"
+            android:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/transmissiontext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vdrive"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Transmission : "
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/transmissiondetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/transmissiontext"
+            android:layout_below="@+id/drivedetails"
+            android:layout_toEndOf="@+id/view4"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/vtrans"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/transmissiondetails"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/bodytext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Body Type : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_below="@+id/vtrans"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/bodydetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:layout_toEndOf="@+id/view4"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/bodytext"
+            android:layout_below="@+id/vtrans" />
+
+        <View
+            android:layout_below="@+id/bodydetails"
+            android:background="#cccccc"
+            android:id="@+id/vbody"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/boattext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Boat Type : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_below="@+id/vbody"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/boatdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/boattext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/bodydetails" />
+
+        <View
+            android:layout_below="@+id/boatdetails"
+            android:background="#cccccc"
+            android:id="@+id/vboat"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/rvtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RV Type : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_below="@+id/vboat"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/rvdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_alignTop="@+id/rvtext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/boatdetails" />
+
+        <View
+            android:layout_below="@+id/rvdetails"
+            android:background="#cccccc"
+            android:id="@+id/vrv"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+
+        <TextView
+            android:id="@+id/applicationtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:text="Application : "
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_below="@+id/vrv"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/applicationdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/applicationtext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/rvdetails" />
+
+        <View
+            android:layout_below="@+id/applicationdetails"
+            android:background="#cccccc"
+            android:id="@+id/vapp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+
+        <TextView
+            android:id="@+id/colortext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:text="Color : "
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_below="@+id/vapp"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/colordetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_alignTop="@+id/colortext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/applicationdetails" />
+
+        <View
+            android:layout_below="@+id/colordetails"
+            android:background="#cccccc"
+            android:id="@+id/vcolor"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/tyretext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tyre Condition : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:layout_marginTop="5dp"
+            android:visibility="visible"
+            android:layout_below="@+id/vcolor"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/tyredetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_alignTop="@+id/tyretext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/colordetails" />
+
+        <View
+            android:layout_below="@+id/tyredetails"
+            android:background="#cccccc"
+            android:id="@+id/vtyre"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+
+        <TextView
+            android:id="@+id/bustext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bus Type : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_below="@+id/vtyre"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/bustypedetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/bustext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/tyredetails" />
+
+        <View
+            android:layout_below="@+id/bustypedetails"
+            android:background="#cccccc"
+            android:id="@+id/vbus"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/airtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:text="Air Condition : "
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_below="@+id/vbus"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/airdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/airtext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/bustypedetails" />
+
+        <View
+            android:layout_below="@+id/airdetails"
+            android:background="#cccccc"
+            android:id="@+id/vair"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/registrationtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registration No : "
+            android:textColor="#2C3343"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:visibility="visible"
+            android:layout_below="@+id/vair"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/registrationdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_alignTop="@+id/registrationtext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/airdetails" />
+
+        <View
+            android:layout_below="@+id/registrationdetails"
+            android:background="#cccccc"
+            android:id="@+id/vregno"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/enginetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Engine No : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_below="@+id/vregno"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/enginedetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_alignTop="@+id/enginetext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/registrationdetails" />
+
+        <View
+            android:layout_below="@+id/enginedetails"
+            android:background="#cccccc"
+            android:id="@+id/vengine"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/implimentstext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Implimentation : "
+            android:textColor="#2C3343"
+            android:layout_marginStart="5dp"
+            android:visibility="gone"
+            android:layout_below="@+id/vengine"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/implementationdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/implimentstext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/enginedetails" />
+
+        <View
+            android:layout_below="@+id/implementationdetails"
+            android:background="#cccccc"
+            android:id="@+id/vimplement"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/chassictext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Chassic No : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_below="@+id/vimplement"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/chassicdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="visible"
+            android:layout_alignTop="@+id/chassictext"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/implementationdetails" />
+
+        <View
+            android:layout_below="@+id/chassicdetails"
+            android:background="#cccccc"
+            android:id="@+id/vchassic"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/hpcapacitytxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Hp/Capacity : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_below="@+id/vchassic"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/hpcapacitydetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/hpcapacitytxt"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/vchassic" />
+
+        <View
+            android:layout_below="@+id/hpcapacitydetails"
+            android:background="#cccccc"
+            android:id="@+id/vhapcapacity"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/jibtxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="JIB : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_below="@+id/vhapcapacity"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/jibdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/jibtxt"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/vhapcapacity" />
+
+        <View
+            android:layout_below="@+id/jibdetails"
+            android:background="#cccccc"
+            android:id="@+id/vjib"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/boontxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Boon : "
+            android:layout_marginStart="5dp"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_below="@+id/vjib"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/boondetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-----"
+            android:textColor="#2C3343"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/boontxt"
+            android:layout_toEndOf="@+id/view4"
+            android:layout_below="@+id/vjib" />
+
+        <View
+            android:layout_below="@+id/boondetails"
+            android:background="#cccccc"
+            android:id="@+id/vboon"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
