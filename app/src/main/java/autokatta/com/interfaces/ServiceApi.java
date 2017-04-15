@@ -77,6 +77,7 @@ import autokatta.com.response.SellerResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreOldAdminResponse;
+import autokatta.com.response.StoreResponse;
 import autokatta.com.response.YourBidResponse;
 import autokatta.com.response.getBussinessChatResponse;
 import autokatta.com.response.getDealsResponse;
@@ -810,4 +811,9 @@ public interface ServiceApi {
     //get Followers
     @POST("getFollowers.php")
     Call<GetFollowersResponse> _autokattaGetFollowers(@Query("id") String contact);
+
+
+    //get single store info
+    @POST("getStoreInfo.php")
+    Call<StoreResponse> getStoreData(@Query("mycontact") String contact, @Query("store_id") String store_id);
 }

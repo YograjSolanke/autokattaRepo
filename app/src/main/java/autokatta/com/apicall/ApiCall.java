@@ -88,6 +88,7 @@ import autokatta.com.response.SellerResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreOldAdminResponse;
+import autokatta.com.response.StoreResponse;
 import autokatta.com.response.YourBidResponse;
 import autokatta.com.response.getBussinessChatResponse;
 import autokatta.com.response.getDealsResponse;
@@ -4983,6 +4984,44 @@ Get saved search Seller list
 
                     @Override
                     public void onFailure(Call<GetFollowersResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+     /*
+    Get Store response.
+     */
+
+    public void getStoreData(String contact, String store_id) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<StoreResponse> mGetfollowers = mServiceApi.getStoreData(contact, store_id);
+                mGetfollowers.enqueue(new Callback<StoreResponse>() {
+                    @Override
+                    public void onResponse(Call<StoreResponse> call, Response<StoreResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<StoreResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
