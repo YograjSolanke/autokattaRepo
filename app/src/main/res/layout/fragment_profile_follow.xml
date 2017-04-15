@@ -13,14 +13,4 @@
         android:layout_marginTop="2dp"
         android:textColor="#2C3343" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:src="@mipmap/ic_menu"
-        app:layout_anchor="@id/appbar" />
 </RelativeLayout>

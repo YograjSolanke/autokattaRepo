@@ -70,6 +70,8 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
         } else {
             contact = mSharedPreferences.getString("loginContact", "");
             Log.i("User", "->" + contact);
+            mCreateGroup.setVisibility(View.VISIBLE);
+            getGroups();
         }
 
         return mGroups;

@@ -25,36 +25,34 @@ import autokatta.com.response.GetOwnVehiclesResponse;
 
 public class MyVehiclesAdapter extends RecyclerView.Adapter<MyVehiclesAdapter.MyViewHolder> {
 
-    List<GetOwnVehiclesResponse.Success>mGetOwnVehiclesList=new ArrayList<>();
+    List<GetOwnVehiclesResponse.Success> mGetOwnVehiclesList = new ArrayList<>();
     Activity activity;
-    Bundle bundle= new Bundle();
+    Bundle bundle = new Bundle();
 
     public MyVehiclesAdapter(Activity activity, List<GetOwnVehiclesResponse.Success> mList) {
         this.mGetOwnVehiclesList = mList;
         this.activity = activity;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
-   {
-       TextView vehicleType,vehicleYear,vehicleBrand, vehicleModel, vehicleVersion, vehicleSubcategory, uploadDates;
-       ImageView vehi_pic, edit_vehi;
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView vehicleType, vehicleYear, vehicleBrand, vehicleModel, vehicleVersion, vehicleSubcategory, uploadDates;
+        ImageView vehi_pic, edit_vehi;
 
-       public MyViewHolder(View itemView) {
-           super(itemView);
-           vehicleType = (TextView) itemView.findViewById(R.id.vehicle_type);
-           vehicleYear = (TextView) itemView.findViewById(R.id.year);
-           vehicleBrand = (TextView) itemView.findViewById(R.id.brand);
-           vehicleModel = (TextView) itemView.findViewById(R.id.model);
-           vehicleVersion = (TextView) itemView.findViewById(R.id.version);
-           vehicleSubcategory = (TextView) itemView.findViewById(R.id.subcategory);
-           uploadDates = (TextView) itemView.findViewById(R.id.uploaddate);
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            vehicleType = (TextView) itemView.findViewById(R.id.vehicle_type);
+            vehicleYear = (TextView) itemView.findViewById(R.id.year);
+            vehicleBrand = (TextView) itemView.findViewById(R.id.brand);
+            vehicleModel = (TextView) itemView.findViewById(R.id.model);
+            vehicleVersion = (TextView) itemView.findViewById(R.id.version);
+            vehicleSubcategory = (TextView) itemView.findViewById(R.id.subcategory);
+            uploadDates = (TextView) itemView.findViewById(R.id.year);
 
-           vehi_pic = (ImageView)itemView.findViewById(R.id.image1);
-           edit_vehi = (ImageView)itemView.findViewById(R.id.edtVehicle);
+            vehi_pic = (ImageView) itemView.findViewById(R.id.image1);
+            edit_vehi = (ImageView) itemView.findViewById(R.id.edtVehicle);
 
-       }
-   }
-
+        }
+    }
 
 
     @Override
@@ -75,47 +73,50 @@ public class MyVehiclesAdapter extends RecyclerView.Adapter<MyVehiclesAdapter.My
         holder.vehicleVersion.setText(mGetOwnVehiclesList.get(position).getVersion());
         holder.vehicleSubcategory.setText(mGetOwnVehiclesList.get(position).getSubcategory());
 
-
         holder.edit_vehi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(activity,NextRegistrationContinue.class);
-               i.putExtra("action", "MyVehicles");
-                i.putExtra("vehicletype",holder.vehicleType.getText().toString());
-                i.putExtra("vehicleyear",holder.vehicleYear.getText().toString());
-                i.putExtra("vehiclebrand",holder.vehicleBrand.getText().toString());
-                i.putExtra("vehiclemodel",holder.vehicleModel.getText().toString());
-                i.putExtra("vehicleversion",holder.vehicleVersion.getText().toString());
+                Intent i = new Intent(activity, NextRegistrationContinue.class);
+                i.putExtra("action", "MyVehicles");
+                i.putExtra("vehicletype", holder.vehicleType.getText().toString());
+                i.putExtra("vehicleyear", holder.vehicleYear.getText().toString());
+                i.putExtra("vehiclebrand", holder.vehicleBrand.getText().toString());
+                i.putExtra("vehiclemodel", holder.vehicleModel.getText().toString());
+                i.putExtra("vehicleversion", holder.vehicleVersion.getText().toString());
                 i.putExtra("vehiclesubcategory", holder.vehicleSubcategory.getText().toString());
 
-                i.putExtra("idss",mGetOwnVehiclesList.get(position).getId());
-                i.putExtra("vehicleno",mGetOwnVehiclesList.get(position).getVehiNo());
-                i.putExtra("taxvalidity",mGetOwnVehiclesList.get(position).getTaxValidity());
-                i.putExtra("fitnessvalidity",mGetOwnVehiclesList.get(position).getFitnessValidity());
-                i.putExtra("permitvalidity",mGetOwnVehiclesList.get(position).getPermitValidity());
-                i.putExtra("insurance",mGetOwnVehiclesList.get(position).getInsurance());
-                i.putExtra("puc",mGetOwnVehiclesList.get(position).getPuc());
-                i.putExtra("lastservice",mGetOwnVehiclesList.get(position).getLastServiceDate());
-                i.putExtra("nextservice",mGetOwnVehiclesList.get(position).getNextServiceDate());
+                i.putExtra("idss", mGetOwnVehiclesList.get(position).getId());
+                i.putExtra("vehicleno", mGetOwnVehiclesList.get(position).getVehiNo());
+                i.putExtra("taxvalidity", mGetOwnVehiclesList.get(position).getTaxValidity());
+                i.putExtra("fitnessvalidity", mGetOwnVehiclesList.get(position).getFitnessValidity());
+                i.putExtra("permitvalidity", mGetOwnVehiclesList.get(position).getPermitValidity());
+                i.putExtra("insurance", mGetOwnVehiclesList.get(position).getInsurance());
+                i.putExtra("puc", mGetOwnVehiclesList.get(position).getPuc());
+                i.putExtra("lastservice", mGetOwnVehiclesList.get(position).getLastServiceDate());
+                i.putExtra("nextservice", mGetOwnVehiclesList.get(position).getNextServiceDate());
                 activity.startActivity(i);
                 activity.finish();
             }
         });
         try {
 //To set Date
+            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
 
-            DateFormat date = new SimpleDateFormat(" MMM dd ");
+            holder.uploadDates.setText(newDateFormat.format(inputDate.parse(mGetOwnVehiclesList.get(position).getUploaddate())));
+
+            //for time and date warnings
+
+                 /*  DateFormat date = new SimpleDateFormat(" MMM dd ");
             DateFormat time = new SimpleDateFormat(" hh:mm a");
 
             holder.uploadDates.setText(date.format(mGetOwnVehiclesList.get(position).getUploaddate()) + time.format(mGetOwnVehiclesList.get(position).getUploaddate()));
-        }catch (Exception e)
-        {
+       */
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
-
     @Override
     public int getItemCount() {
         return mGetOwnVehiclesList.size();

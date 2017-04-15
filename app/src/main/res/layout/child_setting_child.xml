@@ -14,4 +14,5 @@
         android:paddingTop="@dimen/text_about"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/background" />
+
 </LinearLayout>

@@ -20,6 +20,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.fragment_profile.AboutStore;
 import autokatta.com.fragment_profile.Event;
+import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
 import autokatta.com.fragment_profile.Katta;
 import autokatta.com.fragment_profile.Modules;
@@ -94,7 +95,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         adapter.addFragment(new Event(), "EVENT");
         adapter.addFragment(new Katta(), "KATTA");
         adapter.addFragment(new Modules(), "MODULE");
-       // adapter.addFragment(new Follow(), "FOLLOW");
+        adapter.addFragment(new Follow(), "FOLLOW");
         adapter.addFragment(new MyVehicles(), "MY VEHICLES");
         viewPager.setAdapter(adapter);
     }
