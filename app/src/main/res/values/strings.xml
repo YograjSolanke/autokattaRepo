@@ -159,6 +159,4 @@
     <string name="title_activity_bussiness_chat">BussinessChatActivity</string>
     <string name="title_activity_search_vehicle">SearchVehicleActivity</string>
     <string name="title_activity_other_store_view">OtherStoreView</string>
-    <string name="title_activity_my_auction_vehicle_details">MyAuctionVehicleDetails</string>
-    <string name="title_activity_admin_vehicle_details">AdminVehicleDetails</string>
 </resources>
