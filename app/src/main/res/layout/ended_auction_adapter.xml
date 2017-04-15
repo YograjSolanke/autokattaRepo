@@ -127,7 +127,9 @@
                     android:layout_marginStart="5dp"
                     android:text="Start :"
                     android:textColor="#808080"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+
+                </TextView>
 
                 <TextView
                     android:id="@+id/datetime1"
@@ -218,11 +220,64 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/Rl_auction_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl5"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/Txt_auction_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auction Category :"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/auction_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/Txt_auction_category"
+                    android:hint="category"
+                    android:textColor="#808080" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Rl_stockLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Rl_auction_category"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/Txt_stockLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location :"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/stockLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/Txt_stockLocation"
+                    android:hint="location"
+                    android:textColor="#808080" />
+
+            </RelativeLayout>
+
+
             <LinearLayout
                 android:id="@+id/rl6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rl5"
+                android:layout_below="@+id/Rl_stockLocation"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:weightSum="2">

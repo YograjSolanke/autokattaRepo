@@ -78,7 +78,7 @@ public class CreateAuctionFragment extends Fragment
     ApiCall apiCall;
     String Radiobtn_click = "";
     GenericFunctions validObj;
-    String ids = "", cluases = "", name, stdate, sttime, eddate, edtime, type, location;
+    String ids = "", cluases = "", name, stdate, sttime, eddate, edtime, type, location, auctionCategory, stockLocation;
     private ConnectionDetector mConnectionDetector;
 
     public CreateAuctionFragment() {
@@ -189,8 +189,8 @@ public class CreateAuctionFragment extends Fragment
                     edtime = endtime.getText().toString();
                     location = address.getText().toString();
 
-                    final String auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
-                    final String stockLocation = stockLocationSpinner.getSelectedItem().toString().replaceAll(" ", "");
+                    auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
+                    stockLocation = stockLocationSpinner.getSelectedItem().toString().replaceAll(" ", "");
                     Log.i("category", "->" + auctionCategory);
                     Log.i("states", "->" + stockLocation);
 
@@ -445,6 +445,9 @@ public class CreateAuctionFragment extends Fragment
                                             b.putString("ids", ids);
                                             b.putString("cluases", cluases);
                                             b.putString("className", "CreateAuction");
+                                            b.putString("category", auctionCategory);
+                                            b.putString("location", stockLocation);
+                                            b.putString("location", location);
                                             b.putBooleanArray("positionArray", positionArray);
 
                                             AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();

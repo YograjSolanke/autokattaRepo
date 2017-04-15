@@ -22,13 +22,15 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
 
 
     private String strAuctionId = "", strAuctionTitle = "", strVehicleCount = "", strStartDate = "", strStartTime = "",
-            strEndDate = "", strEndTime = "", strSpecialClauses = "", strStartdatetime = "", strEnddatetime = "", strParticipantcount = "", strSpecialClause = "";
+            strEndDate = "", strEndTime = "", strSpecialClauses = "", strStartdatetime = "", strEnddatetime = "",
+            strParticipantcount = "", strSpecialClause = "", strCategory = "", strLocation = "";
 
     CollapsingToolbarLayout mCollapsingToolbar;
 
     TabLayout mTabLayout;
     ViewPager mViewPager;
-    TextView txtVehicle, txtEndDate, txtEndTime, txtStartTime, txtStartDate, txtParticipant, txtTimer;
+    TextView txtVehicle, txtEndDate, txtEndTime, txtStartTime, txtStartDate, txtParticipant, txtTimer,
+            txtCategory, txtLocation;
     FloatingActionButton btnSpecialclause, btnLive;
     AuctionVehiclesFragment auctionVehiclesFragment;
     AuctionParticipantsFragment auctionParticipantsFragment;
@@ -54,6 +56,8 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
         strStartdatetime = getIntent().getExtras().getString("startdatetime");
         strEnddatetime = getIntent().getExtras().getString("enddatetime");
         strParticipantcount = getIntent().getExtras().getString("participant_count");
+        strCategory = getIntent().getExtras().getString("category");
+        strLocation = getIntent().getExtras().getString("location");
 
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mTabLayout = (TabLayout) findViewById(R.id.preview_myended_auction_tabs);
@@ -65,6 +69,8 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
         txtStartTime = (TextView) findViewById(R.id.start_time);
         txtEndDate = (TextView) findViewById(R.id.end_date);
         txtEndTime = (TextView) findViewById(R.id.end_time);
+        txtCategory = (TextView) findViewById(R.id.category);
+        txtLocation = (TextView) findViewById(R.id.location);
         btnSpecialclause = (FloatingActionButton) findViewById(R.id.clauses);
         btnLive = (FloatingActionButton) findViewById(R.id.gotoauction);
 
@@ -92,6 +98,8 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
                     txtEndTime.setText(strEndTime);
                     txtVehicle.setText(strVehicleCount);
                     txtParticipant.setText(strParticipantcount);
+                    txtCategory.setText(strCategory);
+                    txtLocation.setText(strLocation);
                     //mAuctionText.setText(getString(R.string.live_auction));
                     mBundle.putString("auctionid", strAuctionId);
 
@@ -159,6 +167,8 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
                 b.putString("enddatetime", strEnddatetime);
                 b.putString("startdatetime", strStartdatetime);
                 b.putString("participant_count", strParticipantcount);
+                b.putString("category", strCategory);
+                b.putString("location", strLocation);
 
                 finish();
                 Intent intent = new Intent(MyEndedAuctionPreviewActivity.this, MyEndedAuctionPreviewNextActivity.class);

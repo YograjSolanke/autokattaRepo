@@ -66,6 +66,30 @@ public class MySavedAuctionResponse {
         @Expose
         private boolean positionArray[] = null;
 
+        @SerializedName("auction_category")
+        @Expose
+        private String auctionCategory;
+
+        @SerializedName("stockLocation")
+        @Expose
+        private String stockLocation;
+
+        public String getStockLocation() {
+            return stockLocation;
+        }
+
+        public void setStockLocation(String stockLocation) {
+            this.stockLocation = stockLocation;
+        }
+
+        public String getAuctioncategory() {
+            return auctionCategory;
+        }
+
+        public void setAuctioncategory(String auctionCategory) {
+            this.auctionCategory = auctionCategory;
+        }
+
         public String getAuctionId() {
             return auctionId;
         }

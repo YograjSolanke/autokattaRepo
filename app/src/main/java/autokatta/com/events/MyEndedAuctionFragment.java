@@ -106,6 +106,13 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
                         auctionSuccess.setSpecialClauses(auctionSuccess.getSpecialClauses());
                         auctionSuccess.setAuctionType(auctionSuccess.getAuctionType());
                         auctionSuccess.setGoingcount(auctionSuccess.getGoingcount());
+
+                        auctionSuccess.setAuctioncategory(auctionSuccess.getAuctioncategory());
+                        if (auctionSuccess.getStockLocation().equals(""))
+                            auctionSuccess.setStockLocation(auctionSuccess.getLocation());
+                        else
+                            auctionSuccess.setStockLocation(auctionSuccess.getStockLocation());
+
                         myActiveAuctionResponseList.add(auctionSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);

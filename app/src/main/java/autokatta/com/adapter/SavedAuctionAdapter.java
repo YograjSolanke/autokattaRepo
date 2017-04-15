@@ -29,7 +29,7 @@ import autokatta.com.response.MySavedAuctionResponse;
 public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapter.AuctionHolder> {
 
     Activity activity;
-    List<MySavedAuctionResponse.Success> mMainlist = new ArrayList<>();
+    private List<MySavedAuctionResponse.Success> mMainlist = new ArrayList<>();
 
     public SavedAuctionAdapter(Activity activity, List<MySavedAuctionResponse.Success> itemlist) {
         this.activity = activity;
@@ -55,6 +55,8 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
         holder.end_date.setText(mMainlist.get(position).getEndDate());
         holder.end_time.setText(mMainlist.get(position).getEndTime());
         holder.editvehicle.setText(mMainlist.get(position).getNoOfVehicles());
+        holder.mAuction_category.setText(mMainlist.get(position).getAuctioncategory());
+        holder.mStockLocation.setText(mMainlist.get(position).getStockLocation());
 
         holder.special_clauses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +97,8 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
 //                b.putString("cluase", cluases);
 //                b.putString("ids", ids);
                 b.putString("cluases", mMainlist.get(position).getSpecialClauses());
+                b.putString("category", mMainlist.get(position).getAuctioncategory());
+                b.putString("location", mMainlist.get(position).getStockLocation());
 //
                 //Boolean [] array=(Boolean[]) mMainlist.get(position).getPositionArray().toArray();
                 b.putBooleanArray("positionArray", mMainlist.get(position).getPositionArray());
@@ -126,7 +130,7 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
         EditText end_date;
         EditText end_time;
         EditText editvehicle;
-        TextView timer;
+        TextView timer, mAuction_category, mStockLocation;
         Button btnactivate, special_clauses;
 
         AuctionHolder(View view) {
@@ -140,6 +144,8 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
             special_clauses = (Button) view.findViewById(R.id.special_clauses);
 
             btnactivate = (Button) view.findViewById(R.id.btnactivate);
+            mAuction_category = (TextView) view.findViewById(R.id.auction_category);
+            mStockLocation = (TextView) view.findViewById(R.id.stockLocation);
 
         }
 

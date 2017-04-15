@@ -113,6 +113,12 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
                         success.setSpecialPosition(success.getSpecialPosition());
                         success.setPositionArray(success.getPositionArray());
 
+                        success.setAuctioncategory(success.getAuctioncategory());
+                        if (success.getStockLocation().equals(""))
+                            success.setStockLocation(success.getLocation());
+                        else
+                            success.setStockLocation(success.getStockLocation());
+                        
                         mysavedAuctionList.add(success);
 
 

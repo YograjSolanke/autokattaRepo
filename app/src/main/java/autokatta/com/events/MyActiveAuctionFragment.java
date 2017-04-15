@@ -88,8 +88,6 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
                     myActiveAuctionResponseList.clear();
                     for (MyActiveAuctionResponse.Success.Auction auctionSuccess : myActiveAuctionResponse.getSuccess().getAuction()) {
 
-
-
                         auctionSuccess.setAuctionId(auctionSuccess.getAuctionId());
                         auctionSuccess.setActionTitle(auctionSuccess.getActionTitle());
                         auctionSuccess.setNoOfVehicle(auctionSuccess.getNoOfVehicle());

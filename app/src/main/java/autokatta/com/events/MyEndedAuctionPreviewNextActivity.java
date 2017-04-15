@@ -20,13 +20,15 @@ import autokatta.com.adapter.TabAdapterName;
 public class MyEndedAuctionPreviewNextActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String strAuctionId = "", strAuctionTitle = "", strVehicleCount = "", strStartDate = "", strStartTime = "",
-            strEndDate = "", strEndTime = "", strSpecialClauses = "", strStartdatetime = "", strEnddatetime = "", strParticipantcount = "", strSpecialClause = "";
+            strEndDate = "", strEndTime = "", strSpecialClauses = "", strStartdatetime = "", strEnddatetime = "",
+            strParticipantcount = "", strSpecialClause = "", strCategory = "", strLocation = "";
 
     CollapsingToolbarLayout mCollapsingToolbar;
 
     TabLayout mTabLayout;
     ViewPager mViewPager;
-    TextView txtVehicle, txtEndDate, txtEndTime, txtStartTime, txtStartDate, txtParticipant, txtTimer;
+    TextView txtVehicle, txtEndDate, txtEndTime, txtStartTime, txtStartDate, txtParticipant, txtTimer,
+            txtCategory, txtLocation;
     FloatingActionButton btnSpecialclause;
 
     MyEndedAuctionApprovedFragment auctionApprovedFragment;
@@ -54,6 +56,8 @@ public class MyEndedAuctionPreviewNextActivity extends AppCompatActivity impleme
         strStartdatetime = getIntent().getExtras().getString("startdatetime");
         strEnddatetime = getIntent().getExtras().getString("enddatetime");
         strParticipantcount = getIntent().getExtras().getString("participant_count");
+        strCategory = getIntent().getExtras().getString("category");
+        strLocation = getIntent().getExtras().getString("location");
 
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mTabLayout = (TabLayout) findViewById(R.id.preview_next_myended_auction_tabs);
@@ -65,6 +69,8 @@ public class MyEndedAuctionPreviewNextActivity extends AppCompatActivity impleme
         txtStartTime = (TextView) findViewById(R.id.start_time);
         txtEndDate = (TextView) findViewById(R.id.end_date);
         txtEndTime = (TextView) findViewById(R.id.end_time);
+        txtCategory = (TextView) findViewById(R.id.category);
+        txtLocation = (TextView) findViewById(R.id.location);
         btnSpecialclause = (FloatingActionButton) findViewById(R.id.clauses);
 
 
@@ -95,6 +101,8 @@ public class MyEndedAuctionPreviewNextActivity extends AppCompatActivity impleme
                     txtEndTime.setText(strEndTime);
                     txtVehicle.setText(strVehicleCount);
                     txtParticipant.setText(strParticipantcount);
+                    txtCategory.setText(strCategory);
+                    txtLocation.setText(strLocation);
                     //mAuctionText.setText(getString(R.string.live_auction));
                     mBundle.putString("auctionid", strAuctionId);
                     mBundle.putString("specialclauses", strSpecialClauses);

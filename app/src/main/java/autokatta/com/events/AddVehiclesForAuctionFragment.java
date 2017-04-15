@@ -67,7 +67,8 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     Button btnbyteam, btnbyself, btnbyadmin, btnbyreauction, buttonnext;
     ListView byteam_listview, byself_listview, byadmin_listview, byreauction_listview;
     Spinner selectAuctionsSpinner;
-    String className, auction_id, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate, bundleAuctionEndTime, bundleIds, bundleClause;
+    String className, auction_id, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate,
+            bundleAuctionEndTime, bundleIds, bundleClause, bundleCategory, bundleLocation;
     boolean bundlepositionArray[];
     String auctionTitleUpdate, startDateUpdate, startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesUpdate, specialClausesIDUpdate;
 
@@ -104,6 +105,8 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         bundleAuctionEndTime = b.getString("endtime");
         bundleIds = b.getString("ids");
         bundleClause = b.getString("cluase");
+        bundleCategory = b.getString("category");
+        bundleLocation = b.getString("location");
         bundlepositionArray = b.getBooleanArray("positionArray");
 
         specialClausesIDUpdate = bundleIds;
