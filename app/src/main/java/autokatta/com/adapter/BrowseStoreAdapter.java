@@ -130,10 +130,11 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             public void onClick(View v) {
 
                 Bundle b = new Bundle();
-                b.putString("action", "wall");
-                b.putString("contact", success.getContactNo());
+
+                b.putString("StoreContact", success.getContactNo());
                 b.putString("store_id", success.getStoreId());
                 Intent intent = new Intent(activity, OtherStoreView.class);
+                intent.putExtras(b);
                 activity.startActivity(intent);
 
 //                StoreviewFragment fragment = new StoreviewFragment();

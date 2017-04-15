@@ -11,7 +11,7 @@ import java.util.List;
 
 public class StoreResponse {
 
-
+    @SerializedName("Success")
     @Expose
     private List<Success> success = null;
 
