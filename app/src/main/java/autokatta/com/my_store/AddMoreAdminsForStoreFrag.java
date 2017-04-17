@@ -210,15 +210,14 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                             alreadyAdmin.add(success.getAdmin());
                         }
 
-                        if (callFrom.equalsIgnoreCase("storeview") && !(alreadyAdmin.size() == 0))
-                            adapter = new StoreAdminAdapter(getActivity(), contactdata, alreadyAdmin);
-                        else {
-                            adapter = new StoreAdminAdapter(getActivity(), contactdata);
-                        }
-                        list.setAdapter(adapter);
-
-                    } else
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                    } /*else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));*/
+                    if (callFrom.equalsIgnoreCase("storeview") && !(alreadyAdmin.size() == 0))
+                        adapter = new StoreAdminAdapter(getActivity(), contactdata, alreadyAdmin);
+                    else {
+                        adapter = new StoreAdminAdapter(getActivity(), contactdata);
+                    }
+                    list.setAdapter(adapter);
                 }
 
 

@@ -365,6 +365,21 @@
                     android:textSize="18sp"
 
                     />
+
+                <CheckBox
+                    android:id="@+id/rbtvehicle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rbtservice"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/textstoretype"
+                    android:checked="false"
+                    android:text="Vehicle"
+                    android:textColor="#2C3343"
+                    android:textSize="18sp"
+
+                    />
             </RelativeLayout>
 
 
@@ -420,13 +435,73 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/rell"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_below="@+id/linear12"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:visibility="visible">
+
+                <autokatta.com.Registration.Multispinner
+                    android:id="@+id/brandSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearautobrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rell"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <MultiAutoCompleteTextView
+                        android:id="@+id/multiautobrand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Add Brand Tags"
+                        android:textColorHint="#848484"
+
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
             <LinearLayout
 
                 android:id="@+id/linear13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/linear9"
-                android:layout_below="@+id/linear12"
+                android:layout_below="@+id/linearautobrand"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp">

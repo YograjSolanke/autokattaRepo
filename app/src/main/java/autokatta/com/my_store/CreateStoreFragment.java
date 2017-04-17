@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +24,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +46,7 @@ import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
 import okhttp3.MediaType;
@@ -61,22 +66,26 @@ import retrofit2.Retrofit;
 
 public class CreateStoreFragment extends Fragment implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier {
 
-    private View mCreateStore;
     TextView textstore, storetypetext;
     Button btnaddprofile, create, btnaddcover;
-    CheckBox rbtstoreproduct, rbtstoreservice;
+    CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
             storetype = "";
-    Multispinner weekspn;
-    MultiAutoCompleteTextView multiautotext;
+    Multispinner weekspn, brandSpinner;
+    MultiAutoCompleteTextView multiautotext, multiautobrand;
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
     AutoCompleteTextView storelocation;
 
-    Boolean typeproduct = false, typeservice = false;
+    Boolean typeproduct = false, typeservice = false, typevehicle = false;
     Bundle bundle = new Bundle();
     private ApiCall mApiCall;
     private GenericFunctions genericFunctions;
     private ImageUpload mImageUpload;
+
+    List<String> brandtagIdList = new ArrayList<>();
+    List<String> brandTagsList = new ArrayList<>();
+    LinearLayout mLinearautobrand;
+    RelativeLayout mRelativeBrand;
 
     public CreateStoreFragment() {
         //empty constructor
@@ -85,7 +94,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mCreateStore = inflater.inflate(R.layout.fragment_create_store, container, false);
+        View mCreateStore = inflater.inflate(R.layout.fragment_create_store, container, false);
 
         storename = (EditText) mCreateStore.findViewById(R.id.editstorename);
         storecontact = (EditText) mCreateStore.findViewById(R.id.editstorecontact);
@@ -100,15 +109,21 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         textstore = (TextView) mCreateStore.findViewById(R.id.textstore);
         rbtstoreproduct = (CheckBox) mCreateStore.findViewById(R.id.rbtproduct);
         rbtstoreservice = (CheckBox) mCreateStore.findViewById(R.id.rbtservice);
+        rbtstorevehicle = (CheckBox) mCreateStore.findViewById(R.id.rbtvehicle);
         create = (Button) mCreateStore.findViewById(R.id.btncreatestore);
         btnaddprofile = (Button) mCreateStore.findViewById(R.id.btnaddphoto);
         btnaddcover = (Button) mCreateStore.findViewById(R.id.btnaddcover);
         storetypetext = (TextView) mCreateStore.findViewById(R.id.textstoretype);
+        multiautobrand = (MultiAutoCompleteTextView) mCreateStore.findViewById(R.id.multiautobrand);
+        mLinearautobrand = (LinearLayout) mCreateStore.findViewById(R.id.linearautobrand);
+        mRelativeBrand = (RelativeLayout) mCreateStore.findViewById(R.id.rell);
+        brandSpinner = (Multispinner) mCreateStore.findViewById(R.id.brandSpinner);
 
         btnaddprofile.setOnClickListener(this);
         btnaddcover.setOnClickListener(this);
         create.setOnClickListener(this);
         multiautotext.setOnTouchListener(this);
+        multiautobrand.setOnTouchListener(this);
         opentime.setOnTouchListener(this);
         closetime.setOnTouchListener(this);
 
@@ -139,6 +154,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     storecontact.setText(myContact);
                     storecontact.setEnabled(false);
 
+
                     storelocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
                     List<String> weekdays = new ArrayList<>();
                     weekdays.add("Mon");
@@ -151,12 +167,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     weekspn.setItems(weekdays, "-Select Working Days-", CreateStoreFragment.this);
 
                     multiautotext.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                    multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
                     rbtstoreproduct.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                             typeproduct = b;
+                            /*mLinearautobrand.setVisibility(View.VISIBLE);
+                            mRelativeBrand.setVisibility(View.GONE);*/
                         }
                     });
                     rbtstoreservice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -164,9 +183,30 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                             typeservice = b;
+                            /*mLinearautobrand.setVisibility(View.VISIBLE);
+                            mRelativeBrand.setVisibility(View.GONE);*/
+                        }
+                    });
+                    rbtstorevehicle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                            typevehicle = b;
+                            /*mLinearautobrand.setVisibility(View.GONE);
+                            mRelativeBrand.setVisibility(View.VISIBLE);*/
                         }
                     });
 
+
+                    List<String> Brands = new ArrayList<>();
+                    Brands.add("Honda");
+                    Brands.add("Hero");
+                    Brands.add("Mahindra");
+                    Brands.add("Tata");
+                    Brands.add("Bajaj");
+                    Brands.add("Volvo");
+                    Brands.add("Yamaha");
+                    brandSpinner.setItems(Brands, "-Select Brands-", CreateStoreFragment.this);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -194,7 +234,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 Boolean flag = false;
                 Boolean flagtime = false;
                 String address = "", name = "", contact = "", location = "", website = "", storeDescription = "", workdays = "",
-                        stropen = "", strclose = "", category = "";
+                        stropen = "", strclose = "", category = "", finalbrandtags = "", strBrandSpinner = "";
 
                 List<String> resultList;
 
@@ -208,16 +248,65 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 stropen = opentime.getText().toString();
                 strclose = closetime.getText().toString();
                 category = multiautotext.getText().toString();
+                strBrandSpinner = brandSpinner.getSelectedItem().toString().replaceAll(" ", "");
+                Log.i("Brands", ":" + strBrandSpinner);
 
-                if (rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked()) {
-                    storetype = "product";
-                } else if (rbtstoreservice.isChecked() && !rbtstoreproduct.isChecked()) {
+                List<String> tempbrands = new ArrayList<>();
 
-                    storetype = "service";
-                } else if (rbtstoreproduct.isChecked() && rbtstoreservice.isChecked()) {
-                    storetype = "product & service";
+                String textbrand = multiautobrand.getText().toString();
+
+                if (textbrand.endsWith(","))
+                    textbrand = textbrand.substring(0, textbrand.length() - 1);
+
+                textbrand = textbrand.trim();
+
+                if (!textbrand.equals("")) {
+
+                    String[] bparts = textbrand.split(",");
+                    for (int o = 0; o < bparts.length; o++) {
+                        String brandtagpart = bparts[o].trim();
+                        if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
+                            tempbrands.add(brandtagpart);
+                        if (!brandTagsList.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
+                            System.out.println("brand tag going to add=" + brandtagpart);
+                            try {
+                                addOtherBrandTags(brandtagpart);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+
+                    }
+                }
+                for (int n = 0; n < tempbrands.size(); n++) {
+                    if (finalbrandtags.equals(""))
+                        finalbrandtags = tempbrands.get(n);
+                    else
+                        finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
+
                 }
 
+                if (rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked() && !rbtstorevehicle.isChecked()) {
+                    storetype = "product";
+                } else if (rbtstoreservice.isChecked() && !rbtstoreproduct.isChecked() && !rbtstorevehicle.isChecked()) {
+
+                    storetype = "service";
+                } else if (rbtstorevehicle.isChecked() && !rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked()) {
+
+                    storetype = "vehicle";
+                } else if (rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && !rbtstorevehicle.isChecked()) {
+                    storetype = "product & service";
+                } else if (rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
+                    storetype = "product & vehicle";
+                } else if (!rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
+                    storetype = "service & vehicle";
+                } else if (rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
+                    storetype = "all";
+                }
+
+                Log.i("store type", ":" + storetype);
 
                 category = category.trim();
                 if (category.endsWith(","))
@@ -294,30 +383,34 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     storewebsite.setFocusable(true);
                     storewebsite.requestFocus();
                 } else if (stropen.equals("")) {
-                    //Toast.makeText(getActivity(), "Enter Open Time", Toast.LENGTH_SHORT).show();
                     opentime.setError("Enter Open Time");
                     opentime.setFocusable(true);
                     opentime.requestFocus();
                 } else if (strclose.equals("")) {
-                    //Toast.makeText(getActivity(), "Enter Close Time", Toast.LENGTH_SHORT).show();
                     closetime.setError("Enter Close Time");
                     closetime.setFocusable(true);
                     closetime.requestFocus();
                 } else if (opentime.getText().toString().contains("PM") && closetime.getText().toString().contains("AM")) {
-//                    opentime.setError("Wrong Time");
-//                    closetime.setError("Wrong Time");
+
                     Toast.makeText(getActivity(), "Enter Valid Open Time And Close Time", Toast.LENGTH_SHORT).show();
                 } else if (flagtime) {
                     Toast.makeText(getActivity(), "Close Time Should Be Graeter Than Open Time", Toast.LENGTH_SHORT).show();
-                } else if (workdays.equals("")) {
+                } else if (workdays.equals("-Select Working Days-")) {
                     Toast.makeText(getActivity(), "Please select Working Days", Toast.LENGTH_LONG).show();
-                } else if (category.equalsIgnoreCase("-select category-") || category.equalsIgnoreCase("")) {
-                    Toast.makeText(getActivity(), "Please select category", Toast.LENGTH_LONG).show();
                 } else if (storetype.equalsIgnoreCase("")) {
                     Toast.makeText(getActivity(), "Please select store type", Toast.LENGTH_LONG).show();
+                } else if (category.equalsIgnoreCase("")) {
+                    Toast.makeText(getActivity(), "Please provide services offered", Toast.LENGTH_LONG).show();
+                } else if ((rbtstoreproduct.isChecked() || rbtstoreservice.isChecked()) && finalbrandtags.equals("")) {
+                    Toast.makeText(getActivity(), "Please provide brand tags", Toast.LENGTH_LONG).show();
+                    multiautobrand.requestFocus();
+                } else if (rbtstorevehicle.isChecked() && (strBrandSpinner.equalsIgnoreCase("-SelectBrands-") || strBrandSpinner.isEmpty())) {
+                    Toast.makeText(getActivity(), "Please select brands", Toast.LENGTH_LONG).show();
+                    brandSpinner.requestFocus();
                 } else {
 
-                    createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription);
+                    createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription
+                            , finalbrandtags, strBrandSpinner);
                 }
 
         }
@@ -470,6 +563,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 getCategory();
                 break;
 
+            case R.id.multiautobrand:
+                getBrandTags();
+                break;
+
             case R.id.editopen:
                 if (action == MotionEvent.ACTION_DOWN) {
                     opentime.setInputType(InputType.TYPE_NULL);
@@ -502,12 +599,38 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         mApiCall.Categories(type);
     }
 
+    private void getBrandTags() {
+        String type = "";
+        if (typeproduct && !typeservice)
+            type = "1";
+
+        else if (typeservice && !typeproduct)
+            type = "2";
+        else
+            type = "1,2";
+
+        mApiCall.getBrandTags(type);
+    }
+
+    private void addOtherBrandTags(String brandtagpart) {
+        String type = "";
+        if (typeproduct && !typeservice)
+            type = "1";
+
+        else if (typeservice && !typeproduct)
+            type = "2";
+        else
+            type = "1,2";
+        mApiCall.addOtherBrandTags(brandtagpart, type);
+
+    }
+
     private void createStore(String name, String contact, String location, String website, String storetype, String lastWord,
                              String workdays, String open, String close, String category, String address,
-                             String coverlastWord, String storeDescription) {
+                             String coverlastWord, String storeDescription, String textbrand, String strBrandSpinner) {
 
         mApiCall.CreateStore(name, contact, location, website, storetype, lastWord, workdays, open, close, category, address, coverlastWord,
-                storeDescription);
+                storeDescription, textbrand, strBrandSpinner);
 
     }
 
@@ -529,15 +652,36 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             module.add(message.getTitle());
 
                         }
-//                        MODULE = new String[module.size()];
-//                        MODULE = (String[]) module.toArray(MODULE);
-
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, module);
                         multiautotext.setAdapter(dataadapter);
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
 
+                /*
+                        Response to get Brand tags
+                 */
+                if (response.body() instanceof BrandsTagResponse) {
+                    BrandsTagResponse brandResponse = (BrandsTagResponse) response.body();
+                    brandTagsList.clear();
+                    brandtagIdList.clear();
+
+                    if (!brandResponse.getSuccess().isEmpty()) {
+
+                        for (BrandsTagResponse.Success message : brandResponse.getSuccess()) {
+                            message.setId(message.getId());
+                            message.setTag(message.getTag());
+                            brandtagIdList.add(message.getId());
+                            brandTagsList.add(message.getTag());
+
+                        }
+//
+
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTagsList);
+                        multiautobrand.setAdapter(dataadapter);
+                    } else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                }
                  /*
                         Response after creating store
                  */
@@ -557,11 +701,13 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         bundle.putString("call", callFrom);
                         bundle.putString("storetype", storetype);
 
+                        //getActivity().finish();
+
                         AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-                        /*addAdmin.setArguments(bundle);
+                        addAdmin.setArguments(bundle);
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();*/
+                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
 
 
                     } else
@@ -594,6 +740,12 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
     @Override
     public void notifyString(String str) {
+        if (str != null) {
+            if (str.equalsIgnoreCase("brand_tag_added")) {
+                Toast.makeText(getActivity(), "New brand tag added", Toast.LENGTH_SHORT).show();
+            }
+        } else
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
     }
 
@@ -613,7 +765,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
             req.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    CustomToast.customToast(getActivity(), "Image Uploaded");
+                    //CustomToast.customToast(getActivity(), "Image Uploaded");
                 }
 
                 @Override
