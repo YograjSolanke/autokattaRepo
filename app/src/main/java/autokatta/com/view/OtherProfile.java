@@ -40,7 +40,9 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     Groups mGroupsFrag;
     Event mEventFrag;
     Katta mKattaFrag;
+    String mAction="other";
     Follow mFollowFrag;
+    ApiCall mApiCall = new ApiCall(OtherProfile.this, this);
     //private Handler mUiHandler = new Handler();
 
     @Override
@@ -92,7 +94,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                         mOtherContact = getIntent().getExtras().getString("contactOtherProfile");
                     }
                     mBundle.putString("otherContact", mOtherContact);
-
+                    mBundle.putString("action",mAction);
                     getOtherProfile(mOtherContact);
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
                     mOtherPicture = (ImageView) findViewById(R.id.other_profile_image);
@@ -114,9 +116,8 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     /*
     GET Other Profile...
      */
-    private void getOtherProfile(String mycontact) {
-        ApiCall mApiCall = new ApiCall(OtherProfile.this, this);
-        mApiCall.profileAbout(mycontact,mOtherContact);
+    private void getOtherProfile(String contact) {
+        mApiCall.profileAbout(contact,mLoginContact);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -139,6 +140,25 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                     dp = success.getProfilePic();
                     mFolllowstr=success.getFollowstatus();
                     mLikestr=success.getLikestatus();
+
+                    if (mLikestr.equalsIgnoreCase("no")) {
+                        mLike.setLabelText("Like");
+                        mLike.setLabelTextColor(Color.WHITE);
+                        menuRed.setClosedOnTouchOutside(true);
+                    } else {
+                        mLike.setLabelText("Liked");
+                        mLike.setLabelTextColor(Color.RED);
+                        menuRed.setClosedOnTouchOutside(true);
+                    }
+                    if (mFolllowstr.equalsIgnoreCase("no")) {
+                        mFollow.setLabelText("Follow");
+                        mFollow.setLabelTextColor(Color.WHITE);
+                        menuRed.setClosedOnTouchOutside(true);
+                    } else {
+                        mFollow.setLabelText("Following");
+                        mFollow.setLabelTextColor(Color.RED);
+                        menuRed.setClosedOnTouchOutside(true);
+                    }
                 }
                 String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
                 Glide.with(this)
@@ -162,35 +182,52 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
     @Override
     public void notifyString(String str) {
-
+        if (str != null) {
+            if (str.equals("success_follow")) {
+                CustomToast.customToast(getApplicationContext(), " Following Successfully");
+                mFollow.setLabelText("Following");
+                mFollow.setLabelTextColor(Color.RED);
+                mFolllowstr="yes";
+            } else if (str.equals("success_unfollow")) {
+                CustomToast.customToast(getApplicationContext(), " UnFollowed Successfully");
+                mFollow.setLabelText("Follow");
+                mFollow.setLabelTextColor(Color.WHITE);
+                mFolllowstr="no";
+            } else if (str.equals("success_like")) {
+                CustomToast.customToast(getApplicationContext(), " Liked Successfully");
+                mLike.setLabelText("Liked");
+                mLike.setLabelTextColor(Color.RED);
+                mLikestr="yes";
+            } else if (str.equals("success_unlike")) {
+                CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
+                mLike.setLabelText("Like");
+                mLike.setLabelTextColor(Color.WHITE);
+                mLikestr="no";
+            }
+        }
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.call_c:
                 call();
                 break;
-            case R.id.like_l:
-                if (mLike.getLabelText().equalsIgnoreCase("Liked")) {
-                    mLike.setLabelText("Like");
-                    mLike.setLabelTextColor(Color.WHITE);
+            case R.id.follow_f:
+                if (mFolllowstr.equalsIgnoreCase("no")) {
+                    mApiCall.Follow(mOtherContact, mLoginContact, "1");
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mLike.setLabelText("Liked");
-                    mLike.setLabelTextColor(Color.RED);
+                    mApiCall.UnFollow(mOtherContact, mLoginContact, "1");
                     menuRed.setClosedOnTouchOutside(true);
                 }
-
                 break;
-            case R.id.follow_f:
-                if (mFollow.getLabelText().equalsIgnoreCase("Following")) {
-                    mFollow.setLabelText("Follow");
-                    mFollow.setLabelTextColor(Color.WHITE);
+
+            case R.id.like_l:
+                if (mLikestr.equalsIgnoreCase("no")) {
+                    mApiCall.Like(mOtherContact, mLoginContact, "1");
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mFollow.setLabelText("Following");
-                    mFollow.setLabelTextColor(Color.RED);
+                    mApiCall.UnLike(mOtherContact, mLoginContact, "1");
                     menuRed.setClosedOnTouchOutside(true);
                 }
                 break;

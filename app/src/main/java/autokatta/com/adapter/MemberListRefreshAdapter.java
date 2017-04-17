@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -40,11 +38,13 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
     private Activity mActivity;
     private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
+    String mCallFrom;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mContact, mVehicleCount, mAdmin;
         ImageView mCall, mProfilePic;
         Button mOption;
+
         RelativeLayout mRelativeLayout;
 
         MyViewHolder(View itemView) {
@@ -63,6 +63,12 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     public MemberListRefreshAdapter(Activity mActivity, List<GetGroupContactsResponse.Success> mItemList) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
+    }
+
+    public MemberListRefreshAdapter(Activity mActivity, List<GetGroupContactsResponse.Success> mItemList,String mCallfrom) {
+        this.mActivity = mActivity;
+        this.mItemList = mItemList;
+        this.mCallFrom=mCallfrom;
     }
 
     @Override
@@ -193,15 +199,24 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     Bundle bundle = new Bundle();
                     bundle.putString("contact", holder.mContact.getText().toString());
                     bundle.putString("call", "my");
-
                     GroupVehicleList groupVehicleList = new GroupVehicleList();
                     groupVehicleList.setArguments(bundle);
 
-                    FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.group_container, groupVehicleList);
-                    fragmentTransaction.addToBackStack("groupvehiclelist");
-                    fragmentTransaction.commit();
+                    System.out.println("--------------------------->"+mCallFrom);
+                    if (mCallFrom.equalsIgnoreCase("profile"))
+                    {
+                        FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.profile_groups_container, groupVehicleList);
+                        fragmentTransaction.addToBackStack("groupvehiclelist");
+                        fragmentTransaction.commit();
+                    }else {
+                        FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.group_container, groupVehicleList);
+                        fragmentTransaction.addToBackStack("groupvehiclelist");
+                        fragmentTransaction.commit();
+                    }
                 }
             }
         });

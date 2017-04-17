@@ -329,6 +329,7 @@
             android:label="@string/title_activity_admin_vehicle_details"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".other.SearchActivity"></activity>
+        <activity android:name=".view.GroupsActivity"></activity>
     </application>
 
 </manifest>

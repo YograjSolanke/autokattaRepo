@@ -36,7 +36,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     FloatingActionButton floatCreateGroup;
     List<GetGroupContactsResponse.Success> mSuccesses = new ArrayList<>();
     MemberListRefreshAdapter mMemberListAdapter;
-
+String mCallfrom;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +63,12 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         .getString("group_id",""));
             }
         });
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mCallfrom = bundle.getString("profile");
+            Log.i("Other", "->" + mCallfrom);
+        }
         return mMemberList;
     }
 
@@ -89,9 +95,18 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     success.setVehiclecount(success.getVehiclecount());
                     mSuccesses.add(success);
                 }
-                mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses);
-                mRecyclerView.setAdapter(mMemberListAdapter);
-                mMemberListAdapter.notifyDataSetChanged();
+                if (mCallfrom.equalsIgnoreCase("profile"))
+                {
+                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses,mCallfrom);
+                    mRecyclerView.setAdapter(mMemberListAdapter);
+                    mMemberListAdapter.notifyDataSetChanged();
+                }else
+                {
+                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses);
+                    mRecyclerView.setAdapter(mMemberListAdapter);
+                    mMemberListAdapter.notifyDataSetChanged();
+                }
+
             }else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }

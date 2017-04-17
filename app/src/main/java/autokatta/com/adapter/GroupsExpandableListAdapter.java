@@ -1,8 +1,10 @@
 package autokatta.com.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
@@ -12,6 +14,9 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.ModelGroups;
+import autokatta.com.view.GroupsActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-001 on 20/3/17.
@@ -107,7 +112,21 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
         final ModelGroups rowItem = list.get(childPosition);
 
         mView.mHeader.setText(rowItem.getTitle());
+        mView.mHeader.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+              /*  mContext.getSharedPreferences(mContext.getString(R.string.my_preference),MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
+                FragmentManager fragmentManager = ((FragmentActivity) mContext).getSupportFragmentManager();
+                FragmentTransaction mTransaction = fragmentManager.beginTransaction();
+                mTransaction.replace(R.id.profile_groups_container, new GroupDetailTabs()).commit();*/
+                Intent i=new Intent(mContext, GroupsActivity.class);
+                mContext.getSharedPreferences(mContext.getString(R.string.my_preference),MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
+                mContext.startActivity(i);
+
+
+            }
+        });
         return convertView;
     }
 
