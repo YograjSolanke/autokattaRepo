@@ -128,6 +128,7 @@ public class ApiCall {
                 .client(initLogs().build())
                 .build();
     }
+
     /*
     Login Api Call
      */
@@ -164,7 +165,7 @@ public class ApiCall {
     Get Profile Data Of Both Other And Self...
      */
 
-    public void profileAbout(String myContact,String othercontact) {
+    public void profileAbout(String myContact, String othercontact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -173,7 +174,7 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<ProfileAboutResponse> mProfileAboutCall = mServiceApi._autokattaGetProfile(myContact,othercontact);
+                Call<ProfileAboutResponse> mProfileAboutCall = mServiceApi._autokattaGetProfile(myContact, othercontact);
                 mProfileAboutCall.enqueue(new Callback<ProfileAboutResponse>() {
                     @Override
                     public void onResponse(Call<ProfileAboutResponse> call, Response<ProfileAboutResponse> response) {
@@ -4680,7 +4681,7 @@ Get uploaded Vehicle Buyer list
        Update Profile
      */
 
-    public void updateProfile(String email,String website,String profesion,String company,String designation,String skills,String city,String subprofesion,String regid) {
+    public void updateProfile(String email, String website, String profesion, String company, String designation, String skills, String city, String subprofesion, String regid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4697,7 +4698,7 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(email,website,profesion,company,designation,skills,city,subprofesion,regid);
+                Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(email, website, profesion, company, designation, skills, city, subprofesion, regid);
                 setVehiclePrivacy.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5107,6 +5108,42 @@ Get saved search Seller list
         }
     }
 
+    //add other Brand tags in database
+    public void addOtherBrandTags(String brandtag, String type) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> forgetPasswordResponseCall = serviceApi.addOtherBrandTags(brandtag, type);
+                forgetPasswordResponseCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
      /*

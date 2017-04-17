@@ -108,7 +108,7 @@ public interface ServiceApi {
     //Get Profile Data...
     @GET("getProfileData.php")
     Call<ProfileAboutResponse> _autokattaGetProfile(@Query("contact") String mycontact,
-                                                      @Query("sender_contact") String otherContact);
+                                                    @Query("sender_contact") String otherContact);
 
     //Get Groups...
     @GET("getGroups.php")
@@ -801,7 +801,7 @@ public interface ServiceApi {
     @POST("get_seller_notification.php")
     Call<SellerResponse> getSavedSearchSellerList(@Query("contact") String contact);
 
-  //get Own Vehicles
+    //get Own Vehicles
     @POST("getOwnVehicles.php")
     Call<GetOwnVehiclesResponse> _autokattaGetOwnVehicles(@Query("contact") String contact);
 
@@ -829,6 +829,9 @@ public interface ServiceApi {
     @GET("get_brandTags.php")
     Call<BrandsTagResponse> autokattaGetBrandTags(@Query("type") String type);
 
+    //add other Brand tags
+    @POST("add_OtherBrand_tags.php")
+    Call<String> addOtherBrandTags(@Query("tag") String brandtag, @Query("type") String type);
 
        /*
     Get all products,service and vehicles related to single store
@@ -844,7 +847,7 @@ public interface ServiceApi {
 
     @GET("newlikes.php")
     Call<String> _autokattaLike(@Query("sender_contact") String othercontact, @Query("receiver_contact") String mycontact,
-                                                   @Query("layout") String layout);
+                                @Query("layout") String layout);
 
       /*
     UnLike
@@ -852,7 +855,7 @@ public interface ServiceApi {
 
     @GET("newUnlikes.php")
     Call<String> _autokattaUnLike(@Query("sender_contact") String othercontact, @Query("receiver_contact") String mycontact,
-                                                   @Query("layout") String layout);
+                                  @Query("layout") String layout);
 
 
 }
