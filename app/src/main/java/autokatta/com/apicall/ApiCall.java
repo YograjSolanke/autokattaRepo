@@ -24,6 +24,7 @@ import autokatta.com.response.AuctionParticipantsResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
+import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.BroadcastMessageResponse;
 import autokatta.com.response.BroadcastReceivedResponse;
 import autokatta.com.response.BroadcastSendResponse;
@@ -5104,6 +5105,40 @@ Get saved search Seller list
         }
     }
 
+    /*
+    Get Brand tags response.
+     */
+
+    public void getBrandTags(String Type) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<BrandsTagResponse> mGetAuction = mServiceApi.autokattaGetBrandTags(Type);
+                mGetAuction.enqueue(new Callback<BrandsTagResponse>() {
+                    @Override
+                    public void onResponse(Call<BrandsTagResponse> call, Response<BrandsTagResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<BrandsTagResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
@@ -5128,5 +5163,6 @@ Get saved search Seller list
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
 
 }

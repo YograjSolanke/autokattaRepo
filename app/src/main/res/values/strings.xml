@@ -150,6 +150,8 @@
     <string name="title_activity_preview_live_events">PreviewLiveEvents</string>
     <string name="title_activity_preview_going_events">PreviewGoingEvents</string>
     <string name="title_activity_preview_upcoming_events">PreviewUpcomingEvents</string>
+    <string name="title_activity_my_auction_vehicle_details">PreviewUpcomingEvents</string>
+    <string name="title_activity_admin_vehicle_details">PreviewUpcomingEvents</string>
 
     <!-- AuctionType -->
     <string name="live_auction">Live Events</string>

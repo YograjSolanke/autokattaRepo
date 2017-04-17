@@ -1,6 +1,7 @@
 package autokatta.com.events;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,6 +24,8 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.auction.AdminVehicleDetails;
+import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionAllVehicleData;
@@ -109,7 +112,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
 
                     AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
 
-                    auctionAllVehicleData.setVehicleId(success.getAuctionid());
+                    auctionAllVehicleData.setVehicleId(success.getVehicleid());
                     auctionAllVehicleData.setVehicleTitle(success.getTitle());
                     auctionAllVehicleData.setVehicleCategory(success.getCategory());
                     auctionAllVehicleData.setVehicleBrand(success.getBrand());
@@ -224,7 +227,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
         }
 
         @Override
-        public void onBindViewHolder(ActiveAuctionNoBidAdapter.MyViewHolder holder, final int position) {
+        public void onBindViewHolder(final ActiveAuctionNoBidAdapter.MyViewHolder holder, final int position) {
             if (mItemList.get(position).getVehicleSingleImage() != null || mItemList.get(position).getVehicleSingleImage().equals("")
                     || mItemList.get(position).getVehicleSingleImage().isEmpty()) {
                 String images[] = mItemList.get(position).getVehicleSingleImage().split(",");
@@ -254,29 +257,27 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
                 @Override
                 public void onClick(View v) {
                     if (!mItemList.get(position).getVehicleId().startsWith("A ")) {
-                                /*Bundle b = new Bundle();
-                                MyAuctionVehicleDetails frag = new MyAuctionVehicleDetails();
-                                b.putString("vehicle_id", VehiId);
-                                b.putString("auction_id", auction_id);
-                                frag.setArguments(b);
+                        Bundle b = new Bundle();
+                        b.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                        b.putString("auction_id", strAuctionId);
 
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, frag);
-                                fragmentTransaction.addToBackStack("myauctionvehicledetails");
-                                fragmentTransaction.commit();*/
+                        Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
+                        intent.putExtras(b);
+                        getActivity().startActivity(intent);
+                        getActivity().finish();
+
+
                     } else {
-                                /*Toast.makeText(getActivity(),"Admin vehicle",Toast.LENGTH_SHORT).show();
-                                Bundle b = new Bundle();
-                                b.putString("vehicle_id", VehiId);
-                                b.putString("lotNo", lotNo.getText().toString());
+                        Bundle b = new Bundle();
+                        b.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                        b.putString("lotNo", holder.mSetLotNo.getText().toString());
 
-                                AdminVehicleMoreDetails fragment = new AdminVehicleMoreDetails();
-                                fragment.setArguments(b);
-                                FragmentManager mFragmentManagerm = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = mFragmentManagerm.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, fragment).addToBackStack("adminvehiclemoredetails").commit();
-*/
+                        Intent intent = new Intent(getActivity(), AdminVehicleDetails.class);
+                        intent.putExtras(b);
+                        getActivity().startActivity(intent);
+                        getActivity().finish();
+
+
                     }
                 }
             });

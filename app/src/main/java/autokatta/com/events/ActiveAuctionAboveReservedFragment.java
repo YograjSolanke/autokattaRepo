@@ -27,6 +27,8 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.auction.AdminVehicleDetails;
+import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyActiveAuctionAboveReservedResponse;
@@ -238,29 +240,27 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
                         @Override
                         public void onClick(View v) {
                             if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
-                                /*Bundle b = new Bundle();
-                                MyAuctionVehicleDetails frag = new MyAuctionVehicleDetails();
-                                b.putString("vehicle_id", VehiId);
-                                b.putString("auction_id", auction_id);
-                                frag.setArguments(b);
-
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, frag);
-                                fragmentTransaction.addToBackStack("myauctionvehicledetails");
-                                fragmentTransaction.commit();*/
-                            } else {
-                                /*Toast.makeText(getActivity(),"Admin vehicle",Toast.LENGTH_SHORT).show();
                                 Bundle b = new Bundle();
-                                b.putString("vehicle_id", VehiId);
+                                b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
+                                b.putString("auction_id", mAuctionId);
+
+                                Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
+                                intent.putExtras(b);
+                                getActivity().startActivity(intent);
+                                getActivity().finish();
+
+
+                            } else {
+                                Bundle b = new Bundle();
+                                b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
                                 b.putString("lotNo", lotNo.getText().toString());
 
-                                AdminVehicleMoreDetails fragment = new AdminVehicleMoreDetails();
-                                fragment.setArguments(b);
-                                FragmentManager mFragmentManagerm = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = mFragmentManagerm.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, fragment).addToBackStack("adminvehiclemoredetails").commit();
-*/
+                                Intent intent = new Intent(getActivity(), AdminVehicleDetails.class);
+                                intent.putExtras(b);
+                                getActivity().startActivity(intent);
+                                getActivity().finish();
+
+
                             }
                         }
                     });

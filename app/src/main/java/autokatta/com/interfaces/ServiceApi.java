@@ -11,6 +11,7 @@ import autokatta.com.response.AuctionParticipantsResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.BlacklistMemberResponse;
 import autokatta.com.response.BodyAndSeatResponse;
+import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.BroadcastMessageResponse;
 import autokatta.com.response.BroadcastReceivedResponse;
 import autokatta.com.response.BroadcastSendResponse;
@@ -825,4 +826,8 @@ public interface ServiceApi {
 
     @GET("adminVehicleMoreDetails.php")
     Call<GetAdminVehicleResponse> getAdminAuction(@Query("vehicleid") String vehicleId, @Query("contact") String contact);
+
+    //get tags For Brand
+    @GET("get_brandTags.php")
+    Call<BrandsTagResponse> autokattaGetBrandTags(@Query("type") String type);
 }
