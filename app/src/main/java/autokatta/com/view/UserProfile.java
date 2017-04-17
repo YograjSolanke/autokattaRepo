@@ -36,6 +36,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
     Bundle mUserProfileBundle;
     String mUserName;
     CollapsingToolbarLayout collapsingToolbar;
+    String mLoginContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mLoginContact=getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE)
+                .getString("loginContact","");
         mUserProfileBundle = new Bundle();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +83,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
      */
     private void getProfileData() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
-        mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE)
-                .getString("loginContact",""));
+        mApiCall.profileAbout(mLoginContact,mLoginContact);
     }
 
     /*
