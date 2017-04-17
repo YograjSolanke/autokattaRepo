@@ -114,7 +114,7 @@ public class About extends Fragment implements RequestNotifier {
         spinner.setVisibility(View.GONE);
         /*Get Designation,Skills,Company From web service*/
         mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.profileAbout(Sharedcontact);
+        mApiCall.profileAbout(Sharedcontact,Sharedcontact);
         mApiCall.getSkills();
         mApiCall.getDesignation();
         mApiCall.getCompany();
@@ -499,7 +499,8 @@ public class About extends Fragment implements RequestNotifier {
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
                         spinner.setAdapter(dataadapter);
                         for (int i = 0; i < module.size(); i++) {
-                            if (subProfession.equals(module.get(i))) {
+                            if (subProfession.equals(module.get(i)))
+                            {
                                 spinner.setSelection(i);
                             }
                         }
@@ -533,7 +534,7 @@ public class About extends Fragment implements RequestNotifier {
             if (str.equals("Success_update_profile"))
             {
                 CustomToast.customToast(getActivity(), "Profile Updated Successfully");
-                mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+                mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
             }
         }
     }
