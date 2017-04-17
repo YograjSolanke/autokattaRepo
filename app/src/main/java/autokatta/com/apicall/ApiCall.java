@@ -161,11 +161,10 @@ public class ApiCall {
     }
 
     /*
-    Get Profile Data About...
+    Get Profile Data Of Both Other And Self...
      */
 
-    public void profileAbout(String contact) {
-        Log.i("Profile", "--->" + contact);
+    public void profileAbout(String myContact,String othercontact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -174,7 +173,7 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<ProfileAboutResponse> mProfileAboutCall = mServiceApi._autokattaProfileAbout(contact);
+                Call<ProfileAboutResponse> mProfileAboutCall = mServiceApi._autokattaGetProfile(myContact,othercontact);
                 mProfileAboutCall.enqueue(new Callback<ProfileAboutResponse>() {
                     @Override
                     public void onResponse(Call<ProfileAboutResponse> call, Response<ProfileAboutResponse> response) {
@@ -2812,38 +2811,6 @@ Upload Vehicle
         }
     }
 
-     /*
-        get Other Profile Data...
-     */
-
-    public void getOtherProfile(String myContact) {
-        try {
-            if (mConnectionDetector.isConnectedToInternet()) {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(initLog().build())
-                        .build();
-
-                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ProfileAboutResponse> profileOther = serviceApi._autokattaProfileAbout(myContact);
-                profileOther.enqueue(new Callback<ProfileAboutResponse>() {
-                    @Override
-                    public void onResponse(Call<ProfileAboutResponse> call, Response<ProfileAboutResponse> response) {
-                        mNotifier.notifySuccess(response);
-                    }
-
-                    @Override
-                    public void onFailure(Call<ProfileAboutResponse> call, Throwable t) {
-                        mNotifier.notifyError(t);
-                    }
-                });
-            } else
-                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /*
     Get Vehicle By Id...
@@ -5176,6 +5143,85 @@ Get saved search Seller list
         }
     }
 
+   /*
+       Like
+     */
+
+    public void Like(String othercontact, String myContact, String layout) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mUnfollowResponse = serviceApi._autokattaLike(othercontact, myContact, layout);
+                mUnfollowResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+ /*
+      UnLike
+     */
+
+    public void UnLike(String othercontact, String myContact, String layout) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(othercontact, myContact, layout);
+                mUnfollowResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /***

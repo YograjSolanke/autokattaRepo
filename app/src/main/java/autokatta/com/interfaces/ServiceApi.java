@@ -104,14 +104,11 @@ public interface ServiceApi {
     @POST("login.php")
     Call<LoginResponse> _autokattaLogin(@Query("contact") String username, @Query("password") String password);
 
+
     //Get Profile Data...
     @GET("getProfileData.php")
-    Call<ProfileAboutResponse> _autokattaProfileAbout(@Query("contact") String contact);
-
-    /*//Get Profile Data...
-    @GET("getProfileData.php")
-    Call<ProfileAboutResponse> _autokattaOtherProfile(@Query("contact") String contact,
-                                                      @Query("sender_contact") String senderContact);*/
+    Call<ProfileAboutResponse> _autokattaGetProfile(@Query("contact") String mycontact,
+                                                      @Query("sender_contact") String otherContact);
 
     //Get Groups...
     @GET("getGroups.php")
@@ -840,4 +837,22 @@ public interface ServiceApi {
     @GET("getProductByCategory.php")
     Call<StoreInventoryResponse> getStoreInventory(@Query("store_id") String store_id, @Query("mycontact") String mycontact,
                                                    @Query("storecontact") String storecontact);
+
+    /*
+    Like
+     */
+
+    @GET("newlikes.php")
+    Call<String> _autokattaLike(@Query("sender_contact") String othercontact, @Query("receiver_contact") String mycontact,
+                                                   @Query("layout") String layout);
+
+      /*
+    UnLike
+     */
+
+    @GET("newUnlikes.php")
+    Call<String> _autokattaUnLike(@Query("sender_contact") String othercontact, @Query("receiver_contact") String mycontact,
+                                                   @Query("layout") String layout);
+
+
 }

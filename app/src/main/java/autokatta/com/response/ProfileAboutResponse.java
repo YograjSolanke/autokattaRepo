@@ -83,6 +83,20 @@ public class ProfileAboutResponse {
         @SerializedName("skills")
         @Expose
         private String skills;
+        @SerializedName("likecount")
+        @Expose
+        private String likecount;
+        @SerializedName("followcount")
+        @Expose
+        private String followcount;
+        @SerializedName("likestatus")
+        @Expose
+        private String likestatus;
+        @SerializedName("followstatus")
+        @Expose
+        private String followstatus;
+
+
 
         public String getId() {
             return id;
@@ -234,6 +248,38 @@ public class ProfileAboutResponse {
 
         public void setSkills(String skills) {
             this.skills = skills;
+        }
+
+        public String getLikecount() {
+            return likecount;
+        }
+
+        public void setLikecount(String likecount) {
+            this.likecount = likecount;
+        }
+
+        public String getFollowcount() {
+            return followcount;
+        }
+
+        public void setFollowcount(String followcount) {
+            this.followcount = followcount;
+        }
+
+        public String getLikestatus() {
+            return likestatus;
+        }
+
+        public void setLikestatus(String likestatus) {
+            this.likestatus = likestatus;
+        }
+
+        public String getFollowstatus() {
+            return followstatus;
+        }
+
+        public void setFollowstatus(String followstatus) {
+            this.followstatus = followstatus;
         }
 
     }
