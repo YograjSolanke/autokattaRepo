@@ -494,7 +494,8 @@ public interface ServiceApi {
                                                    @Query("workingdays") String workdays, @Query("store_open_time") String open,
                                                    @Query("store_close_time") String close, @Query("category") String category,
                                                    @Query("address") String address, @Query("coverImage") String coverlastWord,
-                                                   @Query("storeDescription") String storeDescription);
+                                                   @Query("storeDescription") String storeDescription, @Query("brandTags") String textbrand,
+                                                   @Query("Brands") String strBrandSpinner);
 
     //Get Store Admins...
     @POST("getStoreAdmin.php")

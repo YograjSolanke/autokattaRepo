@@ -2891,7 +2891,7 @@ Upload Vehicle
 
     public void CreateStore(String name, String contact, String location, String website, String storetype, String lastWord,
                             String workdays, String open, String close, String category, String address,
-                            String coverlastWord, String storeDescription) {
+                            String coverlastWord, String storeDescription, String textbrand, String strBrandSpinner) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -2904,7 +2904,7 @@ Upload Vehicle
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<CreateStoreResponse> deleteStore = serviceApi._autokattaCreatetore(name, contact, location, website, storetype, lastWord,
-                        workdays, open, close, category, address, coverlastWord, storeDescription);
+                        workdays, open, close, category, address, coverlastWord, storeDescription, textbrand, strBrandSpinner);
                 deleteStore.enqueue(new Callback<CreateStoreResponse>() {
                     @Override
                     public void onResponse(Call<CreateStoreResponse> call, Response<CreateStoreResponse> response) {
