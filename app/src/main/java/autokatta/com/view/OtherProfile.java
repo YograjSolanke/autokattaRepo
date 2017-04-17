@@ -1,6 +1,8 @@
 package autokatta.com.view;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -31,7 +33,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-    String mOtherContact, mLoginContact;
+    String mOtherContact, mLoginContact,mFolllowstr,mLikestr;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     FloatingActionButton mCall, mLike, mFollow;
@@ -112,9 +114,9 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     /*
     GET Other Profile...
      */
-    private void getOtherProfile(String contact) {
+    private void getOtherProfile(String mycontact) {
         ApiCall mApiCall = new ApiCall(OtherProfile.this, this);
-        mApiCall.profileAbout(contact);
+        mApiCall.profileAbout(mycontact,mOtherContact);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -135,6 +137,8 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                 for (ProfileAboutResponse.Success success : mProfileAboutResponse.getSuccess()) {
                     userName = success.getUsername();
                     dp = success.getProfilePic();
+                    mFolllowstr=success.getFollowstatus();
+                    mLikestr=success.getLikestatus();
                 }
                 String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
                 Glide.with(this)
@@ -165,7 +169,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.call_c:
-                CustomToast.customToast(getApplicationContext(), mCall.getLabelText());
+                call();
                 break;
             case R.id.like_l:
                 if (mLike.getLabelText().equalsIgnoreCase("Liked")) {
@@ -180,8 +184,27 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
                 break;
             case R.id.follow_f:
-
+                if (mFollow.getLabelText().equalsIgnoreCase("Following")) {
+                    mFollow.setLabelText("Follow");
+                    mFollow.setLabelTextColor(Color.WHITE);
+                    menuRed.setClosedOnTouchOutside(true);
+                } else {
+                    mFollow.setLabelText("Following");
+                    mFollow.setLabelTextColor(Color.RED);
+                    menuRed.setClosedOnTouchOutside(true);
+                }
                 break;
+        }
+    }
+
+    //Calling Functio
+    private void call() {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mOtherContact));
+        System.out.println("calling started");
+        try {
+            startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Other Profile\n");
         }
     }
 }
