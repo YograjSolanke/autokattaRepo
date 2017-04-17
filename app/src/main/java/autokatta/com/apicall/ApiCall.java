@@ -443,7 +443,7 @@ public class ApiCall {
         Search Store
      */
 
-    public void SearchStore(String myContact, String storecontact, String location, String finalCategory, String phrase, String radius) {
+    public void SearchStore(String myContact, String storecontact, String location, String finalCategory, String phrase, String radius, String brands) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -454,7 +454,7 @@ public class ApiCall {
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<SearchStoreResponse> searchStoreResponseCall = serviceApi._autokattaGetSearchStore(myContact, storecontact, location,
-                        finalCategory, phrase, radius);
+                        finalCategory, phrase, radius, brands);
                 searchStoreResponseCall.enqueue(new Callback<SearchStoreResponse>() {
                     @Override
                     public void onResponse(Call<SearchStoreResponse> call, Response<SearchStoreResponse> response) {

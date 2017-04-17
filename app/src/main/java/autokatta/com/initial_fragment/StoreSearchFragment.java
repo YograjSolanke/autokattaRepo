@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -33,6 +34,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.SearchStoreFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import retrofit2.Response;
 
@@ -42,10 +44,10 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-004 on 6/4/17.
  */
 
-public class StoreSearchFragment extends Fragment implements View.OnClickListener, RequestNotifier {
+public class StoreSearchFragment extends Fragment implements View.OnClickListener, RequestNotifier, View.OnTouchListener {
     View view;
 
-    MultiAutoCompleteTextView autoTxtCategory;
+    MultiAutoCompleteTextView autoTxtCategory, multiautobrand;
     AutoCompleteTextView autoTxtLocation;
     EditText edtPhraseSearch, edtContactSearch;
     ImageView imgGetContact;
@@ -56,6 +58,7 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
     ApiCall apiCall;
     private String[] MODULE = null;
     List<String> radiusList;
+
 
     @Nullable
     @Override
@@ -71,9 +74,11 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
         imgGetContact = (ImageView) view.findViewById(R.id.getContact);
         spnRadius = (Spinner) view.findViewById(R.id.spn_radius);
         btnSearch = (Button) view.findViewById(R.id.search);
+        multiautobrand = (MultiAutoCompleteTextView) view.findViewById(R.id.brand_tags);
 
         imgGetContact.setOnClickListener(this);
         btnSearch.setOnClickListener(this);
+        multiautobrand.setOnTouchListener(this);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
         myContact = mSharedPreferences.getString("loginContact", "7841023392");
         Log.i("myContact", myContact);
@@ -90,6 +95,8 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
 
 
         autoTxtCategory.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
         autoTxtLocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.addproductspinner_color));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, radiusList);
@@ -118,6 +125,7 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
                 String strPhrase = edtPhraseSearch.getText().toString();
                 String strContact = edtContactSearch.getText().toString();
                 String strRadius = spnRadius.getSelectedItem().toString();
+                String strBrands = multiautobrand.getText().toString();
                 int radiuspos = spnRadius.getSelectedItemPosition();
 
                 Bundle b = new Bundle();
@@ -128,6 +136,7 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
                 b.putString("radius", strRadius);
                 b.putInt("radiuspos", radiuspos);
                 b.putString("contact_to_search", strContact);
+                b.putString("brands", strBrands);
 
 
                 if (strCategory.equals("") && strContact.equals("")) {
@@ -218,6 +227,34 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
                     }
                 }
 
+                 /*
+                        Response to get Brand tags
+                 */
+                else if (response.body() instanceof BrandsTagResponse) {
+                    List<String> brandtagIdList = new ArrayList<>();
+                    List<String> brandTagsList = new ArrayList<>();
+
+                    BrandsTagResponse brandResponse = (BrandsTagResponse) response.body();
+                    brandTagsList.clear();
+                    brandtagIdList.clear();
+
+                    if (!brandResponse.getSuccess().isEmpty()) {
+
+                        for (BrandsTagResponse.Success message : brandResponse.getSuccess()) {
+                            message.setId(message.getId());
+                            message.setTag(message.getTag());
+                            brandtagIdList.add(message.getId());
+                            brandTagsList.add(message.getTag());
+
+                        }
+//
+
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTagsList);
+                        multiautobrand.setAdapter(dataadapter);
+                    } else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                }
+
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
@@ -244,4 +281,23 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
 
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        int action = event.getAction();
+        switch (v.getId()) {
+
+
+            case R.id.brand_tags:
+                getBrandTags();
+                break;
+
+
+        }
+        return false;
+    }
+
+    private void getBrandTags() {
+
+        apiCall.getBrandTags("1,2");
+    }
 }

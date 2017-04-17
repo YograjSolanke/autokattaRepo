@@ -139,7 +139,7 @@ public interface ServiceApi {
     @POST("getStoreByContact.php")
     Call<SearchStoreResponse> _autokattaGetSearchStore(@Query("mycontact") String myContact, @Query("storecontact") String storecontact,
                                                        @Query("location") String location, @Query("category") String category,
-                                                       @Query("phrase") String phrase, @Query("radius") String radius);
+                                                       @Query("phrase") String phrase, @Query("radius") String radius, @Query("brandTags") String brands);
 
 
     //Registered Contact Validation

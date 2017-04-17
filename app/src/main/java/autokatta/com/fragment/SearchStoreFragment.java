@@ -72,8 +72,10 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
 
         final String phrase = b.getString("phrase");
         final String radius = b.getString("radius");
+        final String brands = b.getString("brands");
         final int radiuspos = b.getInt("radiuspos");
 
+        Log.i("brand", ":" + brands);
         final ApiCall apiCall = new ApiCall(getActivity(), this);
         final String finalCategory = category;
         mSwipeRefreshLayout.post(new Runnable() {
@@ -82,7 +84,7 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                 mSwipeRefreshLayout.setRefreshing(true);
 
                 //API Call
-                apiCall.SearchStore(myContact, storecontact, location, finalCategory, phrase, radius);
+                apiCall.SearchStore(myContact, storecontact, location, finalCategory, phrase, radius, brands);
 
             }
         });
