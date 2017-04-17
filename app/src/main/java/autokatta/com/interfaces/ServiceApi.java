@@ -79,6 +79,7 @@ import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SellerResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
+import autokatta.com.response.StoreInventoryResponse;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.response.YourBidResponse;
@@ -830,4 +831,13 @@ public interface ServiceApi {
     //get tags For Brand
     @GET("get_brandTags.php")
     Call<BrandsTagResponse> autokattaGetBrandTags(@Query("type") String type);
+
+
+       /*
+    Get all products,service and vehicles related to single store
+     */
+
+    @GET("getProductByCategory.php")
+    Call<StoreInventoryResponse> getStoreInventory(@Query("store_id") String store_id, @Query("mycontact") String mycontact,
+                                                   @Query("storecontact") String storecontact);
 }

@@ -90,6 +90,7 @@ import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SellerResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
+import autokatta.com.response.StoreInventoryResponse;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.response.YourBidResponse;
@@ -5138,6 +5139,44 @@ Get saved search Seller list
             e.printStackTrace();
         }
     }
+
+
+
+     /*
+    Get all products,service and vehicles related to single store
+     */
+
+    public void getStoreInventory(String store_id, String mycontact, String storecontact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<StoreInventoryResponse> mGetAuction = mServiceApi.getStoreInventory(store_id, mycontact, storecontact);
+                mGetAuction.enqueue(new Callback<StoreInventoryResponse>() {
+                    @Override
+                    public void onResponse(Call<StoreInventoryResponse> call, Response<StoreInventoryResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<StoreInventoryResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     /***
      * Retrofit Logs
