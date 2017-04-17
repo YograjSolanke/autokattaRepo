@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="autokatta.com.AutokattaMainActivity">
+    tools:context="autokatta.com.other.SearchActivity">
     <!--<item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
@@ -9,8 +10,9 @@
         app:showAsAction="never" />-->
 
     <item
-        android:id="@+id/action_searchs"
+        android:id="@+id/action_search"
         android:title="@string/app_name"
         android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
 </menu>

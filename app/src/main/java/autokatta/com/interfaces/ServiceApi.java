@@ -43,6 +43,7 @@ import autokatta.com.response.GetOwnVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
+import autokatta.com.response.GetSearchProductResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetStoreProfileInfoResponse;
@@ -863,5 +864,8 @@ public interface ServiceApi {
     @POST("deleteMyProduct.php")
     Call<String> deleteProduct(@Query("product_id") String product_id, @Query("keyword") String keyword);
 
+    //Search Product...
+    @GET("getProductSearchData.php")
+    Call<GetSearchProductResponse> searchProduct(@Query("searchKey") String key, @Query("mycontact") String contact);
 
 }

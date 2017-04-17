@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
+import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
 import autokatta.com.register.RegistrationContinue;
 import autokatta.com.view.BlackListedMemberActivity;
@@ -55,13 +57,15 @@ import autokatta.com.view.VehicleUpload;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
-public class AutokattaMainActivity extends AppCompatActivity {
+public class AutokattaMainActivity extends AppCompatActivity { /*implements SearchView.OnQueryTextListener,
+        SearchView.OnCloseListener{*/
 
     private DrawerLayout mDrawerLayout;
     boolean isNetworkAvailable;
     SessionManagement session;
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,6 +225,14 @@ public class AutokattaMainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_autokatta_main, menu);
+        mSearchView = (SearchView) menu.findItem(R.id.action_searchs).getActionView();
+        /*mSearchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setupSearchView();
+            }
+        });*/
+
         return true;
     }
 
@@ -238,6 +250,10 @@ public class AutokattaMainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+            case R.id.action_searchs:
+                setupSearchView();
                 return true;
         }
 
@@ -285,4 +301,52 @@ public class AutokattaMainActivity extends AppCompatActivity {
             editor.apply();
         }
     }
+
+    private void setupSearchView() {
+        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+        startActivity(intent);
+       /* mSearchView.setIconifiedByDefault(true);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        if (searchManager != null) {
+            List<SearchableInfo> searchables = searchManager.getSearchablesInGlobalSearch();
+
+            // Try to use the "applications" global search provider
+            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
+            for (SearchableInfo inf : searchables) {
+                if (inf.getSuggestAuthority() != null
+                        && inf.getSuggestAuthority().startsWith("applications")) {
+                    info = inf;
+                }
+            }
+            mSearchView.setSearchableInfo(info);
+        }
+
+        mSearchView.setOnQueryTextListener(this);
+        mSearchView.setOnCloseListener(this);*/
+    }
+
+    /*@Override
+    public boolean onClose() {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        SearchFragment searchTabFragment = new SearchFragment();
+        *//*Bundle bundle = new Bundle();
+        bundle.putString("searchText", query);
+        searchTabFragment.setArguments(bundle);*//*
+       *//* FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction xfragmentTransaction = manager.beginTransaction();
+        xfragmentTransaction.replace(R.id.content_frame_main, searchTabFragment).commit();*//*
+        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+        startActivity(intent);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }*/
 }

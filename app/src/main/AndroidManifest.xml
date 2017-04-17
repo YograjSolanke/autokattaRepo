@@ -315,19 +315,20 @@
         <activity
             android:name=".auction.MyAuctionVehicleDetails"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/title_activity_my_auction_vehicle_details" />
+            android:label="@string/title_activity_my_auction_vehicle_details"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.OtherStoreView"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_other_store_view"
             android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".auction.AdminVehicleDetails"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/title_activity_admin_vehicle_details" />
+            android:label="@string/title_activity_admin_vehicle_details"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".other.SearchActivity"></activity>
     </application>
 
 </manifest>

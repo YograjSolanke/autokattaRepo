@@ -54,6 +54,7 @@ import autokatta.com.response.GetOwnVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
+import autokatta.com.response.GetSearchProductResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetStoreProfileInfoResponse;
@@ -5291,6 +5292,39 @@ Get saved search Seller list
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     Search product
+     */
+
+    public void searchProduct(String key, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetSearchProductResponse> mUnfollowResponse = serviceApi.searchProduct(key, contact);
+                mUnfollowResponse.enqueue(new Callback<GetSearchProductResponse>() {
+                    @Override
+                    public void onResponse(Call<GetSearchProductResponse> call, Response<GetSearchProductResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetSearchProductResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
