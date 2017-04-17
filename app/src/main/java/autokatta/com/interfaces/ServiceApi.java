@@ -859,4 +859,9 @@ public interface ServiceApi {
                                   @Query("layout") String layout);
 
 
+    //delete product
+    @POST("deleteMyProduct.php")
+    Call<String> deleteProduct(@Query("product_id") String product_id, @Query("keyword") String keyword);
+
+
 }
