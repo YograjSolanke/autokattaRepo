@@ -764,6 +764,10 @@ public interface ServiceApi {
     @POST("upload_profile_profile_pics.php")
     Call<String> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
+    @Multipart
+    @POST("upload_store_profile.php")
+    Call<String> uploadStorePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+
 
     //send buyer call date
     @POST("send_buyer_calldate.php")

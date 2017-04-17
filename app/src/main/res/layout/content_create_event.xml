@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/createEventFrame"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="autokatta.com.view.Create_Event"
@@ -17,93 +17,153 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
 
             <RelativeLayout
+                android:id="@+id/relativeAuction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:id="@+id/relativeAuction">
+                android:layout_marginStart="40dp">
 
                 <ImageView
+                    android:id="@+id/auctionImage"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:id="@+id/auctionImage"
-                    android:src="@drawable/event"
-                    android:layout_alignParentLeft="true" />
+                    android:src="@drawable/event" />
 
 
                 <TextView
+                    android:id="@+id/textauctionevent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textauctionevent"
-                    android:text="Auction Event"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/text_underline"
-                    android:textSize="20sp"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:layout_toRightOf="@+id/auctionImage" />
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/auctionImage"
+                    android:background="@drawable/text_underline"
+                    android:text="Auction Event"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relativeLoan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/relativeLoan"
-                android:layout_below="@+id/relativeAuction">
+                android:layout_below="@+id/relativeAuction"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp">
 
                 <ImageView
+                    android:id="@+id/loanMelaImage"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:id="@+id/loanMelaImage"
-                    android:src="@drawable/lonemelaimage"
-                    android:layout_alignParentLeft="true" />
+                    android:src="@drawable/lonemelaimage" />
 
                 <TextView
+                    android:id="@+id/textloanmela"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textloanmela"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/loanMelaImage"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/loanMelaImage"
                     android:background="@drawable/text_underline"
                     android:text="Loan Mela"
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relativeExchange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/relativeExchange"
-                android:layout_below="@+id/relativeLoan">
+                android:layout_below="@+id/relativeLoan"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp">
 
                 <ImageView
+                    android:id="@+id/exchangeMelaImage"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-
-                    android:id="@+id/exchangeMelaImage"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/exchangeimage"
-                    android:layout_alignParentLeft="true" />
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/exchangeimage" />
 
                 <TextView
+                    android:id="@+id/textexchangemela"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textexchangemela"
-                    android:text="Exchange Mela"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/text_underline"
-                    android:layout_toRightOf="@+id/exchangeMelaImage"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/exchangeMelaImage"
+                    android:background="@drawable/text_underline"
+                    android:text="Exchange Mela"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeSale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeExchange"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/saleMelaImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/salemela" />
+
+                <TextView
+                    android:id="@+id/textsalemela"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/saleMelaImage"
+                    android:background="@drawable/text_underline"
+                    android:text="Sale Mela"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeSale"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/serviceMelaImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/service" />
+
+                <TextView
+                    android:id="@+id/textservicemela"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/serviceMelaImage"
+                    android:background="@drawable/text_underline"
+                    android:text="Service Mela"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -114,26 +174,26 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/clickindicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:id="@+id/clickindicator"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/onefinger" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/clickindicator"
-                android:text="Click on type of event you want to create"
-                android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/clickindicator"
+                android:text="Click on type of event you want to create"
                 android:textStyle="bold" />
         </RelativeLayout>
 

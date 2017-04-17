@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,11 +32,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import autokatta.com.R;
 import autokatta.com.Registration.MultiSelectionSpinner;
@@ -45,6 +48,7 @@ import autokatta.com.generic.GenericFunctions;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
@@ -53,12 +57,13 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by ak-003 on 29/3/17.
@@ -86,6 +91,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     List<String> brandTagsList = new ArrayList<>();
     LinearLayout mLinearautobrand;
     RelativeLayout mRelativeBrand;
+
+    String mediaPath, mediaPath1;
+    Uri selectedImage = null;
+    Bitmap bitmap, bitmapRotate;
 
     public CreateStoreFragment() {
         //empty constructor
@@ -225,10 +234,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnaddphoto:
-                selectImage("addProfile");
+                onPickImage(v, "addProfile");
                 break;
             case R.id.btnaddcover:
-                selectImage("addCover");
+                onPickImage(v, "addCover");
                 break;
             case R.id.btncreatestore:
                 Boolean flag = false;
@@ -417,7 +426,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
     }
 
-    private void selectImage(String whichButton) {
+    /*private void selectImage(String whichButton) {
 
         getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().putString("imageCallStore", whichButton).apply();
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
@@ -455,9 +464,232 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         });
 
         builder.show();
+    }*/
+
+    /*
+    newwwwwwwww
+     */
+    public void onPickImage(View view, String whichButton) {
+        getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().putString("imageCallStore", whichButton).apply();
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    Intent cameraintent = new Intent(
+                            android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraintent, 101);
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, 0);
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            String result = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("imageCallStore", "");
+            String fname;
+            if (result.equalsIgnoreCase("addProfile")) {
+                if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+                    // Get the Image from data
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    assert cursor != null;
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    mediaPath = cursor.getString(columnIndex);
+                    // Set the Image in ImageView for Previewing the Media
+                    //mProfilePic.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                    cursor.close();
+                    ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
+                    lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
+                    Log.i("Media", "path" + lastWord);
+                    //uploadImage(mediaPath);
+
+                } else if (requestCode == 101) {
+                    if (resultCode == RESULT_OK) {
+                        if (data != null) {
+                            selectedImage = data.getData(); // the uri of the image taken
+                            if (String.valueOf((Bitmap) data.getExtras().get("data")).equals("null")) {
+                                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                            } else {
+                                bitmap = (Bitmap) data.getExtras().get("data");
+                            }
+                            if (Float.valueOf(getImageOrientation()) >= 0) {
+                                bitmapRotate = rotateImage(bitmap, Float.valueOf(getImageOrientation()));
+                            } else {
+                                bitmapRotate = bitmap;
+                                bitmap.recycle();
+                            }
+                            //mProfilePic.setImageBitmap(bitmapRotate);
+
+//                            Saving image to mobile internal memory for sometime
+                            String root = getActivity().getFilesDir().toString();
+                            File myDir = new File(root + "/androidlift");
+                            myDir.mkdirs();
+
+                            Random generator = new Random();
+                            int n = 10000;
+                            n = generator.nextInt(n);
+
+//                            Give the file name that u want
+                            fname = "Autokatta" + n + ".jpg";
+
+                            mediaPath = root + "/androidlift/" + fname;
+                            File file = new File(myDir, fname);
+                            saveFile(bitmapRotate, file);
+                        }
+                    }
+                }
+            } else if (result.equalsIgnoreCase("addCover")) {
+                if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
+                    // Get the Image from data
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    assert cursor != null;
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    mediaPath1 = cursor.getString(columnIndex);
+                    // Set the Image in ImageView for Previewing the Media
+                    //mProfilePic.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                    cursor.close();
+                    ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
+                    coverlastWord = mediaPath1.substring(mediaPath1.lastIndexOf("/") + 1);
+                    Log.i("Media", "path" + coverlastWord);
+                    //uploadImage(mediaPath1);
+
+                } else if (requestCode == 101) {
+                    if (resultCode == RESULT_OK) {
+                        if (data != null) {
+                            selectedImage = data.getData(); // the uri of the image taken
+                            if (String.valueOf((Bitmap) data.getExtras().get("data")).equals("null")) {
+                                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                            } else {
+                                bitmap = (Bitmap) data.getExtras().get("data");
+                            }
+                            if (Float.valueOf(getImageOrientation()) >= 0) {
+                                bitmapRotate = rotateImage(bitmap, Float.valueOf(getImageOrientation()));
+                            } else {
+                                bitmapRotate = bitmap;
+                                bitmap.recycle();
+                            }
+                            //mProfilePic.setImageBitmap(bitmapRotate);
+
+//                            Saving image to mobile internal memory for sometime
+                            String root = getActivity().getFilesDir().toString();
+                            File myDir = new File(root + "/androidlift");
+                            myDir.mkdirs();
+
+                            Random generator = new Random();
+                            int n = 10000;
+                            n = generator.nextInt(n);
+
+//                            Give the file name that u want
+                            fname = "Autokatta" + n + ".jpg";
+
+                            mediaPath1 = root + "/androidlift/" + fname;
+                            File file = new File(myDir, fname);
+                            saveFile(bitmapRotate, file);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //    Saving file to the mobile internal memory
+    private void saveFile(Bitmap sourceUri, File destination) {
+        if (destination.exists()) destination.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(destination);
+            sourceUri.compress(Bitmap.CompressFormat.JPEG, 60, out);
+            out.flush();
+            out.close();
+
+            String result = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("imageCallStore", "");
+            if (result.equalsIgnoreCase("addProfile"))
+                lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
+            else if (result.equalsIgnoreCase("addCover"))
+                coverlastWord = mediaPath1.substring(mediaPath1.lastIndexOf("/") + 1);
+            //uploadImage(mediaPath);
+            Log.i("image", "path" + lastWord);
+            Log.i("image", "path1" + coverlastWord);
+            //      /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
+            /*} else {
+                Toast.makeText(MainActivity.this, "No Internet Connection..", Toast.LENGTH_LONG).show();
+            }*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Bitmap retVal;
+
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        retVal = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+
+        return retVal;
+    }
+
+    private void uploadImage(String picturePath) {
+        Log.i("PAth", "->" + picturePath);
+        //    /storage/emulated/0/DCIM/Camera/20170411_124425.jpg
+        //    /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
+        File file = new File(picturePath);
+        // Parsing any Media type file
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+        ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+        Call<String> call = getResponse.uploadStorePic(fileToUpload, filename);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.i("image", "->" + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //    In some mobiles image will get rotate so to correting that this code will help us
+    private int getImageOrientation() {
+        final String[] imageColumns = {MediaStore.Images.Media._ID, MediaStore.Images.ImageColumns.ORIENTATION};
+        final String imageOrderBy = MediaStore.Images.Media._ID + " DESC";
+        Cursor cursor = getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                imageColumns, null, null, imageOrderBy);
+
+        if (cursor.moveToFirst()) {
+            int orientation = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.ORIENTATION));
+            System.out.println("orientation===" + orientation);
+            cursor.close();
+            return orientation;
+        } else {
+            return 0;
+        }
+    }
+
+   /* public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 
@@ -526,10 +758,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     coverpicturePath = cursor.getString(columnIndex);
                     cursor.close();
 
-                    /*ValidationClass obj = new ValidationClass();
+                    *//*ValidationClass obj = new ValidationClass();
                     Bitmap rotatedBitmap = obj.decodeFile(coverpicturePath);
 
-                    storecover.setImageBitmap(rotatedBitmap);*/
+                    storecover.setImageBitmap(rotatedBitmap);*//*
 
                     System.out.println(coverpicturePath);
                     coverlastWord = coverpicturePath.substring(coverpicturePath.lastIndexOf("/") + 1);
@@ -552,7 +784,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         bitmapc.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         coverpicturePath = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), bitmapc, "Title", null);
         return Uri.parse(coverpicturePath);
-    }
+    }*/
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -693,8 +925,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         Log.i("StoreId", "->" + id);
                         CustomToast.customToast(getActivity(), "Store Created Successfully");
 
-                        upload(picturePath);
-                        upload(coverpicturePath);
+                        uploadImage(picturePath);
+                        uploadImage(coverpicturePath);
 
                         bundle = new Bundle();
                         bundle.putString("store_id", id);
@@ -749,7 +981,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
     }
 
-    //upload image to server
+   /* //upload image to server
 
     public void upload(String picturePath) {
 
@@ -757,7 +989,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         try {
 
             File file = new File(picturePath);
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file.getPath());
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image*//*"), file.getPath());
             MultipartBody.Part body = MultipartBody.Part.createFormData("club_image", file.getName(), reqFile);
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
 
@@ -781,5 +1013,5 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         }
 
 
-    }
+    }*/
 }
