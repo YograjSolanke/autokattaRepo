@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,9 +24,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.GetGroupVehiclesResponse;
-import autokatta.com.response.ModelGroups;
 import autokatta.com.view.VehicleDetails;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by ak-001 on 25/3/17.
@@ -161,8 +161,22 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                 mActivity.startActivity(mVehicleDetails);
             }
         });
+        holder.mCall.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                call(mItemList.get(position).getContact());
+            }
+        });
     }
-
+    //Calling Functionality
+    private void call(String contact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
+        try {
+            mActivity.startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+        }
+    }
     @Override
     public int getItemCount() {
         return mItemList.size();

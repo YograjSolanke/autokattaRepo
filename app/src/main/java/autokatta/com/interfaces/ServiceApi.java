@@ -854,7 +854,7 @@ public interface ServiceApi {
      */
 
     @GET("newlikes.php")
-    Call<String> _autokattaLike(@Query("sender_contact") String othercontact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaLike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                 @Query("layout") String layout);
 
       /*
@@ -862,7 +862,7 @@ public interface ServiceApi {
      */
 
     @GET("newUnlikes.php")
-    Call<String> _autokattaUnLike(@Query("sender_contact") String othercontact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaUnLike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                   @Query("layout") String layout);
 
 
@@ -881,7 +881,7 @@ public interface ServiceApi {
 
     //Likes in Vehicle details
     @POST("newlikes.php")
-    Call<String> _autokattaVehicleLike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaVehicleLike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                        @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
 
     //Calling in Vehicle details
@@ -904,12 +904,12 @@ public interface ServiceApi {
 
     //Likes in Product View
     @POST("newlikes.php")
-    Call<String> _autokattaProductView(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaProductView(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                        @Query("layout") String layout, @Query("product_id") String productid);
 
     //UnLikes in Product unlike
     @POST("newUnlikes.php")
-    Call<String> _autokattaProductViewUnlike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaProductViewUnlike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                              @Query("layout") String layout, @Query("product_id") String productId);
 
     //Product Ratings
@@ -940,7 +940,25 @@ public interface ServiceApi {
     Call<GetServiceSearchResponse> searchService(@Query("searchKey") String key, @Query("mycontact") String contact);
 
 
+    //Likes in Otherstore
+    @POST("newlikes.php")
+    Call<String> _autokattaLikeStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String othercontact,
+                                       @Query("layout") String layout, @Query("store_id") String store_id);
+
+    //UnLikes in Otherstore
+    @POST("newUnlikes.php")
+    Call<String> _autokattaUnlikeStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
+                                             @Query("layout") String layout, @Query("store_id") String store_id);
 
 
+    //Follow Otherstore
+    @POST("newfollow.php")
+    Call<String> _autokattaFollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
+                                  @Query("layout") String layout, @Query("store_id") String store_id);
+
+    //Un Follow Otherstore
+    @POST("newUnfollow.php")
+    Call<String> _autokattaUnfollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
+                                    @Query("layout") String layout, @Query("store_id") String store_id);
 
 }

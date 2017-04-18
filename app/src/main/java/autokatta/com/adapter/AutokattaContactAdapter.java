@@ -81,7 +81,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             this.mActivity = mActivity;
             this.contactdata = contactdata;
             contactdata_copy = contactdata;
-            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
+            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
             apicall = new ApiCall(this.mActivity, this);
         } catch (ClassCastException e) {
             e.printStackTrace();

@@ -31,9 +31,12 @@ import java.io.File;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.view.OtherStoreView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -41,13 +44,14 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-004 on 5/4/17.
  */
 
-public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.StoreHolder> {
+public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.StoreHolder> implements RequestNotifier {
 
     List<BrowseStoreResponse.Success> mMainlist;
     Activity activity;
     String image = "";
     String StoreContact, StoreId, allDetails;
     int likecountint, followcountint;
+    ApiCall mApiCall;
 
 
     public BrowseStoreAdapter(Activity activity, List<BrowseStoreResponse.Success> successList) {
@@ -69,7 +73,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     public void onBindViewHolder(final BrowseStoreAdapter.StoreHolder holder, final int position) {
 
         final BrowseStoreResponse.Success success = mMainlist.get(holder.getAdapterPosition());
-
+            mApiCall =new ApiCall(activity,this);
 
         holder.storename.setText(success.getStoreName());
         holder.storelocation.setText(success.getLocation());
@@ -157,7 +161,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     likecountint = Integer.parseInt(likecountstr);
 
                     StoreId = success.getStoreId();
-
+                    mApiCall.otherStoreLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", ""),StoreContact,"2",StoreId);
                     //sendLike(StoreId, StoreContact);
 
                     holder.linearunlike.setVisibility(View.VISIBLE);
@@ -165,7 +170,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     likecountint++;
                     success.setLikecount(String.valueOf(likecountint));
-                    holder.btnlike.setText("Likes(" + likecountint + ")");
+                    holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
 
                     success.setLikestatus("yes");
                 } else {
@@ -187,14 +192,15 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     likecountint = Integer.parseInt(likecountstr);
 
                     StoreId = success.getStoreId();
-
+        mApiCall.otherStoreUnlike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+        .getString("loginContact", ""),StoreContact,"2",StoreId);
                     //    sendUnLike(StoreId, StoreContact);
 
                     holder.linearunlike.setVisibility(View.INVISIBLE);
                     holder.linearlike.setVisibility(View.VISIBLE);
                     likecountint--;
                     success.setLikecount(String.valueOf(likecountint));
-                    holder.btnlike.setText("Likes(" + likecountint + ")");
+                    holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
 
                     success.setLikestatus("no");
                 } else {
@@ -216,14 +222,15 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     followcountint = Integer.parseInt(followcountstr);
 
                     StoreId = success.getStoreId();
-
+                    mApiCall.otherStoreFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", ""),StoreContact,"2",StoreId);
                     //sendFollower(StoreId, StoreContact);
                     holder.linearfollow.setVisibility(View.INVISIBLE);
                     holder.linearunfollow.setVisibility(View.VISIBLE);
 
                     followcountint++;
                     success.setFollowcount(String.valueOf(followcountint));
-                    holder.btnfollow.setText("Follow(" + followcountint + ")");
+                    holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
 
                     success.setFollowstatus("yes");
                 } else {
@@ -233,6 +240,34 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             }
         });
 //
+        holder.linearunfollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                StoreContact = success.getContactNo();
+                if (!StoreContact.equals(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""))) {
+                    String followcountstr = success.getFollowcount();
+                    followcountint = Integer.parseInt(followcountstr);
+
+                    StoreId = success.getStoreId();
+                    mApiCall.otherStoreUnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", ""),StoreContact,"2",StoreId);
+                    //sendFollower(StoreId, StoreContact);
+                    holder.linearunfollow.setVisibility(View.VISIBLE);
+                    holder.linearunfollow.setVisibility(View.INVISIBLE);
+
+                    followcountint--;
+                    success.setFollowcount(String.valueOf(followcountint));
+                    holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
+
+                    success.setFollowstatus("no");
+                } else {
+                    Snackbar.make(v, "Sorry!! you can not follow your own store", Snackbar.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
 
         holder.call_image.setOnClickListener(new View.OnClickListener() {
@@ -337,6 +372,21 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     @Override
     public int getItemCount() {
         return mMainlist.size();
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 
     static class StoreHolder extends RecyclerView.ViewHolder {

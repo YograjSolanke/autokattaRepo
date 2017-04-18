@@ -2,12 +2,15 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
@@ -41,7 +44,7 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
             this.mActivity = mActivity;
             this.contactdata = contactdata;
             contactdata_copy = contactdata;
-            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
+            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
             //apicall = new ApiCall(this.mActivity, this);
         } catch (ClassCastException e) {
             e.printStackTrace();
@@ -56,7 +59,7 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
     }
 
     @Override
-    public void onBindViewHolder(YoHolder holder, int position) {
+    public void onBindViewHolder(final YoHolder holder, final int position) {
 
         String contact_name = contactdata.get(position);
         String arr[] = contact_name.split("=");
@@ -76,6 +79,12 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
                 System.out.println("***********" + con);
 
                 sendSMSMessage(con, namep);
+            }
+        });
+        holder.imgCall.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               call(con);
             }
         });
     }
@@ -153,6 +162,15 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
         } catch (Exception e) {
             Toast.makeText(mActivity, "SMS faild, please try again.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        }
+    }
+    //Calling Functionality
+    private void call(String contact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
+        try {
+            mActivity.startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Car Details Fragment\n");
         }
     }
 

@@ -68,7 +68,8 @@ String mCallfrom;
         if (bundle != null) {
             mCallfrom = bundle.getString("profile");
             Log.i("Other", "->" + mCallfrom);
-        }
+        }else
+            mCallfrom="groups";
         return mMemberList;
     }
 
@@ -95,17 +96,19 @@ String mCallfrom;
                     success.setVehiclecount(success.getVehiclecount());
                     mSuccesses.add(success);
                 }
-                if (mCallfrom.equalsIgnoreCase("profile"))
+                if (mCallfrom.equals("profile"))
                 {
                     mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses,mCallfrom);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
+
                 }else
+                if (mCallfrom.equals("groups"))
                 {
                     mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
-                }
+                   }
 
             }else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

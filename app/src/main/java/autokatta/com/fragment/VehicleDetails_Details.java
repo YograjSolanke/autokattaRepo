@@ -114,7 +114,7 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
                     datum.setApplication(datum.getApplication());
                     datum.setContact(datum.getContact());
                     mViewsStr.setText(datum.getViews());
-                    mViewsStr.setText(datum.getCalls());
+                    mCallStr.setText(datum.getCalls());
                     datum.setBodyManufacturer(datum.getBodyManufacturer());
                     datum.setSeatManufacturer(datum.getSeatManufacturer());
                     datum.setUsername(datum.getUsername());

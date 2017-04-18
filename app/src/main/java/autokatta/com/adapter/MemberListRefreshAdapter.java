@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -47,6 +49,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
         RelativeLayout mRelativeLayout;
 
+
         MyViewHolder(View itemView) {
             super(itemView);
             mName = (TextView) itemView.findViewById(R.id.names);
@@ -82,7 +85,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     @Override
-    public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, final int position) {
         holder.mName.setText(mItemList.get(position).getUsername());
         holder.mContact.setText(mItemList.get(position).getContact());
         holder.mAdmin.setText(mItemList.get(position).getMember());
@@ -189,7 +192,17 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 holder.mOption.setText("Options");
             }
         }
+        holder.mCall.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                call(mItemList.get(position).getContact());
+            }
+        });
 
+if (mCallFrom!="profile")
+{
+    mCallFrom="groups";
+}
         holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,7 +223,9 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                         fragmentTransaction.replace(R.id.profile_groups_container, groupVehicleList);
                         fragmentTransaction.addToBackStack("groupvehiclelist");
                         fragmentTransaction.commit();
-                    }else {
+                    }else
+                        if (mCallFrom.equals("groups"))
+                        {
                         FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.group_container, groupVehicleList);
@@ -240,9 +255,18 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             }
         });
     }
-
+    //Calling Functionality
+    private void call(String contact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
+        try {
+            mActivity.startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+        }
+    }
     @Override
     public int getItemCount() {
         return mItemList.size();
     }
+
 }

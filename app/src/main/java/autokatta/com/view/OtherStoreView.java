@@ -1,6 +1,8 @@
 package autokatta.com.view;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -31,7 +33,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-    String mOtherContact, mLoginContact, store_id;
+    String mOtherContact, mLoginContact, store_id,mFolllowstr,mLikestr;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     FloatingActionButton mCall, mLike, mFollow;
@@ -39,7 +41,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
     StoreProducts storeProducts;
     StoreServices storeServices;
     StoreVehicles storeVehicles;
-
+    ApiCall mApiCall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mApiCall   = new ApiCall(OtherStoreView.this, this);
 
         menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
@@ -115,7 +118,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
     }
 
     private void getOtherStore(String contact, String store_id) {
-        ApiCall mApiCall = new ApiCall(OtherStoreView.this, this);
+
         mApiCall.getStoreData(contact, store_id);
     }
 
@@ -123,22 +126,26 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.call_c:
-                CustomToast.customToast(getApplicationContext(), mCall.getLabelText());
+                call();
                 break;
             case R.id.like_l:
-                if (mLike.getLabelText().equalsIgnoreCase("Liked")) {
-                    mLike.setLabelText("Like");
-                    mLike.setLabelTextColor(Color.WHITE);
+                if (mLikestr.equalsIgnoreCase("no")) {
+                    mApiCall.otherStoreLike(mLoginContact,mOtherContact, "2",store_id);
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mLike.setLabelText("Liked");
-                    mLike.setLabelTextColor(Color.RED);
+                    mApiCall.otherStoreUnlike(mLoginContact,mOtherContact, "2",store_id);
                     menuRed.setClosedOnTouchOutside(true);
                 }
 
                 break;
             case R.id.follow_f:
-
+                if (mFolllowstr.equalsIgnoreCase("no")) {
+                    mApiCall.otherStoreFollow(mLoginContact,mOtherContact, "2",store_id);
+                    menuRed.setClosedOnTouchOutside(true);
+                } else {
+                    mApiCall.otherStoreUnFollow(mLoginContact,mOtherContact, "2",store_id);
+                    menuRed.setClosedOnTouchOutside(true);
+                }
                 break;
         }
 
@@ -154,6 +161,8 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
                     userName = success.getName();
                     dp = success.getStoreImage();
+                    mLikestr=success.getLikestatus();
+                    mFolllowstr=success.getFollowstatus();
                 }
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + dp;
                 Glide.with(this)
@@ -162,6 +171,25 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(mOtherPicture);
                 collapsingToolbar.setTitle(userName);
+
+                if (mLikestr.equalsIgnoreCase("no")) {
+                    mLike.setLabelText("Like");
+                    mLike.setLabelTextColor(Color.WHITE);
+                    menuRed.setClosedOnTouchOutside(true);
+                } else {
+                    mLike.setLabelText("Liked");
+                    mLike.setLabelTextColor(Color.RED);
+                    menuRed.setClosedOnTouchOutside(true);
+                }
+                if (mFolllowstr.equalsIgnoreCase("no")) {
+                    mFollow.setLabelText("Follow");
+                    mFollow.setLabelTextColor(Color.WHITE);
+                    menuRed.setClosedOnTouchOutside(true);
+                } else {
+                    mFollow.setLabelText("Following");
+                    mFollow.setLabelTextColor(Color.RED);
+                    menuRed.setClosedOnTouchOutside(true);
+                }
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
@@ -178,6 +206,38 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
 
     @Override
     public void notifyString(String str) {
-
+        if (str != null) {
+            if (str.equals("success_follow")) {
+                CustomToast.customToast(getApplicationContext(), " Following Successfully");
+                mFollow.setLabelText("Following");
+                mFollow.setLabelTextColor(Color.RED);
+                mFolllowstr="yes";
+            } else if (str.equals("success_unfollow")) {
+                CustomToast.customToast(getApplicationContext(), " UnFollowed Successfully");
+                mFollow.setLabelText("Follow");
+                mFollow.setLabelTextColor(Color.WHITE);
+                mFolllowstr="no";
+            } else if (str.equals("success_like")) {
+                CustomToast.customToast(getApplicationContext(), " Liked Successfully");
+                mLike.setLabelText("Liked");
+                mLike.setLabelTextColor(Color.RED);
+                mLikestr="yes";
+            } else if (str.equals("success_unlike")) {
+                CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
+                mLike.setLabelText("Like");
+                mLike.setLabelTextColor(Color.WHITE);
+                mLikestr="no";
+            }
+        }
+    }
+    //Calling Functio
+    private void call() {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mOtherContact));
+        System.out.println("calling started");
+        try {
+            startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Other Profile\n");
+        }
     }
 }
