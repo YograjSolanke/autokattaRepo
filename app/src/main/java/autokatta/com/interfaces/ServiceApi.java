@@ -47,6 +47,7 @@ import autokatta.com.response.GetSearchProductResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetStoreProfileInfoResponse;
+import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleByIdResponse;
 import autokatta.com.response.GetVehicleColor;
@@ -892,4 +893,7 @@ public interface ServiceApi {
     Call<String> _autokattaVehicleUnLike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
                                        @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
 
+    //get tags
+    @GET("get_tags.php")
+    Call<GetTagsResponse> _autoGetTags(@Query("type") String type);
 }

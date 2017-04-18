@@ -5485,6 +5485,40 @@ Get saved search Seller list
             e.printStackTrace();
         }
     }
+
+    /*
+      Get Tags
+       */
+    public void _autoGetTags(String type) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetTagsResponse> getTags = serviceApi._autoGetTags(type);
+                getTags.enqueue(new Callback<GetTagsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetTagsResponse> call, Response<GetTagsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetTagsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /***
      * Retrofit Logs
      ***/
