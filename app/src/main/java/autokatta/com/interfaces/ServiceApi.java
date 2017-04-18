@@ -885,4 +885,11 @@ public interface ServiceApi {
     //Calling in Vehicle details
     @POST("calling.php")
     Call<String> _autokattaVehicleCalling(@Query("vehicle_id") String vehicle_id, @Query("keyword") String keyword);
+
+
+    //UnLikes in Vehicle details
+    @POST("newUnlikes.php")
+    Call<String> _autokattaVehicleUnLike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
+                                       @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
+
 }
