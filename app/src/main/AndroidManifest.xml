@@ -328,8 +328,12 @@
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_admin_vehicle_details"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".other.SearchActivity"></activity>
-        <activity android:name=".view.GroupsActivity"></activity>
+        <activity android:name=".other.SearchActivity" />
+        <activity android:name=".view.GroupsActivity" />
+        <activity
+            android:name=".view.ShareWithinAppActivity"
+            android:label="@string/title_activity_share_within_app"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

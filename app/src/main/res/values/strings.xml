@@ -161,4 +161,5 @@
     <string name="title_activity_bussiness_chat">BussinessChatActivity</string>
     <string name="title_activity_search_vehicle">SearchVehicleActivity</string>
     <string name="title_activity_other_store_view">OtherStoreView</string>
+    <string name="title_activity_share_within_app">ShareWithinAppActivity</string>
 </resources>
