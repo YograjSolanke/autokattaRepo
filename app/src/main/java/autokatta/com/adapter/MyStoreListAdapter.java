@@ -37,6 +37,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyStoreResponse;
+import autokatta.com.view.ShareWithinAppActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -222,13 +223,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "store").apply();
 
-
-                /*ShareWithinApp fr = new ShareWithinApp();
-                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.containerView, fr);
-                fragmentTransaction.addToBackStack("sharewithinapp");
-                fragmentTransaction.commit();*/
+                mActivity.startActivity(new Intent(mActivity, ShareWithinAppActivity.class));
 
 
             }

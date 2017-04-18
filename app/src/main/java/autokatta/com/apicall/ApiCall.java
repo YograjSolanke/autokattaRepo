@@ -5704,6 +5704,50 @@ Get saved search Seller list
             e.printStackTrace();
         }
     }
+
+    /*
+    To Share data
+     */
+    public void shareTaskInApp(String sender_contact, String receiver_contact, String group_id, String broadcastgroup_id,
+                               String caption_data, String layout, String profile_id, String store_id,
+                               String vehicle_id, String product_id, String service_id, String status_id,
+                               String search_id, String auction_id, String loan_id, String exchange_id) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> setVehiclePrivacy = serviceApi._autokattaShareData(sender_contact, receiver_contact, group_id,
+                        broadcastgroup_id, caption_data, layout, profile_id, store_id, vehicle_id, product_id, service_id, status_id,
+                        search_id, auction_id, loan_id, exchange_id);
+                setVehiclePrivacy.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /***
      * Retrofit Logs
      ***/

@@ -466,7 +466,7 @@
                         android:id="@+id/shareimg1"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@android:drawable/ic_menu_share"
+                        android:background="@drawable/autoshare"
                         android:contentDescription="@string/app_name" />
 
                     <TextView
@@ -482,7 +482,9 @@
                     android:layout_width="1dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:background="#cccccc"></View>
+                    android:background="#cccccc">
+
+                </View>
 
 
                 <LinearLayout

@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:padding="2dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:background="#C8C9CC"
+                android:id="@+id/relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/profile"
+                    android:id="@+id/imglike"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp" />
+
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toLeftOf="@+id/relativefev"
+                    android:layout_toRightOf="@+id/imglike"
+                    android:id="@+id/serviceaction"
+                    android:textColor="#808080"
+                    android:text="serviceaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!--<TextView-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_toRightOf="@+id/name"-->
+                <!--android:id="@+id/action"-->
+                <!--android:text="action"-->
+                <!--android:textColor="#808080"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+                <!--<TextView-->
+                <!--android:textStyle="bold"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_toRightOf="@+id/action"-->
+                <!--android:id="@+id/servicenamemain"-->
+                <!--android:text="service name"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+                <!--<TextView-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_toRightOf="@+id/servicenamemain"-->
+                <!--android:id="@+id/service"-->
+                <!--android:text="service"-->
+                <!--android:textColor="#808080"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/imglike"
+                    android:layout_below="@+id/serviceaction"
+                    android:id="@+id/servicetime"
+                    android:layout_toLeftOf="@+id/relativefev"
+                    android:text="Day at time"
+                    android:textColor="#808080"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/relativefev"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+
+
+                    >
+
+
+                    <ImageView
+
+                        android:layout_toLeftOf="@+id/vehicletxt"
+
+                        android:background="@drawable/fav1"
+                        android:id="@+id/fvrtimg"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:background="@drawable/fav2"
+                        android:id="@+id/fvrtredimg"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_below="@+id/relative"
+                android:background="#cccccc"
+                android:id="@+id/v1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"></View>
+
+            <RelativeLayout
+
+                android:layout_below="@+id/v1"
+                android:id="@+id/relalike1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/imgservice"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/store"
+                    android:layout_above="@+id/starlike"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <RelativeLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/servicenamerel"
+                    android:layout_toRightOf="@+id/imgservice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/servicenametxt"
+                        android:text="Service name :"
+                        android:textColor="#808080"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:hint="name"
+                        android:textColor="#808080"
+                        android:layout_toRightOf="@+id/servicenametxt"
+                        android:id="@+id/servicename"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/servicenamerel"
+                    android:id="@+id/servicetyperel"
+                    android:layout_toRightOf="@+id/imgservice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/servicetypetxt"
+                        android:text="Service type :"
+                        android:textColor="#808080"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:hint="type"
+                        android:textColor="#808080"
+                        android:layout_toRightOf="@+id/servicetypetxt"
+                        android:id="@+id/servicetype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/imgservice"
+                    android:id="@+id/rel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textSize="12sp"
+                        android:textColor="#808080"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Like"
+                        android:id="@+id/likeservice" />
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/likeservice"
+                        android:id="@+id/dot"
+                        android:text="."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="12sp"
+                        android:layout_toRightOf="@+id/dot"
+                        android:textColor="#808080"
+                        android:id="@+id/shareservice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Share" />
+
+                    <!--<TextView-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_toRightOf="@+id/shareservice"-->
+                    <!--android:id="@+id/dot2"-->
+                    <!--android:text="."-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content" />-->
+
+                    <!--<TextView-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:textSize="12sp"-->
+                    <!--android:layout_toRightOf="@+id/dot2"-->
+                    <!--android:textColor="#808080"-->
+                    <!--android:id="@+id/followcnt"-->
+                    <!--android:text="follower"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+
+                    <!--/>-->
+
+
+                </RelativeLayout>
+
+
+                <ImageView
+                    android:background="@drawable/call_icon"
+                    android:id="@+id/callimg"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/servicenamerel" />
+
+                <ImageView
+                    android:background="@drawable/ratestar1"
+                    android:id="@+id/starservice1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toLeftOf="@+id/starservice2"
+                    android:layout_below="@+id/callimg"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <ImageView
+                    android:background="@drawable/ratestar1"
+                    android:id="@+id/starservice2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toLeftOf="@+id/starservice3"
+                    android:layout_below="@+id/callimg"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <ImageView
+                    android:background="@drawable/ratestar1"
+                    android:id="@+id/starservice3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toLeftOf="@+id/starservice4"
+                    android:layout_below="@+id/callimg"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <ImageView
+                    android:background="@drawable/ratestar1"
+                    android:id="@+id/starservice4"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toLeftOf="@+id/starservice5"
+                    android:layout_below="@+id/callimg"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <ImageView
+                    android:background="@drawable/ratestar1"
+                    android:id="@+id/starservice5"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/callimg"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <!--<ImageView-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:background="@drawable/follow"-->
+                <!--android:layout_below="@+id/starservice1"-->
+                <!--android:id="@+id/followimg"-->
+                <!--android:layout_marginRight="5dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_toLeftOf="@+id/followcnt"/>-->
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_below="@+id/relalike1"
+                android:background="#cccccc"
+                android:id="@+id/v2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"></View>
+
+            <LinearLayout
+
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:layout_below="@+id/v2"
+                android:id="@+id/relalike2"
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/linearlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:background="@drawable/likeicon"
+                        android:id="@+id/likeimg"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/liketxt"
+                        android:text="Like"
+                        android:textColor="#808080"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/linearunlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:background="@drawable/unlikethumb"
+                        android:id="@+id/unlikeimg"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                    <TextView
+                        android:textColor="@color/red"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/unliketxt"
+                        android:text="Unlike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_gravity="center"
+                    android:background="#cccccc"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"></View>
+
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/linearshare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:background="@android:drawable/ic_menu_share"
+                        android:id="@+id/shareimg"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/sharetxt"
+                        android:text="Share"
+                        android:textColor="#808080"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_gravity="center"
+                    android:background="#cccccc"
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"></View>
+
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:id="@+id/linearshare1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:background="@drawable/autoshare"
+                        android:id="@+id/shareimg1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/sharetxt1"
+                        android:text="Share"
+                        android:textColor="#808080"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <!--<View-->
+                <!--android:layout_gravity="center"-->
+                <!--android:background="#cccccc"-->
+                <!--android:layout_width="1dp"-->
+                <!--android:layout_height="20dp"></View>-->
+
+
+                <!--<LinearLayout-->
+                <!--android:gravity="center"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_weight="0.33"-->
+                <!--android:id="@+id/linearfollow"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent">-->
+
+                <!--<ImageView-->
+                <!--android:background="@drawable/followicon"-->
+                <!--android:id="@+id/followimg"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp" />-->
+                <!--<TextView-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:id="@+id/followtxt"-->
+                <!--android:text="Follow"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                <!--android:visibility="gone"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_weight="0.33"-->
+                <!--android:id="@+id/linearunfollow"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent">-->
+
+                <!--<ImageView-->
+                <!--android:background="@drawable/followicon"-->
+                <!--android:id="@+id/unfollowimg"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp" />-->
+                <!--<TextView-->
+                <!--android:textColor="@color/red"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:id="@+id/unfollowtxt"-->
+                <!--android:text="Follow"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+                <!--</LinearLayout>-->
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

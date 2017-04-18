@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:paddingBottom="2dp"
+    android:paddingRight="2dp"
+    android:paddingTop="2dp"
+    android:paddingLeft="2dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:background="#C8C9CC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeheadline">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/profile"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/profile" />
+
+                <RelativeLayout
+                    android:id="@+id/relaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/profile"
+                    android:layout_toLeftOf="@+id/relativefev">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/groupaction"
+                        android:text="groupaction"
+                        android:textStyle="bold"
+                        android:textColor="#808080"
+                        android:layout_marginLeft="5dp" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativefev"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:background="@drawable/fav1"
+                        android:id="@+id/fvrtimg"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:background="@drawable/fav2"
+                        android:id="@+id/fvrtredimg"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/profile"
+                    android:layout_below="@+id/relaction"
+                    android:id="@+id/grouptime"
+                    android:textColor="#808080"
+                    android:text="Day at time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+            <View
+
+                android:background="#cccccc"
+                android:layout_below="@+id/relativeheadline"
+                android:id="@+id/viewgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp">
+
+            </View>
+
+            <RelativeLayout
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relaivegroupinfo"
+                android:layout_below="@+id/viewgroup">
+
+
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/grpprofile" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+
+                    android:textStyle="bold"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Group Name : "
+                    android:id="@+id/txtgrpname"
+                    android:textColor="#808080"
+                    android:layout_toRightOf="@+id/grpprofile"
+                    android:layout_marginLeft="5dp" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+
+                    android:textColor="#808080"
+                    android:id="@+id/groupname"
+                    android:layout_toRightOf="@+id/txtgrpname"
+                    android:text="group name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+
+                    android:textStyle="bold"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Members : "
+                    android:textColor="#808080"
+                    android:id="@+id/grpmember"
+                    android:layout_below="@+id/groupname"
+                    android:layout_toRightOf="@+id/grpprofile"
+                    android:layout_marginLeft="5dp" />
+
+                <TextView
+
+                    android:textColor="#808080"
+                    android:id="@+id/members"
+                    android:layout_below="@+id/groupname"
+                    android:layout_toRightOf="@+id/grpmember"
+                    android:text="members"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No of Vehicle : "
+                    android:textColor="#808080"
+                    android:id="@+id/grpvehicle"
+                    android:layout_below="@+id/grpmember"
+                    android:layout_toRightOf="@+id/grpprofile"
+                    android:layout_marginLeft="5dp" />
+
+                <TextView
+
+                    android:textColor="#808080"
+                    android:layout_toRightOf="@+id/grpmember"
+                    android:layout_below="@+id/members"
+                    android:id="@+id/vehicle"
+                    android:text="vehicle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <!--<RelativeLayout-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_below="@+id/grpprofile"-->
+                <!--android:id="@+id/rel"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<TextView-->
+                <!--android:textSize="12sp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:textColor="#808080"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Like"-->
+                <!--android:id="@+id/like"-->
+                <!--/>-->
+                <!--<TextView-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:textStyle="bold"-->
+                <!--android:layout_toRightOf="@+id/like"-->
+                <!--android:id="@+id/dot"-->
+                <!--android:text="."-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+                <!--<TextView-->
+                <!--android:textSize="12sp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_toRightOf="@+id/dot"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:text="Share"-->
+                <!--android:textColor="#808080"-->
+                <!--/>-->
+
+                <!--</RelativeLayout>-->
+
+            </RelativeLayout>
+
+            <View
+
+                android:background="#cccccc"
+                android:layout_below="@+id/relaivegroupinfo"
+                android:id="@+id/viewg"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp">
+
+            </View>
+
+            <!--<LinearLayout-->
+            <!--android:weightSum="1"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_below="@+id/viewg"-->
+            <!--android:id="@+id/relalike2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="35dp">-->
+
+            <!--<LinearLayout-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="0.33"-->
+            <!--android:id="@+id/linearlike"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<ImageView-->
+            <!--android:background="@drawable/likeicon"-->
+            <!--android:id="@+id/likeimg"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp" />-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:id="@+id/liketxt"-->
+            <!--android:text="Like"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="0.33"-->
+            <!--android:id="@+id/linearshare"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<ImageView-->
+            <!--android:background="@drawable/shareicon"-->
+            <!--android:id="@+id/shareimg"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp" />-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:id="@+id/sharetxt"-->
+            <!--android:text="Share"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="0.33"-->
+            <!--android:id="@+id/linearfollow"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<ImageView-->
+            <!--android:background="@drawable/followicon"-->
+            <!--android:id="@+id/followimg"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp" />-->
+            <!--<TextView-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:id="@+id/followtxt"-->
+            <!--android:text="Follow"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

@@ -1,0 +1,162 @@
+package autokatta.com.share;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
+
+import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.ModelGroups;
+import autokatta.com.response.ProfileGroupResponse;
+import retrofit2.Response;
+
+/**
+ * Created by ak-005 on 18/6/16.
+ */
+public class ShareWithGroup extends Fragment implements RequestNotifier {
+
+    Activity activity;
+    String contactnumber, storecontact, store_id, vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id,
+            exchange_id;
+    String sharedata, keyword;
+
+
+    ListView grouplist;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        View root = inflater.inflate(R.layout.sharewithgroup, container, false);
+
+        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
+        System.out.print("Contact in share with Group " + contactnumber);
+
+
+        grouplist = (ListView) root.findViewById(R.id.group_list);
+
+        getData(contactnumber);
+
+
+        try {
+            Bundle b = getArguments();
+            sharedata = b.getString("sharewithcontact");
+            store_id = b.getString("store_id");
+            vehicle_id = b.getString("vehicle_id");
+            product_id = b.getString("product_id");
+            service_id = b.getString("service_id");
+            search_id = b.getString("search_id");
+            profile_contact = b.getString("profile_contact");
+            status_id = b.getString("status_id");
+            auction_id = b.getString("auction_id");
+            loan_id = b.getString("loan_id");
+            exchange_id = b.getString("exchange_id");
+            keyword = b.getString("keyword");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return root;
+    }
+
+
+    /*
+Get Group Data...
+ */
+    private void getData(String loginContact) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.profileGroup(loginContact);
+    }
+
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                List<String> alldata = new ArrayList<String>();
+
+                ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
+                //My Groups data
+                for (ProfileGroupResponse.MyGroup myGroup : profileGroupResponse.getSuccess().getMyGroups()) {
+                    ModelGroups modelGroups = new ModelGroups();
+                    modelGroups.setId(myGroup.getId());
+                    modelGroups.setTitle(myGroup.getTitle());
+                    modelGroups.setImage(myGroup.getImage());
+                    modelGroups.setGroupCount(myGroup.getGroupcount());
+                    modelGroups.setVehicleCount(myGroup.getVehiclecount());
+
+                    String id = myGroup.getId();
+                    String title = myGroup.getTitle();
+                    String image = myGroup.getImage();
+
+                    if (image.equals(null) || image.equals("null") || image.equals(""))
+                        alldata.add(title + "=" + id + "=null");
+                    else
+                        alldata.add(title + "=" + id + "=" + image);
+                }
+                //Joined Groups data
+                for (ProfileGroupResponse.JoinedGroup joinedGroup : profileGroupResponse.getSuccess().getJoinedGroups()) {
+                    ModelGroups modelGroups = new ModelGroups();
+                    modelGroups.setId(joinedGroup.getId());
+                    modelGroups.setTitle(joinedGroup.getTitle());
+                    modelGroups.setImage(joinedGroup.getImage());
+                    modelGroups.setGroupCount(joinedGroup.getGroupcount());
+                    modelGroups.setVehicleCount(joinedGroup.getVehiclecount());
+
+                    String id = joinedGroup.getId();
+                    String title = joinedGroup.getTitle();
+                    String image = joinedGroup.getImage();
+
+                    if (image.equals(null) || image.equals("null") || image.equals(""))
+                        alldata.add(title + "=" + id + "=null");
+                    else
+                        alldata.add(title + "=" + id + "=" + image);
+                }
+                ShareWithinGroupAdapter adapter = new ShareWithinGroupAdapter(getActivity(), alldata, sharedata, contactnumber, store_id,
+                        vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
+                grouplist.setAdapter(adapter);
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("Check Class-"
+                    , "Share With Group");
+        }
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
+    }
+
+}

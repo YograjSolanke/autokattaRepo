@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.broadcastreceiver.Receiver;
+import autokatta.com.share.ShareWithinApp;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
@@ -52,7 +53,7 @@ public class ShareWithinAppActivity extends AppCompatActivity {
 
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        //mFragmentTransaction.replace(R.id.shareInApp_container, new ShareWithinApp()).commit();
+        mFragmentTransaction.replace(R.id.shareInApp_container, new ShareWithinApp()).commit();
     }
 
     @Override
