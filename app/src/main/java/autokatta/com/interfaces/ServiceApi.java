@@ -44,6 +44,7 @@ import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
 import autokatta.com.response.GetSearchProductResponse;
+import autokatta.com.response.GetServiceSearchResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetStoreProfileInfoResponse;
@@ -933,4 +934,13 @@ public interface ServiceApi {
                                      @Query("service_id") String service_id, @Query("status_id") String status_id,
                                      @Query("search_id") String search_id, @Query("auction_id") String auction_id,
                                      @Query("loan_id") String loan_id, @Query("exchange_id") String exchange_id);
+
+    //Search Service...
+    @GET("getServiceSearchData.php")
+    Call<GetServiceSearchResponse> searchService(@Query("searchKey") String key, @Query("mycontact") String contact);
+
+
+
+
+
 }

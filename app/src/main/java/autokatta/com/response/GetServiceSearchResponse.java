@@ -6,11 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by ak-001 on 17/4/17.
+ * Created by ak-001 on 18/4/17.
  */
 
-public class GetSearchProductResponse {
-
+public class GetServiceSearchResponse {
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
@@ -28,21 +27,18 @@ public class GetSearchProductResponse {
         @SerializedName("store_id")
         @Expose
         private String storeId;
-        @SerializedName("product_id")
+        @SerializedName("id")
         @Expose
-        private String productId;
-        @SerializedName("type")
+        private String id;
+        @SerializedName("name")
         @Expose
-        private String type;
-        @SerializedName("product_name")
-        @Expose
-        private String productName;
+        private String name;
         @SerializedName("images")
         @Expose
         private String images;
-        @SerializedName("product_type")
+        @SerializedName("type")
         @Expose
-        private String productType;
+        private String type;
         @SerializedName("price")
         @Expose
         private String price;
@@ -52,9 +48,9 @@ public class GetSearchProductResponse {
         @SerializedName("brandtags")
         @Expose
         private String brandtags;
-        @SerializedName("product_details")
+        @SerializedName("details")
         @Expose
-        private String productDetails;
+        private String details;
         @SerializedName("storecontact")
         @Expose
         private String storecontact;
@@ -67,31 +63,30 @@ public class GetSearchProductResponse {
         @SerializedName("storerating")
         @Expose
         private String storerating;
-        @SerializedName("productlikecount")
+        @SerializedName("servicelikecount")
         @Expose
-        private String productlikecount;
-        @SerializedName("productlikestatus")
+        private String servicelikecount;
+        @SerializedName("servicelikestatus")
         @Expose
-        private String productlikestatus;
-        @SerializedName("prate")
+        private String servicelikestatus;
+        @SerializedName("srate")
         @Expose
-        private String prate;
-        @SerializedName("prate1")
+        private String srate;
+        @SerializedName("srate1")
         @Expose
-        private String prate1;
-        @SerializedName("prate2")
+        private String srate1;
+        @SerializedName("srate2")
         @Expose
-        private String prate2;
-        @SerializedName("prate3")
+        private String srate2;
+        @SerializedName("srate3")
         @Expose
-        private String prate3;
-        @SerializedName("productrating")
+        private String srate3;
+        @SerializedName("servicerating")
         @Expose
-        private String productrating;
-        @SerializedName("product_tags")
+        private String servicerating;
+        @SerializedName("service_tags")
         @Expose
-        private String productTags;
-        public boolean visibility;
+        private String serviceTags;
 
         public String getStoreId() {
             return storeId;
@@ -101,28 +96,20 @@ public class GetSearchProductResponse {
             this.storeId = storeId;
         }
 
-        public String getProductId() {
-            return productId;
+        public String getId() {
+            return id;
         }
 
-        public void setProductId(String productId) {
-            this.productId = productId;
+        public void setId(String id) {
+            this.id = id;
         }
 
-        public String getType() {
-            return type;
+        public String getName() {
+            return name;
         }
 
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getProductName() {
-            return productName;
-        }
-
-        public void setProductName(String productName) {
-            this.productName = productName;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getImages() {
@@ -133,12 +120,12 @@ public class GetSearchProductResponse {
             this.images = images;
         }
 
-        public String getProductType() {
-            return productType;
+        public String getType() {
+            return type;
         }
 
-        public void setProductType(String productType) {
-            this.productType = productType;
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getPrice() {
@@ -165,12 +152,12 @@ public class GetSearchProductResponse {
             this.brandtags = brandtags;
         }
 
-        public String getProductDetails() {
-            return productDetails;
+        public String getDetails() {
+            return details;
         }
 
-        public void setProductDetails(String productDetails) {
-            this.productDetails = productDetails;
+        public void setDetails(String details) {
+            this.details = details;
         }
 
         public String getStorecontact() {
@@ -205,68 +192,69 @@ public class GetSearchProductResponse {
             this.storerating = storerating;
         }
 
-        public String getProductlikecount() {
-            return productlikecount;
+        public String getServicelikecount() {
+            return servicelikecount;
         }
 
-        public void setProductlikecount(String productlikecount) {
-            this.productlikecount = productlikecount;
+        public void setServicelikecount(String servicelikecount) {
+            this.servicelikecount = servicelikecount;
         }
 
-        public String getProductlikestatus() {
-            return productlikestatus;
+        public String getServicelikestatus() {
+            return servicelikestatus;
         }
 
-        public void setProductlikestatus(String productlikestatus) {
-            this.productlikestatus = productlikestatus;
+        public void setServicelikestatus(String servicelikestatus) {
+            this.servicelikestatus = servicelikestatus;
         }
 
-        public String getPrate() {
-            return prate;
+        public String getSrate() {
+            return srate;
         }
 
-        public void setPrate(String prate) {
-            this.prate = prate;
+        public void setSrate(String srate) {
+            this.srate = srate;
         }
 
-        public String getPrate1() {
-            return prate1;
+        public String getSrate1() {
+            return srate1;
         }
 
-        public void setPrate1(String prate1) {
-            this.prate1 = prate1;
+        public void setSrate1(String srate1) {
+            this.srate1 = srate1;
         }
 
-        public String getPrate2() {
-            return prate2;
+        public String getSrate2() {
+            return srate2;
         }
 
-        public void setPrate2(String prate2) {
-            this.prate2 = prate2;
+        public void setSrate2(String srate2) {
+            this.srate2 = srate2;
         }
 
-        public String getPrate3() {
-            return prate3;
+        public String getSrate3() {
+            return srate3;
         }
 
-        public void setPrate3(String prate3) {
-            this.prate3 = prate3;
+        public void setSrate3(String srate3) {
+            this.srate3 = srate3;
         }
 
-        public String getProductrating() {
-            return productrating;
+        public String getServicerating() {
+            return servicerating;
         }
 
-        public void setProductrating(String productrating) {
-            this.productrating = productrating;
+        public void setServicerating(String servicerating) {
+            this.servicerating = servicerating;
         }
 
-        public String getProductTags() {
-            return productTags;
+        public String getServiceTags() {
+            return serviceTags;
         }
 
-        public void setProductTags(String productTags) {
-            this.productTags = productTags;
+        public void setServiceTags(String serviceTags) {
+            this.serviceTags = serviceTags;
         }
+
     }
 }

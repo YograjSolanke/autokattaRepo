@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearbtn">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/cattext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="Categories"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/listview1"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/cattext"></ListView>
+
+            <TextView
+                android:id="@+id/tagtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/listview1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="Tags"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/listview2"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/tagtext">
+
+            </ListView>
+
+            <TextView
+                android:id="@+id/brandtagtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/listview2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:text="Brand Tags"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/listview3"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/brandtagtext">
+
+            </ListView>
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <TableRow
+        android:id="@+id/linearbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnok"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:background="@color/background"
+            android:text="Ok"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btncancel"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:background="@color/background"
+            android:text="Cancel"
+            android:textColor="@color/white" />
+
+    </TableRow>
+
+</RelativeLayout>
+
+
+
+

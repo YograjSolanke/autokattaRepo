@@ -1,34 +1,33 @@
 package autokatta.com.search;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.SearchProductAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.my_store.ProductView;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetSearchProductResponse;
 import retrofit2.Response;
@@ -43,6 +42,7 @@ public class SearchProduct extends Fragment implements RequestNotifier {
     ImageView filterImg;
     String searchString, firstWord;
     List<GetSearchProductResponse.Success> mList = new ArrayList<>();
+    List<GetSearchProductResponse.Success> mList_new = new ArrayList<>();
     List<String> categoryList = new ArrayList<>();
     List<String> tagsList = new ArrayList<>();
     List<String> BrandtagsList = new ArrayList<>();
@@ -51,6 +51,12 @@ public class SearchProduct extends Fragment implements RequestNotifier {
     HashSet<String> BrandtagsHashSet;
     SearchProductAdapter adapter;
     Bundle bundle;
+    CheckedTagsAdapter tagsadapter;
+    CheckedCategoryAdapter categoryAdapter;
+    CheckedBrandTagsAdapter brandTagsAdapter;
+    ArrayList<String> finalcategory = new ArrayList<>();
+    ArrayList<String> finalTags = new ArrayList<>();
+    ArrayList<String> finalBrandTags = new ArrayList<>();
 
     @Nullable
     @Override
@@ -68,6 +74,14 @@ public class SearchProduct extends Fragment implements RequestNotifier {
                     Log.i("String", "->" + searchString);
                     getSearchResults(searchString);
                 }
+            }
+        });
+
+        filterImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testingbox(categoryHashSet.toArray(new String[categoryHashSet.size()]),
+                        tagsHashSet.toArray(new String[tagsHashSet.size()]), BrandtagsHashSet.toArray(new String[BrandtagsHashSet.size()]));
             }
         });
         return mSearchProduct;
@@ -107,6 +121,7 @@ public class SearchProduct extends Fragment implements RequestNotifier {
                     success.setStoreId(success.getPrate3());
                     success.setStoreId(success.getProductrating());
                     success.setStoreId(success.getProductTags());
+                    success.visibility = true;
 
                     if (success.getCategory().trim().contains(",")) {
                         String arr[] = success.getCategory().trim().split(",");
@@ -187,123 +202,477 @@ public class SearchProduct extends Fragment implements RequestNotifier {
 
     }
 
+    public void testingbox(final String[] incomingCategory, final String[] incomingTags, final String[] incomingBtags) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View convertView = inflater.inflate(R.layout.custom, null);
+        alertDialog.setView(convertView);
+        final AlertDialog alert = alertDialog.show();
+        alertDialog.setTitle("Select option to filter data");
+        ListView lvcat = (ListView) convertView.findViewById(R.id.listview1);
+        ListView lvtags = (ListView) convertView.findViewById(R.id.listview2);
+        ListView lvbrandtags = (ListView) convertView.findViewById(R.id.listview3);
+        Button ok = (Button) convertView.findViewById(R.id.btnok);
+        Button cancel = (Button) convertView.findViewById(R.id.btncancel);
+        tagsadapter = new CheckedTagsAdapter(getActivity(), incomingTags);
+        categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
+        brandTagsAdapter = new CheckedBrandTagsAdapter(getActivity(), incomingBtags);
+        lvtags.setAdapter(tagsadapter);
+        lvcat.setAdapter(categoryAdapter);
+        lvbrandtags.setAdapter(brandTagsAdapter);
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchList.setAdapter(null);
+
+                for (int i = 0; i < mList.size(); i++) {
+                    if (mList.get(i).getCategory().trim().contains(",")) {
+                        boolean flag = false;
+
+                        String arr[] = mList.get(i).getCategory().trim().split(",");
+                        for (int r = 0; r < arr.length; r++) {
+                            if (finalcategory.contains(arr[r].trim()))
+                                flag = true;
+                        }
+
+                        if (flag)
+                            mList.get(i).visibility = true;
+                        else {
+                            //If Tags contains ","
+                            if (mList.get(i).getProductTags().trim().contains(",")) {
+                                boolean flagtag = false;
+                                String aartag[] = mList.get(i).getProductTags().trim().split(",");
+                                for (int t = 0; t < aartag.length; t++) {
+                                    if (finalTags.contains(aartag[t].trim()))
+                                        flagtag = true;
+                                }
+
+                                if (flagtag)
+                                    mList.get(i).visibility = true;
+                                else {
+                                    //mList.get(i).visibility = false;
+                                    //If BrandTags contains ","
+                                    if (mList.get(i).getBrandtags().trim().contains(",")) {
+                                        boolean flagbrandtag = false;
+
+                                        String arrbrandtag[] = mList.get(i).getBrandtags().trim().split(",");
+                                        for (int t = 0; t < arrbrandtag.length; t++) {
+                                            if (finalBrandTags.contains(arrbrandtag[t].trim()))
+                                                flagbrandtag = true;
+                                        }
+
+                                        if (flagbrandtag)
+                                            mList.get(i).visibility = true;
+                                        else
+                                            mList.get(i).visibility = false;
+
+                                    } else {
+                                        if (finalBrandTags.contains(mList.get(i).getBrandtags().trim()))
+                                            mList.get(i).visibility = true;
+                                        else
+                                            mList.get(i).visibility = false;
+                                    }
+                                }
+
+                            }
+
+                            //If there is no "," in Tags
+                            else {
+
+                                if (finalTags.contains(mList.get(i).getProductTags().trim()))
+                                    mList.get(i).visibility = true;
+                                else {
+                                    //If BrandTags contains ","
+                                    if (mList.get(i).getProductTags().trim().contains(",")) {
+
+                                        boolean flagbrandtag = false;
+
+                                        String arrbrandtag[] = mList.get(i).getProductTags().trim().split(",");
+                                        for (int t = 0; t < arrbrandtag.length; t++) {
+                                            if (finalBrandTags.contains(arrbrandtag[t].trim()))
+                                                flagbrandtag = true;
+                                        }
+
+                                        if (flagbrandtag)
+                                            mList.get(i).visibility = true;
+                                        else
+                                            mList.get(i).visibility = false;
+
+                                    } else {
+                                        if (finalBrandTags.contains(mList.get(i).getBrandtags().trim()))
+                                            mList.get(i).visibility = true;
+                                        else
+                                            mList.get(i).visibility = false;
+                                    }
+                                }
+                                //mList.get(i).visibility = false;
+                            }
+
+
+                        }
+
+
+                    }
+                    //If there is no "," in Category
+                    else {
+                        if (finalcategory.contains(mList.get(i).getCategory().trim()))
+                            mList.get(i).visibility = true;
+                        else {
+                            if (mList.get(i).getProductTags().trim().contains(",")) {
+
+                                boolean flagtag = false;
+
+                                String aartag[] = mList.get(i).getProductTags().trim().split(",");
+                                for (int t = 0; t < aartag.length; t++) {
+                                    if (finalTags.contains(aartag[t].trim()))
+                                        flagtag = true;
+                                }
+
+                                if (flagtag)
+                                    mList.get(i).visibility = true;
+                                else {
+                                    //If BrandTags contains ","
+                                    if (mList.get(i).getBrandtags().trim().contains(",")) {
+
+                                        boolean flagbrandtag = false;
+
+                                        String arrbrandtag[] = mList.get(i).getBrandtags().trim().split(",");
+                                        for (int t = 0; t < arrbrandtag.length; t++) {
+                                            if (finalBrandTags.contains(arrbrandtag[t].trim()))
+                                                flagbrandtag = true;
+                                        }
+
+                                        if (flagbrandtag)
+                                            mList.get(i).visibility = true;
+                                        else
+                                            mList.get(i).visibility = false;
+
+                                    } else {
+                                        if (finalBrandTags.contains(mList.get(i).getBrandtags().trim()))
+                                            mList.get(i).visibility = true;
+                                        else
+                                            mList.get(i).visibility = false;
+                                    }
+                                }
+
+                            } else {
+
+                                if (finalTags.contains(mList.get(i).getProductTags().trim()))
+                                    mList.get(i).visibility = true;
+                                else {
+                                    //If BrandTags contains ","
+                                    if (mList.get(i).getBrandtags().trim().contains(",")) {
+
+                                        boolean flagbrandtag = false;
+
+                                        String arrbrandtag[] = mList.get(i).getBrandtags().trim().split(",");
+                                        for (int t = 0; t < arrbrandtag.length; t++) {
+                                            if (finalBrandTags.contains(arrbrandtag[t].trim()))
+                                                flagbrandtag = true;
+                                        }
+
+                                        if (flagbrandtag)
+                                            mList.get(i).visibility = true;
+                                        else
+                                            mList.get(i).visibility = false;
+
+                                    } else {
+                                        if (finalBrandTags.contains(mList.get(i).getBrandtags().trim()))
+                                            mList.get(i).visibility = true;
+                                        else
+                                            mList.get(i).visibility = false;
+                                    }
+                                }
+                                //mList.get(i).visibility = false;
+                            }
+                        }
+                    }
+                }
+
+                mList_new = new ArrayList<>();
+                mList_new.clear();
+
+                for (int w = 0; w < mList.size(); w++) {
+                    if (mList.get(w).visibility) {
+                        mList_new.add(mList.get(w));
+                    }
+                }
+
+                alert.dismiss();
+                adapter = new SearchProductAdapter(getActivity(), mList_new);
+                adapter.notifyDataSetChanged();
+                searchList.setAdapter(adapter);
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+
+            }
+        });
+        convertView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+    }
+
     /*
-    Adapter
+    Adapters....
      */
 
-    private class SearchProductAdapter extends BaseAdapter {
+    static class ViewHolder {
+        TextView text;
+        Button remove;
+        CheckBox checkBox;
+    }
 
+    public class CheckedTagsAdapter extends BaseAdapter {
+        private LayoutInflater mInflater;
         Activity activity;
-        List<GetSearchProductResponse.Success> allSearchData = new ArrayList<>();
-        private LayoutInflater inflater;
 
-        private SearchProductAdapter(Activity activity, List<GetSearchProductResponse.Success> allSearchDataArrayList) {
-            this.activity = activity;
-            this.allSearchData = allSearchDataArrayList;
-            inflater = (LayoutInflater) activity.
+        ArrayList<String> titles = new ArrayList<>();
+
+        public CheckedTagsAdapter(Activity a, String titles[]) {
+            this.activity = a;
+            this.titles = new ArrayList<>(Arrays.asList(titles));
+
+            if (finalTags.size() == 0) {
+                for (int i = 0; i < this.titles.size(); i++) {
+                    finalTags.add(this.titles.get(i));
+                }
+            }
+
+
+            // mInflater = LayoutInflater.from(context);
+            mInflater = (LayoutInflater) activity.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        @Override
         public int getCount() {
-            return allSearchData.size();
+            return titles.size();
         }
 
-        @Override
         public Object getItem(int position) {
-            return position;
+            return titles.get(position);
         }
 
-        @Override
         public long getItemId(int position) {
             return position;
         }
 
-        private class YoHolder {
-            TextView productName, productPrice, productDetails, productTags, productType;
-            Button ViewDetails;
-            ImageView productImage, deleteproduct;
-            RatingBar productrating;
+        @Override
+        public int getViewTypeCount() {
+            return getCount();
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            final YoHolder yoHolder;
-            if (convertView == null) {
-                yoHolder = new YoHolder();
-                convertView = inflater.inflate(R.layout.product_new, null);
-                yoHolder.productName = (TextView) convertView.findViewById(R.id.edittxt);
-                yoHolder.productPrice = (TextView) convertView.findViewById(R.id.priceedit);
-                yoHolder.productDetails = (TextView) convertView.findViewById(R.id.editdetails);
-                yoHolder.productTags = (TextView) convertView.findViewById(R.id.edittags);
-                yoHolder.productType = (TextView) convertView.findViewById(R.id.editproducttype);
-                yoHolder.ViewDetails = (Button) convertView.findViewById(R.id.btnviewdetails);
-                yoHolder.productImage = (ImageView) convertView.findViewById(R.id.profile);
-                yoHolder.productrating = (RatingBar) convertView.findViewById(R.id.productrating);
-                yoHolder.deleteproduct = (ImageView) convertView.findViewById(R.id.deleteproduct);
-                convertView.setTag(yoHolder);
-            } else {
-                yoHolder = (YoHolder) convertView.getTag();
-            }
-            final GetSearchProductResponse.Success obj = allSearchData.get(position);
-            yoHolder.productrating.setVisibility(View.GONE);
-            yoHolder.deleteproduct.setVisibility(View.GONE);
-            yoHolder.productName.setText(obj.getProductName());
-            yoHolder.productPrice.setText(obj.getPrice());
-            yoHolder.productDetails.setText(obj.getProductDetails());
-            yoHolder.productTags.setText(obj.getProductTags());
-            yoHolder.productType.setText(obj.getType());
+        public int getItemViewType(int position) {
+            return position;
+        }
 
-            if (obj.getImages().equals("") || obj.getImages().equals("null") || obj.getImages().equals("")) {
-                yoHolder.productImage.setBackgroundResource(R.drawable.store);
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final ViewHolder holder;
+            final View cv = convertView;
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = mInflater.inflate(R.layout.checked_category_adapter, null);
+                holder.text = (TextView) convertView.findViewById(R.id.txtname);
+                holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+                convertView.setTag(holder);
             } else {
-                try {
-                    String dp_path = "http://autokatta.com/mobile/Product_pics/" + obj.getImages();
-                    Glide.with(activity)
-                            .load(dp_path)
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(yoHolder.productImage);
-                } catch (Exception e) {
-                    System.out.println("Error in uploading images");
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.text.setText(titles.get(position));
+            if (!finalTags.get(position).equalsIgnoreCase("0"))
+                holder.checkBox.setChecked(true);
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        finalTags.set(position, holder.text.getText().toString());
+                    } else {
+                        finalTags.set(position, "0");
+                    }
+                }
+            });
+
+            convertView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+            return convertView;
+        }
+    }
+
+    /*
+    Adpters...
+     */
+    static class ViewHolder1 {
+        TextView text;
+        Button remove;
+        CheckBox checkBox;
+    }
+
+    public class CheckedCategoryAdapter extends BaseAdapter {
+        private LayoutInflater mInflater;
+        Activity activity;
+        ArrayList<String> titles = new ArrayList<>();
+
+        public CheckedCategoryAdapter(Activity a, String titles[]) {
+            this.activity = a;
+            this.titles = new ArrayList<>(Arrays.asList(titles));
+            if (finalcategory.size() == 0) {
+                for (int i = 0; i < this.titles.size(); i++) {
+                    finalcategory.add(this.titles.get(i));
                 }
             }
+            mInflater = (LayoutInflater) activity.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
 
-            yoHolder.ViewDetails.setOnClickListener(new View.OnClickListener() {
+        public int getCount() {
+            return titles.size();
+        }
+
+        public Object getItem(int position) {
+            return titles.get(position);
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return getCount();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
+
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final ViewHolder1 holder;
+            final View cv = convertView;
+            if (convertView == null) {
+                holder = new ViewHolder1();
+                convertView = mInflater.inflate(R.layout.checked_category_adapter, null);
+                holder.text = (TextView) convertView.findViewById(R.id.txtname);
+                holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder1) convertView.getTag();
+            }
+
+            holder.text.setText(titles.get(position));
+            if (!finalcategory.get(position).equalsIgnoreCase("0"))
+                holder.checkBox.setChecked(true);
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View v) {
-                    Bundle b = new Bundle();
-                    b.putString("name", obj.getProductName());
-                    b.putString("pid", obj.getProductId());
-                    b.putString("price", obj.getPrice());
-                    b.putString("details", obj.getProductDetails());
-                    b.putString("tags", obj.getProductTags());
-                    b.putString("type", obj.getType());
-                    b.putString("likestatus", obj.getProductlikestatus());
-                    b.putString("images", obj.getImages());
-                    b.putString("category", obj.getCategory());
-                    b.putString("plikecnt", obj.getProductlikecount());
-                    b.putString("prating", obj.getProductrating());
-                    b.putString("prate", obj.getPrate());
-                    b.putString("prate1", obj.getPrate1());
-                    b.putString("prate2", obj.getPrate2());
-                    b.putString("prate3", obj.getPrate3());
-                    b.putString("store_id", obj.getStoreId());
-                    b.putString("storecontact", obj.getStorecontact());
-                    b.putString("storename", obj.getStoreName());
-                    b.putString("storewebsite", obj.getStorewebsite());
-                    b.putString("storerating", obj.getStorerating());
-                    b.putString("brandtags_list", obj.getBrandtags());
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        finalcategory.set(position, holder.text.getText().toString());
+                    } else {
+                        finalcategory.set(position, "0");
+                    }
+                }
+            });
+            convertView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+            return convertView;
+        }
+    }
 
+    static class ViewHolder2 {
+        TextView text;
+        Button remove;
+        CheckBox checkBox;
+    }
 
-                    ProductView frag = new ProductView();
-                    frag.setArguments(b);
+    public class CheckedBrandTagsAdapter extends BaseAdapter {
+        private LayoutInflater mInflater;
+        Activity activity;
+        ArrayList<String> titles = new ArrayList<>();
 
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.search_product, frag);
-                    fragmentTransaction.addToBackStack("product_view");
-                    fragmentTransaction.commit();
+        public CheckedBrandTagsAdapter(Activity a, String titles[]) {
+            this.activity = a;
+            this.titles = new ArrayList<>(Arrays.asList(titles));
+            if (finalBrandTags.size() == 0) {
+                for (int i = 0; i < this.titles.size(); i++) {
+                    finalBrandTags.add(this.titles.get(i));
+                }
+            }
+            mInflater = (LayoutInflater) activity.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        public int getCount() {
+            return titles.size();
+        }
+
+        public Object getItem(int position) {
+            return titles.get(position);
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return getCount();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
+
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final ViewHolder2 holder;
+            final View cv = convertView;
+            if (convertView == null) {
+                holder = new ViewHolder2();
+                convertView = mInflater.inflate(R.layout.checked_category_adapter, null);
+                holder.text = (TextView) convertView.findViewById(R.id.txtname);
+                holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder2) convertView.getTag();
+            }
+            holder.text.setText(titles.get(position));
+            if (!finalBrandTags.get(position).equalsIgnoreCase("0"))
+                holder.checkBox.setChecked(true);
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        finalBrandTags.set(position, holder.text.getText().toString());
+                    } else {
+                        finalBrandTags.set(position, "0");
+                    }
+                }
+            });
+            convertView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
                 }
             });
             return convertView;
