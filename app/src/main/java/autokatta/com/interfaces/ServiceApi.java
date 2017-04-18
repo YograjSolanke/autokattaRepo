@@ -872,4 +872,8 @@ public interface ServiceApi {
     @GET("getProductSearchData.php")
     Call<GetSearchProductResponse> searchProduct(@Query("searchKey") String key, @Query("mycontact") String contact);
 
+    //Post Product Review...
+    @POST("post_product_review.php")
+    Call<String> postProductReview(@Query("contact") String contact, @Query("store_id") String storeId,
+                                   @Query("product_id") String productId, @Query("review") String review);
 }

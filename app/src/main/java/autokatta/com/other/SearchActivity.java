@@ -4,8 +4,8 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -14,42 +14,18 @@ import android.view.MenuItem;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.TabAdapterName;
-import autokatta.com.fragment.MyGroupsFragment;
-import autokatta.com.search.SearchProduct;
 
 public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
         SearchView.OnCloseListener {
-
     private SearchView mSearchView;
-    SearchProduct mSearchProduct;
-    String searchString;
-    Bundle mBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
-        mBundle = new Bundle();
-        mBundle.putString("searchText", searchString);
-
-        mSearchProduct = new SearchProduct();
-        mSearchProduct.setArguments(mBundle);
-
-        ViewPager mviewPager = (ViewPager) mSearchView.findViewById(R.id.search_viewpager);
-        if (mviewPager != null) {
-            setupViewPager(mviewPager);
-        }
-        TabLayout tabLayout = (TabLayout) mSearchView.findViewById(R.id.search_tabs);
-        tabLayout.setupWithViewPager(mviewPager);
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getSupportFragmentManager());
-        tabAdapterName.addFragment(new MyGroupsFragment(), "Promotional");
-        tabAdapterName.addFragment(new SearchProduct(), "Products");
-        viewPager.setAdapter(tabAdapterName);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.search_product, new SearchFragment()).commit();
     }
 
     @Override
@@ -64,7 +40,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     }
 
     private void setupSearchView() {
-        mSearchView.setIconifiedByDefault(true);
+        mSearchView.setIconifiedByDefault(false);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         if (searchManager != null) {
@@ -90,7 +66,13 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        searchString = query;
+        SearchFragment searchTabFragment = new SearchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("searchText", query);
+        searchTabFragment.setArguments(bundle);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction xfragmentTransaction = manager.beginTransaction();
+        xfragmentTransaction.replace(R.id.search_product, searchTabFragment).commit();
         return false;
     }
 
