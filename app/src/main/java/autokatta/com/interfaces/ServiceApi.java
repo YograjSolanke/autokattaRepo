@@ -482,7 +482,7 @@ public interface ServiceApi {
 
     //Get Vehicle By Id...
     @POST("getVehicleById.php")
-    Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("vehicle_id") String vehicleId);
+    Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("yourcontact") String yourcontact,@Query("vehicle_id") String vehicleId);
 
     //Delete a store...
     @POST("deleteMyStore.php")

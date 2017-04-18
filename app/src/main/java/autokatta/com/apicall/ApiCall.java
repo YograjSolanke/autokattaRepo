@@ -2817,7 +2817,7 @@ Upload Vehicle
     /*
     Get Vehicle By Id...
      */
-    public void getVehicleById(String vehicleId) {
+    public void getVehicleById(String contact,String vehicleId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -2827,7 +2827,7 @@ Upload Vehicle
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<GetVehicleByIdResponse> getVehicleById = serviceApi._autokattaGetVehicleById(vehicleId);
+                Call<GetVehicleByIdResponse> getVehicleById = serviceApi._autokattaGetVehicleById(contact,vehicleId);
                 getVehicleById.enqueue(new Callback<GetVehicleByIdResponse>() {
                     @Override
                     public void onResponse(Call<GetVehicleByIdResponse> call, Response<GetVehicleByIdResponse> response) {
