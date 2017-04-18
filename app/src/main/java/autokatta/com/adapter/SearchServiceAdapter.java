@@ -3,9 +3,6 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,28 +19,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.my_store.ProductView;
-import autokatta.com.response.GetSearchProductResponse;
+import autokatta.com.response.GetServiceSearchResponse;
 
 /**
  * Created by ak-001 on 18/4/17.
  */
 
-public class SearchProductAdapter extends BaseAdapter {
+public class SearchServiceAdapter extends BaseAdapter {
+
     Activity activity;
-    List<GetSearchProductResponse.Success> allSearchData = new ArrayList<>();
+    List<GetServiceSearchResponse.Success> allSearchDataArrayList = new ArrayList<>();
     private LayoutInflater inflater;
 
-    public SearchProductAdapter(Activity activity, List<GetSearchProductResponse.Success> allSearchDataArrayList) {
+    public SearchServiceAdapter(Activity activity, List<GetServiceSearchResponse.Success> allSearchDataArrayList) {
         this.activity = activity;
-        this.allSearchData = allSearchDataArrayList;
+        this.allSearchDataArrayList = allSearchDataArrayList;
         inflater = (LayoutInflater) activity.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return allSearchData.size();
+        return allSearchDataArrayList.size();
     }
 
     @Override
@@ -65,7 +62,7 @@ public class SearchProductAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        YoHolder yoHolder = null;
+        final YoHolder yoHolder;
         if (convertView == null) {
             yoHolder = new YoHolder();
             convertView = inflater.inflate(R.layout.product_new, null);
@@ -82,13 +79,16 @@ public class SearchProductAdapter extends BaseAdapter {
         } else {
             yoHolder = (YoHolder) convertView.getTag();
         }
-        final GetSearchProductResponse.Success obj = allSearchData.get(position);
+
+        final GetServiceSearchResponse.Success obj = allSearchDataArrayList.get(position);
+
         yoHolder.productrating.setVisibility(View.GONE);
         yoHolder.deleteproduct.setVisibility(View.GONE);
-        yoHolder.productName.setText(obj.getProductName());
+
+        yoHolder.productName.setText(obj.getStoreName());
         yoHolder.productPrice.setText(obj.getPrice());
-        yoHolder.productDetails.setText(obj.getProductDetails());
-        yoHolder.productTags.setText(obj.getProductTags());
+        yoHolder.productDetails.setText(obj.getDetails());
+        yoHolder.productTags.setText(obj.getServiceTags());
         yoHolder.productType.setText(obj.getType());
 
         if (obj.getImages().equals("") || obj.getImages().equals("null") || obj.getImages().equals("")) {
@@ -110,37 +110,45 @@ public class SearchProductAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putString("name", obj.getProductName());
-                b.putString("pid", obj.getProductId());
+                b.putString("name", obj.getName());
+                b.putString("sid", obj.getStoreId());
                 b.putString("price", obj.getPrice());
-                b.putString("details", obj.getProductDetails());
-                b.putString("tags", obj.getProductTags());
+                b.putString("details", obj.getDetails());
+                b.putString("tags", obj.getServiceTags());
                 b.putString("type", obj.getType());
-                b.putString("likestatus", obj.getProductlikestatus());
+                b.putString("slikestatus", obj.getServicelikestatus());
                 b.putString("images", obj.getImages());
                 b.putString("category", obj.getCategory());
-                b.putString("plikecnt", obj.getProductlikecount());
-                b.putString("prating", obj.getProductrating());
-                b.putString("prate", obj.getPrate());
-                b.putString("prate1", obj.getPrate1());
-                b.putString("prate2", obj.getPrate2());
-                b.putString("prate3", obj.getPrate3());
+                b.putString("slikecnt", obj.getServicelikecount());
+                b.putString("srating", obj.getServicerating());
+                b.putString("srate", obj.getSrate());
+                b.putString("srate1", obj.getSrate1());
+                b.putString("srate2", obj.getSrate2());
+                b.putString("srate3", obj.getSrate3());
                 b.putString("store_id", obj.getStoreId());
                 b.putString("storecontact", obj.getStorecontact());
                 b.putString("storename", obj.getStoreName());
                 b.putString("storewebsite", obj.getStorewebsite());
-                b.putString("storerating", obj.getStorerating());
+                b.putString("storerating", obj.getServicerating());
                 b.putString("brandtags_list", obj.getBrandtags());
 
-                ProductView frag = new ProductView();
+
+                /*ServiceView frag = new ServiceView();
                 frag.setArguments(b);
 
-                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.search_product, frag);
-                fragmentTransaction.commit();
+                fragmentTransaction.replace(R.id.containerView, frag);
+                fragmentTransaction.addToBackStack("service_view");
+                fragmentTransaction.commit();*/
             }
         });
+
+//            if(!obj.visibility)
+//                allSearchDataArrayList.remove(obj);
+//           notifyDataSetChanged();
+
+
         return convertView;
     }
 }

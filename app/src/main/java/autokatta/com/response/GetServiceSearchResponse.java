@@ -87,6 +87,7 @@ public class GetServiceSearchResponse {
         @SerializedName("service_tags")
         @Expose
         private String serviceTags;
+        public boolean visibility;
 
         public String getStoreId() {
             return storeId;
