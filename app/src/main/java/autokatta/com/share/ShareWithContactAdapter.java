@@ -46,7 +46,6 @@ public class ShareWithContactAdapter extends BaseAdapter {
         this.activity = activity;
         this.sharedata = sharedata;
         this.store_id = store_id;
-        // this.storecontact=storecontact;
         this.contactnumber = contactnumber;
         this.vehicle_id = vehicle_id;
         this.product_id = product_id;
@@ -94,11 +93,9 @@ public class ShareWithContactAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.sharecontact_list_row, null);
+            convertView = mInflater.inflate(R.layout.adapter_share_contact, null);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.number = (TextView) convertView.findViewById(R.id.number);
-            // holder.share = (Button) convertView.findViewById(R.id.share);
-
             holder.profile_pic = (ImageView) convertView.findViewById(R.id.profile_image);
 
             convertView.setTag(holder);
@@ -132,7 +129,7 @@ public class ShareWithContactAdapter extends BaseAdapter {
                 name = holder.name.getText().toString();
 
                 Bundle b = new Bundle();
-                b.putString("sharewithcontact", sharedata);
+                b.putString("generic_list_view", sharedata);
                 b.putString("store_id", store_id);
                 b.putString("vehicle_id", vehicle_id);
                 b.putString("product_id", product_id);
@@ -150,14 +147,14 @@ public class ShareWithContactAdapter extends BaseAdapter {
 
                 System.out.println("data in contact adapter=============" + sharedata);
 
-                ShareWithCaption frag = new ShareWithCaption();
+                ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
 
                 frag.setArguments(b);
 
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.shareInApp_container, frag);
-                fragmentTransaction.addToBackStack("ShareWithCaption");
+                fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
                 fragmentTransaction.commit();
 
 

@@ -348,7 +348,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                         putString("Share_keyword", "mysearch").apply();
 
 
-//                ShareWithinApp fr = new ShareWithinApp();
+//                ShareWithinAppTabFragment fr = new ShareWithinAppTabFragment();
 //                // fr.setArguments(b);
 //
 //                FragmentManager fragmentManager = ctx.getSupportFragmentManager();

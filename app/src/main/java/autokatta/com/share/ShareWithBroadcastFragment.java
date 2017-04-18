@@ -25,9 +25,9 @@ import retrofit2.Response;
  * Created by ak-003 on 21/2/17.
  */
 
-public class ShareWithBroadcast extends Fragment implements RequestNotifier {
+public class ShareWithBroadcastFragment extends Fragment implements RequestNotifier {
 
-    public ShareWithBroadcast() {
+    public ShareWithBroadcastFragment() {
     }
 
     String contactnumber, store_id, vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id,
@@ -43,20 +43,18 @@ public class ShareWithBroadcast extends Fragment implements RequestNotifier {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View root = inflater.inflate(R.layout.sharewithgroup, container, false);
+        View root = inflater.inflate(R.layout.generic_list_view, container, false);
 
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
-        System.out.print("Contact in share with Group " + contactnumber);
 
-
-        grouplist = (ListView) root.findViewById(R.id.group_list);
+        grouplist = (ListView) root.findViewById(R.id.generic_list);
 
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.MyBroadcastGroups(contactnumber);
 
         try {
             Bundle b = getArguments();
-            sharedata = b.getString("sharewithcontact");
+            sharedata = b.getString("generic_list_view");
             store_id = b.getString("store_id");
             vehicle_id = b.getString("vehicle_id");
             product_id = b.getString("product_id");
@@ -101,7 +99,7 @@ public class ShareWithBroadcast extends Fragment implements RequestNotifier {
 
                         broadcastGroupsResponseList.add(success);
                     }
-                    ShareWithinBroadcastAdapter adapter = new ShareWithinBroadcastAdapter(getActivity(), broadcastGroupsResponseList, sharedata, contactnumber, store_id,
+                    ShareWithBroadcastAdapter adapter = new ShareWithBroadcastAdapter(getActivity(), broadcastGroupsResponseList, sharedata, contactnumber, store_id,
                             vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
                     grouplist.setAdapter(adapter);
                     adapter.notifyDataSetChanged();

@@ -674,7 +674,7 @@ public class ProductView extends Fragment implements RequestNotifier {
                             shareedit.putString("keyword", "product");
 
                             shareedit.commit();*/
-                            /*ShareWithinApp fr = new ShareWithinApp();
+                            /*ShareWithinAppTabFragment fr = new ShareWithinAppTabFragment();
                             // fr.setArguments(b);
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

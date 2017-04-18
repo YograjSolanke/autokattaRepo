@@ -26,7 +26,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * Created by ak-005 on 20/6/16.
  */
 
-public class ShareWithinGroupAdapter extends BaseAdapter {
+public class ShareWithGroupAdapter extends BaseAdapter {
 
 
     private Activity activity;
@@ -38,14 +38,13 @@ public class ShareWithinGroupAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
     private String sharedata, groupid, contactnumber, number, store_id, vehicle_id, product_id, service_id, profile_contact,
-            search_id, status_id, auction_id, loan_id, exchange_id, keyword, grouptab;
-    private String groupname;
+            search_id, status_id, auction_id, loan_id, exchange_id, keyword, groupname;
 
 
-    ShareWithinGroupAdapter(Activity activity, List<String> alldata,
-                            String sharedata, String contactnumber, String store_id, String vehicle_id,
-                            String product_id, String service_id, String profile_contact, String search_id,
-                            String status_id, String auction_id, String loan_id, String exchange_id, String keyword) {
+    ShareWithGroupAdapter(Activity activity, List<String> alldata,
+                          String sharedata, String contactnumber, String store_id, String vehicle_id,
+                          String product_id, String service_id, String profile_contact, String search_id,
+                          String status_id, String auction_id, String loan_id, String exchange_id, String keyword) {
 
         this.activity = activity;
         this.alldata = alldata;
@@ -85,7 +84,7 @@ public class ShareWithinGroupAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return group_id.size();
+        return alldata.size();
     }
 
     @Override
@@ -108,7 +107,7 @@ public class ShareWithinGroupAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.sharecontact_list_row, null);
+            convertView = mInflater.inflate(R.layout.adapter_share_contact, null);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.number = (TextView) convertView.findViewById(R.id.number);
 
@@ -123,12 +122,9 @@ public class ShareWithinGroupAdapter extends BaseAdapter {
         holder.number.setVisibility(View.GONE);
 
 
-        System.out.println("image_array.get(position).toString()" + image_array.get(position));
-
         if (image_array.get(position) == null || image_array.get(position).equals("null") || image_array.get(position).equals("")) {
-            holder.profile_pic.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.workers));
+            holder.profile_pic.setBackgroundResource(R.drawable.workers);
         } else {
-
 
             Glide.with(activity)
                     .load("http://autokatta.com/mobile/group_profile_pics/" + image_array.get(position))
@@ -147,7 +143,7 @@ public class ShareWithinGroupAdapter extends BaseAdapter {
                 groupname = title_array.get(position);
 
                 Bundle b = new Bundle();
-                b.putString("sharewithcontact", sharedata);
+                b.putString("generic_list_view", sharedata);
                 b.putString("store_id", store_id);
                 b.putString("vehicle_id", vehicle_id);
                 b.putString("product_id", product_id);
@@ -163,20 +159,15 @@ public class ShareWithinGroupAdapter extends BaseAdapter {
                 b.putString("groupname", groupname);
                 b.putString("groupid", groupid);
                 b.putString("tab", "group");
-                System.out.println("rutu-----------------" + groupname);
 
 
-                ShareWithCaption frag = new ShareWithCaption();
+                ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
                 frag.setArguments(b);
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.shareInApp_container, frag);
-                fragmentTransaction.addToBackStack("ShareWithCaption");
+                fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
                 fragmentTransaction.commit();
-
-                System.out.println("group idddddddd==================" + groupid);
-
-
             }
         });
 

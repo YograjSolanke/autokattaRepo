@@ -15,26 +15,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:hint="Send To :- " />
+            android:hint="Send To :- "
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtreceiver"
-            android:layout_toRightOf="@+id/txtsend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textStyle="bold"
+            android:layout_toEndOf="@+id/txtsend"
+            android:hint="User"
             android:textSize="15sp"
-            android:hint="User" />
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView1"
-        android:layout_below="@+id/relSenddto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/relSenddto"
         android:layout_marginTop="12dip">
 
         <RelativeLayout
@@ -73,15 +73,14 @@
 
                 <Button
                     android:id="@+id/sharebutton"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/buttonback"
                     android:text="Share"
                     android:textColor="@color/white" />
             </RelativeLayout>
 
         </RelativeLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>

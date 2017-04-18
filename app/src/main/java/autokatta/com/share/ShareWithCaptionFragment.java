@@ -1,6 +1,7 @@
 package autokatta.com.share;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 
+import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
@@ -23,9 +25,9 @@ import retrofit2.Response;
 /**
  * Created by ak-002 on 10/9/16.
  */
-public class ShareWithCaption extends Fragment implements RequestNotifier {
+public class ShareWithCaptionFragment extends Fragment implements RequestNotifier {
 
-    public ShareWithCaption() {
+    public ShareWithCaptionFragment() {
     }
 
     EditText editShare;
@@ -42,10 +44,9 @@ public class ShareWithCaption extends Fragment implements RequestNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View root = inflater.inflate(R.layout.sharewithcaption, container, false);
+        View root = inflater.inflate(R.layout.fragment_share_caption, container, false);
 
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
-        System.out.print("Contact in share with contact " + contactnumber);
 
         sharebutton = (Button) root.findViewById(R.id.sharebutton);
         sharelist = (ListView) root.findViewById(R.id.listshare);
@@ -54,7 +55,7 @@ public class ShareWithCaption extends Fragment implements RequestNotifier {
 
         mApiCall = new ApiCall(getActivity(), this);
         Bundle b = getArguments();
-        sharedata = b.getString("sharewithcontact");
+        sharedata = b.getString("generic_list_view");
         store_id = b.getString("store_id");
         vehicle_id = b.getString("vehicle_id");
         product_id = b.getString("product_id");
@@ -116,25 +117,8 @@ public class ShareWithCaption extends Fragment implements RequestNotifier {
             @Override
             public void onClick(View v) {
 
-                editdata = editShare.getText().toString();
-
-                /*System.out.println("dataaaaaaaaa=========******======11111" + editdata);
-
-                if (tab.equals("contact")) {
-                    new ShareTask().execute();
-                    shareTask(layoutNumber);
-
-                    Toast.makeText(getActivity(), "share successfully to " + name, Toast.LENGTH_SHORT).show();
-                }
-                if (tab.equals("group")) {
-                    new ShareTask1().execute();
-
-                    Toast.makeText(getActivity(), "share successfully to " + groupname + "group", Toast.LENGTH_SHORT).show();
-                }
-                if (tab.equals("broadcastgroup")) {
-                    shareInBroadcast();
-                }*/
-                shareTask(layoutNumber);
+                //editdata = editShare.getText().toString();
+                shareTask(layoutNumber, editShare.getText().toString());
             }
         });
 
@@ -148,6 +132,11 @@ public class ShareWithCaption extends Fragment implements RequestNotifier {
         return root;
     }
 
+
+    private void shareTask(String layoutNumber, String editdata) {
+        mApiCall.shareTaskInApp(contactnumber, number, groupid, broadcastgroupid, editdata, layoutNumber, profile_contact,
+                store_id, vehicle_id, product_id, service_id, status_id, search_id, auction_id, loan_id, exchange_id);
+    }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -171,11 +160,13 @@ public class ShareWithCaption extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
 
-    }
+        if (str != null) {
+            if (str.equalsIgnoreCase("success")) {
+                Toast.makeText(getActivity(), "Share successfully", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
+            }
+        }
 
-    private void shareTask(String layoutNumber) {
-        mApiCall.shareTaskInApp(contactnumber, number, groupid, broadcastgroupid, editdata, layoutNumber, profile_contact,
-                store_id, vehicle_id, product_id, service_id, status_id, search_id, auction_id, loan_id, exchange_id);
     }
 
 

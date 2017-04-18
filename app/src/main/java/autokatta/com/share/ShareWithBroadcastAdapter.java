@@ -23,7 +23,7 @@ import autokatta.com.response.MyBroadcastGroupsResponse;
  * Created by ak-003 on 21/2/17.
  */
 
-public class ShareWithinBroadcastAdapter extends BaseAdapter {
+public class ShareWithBroadcastAdapter extends BaseAdapter {
 
     private Activity activity;
     private List<MyBroadcastGroupsResponse.Success> broadcastlist = new ArrayList<>();
@@ -32,10 +32,10 @@ public class ShareWithinBroadcastAdapter extends BaseAdapter {
     private String sharedata, groupid, contactnumber, number, store_id, vehicle_id, product_id, service_id, profile_contact,
             search_id, status_id, auction_id, loan_id, exchange_id, keyword, grouptab;
 
-    ShareWithinBroadcastAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> alldata,
-                                String sharedata, String contactnumber, String store_id, String vehicle_id,
-                                String product_id, String service_id, String profile_contact, String search_id,
-                                String status_id, String auction_id, String loan_id, String exchange_id, String keyword) {
+    ShareWithBroadcastAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> alldata,
+                              String sharedata, String contactnumber, String store_id, String vehicle_id,
+                              String product_id, String service_id, String profile_contact, String search_id,
+                              String status_id, String auction_id, String loan_id, String exchange_id, String keyword) {
 
         this.activity = activity;
         this.broadcastlist = alldata;
@@ -83,13 +83,13 @@ public class ShareWithinBroadcastAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        final ShareWithinBroadcastAdapter.ViewHolder holder;
+        final ShareWithBroadcastAdapter.ViewHolder holder;
 
 
         if (convertView == null) {
-            holder = new ShareWithinBroadcastAdapter.ViewHolder();
+            holder = new ShareWithBroadcastAdapter.ViewHolder();
 
-            convertView = mInflater.inflate(R.layout.sharecontact_list_row, null);
+            convertView = mInflater.inflate(R.layout.adapter_share_contact, null);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.number = (TextView) convertView.findViewById(R.id.number);
 
@@ -98,7 +98,7 @@ public class ShareWithinBroadcastAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
         } else
-            holder = (ShareWithinBroadcastAdapter.ViewHolder) convertView.getTag();
+            holder = (ShareWithBroadcastAdapter.ViewHolder) convertView.getTag();
 
 
         final MyBroadcastGroupsResponse.Success obj = broadcastlist.get(position);
@@ -115,7 +115,7 @@ public class ShareWithinBroadcastAdapter extends BaseAdapter {
 
 
                 Bundle b = new Bundle();
-                b.putString("sharewithcontact", sharedata);
+                b.putString("generic_list_view", sharedata);
                 b.putString("store_id", store_id);
                 b.putString("vehicle_id", vehicle_id);
                 b.putString("product_id", product_id);
@@ -133,14 +133,14 @@ public class ShareWithinBroadcastAdapter extends BaseAdapter {
                 b.putString("tab", "broadcastgroup");
 
 
-                ShareWithCaption frag = new ShareWithCaption();
+                ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
 
                 frag.setArguments(b);
 
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.shareInApp_container, frag);
-                fragmentTransaction.addToBackStack("ShareWithCaption");
+                fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
                 fragmentTransaction.commit();
 
             }

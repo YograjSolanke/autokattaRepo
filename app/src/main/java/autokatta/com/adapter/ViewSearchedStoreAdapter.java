@@ -251,7 +251,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                         putString("Share_keyword", "store").apply();
 
 
-//                ShareWithinApp fr = new ShareWithinApp();
+//                ShareWithinAppTabFragment fr = new ShareWithinAppTabFragment();
 //                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
 //                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //                fragmentTransaction.replace(R.id.containerView, fr);

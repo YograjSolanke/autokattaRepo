@@ -23,6 +23,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 /**
  * Created by ak-005 on 20/6/16.
  */
+
 public class ShareWithCaptionAdapter extends BaseAdapter {
 
     private Activity activity;
@@ -36,7 +37,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
     public ShareWithCaptionAdapter(Activity activity, String contactnumber, String sharedata, String store_id, String keyword, String product_id,
                                    String service_id, String vehicle_id, String search_id, String status_id, String profile_contact,
                                    String auction_id, String loan_id, String exchange_id) {
-
 
         this.activity = activity;
         this.contactnumber = contactnumber;
@@ -73,9 +73,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
         TextView poststatus;
         TextView aucnoofvehicles, aucenddate, auctitle, aucendtime, going, ignore, auctype;
         RelativeLayout relGoing, relIgnore;
-
         TextView username, profilelocation, profileworkat, profilewebsite;
-
         ImageView callimg, image;
         ImageView starrating1, starrating2, starrating3, starrating4, starrating5;
         ImageView productrating1, productrating2, productrating3, productrating4, productrating5;
@@ -113,19 +111,14 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
             switch (keyword) {
 
                 case "profile":
-                    convertView = mInflater.inflate(R.layout.profilenotifications, null);
-
-//
+                    convertView = mInflater.inflate(R.layout.adapter_share_profile_notification, null);
 
                     holder.username = (TextView) convertView.findViewById(R.id.username);
                     holder.profilelocation = (TextView) convertView.findViewById(R.id.profilelocation);
                     holder.profileworkat = (TextView) convertView.findViewById(R.id.profileworkat);
                     holder.profilewebsite = (TextView) convertView.findViewById(R.id.profilewebsite);
-
                     holder.profilefollowcnt = (TextView) convertView.findViewById(R.id.followcnt);
                     holder.profilelikecnt = (TextView) convertView.findViewById(R.id.like);
-                    //    holder.profiletxt = (TextView)convertView.findViewById(R.id.profiletxt);
-
                     holder.profileimage = (ImageView) convertView.findViewById(R.id.imgnotilike);
                     holder.relaprofilelike = (RelativeLayout) convertView.findViewById(R.id.relaprofilelike);
                     holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
@@ -134,12 +127,9 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     break;
 
                 case "store":
-                    convertView = mInflater.inflate(R.layout.storenotifications, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_store_notification, null);
 
-//                    holder.name = (TextView)convertView.findViewById(R.id.name);
-//                    holder.action = (TextView)convertView.findViewById(R.id.action);
                     holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
-
                     holder.storeimage = (ImageView) convertView.findViewById(R.id.imgnotilike);
                     holder.storename = (TextView) convertView.findViewById(R.id.storename);
                     holder.storetype = (TextView) convertView.findViewById(R.id.storetype);
@@ -147,11 +137,9 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     holder.website = (TextView) convertView.findViewById(R.id.website);
                     holder.time = (TextView) convertView.findViewById(R.id.timing);
                     holder.workingday = (TextView) convertView.findViewById(R.id.workday);
-
                     holder.storefollowcnt = (TextView) convertView.findViewById(R.id.followcnt);
                     holder.storelikecnt = (TextView) convertView.findViewById(R.id.like);
                     holder.storecallimg = (ImageView) convertView.findViewById(R.id.callimg);
-
                     holder.starrating1 = (ImageView) convertView.findViewById(R.id.starlike4);
                     holder.starrating2 = (ImageView) convertView.findViewById(R.id.starlike3);
                     holder.starrating3 = (ImageView) convertView.findViewById(R.id.starlike2);
@@ -163,8 +151,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     break;
 
                 case "product":
-                    convertView = mInflater.inflate(R.layout.product_notification, null);
-//
+                    convertView = mInflater.inflate(R.layout.adapter_share_product_notification, null);
 
                     holder.imgproduct = (ImageView) convertView.findViewById(R.id.imgnotilike);
                     holder.productname = (TextView) convertView.findViewById(R.id.productname);
@@ -172,7 +159,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     holder.productlikecnt = (TextView) convertView.findViewById(R.id.likeprod);
                     holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
                     holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-
                     holder.productrating1 = (ImageView) convertView.findViewById(R.id.starprod1);
                     holder.productrating2 = (ImageView) convertView.findViewById(R.id.starprod2);
                     holder.productrating3 = (ImageView) convertView.findViewById(R.id.starprod3);
@@ -186,7 +172,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
                 case "service":
 
-                    convertView = mInflater.inflate(R.layout.service_notification, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_service_notification, null);
 
                     holder.imgservice = (ImageView) convertView.findViewById(R.id.imgservice);
                     holder.servicename = (TextView) convertView.findViewById(R.id.servicename);
@@ -194,10 +180,8 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     holder.servicefollowcnt = (TextView) convertView.findViewById(R.id.followcnt);
                     holder.servicelikecnt = (TextView) convertView.findViewById(R.id.likeservice);
                     holder.servicesharecnt = (TextView) convertView.findViewById(R.id.shareservice);
-
                     holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
                     holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-
                     holder.servicerating1 = (ImageView) convertView.findViewById(R.id.starservice1);
                     holder.servicerating2 = (ImageView) convertView.findViewById(R.id.starservice2);
                     holder.servicerating3 = (ImageView) convertView.findViewById(R.id.starservice3);
@@ -210,30 +194,24 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
                 case "vehicle":
 
-                    convertView = mInflater.inflate(R.layout.vehiclenotifications, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_vehicle_notification, null);
 
-//
                     holder.imgvehicle = (ImageView) convertView.findViewById(R.id.imgvehicle);
                     holder.title = (TextView) convertView.findViewById(R.id.title);
                     holder.vprice = (TextView) convertView.findViewById(R.id.price);
                     holder.vbrand = (TextView) convertView.findViewById(R.id.brand);
                     holder.vmodel = (TextView) convertView.findViewById(R.id.model);
                     holder.vyear = (TextView) convertView.findViewById(R.id.year);
-
                     holder.vkms = (TextView) convertView.findViewById(R.id.km_hrs);
                     holder.vregno = (TextView) convertView.findViewById(R.id.registrationNo);
                     holder.vrto = (TextView) convertView.findViewById(R.id.RTO);
                     holder.vlocation = (TextView) convertView.findViewById(R.id.location);
                     holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
                     holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-                    //holder.vhrs = (TextView)convertView.findViewById(R.id.year);
-
                     holder.vehiclelikecnt = (TextView) convertView.findViewById(R.id.like);
                     holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
                     holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-
                     holder.callimg = (ImageView) convertView.findViewById(R.id.callimg);
-
 
                     break;
 
@@ -266,7 +244,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
                 case "uploadvehicle":
 
-                    convertView = mInflater.inflate(R.layout.vehiclenotifications, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_vehicle_notification, null);
 
                     holder.imgvehicle = (ImageView) convertView.findViewById(R.id.imgvehicle);
                     holder.title = (TextView) convertView.findViewById(R.id.title);
@@ -274,12 +252,10 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     holder.vbrand = (TextView) convertView.findViewById(R.id.brand);
                     holder.vmodel = (TextView) convertView.findViewById(R.id.model);
                     holder.vyear = (TextView) convertView.findViewById(R.id.year);
-
                     holder.vkms = (TextView) convertView.findViewById(R.id.km_hrs);
                     holder.vregno = (TextView) convertView.findViewById(R.id.registrationNo);
                     holder.vrto = (TextView) convertView.findViewById(R.id.RTO);
                     holder.vlocation = (TextView) convertView.findViewById(R.id.location);
-                    //holder.hrs = (TextView)convertView.findViewById(R.id.year);
                     holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
                     holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
                     holder.callimg = (ImageView) convertView.findViewById(R.id.callimg);
@@ -292,8 +268,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                 case "auction":
                     convertView = mInflater.inflate(R.layout.activenotification, null);
 
-
-                    //  holder.profiletxt = (TextView)convertView.findViewById(R.id.profiletxt);
                     holder.auctitle = (TextView) convertView.findViewById(R.id.auc_name);
                     holder.aucnoofvehicles = (TextView) convertView.findViewById(R.id.auc_noofvehicle);
                     holder.aucenddate = (TextView) convertView.findViewById(R.id.auc_enddate);
@@ -303,7 +277,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     holder.auctype = (TextView) convertView.findViewById(R.id.auc_type);
                     holder.relGoing = (RelativeLayout) convertView.findViewById(R.id.relgoing);
                     holder.relIgnore = (RelativeLayout) convertView.findViewById(R.id.relignore);
-
                     holder.relaprofilelike = (RelativeLayout) convertView.findViewById(R.id.relaprofilelike);
                     holder.relatebutton = (LinearLayout) convertView.findViewById(R.id.relatebutton);
 

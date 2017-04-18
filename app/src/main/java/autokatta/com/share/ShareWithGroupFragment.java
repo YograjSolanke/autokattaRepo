@@ -1,6 +1,5 @@
 package autokatta.com.share;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,9 +25,11 @@ import retrofit2.Response;
 /**
  * Created by ak-005 on 18/6/16.
  */
-public class ShareWithGroup extends Fragment implements RequestNotifier {
+public class ShareWithGroupFragment extends Fragment implements RequestNotifier {
 
-    Activity activity;
+    public ShareWithGroupFragment() {
+    }
+
     String contactnumber, storecontact, store_id, vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id,
             exchange_id;
     String sharedata, keyword;
@@ -41,20 +42,18 @@ public class ShareWithGroup extends Fragment implements RequestNotifier {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View root = inflater.inflate(R.layout.sharewithgroup, container, false);
+        View root = inflater.inflate(R.layout.generic_list_view, container, false);
 
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
-        System.out.print("Contact in share with Group " + contactnumber);
 
-
-        grouplist = (ListView) root.findViewById(R.id.group_list);
+        grouplist = (ListView) root.findViewById(R.id.generic_list);
 
         getData(contactnumber);
 
 
         try {
             Bundle b = getArguments();
-            sharedata = b.getString("sharewithcontact");
+            sharedata = b.getString("generic_list_view");
             store_id = b.getString("store_id");
             vehicle_id = b.getString("vehicle_id");
             product_id = b.getString("product_id");
@@ -127,7 +126,7 @@ Get Group Data...
                     else
                         alldata.add(title + "=" + id + "=" + image);
                 }
-                ShareWithinGroupAdapter adapter = new ShareWithinGroupAdapter(getActivity(), alldata, sharedata, contactnumber, store_id,
+                ShareWithGroupAdapter adapter = new ShareWithGroupAdapter(getActivity(), alldata, sharedata, contactnumber, store_id,
                         vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
                 grouplist.setAdapter(adapter);
             } else {

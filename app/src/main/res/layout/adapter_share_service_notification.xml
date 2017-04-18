@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
+    android:layout_height="wrap_content"
     android:padding="2dp">
 
     <android.support.v7.widget.CardView
@@ -26,7 +26,8 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_marginLeft="5dp"
+                    android:contentDescription="@string/app_name"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/profile"
                     android:id="@+id/imglike"
@@ -35,56 +36,26 @@
 
                 <TextView
                     android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/imglike"
-                    android:id="@+id/productaction"
+                    android:layout_toStartOf="@+id/relativefev"
+                    android:layout_toEndOf="@+id/imglike"
+                    android:id="@+id/serviceaction"
                     android:textColor="#808080"
-                    android:layout_toLeftOf="@+id/relativefev"
-                    android:text="productaction"
+                    android:text="serviceaction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <!--<TextView-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_toRightOf="@+id/name"-->
-                <!--android:id="@+id/action"-->
-                <!--android:text="action"-->
-                <!--android:textColor="#808080"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
-                <!--<TextView-->
-                <!--android:textStyle="bold"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_toRightOf="@+id/action"-->
-                <!--android:id="@+id/productnamemain"-->
-                <!--android:text="product name"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
-                <!--<TextView-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_toRightOf="@+id/productnamemain"-->
-                <!--android:id="@+id/product"-->
-                <!--android:text="product"-->
-                <!--android:textColor="#808080"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
 
                 <TextView
                     android:layout_marginTop="4dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/imglike"
-                    android:layout_below="@+id/productaction"
-                    android:layout_toLeftOf="@+id/relativefev"
-                    android:id="@+id/producttime"
-                    android:textColor="#808080"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/imglike"
+                    android:layout_below="@+id/serviceaction"
+                    android:id="@+id/servicetime"
+                    android:layout_toStartOf="@+id/relativefev"
                     android:text="Day at time"
+                    android:textColor="#808080"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -93,32 +64,27 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-
-
-                    >
+                    android:layout_alignParentEnd="true">
 
 
                     <ImageView
+                        android:contentDescription="@string/app_name"
                         android:background="@drawable/fav1"
                         android:id="@+id/fvrtimg"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />
 
                     <ImageView
-
+                        android:contentDescription="@string/app_name"
+                        android:visibility="gone"
                         android:background="@drawable/fav2"
                         android:id="@+id/fvrtredimg"
-                        android:visibility="gone"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />
-
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -128,215 +94,189 @@
                 android:background="#cccccc"
                 android:id="@+id/v1"
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="1dp">
 
+            </View>
 
             <RelativeLayout
+
                 android:layout_below="@+id/v1"
                 android:id="@+id/relalike1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_marginLeft="5dp"
+                    android:contentDescription="@string/app_name"
                     android:layout_marginTop="15dp"
-                    android:id="@+id/imgnotilike"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/imgservice"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/store"
-                    android:layout_above="@+id/starlike"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
                 <RelativeLayout
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="30dp"
-                    android:id="@+id/productnamerel"
-                    android:layout_toRightOf="@+id/imgnotilike"
+                    android:id="@+id/servicenamerel"
+                    android:layout_toEndOf="@+id/imgservice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:textStyle="bold"
-                        android:id="@+id/productnametxt"
-                        android:text="Product name  :"
+                        android:id="@+id/servicenametxt"
+                        android:text="Service name :"
                         android:textColor="#808080"
-                        android:layout_width="110dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:hint="name"
                         android:textColor="#808080"
-                        android:layout_toRightOf="@+id/productnametxt"
-                        android:id="@+id/productname"
+                        android:layout_toEndOf="@+id/servicenametxt"
+                        android:id="@+id/servicename"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@+id/productnamerel"
-                    android:id="@+id/producttyperel"
-                    android:layout_toRightOf="@+id/imgnotilike"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@+id/servicenamerel"
+                    android:id="@+id/servicetyperel"
+                    android:layout_toEndOf="@+id/imgservice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:textStyle="bold"
-                        android:id="@+id/producttypetxt"
-                        android:text="Product type  : "
+                        android:id="@+id/servicetypetxt"
+                        android:text="Service type :"
                         android:textColor="#808080"
-                        android:layout_width="110dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:hint="type"
                         android:textColor="#808080"
-                        android:layout_toRightOf="@+id/producttypetxt"
-                        android:id="@+id/producttype"
+                        android:layout_toEndOf="@+id/servicetypetxt"
+                        android:id="@+id/servicetype"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="20dp"
-                    android:layout_below="@+id/imgnotilike"
+                    android:layout_below="@+id/imgservice"
                     android:id="@+id/rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:textSize="12sp"
                         android:layout_marginTop="5dp"
+                        android:textSize="12sp"
                         android:textColor="#808080"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Like"
-                        android:id="@+id/likeprod"
-                        android:layout_marginBottom="10dp" />
+                        android:id="@+id/likeservice" />
 
                     <TextView
                         android:textStyle="bold"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/likeprod"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/likeservice"
                         android:id="@+id/dot"
                         android:text="."
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        android:textSize="12sp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/dot"
+                        android:textSize="12sp"
+                        android:layout_toEndOf="@+id/dot"
                         android:textColor="#808080"
-                        android:id="@+id/shareprod"
+                        android:id="@+id/shareservice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Share" />
-
-                    <!--<TextView-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:layout_toRightOf="@+id/shareprod"-->
-                    <!--android:id="@+id/dot2"-->
-                    <!--android:text="."-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content" />-->
-
-                    <!--<TextView-->
-                    <!--android:textSize="12sp"-->
-                    <!--android:layout_marginTop="5dp"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:layout_toRightOf="@+id/dot2"-->
-                    <!--android:textColor="#808080"-->
-                    <!--android:id="@+id/followcnt"-->
-                    <!--android:text="follower"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--/>-->
-
 
                 </RelativeLayout>
 
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:background="@drawable/call_icon"
                     android:id="@+id/callimg"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/producttyperel" />
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/servicenamerel" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:background="@drawable/ratestar1"
-                    android:id="@+id/starprod1"
+                    android:id="@+id/starservice1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_toLeftOf="@+id/starprod2"
+                    android:layout_toStartOf="@+id/starservice2"
                     android:layout_below="@+id/callimg"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:background="@drawable/ratestar1"
-                    android:id="@+id/starprod2"
+                    android:id="@+id/starservice2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_toLeftOf="@+id/starprod3"
+                    android:layout_toStartOf="@+id/starservice3"
                     android:layout_below="@+id/callimg"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:background="@drawable/ratestar1"
-                    android:id="@+id/starprod3"
+                    android:id="@+id/starservice3"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_toLeftOf="@+id/starprod4"
+                    android:layout_toStartOf="@+id/starservice4"
                     android:layout_below="@+id/callimg"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:background="@drawable/ratestar1"
-                    android:id="@+id/starprod4"
+                    android:id="@+id/starservice4"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_toLeftOf="@+id/starprod5"
+                    android:layout_toStartOf="@+id/starservice5"
                     android:layout_below="@+id/callimg"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp" />
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:background="@drawable/ratestar1"
-                    android:id="@+id/starprod5"
+                    android:id="@+id/starservice5"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_below="@+id/callimg"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp" />
-
-                <!--<ImageView-->
-                <!--android:layout_width="20dp"-->
-                <!--android:layout_height="20dp"-->
-                <!--android:background="@drawable/follow"-->
-                <!--android:layout_below="@+id/starprod1"-->
-                <!--android:id="@+id/followimg"-->
-                <!--android:layout_marginRight="5dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_toLeftOf="@+id/followcnt"/>-->
 
 
             </RelativeLayout>
@@ -346,7 +286,9 @@
                 android:background="#cccccc"
                 android:id="@+id/v2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"></View>
+                android:layout_height="1dp">
+
+            </View>
 
             <LinearLayout
 
@@ -366,13 +308,14 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:contentDescription="@string/app_name"
                         android:background="@drawable/likeicon"
                         android:id="@+id/likeimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />
 
                     <TextView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:id="@+id/liketxt"
                         android:text="Like"
                         android:textColor="#808080"
@@ -391,6 +334,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:contentDescription="@string/app_name"
                         android:background="@drawable/unlikethumb"
                         android:id="@+id/unlikeimg"
                         android:layout_width="20dp"
@@ -398,7 +342,7 @@
 
                     <TextView
                         android:textColor="@color/red"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:id="@+id/unliketxt"
                         android:text="Unlike"
                         android:layout_width="wrap_content"
@@ -410,7 +354,9 @@
                     android:layout_gravity="center"
                     android:background="#cccccc"
                     android:layout_width="1dp"
-                    android:layout_height="20dp"></View>
+                    android:layout_height="20dp">
+
+                </View>
 
 
                 <LinearLayout
@@ -422,13 +368,14 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:contentDescription="@string/app_name"
                         android:background="@android:drawable/ic_menu_share"
                         android:id="@+id/shareimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />
 
                     <TextView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:id="@+id/sharetxt"
                         android:text="Share"
                         android:textColor="#808080"
@@ -441,7 +388,9 @@
                     android:layout_gravity="center"
                     android:background="#cccccc"
                     android:layout_width="1dp"
-                    android:layout_height="20dp"></View>
+                    android:layout_height="20dp">
+
+                </View>
 
 
                 <LinearLayout
@@ -453,13 +402,14 @@
                     android:layout_height="match_parent">
 
                     <ImageView
+                        android:contentDescription="@string/app_name"
                         android:background="@drawable/autoshare"
                         android:id="@+id/shareimg1"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />
 
                     <TextView
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:id="@+id/sharetxt1"
                         android:text="Share"
                         android:textColor="#808080"
@@ -468,65 +418,10 @@
 
                 </LinearLayout>
 
-
-                <!--<View-->
-                <!--android:layout_gravity="center"-->
-                <!--android:background="#cccccc"-->
-                <!--android:layout_width="1dp"-->
-                <!--android:layout_height="20dp"></View>-->
-
-
-                <!--<LinearLayout-->
-                <!--android:gravity="center"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_weight="0.33"-->
-                <!--android:id="@+id/linearfollow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent">-->
-
-                <!--<ImageView-->
-                <!--android:background="@drawable/followicon"-->
-                <!--android:id="@+id/followimg"-->
-                <!--android:layout_width="20dp"-->
-                <!--android:layout_height="20dp" />-->
-                <!--<TextView-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:id="@+id/followtxt"-->
-                <!--android:text="Follow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
-                <!--</LinearLayout>-->
-
-                <!--<LinearLayout-->
-                <!--android:visibility="gone"-->
-                <!--android:gravity="center"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_weight="0.33"-->
-                <!--android:id="@+id/linearunfollow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent">-->
-
-                <!--<ImageView-->
-                <!--android:background="@drawable/followicon"-->
-                <!--android:id="@+id/unfollowimg"-->
-                <!--android:layout_width="20dp"-->
-                <!--android:layout_height="20dp" />-->
-                <!--<TextView-->
-                <!--android:textColor="@color/red"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:id="@+id/unfollowtxt"-->
-                <!--android:text="Follow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
-                <!--</LinearLayout>-->
-
-
             </LinearLayout>
 
-
         </RelativeLayout>
+
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>

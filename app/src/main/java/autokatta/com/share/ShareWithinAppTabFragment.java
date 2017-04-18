@@ -19,32 +19,28 @@ import autokatta.com.R;
 /**
  * Created by ak-005 on 18/6/16.
  */
-public class ShareWithinApp extends Fragment {
+public class ShareWithinAppTabFragment extends Fragment {
 
-    public ShareWithinApp() {
+    public ShareWithinAppTabFragment() {
         //empty constructor
     }
 
     TabLayout tabLayout;
     ViewPager viewPager;
 
-    SharedPreferences.Editor editor;
     SharedPreferences prefs;
-    public static final String MyContactPREFERENCES = "contact No";
 
 
     String contactnumber;
-    public static final String MyContactPREFERENCESshare = "sharedata";
     String sharedata, store_id, storecontact, vehicle_id, task_id, product_id, service_id, profile_contact,
             search_id, status_id, auction_id, exchange_id, loan_id;
 
     String keyword;
-    // String keyword;
 
     @Override
     public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
 
-        View root = infl.inflate(R.layout.sharewithinapptab, container, false);
+        View root = infl.inflate(R.layout.fragment_share_withinapp_tab, container, false);
 
         prefs = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE);
 
@@ -104,10 +100,8 @@ public class ShareWithinApp extends Fragment {
         @Override
         public Fragment getItem(int position) {
             Bundle b = new Bundle();
-            b.putString("sharewithcontact", sharedata);
+            b.putString("generic_list_view", sharedata);
             b.putString("store_id", store_id);
-            System.out.println("share data in aaaa===" + sharedata);
-            // b.putString("storecontact", storecontact);
             b.putString("vehicle_id", vehicle_id);
             b.putString("product_id", product_id);
             b.putString("service_id", service_id);
@@ -123,7 +117,7 @@ public class ShareWithinApp extends Fragment {
             switch (position) {
                 case 0:
 
-                    ShareWithContact fr = new ShareWithContact();
+                    ShareWithContactFragment fr = new ShareWithContactFragment();
 
                     fr.setArguments(b);
 
@@ -131,7 +125,7 @@ public class ShareWithinApp extends Fragment {
 
                 case 1:
 
-                    ShareWithGroup fr1 = new ShareWithGroup();
+                    ShareWithGroupFragment fr1 = new ShareWithGroupFragment();
 
                     fr1.setArguments(b);
 
@@ -139,7 +133,7 @@ public class ShareWithinApp extends Fragment {
 
                 case 2:
 
-                    ShareWithBroadcast fr2 = new ShareWithBroadcast();
+                    ShareWithBroadcastFragment fr2 = new ShareWithBroadcastFragment();
 
                     fr2.setArguments(b);
 

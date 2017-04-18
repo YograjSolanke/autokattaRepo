@@ -22,9 +22,9 @@ import autokatta.com.response.Db_AutokattaContactResponse;
 /**
  * Created by ak-005 on 18/6/16.
  */
-public class ShareWithContact extends Fragment {
+public class ShareWithContactFragment extends Fragment {
 
-    public ShareWithContact() {
+    public ShareWithContactFragment() {
     }
 
     SharedPreferences prefs;
@@ -42,19 +42,17 @@ public class ShareWithContact extends Fragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View root = inflater.inflate(R.layout.sharewithcontact, container, false);
+        View root = inflater.inflate(R.layout.generic_list_view, container, false);
 
         prefs = getActivity().getSharedPreferences(MyContactPREFERENCES, Context.MODE_PRIVATE);
         contactnumber = prefs.getString("loginContact", "");
-        System.out.print("Contact in share with contact " + contactnumber);
 
-
-        contactlist = (ListView) root.findViewById(R.id.contact_list);
+        contactlist = (ListView) root.findViewById(R.id.generic_list);
 
 
         try {
             Bundle b = getArguments();
-            sharedata = b.getString("sharewithcontact");
+            sharedata = b.getString("generic_list_view");
             store_id = b.getString("store_id");
             vehicle_id = b.getString("vehicle_id");
             product_id = b.getString("product_id");
