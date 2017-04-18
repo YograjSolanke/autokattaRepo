@@ -876,4 +876,13 @@ public interface ServiceApi {
     @POST("post_product_review.php")
     Call<String> postProductReview(@Query("contact") String contact, @Query("store_id") String storeId,
                                    @Query("product_id") String productId, @Query("review") String review);
+
+    //Likes in Vehicle details
+    @POST("newlikes.php")
+    Call<String> _autokattaVehicleLike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
+                                   @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
+
+    //Calling in Vehicle details
+    @POST("calling.php")
+    Call<String> _autokattaVehicleCalling(@Query("vehicle_id") String vehicle_id, @Query("keyword") String keyword);
 }
