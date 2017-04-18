@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -43,8 +45,12 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.GetTagsResponse;
+import autokatta.com.search.ProductImageSlider;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -80,13 +86,6 @@ public class ProductView extends Fragment implements RequestNotifier {
 
     // SharedPreferences settings;
     String contact;
-    SharedPreferences.Editor editor1, shareedit;
-    SharedPreferences prefs1, spr;
-    public static final String MyProfilePREFERENCES = "contact No";
-
-
-    public static final String MyContactPREFERENCESshare = "sharedata";
-
     Float pricerate = 0.0f;
     Float qualityrate = 0.0f;
     Float stockrate = 0.0f;
@@ -114,6 +113,7 @@ public class ProductView extends Fragment implements RequestNotifier {
     String tagpart = "", tagid = "";
     String idlist = "", product_id;
     boolean tagflag = false;
+    ConnectionDetector mConnectionDetector;
 
     @Nullable
     @Override
@@ -122,6 +122,7 @@ public class ProductView extends Fragment implements RequestNotifier {
         contact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                 .getString("loginContact", "");
 
+        mConnectionDetector = new ConnectionDetector(getActivity());
         storename = (TextView) mProductView.findViewById(R.id.txtstorename);
         website = (TextView) mProductView.findViewById(R.id.txtstorewebsite);
         productname = (EditText) mProductView.findViewById(R.id.txtpname);
@@ -440,26 +441,24 @@ public class ProductView extends Fragment implements RequestNotifier {
                     picture.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            /*b.putString("images", pimages);
+                            b.putString("images", pimages);
                             ProductImageSlider fragment = new ProductImageSlider();
                             fragment.setArguments(b);
 
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.containerView, fragment);
+                            fragmentTransaction.replace(R.id.search_product, fragment);
                             fragmentTransaction.addToBackStack("productimageslider");
-                            fragmentTransaction.commit();*/
-
+                            fragmentTransaction.commit();
                         }
                     });
-
 
                     edit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             try {
-                                // getTags();
-                                //getBrandTags();
+                                getTags();
+                                getBrandTags();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -506,7 +505,7 @@ public class ProductView extends Fragment implements RequestNotifier {
                                     othertag.add(tagpart);
 
                                     try {
-                                        //addOtherTags();
+                                        addOtherTags();
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -514,18 +513,18 @@ public class ProductView extends Fragment implements RequestNotifier {
 
                             }
 
-                            //getTags();
+                            getTags();
                             for (int i = 0; i < images.size(); i++) {
                                 for (int j = 0; j < tagname.size(); j++) {
-                                    if (images.get(i).toString().equalsIgnoreCase(tagname.get(j).toString()))
-                                        idlist = idlist + "," + spnid.get(j).toString();
+                                    if (images.get(i).equalsIgnoreCase(tagname.get(j)))
+                                        idlist = idlist + "," + spnid.get(j);
                                 }
                             }
 
                             if (!producttags.getText().toString().equalsIgnoreCase("") && idlist.length() > 0) {
                                 idlist = idlist.substring(1);
                             }
-                            if (tagflag == true) {
+                            if (tagflag) {
                                 tagid = tagid.substring(1);
                                 if (!idlist.equalsIgnoreCase(""))
                                     idlist = idlist + "," + tagid;
@@ -547,7 +546,7 @@ public class ProductView extends Fragment implements RequestNotifier {
                                     if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
                                         System.out.println("brand tag going to add=" + brandtagpart);
                                         try {
-                                            //addOtherBrandTags(brandtagpart);
+                                            addOtherBrandTags(brandtagpart);
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -589,7 +588,7 @@ public class ProductView extends Fragment implements RequestNotifier {
                                 producttags.clearFocus();
                                 producttype.clearFocus();
                                 spinCategory.clearFocus();
-                                /*UpdateProductDetails productRequest = new UpdateProductDetails(setProductData(), ProductView.this);
+                               /* UpdateProductDetails productRequest = new UpdateProductDetails(setProductData(), ProductView.this);
                                 productRequest.sendRequest();*/
                             }
 
@@ -599,21 +598,25 @@ public class ProductView extends Fragment implements RequestNotifier {
                     deleteproduct.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            new AlertDialog.Builder(getActivity())
-                                    .setTitle("Delete?")
-                                    .setMessage("Are You Sure You Want To Delete This Product?")
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // deleteproduct();
-                                        }
-                                    })
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
+                            if (!mConnectionDetector.isConnectedToInternet()) {
+                                Toast.makeText(getActivity(), "Please try later", Toast.LENGTH_SHORT).show();
+                            } else {
+                                new AlertDialog.Builder(getActivity())
+                                        .setTitle("Delete?")
+                                        .setMessage("Are You Sure You Want To Delete This Product?")
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                deleteproduct();
+                                            }
+                                        })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
 
-                                        }
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+                            }
                         }
                     });
 
@@ -624,7 +627,7 @@ public class ProductView extends Fragment implements RequestNotifier {
                         public void onClick(View view) {
                             linearlike.setVisibility(View.GONE);
                             linearunlike.setVisibility(View.VISIBLE);
-                            //sendLike();
+                            sendLike();
                             lcnt = lcnt + 1;
                             txtlike.setText("Like(" + lcnt + ")");
                         }
@@ -634,54 +637,45 @@ public class ProductView extends Fragment implements RequestNotifier {
                         public void onClick(View view) {
                             linearlike.setVisibility(View.VISIBLE);
                             linearunlike.setVisibility(View.GONE);
-                            //sendUnlike();
+                            sendUnlike();
                             lcnt = lcnt - 1;
                             txtlike.setText("Like(" + lcnt + ")");
-
                         }
                     });
-//
+
                     submitfeedback.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             if (prate.equals("0")) {
-                                //sendproductrating();
+                                sendproductrating();
                                 System.out.println("hiiii..............send rating called");
                             }
                             if (!prate.equals("0")) {
-                                //sendupdatedproductrating();
+                                sendupdatedproductrating();
                                 System.out.println("hiiii..............send updated product rating called");
                             }
-
-
                         }
                     });
 
                     if (pimages.equals("")) {
                         imagename = "http://autokatta.com/mobile/Product_pics/autokattalogofinaltry.jpg";
-
                     } else {
-
                         imagename = "http://autokatta.com/mobile/Product_pics/" + images.get(0);
-
                     }
-                    System.out.println("imagename================**********" + imagename);
 
                     linearshare1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            System.out.println("imagenamepppppp****======**==========**********" + images.get(0));
 
                             allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + images.get(0);
 
-                            shareedit.putString("sharedata", allDetails);
+                            /*shareedit.putString("sharedata", allDetails);
                             shareedit.putString("product_id", id);
                             shareedit.putString("keyword", "product");
 
-                            shareedit.commit();
-                           /* ShareWithinApp fr = new ShareWithinApp();
-
+                            shareedit.commit();*/
+                            /*ShareWithinApp fr = new ShareWithinApp();
+                            // fr.setArguments(b);
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.containerView, fr);
@@ -690,6 +684,7 @@ public class ProductView extends Fragment implements RequestNotifier {
 
                         }
                     });
+
 
                     linearshare.setOnClickListener(new View.OnClickListener() {
 
@@ -736,10 +731,9 @@ public class ProductView extends Fragment implements RequestNotifier {
                     seellreview.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //sending product id to seeallreview fragment to get all review data
                             b.putString("product_id", id);
                             b.putString("action", action);
-                           /* SeeAllReviews frag = new SeeAllReviews();
+                            /*SeeAllReviews frag = new SeeAllReviews();
                             frag.setArguments(b);
 
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -755,6 +749,80 @@ public class ProductView extends Fragment implements RequestNotifier {
             }
         });
         return mProductView;
+    }
+
+    /*
+    Update Ratings...
+     */
+    private void sendupdatedproductrating() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall._autokattaProductUpdateRatings(contact, id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+                , String.valueOf(stockrate), "product");
+    }
+
+    /*
+    Ratings...
+     */
+    private void sendproductrating() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall._autokattaProductNewRatings(contact, id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+                , String.valueOf(stockrate), "product");
+    }
+
+    /*
+    Unlike...
+     */
+    private void sendUnlike() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall._autokattaProductViewUnlike(contact, receiver_contact, "5", product_id);
+    }
+
+    /*
+    Like
+     */
+    private void sendLike() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall._autokattaProductView(contact, receiver_contact, "5", id);
+    }
+
+    /*
+    Delete Product
+     */
+    private void deleteproduct() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.deleteProduct(id, "delete");
+    }
+
+    /*
+    Add Other Brand Tags...
+     */
+    private void addOtherBrandTags(String brandtagpart) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.addOtherBrandTags(brandtagpart, "1");
+    }
+
+    /*
+    Add Other Tags...
+     */
+    private void addOtherTags() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall._autoAddTags(tagpart, "1");
+    }
+
+    /*
+    Get Tags...
+     */
+    private void getTags() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall._autoGetTags("1");
+    }
+
+    /*
+    Get Brand Tags...
+     */
+    private void getBrandTags() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getBrandTags("1");
     }
 
     /*
@@ -788,6 +856,26 @@ public class ProductView extends Fragment implements RequestNotifier {
                         spinCategory.setAdapter(dataadapter);
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                } else if (response.body() instanceof BrandsTagResponse) {
+                    BrandsTagResponse brandsTagResponse = (BrandsTagResponse) response.body();
+                    List<String> brands = new ArrayList<>();
+                    if (!brandsTagResponse.getSuccess().isEmpty()) {
+                        for (BrandsTagResponse.Success success : brandsTagResponse.getSuccess()) {
+                            brands.add(success.getTag());
+                        }
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, brands);
+                        multiautobrand.setAdapter(dataadapter);
+                    }
+                } else if (response.body() instanceof GetTagsResponse) {
+                    GetTagsResponse tagsResponse = (GetTagsResponse) response.body();
+                    List<String> tags = new ArrayList<>();
+                    if (!tagsResponse.getSuccess().isEmpty()) {
+                        for (GetTagsResponse.Success success : tagsResponse.getSuccess()) {
+                            tags.add(success.getTag());
+                        }
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, tags);
+                        producttags.setAdapter(dataadapter);
+                    }
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -804,7 +892,7 @@ public class ProductView extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyString(String str) {
-
+        Log.i("Tas", "->" + str);
     }
 
     /*

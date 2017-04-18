@@ -482,7 +482,7 @@ public interface ServiceApi {
 
     //Get Vehicle By Id...
     @POST("getVehicleById.php")
-    Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("yourcontact") String yourcontact,@Query("vehicle_id") String vehicleId);
+    Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("yourcontact") String yourcontact, @Query("vehicle_id") String vehicleId);
 
     //Delete a store...
     @POST("deleteMyStore.php")
@@ -881,7 +881,7 @@ public interface ServiceApi {
     //Likes in Vehicle details
     @POST("newlikes.php")
     Call<String> _autokattaVehicleLike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
-                                   @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
+                                       @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
 
     //Calling in Vehicle details
     @POST("calling.php")
@@ -891,9 +891,35 @@ public interface ServiceApi {
     //UnLikes in Vehicle details
     @POST("newUnlikes.php")
     Call<String> _autokattaVehicleUnLike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
-                                       @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
+                                         @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
 
     //get tags
     @GET("get_tags.php")
     Call<GetTagsResponse> _autoGetTags(@Query("type") String type);
+
+    //get tags
+    @GET("add_other_tags.php")
+    Call<String> _autoAddTags(@Query("tag") String tag, @Query("type") String type);
+
+    //Likes in Product View
+    @POST("newlikes.php")
+    Call<String> _autokattaProductView(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
+                                       @Query("layout") String layout, @Query("product_id") String productid);
+
+    //UnLikes in Product unlike
+    @POST("newUnlikes.php")
+    Call<String> _autokattaProductViewUnlike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
+                                             @Query("layout") String layout, @Query("product_id") String productId);
+
+    //Product Ratings
+    @POST("newrating.php")
+    Call<String> _autokattaProductNewRatings(@Query("contact") String contact, @Query("product_id") String productId,
+                                             @Query("rate") String rate, @Query("rate1") String rate1, @Query("rate2") String rate2,
+                                             @Query("rate3") String rate3, @Query("type") String type);
+
+    //Update Ratings
+    @POST("updateRatings.php")
+    Call<String> _autokattaProductUpdateRatings(@Query("contact") String contact, @Query("product_id") String productId,
+                                                @Query("rate") String rate, @Query("rate1") String rate1, @Query("rate2") String rate2,
+                                                @Query("rate3") String rate3, @Query("type") String type);
 }

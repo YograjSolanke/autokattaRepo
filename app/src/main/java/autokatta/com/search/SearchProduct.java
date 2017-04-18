@@ -5,7 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.my_store.ProductView;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetSearchProductResponse;
 import retrofit2.Response;
@@ -192,7 +194,6 @@ public class SearchProduct extends Fragment implements RequestNotifier {
     private class SearchProductAdapter extends BaseAdapter {
 
         Activity activity;
-        FragmentActivity ctx;
         List<GetSearchProductResponse.Success> allSearchData = new ArrayList<>();
         private LayoutInflater inflater;
 
@@ -295,14 +296,14 @@ public class SearchProduct extends Fragment implements RequestNotifier {
                     b.putString("brandtags_list", obj.getBrandtags());
 
 
-                   /* ProductView frag = new ProductView();
+                    ProductView frag = new ProductView();
                     frag.setArguments(b);
 
-                    FragmentManager fragmentManager = ctx.getSupportFragmentManager();
+                    FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, frag);
+                    fragmentTransaction.replace(R.id.search_product, frag);
                     fragmentTransaction.addToBackStack("product_view");
-                    fragmentTransaction.commit();*/
+                    fragmentTransaction.commit();
                 }
             });
             return convertView;

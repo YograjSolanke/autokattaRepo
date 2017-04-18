@@ -1,15 +1,12 @@
 package autokatta.com.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -56,7 +53,8 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                      */
                     getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).edit()
                             .putString("vehicle_id",getIntent().getExtras().getString("vehicle_id")).apply();
-                    getVehicleData(getIntent().getExtras().getString("vehicle_id"));
+                    getVehicleData(getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                            .getString("loginContact", ""), getIntent().getExtras().getString("vehicle_id"));
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
                     mVehiclePicture = (ImageView) findViewById(R.id.vehicle_image);
@@ -78,9 +76,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     /*
     Vehicle Details...
      */
-    private void getVehicleData(String mVehicleId) {
+    private void getVehicleData(String contact, String mVehicleId) {
         ApiCall mApiCall = new ApiCall(VehicleDetails.this, this);
-        mApiCall.getVehicleById(mVehicleId);
+        mApiCall.getVehicleById(contact, mVehicleId);
     }
 
     private void setupViewPager(ViewPager viewPager) {

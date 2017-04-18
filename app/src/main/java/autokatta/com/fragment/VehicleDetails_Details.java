@@ -14,7 +14,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetVehicleByIdResponse;
-import autokatta.com.view.VehicleDetails;
 import retrofit2.Response;
 
 /**
@@ -48,6 +47,8 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
             @Override
             public void run() {
                 getVehicleData(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                .getString("loginContact", ""),
+                        getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                 .getString("vehicle_id",""));
             }
         });
@@ -58,9 +59,9 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
     /*
     Vehicle Details...
      */
-    private void getVehicleData(String mVehicleId) {
+    private void getVehicleData(String contact, String mVehicleId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getVehicleById(mVehicleId);
+        mApiCall.getVehicleById(contact, mVehicleId);
     }
 
     @Override
