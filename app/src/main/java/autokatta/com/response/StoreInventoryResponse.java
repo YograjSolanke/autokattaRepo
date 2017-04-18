@@ -3,6 +3,7 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -552,6 +553,15 @@ public class StoreInventoryResponse {
         }
 
         public class Vehicle {
+            public Date getVehicleDate() {
+                return vehicleDate;
+            }
+
+            public void setVehicleDate(Date vehicleDate) {
+                this.vehicleDate = vehicleDate;
+            }
+
+            private Date vehicleDate;
 
             @SerializedName("vehicle_id")
             @Expose
