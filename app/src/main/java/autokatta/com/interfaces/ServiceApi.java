@@ -870,6 +870,14 @@ public interface ServiceApi {
     @POST("deleteMyProduct.php")
     Call<String> deleteProduct(@Query("product_id") String product_id, @Query("keyword") String keyword);
 
+    //delete service
+    @POST("deleteMyService.php")
+    Call<String> deleteService(@Query("service_id") String service_id, @Query("keyword") String keyword);
+
+    //delete vehicle
+    @POST("deleteMyUploadedVehicles.php")
+    Call<String> deleteVehicle(@Query("vehicle_id") String vehicle_id, @Query("keyword") String keyword);
+
     //Search Product...
     @GET("getProductSearchData.php")
     Call<GetSearchProductResponse> searchProduct(@Query("searchKey") String key, @Query("mycontact") String contact);

@@ -194,7 +194,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    //  apiCall.deleteProduct(product_id, "delete");
+                                    //apiCall.deleteProduct(product_id, "delete");
                                     mMainList.remove(holder.getAdapterPosition());
                                     notifyDataSetChanged();
 
