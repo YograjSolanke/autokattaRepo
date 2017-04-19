@@ -5516,15 +5516,15 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<SearchVehicleResponse> mUnfollowResponse = serviceApi.getPersonSearchData(key, contact);
-                mUnfollowResponse.enqueue(new Callback<SearchVehicleResponse>() {
+                Call<SearchPersonResponse> mUnfollowResponse = serviceApi.getPersonSearchData(key, contact);
+                mUnfollowResponse.enqueue(new Callback<SearchPersonResponse>() {
                     @Override
-                    public void onResponse(Call<SearchVehicleResponse> call, Response<SearchVehicleResponse> response) {
+                    public void onResponse(Call<SearchPersonResponse> call, Response<SearchPersonResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<SearchVehicleResponse> call, Throwable t) {
+                    public void onFailure(Call<SearchPersonResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -5549,15 +5549,15 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<SearchPersonResponse> mUnfollowResponse = serviceApi.getVehicleSearchData(key, contact);
-                mUnfollowResponse.enqueue(new Callback<SearchPersonResponse>() {
+                Call<SearchVehicleResponse> mUnfollowResponse = serviceApi.getVehicleSearchData(key, contact);
+                mUnfollowResponse.enqueue(new Callback<SearchVehicleResponse>() {
                     @Override
-                    public void onResponse(Call<SearchPersonResponse> call, Response<SearchPersonResponse> response) {
+                    public void onResponse(Call<SearchVehicleResponse> call, Response<SearchVehicleResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<SearchPersonResponse> call, Throwable t) {
+                    public void onFailure(Call<SearchVehicleResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

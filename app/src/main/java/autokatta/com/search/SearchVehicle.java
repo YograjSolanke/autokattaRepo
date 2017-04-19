@@ -1,10 +1,11 @@
 package autokatta.com.search;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.VehicleSearchAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -30,12 +36,8 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
     private ListView searchList;
 
     String searchString;
-    private ArrayList<SearchVehicleResponse> allSearchDataArrayList;
-
+    private List<SearchVehicleResponse.Success> allSearchDataArrayList = new ArrayList<>();
     String myContact;
-
-    public static final String MyProfilePREFERENCES = "contact No";
-    SharedPreferences prefs;
     ImageView filterImg;
     Button advanceSearch;
 
@@ -64,7 +66,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                     advanceSearch.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                           /* FilterActivity filterActivity = new FilterActivity();
+                            FilterFragment filterActivity = new FilterFragment();
                             Bundle b=new Bundle();
                             b.putString("action", "Main");
                             filterActivity.setArguments(b);
@@ -72,7 +74,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.search_product, filterActivity);
                             fragmentTransaction.addToBackStack("filteractivity");
-                            fragmentTransaction.commit();*/
+                            fragmentTransaction.commit();
                         }
                     });
                 } catch (Exception e) {
@@ -89,7 +91,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
      */
     private void getSearchResults(String searchString) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getPersonSearchData(searchString, myContact);
+        mApiCall.getVehicleSearchData(searchString, myContact);
     }
 
     @Override
@@ -99,49 +101,63 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                 SearchVehicleResponse vehicleResponse = (SearchVehicleResponse) response.body();
                 if (!vehicleResponse.getSuccess().isEmpty()) {
                     for (SearchVehicleResponse.Success success : vehicleResponse.getSuccess()) {
-                        success.setVehicleId(success.getVehicleId());
-                        success.setTitle(success.getTitle());
-                        success.setCategory(success.getCategory());
-                        success.setModel(success.getModel());
-                        success.setManufacturer(success.getManufacturer());
-                        success.setRTOCity(success.getRTOCity());
-                        success.setLocationCity(success.getLocationCity());
-                        success.setLocationState(success.getLocationState());
-                        success.setLocationCountry(success.getLocationCountry());
-                        success.setLocationAddress(success.getLocationAddress());
-                        success.setYearOfRegistration(success.getYearOfRegistration());
-                        success.setYearOfManufacture(success.getYearOfManufacture());
-                        success.setContact(success.getContact());
-                        success.setColor(success.getColor());
-                        success.setRegistrationNumber(success.getRegistrationNumber());
-                        success.setRcAvailable(success.getRcAvailable());
-                        success.setInsuranceValid(success.getInsuranceValid());
-                        success.setInsuranceIdv(success.getInsuranceIdv());
-                        success.setTaxValidity(success.getTaxValidity());
-                        success.setFitnessValidity(success.getFitnessValidity());
-                        success.setPermitValidity(success.getPermitValidity());
-                        success.setFualType(success.getFualType());
-                        success.setSeatingCapacity(success.getSeatingCapacity());
-                        success.setPermit(success.getPermit());
-                        success.setKmsRunning(success.getKmsRunning());
-                        success.setNoOfOwners(success.getNoOfOwners());
-                        success.setHypothication(success.getHypothication());
-                        success.setEngineNo(success.getEngineNo());
-                        success.setChassisNo(success.getChassisNo());
-                        success.setPermit(success.getPrice());
-                        success.setImage(success.getImage());
-                        success.setDrive(success.getDrive());
-                        success.setTransmission(success.getTransmission());
-                        success.setBodyType(success.getBodyType());
-                        success.setBoatType(success.getBoatType());
-                        success.setRvType(success.getRvType());
-                        success.setApplication(success.getApplication());
-                        success.setStatus(success.getStatus());
-                        success.setDate(success.getDate());
-                        success.setVehiclelikestatus(success.getVehiclelikestatus());
-                        success.setUsername(success.getUsername());
-                        success.setBuyerLeads(success.getBuyerLeads());
+                        try {
+                            success.setVehicleId(success.getVehicleId());
+                            success.setTitle(success.getTitle());
+                            success.setCategory(success.getCategory());
+                            success.setModel(success.getModel());
+                            success.setManufacturer(success.getManufacturer());
+                            success.setRTOCity(success.getRTOCity());
+                            success.setLocationCity(success.getLocationCity());
+                            success.setLocationState(success.getLocationState());
+                            success.setLocationCountry(success.getLocationCountry());
+                            success.setLocationAddress(success.getLocationAddress());
+                            success.setYearOfRegistration(success.getYearOfRegistration());
+                            success.setYearOfManufacture(success.getYearOfManufacture());
+                            success.setContact(success.getContact());
+                            success.setColor(success.getColor());
+                            success.setRegistrationNumber(success.getRegistrationNumber());
+                            success.setRcAvailable(success.getRcAvailable());
+                            success.setInsuranceValid(success.getInsuranceValid());
+                            success.setInsuranceIdv(success.getInsuranceIdv());
+                            success.setTaxValidity(success.getTaxValidity());
+                            success.setFitnessValidity(success.getFitnessValidity());
+                            success.setPermitValidity(success.getPermitValidity());
+                            success.setFualType(success.getFualType());
+                            success.setSeatingCapacity(success.getSeatingCapacity());
+                            success.setPermit(success.getPermit());
+                            success.setKmsRunning(success.getKmsRunning());
+                            success.setNoOfOwners(success.getNoOfOwners());
+                            success.setHypothication(success.getHypothication());
+                            success.setEngineNo(success.getEngineNo());
+                            success.setChassisNo(success.getChassisNo());
+                            success.setPermit(success.getPrice());
+                            success.setImage(success.getImage());
+                            success.setDrive(success.getDrive());
+                            success.setTransmission(success.getTransmission());
+                            success.setBodyType(success.getBodyType());
+                            success.setBoatType(success.getBoatType());
+                            success.setRvType(success.getRvType());
+                            success.setApplication(success.getApplication());
+                            success.setStatus(success.getStatus());
+                            success.setVehiclelikestatus(success.getVehiclelikestatus());
+                            success.setUsername(success.getUsername());
+                            success.setBuyerLeads(success.getBuyerLeads());
+
+                            String dates = success.getDate();
+                            DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date d = f.parse(dates);
+                            success.setDate(d.toString());
+
+                            allSearchDataArrayList.add(success);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+                    VehicleSearchAdapter adapter = new VehicleSearchAdapter(getActivity(), allSearchDataArrayList);
+                    searchList.setAdapter(adapter);
+
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

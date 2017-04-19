@@ -897,11 +897,11 @@ public interface ServiceApi {
 
     //Search Person...
     @GET("getPersonSearchData.php")
-    Call<SearchVehicleResponse> getPersonSearchData(@Query("searchKey") String key, @Query("mycontact") String contact);
+    Call<SearchPersonResponse> getPersonSearchData(@Query("searchKey") String key, @Query("mycontact") String contact);
 
     //Search Vehicle...
     @GET("getVehicleSearchData.php")
-    Call<SearchPersonResponse> getVehicleSearchData(@Query("searchKey") String key, @Query("mycontact") String contact);
+    Call<SearchVehicleResponse> getVehicleSearchData(@Query("searchKey") String key, @Query("mycontact") String contact);
 
     //Post Product Review...
     @POST("post_product_review.php")
