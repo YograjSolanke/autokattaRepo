@@ -35,6 +35,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.view.OtherStoreView;
+import autokatta.com.view.ShareWithinAppActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -308,15 +309,9 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "store").apply();
 
-
-//                ShareWithinApp fr = new ShareWithinApp();
-//                // fr.setArguments(b);
-//
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fr);
-//                fragmentTransaction.addToBackStack("sharewithinapp");
-//                fragmentTransaction.commit();
+                Intent i=new Intent(activity, ShareWithinAppActivity.class);
+                activity.startActivity(i);
+                activity.finish();
 
             }
         });
