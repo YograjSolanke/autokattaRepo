@@ -369,6 +369,11 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <activity
+            android:name=".initial_fragment.LocalityFragment"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection">
+
+        </activity>
 
         <!-- Meta data for Google Map API key -->
         <meta-data

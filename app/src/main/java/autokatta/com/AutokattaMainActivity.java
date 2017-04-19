@@ -32,6 +32,7 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.fragment_profile.About;
+import autokatta.com.initial_fragment.LocalityFragment;
 import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
 import autokatta.com.register.RegistrationContinue;
@@ -41,7 +42,6 @@ import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.Create_Event;
 import autokatta.com.view.GroupTabs;
-import autokatta.com.view.LocalityActivity;
 import autokatta.com.view.MyActiveEventsTabActivity;
 import autokatta.com.view.MyAutokattaContactsActivity;
 import autokatta.com.view.MyBroadcastGroupsActivity;
@@ -213,7 +213,7 @@ public class AutokattaMainActivity extends AppCompatActivity { /*implements Sear
                         } else if (menuItem.getItemId() == R.id.business_Chat) {
                             startActivity(new Intent(AutokattaMainActivity.this, BussinessChatActivity.class));
                         } else if (menuItem.getItemId() == R.id.locality) {
-                            startActivity(new Intent(AutokattaMainActivity.this, LocalityActivity.class));
+                            startActivity(new Intent(AutokattaMainActivity.this, LocalityFragment.class));
                         } else if (menuItem.getItemId() == R.id.sign_out) {
                             session.logoutUser();
                         }

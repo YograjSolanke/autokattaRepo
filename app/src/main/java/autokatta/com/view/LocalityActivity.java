@@ -8,8 +8,6 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +16,6 @@ import android.view.MenuItem;
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.broadcastreceiver.Receiver;
-import autokatta.com.initial_fragment.LocalityFragment;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
@@ -51,9 +48,9 @@ public class LocalityActivity extends AppCompatActivity {
         }
 
 
-        FragmentManager mFragmentManager = getSupportFragmentManager();
+        /*FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.locality_container, new LocalityFragment()).commit();
+        mFragmentTransaction.replace(R.id.locality_container, new LocalityFragment()).commit();*/
     }
 
     @Override

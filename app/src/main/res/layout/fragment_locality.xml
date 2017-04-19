@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
@@ -29,11 +28,16 @@
             android:layout_height="40dp" />
     </RelativeLayout>
 
-    <fragment
+    <!--<fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rel"
-        class="com.google.android.gms.maps.SupportMapFragment"
-        tools:layout="@layout/fragment_locality" />
+        class="com.google.android.gms.maps.SupportMapFragment" />-->
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_below="@id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
 </RelativeLayout>
