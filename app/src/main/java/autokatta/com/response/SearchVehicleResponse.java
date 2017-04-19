@@ -54,7 +54,7 @@ public class SearchVehicleResponse {
         private String locationCountry;
         @SerializedName("Location_address")
         @Expose
-        private Object locationAddress;
+        private String locationAddress;
         @SerializedName("Year_of_registration")
         @Expose
         private String yearOfRegistration;
@@ -224,11 +224,11 @@ public class SearchVehicleResponse {
             this.locationCountry = locationCountry;
         }
 
-        public Object getLocationAddress() {
+        public String getLocationAddress() {
             return locationAddress;
         }
 
-        public void setLocationAddress(Object locationAddress) {
+        public void setLocationAddress(String locationAddress) {
             this.locationAddress = locationAddress;
         }
 
