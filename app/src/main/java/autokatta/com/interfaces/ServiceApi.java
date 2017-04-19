@@ -841,6 +841,17 @@ public interface ServiceApi {
     @POST("add_OtherBrand_tags.php")
     Call<String> addOtherBrandTags(@Query("tag") String brandtag, @Query("type") String type);
 
+    //update_tag_association.php
+    @POST("update_tag_association.php")
+    Call<String> updateTagAssociation(@Query("service_id") String serviceId, @Query("tag_id") String tagId);
+
+    //update Store Service
+    @POST("updateStoreService.php")
+    Call<String> updateStoreService(@Query("service_name") String name, @Query("service_type") String type,
+                                    @Query("service_details") String details, @Query("service_price") String price,
+                                    @Query("service_tags") String tags, @Query("service_id") String id,
+                                    @Query("category") String category, @Query("brandtags") String brandTags);
+
        /*
     Get all products,service and vehicles related to single store
      */
@@ -948,25 +959,30 @@ public interface ServiceApi {
     Call<GetServiceSearchResponse> searchService(@Query("searchKey") String key, @Query("mycontact") String contact);
 
 
+    //Search Store Data...
+    @GET("getStoreSearchData.php")
+    Call<MyStoreResponse> searchStore(@Query("searchKey") String key, @Query("mycontact") String contact);
+
+
     //Likes in Otherstore
     @POST("newlikes.php")
     Call<String> _autokattaLikeStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String othercontact,
-                                       @Query("layout") String layout, @Query("store_id") String store_id);
+                                     @Query("layout") String layout, @Query("store_id") String store_id);
 
     //UnLikes in Otherstore
     @POST("newUnlikes.php")
     Call<String> _autokattaUnlikeStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
-                                             @Query("layout") String layout, @Query("store_id") String store_id);
+                                       @Query("layout") String layout, @Query("store_id") String store_id);
 
 
     //Follow Otherstore
     @POST("newfollow.php")
     Call<String> _autokattaFollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
-                                  @Query("layout") String layout, @Query("store_id") String store_id);
+                                       @Query("layout") String layout, @Query("store_id") String store_id);
 
     //Un Follow Otherstore
     @POST("newUnfollow.php")
     Call<String> _autokattaUnfollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
-                                    @Query("layout") String layout, @Query("store_id") String store_id);
+                                         @Query("layout") String layout, @Query("store_id") String store_id);
 
 }

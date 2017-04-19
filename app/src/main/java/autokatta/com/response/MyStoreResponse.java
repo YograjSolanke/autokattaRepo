@@ -63,13 +63,15 @@ public class MyStoreResponse {
         private String coverImage;
         @SerializedName("rating")
         @Expose
-        private Object rating;
+        private String rating;
         @SerializedName("likecount")
         @Expose
         private String likecount;
         @SerializedName("followcount")
         @Expose
         private String followcount;
+        public boolean visibility;
+
 
         public String getId() {
             return id;
@@ -167,11 +169,11 @@ public class MyStoreResponse {
             this.coverImage = coverImage;
         }
 
-        public Object getRating() {
+        public String getRating() {
             return rating;
         }
 
-        public void setRating(Object rating) {
+        public void setRating(String rating) {
             this.rating = rating;
         }
 

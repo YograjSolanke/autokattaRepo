@@ -14,6 +14,8 @@ import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.fragment.MyGroupsFragment;
 import autokatta.com.search.SearchProduct;
+import autokatta.com.search.SearchService;
+import autokatta.com.search.SearchStore;
 
 /**
  * Created by ak-001 on 17/4/17.
@@ -22,6 +24,8 @@ import autokatta.com.search.SearchProduct;
 public class SearchFragment extends Fragment {
     View mSearchView;
     SearchProduct mSearchProduct;
+    SearchService mSearchService;
+    SearchStore mSearchStore;
     Bundle mBundle;
     Bundle bundle = new Bundle();
     String searchString;
@@ -32,6 +36,8 @@ public class SearchFragment extends Fragment {
         mSearchView = inflater.inflate(R.layout.fragment_search, container, false);
 
         mSearchProduct = new SearchProduct();
+        mSearchService = new SearchService();
+        mSearchStore = new SearchStore();
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -40,6 +46,8 @@ public class SearchFragment extends Fragment {
                 if (mBundle != null) {
                     searchString = mBundle.getString("searchText");
                     mSearchProduct.setArguments(bundle);
+                    mSearchService.setArguments(bundle);
+                    mSearchStore.setArguments(bundle);
                 }
                 bundle.putString("searchText1", searchString);
                 Log.i("searchText", "->" + searchString);
@@ -59,6 +67,8 @@ public class SearchFragment extends Fragment {
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new MyGroupsFragment(), "Promotional");
         tabAdapterName.addFragment(mSearchProduct, "Products");
+        tabAdapterName.addFragment(mSearchService, "Services");
+        tabAdapterName.addFragment(mSearchStore, "Store");
         viewPager.setAdapter(tabAdapterName);
     }
 }

@@ -179,9 +179,9 @@ public class SearchProduct extends Fragment implements RequestNotifier {
                     }
                     mList.add(success);
                 }
-                categoryHashSet = new HashSet<String>(categoryList);
-                tagsHashSet = new HashSet<String>(tagsList);
-                BrandtagsHashSet = new HashSet<String>(BrandtagsList);
+                categoryHashSet = new HashSet<>(categoryList);
+                tagsHashSet = new HashSet<>(tagsList);
+                BrandtagsHashSet = new HashSet<>(BrandtagsList);
                 adapter = new SearchProductAdapter(getActivity(), mList);
                 searchList.setAdapter(adapter);
             } else {

@@ -28,6 +28,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.SearchServiceAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetServiceSearchResponse;
 import retrofit2.Response;
 
@@ -180,12 +181,16 @@ public class SearchService extends Fragment implements RequestNotifier {
                     }
                     mList.add(success);
                 }
-                categoryHashSet = new HashSet<String>(categoryList);
-                tagsHashSet = new HashSet<String>(tagsList);
-                BrandtagsHashSet = new HashSet<String>(BrandtagsList);
+                categoryHashSet = new HashSet<>(categoryList);
+                tagsHashSet = new HashSet<>(tagsList);
+                BrandtagsHashSet = new HashSet<>(BrandtagsList);
                 adapter = new SearchServiceAdapter(getActivity(), mList);
                 searchList.setAdapter(adapter);
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -224,13 +229,7 @@ public class SearchService extends Fragment implements RequestNotifier {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                System.out.println("Final tags=" + finalTags + "Final cate=" + finalcategory);
-
-
                 searchList.setAdapter(null);
-
-
                 for (int i = 0; i < mList.size(); i++) {
                     //If Category contains ","
                     if (mList.get(i).getCategory().trim().contains(",")) {
@@ -238,10 +237,8 @@ public class SearchService extends Fragment implements RequestNotifier {
 
                         String arr[] = mList.get(i).getCategory().trim().split(",");
                         for (int r = 0; r < arr.length; r++) {
-
                             if (finalcategory.contains(arr[r].trim()))
                                 flag = true;
-
                         }
 
                         if (flag)
@@ -249,7 +246,6 @@ public class SearchService extends Fragment implements RequestNotifier {
                         else {
                             //If Tags contains ","
                             if (mList.get(i).getServiceTags().trim().contains(",")) {
-
                                 boolean flagtag = false;
 
                                 String aartag[] = mList.get(i).getServiceTags().trim().split(",");

@@ -84,7 +84,6 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             linearfollow = (LinearLayout) itemView.findViewById(R.id.linearfollow);
             linearunfollow = (LinearLayout) itemView.findViewById(R.id.linearunfollow);
 
-
         }
     }
 
@@ -129,15 +128,6 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         //   holder.stshare.setText("share "+sshare);
         holder.stworkdays.setText(mStoreList.get(position).getWorkingDays());
         holder.storerating.setEnabled(false);
-
-
-//        if (!mStoreList.get(position).getRating().equals("null") || mStoreList.get(position).getRating() !=null) {
-//
-//            holder.storerating.setRating(Float.parseFloat(mStoreList.get(position).getRating().toString()));
-//
-//        } else {
-//
-//        }
 
         holder.storedelete.setOnClickListener(new View.OnClickListener() {
             @Override
