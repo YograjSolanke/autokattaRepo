@@ -995,4 +995,39 @@ public interface ServiceApi {
     Call<String> _autokattaUnfollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
                                          @Query("layout") String layout, @Query("store_id") String store_id);
 
+
+    //send new rating
+    @GET("newrating.php")
+    Call<String> sendNewRating(@Query("contact") String contact,
+                               @Query("store_id") String store_id,
+                               @Query("product_id") String product_id,
+                               @Query("service_id") String service_id,
+                               @Query("rate") String rate,
+                               @Query("rate1") String rate1,
+                               @Query("rate2") String rate2,
+                               @Query("rate3") String rate3,
+                               @Query("rate4") String rate4,
+                               @Query("rate5") String rate5,
+                               @Query("type") String type);
+
+
+    //send updated rating
+    @GET("updateRatings.php")
+    Call<String> sendupdatedRating(@Query("contact") String contact,
+                                   @Query("store_id") String store_id,
+                                   @Query("product_id") String product_id,
+                                   @Query("service_id") String service_id,
+                                   @Query("rate") String rate,
+                                   @Query("rate1") String rate1,
+                                   @Query("rate2") String rate2,
+                                   @Query("rate3") String rate3,
+                                   @Query("rate4") String rate4,
+                                   @Query("rate5") String rate5,
+                                   @Query("type") String type);
+
+
+    //recommend
+    @GET("recommendStore.php")
+    Call<String> recommendStore(@Query("contact") String contact, @Query("Store_id") String Store_id);
+
 }

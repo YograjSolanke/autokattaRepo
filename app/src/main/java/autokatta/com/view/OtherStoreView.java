@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -36,7 +41,11 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
     String mOtherContact, mLoginContact, store_id,mFolllowstr,mLikestr;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
-    FloatingActionButton mCall, mLike, mFollow;
+    RatingBar storerating;
+    String overAllRate;
+    RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
+    Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
+    FloatingActionButton mCall, mLike, mFollow, mRate;
     StoreInfo storeInfo;
     StoreProducts storeProducts;
     StoreServices storeServices;
@@ -55,10 +64,14 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
         mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
+        mRate = (FloatingActionButton) findViewById(R.id.rate);
+        storerating = (RatingBar) findViewById(R.id.store_rating);
+        storerating.setRating(2);
 
         mCall.setOnClickListener(this);
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
+        mRate.setOnClickListener(this);
 
 
         storeInfo = new StoreInfo();
@@ -108,6 +121,109 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
 
     }
 
+    public void filterResult() {
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(OtherStoreView.this);
+        LayoutInflater inflater = getLayoutInflater();
+
+        View convertView = inflater.inflate(R.layout.custom_store_rate_layout, null);
+        alertDialog.setView(convertView);
+        final AlertDialog alert = alertDialog.show();
+        alertDialog.setTitle("Rate This Store");
+        Button yes = (Button) convertView.findViewById(R.id.btnyes);
+        Button no = (Button) convertView.findViewById(R.id.btnno);
+        csbar = (RatingBar) convertView.findViewById(R.id.cs_rating);
+        qwbar = (RatingBar) convertView.findViewById(R.id.qw_rating);
+        frbar = (RatingBar) convertView.findViewById(R.id.fr_rating);
+        prbar = (RatingBar) convertView.findViewById(R.id.pr_rating);
+        tmbar = (RatingBar) convertView.findViewById(R.id.tm_rating);
+        overallbar = (RatingBar) convertView.findViewById(R.id.overall_rating);
+
+
+        csbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                csrate = v;
+                calculate(csrate, qwrate, frrate, prrate, tmrate);
+            }
+        });
+
+        qwbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                qwrate = v;
+                calculate(csrate, qwrate, frrate, prrate, tmrate);
+            }
+        });
+
+        frbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                frrate = v;
+                calculate(csrate, qwrate, frrate, prrate, tmrate);
+            }
+        });
+
+        prbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                prrate = v;
+                calculate(csrate, qwrate, frrate, prrate, tmrate);
+            }
+        });
+
+        tmbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                tmrate = v;
+                calculate(csrate, qwrate, frrate, prrate, tmrate);
+            }
+        });
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (overAllRate.equals("0")) {
+                    //  sendstorerating();
+                } else {
+                    //  sendupdatedstorerating();
+                }
+
+                // sendrecommendtask();
+
+            }
+        });
+
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+
+            }
+        });
+
+
+        convertView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+
+                return false;
+            }
+        });
+
+    }
+
+    //calculate rating fuction
+    public void calculate(Float r1, Float r2, Float r3, Float r4, Float r5) {
+        total = r1 + r2 + r3 + r4 + r5;
+        count = total / 5;
+        overallbar.setRating(count);
+
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
         adapter.addFragment(storeInfo, "About");
@@ -147,6 +263,10 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                     menuRed.setClosedOnTouchOutside(true);
                 }
                 break;
+            case R.id.rate:
+                filterResult();
+                menuRed.setClosedOnTouchOutside(true);
+                break;
         }
 
     }
@@ -163,6 +283,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                     dp = success.getStoreImage();
                     mLikestr=success.getLikestatus();
                     mFolllowstr=success.getFollowstatus();
+                    overAllRate = success.getRate();
                 }
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + dp;
                 Glide.with(this)

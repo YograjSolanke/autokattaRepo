@@ -46,6 +46,7 @@
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+
             <ImageView
                 android:id="@+id/other_store_image"
                 android:layout_width="match_parent"
@@ -61,6 +62,19 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <RatingBar
+                android:id="@+id/store_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/product_favourite"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -79,6 +93,14 @@
         android:paddingRight="10dp"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star_half"
+            fab:fab_label="Rate"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/call_c"

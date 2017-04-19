@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/relativeratestore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearbtn"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/relativecustomerservice"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/cstext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Customer Service"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+
+            <RatingBar
+                android:id="@+id/cs_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:numStars="5"
+                android:isIndicator="false"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativequalityofwork"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/relativecustomerservice"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/qwtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Quality Of Work"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/qw_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativefriendliness"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/relativequalityofwork"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Friendliness"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/fr_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeprice"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/relativefriendliness"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Price"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/pr_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativetimemanagement"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/relativeprice"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Time Management"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/tm_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:isIndicator="false"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeoverallrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativetimemanagement">
+
+            <TextView
+                android:id="@+id/txtoverallrate"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Your Overall Rating Of This Store"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/overall_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/txtoverallrate"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativerecommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeoverallrate"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/txtrecommend"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Would You Like To Recommend This Store"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtrecommend"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
+
+                <Button
+                    android:id="@+id/btnyes"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/buttonback"
+                    android:text="Yes"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btnno"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/btnyes"
+                    android:background="@drawable/buttonback"
+                    android:text="No"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
