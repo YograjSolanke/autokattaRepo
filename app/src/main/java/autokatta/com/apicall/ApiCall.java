@@ -91,6 +91,7 @@ import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchPersonResponse;
 import autokatta.com.response.SearchStoreResponse;
+import autokatta.com.response.SearchVehicleResponse;
 import autokatta.com.response.SellerResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
@@ -5515,7 +5516,40 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<SearchPersonResponse> mUnfollowResponse = serviceApi.getPersonSearchData(key, contact);
+                Call<SearchVehicleResponse> mUnfollowResponse = serviceApi.getPersonSearchData(key, contact);
+                mUnfollowResponse.enqueue(new Callback<SearchVehicleResponse>() {
+                    @Override
+                    public void onResponse(Call<SearchVehicleResponse> call, Response<SearchVehicleResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<SearchVehicleResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     Search Vehicle
+     */
+
+    public void getVehicleSearchData(String key, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<SearchPersonResponse> mUnfollowResponse = serviceApi.getVehicleSearchData(key, contact);
                 mUnfollowResponse.enqueue(new Callback<SearchPersonResponse>() {
                     @Override
                     public void onResponse(Call<SearchPersonResponse> call, Response<SearchPersonResponse> response) {

@@ -17,6 +17,7 @@ import autokatta.com.search.SearchPerson;
 import autokatta.com.search.SearchProduct;
 import autokatta.com.search.SearchService;
 import autokatta.com.search.SearchStore;
+import autokatta.com.search.SearchVehicle;
 
 /**
  * Created by ak-001 on 17/4/17.
@@ -28,6 +29,7 @@ public class SearchFragment extends Fragment {
     SearchService mSearchService;
     SearchStore mSearchStore;
     SearchPerson mSearchPerson;
+    SearchVehicle mSearchVehicle;
     Bundle mBundle;
     Bundle bundle = new Bundle();
     String searchString;
@@ -41,6 +43,7 @@ public class SearchFragment extends Fragment {
         mSearchService = new SearchService();
         mSearchStore = new SearchStore();
         mSearchPerson = new SearchPerson();
+        mSearchVehicle = new SearchVehicle();
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -52,6 +55,7 @@ public class SearchFragment extends Fragment {
                     mSearchService.setArguments(bundle);
                     mSearchStore.setArguments(bundle);
                     mSearchPerson.setArguments(bundle);
+                    mSearchVehicle.setArguments(bundle);
                 }
                 bundle.putString("searchText1", searchString);
                 Log.i("searchText", "->" + searchString);
@@ -74,6 +78,7 @@ public class SearchFragment extends Fragment {
         tabAdapterName.addFragment(mSearchService, "Services");
         tabAdapterName.addFragment(mSearchStore, "Store");
         tabAdapterName.addFragment(mSearchPerson, "Person");
+        tabAdapterName.addFragment(mSearchVehicle, "Vehicle");
         viewPager.setAdapter(tabAdapterName);
     }
 }

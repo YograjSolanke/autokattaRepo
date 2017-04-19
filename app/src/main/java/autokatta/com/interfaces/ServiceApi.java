@@ -80,6 +80,7 @@ import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SearchPersonResponse;
 import autokatta.com.response.SearchStoreResponse;
+import autokatta.com.response.SearchVehicleResponse;
 import autokatta.com.response.SellerResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
@@ -896,7 +897,11 @@ public interface ServiceApi {
 
     //Search Person...
     @GET("getPersonSearchData.php")
-    Call<SearchPersonResponse> getPersonSearchData(@Query("searchKey") String key, @Query("mycontact") String contact);
+    Call<SearchVehicleResponse> getPersonSearchData(@Query("searchKey") String key, @Query("mycontact") String contact);
+
+    //Search Vehicle...
+    @GET("getVehicleSearchData.php")
+    Call<SearchPersonResponse> getVehicleSearchData(@Query("searchKey") String key, @Query("mycontact") String contact);
 
     //Post Product Review...
     @POST("post_product_review.php")
