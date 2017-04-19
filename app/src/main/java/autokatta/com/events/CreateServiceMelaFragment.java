@@ -1,16 +1,15 @@
 package autokatta.com.events;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,13 +21,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
 import java.util.List;
-import java.util.Random;
 
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
@@ -37,55 +34,52 @@ import autokatta.com.generic.GenericFunctions;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.LoanMelaCreateResponse;
+import autokatta.com.response.ExchangeMelaCreateResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-004 on 23/3/17.
+ * Created by ak-003 on 19/4/17.
  */
 
-public class CreateLoanMelaFragment extends Fragment implements RequestNotifier, View.OnClickListener, View.OnTouchListener {
+public class CreateServiceMelaFragment extends Fragment implements RequestNotifier, View.OnClickListener, View.OnTouchListener {
+    public CreateServiceMelaFragment() {
 
+    }
 
-    View createLoanView;
+    View createServiceView;
     ImageView picture;
     Button create, btnaddprofile;
     ApiCall apiCall;
     String picturePath = "";
     String lastWord = "";
     String userSelected;
-    TextView textevent;
     ImageUpload mImageUpload;
+    TextView textevent;
+    Bitmap bitmap;
     GenericFunctions validObj = new GenericFunctions();
     EditText eventname, startdate, starttime, enddate, endtime, eventaddress, eventdetails;
     AutoCompleteTextView eventlocation;
     String myContact;
-    String mediaPath;
-    Uri selectedImage = null;
-    Bitmap bitmap, bitmapRotate;
 
-    public CreateLoanMelaFragment() {
-        //empty constructor
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        createLoanView = inflater.inflate(R.layout.fragment_create_loanmela, container, false);
+        createServiceView = inflater.inflate(R.layout.fragment_create_loanmela, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -95,18 +89,18 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
         mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
 
 
-        eventname = (EditText) createLoanView.findViewById(R.id.editauctionname);
-        startdate = (EditText) createLoanView.findViewById(R.id.auctionstartdate);
-        starttime = (EditText) createLoanView.findViewById(R.id.auctionstarttime);
-        enddate = (EditText) createLoanView.findViewById(R.id.auctionenddate);
-        endtime = (EditText) createLoanView.findViewById(R.id.auctionendtime);
-        eventlocation = (AutoCompleteTextView) createLoanView.findViewById(R.id.editlocation);
-        eventaddress = (EditText) createLoanView.findViewById(R.id.editaddress);
-        eventdetails = (EditText) createLoanView.findViewById(R.id.editdetails);
-        create = (Button) createLoanView.findViewById(R.id.btncreate);
-        textevent = (TextView) createLoanView.findViewById(R.id.textevent);
-        picture = (ImageView) createLoanView.findViewById(R.id.loanmelaimg);
-        btnaddprofile = (Button) createLoanView.findViewById(R.id.btnaddphoto);
+        eventname = (EditText) createServiceView.findViewById(R.id.editauctionname);
+        startdate = (EditText) createServiceView.findViewById(R.id.auctionstartdate);
+        starttime = (EditText) createServiceView.findViewById(R.id.auctionstarttime);
+        enddate = (EditText) createServiceView.findViewById(R.id.auctionenddate);
+        endtime = (EditText) createServiceView.findViewById(R.id.auctionendtime);
+        eventlocation = (AutoCompleteTextView) createServiceView.findViewById(R.id.editlocation);
+        eventaddress = (EditText) createServiceView.findViewById(R.id.editaddress);
+        eventdetails = (EditText) createServiceView.findViewById(R.id.editdetails);
+        create = (Button) createServiceView.findViewById(R.id.btncreate);
+        textevent = (TextView) createServiceView.findViewById(R.id.textevent);
+        picture = (ImageView) createServiceView.findViewById(R.id.loanmelaimg);
+        btnaddprofile = (Button) createServiceView.findViewById(R.id.btnaddphoto);
         apiCall = new ApiCall(getActivity(), this);
 
         btnaddprofile.setOnClickListener(this);
@@ -118,7 +112,10 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
         eventlocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
 
 
-        return createLoanView;
+        textevent.setText("Create Service Mela");
+        picture.setImageResource(R.drawable.service);
+
+        return createServiceView;
     }
 
     @Override
@@ -126,7 +123,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
         switch (view.getId()) {
 
             case (R.id.btnaddphoto):
-                onPickImage(view);
+                selectImage();
                 break;
             case (R.id.btncreate):
 
@@ -160,38 +157,47 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
 
 
                 if (name.equals("")) {
-                    eventname.setError("Enter loan title");
-                    // Toast.makeText(getActivity(), "Enter loan title", Toast.LENGTH_LONG).show();
-//                    auctioname.setFocusable(true);
+                    eventname.setError("Enter Service mela title");
+                    eventname.requestFocus();
+
                 } else if (stdate.equals("")) {
-//                    startdate.setError("Enter start date");
-                    Toast.makeText(getActivity(), "Enter start date", Toast.LENGTH_LONG).show();
+                    startdate.setError("Enter start date");
+                    //Toast.makeText(getActivity(), "Enter start date", Toast.LENGTH_LONG).show();
+                    startdate.requestFocus();
                 } else if (sttime.equals("")) {
-//                    starttime.setError("Enter start time");
-                    Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                    starttime.setError("Enter start time");
+                    //Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                    starttime.requestFocus();
                 } else if (eddate.equals("")) {
-//                    enddate.setError("Enter end date");
-                    Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
+                    enddate.setError("Enter end date");
+                    //Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
+                    enddate.requestFocus();
                 } else if (edtime.equals("")) {
-//                    endtime.setError("Enter end time");
-                    Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
+                    endtime.setError("Enter end time");
+                    //Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
+                    enddate.requestFocus();
                 } else if (!validObj.startDateValidatioon(stdate)) {
                     startdate.setError("Enter valid Date");
+                    startdate.requestFocus();
                 } else if (!validObj.startDateEndDateValidation(eddate, stdate)) {
                     enddate.setError("Enter valid Date");
+                    enddate.requestFocus();
                 } else if (stdate.equals(eddate)) {
                     if (!validObj.startTimeEndTimeValidation(sttime, edtime)) {
                         endtime.setError("Enter valid time");
+                        endtime.requestFocus();
                     }
                 } else if (location.equals("")) {
                     eventlocation.setError("Enter location");
+                    eventlocation.requestFocus();
                 } else if (!flag) {
                     eventlocation.setError("Please Select Location From Dropdown Only");
                 } else if (address.equals("")) {
                     eventaddress.setError("Enter address");
+                    eventaddress.requestFocus();
                 } else {
-                    apiCall.createLoanMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
-                    //uploadImage(mediaPath);
+                    apiCall.createExchangeMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
+
                 }
 
 
@@ -206,12 +212,12 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                LoanMelaCreateResponse createResponse = (LoanMelaCreateResponse) response.body();
+                ExchangeMelaCreateResponse createResponse = (ExchangeMelaCreateResponse) response.body();
                 if (createResponse.getSuccess() != null) {
-                    String id = createResponse.getSuccess().getLoanID().toString();
-                    Log.i("Loanid", "->" + id);
-                    CustomToast.customToast(getActivity(), "Loan Event Created Successfully");
-                    uploadImage(mediaPath);
+                    String id = createResponse.getSuccess().getExchangeID().toString();
+                    Log.i("ServiceMelaId", "->" + id);
+                    CustomToast.customToast(getActivity(), "Service Mela Created Successfully");
+                    upload(picturePath);
 
                 }
             } else {
@@ -232,10 +238,8 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class", "Create Loan Mela");
             error.printStackTrace();
         }
-
 
     }
 
@@ -244,7 +248,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
 
     }
 
-    /*private void selectImage() {
+    private void selectImage() {
 
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
 
@@ -330,161 +334,6 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         picturePath = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), bitmap, "Title", null);
         return Uri.parse(picturePath);
-    }*/
-
-    public void onPickImage(View view) {
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
-                    Intent cameraintent = new Intent(
-                            android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraintent, 101);
-                } else if (options[item].equals("Choose from Gallery")) {
-                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(galleryIntent, 0);
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            String fname;
-
-            if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
-                // Get the Image from data
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                assert cursor != null;
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                mediaPath = cursor.getString(columnIndex);
-                // Set the Image in ImageView for Previewing the Media
-                //mProfilePic.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
-                cursor.close();
-                lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
-                Log.i("Media", "path" + lastWord);
-
-            } else if (requestCode == 101) {
-                if (resultCode == RESULT_OK) {
-                    if (data != null) {
-                        selectedImage = data.getData(); // the uri of the image taken
-                        if (String.valueOf((Bitmap) data.getExtras().get("data")).equals("null")) {
-                            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-                        } else {
-                            bitmap = (Bitmap) data.getExtras().get("data");
-                        }
-                        if (Float.valueOf(getImageOrientation()) >= 0) {
-                            bitmapRotate = rotateImage(bitmap, Float.valueOf(getImageOrientation()));
-                        } else {
-                            bitmapRotate = bitmap;
-                            bitmap.recycle();
-                        }
-                        //mProfilePic.setImageBitmap(bitmapRotate);
-
-//                            Saving image to mobile internal memory for sometime
-                        String root = getActivity().getFilesDir().toString();
-                        File myDir = new File(root + "/androidlift");
-                        myDir.mkdirs();
-
-                        Random generator = new Random();
-                        int n = 10000;
-                        n = generator.nextInt(n);
-
-//                            Give the file name that u want
-                        fname = "Autokatta" + n + ".jpg";
-
-                        mediaPath = root + "/androidlift/" + fname;
-                        File file = new File(myDir, fname);
-                        saveFile(bitmapRotate, file);
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //    Saving file to the mobile internal memory
-    private void saveFile(Bitmap sourceUri, File destination) {
-        if (destination.exists()) destination.delete();
-        try {
-            FileOutputStream out = new FileOutputStream(destination);
-            sourceUri.compress(Bitmap.CompressFormat.JPEG, 60, out);
-            out.flush();
-            out.close();
-
-            lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
-
-            //uploadImage(mediaPath);
-            Log.i("image", "path" + lastWord);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Bitmap retVal;
-
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        retVal = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-
-        return retVal;
-    }
-
-    private void uploadImage(String picturePath) {
-        Log.i("PAth", "->" + picturePath);
-
-        File file = new File(picturePath);
-        // Parsing any Media type file
-        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-
-        ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
-        Call<String> call = getResponse.uploadEventsPic(fileToUpload, filename);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.i("image", "->" + response.body());
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-    }
-
-    //    In some mobiles image will get rotate so to correting that this code will help us
-    private int getImageOrientation() {
-        final String[] imageColumns = {MediaStore.Images.Media._ID, MediaStore.Images.ImageColumns.ORIENTATION};
-        final String imageOrderBy = MediaStore.Images.Media._ID + " DESC";
-        Cursor cursor = getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                imageColumns, null, null, imageOrderBy);
-
-        if (cursor.moveToFirst()) {
-            int orientation = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.ORIENTATION));
-            System.out.println("orientation===" + orientation);
-            cursor.close();
-            return orientation;
-        } else {
-            return 0;
-        }
     }
 
     @Override
@@ -495,7 +344,6 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
             case (R.id.auctionstartdate):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     startdate.setInputType(InputType.TYPE_NULL);
                     startdate.setError(null);
                     new SetMyDateAndTime("date", startdate, getActivity());
@@ -505,7 +353,6 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
 
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     starttime.setInputType(InputType.TYPE_NULL);
                     starttime.setError(null);
                     new SetMyDateAndTime("time", starttime, getActivity());
@@ -514,7 +361,6 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
             case (R.id.auctionenddate):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     enddate.setInputType(InputType.TYPE_NULL);
                     enddate.setError(null);
                     new SetMyDateAndTime("date", enddate, getActivity());
@@ -524,7 +370,6 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
             case (R.id.auctionendtime):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     endtime.setInputType(InputType.TYPE_NULL);
                     endtime.setError(null);
                     new SetMyDateAndTime("time", endtime, getActivity());
@@ -536,4 +381,45 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
         return false;
     }
 
+
+    //upload image to server
+
+    public void upload(String picturePath) {
+
+        System.out.println("picturePath while upload image:" + picturePath);
+        System.out.println("rutu= userselected in upload==========:" + userSelected);
+
+        try {
+
+            // HttpPost httpPost = new HttpPost("http://www.autokatta.com/mobile/upload_profile_profile_pics.php"); // serverupdate_profile.php
+            lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
+            System.out.println(lastWord);
+
+
+            File file = new File(picturePath);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file.getPath());
+            MultipartBody.Part body = MultipartBody.Part.createFormData("club_image", file.getName(), reqFile);
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload_test");
+
+            retrofit2.Call<okhttp3.ResponseBody> req = mImageUpload.postLoanAndExchangeImage(body, name);
+            req.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    CustomToast.customToast(getActivity(), "Image Upladed");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+
+        } catch (Exception e) {
+
+            Log.e(e.getClass().getName(), e.getMessage(), e);
+
+        }
+
+
+    }
 }
