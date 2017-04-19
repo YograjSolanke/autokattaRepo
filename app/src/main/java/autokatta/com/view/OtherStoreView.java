@@ -42,7 +42,9 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     RatingBar storerating;
+    String myContact;
     String overAllRate;
+    String precsrate = "", preqwrate = "", prefrrate = "", preprrate = "", pretmrate = "", preoverall = "";
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
     FloatingActionButton mCall, mLike, mFollow, mRate;
@@ -59,6 +61,8 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         setSupportActionBar(toolbar);
 
         mApiCall   = new ApiCall(OtherStoreView.this, this);
+        myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "");
 
         menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
@@ -129,7 +133,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         View convertView = inflater.inflate(R.layout.custom_store_rate_layout, null);
         alertDialog.setView(convertView);
         final AlertDialog alert = alertDialog.show();
-        alertDialog.setTitle("Rate This Store");
+        alert.setTitle("Rate This Store");
         Button yes = (Button) convertView.findViewById(R.id.btnyes);
         Button no = (Button) convertView.findViewById(R.id.btnno);
         csbar = (RatingBar) convertView.findViewById(R.id.cs_rating);
@@ -138,6 +142,26 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         prbar = (RatingBar) convertView.findViewById(R.id.pr_rating);
         tmbar = (RatingBar) convertView.findViewById(R.id.tm_rating);
         overallbar = (RatingBar) convertView.findViewById(R.id.overall_rating);
+
+
+        if (!precsrate.equals("0")) {
+            csbar.setRating(Float.parseFloat(precsrate));
+        }
+        if (!preqwrate.equals("0")) {
+            qwbar.setRating(Float.parseFloat(preqwrate));
+        }
+        if (!prefrrate.equals("0")) {
+            frbar.setRating(Float.parseFloat(prefrrate));
+        }
+        if (!preprrate.equals("0")) {
+            prbar.setRating(Float.parseFloat(preprrate));
+        }
+        if (!pretmrate.equals("0")) {
+            tmbar.setRating(Float.parseFloat(pretmrate));
+        }
+        if (!preoverall.equals("0")) {
+            overallbar.setRating(Float.parseFloat(preoverall));
+        }
 
 
         csbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -184,13 +208,27 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
             @Override
             public void onClick(View view) {
 
-                if (overAllRate.equals("0")) {
-                    //  sendstorerating();
+                if (preoverall.equals("0")) {
+                    mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
+                            String.valueOf(csrate),
+                            String.valueOf(qwrate),
+                            String.valueOf(frrate),
+                            String.valueOf(prrate),
+                            String.valueOf(tmrate),
+                            "store");
                 } else {
-                    //  sendupdatedstorerating();
+                    mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
+                            String.valueOf(csrate),
+                            String.valueOf(qwrate),
+                            String.valueOf(frrate),
+                            String.valueOf(prrate),
+                            String.valueOf(tmrate),
+                            "store");
+
                 }
 
-                // sendrecommendtask();
+                mApiCall.recommendStore(myContact, store_id);
+                alert.dismiss();
 
             }
         });
@@ -283,8 +321,19 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                     dp = success.getStoreImage();
                     mLikestr=success.getLikestatus();
                     mFolllowstr=success.getFollowstatus();
-                    overAllRate = success.getRate();
+                    preoverall = success.getRate();
+                    precsrate = success.getRate1();
+                    preqwrate = success.getRate2();
+                    prefrrate = success.getRate3();
+                    preprrate = success.getRate4();
+                    pretmrate = success.getRate5();
                 }
+
+                System.out.println("rates=" + store_id + " " + overAllRate + " " + precsrate + " " + preqwrate);
+
+
+
+
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + dp;
                 Glide.with(this)
                         .load(dp_path)
@@ -348,6 +397,12 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                 mLike.setLabelText("Like");
                 mLike.setLabelTextColor(Color.WHITE);
                 mLikestr="no";
+            } else if (str.equals("success_rating_submitted")) {
+                CustomToast.customToast(getApplicationContext(), "Rating Submitted");
+            } else if (str.equals("success_rating_updated")) {
+                CustomToast.customToast(getApplicationContext(), "Rating updated");
+            } else if (str.equals("success_recommended")) {
+                CustomToast.customToast(getApplicationContext(), "Store Recommended");
             }
         }
     }
