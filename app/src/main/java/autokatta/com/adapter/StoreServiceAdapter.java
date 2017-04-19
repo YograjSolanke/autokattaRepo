@@ -189,12 +189,12 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
 
                     new android.support.v7.app.AlertDialog.Builder(activity)
                             .setTitle("Delete?")
-                            .setMessage("Are You Sure You Want To Delete This Product?")
+                            .setMessage("Are You Sure You Want To Delete This Service?")
 
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    //apiCall.deleteProduct(product_id, "delete");
+                                    apiCall.deleteService(serviceId, "delete");
                                     mMainList.remove(holder.getAdapterPosition());
                                     notifyDataSetChanged();
 
@@ -249,7 +249,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         if (str != null) {
             if (str.equals("success")) {
 
-                CustomToast.customToast(activity, "Product Deleted");
+                CustomToast.customToast(activity, "Service Deleted");
 
             }
 

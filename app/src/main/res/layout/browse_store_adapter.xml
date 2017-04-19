@@ -222,7 +222,7 @@
                     android:id="@+id/details"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/buttonback"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp"

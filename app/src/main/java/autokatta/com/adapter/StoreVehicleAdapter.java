@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -64,7 +66,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     }
 
     @Override
-    public void onBindViewHolder(StoreVehicleAdapter.VehicleHolder holder, int position) {
+    public void onBindViewHolder(final StoreVehicleAdapter.VehicleHolder holder, final int position) {
 
 
         final StoreInventoryResponse.Success.Vehicle obj = vehicleList.get(position);
@@ -147,36 +149,35 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//            String    vehicle_id=obj.vehicleId;
-//
-//                if(!connectionDetector.isConnectedToInternet())
-//                {
-//                    Toast.makeText(activity,"Please try later",Toast.LENGTH_SHORT).show();
-//                }
-//
-//                else {
-//                    new android.support.v7.app.AlertDialog.Builder(activity)
-//                            .setTitle("Delete?")
-//                            .setMessage("Are You Sure You Want To Delete This Vehicle")
-//
-//                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//
-//                                    deleteVehicle(position);
-//
-//
-//                                }
-//                            })
-//
-//                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//
-//                                }
-//                            })
-//                            .setIcon(android.R.drawable.ic_dialog_alert)
-//                            .show();
-//
-//                }
+                final String vehicle_id = obj.getVehicleId();
+
+                if (!connectionDetector.isConnectedToInternet()) {
+                    Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
+                } else {
+                    new android.support.v7.app.AlertDialog.Builder(activity)
+                            .setTitle("Delete?")
+                            .setMessage("Are You Sure You Want To Delete This Vehicle")
+
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    apiCall.deleteVehicle(vehicle_id, "delete");
+                                    vehicleList.remove(holder.getAdapterPosition());
+                                    notifyDataSetChanged();
+
+
+                                }
+                            })
+
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+
+                }
 
 
             }
@@ -224,6 +225,15 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
     @Override
     public void notifyString(String str) {
+
+        if (str != null) {
+            if (str.equals("success")) {
+
+                CustomToast.customToast(activity, "Vehicle Deleted");
+
+            }
+
+        }
 
     }
 
