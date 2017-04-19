@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.fragment.MyGroupsFragment;
+import autokatta.com.search.SearchPerson;
 import autokatta.com.search.SearchProduct;
 import autokatta.com.search.SearchService;
 import autokatta.com.search.SearchStore;
@@ -26,6 +27,7 @@ public class SearchFragment extends Fragment {
     SearchProduct mSearchProduct;
     SearchService mSearchService;
     SearchStore mSearchStore;
+    SearchPerson mSearchPerson;
     Bundle mBundle;
     Bundle bundle = new Bundle();
     String searchString;
@@ -38,6 +40,7 @@ public class SearchFragment extends Fragment {
         mSearchProduct = new SearchProduct();
         mSearchService = new SearchService();
         mSearchStore = new SearchStore();
+        mSearchPerson = new SearchPerson();
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -48,6 +51,7 @@ public class SearchFragment extends Fragment {
                     mSearchProduct.setArguments(bundle);
                     mSearchService.setArguments(bundle);
                     mSearchStore.setArguments(bundle);
+                    mSearchPerson.setArguments(bundle);
                 }
                 bundle.putString("searchText1", searchString);
                 Log.i("searchText", "->" + searchString);
@@ -69,6 +73,7 @@ public class SearchFragment extends Fragment {
         tabAdapterName.addFragment(mSearchProduct, "Products");
         tabAdapterName.addFragment(mSearchService, "Services");
         tabAdapterName.addFragment(mSearchStore, "Store");
+        tabAdapterName.addFragment(mSearchPerson, "Person");
         viewPager.setAdapter(tabAdapterName);
     }
 }

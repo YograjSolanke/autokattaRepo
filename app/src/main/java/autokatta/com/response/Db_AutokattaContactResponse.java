@@ -15,6 +15,7 @@ public class Db_AutokattaContactResponse {
     private String mystatus;
     private String city;
     private Boolean contactVisibility;
+    private String status;
 
     public String getContact() {
         return contact;
@@ -72,6 +73,13 @@ public class Db_AutokattaContactResponse {
         this.contactVisibility = contactVisibility;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     /*Comparator for sorting the list by Student Name*/
     public static Comparator<Db_AutokattaContactResponse> StuNameComparator = new Comparator<Db_AutokattaContactResponse>() {
