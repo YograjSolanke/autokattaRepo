@@ -97,7 +97,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             this.mActivity = mActivity;
             this.mStoreList = mItemList;
             myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
-                    getString("loginContact", "7841023392");
+                    getString("loginContact", "");
             mConnectionDetector = new ConnectionDetector(mActivity);
         } catch (ClassCastException c) {
             c.printStackTrace();
@@ -214,7 +214,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                         putString("Share_keyword", "store").apply();
 
                 mActivity.startActivity(new Intent(mActivity, ShareWithinAppActivity.class));
-
+                mActivity.finish();
 
             }
         });

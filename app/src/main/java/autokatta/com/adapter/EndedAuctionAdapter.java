@@ -39,7 +39,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             this.mActivity = mActivity;
             this.mMainList = mItemList;
             myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
-                    getString("loginContact", "7841023392");
+                    getString("loginContact", "");
             mConnectionDetector = new ConnectionDetector(mActivity);
 
         } catch (ClassCastException c) {

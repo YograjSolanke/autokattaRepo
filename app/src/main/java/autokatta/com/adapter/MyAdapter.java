@@ -47,7 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     private Context mContext;
     private List<ModelGroups> mItemList = new ArrayList<>();
     private String GroupType, keyword, mGroupid, mGroupName, mGroupImage;
-    private String mycontact = "8007855589";
+ //   private String mycontact = "8007855589";
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -136,7 +136,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 //                                groups = obj.groupId;
                                 keyword = "delete";
                                 //new DeleteGroup().execute();
-                                mApiCall.deleteGroup(mGroupid, keyword, mycontact);
+                                mApiCall.deleteGroup(mGroupid, keyword, mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),MODE_PRIVATE).getString("loginContact",""));
 //                                grouplist.remove(position);
 //                                notifyDataSetChanged();
                             }

@@ -26,6 +26,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.events.PreviewMyActiveAuctionActivity;
 import autokatta.com.response.MyActiveAuctionResponse;
+import autokatta.com.view.ShareWithinAppActivity;
 
 /**
  * Created by ak-004 on 30/3/17.
@@ -233,14 +234,9 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", mAuction).apply();
 
-
-//                ShareWithinAppTabFragment fr = new ShareWithinAppTabFragment();
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fr);
-//                fragmentTransaction.addToBackStack("sharewithinapp");
-//                fragmentTransaction.commit();
-
+                Intent i = new Intent(activity, ShareWithinAppActivity.class);
+                activity.startActivity(i);
+                activity.finish();
             }
         });
 

@@ -273,8 +273,7 @@
                 android:layout_below="@+id/linear_card"
                 android:layout_marginEnd="@dimen/text_margin_top"
                 android:contentDescription="@string/app_name"
-                android:tint="@color/button_grey"
-                app:srcCompat="@android:drawable/ic_menu_share" />
+                app:srcCompat="@drawable/autoshare" />
 
             <ImageButton
                 android:id="@+id/share_other"

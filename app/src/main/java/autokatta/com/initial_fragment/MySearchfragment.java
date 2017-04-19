@@ -53,7 +53,7 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
 
         apiCall = new ApiCall(getActivity(), this);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        final String myContact = mSharedPreferences.getString("loginContact", "7841023392");
+        final String myContact = mSharedPreferences.getString("loginContact", "");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mySearch.findViewById(R.id.swipeRefreshLayoutMySearch);
         mRecyclerView = (RecyclerView) mySearch.findViewById(R.id.recyclermySearch);

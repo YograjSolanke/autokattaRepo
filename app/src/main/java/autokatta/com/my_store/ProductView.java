@@ -51,6 +51,7 @@ import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetTagsResponse;
 import autokatta.com.search.ProductImageSlider;
+import autokatta.com.view.ShareWithinAppActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -669,19 +670,16 @@ public class ProductView extends Fragment implements RequestNotifier {
 
                             allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + images.get(0);
 
-                            /*shareedit.putString("sharedata", allDetails);
-                            shareedit.putString("product_id", id);
-                            shareedit.putString("keyword", "product");
+                            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                    putString("Share_sharedata", allDetails).apply();
+                            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                    putString("Share_auction_id", store_id).apply();
+                            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                    putString("Share_keyword", "store").apply();
 
-                            shareedit.commit();*/
-                            /*ShareWithinAppTabFragment fr = new ShareWithinAppTabFragment();
-                            // fr.setArguments(b);
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.containerView, fr);
-                            fragmentTransaction.addToBackStack("sharewithinapp");
-                            fragmentTransaction.commit();*/
-
+                            Intent i = new Intent(getActivity(), ShareWithinAppActivity.class);
+                            getActivity().startActivity(i);
+                            getActivity().finish();
                         }
                     });
 

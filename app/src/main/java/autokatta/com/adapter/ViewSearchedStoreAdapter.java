@@ -26,6 +26,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.SearchStoreResponse;
+import autokatta.com.view.ShareWithinAppActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -250,13 +251,9 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "store").apply();
 
+                activity.startActivity(new Intent(activity, ShareWithinAppActivity.class));
+                activity.finish();
 
-//                ShareWithinAppTabFragment fr = new ShareWithinAppTabFragment();
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fr);
-//                fragmentTransaction.addToBackStack("sharewithinapp");
-//                fragmentTransaction.commit();
 
             }
         });

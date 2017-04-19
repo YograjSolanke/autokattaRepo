@@ -87,11 +87,17 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         //To set Date
         try {
 
-            DateFormat date = new SimpleDateFormat(" MMM dd ");
+            //To set Date
+            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+
+            holder.edituploadedon.setText(newDateFormat.format(inputDate.parse(mMainList.get(position).getDate())));
+
+           /* DateFormat date = new SimpleDateFormat(" MMM dd ");
             DateFormat time = new SimpleDateFormat(" hh:mm a");
 
             holder.edituploadedon.setText(date.format(mMainList.get(position).getDate()) + time.format(mMainList.get(position).getDate()));
-
+*/
         } catch (Exception e) {
             e.printStackTrace();
         }

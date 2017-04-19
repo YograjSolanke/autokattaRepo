@@ -75,7 +75,7 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.getMySavedAuctions(mSharedPreferences.getString("loginContact", "7841023392"));
+                apiCall.getMySavedAuctions(mSharedPreferences.getString("loginContact", ""));
             }
         });
 

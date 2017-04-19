@@ -1,29 +1,39 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.GetGroupVehiclesResponse;
+import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.VehicleDetails;
 
 /**
@@ -31,8 +41,11 @@ import autokatta.com.view.VehicleDetails;
  */
 
 public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicleRefreshAdapter.MyViewHolder> {
-    private Activity mActivity;
+     Activity mActivity;
     private List<GetGroupVehiclesResponse.Success> mItemList = new ArrayList<>();
+String allDetails;
+    String imgUrl;
+    String mContact;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
@@ -66,6 +79,8 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     public GroupVehicleRefreshAdapter(Activity mActivity, List<GetGroupVehiclesResponse.Success> mItemList) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
+
+        mContact=mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),Context.MODE_PRIVATE).getString("loginContact","");
     }
 
     @Override
@@ -149,6 +164,178 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.mCardImage);
         }
+        //Share In App
+        holder.mShareAutokatta.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new AlertDialog.Builder(mActivity)
+                        .setTitle("Contact")
+                        .setMessage("Do you want to share your contact no as vehicle contact?")
+
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                allDetails = mItemList.get(position).getTitle() + "=" +
+                                        mItemList.get(position).getCategory() + "=" +
+                                        "-" + "=" +
+                                        mItemList.get(position).getPrice() + "=" +
+                                        "" + "=" +
+                                        mItemList.get(position).getModel() + "=" +
+                                        mItemList.get(position).getYearOfManufacture() + "=" +
+                                        mItemList.get(position).getKmsRunning() + "=" +
+                                        mItemList.get(position).getRTOCity()+ "=" +
+                                        mItemList.get(position).getLocationCity() + "=" +
+                                        mItemList.get(position).getRegistrationNumber()+ "=" +
+                                        mItemList.get(position).getImage() + "=" +
+                                       mContact+"="+"0";
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_vehicle_id", mItemList.get(position).getVehicleId()).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "vehicle").apply();
+
+                                Intent i=new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                mActivity.finish();
+
+                            }
+                        })
+
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                allDetails = mItemList.get(position).getTitle() + "=" +
+                                        mItemList.get(position).getCategory() + "=" +
+                                        "-" + "=" +
+                                        mItemList.get(position).getPrice() + "=" +
+                                        "" + "=" +
+                                        mItemList.get(position).getModel() + "=" +
+                                        mItemList.get(position).getYearOfManufacture() + "=" +
+                                        mItemList.get(position).getKmsRunning() + "=" +
+                                        mItemList.get(position).getRTOCity()+ "=" +
+                                        mItemList.get(position).getLocationCity() + "=" +
+                                        mItemList.get(position).getRegistrationNumber()+ "=" +
+                                        mItemList.get(position).getImage() + "=" +
+                                        mItemList.get(position).getContact();
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_vehicle_id", mItemList.get(position).getVehicleId()).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "vehicle").apply();
+
+                                Intent i=new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                mActivity.finish();
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+            }
+        });
+        holder.mShareOther.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new AlertDialog.Builder(mActivity)
+                        .setTitle("Contact")
+                        .setMessage("Do you want to share your contact no as vehicle contact?")
+
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //ChoiceContact = obj.vehicleContact;
+                                //Rcontact=holder.contact.getText().toString();
+                                System.out.println("Choice contact before share applying yes........"+mContact);
+                                String imageFilePath;
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+
+
+                                if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null)) {
+                                    imgUrl="http://autokatta.com/mobile/uploads/"+"abc.jpg";
+                                } else {
+                                    imgUrl = "http://autokatta.com/mobile/uploads/"+mItemList.get(position).getImage();
+                                }
+                                Log.e("TAG", "img : " + imgUrl);
+
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imgUrl));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imgUrl, null, MimeTypeMap.getFileExtensionFromUrl(imgUrl));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imgUrl);
+
+                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Log.e("TAG", "img URL: " + imgUrl);
+
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:"+imageFilePath);
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + mContact);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                            }
+                        })
+
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                //ChoiceContact = Contact;
+                                System.out.println("Choice contact before share applying yes........"+ mItemList.get(position).getContact());
+                                System.out.println("Choice contact before share applying yes........"+mContact);
+                                String imageFilePath;
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+
+
+                                if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null)) {
+                                    imgUrl="http://autokatta.com/mobile/uploads/"+"abc.jpg";
+                                } else {
+                                    imgUrl = "http://autokatta.com/mobile/uploads/"+mItemList.get(position).getImage();
+                                }
+                                Log.e("TAG", "img : " + imgUrl);
+
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imgUrl));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imgUrl, null, MimeTypeMap.getFileExtensionFromUrl(imgUrl));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imgUrl);
+
+                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Log.e("TAG", "img URL: " + imgUrl);
+
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:"+imageFilePath);
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + mItemList.get(position).getContact() );
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +354,11 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                 call(mItemList.get(position).getContact());
             }
         });
+
+
     }
+
+
     //Calling Functionality
     private void call(String contact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
@@ -181,4 +372,6 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     public int getItemCount() {
         return mItemList.size();
     }
+
+
 }

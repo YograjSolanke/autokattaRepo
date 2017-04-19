@@ -1,24 +1,32 @@
 package autokatta.com.view;
 
 import android.Manifest.permission;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import java.io.File;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -37,9 +45,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     CollapsingToolbarLayout collapsingToolbar;
     String name;
     FloatingActionMenu mFab;
-    FloatingActionButton mLike, mCall;
-    String mVehicle_Id;
-    String contact, mLikestr, prefcontact;
+    FloatingActionButton mLike, mCall, mAutoshare, mShare;
+    String mVehicle_Id, Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage,imgUrl;
+    String contact, mLikestr, prefcontact, allDetails;
     ApiCall mApiCall;
 
     @Override
@@ -51,10 +59,15 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mFab = (FloatingActionMenu) findViewById(R.id.menu_red);
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
+        mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
+        mShare = (FloatingActionButton) findViewById(R.id.share);
+
         mApiCall = new ApiCall(VehicleDetails.this, this);
         mCall.setOnClickListener(this);
         mLike.setOnClickListener(this);
         mFab.setOnClickListener(this);
+        mShare.setOnClickListener(this);
+        mAutoshare.setOnClickListener(this);
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -125,6 +138,16 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     name = datum.getUsername();
                     contact = datum.getContact();
                     mLikestr = datum.getStatus();
+                    Title = datum.getTitle();
+                    mAddress = (String) datum.getLocationAddress();
+                    mRegistration = datum.getRegistrationNumber();
+                    mYear = datum.getYearOfRegistration();
+                    mPrice = datum.getPrice();
+                    mBrand = datum.getBrand();
+                    mModel = datum.getModel();
+                    mRTO_City = datum.getRTOCity();
+                    mSendImage = datum.getImage();
+                    mKms = datum.getKmsRunning();
 
                     if (mLikestr.equalsIgnoreCase("no")) {
                         mLike.setLabelText("Like");
@@ -191,8 +214,65 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
                 break;
             case R.id.share:
+                String imageFilePath;
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                if (mSendImage.equalsIgnoreCase("") || mSendImage.equalsIgnoreCase(null)) {
+                    imgUrl = "http://autokatta.com/mobile/uploads/" + "abc.jpg";
+                } else {
+                    imgUrl = "http://autokatta.com/mobile/uploads/" + mSendImage;
+                }
+                Log.e("TAG", "img : " + imgUrl);
+
+                DownloadManager.Request request = new DownloadManager.Request(
+                        Uri.parse(imgUrl));
+                request.allowScanningByMediaScanner();
+                String filename = URLUtil.guessFileName(imgUrl, null, MimeTypeMap.getFileExtensionFromUrl(imgUrl));
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                Log.e("ShareImagePath :", filename);
+                Log.e("TAG", "img : " + imgUrl);
+
+                DownloadManager manager = (DownloadManager) getApplication()
+                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                Log.e("TAG", "img URL: " + imgUrl);
+
+                manager.enqueue(request);
+
+                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                System.out.println("ImageFilePath:"+imageFilePath);
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                        + "\n" + "http://autokatta.com/vehicle/" +mVehicle_Id);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                startActivity(Intent.createChooser(intent, "Autokatta"));
+
                 break;
             case R.id.autokatta_share:
+                allDetails = Title + "=" +
+                        mPrice + "=" +
+                        mBrand + "=" +
+                        mModel + "=" +
+                        mYear + "=" +
+                        mKms + "=" +
+                        mRTO_City + "=" +
+                        mAddress + "=" +
+                        mRegistration + "=" +
+                        mSendImage + "=" + "0";
+
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", allDetails).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_vehicle_id", mVehicle_Id).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_keyword", "vehicle").apply();
+
+
+                Intent i = new Intent(getApplicationContext(), ShareWithinAppActivity.class);
+                startActivity(i);
+                finish();
                 break;
         }
     }

@@ -19,6 +19,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.MyUpcomingAuctionResponse;
+import autokatta.com.view.ShareWithinAppActivity;
 
 /**
  * Created by ak-004 on 31/3/17.
@@ -105,15 +106,9 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", mAuction).apply();
 
+                activity.startActivity(new Intent(activity, ShareWithinAppActivity.class));
+                activity.finish();
 
-//                ShareWithinAppTabFragment fr = new ShareWithinAppTabFragment();
-//                // fr.setArguments(b);
-//
-//                FragmentManager fragmentManager =ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fr);
-//                fragmentTransaction.addToBackStack("sharewithinapp");
-//                fragmentTransaction.commit();
             }
         });
 

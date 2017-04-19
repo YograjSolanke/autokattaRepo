@@ -62,7 +62,7 @@ public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNo
     String allDetails = "", keyword;
 
     String auction_id = "", whoseAuction = "";
-    String contact = "", auctioneername, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
+    String contact , auctioneername, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
             no_of_vehicles, auctioncontact, action_title, ignoreGoingStatus, startDateTime, endDateTime, specialcluases,
             blackListStatus, openClose, auctiontype, showPrice, strCategory, strLocation;
 
@@ -78,6 +78,7 @@ public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNo
         setContentView(R.layout.activity_preview_live_events);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -128,6 +129,7 @@ public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNo
 
         mGoLive.setOnClickListener(this);
         mGoing.setOnClickListener(this);
+        mShare.setOnClickListener(this);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -481,6 +483,38 @@ public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNo
                     e.printStackTrace();
                 }
                 break;
+
+            case R.id.btn_share:
+                if (contact.equals(auctioncontact)) {
+                    whoseAuction = "myauction";
+                } else
+                    whoseAuction = "otherauction";
+
+                allDetails = action_title + "=" +
+                        no_of_vehicles + "=" +
+                        auction_enddate + "=" +
+                        auction_endtime + "=" +
+                        auctiontype + "=" +
+                        "0" + "=" +
+                        "0" + "=" +
+                        whoseAuction;
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", allDetails).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_auction_id", auction_id).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_keyword", keyword).apply();
+
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                        intent.putExtra(Intent.EXTRA_TEXT, allDetails);
+
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        startActivity(intent);
+                        break;
         }
     }
 

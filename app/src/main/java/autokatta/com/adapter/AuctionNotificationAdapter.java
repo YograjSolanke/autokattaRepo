@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,7 +43,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
     Activity mActivity;
     private List<GetLiveEventsResponse.Success> mItemList = new ArrayList<>();
     private String auctionType, whoseAuction = "", special_clause;
-
+    String allDetails, mContact ;
     private HashMap<TextView, CountDownTimer> counters;
 
     public AuctionNotificationAdapter(Activity mActivity, List<GetLiveEventsResponse.Success> mItemList, String auctionType) {
@@ -85,11 +86,12 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
     public AuctionNotificationAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_card_auction, parent, false);
         MyViewHolder holder = new MyViewHolder(mView);
+        mContact=mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(AuctionNotificationAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final AuctionNotificationAdapter.MyViewHolder holder, final int position) {
         holder.mAuctioneer.setText(mItemList.get(position).getAuctioneer());
         holder.mAuctioneerTitle.setText(mItemList.get(position).getActionTitle());
         holder.mAuctioneerNoOfVehicles.setText(mItemList.get(position).getNoOfVehicles());
@@ -263,6 +265,48 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                     intent.putExtras(bundle);
                     mActivity.startActivity(intent);
                 }
+            }
+        });
+
+
+        holder.mShare.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (mContact.equals(mItemList.get(position).getContact())) {
+                    whoseAuction = "myauction";
+                } else
+                    whoseAuction = "otherauction";
+
+                allDetails = mItemList.get(position).getActionTitle() + "=" +
+                        mItemList.get(position).getNoOfVehicles() + "=" +
+                        mItemList.get(position).getEndDate() + "=" +
+                        mItemList.get(position).getEndTime() + "=" +
+                        mItemList.get(position).getAuctionType() + "=" +
+                       "0" + "=" +//.auctionGoingcount+"="+
+                       "0"+ "=" +//auctionIgnorecount
+                        whoseAuction;
+
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                System.out.println("Share Image \n");
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", allDetails).apply();
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_keyword", "auction").apply();
+
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
+
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                mActivity.startActivity(intent);
+
+
             }
         });
     }

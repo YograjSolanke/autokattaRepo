@@ -32,6 +32,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MySearchResponse;
 import autokatta.com.view.SearchVehicleActivity;
+import autokatta.com.view.ShareWithinAppActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -348,14 +349,10 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                         putString("Share_keyword", "mysearch").apply();
 
 
-//                ShareWithinAppTabFragment fr = new ShareWithinAppTabFragment();
-//                // fr.setArguments(b);
-//
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fr);
-//                fragmentTransaction.addToBackStack("sharewithinapp");
-//                fragmentTransaction.commit();
+                Intent i=new Intent(activity, ShareWithinAppActivity.class);
+                activity.startActivity(i);
+                activity.finish();
+
 
 
             }
