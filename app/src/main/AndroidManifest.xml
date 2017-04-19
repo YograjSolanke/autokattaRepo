@@ -224,9 +224,15 @@
             android:name="io.fabric.ApiKey"
             android:value="0310abc2483857212f40bd7bad891e166bf94ec4" />
 
-        <activity android:name=".Registration.CompanyBasedInvitation" />
-        <activity android:name=".Registration.SkillsBasedInvitation" />
-        <activity android:name=".Registration.InviteFriends" />
+        <activity
+            android:name=".Registration.CompanyBasedInvitation"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+        <activity
+            android:name=".Registration.SkillsBasedInvitation"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+        <activity
+            android:name=".Registration.InviteFriends"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
         <activity
             android:name=".auction.PreviewLiveEvents"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
@@ -328,12 +334,27 @@
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_admin_vehicle_details"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".other.SearchActivity" />
-        <activity android:name=".view.GroupsActivity" />
+        <activity
+            android:name=".other.SearchActivity"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+        <activity
+            android:name=".view.GroupsActivity"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
         <activity
             android:name=".view.ShareWithinAppActivity"
-            android:label="@string/title_activity_share_within_app"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

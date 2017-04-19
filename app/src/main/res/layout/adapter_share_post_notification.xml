@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -32,18 +32,19 @@
                     android:id="@+id/imgprofilelike"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/profile" />
+                    android:background="@drawable/profile"
+                    android:contentDescription="@string/app_name" />
 
                 <TextView
                     android:id="@+id/postaction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:layout_toLeftOf="@+id/fvrtimg"
-                    android:layout_toRightOf="@+id/imgprofilelike"
+                    android:layout_toEndOf="@+id/imgprofilelike"
+                    android:layout_toStartOf="@+id/fvrtimg"
                     android:text="postaction"
                     android:textColor="#808080"
                     android:textStyle="bold" />
@@ -54,9 +55,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/postaction"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    android:layout_toRightOf="@+id/imgprofilelike"
+                    android:layout_toEndOf="@+id/imgprofilelike"
                     android:text="Day at time"
                     android:textColor="#808080" />
 
@@ -65,8 +66,8 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:background="@drawable/fav1"
+                    android:contentDescription="@string/app_name"
                     android:visibility="gone" />
 
                 <ImageView
@@ -74,26 +75,21 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:background="@drawable/fav2"
+                    android:contentDescription="@string/app_name"
                     android:visibility="gone" />
 
             </RelativeLayout>
 
-            <!--<RelativeLayout-->
-            <!--android:id="@+id/reltxt"-->
-            <!--android:layout_below="@+id/relaprofilelike"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="100dp">-->
 
             <com.freesoulapps.preview.android.Preview
                 android:id="@+id/preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="0dp"
                 android:layout_below="@+id/relaprofilelike"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="0dp" />
 
             <TextView
                 android:id="@+id/statustxt"
@@ -104,9 +100,9 @@
                 android:maxLength="200"
                 android:minHeight="100dp"
                 android:text="@string/app_name"
-                android:textStyle="italic"
                 android:textColor="#808080"
                 android:textSize="18sp"
+                android:textStyle="italic"
                 android:visibility="gone" />
             <!--</RelativeLayout>-->
 
@@ -129,7 +125,6 @@
 
                 <LinearLayout
                     android:id="@+id/linearlike"
-
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -139,13 +134,14 @@
                         android:id="@+id/likeimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@drawable/likeicon" />
+                        android:background="@drawable/likeicon"
+                        android:contentDescription="@string/app_name" />
 
                     <TextView
                         android:id="@+id/liketxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:text="Like"
                         android:textColor="#808080" />
 
@@ -154,7 +150,6 @@
                 <LinearLayout
                     android:id="@+id/linearunlike"
                     android:layout_width="wrap_content"
-
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -164,13 +159,14 @@
                         android:id="@+id/unlikeimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@drawable/unlikethumb" />
+                        android:background="@drawable/unlikethumb"
+                        android:contentDescription="@string/app_name" />
 
                     <TextView
                         android:id="@+id/unliketxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:text="Unlike"
                         android:textColor="@color/red" />
 
@@ -194,13 +190,14 @@
                         android:id="@+id/shareimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@android:drawable/ic_menu_share" />
+                        android:background="@android:drawable/ic_menu_share"
+                        android:contentDescription="@string/app_name" />
 
                     <TextView
                         android:id="@+id/sharetxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:text="Share"
                         android:textColor="#808080" />
 
@@ -215,7 +212,6 @@
 
                 <LinearLayout
                     android:id="@+id/linearshare1"
-
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -225,69 +221,19 @@
                         android:id="@+id/shareimg1"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@drawable/autoshare" />
+                        android:background="@drawable/autoshare"
+                        android:contentDescription="@string/app_name" />
 
                     <TextView
                         android:id="@+id/sharetxt1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:text="Share"
                         android:textColor="#808080" />
 
                 </LinearLayout>
 
-                <!--<View-->
-                <!--android:layout_gravity="center"-->
-                <!--android:background="#cccccc"-->
-                <!--android:layout_width="1dp"-->
-                <!--android:layout_height="20dp"></View>-->
-
-
-                <!--<LinearLayout-->
-                <!--android:gravity="center"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_weight="0.33"-->
-                <!--android:id="@+id/linearfollow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent">-->
-
-                <!--<ImageView-->
-                <!--android:background="@drawable/followicon"-->
-                <!--android:id="@+id/followimg"-->
-                <!--android:layout_width="20dp"-->
-                <!--android:layout_height="20dp" />-->
-                <!--<TextView-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:id="@+id/followtxt"-->
-                <!--android:text="Follow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
-                <!--</LinearLayout>-->
-                <!--<LinearLayout-->
-                <!--android:visibility="gone"-->
-                <!--android:gravity="center"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_weight="0.33"-->
-                <!--android:id="@+id/linearunfollow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent">-->
-
-                <!--<ImageView-->
-                <!--android:background="@drawable/followicon"-->
-                <!--android:id="@+id/unfollowimg"-->
-                <!--android:layout_width="20dp"-->
-                <!--android:layout_height="20dp" />-->
-                <!--<TextView-->
-                <!--android:textColor="@color/red"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:id="@+id/unfollowtxt"-->
-                <!--android:text="Follow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
-                <!--</LinearLayout>-->
 
             </LinearLayout>
 

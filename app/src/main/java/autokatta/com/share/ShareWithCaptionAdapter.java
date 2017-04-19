@@ -14,9 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import autokatta.com.R;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -30,7 +27,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
     private String sharedata, store_id, contactnumber, vehicle_id, product_id,
             service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword, contacttab;
 
-    private List<String> iname;
     private LayoutInflater mInflater;
 
 
@@ -217,13 +213,12 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
 
                 case "mysearch":
-                    convertView = mInflater.inflate(R.layout.searchnotification, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_search_notification, null);
 
                     holder.category = (TextView) convertView.findViewById(R.id.mysearch_category);
                     holder.brand = (TextView) convertView.findViewById(R.id.mysearch_brand);
                     holder.model = (TextView) convertView.findViewById(R.id.mysearch_model);
                     holder.price = (TextView) convertView.findViewById(R.id.mysearch_price);
-
                     holder.year = (TextView) convertView.findViewById(R.id.mysearch_year);
                     holder.dateofsearch = (TextView) convertView.findViewById(R.id.searchdate);
                     holder.searchleads = (TextView) convertView.findViewById(R.id.buyerleads);
@@ -234,7 +229,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
                 case "poststatus":
 
-                    convertView = mInflater.inflate(R.layout.postnotification, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_post_notification, null);
 
                     holder.poststatus = (TextView) convertView.findViewById(R.id.statustxt);
                     holder.relaprofilelike = (RelativeLayout) convertView.findViewById(R.id.relaprofilelike);
@@ -266,7 +261,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
 
                 case "auction":
-                    convertView = mInflater.inflate(R.layout.activenotification, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_auction_notification, null);
 
                     holder.auctitle = (TextView) convertView.findViewById(R.id.auc_name);
                     holder.aucnoofvehicles = (TextView) convertView.findViewById(R.id.auc_noofvehicle);
@@ -284,7 +279,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     break;
 
                 case "loan":
-                    convertView = mInflater.inflate(R.layout.loan_hori_adapter, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_event_notification, null);
 
                     holder.titleevent = (TextView) convertView.findViewById(R.id.edittitle);
                     holder.start_date = (TextView) convertView.findViewById(R.id.start_date);
@@ -300,7 +295,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
 
                 case "exchange":
-                    convertView = mInflater.inflate(R.layout.loan_hori_adapter, null);
+                    convertView = mInflater.inflate(R.layout.adapter_share_event_notification, null);
 
                     holder.titleevent = (TextView) convertView.findViewById(R.id.edittitle);
                     holder.start_date = (TextView) convertView.findViewById(R.id.start_date);
@@ -324,7 +319,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
 
         }
-        iname = new ArrayList<String>();
 
         System.out.println("sharedata============" + sharedata);
 
