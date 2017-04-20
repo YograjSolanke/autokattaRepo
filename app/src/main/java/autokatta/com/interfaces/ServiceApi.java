@@ -1053,16 +1053,16 @@ public interface ServiceApi {
     Call<FavouriteResponse> getMyFavourites(@Body SampleResponse sampleResponse);
 
     //Create Groups
-    @POST("createGroup")
+    @POST("createGroup.php")
     Call<String> createGroup(@Query("title") String title, @Query("image") String image,@Query("admin_contact") String admin_contact);
 
     //Add contacts to  Groups
-    @POST("add_contacts")
+    @POST("add_contacts.php")
     Call<String> addContactToGroup(@Query("groupid") String groupid, @Query("contacts") String contacts);
 
 
  //Notification Like Group
-    @POST("newlikes")
+    @POST("newlikes.php")
     Call<String> notificationLikegroup(@Query("groupid") String groupid, @Query("sender_contact") String mycontact,@Query("receiver_contact") String OtherContact, @Query("layout") String layout);
 
 
