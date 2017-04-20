@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -84,7 +84,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        createLoanView = inflater.inflate(R.layout.fragment_create_loanmela, container, false);
+        createLoanView = inflater.inflate(R.layout.fragment_create_events, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -161,34 +161,39 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
 
                 if (name.equals("")) {
                     eventname.setError("Enter loan title");
-                    // Toast.makeText(getActivity(), "Enter loan title", Toast.LENGTH_LONG).show();
-//                    auctioname.setFocusable(true);
+                    eventname.requestFocus();
                 } else if (stdate.equals("")) {
-//                    startdate.setError("Enter start date");
-                    Toast.makeText(getActivity(), "Enter start date", Toast.LENGTH_LONG).show();
+                    startdate.setError("Enter start date");
+                    startdate.requestFocus();
                 } else if (sttime.equals("")) {
-//                    starttime.setError("Enter start time");
-                    Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                    starttime.setError("Enter start time");
+                    starttime.requestFocus();
                 } else if (eddate.equals("")) {
-//                    enddate.setError("Enter end date");
-                    Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
+                    enddate.setError("Enter end date");
+                    enddate.requestFocus();
                 } else if (edtime.equals("")) {
-//                    endtime.setError("Enter end time");
-                    Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
+                    endtime.setError("Enter end time");
+                    endtime.requestFocus();
                 } else if (!validObj.startDateValidatioon(stdate)) {
                     startdate.setError("Enter valid Date");
+                    startdate.requestFocus();
                 } else if (!validObj.startDateEndDateValidation(eddate, stdate)) {
                     enddate.setError("Enter valid Date");
-                } else if (stdate.equals(eddate)) {
-                    if (!validObj.startTimeEndTimeValidation(sttime, edtime)) {
-                        endtime.setError("Enter valid time");
-                    }
+                    enddate.requestFocus();
+                } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
+
+                    endtime.setError("Enter valid time");
+                    endtime.requestFocus();
+
                 } else if (location.equals("")) {
                     eventlocation.setError("Enter location");
+                    eventlocation.requestFocus();
                 } else if (!flag) {
                     eventlocation.setError("Please Select Location From Dropdown Only");
+                    eventlocation.requestFocus();
                 } else if (address.equals("")) {
                     eventaddress.setError("Enter address");
+                    eventaddress.requestFocus();
                 } else {
                     apiCall.createLoanMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
                     //uploadImage(mediaPath);
@@ -371,7 +376,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
-                //mProfilePic.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                picture.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 cursor.close();
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
@@ -391,7 +396,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
                             bitmapRotate = bitmap;
                             bitmap.recycle();
                         }
-                        //mProfilePic.setImageBitmap(bitmapRotate);
+                        picture.setImageBitmap(bitmapRotate);
 
 //                            Saving image to mobile internal memory for sometime
                         String root = getActivity().getFilesDir().toString();
@@ -495,7 +500,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
             case (R.id.auctionstartdate):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
+
                     startdate.setInputType(InputType.TYPE_NULL);
                     startdate.setError(null);
                     new SetMyDateAndTime("date", startdate, getActivity());
@@ -505,7 +510,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
 
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
+
                     starttime.setInputType(InputType.TYPE_NULL);
                     starttime.setError(null);
                     new SetMyDateAndTime("time", starttime, getActivity());
@@ -514,7 +519,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
             case (R.id.auctionenddate):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
+
                     enddate.setInputType(InputType.TYPE_NULL);
                     enddate.setError(null);
                     new SetMyDateAndTime("date", enddate, getActivity());
@@ -524,7 +529,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
             case (R.id.auctionendtime):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
+
                     endtime.setInputType(InputType.TYPE_NULL);
                     endtime.setError(null);
                     new SetMyDateAndTime("time", endtime, getActivity());

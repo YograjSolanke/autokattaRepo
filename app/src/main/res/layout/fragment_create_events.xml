@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeparent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:id="@+id/relativeparent">
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/relativename"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:padding="10dp"
-        android:background="#2C3343">
+        android:layout_height="wrap_content"
+        android:background="#2C3343"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/textevent"
@@ -40,7 +40,6 @@
             android:id="@+id/relative1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relativename"
             android:padding="5dp">
 
 
@@ -48,16 +47,17 @@
                 android:id="@+id/linear1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:orientation="vertical"
-                android:visibility="visible"
-                android:layout_centerHorizontal="true">
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/loanmelaimg"
                     android:layout_width="100dip"
                     android:layout_height="100dip"
-                    android:src="@drawable/lonemelaimage"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/lonemelaimage" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -65,15 +65,15 @@
                     android:layout_marginTop="10dp">
 
                     <Button
+                        android:id="@+id/btnaddphoto"
                         android:layout_width="100dp"
                         android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/buttonback"
                         android:text="Add Photo"
                         android:textAllCaps="false"
-                        android:textSize="16sp"
-                        android:id="@+id/btnaddphoto"
                         android:textColor="#ffffff"
-                        android:background="@drawable/buttonback"
-                        android:layout_centerHorizontal="true" />
+                        android:textSize="16sp" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -81,173 +81,173 @@
             <EditText
                 android:id="@+id/editauctionname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#80bebebe"
-                android:textColorHint="#848484"
-                android:textColor="#2C3343"
+                android:layout_height="30dp"
                 android:layout_below="@+id/linear1"
-                android:hint="Event Title"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dip"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dip"
-                android:layout_marginRight="30dp"
+                android:background="#80bebebe"
+                android:gravity="center"
+                android:hint="Event Title"
                 android:textAlignment="center"
-                android:gravity="center" />
+                android:textColor="#2C3343"
+                android:textColorHint="#848484" />
 
             <TextView
+                android:id="@+id/auctionstarttxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Event Start"
-                android:layout_centerHorizontal="true"
-                android:textColor="#848484"
-                android:textSize="18sp"
-                android:background="@drawable/text_underline"
                 android:layout_below="@+id/editauctionname"
-                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:id="@+id/auctionstarttxt" />
+                android:background="@drawable/text_underline"
+                android:gravity="center_horizontal"
+                android:text="Event Start"
+                android:textColor="#848484"
+                android:textSize="18sp" />
 
             <RelativeLayout
+                android:id="@+id/linear3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/linear3"
                 android:layout_below="@+id/auctionstarttxt"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/auctionstartdate"
                     android:layout_width="120dp"
                     android:layout_height="30dp"
-                    android:id="@+id/auctionstartdate"
+                    android:background="#80bebebe"
+                    android:gravity="center"
                     android:hint="Date"
                     android:textAlignment="center"
-                    android:gravity="center"
-                    android:textColorHint="#848484"
                     android:textColor="#2C3343"
-                    android:background="#80bebebe" />
+                    android:textColorHint="#848484" />
 
                 <EditText
+                    android:id="@+id/auctionstarttime"
                     android:layout_width="120dp"
                     android:layout_height="30dp"
-                    android:id="@+id/auctionstarttime"
+                    android:layout_alignParentEnd="true"
+                    android:background="#80bebebe"
+                    android:gravity="center"
                     android:hint="Time"
                     android:textAlignment="center"
-                    android:gravity="center"
-                    android:textColorHint="#848484"
                     android:textColor="#2C3343"
-                    android:background="#80bebebe"
-                    android:layout_alignParentRight="true" />
+                    android:textColorHint="#848484" />
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/auctionendtxt"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/text_underline"
-                android:text="Event End"
                 android:layout_below="@+id/linear3"
-                android:id="@+id/auctionendtxt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/text_underline"
                 android:gravity="center_horizontal"
+                android:text="Event End"
+                android:textAlignment="center"
                 android:textColor="#848484"
-                android:textSize="18sp"
-                android:textAlignment="center" />
+                android:textSize="18sp" />
 
             <RelativeLayout
+                android:id="@+id/linear4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/linear4"
                 android:layout_below="@+id/auctionendtxt"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/auctionenddate"
                     android:layout_width="120dp"
                     android:layout_height="30dp"
-                    android:id="@+id/auctionenddate"
+                    android:background="#80bebebe"
+                    android:gravity="center"
                     android:hint="Date"
                     android:textAlignment="center"
-                    android:gravity="center"
-                    android:textColorHint="#848484"
                     android:textColor="#2C3343"
-                    android:background="#80bebebe" />
+                    android:textColorHint="#848484" />
 
                 <EditText
+                    android:id="@+id/auctionendtime"
                     android:layout_width="120dp"
                     android:layout_height="30dp"
-                    android:id="@+id/auctionendtime"
+                    android:layout_alignParentEnd="true"
+                    android:background="#80bebebe"
+                    android:gravity="center"
                     android:hint="Time"
                     android:textAlignment="center"
-                    android:textColorHint="#848484"
                     android:textColor="#2C3343"
-                    android:gravity="center"
-                    android:background="#80bebebe"
-                    android:layout_alignParentRight="true" />
+                    android:textColorHint="#848484" />
             </RelativeLayout>
 
 
             <AutoCompleteTextView
                 android:id="@+id/editlocation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#80bebebe"
-                android:textColorHint="#848484"
-                android:textColor="#2C3343"
+                android:layout_height="30dp"
                 android:layout_below="@+id/linear4"
-                android:hint="Event Location"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dip"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dip"
-                android:layout_marginRight="30dp"
+                android:background="#80bebebe"
+                android:gravity="center"
+                android:hint="Event Location"
                 android:textAlignment="center"
-                android:gravity="center" />
+                android:textColor="#2C3343"
+                android:textColorHint="#848484" />
 
 
             <EditText
                 android:id="@+id/editaddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#80bebebe"
-                android:textColorHint="#848484"
-                android:textColor="#2C3343"
+                android:layout_height="30dp"
                 android:layout_below="@+id/editlocation"
-                android:hint="Event Address"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dip"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dip"
-                android:layout_marginRight="30dp"
+                android:background="#80bebebe"
+                android:gravity="center"
+                android:hint="Event Address"
                 android:textAlignment="center"
-                android:gravity="center" />
+                android:textColor="#2C3343"
+                android:textColorHint="#848484" />
 
 
             <EditText
                 android:id="@+id/editdetails"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#80bebebe"
-                android:textColorHint="#848484"
-                android:textColor="#2C3343"
+                android:layout_height="30dp"
                 android:layout_below="@+id/editaddress"
-                android:hint="Event Details"
+                android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dip"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dip"
-                android:layout_marginRight="30dp"
+                android:background="#80bebebe"
+                android:gravity="center"
+                android:hint="Event Details"
                 android:textAlignment="center"
-                android:gravity="center" />
+                android:textColor="#2C3343"
+                android:textColorHint="#848484" />
 
 
             <Button
+                android:id="@+id/btncreate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="create"
-                android:background="@drawable/buttonback"
-                android:id="@+id/btncreate"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
                 android:layout_below="@+id/editdetails"
-                android:layout_marginTop="10dp" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/buttonback"
+                android:text="Create"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
 
         </RelativeLayout>

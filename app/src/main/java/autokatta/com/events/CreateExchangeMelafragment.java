@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,7 +82,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        createExchangeView = inflater.inflate(R.layout.fragment_create_loanmela, container, false);
+        createExchangeView = inflater.inflate(R.layout.fragment_create_events, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
 
@@ -163,39 +163,43 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
 
                 if (name.equals("")) {
                     eventname.setError("Enter Exchange title");
-                    // Toast.makeText(getActivity(), "Enter Exchange title", Toast.LENGTH_LONG).show();
-//                    auctioname.setFocusable(true);
+                    eventname.requestFocus();
                 } else if (stdate.equals("")) {
-//                    startdate.setError("Enter start date");
-                    Toast.makeText(getActivity(), "Enter start date", Toast.LENGTH_LONG).show();
+                    startdate.setError("Enter start date");
+                    startdate.requestFocus();
                 } else if (sttime.equals("")) {
-//                    starttime.setError("Enter start time");
-                    Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                    starttime.setError("Enter start time");
+                    starttime.requestFocus();
                 } else if (eddate.equals("")) {
-//                    enddate.setError("Enter end date");
-                    Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
+                    enddate.setError("Enter end date");
+                    enddate.requestFocus();
                 } else if (edtime.equals("")) {
-//                    endtime.setError("Enter end time");
-                    Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
+                    endtime.setError("Enter end time");
+                    endtime.requestFocus();
                 } else if (!validObj.startDateValidatioon(stdate)) {
                     startdate.setError("Enter valid Date");
+                    startdate.requestFocus();
                 } else if (!validObj.startDateEndDateValidation(eddate, stdate)) {
                     enddate.setError("Enter valid Date");
-                } else if (stdate.equals(eddate)) {
-                    if (!validObj.startTimeEndTimeValidation(sttime, edtime)) {
-                        endtime.setError("Enter valid time");
-                    }
+                    enddate.requestFocus();
+                } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
+
+                    endtime.setError("Enter valid time");
+                    endtime.requestFocus();
+
                 } else if (location.equals("")) {
                     eventlocation.setError("Enter location");
+                    eventlocation.requestFocus();
                 } else if (!flag) {
                     eventlocation.setError("Please Select Location From Dropdown Only");
+                    eventlocation.requestFocus();
                 } else if (address.equals("")) {
                     eventaddress.setError("Enter address");
+                    eventaddress.requestFocus();
                 } else {
                     apiCall.createExchangeMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
 
                 }
-
 
                 break;
 
@@ -244,94 +248,6 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
 
     }
 
-  /*  private void selectImage() {
-
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-
-        final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-
-            @Override
-
-            public void onClick(DialogInterface dialog, int item) {
-
-                if (options[item].equals("Take Photo")) {
-
-                    userSelected = "camera";
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                    startActivityForResult(intent, 1);
-
-                } else if (options[item].equals("Choose from Gallery")) {
-
-                    userSelected = "gallery";
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                    startActivityForResult(intent, 2);
-
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-
-            }
-
-        });
-
-        builder.show();
-    }
-
-    //new activity???????????????????????????????????????????///
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            ////image upload from camera
-            if (userSelected == "camera") {
-                Bundle b = data.getExtras();
-
-                bitmap = (Bitmap) b.get("data");
-                picture.setImageBitmap(bitmap);
-                getImageUri(getActivity(), bitmap);
-                System.out.println("rutu----------------" + picturePath);
-
-                lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
-                System.out.println(lastWord);
-            }
-            //Image Upload from gallery
-            else if (userSelected == "gallery") {
-                System.out.println("rutu= userselected in gallery==========:" + userSelected);
-
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                picturePath = cursor.getString(columnIndex);
-                cursor.close();
-
-                GenericFunctions obj = new GenericFunctions();
-                Bitmap rotatedBitmap = obj.decodeFile(picturePath);
-
-                picture.setImageBitmap(rotatedBitmap);
-
-                System.out.println(picturePath);
-                lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
-                System.out.println("lastword=" + lastWord);
-            }
-        }
-    }
-
-    //Code for getting uri from bitmap image only if image is set in ImageView
-    public Uri getImageUri(Context inContext, Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        picturePath = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), bitmap, "Title", null);
-        return Uri.parse(picturePath);
-    }*/
-
     public void onPickImage(View view) {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -371,7 +287,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
-                //mProfilePic.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                picture.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 cursor.close();
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
@@ -391,7 +307,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                             bitmapRotate = bitmap;
                             bitmap.recycle();
                         }
-                        //mProfilePic.setImageBitmap(bitmapRotate);
+                        picture.setImageBitmap(bitmapRotate);
 
 //                            Saving image to mobile internal memory for sometime
                         String root = getActivity().getFilesDir().toString();
