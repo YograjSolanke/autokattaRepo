@@ -169,7 +169,6 @@ public class SearchStore extends Fragment implements RequestNotifier {
     public void filterResult(final String[] incomingCategory, final String[] incomingLocation) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-
         View convertView = inflater.inflate(R.layout.custom_store, null);
         alertDialog.setView(convertView);
         final AlertDialog alert = alertDialog.show();
@@ -178,10 +177,14 @@ public class SearchStore extends Fragment implements RequestNotifier {
         ListView lvlocation = (ListView) convertView.findViewById(R.id.listview2);
         Button Ok = (Button) convertView.findViewById(R.id.btnok);
         Button cancel = (Button) convertView.findViewById(R.id.btncancel);
-        categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
-        locationAdapter = new CheckedLocationAdapter(getActivity(), incomingLocation);
-        lvcat.setAdapter(categoryAdapter);
-        lvlocation.setAdapter(locationAdapter);
+        if (incomingCategory.length != 0) {
+            categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
+            lvcat.setAdapter(categoryAdapter);
+        }
+        if (incomingLocation.length != 0) {
+            locationAdapter = new CheckedLocationAdapter(getActivity(), incomingLocation);
+            lvlocation.setAdapter(locationAdapter);
+        }
 
         Ok.setOnClickListener(new View.OnClickListener() {
             @Override

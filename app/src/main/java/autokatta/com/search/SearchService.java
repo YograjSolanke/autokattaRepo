@@ -205,8 +205,6 @@ public class SearchService extends Fragment implements RequestNotifier {
     }
 
     public void testingbox(final String[] incomingCategory, final String[] incomingTags, final String[] incomingBtags) {
-
-
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View convertView = inflater.inflate(R.layout.custom, null);
@@ -218,13 +216,18 @@ public class SearchService extends Fragment implements RequestNotifier {
         ListView lvbrandtags = (ListView) convertView.findViewById(R.id.listview3);
         Button ok = (Button) convertView.findViewById(R.id.btnok);
         Button cancel = (Button) convertView.findViewById(R.id.btncancel);
-        tagsadapter = new CheckedTagsAdapter(getActivity(), incomingTags);
-        categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
-        brandTagsAdapter = new CheckedBrandTagsAdapter(getActivity(), incomingBtags);
-        lvtags.setAdapter(tagsadapter);
-        lvcat.setAdapter(categoryAdapter);
-        lvbrandtags.setAdapter(brandTagsAdapter);
-
+        if (incomingTags.length != 0) {
+            tagsadapter = new CheckedTagsAdapter(getActivity(), incomingTags);
+            lvtags.setAdapter(tagsadapter);
+        }
+        if (incomingCategory.length != 0) {
+            categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
+            lvcat.setAdapter(categoryAdapter);
+        }
+        if (incomingBtags.length != 0) {
+            brandTagsAdapter = new CheckedBrandTagsAdapter(getActivity(), incomingBtags);
+            lvbrandtags.setAdapter(brandTagsAdapter);
+        }
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -568,19 +571,14 @@ public class SearchService extends Fragment implements RequestNotifier {
 
 
         public CheckedCategoryAdapter(Activity a, String titles[]) {
-//
             this.activity = a;
-
             this.titles = new ArrayList<>(Arrays.asList(titles));
-//
-
             if (finalcategory.size() == 0) {
                 for (int i = 0; i < this.titles.size(); i++) {
 
                     finalcategory.add(this.titles.get(i));
                 }
             }
-
             // mInflater = LayoutInflater.from(context);
             mInflater = (LayoutInflater) activity.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -672,22 +670,14 @@ public class SearchService extends Fragment implements RequestNotifier {
     }
 
     public class CheckedBrandTagsAdapter extends BaseAdapter {
-
         private LayoutInflater mInflater;
         Activity activity;
-
         ArrayList<String> titles = new ArrayList<>();
-
         public CheckedBrandTagsAdapter(Activity a, String titles[]) {
-//
             this.activity = a;
-
             this.titles = new ArrayList<>(Arrays.asList(titles));
-//
-
             if (finalBrandTags.size() == 0) {
                 for (int i = 0; i < this.titles.size(); i++) {
-
                     finalBrandTags.add(this.titles.get(i));
                 }
             }

@@ -44,6 +44,7 @@ import autokatta.com.response.GetOwnVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
+import autokatta.com.response.GetSearchAuctionResponse;
 import autokatta.com.response.GetSearchProductResponse;
 import autokatta.com.response.GetServiceSearchResponse;
 import autokatta.com.response.GetSkillsResponse;
@@ -916,6 +917,10 @@ public interface ServiceApi {
     //Search Vehicle...
     @GET("getVehicleSearchData.php")
     Call<SearchVehicleResponse> getVehicleSearchData(@Query("searchKey") String key, @Query("mycontact") String contact);
+
+    //Search Auction...
+    @GET("getSearchAuctionData.php")
+    Call<GetSearchAuctionResponse> getSearchAuctionData(@Query("searchKey") String key);
 
     //Post Product Review...
     @POST("post_product_review.php")
