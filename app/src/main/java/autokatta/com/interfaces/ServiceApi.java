@@ -764,7 +764,13 @@ public interface ServiceApi {
     @POST("getColors.php")
     Call<ColorResponse> _autokattaGetAllColor();
 
+    //Group Profile
     @Multipart
+    @POST("upload_profile.php")
+    Call<String> uploaGroupProfilePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+
+
+ @Multipart
     @POST("upload_profile_profile_pics.php")
     Call<String> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
