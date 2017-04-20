@@ -53,6 +53,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
+import autokatta.com.response.StoreResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -75,7 +76,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
-            storetype = "";
+            storetype = "", store_id;
     Multispinner weekspn, brandSpinner;
     MultiAutoCompleteTextView multiautotext, multiautobrand;
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
@@ -95,7 +96,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     String mediaPath, mediaPath1;
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
-
+    List<String> weekdays = new ArrayList<>();
     public CreateStoreFragment() {
         //empty constructor
     }
@@ -149,10 +150,16 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
 
         bundle = getArguments();
-        callFrom = bundle.getString("call");
+        callFrom = bundle.getString("className");
         System.out.println("Call from in Store Fragment" + callFrom);
-
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
+        if (callFrom.equals("StoreViewActivity")) {
+            store_id = bundle.getString("store_id");
+            create.setText("update");
+            mApiCall.getStoreData(myContact, store_id);
+        }
+
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -165,7 +172,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
 
                     storelocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
-                    List<String> weekdays = new ArrayList<>();
+
                     weekdays.add("Mon");
                     weekdays.add("Tue");
                     weekdays.add("Wed");
@@ -806,6 +813,44 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
+
+
+                 /*
+                        Response after updating store
+                 */
+                if (response.body() instanceof StoreResponse) {
+                    //  CreateStoreResponse createStoreResponse = (CreateStoreResponse) response.body();
+                    StoreResponse storeResponse = (StoreResponse) response.body();
+                    if (!storeResponse.getSuccess().isEmpty()) {
+                        for (StoreResponse.Success success : storeResponse.getSuccess()) {
+                            storename.setText(success.getName());
+                            storelocation.setText(success.getLocation());
+                            storewebsite.setText(success.getWebsite());
+                            weekspn.setItems(weekdays, success.getWorkingDays(), CreateStoreFragment.this);
+                            opentime.setText(success.getStoreOpenTime());
+                            closetime.setText(success.getStoreCloseTime());
+                            storeaddress.setText(success.getAddress());
+                            edtStoreDesc.setText(success.getStoreDescription());
+                            multiautotext.setText(success.getCategory());
+                            String storeType = success.getStoreType();
+
+                            if (storeType.equalsIgnoreCase("product")) {
+                                rbtstoreproduct.setChecked(true);
+                            } else if (storeType.equalsIgnoreCase("service")) {
+                                rbtstoreservice.setChecked(true);
+                            } else if (storeType.equalsIgnoreCase("vehicle")) {
+                                rbtstorevehicle.setChecked(true);
+                            } else {
+                                rbtstoreproduct.setChecked(true);
+                                rbtstoreservice.setChecked(true);
+                                rbtstorevehicle.setChecked(true);
+                            }
+                        }
+                    } else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                }
+
+
 
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

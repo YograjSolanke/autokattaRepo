@@ -332,7 +332,7 @@
             android:label="@string/title_activity_my_auction_vehicle_details"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".view.OtherStoreView"
+            android:name=".view.StoreViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_other_store_view"
             android:theme="@style/AppTheme.NoActionBar"

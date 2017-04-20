@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -38,6 +39,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.view.ShareWithinAppActivity;
+import autokatta.com.view.StoreViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -115,7 +117,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyStoreListAdapter.YoHolder holder, final int position) {
+    public void onBindViewHolder(final MyStoreListAdapter.YoHolder holder, final int position) {
 
         Log.i("contact", myContact);
         holder.stname.setText(mStoreList.get(position).getName());
@@ -269,23 +271,13 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*String storecontact = mycontact;
-
                 Bundle b = new Bundle();
-                b.putString("action", "main");
-                b.putString("store_id", sid);
-                b.putString("contact", storecontact);
 
-                System.out.println("store id---------------" + sid);
-
-                StoreviewFragment fragment = new StoreviewFragment();
-                fragment.setArguments(b);
-
-                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.containerView, fragment);
-                fragmentTransaction.addToBackStack("store_view");
-                fragmentTransaction.commit();*/
+                b.putString("StoreContact", mStoreList.get(holder.getAdapterPosition()).getContact());
+                b.putString("store_id", mStoreList.get(holder.getAdapterPosition()).getId());
+                Intent intent = new Intent(mActivity, StoreViewActivity.class);
+                intent.putExtras(b);
+                mActivity.startActivity(intent);
             }
         });
 

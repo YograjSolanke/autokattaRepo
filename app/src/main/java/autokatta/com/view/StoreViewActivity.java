@@ -34,7 +34,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
 import retrofit2.Response;
 
-public class OtherStoreView extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
+public class StoreViewActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
@@ -44,10 +44,17 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
     RatingBar storerating;
     String myContact;
     String overAllRate;
-    String precsrate = "", preqwrate = "", prefrrate = "", preprrate = "", pretmrate = "", preoverall = "";
+    String precsrate = "";
+    String preqwrate = "";
+    String prefrrate = "";
+    String preprrate = "";
+    String pretmrate = "";
+    String preoverall = "";
+    Double storelattitude;
+    Double storelongitude;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
-    FloatingActionButton mCall, mLike, mFollow, mRate;
+    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap;
     StoreInfo storeInfo;
     StoreProducts storeProducts;
     StoreServices storeServices;
@@ -60,7 +67,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mApiCall   = new ApiCall(OtherStoreView.this, this);
+        mApiCall = new ApiCall(StoreViewActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
@@ -69,6 +76,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
         mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
         mRate = (FloatingActionButton) findViewById(R.id.rate);
+        mGoogleMap = (FloatingActionButton) findViewById(R.id.gotoMap);
         storerating = (RatingBar) findViewById(R.id.store_rating);
         storerating.setRating(2);
 
@@ -76,6 +84,8 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
         mRate.setOnClickListener(this);
+        mGoogleMap.setOnClickListener(this);
+
 
 
         storeInfo = new StoreInfo();
@@ -102,9 +112,18 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                         mOtherContact = getIntent().getExtras().getString("StoreContact");
                         store_id = getIntent().getExtras().getString("store_id");
                     }
+
+                    if (mOtherContact.contains(mLoginContact)) {
+                        mCall.setVisibility(View.GONE);
+                        mLike.setVisibility(View.GONE);
+                        mFollow.setVisibility(View.GONE);
+                        mRate.setVisibility(View.GONE);
+                        mGoogleMap.setVisibility(View.GONE);
+                    }
+
                     mBundle.putString("store_id", store_id);
                     mBundle.putString("StoreContact", mOtherContact);
-                    getOtherStore(mOtherContact, store_id);
+                    getOtherStore(mLoginContact, store_id);
 
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
                     mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
@@ -127,7 +146,7 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
 
     public void filterResult() {
 
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(OtherStoreView.this);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(StoreViewActivity.this);
         LayoutInflater inflater = getLayoutInflater();
 
         View convertView = inflater.inflate(R.layout.custom_store_rate_layout, null);
@@ -237,6 +256,26 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                if (preoverall.equals("0")) {
+                    mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
+                            String.valueOf(csrate),
+                            String.valueOf(qwrate),
+                            String.valueOf(frrate),
+                            String.valueOf(prrate),
+                            String.valueOf(tmrate),
+                            "store");
+                } else {
+                    mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
+                            String.valueOf(csrate),
+                            String.valueOf(qwrate),
+                            String.valueOf(frrate),
+                            String.valueOf(prrate),
+                            String.valueOf(tmrate),
+                            "store");
+
+                }
                 alert.dismiss();
 
             }
@@ -305,7 +344,26 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                 filterResult();
                 menuRed.setClosedOnTouchOutside(true);
                 break;
+
+            case R.id.gotoMap:
+
+                drawMap(storelattitude, storelongitude);
+
+                menuRed.setClosedOnTouchOutside(true);
+                break;
         }
+
+    }
+
+    private void drawMap(Double storelattitude, Double storelongitude) {
+
+        double destinationLatitude = storelattitude;
+        double destinationLongitude = storelongitude;
+
+        String url = "http://maps.google.com/maps?f=d&daddr=" + destinationLatitude + "," + destinationLongitude + "&dirflg=d&layer=t";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+        startActivity(intent);
 
     }
 
@@ -327,13 +385,9 @@ public class OtherStoreView extends AppCompatActivity implements RequestNotifier
                     prefrrate = success.getRate3();
                     preprrate = success.getRate4();
                     pretmrate = success.getRate5();
+                    storelattitude = success.getLatitude();
+                    storelongitude = success.getLongitude();
                 }
-
-                System.out.println("rates=" + store_id + " " + overAllRate + " " + precsrate + " " + preqwrate);
-
-
-
-
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + dp;
                 Glide.with(this)
                         .load(dp_path)

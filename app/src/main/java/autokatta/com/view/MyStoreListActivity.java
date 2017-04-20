@@ -12,12 +12,14 @@ import java.util.ArrayList;
 
 import autokatta.com.R;
 import autokatta.com.initial_fragment.MyStoreListFragment;
+import autokatta.com.my_store.CreateStoreFragment;
 import autokatta.com.response.MyStoreResponse;
 
 public class MyStoreListActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
     FloatingActionButton fabCreateStore;
+    String callType;
     ArrayList<MyStoreResponse.Success> storeResponseArrayList;
 
     @Override
@@ -38,9 +40,23 @@ public class MyStoreListActivity extends AppCompatActivity {
                         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     }
 
-                    FragmentManager mFragmentManager = getSupportFragmentManager();
-                    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment()).commit();
+                    if (getIntent().getExtras() != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("className", getIntent().getExtras().getString("className"));
+                        bundle.putString("store_id", getIntent().getExtras().getString("store_id"));
+                        CreateStoreFragment fragment = new CreateStoreFragment();
+                        fragment.setArguments(bundle);
+                        FragmentManager mFragmentManager = getSupportFragmentManager();
+                        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                        mFragmentTransaction.replace(R.id.myStoreListFrame, fragment).commit();
+
+                    } else {
+
+
+                        FragmentManager mFragmentManager = getSupportFragmentManager();
+                        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                        mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment()).commit();
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

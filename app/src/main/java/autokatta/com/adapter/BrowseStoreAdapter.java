@@ -34,8 +34,8 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.BrowseStoreResponse;
-import autokatta.com.view.OtherStoreView;
 import autokatta.com.view.ShareWithinAppActivity;
+import autokatta.com.view.StoreViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -138,7 +138,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                 b.putString("StoreContact", success.getContactNo());
                 b.putString("store_id", success.getStoreId());
-                Intent intent = new Intent(activity, OtherStoreView.class);
+                Intent intent = new Intent(activity, StoreViewActivity.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);
 

@@ -22,18 +22,28 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/white" />
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/Widget.CardContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_about">
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editStore"
+                android:src="@drawable/ic_mode_edit_black_24dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/relativetitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/editprofile"
+                android:layout_below="@+id/editStore"
                 android:padding="5dp"
+                android:layout_marginTop="5dp"
                 android:visibility="visible">
 
                 <RelativeLayout
@@ -467,7 +477,7 @@
 
             </RelativeLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 

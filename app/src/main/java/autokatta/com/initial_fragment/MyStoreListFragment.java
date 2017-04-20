@@ -152,7 +152,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
 
             case R.id.fabCreateStore:
                 Bundle bundle = new Bundle();
-                bundle.putString("call", "mystorelist");
+                bundle.putString("className", "MyStoreListFragment");
                 CreateStoreFragment createStoreFragment = new CreateStoreFragment();
                 createStoreFragment.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

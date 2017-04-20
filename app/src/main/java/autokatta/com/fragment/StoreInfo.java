@@ -1,18 +1,22 @@
 package autokatta.com.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.my_store.CreateStoreFragment;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
+import autokatta.com.view.MyStoreListActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -28,14 +32,15 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     }
 
     View mAbout;
-    String Sharedcontact;
+    String myContact, Store_id, StoreContact;
+    ImageView editStore;
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen, storeClose, storeAddress, storeServiceOffered, storeType, storeDescription;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAbout = inflater.inflate(R.layout.store_info_fragment, container, false);
-        Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
         storeName = (TextView) mAbout.findViewById(R.id.editstname);
         storeLocation = (TextView) mAbout.findViewById(R.id.autolocation);
         storeWebsite = (TextView) mAbout.findViewById(R.id.editwebsite);
@@ -43,25 +48,57 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
         storeClose = (TextView) mAbout.findViewById(R.id.edittiming1);
         storeAddress = (TextView) mAbout.findViewById(R.id.editaddress);
         storeType = (TextView) mAbout.findViewById(R.id.storetype);
+        editStore = (ImageView) mAbout.findViewById(R.id.editStore);
         storeDescription = (TextView) mAbout.findViewById(R.id.editstoredescription);
         storeWorkDays = (TextView) mAbout.findViewById(R.id.editworkingdays);
         storeServiceOffered = (TextView) mAbout.findViewById(R.id.autoservices);
 
+        editStore.setOnClickListener(this);
         Bundle b = getArguments();
-        String Store_id = b.getString("store_id");
-        String StoreContact = b.getString("StoreContact");
-        getStoredata(StoreContact, Store_id);
+        Store_id = b.getString("store_id");
+        StoreContact = b.getString("StoreContact");
+        getStoredata(myContact, Store_id);
+
+
+        if (StoreContact.contains(myContact)) {
+            editStore.setVisibility(View.VISIBLE);
+
+        }
+
 
         return mAbout;
     }
 
-    private void getStoredata(String storeContact, String store_id) {
+    private void getStoredata(String myContact, String store_id) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getStoreData(storeContact, store_id);
+        mApiCall.getStoreData(myContact, store_id);
     }
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.editStore:
+                Bundle bundle = new Bundle();
+                bundle.putString("store_id", Store_id);
+                bundle.putString("className", "StoreViewActivity");
+
+                CreateStoreFragment addAdmin = new CreateStoreFragment();
+                addAdmin.setArguments(bundle);
+
+
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.storeviewFrame, addAdmin).addToBackStack("StoreInfo").commit();
+
+                Intent intent = new Intent(getActivity(), MyStoreListActivity.class);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+                //getActivity().finish();
+
+
+                break;
+        }
 
     }
 
@@ -82,8 +119,8 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                     storeDescription.setText(success.getStoreDescription());
                     storeType.setText(success.getStoreType());
                     storeServiceOffered.setText(success.getCategory());
-
                 }
+
 
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
