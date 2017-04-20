@@ -2,7 +2,10 @@ package autokatta.com.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +39,9 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     List<ModelGroups> mMyGroupsList = new ArrayList<>();
+    FloatingActionButton mFab;
     MyAdapter mMyAdapter;
+    ApiCall mApiCall;
 
     public MyGroupsFragment() {
         //Empty constructor
@@ -47,6 +52,8 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyGroups = inflater.inflate(R.layout.fragment_my_groups, container, false);
 
+
+        mFab= (FloatingActionButton) mMyGroups.findViewById(R.id.fabCreateGroup);
         mRecyclerView = (RecyclerView) mMyGroups.findViewById(R.id.rv_recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyGroups.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView.setHasFixedSize(true);
@@ -68,6 +75,8 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         .getString("loginContact", ""));
             }
         });
+mFab.setOnClickListener(this);
+        mApiCall = new ApiCall(getActivity(), this);
         return mMyGroups;
     }
 
@@ -76,8 +85,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
      */
     private void getData(String loginContact) {
 
-        ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.Groups(loginContact);
+        mApiCall.Groups(loginContact);
     }
 
     @Override
@@ -132,7 +140,11 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.fabCreateGroup:
+                FragmentManager fragmentManager=getFragmentManager();
+                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.group_container,new CreateGroupFragment()).commit();
+                break;
         }
 
     }

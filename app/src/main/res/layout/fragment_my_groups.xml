@@ -25,5 +25,6 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/add" />
+        app:srcCompat="@drawable/add"
+        android:visibility="visible"/>
 </RelativeLayout>

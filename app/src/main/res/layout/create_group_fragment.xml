@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="20dip"
+                android:paddingRight="20dip"
+                android:background="@color/white"
+                android:paddingTop="10dip">
+
+    <ImageView
+        android:id="@+id/group_profile_pic"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/group_color" />
+
+    <LinearLayout
+        android:id="@+id/lineartitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/group_profile_pic">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/group_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:textColor="#2C3343"
+                android:paddingLeft="10dip"
+                android:ems="10"
+                android:textColorHint="#848484"
+                android:hint="Type Your Group Name" />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+    <TextView
+
+        android:layout_marginTop="20dp"
+        android:id="@+id/group_title_id"
+        android:layout_width="200dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/group_profile_pic"
+        android:layout_toRightOf="@+id/group_profile_pic"
+        android:layout_marginLeft="15dip"
+        android:text="Please provide group name and optional group icon"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:textSize="16dp"
+        android:id="@+id/BtnAddMember"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/lineartitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white"
+        android:background="@color/background"
+        android:text="Add  Member"
+        android:selectAllOnFocus="true"
+        />
+
+</RelativeLayout>
