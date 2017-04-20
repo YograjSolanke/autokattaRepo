@@ -27,11 +27,11 @@ import android.view.View;
 import autokatta.com.adapter.TabAdapter;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.AuctionNotification;
+import autokatta.com.fragment.FavoriteNotificationFragment;
 import autokatta.com.fragment.SocialFragment;
 import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
-import autokatta.com.fragment_profile.About;
 import autokatta.com.other.MapsActivity;
 import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
@@ -149,7 +149,7 @@ public class AutokattaMainActivity extends AppCompatActivity { /*implements Sear
         adapter.addFragment(new AuctionNotification());
         adapter.addFragment(new StoreNotification());
         adapter.addFragment(new WallNotificationFragment());
-        adapter.addFragment(new About());
+        adapter.addFragment(new FavoriteNotificationFragment());
         viewPager.setAdapter(adapter);
     }
 

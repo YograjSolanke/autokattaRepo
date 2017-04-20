@@ -11,99 +11,103 @@ import java.util.List;
 
 public class FavouriteResponse {
 
-    @SerializedName("next")
+    @SerializedName("Success")
     @Expose
-    private String next;
-    @SerializedName("Notification")
-    @Expose
-    private List<Notification> notification = null;
-    @SerializedName("Search")
-    @Expose
-    private List<Search> search = null;
-    @SerializedName("Vehicle")
-    @Expose
-    private List<Object> vehicle = null;
-    @SerializedName("SellerVehicle")
-    @Expose
-    private List<SellerVehicle> sellerVehicle = null;
-    @SerializedName("BuyerSearch")
-    @Expose
-    private List<Object> buyerSearch = null;
-    @SerializedName("time")
-    @Expose
-    private Double time;
+    private Success success;
 
-    public String getNext() {
-        return next;
+    public Success getSuccess() {
+        return success;
     }
 
-    public void setNext(String next) {
-        this.next = next;
+    public void setSuccess(Success success) {
+        this.success = success;
     }
 
-    public List<Notification> getNotification() {
-        return notification;
-    }
+    public class Success {
 
-    public void setNotification(List<Notification> notification) {
-        this.notification = notification;
-    }
+        @SerializedName("next")
+        @Expose
+        private String next;
+        @SerializedName("Notification")
+        @Expose
+        private List<Notification> notification = null;
+        @SerializedName("Search")
+        @Expose
+        private List<Search> search = null;
+        @SerializedName("SellerVehicle")
+        @Expose
+        private List<SellerVehicle> sellerVehicle = null;
+        @SerializedName("BuyerSearch")
+        @Expose
+        private List<BuyerSearch> buyerSearch = null;
+        @SerializedName("time")
+        @Expose
+        private Double time;
 
-    public List<Search> getSearch() {
-        return search;
-    }
+        public String getNext() {
+            return next;
+        }
 
-    public void setSearch(List<Search> search) {
-        this.search = search;
-    }
+        public void setNext(String next) {
+            this.next = next;
+        }
 
-    public List<Object> getVehicle() {
-        return vehicle;
-    }
+        public List<Notification> getNotification() {
+            return notification;
+        }
 
-    public void setVehicle(List<Object> vehicle) {
-        this.vehicle = vehicle;
-    }
+        public void setNotification(List<Notification> notification) {
+            this.notification = notification;
+        }
 
-    public List<SellerVehicle> getSellerVehicle() {
-        return sellerVehicle;
-    }
+        public List<Search> getSearch() {
+            return search;
+        }
 
-    public void setSellerVehicle(List<SellerVehicle> sellerVehicle) {
-        this.sellerVehicle = sellerVehicle;
-    }
+        public void setSearch(List<Search> search) {
+            this.search = search;
+        }
 
-    public List<Object> getBuyerSearch() {
-        return buyerSearch;
-    }
+        public List<SellerVehicle> getSellerVehicle() {
+            return sellerVehicle;
+        }
 
-    public void setBuyerSearch(List<Object> buyerSearch) {
-        this.buyerSearch = buyerSearch;
-    }
+        public void setSellerVehicle(List<SellerVehicle> sellerVehicle) {
+            this.sellerVehicle = sellerVehicle;
+        }
 
-    public Double getTime() {
-        return time;
-    }
+        public List<BuyerSearch> getBuyerSearch() {
+            return buyerSearch;
+        }
 
-    public void setTime(Double time) {
-        this.time = time;
-    }
+        public void setBuyerSearch(List<BuyerSearch> buyerSearch) {
+            this.buyerSearch = buyerSearch;
+        }
 
+        public Double getTime() {
+            return time;
+        }
+
+        public void setTime(Double time) {
+            this.time = time;
+        }
+
+    }
 
     public class Notification {
 
-        @SerializedName("id")
-        @Expose
-        private String id;
         @SerializedName("favid")
         @Expose
         private String favid;
-        @SerializedName("date")
+        @SerializedName("id")
         @Expose
-        private String date;
+        private String id;
         @SerializedName("layout")
         @Expose
         private String layout;
+        @SerializedName("date")
+        @Expose
+        private String date;
         @SerializedName("datetime")
         @Expose
         private String datetime;
@@ -200,6 +204,9 @@ public class FavouriteResponse {
         @SerializedName("storefollowcount")
         @Expose
         private String storefollowcount;
+        @SerializedName("storetiming")
+        @Expose
+        private String storetiming;
         @SerializedName("store_contact")
         @Expose
         private String storeContact;
@@ -221,9 +228,6 @@ public class FavouriteResponse {
         @SerializedName("store_location")
         @Expose
         private String storeLocation;
-        @SerializedName("storetiming")
-        @Expose
-        private String storetiming;
         @SerializedName("group_vehicles")
         @Expose
         private String groupVehicles;
@@ -286,7 +290,7 @@ public class FavouriteResponse {
         private String vehiclefollowstatus;
         @SerializedName("vehiclelikecount")
         @Expose
-        private String vehiclelikecount;
+        private Integer vehiclelikecount;
         @SerializedName("vehiclefollowcount")
         @Expose
         private String vehiclefollowcount;
@@ -312,14 +316,6 @@ public class FavouriteResponse {
         @Expose
         private String year;
 
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
         public String getFavid() {
             return favid;
         }
@@ -328,12 +324,12 @@ public class FavouriteResponse {
             this.favid = favid;
         }
 
-        public String getDate() {
-            return date;
+        public String getId() {
+            return id;
         }
 
-        public void setDate(String date) {
-            this.date = date;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getLayout() {
@@ -342,6 +338,14 @@ public class FavouriteResponse {
 
         public void setLayout(String layout) {
             this.layout = layout;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
         }
 
         public String getDatetime() {
@@ -600,6 +604,14 @@ public class FavouriteResponse {
             this.storefollowcount = storefollowcount;
         }
 
+        public String getStoretiming() {
+            return storetiming;
+        }
+
+        public void setStoretiming(String storetiming) {
+            this.storetiming = storetiming;
+        }
+
         public String getStoreContact() {
             return storeContact;
         }
@@ -654,14 +666,6 @@ public class FavouriteResponse {
 
         public void setStoreLocation(String storeLocation) {
             this.storeLocation = storeLocation;
-        }
-
-        public String getStoretiming() {
-            return storetiming;
-        }
-
-        public void setStoretiming(String storetiming) {
-            this.storetiming = storetiming;
         }
 
         public String getGroupVehicles() {
@@ -824,11 +828,11 @@ public class FavouriteResponse {
             this.vehiclefollowstatus = vehiclefollowstatus;
         }
 
-        public String getVehiclelikecount() {
+        public Integer getVehiclelikecount() {
             return vehiclelikecount;
         }
 
-        public void setVehiclelikecount(String vehiclelikecount) {
+        public void setVehiclelikecount(Integer vehiclelikecount) {
             this.vehiclelikecount = vehiclelikecount;
         }
 
@@ -904,9 +908,6 @@ public class FavouriteResponse {
         @SerializedName("search_id")
         @Expose
         private String searchId;
-        @SerializedName("favid")
-        @Expose
-        private String favid;
         @SerializedName("date")
         @Expose
         private String date;
@@ -934,12 +935,15 @@ public class FavouriteResponse {
         @SerializedName("price")
         @Expose
         private String price;
-        @SerializedName("images")
-        @Expose
-        private Object images;
         @SerializedName("year_of_manufactur")
         @Expose
         private String yearOfManufactur;
+        @SerializedName("favid")
+        @Expose
+        private String favid;
+        @SerializedName("images")
+        @Expose
+        private Object images;
 
         public String getSearchId() {
             return searchId;
@@ -947,14 +951,6 @@ public class FavouriteResponse {
 
         public void setSearchId(String searchId) {
             this.searchId = searchId;
-        }
-
-        public String getFavid() {
-            return favid;
-        }
-
-        public void setFavid(String favid) {
-            this.favid = favid;
         }
 
         public String getDate() {
@@ -1029,20 +1025,28 @@ public class FavouriteResponse {
             this.price = price;
         }
 
-        public Object getImages() {
-            return images;
-        }
-
-        public void setImages(Object images) {
-            this.images = images;
-        }
-
         public String getYearOfManufactur() {
             return yearOfManufactur;
         }
 
         public void setYearOfManufactur(String yearOfManufactur) {
             this.yearOfManufactur = yearOfManufactur;
+        }
+
+        public String getFavid() {
+            return favid;
+        }
+
+        public void setFavid(String favid) {
+            this.favid = favid;
+        }
+
+        public Object getImages() {
+            return images;
+        }
+
+        public void setImages(Object images) {
+            this.images = images;
         }
 
     }
@@ -2240,4 +2244,660 @@ public class FavouriteResponse {
         }
 
     }
+
+    public class BuyerSearch {
+
+        @SerializedName("favid")
+        @Expose
+        private String favid;
+        @SerializedName("Vvehicle_id")
+        @Expose
+        private String vvehicleId;
+        @SerializedName("Vtitle")
+        @Expose
+        private String vtitle;
+        @SerializedName("Vcontact_no")
+        @Expose
+        private String vcontactNo;
+        @SerializedName("Vcategory")
+        @Expose
+        private String vcategory;
+        @SerializedName("Vmodel")
+        @Expose
+        private String vmodel;
+        @SerializedName("Vmanufacturer")
+        @Expose
+        private String vmanufacturer;
+        @SerializedName("VVersion")
+        @Expose
+        private String vVersion;
+        @SerializedName("Vrto_city")
+        @Expose
+        private String vrtoCity;
+        @SerializedName("Vlocation_city")
+        @Expose
+        private String vlocationCity;
+        @SerializedName("Vlocation_state")
+        @Expose
+        private String vlocationState;
+        @SerializedName("Vlocation_country")
+        @Expose
+        private String vlocationCountry;
+        @SerializedName("Vmonth_of_registration")
+        @Expose
+        private String vmonthOfRegistration;
+        @SerializedName("Vyear_of_registration")
+        @Expose
+        private String vyearOfRegistration;
+        @SerializedName("Vmonth_of_manufacture")
+        @Expose
+        private String vmonthOfManufacture;
+        @SerializedName("Vyear_of_manufacture")
+        @Expose
+        private String vyearOfManufacture;
+        @SerializedName("Vcolor")
+        @Expose
+        private String vcolor;
+        @SerializedName("Vregistration_number")
+        @Expose
+        private String vregistrationNumber;
+        @SerializedName("Vrc_available")
+        @Expose
+        private String vrcAvailable;
+        @SerializedName("Vinsurance_valid")
+        @Expose
+        private String vinsuranceValid;
+        @SerializedName("Vinsurance_idv")
+        @Expose
+        private String vinsuranceIdv;
+        @SerializedName("Vtax_validity")
+        @Expose
+        private String vtaxValidity;
+        @SerializedName("Vtax_paid_upto")
+        @Expose
+        private String vtaxPaidUpto;
+        @SerializedName("Vfitness_validity")
+        @Expose
+        private String vfitnessValidity;
+        @SerializedName("Vpermit_validity")
+        @Expose
+        private String vpermitValidity;
+        @SerializedName("Vpermit_yesno")
+        @Expose
+        private String vpermitYesno;
+        @SerializedName("Vfitness_yesno")
+        @Expose
+        private String vfitnessYesno;
+        @SerializedName("Vfual_type")
+        @Expose
+        private String vfualType;
+        @SerializedName("Vseating_capacity")
+        @Expose
+        private String vseatingCapacity;
+        @SerializedName("Vpermit")
+        @Expose
+        private String vpermit;
+        @SerializedName("Vkms_running")
+        @Expose
+        private String vkmsRunning;
+        @SerializedName("VHrs_running")
+        @Expose
+        private String vHrsRunning;
+        @SerializedName("Vno_of_owners")
+        @Expose
+        private String vnoOfOwners;
+        @SerializedName("Vhypothication")
+        @Expose
+        private String vhypothication;
+        @SerializedName("Vengine_no")
+        @Expose
+        private String vengineNo;
+        @SerializedName("Vchassis_no")
+        @Expose
+        private String vchassisNo;
+        @SerializedName("Vprice")
+        @Expose
+        private String vprice;
+        @SerializedName("Vimage")
+        @Expose
+        private String vimage;
+        @SerializedName("Vdrive")
+        @Expose
+        private String vdrive;
+        @SerializedName("Vtransmission")
+        @Expose
+        private String vtransmission;
+        @SerializedName("Vbody_type")
+        @Expose
+        private String vbodyType;
+        @SerializedName("Vboat_type")
+        @Expose
+        private String vboatType;
+        @SerializedName("Vrv_type")
+        @Expose
+        private String vrvType;
+        @SerializedName("Vapplication")
+        @Expose
+        private String vapplication;
+        @SerializedName("Vtyre_condition")
+        @Expose
+        private String vtyreCondition;
+        @SerializedName("Vbus_type")
+        @Expose
+        private String vbusType;
+        @SerializedName("Vair_condition")
+        @Expose
+        private String vairCondition;
+        @SerializedName("Vinvoice")
+        @Expose
+        private String vinvoice;
+        @SerializedName("Vimplements")
+        @Expose
+        private String vimplements;
+        @SerializedName("Vfinance_req")
+        @Expose
+        private String vfinanceReq;
+        @SerializedName("Vprivacy")
+        @Expose
+        private String vprivacy;
+        @SerializedName("Vviewcount")
+        @Expose
+        private String vviewcount;
+        @SerializedName("Vcallcount")
+        @Expose
+        private String vcallcount;
+        @SerializedName("Vdate")
+        @Expose
+        private String vdate;
+        @SerializedName("Vstart_price")
+        @Expose
+        private String vstartPrice;
+        @SerializedName("Vreserve_price")
+        @Expose
+        private String vreservePrice;
+        @SerializedName("Vstatus")
+        @Expose
+        private String vstatus;
+        @SerializedName("sendername")
+        @Expose
+        private String sendername;
+        @SerializedName("sender_pic")
+        @Expose
+        private String senderPic;
+
+        public String getFavid() {
+            return favid;
+        }
+
+        public void setFavid(String favid) {
+            this.favid = favid;
+        }
+
+        public String getVvehicleId() {
+            return vvehicleId;
+        }
+
+        public void setVvehicleId(String vvehicleId) {
+            this.vvehicleId = vvehicleId;
+        }
+
+        public String getVtitle() {
+            return vtitle;
+        }
+
+        public void setVtitle(String vtitle) {
+            this.vtitle = vtitle;
+        }
+
+        public String getVcontactNo() {
+            return vcontactNo;
+        }
+
+        public void setVcontactNo(String vcontactNo) {
+            this.vcontactNo = vcontactNo;
+        }
+
+        public String getVcategory() {
+            return vcategory;
+        }
+
+        public void setVcategory(String vcategory) {
+            this.vcategory = vcategory;
+        }
+
+        public String getVmodel() {
+            return vmodel;
+        }
+
+        public void setVmodel(String vmodel) {
+            this.vmodel = vmodel;
+        }
+
+        public String getVmanufacturer() {
+            return vmanufacturer;
+        }
+
+        public void setVmanufacturer(String vmanufacturer) {
+            this.vmanufacturer = vmanufacturer;
+        }
+
+        public String getVVersion() {
+            return vVersion;
+        }
+
+        public void setVVersion(String vVersion) {
+            this.vVersion = vVersion;
+        }
+
+        public String getVrtoCity() {
+            return vrtoCity;
+        }
+
+        public void setVrtoCity(String vrtoCity) {
+            this.vrtoCity = vrtoCity;
+        }
+
+        public String getVlocationCity() {
+            return vlocationCity;
+        }
+
+        public void setVlocationCity(String vlocationCity) {
+            this.vlocationCity = vlocationCity;
+        }
+
+        public String getVlocationState() {
+            return vlocationState;
+        }
+
+        public void setVlocationState(String vlocationState) {
+            this.vlocationState = vlocationState;
+        }
+
+        public String getVlocationCountry() {
+            return vlocationCountry;
+        }
+
+        public void setVlocationCountry(String vlocationCountry) {
+            this.vlocationCountry = vlocationCountry;
+        }
+
+        public String getVmonthOfRegistration() {
+            return vmonthOfRegistration;
+        }
+
+        public void setVmonthOfRegistration(String vmonthOfRegistration) {
+            this.vmonthOfRegistration = vmonthOfRegistration;
+        }
+
+        public String getVyearOfRegistration() {
+            return vyearOfRegistration;
+        }
+
+        public void setVyearOfRegistration(String vyearOfRegistration) {
+            this.vyearOfRegistration = vyearOfRegistration;
+        }
+
+        public String getVmonthOfManufacture() {
+            return vmonthOfManufacture;
+        }
+
+        public void setVmonthOfManufacture(String vmonthOfManufacture) {
+            this.vmonthOfManufacture = vmonthOfManufacture;
+        }
+
+        public String getVyearOfManufacture() {
+            return vyearOfManufacture;
+        }
+
+        public void setVyearOfManufacture(String vyearOfManufacture) {
+            this.vyearOfManufacture = vyearOfManufacture;
+        }
+
+        public String getVcolor() {
+            return vcolor;
+        }
+
+        public void setVcolor(String vcolor) {
+            this.vcolor = vcolor;
+        }
+
+        public String getVregistrationNumber() {
+            return vregistrationNumber;
+        }
+
+        public void setVregistrationNumber(String vregistrationNumber) {
+            this.vregistrationNumber = vregistrationNumber;
+        }
+
+        public String getVrcAvailable() {
+            return vrcAvailable;
+        }
+
+        public void setVrcAvailable(String vrcAvailable) {
+            this.vrcAvailable = vrcAvailable;
+        }
+
+        public String getVinsuranceValid() {
+            return vinsuranceValid;
+        }
+
+        public void setVinsuranceValid(String vinsuranceValid) {
+            this.vinsuranceValid = vinsuranceValid;
+        }
+
+        public String getVinsuranceIdv() {
+            return vinsuranceIdv;
+        }
+
+        public void setVinsuranceIdv(String vinsuranceIdv) {
+            this.vinsuranceIdv = vinsuranceIdv;
+        }
+
+        public String getVtaxValidity() {
+            return vtaxValidity;
+        }
+
+        public void setVtaxValidity(String vtaxValidity) {
+            this.vtaxValidity = vtaxValidity;
+        }
+
+        public String getVtaxPaidUpto() {
+            return vtaxPaidUpto;
+        }
+
+        public void setVtaxPaidUpto(String vtaxPaidUpto) {
+            this.vtaxPaidUpto = vtaxPaidUpto;
+        }
+
+        public String getVfitnessValidity() {
+            return vfitnessValidity;
+        }
+
+        public void setVfitnessValidity(String vfitnessValidity) {
+            this.vfitnessValidity = vfitnessValidity;
+        }
+
+        public String getVpermitValidity() {
+            return vpermitValidity;
+        }
+
+        public void setVpermitValidity(String vpermitValidity) {
+            this.vpermitValidity = vpermitValidity;
+        }
+
+        public String getVpermitYesno() {
+            return vpermitYesno;
+        }
+
+        public void setVpermitYesno(String vpermitYesno) {
+            this.vpermitYesno = vpermitYesno;
+        }
+
+        public String getVfitnessYesno() {
+            return vfitnessYesno;
+        }
+
+        public void setVfitnessYesno(String vfitnessYesno) {
+            this.vfitnessYesno = vfitnessYesno;
+        }
+
+        public String getVfualType() {
+            return vfualType;
+        }
+
+        public void setVfualType(String vfualType) {
+            this.vfualType = vfualType;
+        }
+
+        public String getVseatingCapacity() {
+            return vseatingCapacity;
+        }
+
+        public void setVseatingCapacity(String vseatingCapacity) {
+            this.vseatingCapacity = vseatingCapacity;
+        }
+
+        public String getVpermit() {
+            return vpermit;
+        }
+
+        public void setVpermit(String vpermit) {
+            this.vpermit = vpermit;
+        }
+
+        public String getVkmsRunning() {
+            return vkmsRunning;
+        }
+
+        public void setVkmsRunning(String vkmsRunning) {
+            this.vkmsRunning = vkmsRunning;
+        }
+
+        public String getVHrsRunning() {
+            return vHrsRunning;
+        }
+
+        public void setVHrsRunning(String vHrsRunning) {
+            this.vHrsRunning = vHrsRunning;
+        }
+
+        public String getVnoOfOwners() {
+            return vnoOfOwners;
+        }
+
+        public void setVnoOfOwners(String vnoOfOwners) {
+            this.vnoOfOwners = vnoOfOwners;
+        }
+
+        public String getVhypothication() {
+            return vhypothication;
+        }
+
+        public void setVhypothication(String vhypothication) {
+            this.vhypothication = vhypothication;
+        }
+
+        public String getVengineNo() {
+            return vengineNo;
+        }
+
+        public void setVengineNo(String vengineNo) {
+            this.vengineNo = vengineNo;
+        }
+
+        public String getVchassisNo() {
+            return vchassisNo;
+        }
+
+        public void setVchassisNo(String vchassisNo) {
+            this.vchassisNo = vchassisNo;
+        }
+
+        public String getVprice() {
+            return vprice;
+        }
+
+        public void setVprice(String vprice) {
+            this.vprice = vprice;
+        }
+
+        public String getVimage() {
+            return vimage;
+        }
+
+        public void setVimage(String vimage) {
+            this.vimage = vimage;
+        }
+
+        public String getVdrive() {
+            return vdrive;
+        }
+
+        public void setVdrive(String vdrive) {
+            this.vdrive = vdrive;
+        }
+
+        public String getVtransmission() {
+            return vtransmission;
+        }
+
+        public void setVtransmission(String vtransmission) {
+            this.vtransmission = vtransmission;
+        }
+
+        public String getVbodyType() {
+            return vbodyType;
+        }
+
+        public void setVbodyType(String vbodyType) {
+            this.vbodyType = vbodyType;
+        }
+
+        public String getVboatType() {
+            return vboatType;
+        }
+
+        public void setVboatType(String vboatType) {
+            this.vboatType = vboatType;
+        }
+
+        public String getVrvType() {
+            return vrvType;
+        }
+
+        public void setVrvType(String vrvType) {
+            this.vrvType = vrvType;
+        }
+
+        public String getVapplication() {
+            return vapplication;
+        }
+
+        public void setVapplication(String vapplication) {
+            this.vapplication = vapplication;
+        }
+
+        public String getVtyreCondition() {
+            return vtyreCondition;
+        }
+
+        public void setVtyreCondition(String vtyreCondition) {
+            this.vtyreCondition = vtyreCondition;
+        }
+
+        public String getVbusType() {
+            return vbusType;
+        }
+
+        public void setVbusType(String vbusType) {
+            this.vbusType = vbusType;
+        }
+
+        public String getVairCondition() {
+            return vairCondition;
+        }
+
+        public void setVairCondition(String vairCondition) {
+            this.vairCondition = vairCondition;
+        }
+
+        public String getVinvoice() {
+            return vinvoice;
+        }
+
+        public void setVinvoice(String vinvoice) {
+            this.vinvoice = vinvoice;
+        }
+
+        public String getVimplements() {
+            return vimplements;
+        }
+
+        public void setVimplements(String vimplements) {
+            this.vimplements = vimplements;
+        }
+
+        public String getVfinanceReq() {
+            return vfinanceReq;
+        }
+
+        public void setVfinanceReq(String vfinanceReq) {
+            this.vfinanceReq = vfinanceReq;
+        }
+
+        public String getVprivacy() {
+            return vprivacy;
+        }
+
+        public void setVprivacy(String vprivacy) {
+            this.vprivacy = vprivacy;
+        }
+
+        public String getVviewcount() {
+            return vviewcount;
+        }
+
+        public void setVviewcount(String vviewcount) {
+            this.vviewcount = vviewcount;
+        }
+
+        public String getVcallcount() {
+            return vcallcount;
+        }
+
+        public void setVcallcount(String vcallcount) {
+            this.vcallcount = vcallcount;
+        }
+
+        public String getVdate() {
+            return vdate;
+        }
+
+        public void setVdate(String vdate) {
+            this.vdate = vdate;
+        }
+
+        public String getVstartPrice() {
+            return vstartPrice;
+        }
+
+        public void setVstartPrice(String vstartPrice) {
+            this.vstartPrice = vstartPrice;
+        }
+
+        public String getVreservePrice() {
+            return vreservePrice;
+        }
+
+        public void setVreservePrice(String vreservePrice) {
+            this.vreservePrice = vreservePrice;
+        }
+
+        public String getVstatus() {
+            return vstatus;
+        }
+
+        public void setVstatus(String vstatus) {
+            this.vstatus = vstatus;
+        }
+
+        public String getSendername() {
+            return sendername;
+        }
+
+        public void setSendername(String sendername) {
+            this.sendername = sendername;
+        }
+
+        public String getSenderPic() {
+            return senderPic;
+        }
+
+        public void setSenderPic(String senderPic) {
+            this.senderPic = senderPic;
+        }
+
+    }
 }
+
+

@@ -24,6 +24,7 @@ import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.EndedAuctionApprovedVehiResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.response.FavouriteResponse;
 import autokatta.com.response.GetAdminVehicleResponse;
 import autokatta.com.response.GetAuctionEventResponse;
 import autokatta.com.response.GetAutokattaContactResponse;
@@ -78,6 +79,7 @@ import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.response.SampleResponse;
 import autokatta.com.response.SearchPersonResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SearchVehicleResponse;
@@ -93,6 +95,7 @@ import autokatta.com.response.getDealsResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -770,7 +773,7 @@ public interface ServiceApi {
     Call<String> uploaGroupProfilePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
 
- @Multipart
+    @Multipart
     @POST("upload_profile_profile_pics.php")
     Call<String> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
@@ -1041,4 +1044,7 @@ public interface ServiceApi {
     @GET("recommendStore.php")
     Call<String> recommendStore(@Query("contact") String contact, @Query("Store_id") String Store_id);
 
+    //getting Favourite data
+    @POST("api/getMyFavourites")
+    Call<FavouriteResponse> getMyFavourites(@Body SampleResponse sampleResponse);
 }

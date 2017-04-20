@@ -37,6 +37,7 @@ import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.EndedAuctionApprovedVehiResponse;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.response.FavouriteResponse;
 import autokatta.com.response.GetAdminVehicleResponse;
 import autokatta.com.response.GetAuctionEventResponse;
 import autokatta.com.response.GetBodyTypeResponse;
@@ -89,6 +90,7 @@ import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.response.SampleResponse;
 import autokatta.com.response.SearchPersonResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SearchVehicleResponse;
@@ -6090,7 +6092,7 @@ Get saved search Seller list
      Other Store UNfollow
      */
 
-    public void otherStoreUnFollow(String mycontact, String otherContact, String layout, String storeid)  {
+    public void otherStoreUnFollow(String mycontact, String otherContact, String layout, String storeid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6333,7 +6335,39 @@ Get saved search Seller list
         }
     }
 
+    /*
+    get Favourite Notification
+     */
+    public void FavouriteNotification(String loginContact, String next) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
 
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                SampleResponse sampleResponse = new SampleResponse(loginContact, next);
+                Call<FavouriteResponse> mUnfollowResponse = serviceApi.getMyFavourites(sampleResponse);
+                mUnfollowResponse.enqueue(new Callback<FavouriteResponse>() {
+                    @Override
+                    public void onResponse(Call<FavouriteResponse> call, Response<FavouriteResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<FavouriteResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs
