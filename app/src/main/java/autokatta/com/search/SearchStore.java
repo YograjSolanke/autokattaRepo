@@ -74,8 +74,8 @@ public class SearchStore extends Fragment implements RequestNotifier {
 
         try {
             Bundle bundle = getArguments();
-            searchString = bundle.getString("searchText");
-            System.out.println("SearchString" + searchString);
+            searchString = bundle.getString("searchText1");
+            System.out.println("Store" + searchString);
             getSearchResults(searchString);
         } catch (Exception e) {
             e.printStackTrace();

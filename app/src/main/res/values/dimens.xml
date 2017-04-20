@@ -18,4 +18,5 @@
     <dimen name="cards_button_width">48dp</dimen>
     <dimen name="cards_button_height">48dp</dimen>
     <dimen name="text_layout_height">60dp</dimen>
+    <dimen name="title_size">20sp</dimen>
 </resources>

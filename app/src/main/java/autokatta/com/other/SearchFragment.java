@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
-import autokatta.com.fragment.MyGroupsFragment;
+import autokatta.com.events.MyActiveAuctionFragment;
 import autokatta.com.search.SearchAuction;
 import autokatta.com.search.SearchPerson;
 import autokatta.com.search.SearchProduct;
@@ -54,6 +54,7 @@ public class SearchFragment extends Fragment {
                 mBundle = getArguments();
                 if (mBundle != null) {
                     searchString = mBundle.getString("searchText");
+                    bundle.putString("searchText1", searchString);
                     mSearchProduct.setArguments(bundle);
                     mSearchService.setArguments(bundle);
                     mSearchStore.setArguments(bundle);
@@ -61,7 +62,7 @@ public class SearchFragment extends Fragment {
                     mSearchVehicle.setArguments(bundle);
                     mSearchAuction.setArguments(bundle);
                 }
-                bundle.putString("searchText1", searchString);
+
                 Log.i("searchText", "->" + searchString);
 
                 ViewPager mviewPager = (ViewPager) mSearchView.findViewById(R.id.search_viewpager);
@@ -77,7 +78,7 @@ public class SearchFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
-        tabAdapterName.addFragment(new MyGroupsFragment(), "Promotional");
+        tabAdapterName.addFragment(new MyActiveAuctionFragment(), "Promotional");
         tabAdapterName.addFragment(mSearchProduct, "Products");
         tabAdapterName.addFragment(mSearchService, "Services");
         tabAdapterName.addFragment(mSearchStore, "Store");

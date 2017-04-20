@@ -144,7 +144,7 @@ public class GetSearchAuctionResponse {
         private String location;
         @SerializedName("product_category")
         @Expose
-        private Object productCategory;
+        private String productCategory;
         @SerializedName("special_clauses")
         @Expose
         private String specialClauses;
@@ -234,11 +234,11 @@ public class GetSearchAuctionResponse {
             this.location = location;
         }
 
-        public Object getProductCategory() {
+        public String getProductCategory() {
             return productCategory;
         }
 
-        public void setProductCategory(Object productCategory) {
+        public void setProductCategory(String productCategory) {
             this.productCategory = productCategory;
         }
 

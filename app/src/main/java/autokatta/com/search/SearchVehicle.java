@@ -40,6 +40,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
     String myContact;
     ImageView filterImg;
     Button advanceSearch;
+    Bundle bundle;
 
     @Nullable
     @Override
@@ -58,9 +59,9 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 try {
-                    Bundle bundle = getArguments();
-                    searchString = bundle.getString("searchText");
-                    System.out.println("SearchString" + searchString);
+                    bundle = getArguments();
+                    searchString = bundle.getString("searchText1");
+                    System.out.println("Vehicle" + searchString);
                     getSearchResults(searchString);
 
                     advanceSearch.setOnClickListener(new View.OnClickListener() {

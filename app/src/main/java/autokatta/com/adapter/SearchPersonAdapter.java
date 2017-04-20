@@ -64,7 +64,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             super(itemView);
             mCardView = (CardView) itemView.findViewById(R.id.adapter_autokatta_contactCard_view);
             imgProfile = (ImageView) itemView.findViewById(R.id.profileImg);
-            imgCall = (ImageView) itemView.findViewById(R.id.callImg);
+            //imgCall = (ImageView) itemView.findViewById(R.id.callImg);
             mTextName = (TextView) itemView.findViewById(R.id.txtname);
             mTextNumber = (TextView) itemView.findViewById(R.id.txtnumber);
             mTextStatus = (TextView) itemView.findViewById(R.id.txtstatus);
@@ -135,7 +135,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         }
 
 
-        //calling Functionality
+       /* //calling Functionality
         holder.imgCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,7 +143,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
                 call(contactdata.get(holder.getAdapterPosition()).getContact());
 
             }
-        });
+        });*/
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             Bundle bundle = new Bundle();

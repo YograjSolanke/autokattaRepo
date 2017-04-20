@@ -920,7 +920,7 @@ public interface ServiceApi {
 
     //Search Auction...
     @GET("getSearchAuctionData.php")
-    Call<GetSearchAuctionResponse> getSearchAuctionData(@Query("searchKey") String key);
+    Call<GetSearchAuctionResponse> getSearchAuctionData(@Query("searchkey") String key);
 
     //Post Product Review...
     @POST("post_product_review.php")

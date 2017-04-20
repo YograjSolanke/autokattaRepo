@@ -56,13 +56,13 @@
                 android:layout_below="@+id/txtnumber"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
-                android:layout_toStartOf="@+id/callImg"
+                android:layout_toStartOf="@+id/btnfollow"
                 android:text="Number"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
                 android:textStyle="italic" />
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/callImg"
                 android:layout_width="40dp"
                 android:layout_height="50dp"
@@ -70,7 +70,7 @@
                 android:layout_marginEnd="90dp"
                 android:contentDescription="@string/app_name"
                 android:padding="5dp"
-                android:src="@android:drawable/ic_menu_call" />
+                android:src="@android:drawable/ic_menu_call" />-->
 
             <Button
                 android:id="@+id/btnfollow"

@@ -71,7 +71,7 @@ public class SearchService extends Fragment implements RequestNotifier {
                 bundle = getArguments();
                 if (bundle != null) {
                     searchString = bundle.getString("searchText1");
-                    Log.i("String", "->" + searchString);
+                    Log.i("Service", "->" + searchString);
                     getSearchResults(searchString);
                 }
             }
