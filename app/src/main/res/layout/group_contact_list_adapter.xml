@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+    <!-- Single ListItem -->
+
+    <!-- Product Name -->
+
+    <TextView
+        android:id="@+id/contact_name"
+        android:layout_width="200dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/checkall"
+        android:layout_toRightOf="@+id/group_icon"
+        android:padding="5dip"
+        android:textColor="#2C3343"
+        android:textSize="16dip"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/contact_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/contact_name"
+        android:layout_alignRight="@+id/contact_name"
+        android:layout_below="@+id/contact_name"
+        android:textColor="#2C3343"
+        android:padding="5dip"
+        android:text="" />
+
+    <ImageView
+        android:id="@+id/group_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+    <!--android:src="@drawable/share"/>-->
+
+    <CheckBox
+        android:id="@+id/checkall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="" />
+
+</RelativeLayout>
