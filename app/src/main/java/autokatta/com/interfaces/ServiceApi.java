@@ -1055,4 +1055,19 @@ public interface ServiceApi {
     //Create Groups
     @POST("createGroup")
     Call<String> createGroup(@Query("title") String title, @Query("image") String image,@Query("admin_contact") String admin_contact);
+
+    //Add contacts to  Groups
+    @POST("add_contacts")
+    Call<String> addContactToGroup(@Query("groupid") String groupid, @Query("contacts") String contacts);
+
+
+ //Notification Like Group
+    @POST("newlikes")
+    Call<String> notificationLikegroup(@Query("groupid") String groupid, @Query("sender_contact") String mycontact,@Query("receiver_contact") String OtherContact, @Query("layout") String layout);
+
+
+
+
+
+
 }
