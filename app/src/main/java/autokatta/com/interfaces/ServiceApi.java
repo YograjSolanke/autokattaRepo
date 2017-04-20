@@ -1044,7 +1044,6 @@ public interface ServiceApi {
                                    @Query("rate5") String rate5,
                                    @Query("type") String type);
 
-
     //recommend
     @GET("recommendStore.php")
     Call<String> recommendStore(@Query("contact") String contact, @Query("Store_id") String Store_id);
@@ -1052,4 +1051,8 @@ public interface ServiceApi {
     //getting Favourite data
     @POST("api/getMyFavourites")
     Call<FavouriteResponse> getMyFavourites(@Body SampleResponse sampleResponse);
+
+    //Create Groups
+    @POST("createGroup")
+    Call<String> createGroup(@Query("title") String title, @Query("image") String image,@Query("admin_contact") String admin_contact);
 }
