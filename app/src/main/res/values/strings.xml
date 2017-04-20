@@ -163,4 +163,5 @@
     <string name="title_activity_other_store_view">OtherStoreView</string>
     <string name="title_activity_share_within_app">ShareWithinAppActivity</string>
     <string name="title_activity_locality">LocalityActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
