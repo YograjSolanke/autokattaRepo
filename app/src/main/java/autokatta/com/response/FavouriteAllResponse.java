@@ -73,12 +73,12 @@ public class FavouriteAllResponse {
     private String servicefollowstatus;
     private String servicelikecount;
     private String servicefollowcount;
-    private String seriveName;
+    private String serviceName;
     private String serviceType;
     private String serviceimages;
     private String vehiclelikestatus;
     private String vehiclefollowstatus;
-    private Integer vehiclelikecount;
+    private String vehiclelikecount;
     private String vehiclefollowcount;
     private String vehicleContact;
     private String title;
@@ -557,12 +557,12 @@ public class FavouriteAllResponse {
         this.servicefollowcount = servicefollowcount;
     }
 
-    public String getSeriveName() {
-        return seriveName;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setSeriveName(String seriveName) {
-        this.seriveName = seriveName;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public String getServiceType() {
@@ -597,11 +597,11 @@ public class FavouriteAllResponse {
         this.vehiclefollowstatus = vehiclefollowstatus;
     }
 
-    public Integer getVehiclelikecount() {
+    public String getVehiclelikecount() {
         return vehiclelikecount;
     }
 
-    public void setVehiclelikecount(Integer vehiclelikecount) {
+    public void setVehiclelikecount(String vehiclelikecount) {
         this.vehiclelikecount = vehiclelikecount;
     }
 

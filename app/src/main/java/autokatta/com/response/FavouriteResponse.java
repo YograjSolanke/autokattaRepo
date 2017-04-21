@@ -274,7 +274,7 @@ public class FavouriteResponse {
             private String servicefollowcount;
             @SerializedName("serive_name")
             @Expose
-            private String seriveName;
+            private String serviceName;
             @SerializedName("service_type")
             @Expose
             private String serviceType;
@@ -289,7 +289,7 @@ public class FavouriteResponse {
             private String vehiclefollowstatus;
             @SerializedName("vehiclelikecount")
             @Expose
-            private Integer vehiclelikecount;
+            private String vehiclelikecount;
             @SerializedName("vehiclefollowcount")
             @Expose
             private String vehiclefollowcount;
@@ -787,12 +787,12 @@ public class FavouriteResponse {
                 this.servicefollowcount = servicefollowcount;
             }
 
-            public String getSeriveName() {
-                return seriveName;
+            public String getServiceName() {
+                return serviceName;
             }
 
-            public void setSeriveName(String seriveName) {
-                this.seriveName = seriveName;
+            public void setServiceName(String serviceName) {
+                this.serviceName = serviceName;
             }
 
             public String getServiceType() {
@@ -827,11 +827,11 @@ public class FavouriteResponse {
                 this.vehiclefollowstatus = vehiclefollowstatus;
             }
 
-            public Integer getVehiclelikecount() {
+            public String getVehiclelikecount() {
                 return vehiclelikecount;
             }
 
-            public void setVehiclelikecount(Integer vehiclelikecount) {
+            public void setVehiclelikecount(String vehiclelikecount) {
                 this.vehiclelikecount = vehiclelikecount;
             }
 
@@ -2788,7 +2788,7 @@ public class FavouriteResponse {
             private String favid;
             @SerializedName("images")
             @Expose
-            private Object images;
+            private String images;
 
             public String getSearchId() {
                 return searchId;
@@ -2886,11 +2886,11 @@ public class FavouriteResponse {
                 this.favid = favid;
             }
 
-            public Object getImages() {
+            public String getImages() {
                 return images;
             }
 
-            public void setImages(Object images) {
+            public void setImages(String images) {
                 this.images = images;
             }
 

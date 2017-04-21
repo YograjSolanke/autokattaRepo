@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,24 +14,38 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.FavouriteAllResponse;
+import retrofit2.Response;
 
 /**
  * Created by ak-003 on 20/4/17.
  */
 
-public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
 
     private Activity mActivity;
     private List<FavouriteAllResponse> allResponseList = new ArrayList<>();
+    private int storelikecountint;
+    private String mLoginContact = "";
+    private ApiCall mApiCall;
 
     public FavouriteNotificationAdapter(Activity mActivity, List<FavouriteAllResponse> responseList) {
         this.mActivity = mActivity;
         allResponseList = responseList;
+        mApiCall = new ApiCall(mActivity, this);
+        mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
+                getString("loginContact", "7841023392");
     }
 
     /*
@@ -494,8 +509,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        FavouriteAllResponse objAllResponse = allResponseList.get(position);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        final FavouriteAllResponse objAllResponse = allResponseList.get(position);
         Log.i("Layout", "BindHolder" + holder.getItemViewType());
         switch (holder.getItemViewType()) {
 
@@ -504,14 +519,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
                 break;
             case 2:
-                StoreNotifications store = (StoreNotifications) holder;
-                store.mStoreActionName.setText(objAllResponse.getAction());
-                store.mActionTime.setText(objAllResponse.getDatetime());
-                store.mStoreActionName.setText(objAllResponse.getAction());
-                store.mStoreWebSite.setText(objAllResponse.getStoreWebsite());
-                store.mStoreTiming.setText(objAllResponse.getStoretiming());
-                store.mStoreWorkingDay.setText(objAllResponse.getWorkingDays());
-                store.mStoreLocation.setText(objAllResponse.getStoreLocation());
+                final String allDetails, store_id;
+
+                final StoreNotifications store = (StoreNotifications) holder;
 
                 /*
                 ImageView mStorePic, mStoreImage;
@@ -520,6 +530,147 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         TextView mStoreActionName, mActionTime, mStoreName, mStoreText, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
                 mStoreLocation, mFollowCount, mLikes, mShares;
                  */
+                //holder.deleteStoreNoti.setBackgroundResource(R.drawable.deletimage);
+
+                try {
+                    DateFormat date = new SimpleDateFormat(" MMM dd ");
+                    DateFormat time = new SimpleDateFormat(" hh:mm a");
+                    System.out.println("Date: " + date.format(objAllResponse.getDatetime()));
+                    System.out.println("Time: " + time.format(objAllResponse.getDatetime()));
+
+                    store.mActionTime.setText(date.format(objAllResponse.getDatetime()) + time.format(objAllResponse.getDatetime()));
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                /*if(objAllResponse.sendernameld.toString().equals("you") && (objAllResponse.actionld.toString().equals("likes") ||objAllResponse.actionld.toString().equals("unlikes")))
+                {
+                    if(objAllResponse.actionld.toString().equals("likes")) {
+                        holder.storeaction.setText(objAllResponse.sendernameld.toString() + " like " + objAllResponse.store_nameld.toString() + " " + "store");
+                    }
+                    if(objAllResponse.actionld.toString().equals("unlikes")) {
+                        holder.storeaction.setText(objAllResponse.sendernameld.toString() + " unlike " + objAllResponse.store_nameld.toString() + " " + "store");
+                    }
+                }
+                else {
+                    holder.storeaction.setText(objAllResponse.sendernameld.toString() + " " + objAllResponse.actionld.toString() + " " + objAllResponse.store_nameld.toString() + " " + "store");
+                }*/
+
+                store.mStoreName.setText(objAllResponse.getStoreName());
+                //store.storetype.setText(objAllResponse.store_typeld.toString());
+                store.mStoreLocation.setText(objAllResponse.getStoreLocation());
+                store.mStoreWebSite.setText(objAllResponse.getStoreWebsite());
+                store.mStoreWorkingDay.setText(objAllResponse.getWorkingDays());
+                store.mStoreTiming.setText(objAllResponse.getStoretiming());
+                store.mFollowCount.setText("Followers(" + objAllResponse.getStorefollowcount() + ")");
+                //store.storelikecnt.setText("Likes(" + objAllResponse.storelikecountld.toString() + ")");
+
+                allDetails = "storename: " + store.mStoreName.getText().toString() + "\n" +
+                        /*"storetype: "+holder.storetype.getText().toString()+"\n"+*/
+                        "location: " + store.mStoreLocation.getText().toString() + "\n" +
+                        "website: " + store.mStoreWebSite.getText().toString() + "\n" +
+                        "workingday: " + store.mStoreWorkingDay.getText().toString() + "\n";
+                System.out.println("all details=========" + allDetails);
+
+
+                store_id = objAllResponse.getStoreId();
+
+                if (objAllResponse.getStorelikestatus().equalsIgnoreCase("yes")) {
+                    //store.mLike.setImageTintMode(PorterDuff.Mode.DARKEN);
+                    store.mLike.setColorFilter(R.color.black); // black Tint
+                }
+                if (objAllResponse.getStorelikestatus().equalsIgnoreCase("no")) {
+                    //store.mLike.setImageTintMode(PorterDuff.Mode.LIGHTEN);
+                    store.mLike.setColorFilter(R.color.button_grey); // grey Tint
+                }
+
+                if (objAllResponse.getStorefollowstatus().equalsIgnoreCase("yes")) {
+                    //store.mFollow.setImageTintMode(PorterDuff.Mode.DARKEN);
+                    store.mFollow.setColorFilter(R.color.black); // black Tint
+                }
+                if (objAllResponse.getStorefollowstatus().equalsIgnoreCase("no")) {
+                    //store.mFollow.setImageTintMode(PorterDuff.Mode.LIGHTEN);
+                    store.mFollow.setColorFilter(R.color.button_grey); // grey Tint
+                }
+
+                if (objAllResponse.getStoreImage() == null || objAllResponse.getStoreImage().equals("") || objAllResponse.getStoreImage().equals("null"))
+
+                    store.mStoreImage.setBackgroundResource(R.drawable.store);
+
+                else {
+
+                    /****************
+                     Glide code for image uploading
+
+                     *****************/
+                    Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/store_profiles/" + objAllResponse.getStoreImage())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(store.mStoreImage);
+                }
+
+                store.mLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String mOtherContact = "";
+                        if (objAllResponse.getStorelikestatus().equalsIgnoreCase("no")) {
+
+
+                            String storelikecountstr = objAllResponse.getStorelikecount();
+                            storelikecountint = Integer.parseInt(storelikecountstr);
+
+                            store.mLike.setColorFilter(R.color.black); // black Tint
+
+
+                            if (objAllResponse.getStoreContact().contains(",")) {
+                                String parts[] = objAllResponse.getStoreContact().split(",");
+                                mOtherContact = parts[0];
+
+                            } else
+                                mOtherContact = objAllResponse.getStoreContact();
+
+                            mApiCall.otherStoreLike(mLoginContact, mOtherContact, "2", store_id);
+                            storelikecountint++;
+
+                            objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
+
+                            store.mLikes.setText("Likes(" + storelikecountint + ")");
+                            // locallist.get(position).storelikestatusld.toString();
+
+                            objAllResponse.setStorelikestatus("yes");
+                            allResponseList.set(position, objAllResponse);
+                        } else {
+                            String storelikecountstr = objAllResponse.getStorelikecount();
+                            storelikecountint = Integer.parseInt(storelikecountstr);
+
+                            store.mLike.setColorFilter(R.color.button_grey); // black Tint
+
+
+                            if (objAllResponse.getStoreContact().contains(",")) {
+                                String parts[] = objAllResponse.getStoreContact().split(",");
+                                mOtherContact = parts[0];
+
+                            } else
+                                mOtherContact = objAllResponse.getStoreContact();
+
+                            mApiCall.otherStoreUnlike(mLoginContact, mOtherContact, "2", store_id);
+                            storelikecountint--;
+
+                            objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
+
+                            store.mLikes.setText("Likes(" + storelikecountint + ")");
+                            // locallist.get(position).storelikestatusld.toString();
+
+                            objAllResponse.setStorelikestatus("yes");
+                            allResponseList.set(position, objAllResponse);
+
+
+                        }
+                    }
+                });
+
                 break;
 
             case 3:
@@ -584,5 +735,21 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     @Override
     public int getItemCount() {
         return allResponseList.size();
+    }
+
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 }

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearFirst">
+
+        <TextView
+            android:id="@+id/ttile"
+            android:textColor="#808080"
+            android:text="Title"
+            android:layout_marginTop="2dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/settitle"
+            android:textColor="#808080"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/ttile"
+            android:layout_marginRight="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+        <TextView
+            android:id="@+id/category"
+            android:textColor="#808080"
+            android:text="CATEGORY"
+            android:layout_below="@+id/ttile"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="100dip"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setcategary"
+            android:textColor="#808080"
+            android:layout_toRightOf="@+id/category"
+            android:layout_below="@id/ttile"
+            android:layout_marginRight="2dp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+        <TextView
+            android:id="@+id/subcategory"
+            android:textColor="#808080"
+            android:text="SUBCATEGORY"
+            android:layout_below="@+id/category"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="100dip"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setsubcat"
+            android:textColor="#808080"
+            android:layout_toRightOf="@+id/subcategory"
+            android:layout_below="@+id/category"
+            android:layout_marginRight="2dp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+        <TextView
+            android:id="@+id/bbrand"
+            android:textColor="#808080"
+            android:layout_below="@+id/subcategory"
+            android:text="Brand"
+
+            android:textStyle="bold"
+            android:layout_marginTop="2dip"
+            android:layout_marginLeft="5dp"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setbrand"
+            android:layout_below="@+id/subcategory"
+            android:layout_toRightOf="@+id/bbrand"
+            android:layout_toLeftOf="@+id/sellvehicalimgflicker"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dip"
+            android:textColor="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+
+        <TextView
+            android:id="@+id/mmodel"
+            android:layout_below="@+id/setbrand"
+            android:text="Model"
+            android:textStyle="bold"
+            android:layout_marginTop="2dip"
+            android:layout_marginLeft="5dp"
+            android:textColor="#808080"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setmodel"
+            android:layout_below="@+id/setbrand"
+            android:layout_toLeftOf="@+id/sellvehicalimgflicker"
+            android:layout_toRightOf="@+id/mmodel"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dip"
+            android:textColor="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+
+        <TextView
+            android:id="@+id/pprice"
+            android:layout_below="@+id/setmodel"
+            android:text="Price"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:textColor="#808080"
+            android:layout_marginTop="2dip"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setprice"
+            android:layout_below="@+id/setmodel"
+            android:layout_toLeftOf="@+id/sellvehicalimgflicker"
+            android:layout_toRightOf="@+id/pprice"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dip"
+            android:textColor="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+
+        <TextView
+            android:id="@+id/yyear"
+            android:layout_below="@+id/setprice"
+            android:text="Year"
+            android:textStyle="bold"
+            android:layout_marginTop="2dip"
+            android:layout_width="110dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#808080"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setyear"
+            android:layout_below="@+id/setprice"
+            android:layout_toRightOf="@+id/yyear"
+            android:layout_toLeftOf="@+id/sellvehicalimgflicker"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dip"
+            android:textColor="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+        <TextView
+            android:id="@+id/yrto"
+            android:layout_below="@+id/yyear"
+            android:text="RTO City:"
+            android:textStyle="bold"
+            android:layout_marginTop="2dip"
+            android:layout_width="110dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#808080"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setrto"
+            android:layout_below="@+id/setyear"
+            android:layout_toRightOf="@+id/yrto"
+            android:layout_toLeftOf="@+id/sellvehicalimgflicker"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dip"
+            android:textColor="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+        <TextView
+            android:id="@+id/ykms"
+            android:layout_below="@+id/yrto"
+            android:text="Kms:"
+            android:textStyle="bold"
+            android:layout_marginTop="2dip"
+            android:layout_width="110dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#808080"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setkms"
+            android:layout_below="@+id/setrto"
+            android:layout_toRightOf="@+id/ykms"
+            android:layout_toLeftOf="@+id/sellvehicalimgflicker"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dip"
+            android:textColor="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+        <TextView
+            android:id="@+id/ylocation"
+            android:layout_below="@+id/ykms"
+            android:text="Location:"
+            android:textStyle="bold"
+            android:layout_marginTop="2dip"
+            android:layout_width="110dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#808080"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setlocation"
+            android:layout_below="@+id/setkms"
+            android:layout_toRightOf="@+id/ylocation"
+            android:layout_toLeftOf="@+id/sellvehicalimgflicker"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dip"
+            android:textColor="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+        <TextView
+            android:id="@+id/yregno"
+            android:layout_below="@+id/ylocation"
+            android:text="Registration No:"
+            android:textStyle="bold"
+            android:layout_marginTop="2dip"
+            android:layout_width="110dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="#808080"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/setregno"
+            android:layout_below="@+id/setlocation"
+            android:layout_toRightOf="@+id/yregno"
+            android:layout_toLeftOf="@+id/sellvehicalimgflicker"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="2dip"
+            android:textColor="#808080"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="--" />
+
+        <RelativeLayout
+            android:background="#2C3343"
+            android:layout_below="@+id/setregno"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seller Leads"
+                android:id="@+id/matching_leads_txt"
+                android:layout_centerVertical="true"
+                android:textColor="#ffffff"
+                android:layout_centerHorizontal="true"
+                android:textSize="15dp"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                android:layout_width="20dp"
+                android:id="@+id/seller_match_count"
+                android:layout_height="20dp"
+                android:layout_toLeftOf="@+id/matching_leads_txt"
+                android:layout_marginRight="5dp"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+
+
+                android:id="@+id/sellerdownarrow" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_toLeftOf="@+id/seller_match_count"
+                android:layout_marginRight="5dp"
+
+
+                android:id="@+id/selleruparrow"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>

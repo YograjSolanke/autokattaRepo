@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import autokatta.com.R;
-import autokatta.com.adapter.TabAdapter;
+import autokatta.com.adapter.TabAdapterName;
 
 /**
  * Created by ak-001 on 17/3/17.
@@ -31,16 +31,16 @@ public class SocialFragment extends Fragment {
 
         TabLayout tabLayout = (TabLayout) mSocialFragment.findViewById(R.id.social_tabs);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
+        /*tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
+        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);*/
 
         return mSocialFragment;
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        TabAdapter adapter = new TabAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new WallNotificationFragment());
-        adapter.addFragment(new WallNotificationFragment());
+        TabAdapterName adapter = new TabAdapterName(getActivity().getSupportFragmentManager());
+        adapter.addFragment(new SellerNotificationFragment(), "Seller");
+        adapter.addFragment(new BuyerNotificationFragment(), "Buyer");
         viewPager.setAdapter(adapter);
     }
 }

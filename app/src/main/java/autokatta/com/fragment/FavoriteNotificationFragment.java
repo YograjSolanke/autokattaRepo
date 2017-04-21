@@ -33,7 +33,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
     SwipeRefreshLayout mSwipeRefreshLayout;
     View mFavNotify;
     String nextCount = "0";
-    Double strTime;
+    Double strTime = 0.0;
 
 
     public FavoriteNotificationFragment() {
@@ -87,6 +87,9 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
         if (response != null) {
             if (response.isSuccessful()) {
                 List<FavouriteAllResponse> mainList = new ArrayList<>();
+                mainList.clear();
+                nextCount = "0";
+                strTime = 0.0;
 
 
                 FavouriteResponse favouriteResponse = (FavouriteResponse) response.body();
@@ -95,103 +98,307 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
 
                 //Wall Notification
                 //successNotifiList.clear();
-                for (FavouriteResponse.Success.Notification successNotification : favouriteResponse.getSuccess().getNotification()) {
-                    FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
-                    favouriteAllResponse.setLayoutNo(Integer.parseInt(successNotification.getLayout()));
-                    favouriteAllResponse.setSender(successNotification.getSender());
-                    favouriteAllResponse.setAction(successNotification.getAction());
-                    favouriteAllResponse.setReceiver(successNotification.getReceiver());
-                    favouriteAllResponse.setVehicleId(successNotification.getVehicleId());
-                    favouriteAllResponse.setProductId(successNotification.getProductId());
-                    favouriteAllResponse.setServiceId(successNotification.getServiceId());
-                    favouriteAllResponse.setStoreId(successNotification.getStoreId());
-                    favouriteAllResponse.setGroupId(successNotification.getGroupId());
-                    favouriteAllResponse.setSenderprofession(successNotification.getSenderprofession());
-                    favouriteAllResponse.setSenderwebsite(successNotification.getSenderwebsite());
-                    favouriteAllResponse.setSendercity(successNotification.getSendercity());
-                    favouriteAllResponse.setSenderlikecount(successNotification.getSenderlikecount());
-                    favouriteAllResponse.setSenderfollowcount(successNotification.getSenderfollowcount());
-                    favouriteAllResponse.setSenderlikestatus(successNotification.getSenderlikestatus());
-                    favouriteAllResponse.setSenderfollowstatus(successNotification.getSenderfollowstatus());
-                    favouriteAllResponse.setReceivername(successNotification.getReceivername());
-                    favouriteAllResponse.setReceiverPic(successNotification.getReceiverPic());
-                    favouriteAllResponse.setReceiverprofession(successNotification.getReceiverprofession());
-                    favouriteAllResponse.setReceiverwebsite(successNotification.getReceiverwebsite());
-                    favouriteAllResponse.setReceivercity(successNotification.getReceivercity());
-                    favouriteAllResponse.setReceiverlikecount(successNotification.getReceiverlikecount());
-                    favouriteAllResponse.setReceiverfollowcount(successNotification.getReceiverfollowcount());
-                    favouriteAllResponse.setReceiverlikestatus(successNotification.getReceiverlikestatus());
-                    favouriteAllResponse.setReceiverfollowstatus(successNotification.getReceiverfollowstatus());
-                    favouriteAllResponse.setStorelikestatus(successNotification.getStorelikestatus());
-                    favouriteAllResponse.setStorefollowstatus(successNotification.getStorefollowstatus());
-                    favouriteAllResponse.setStorerating(successNotification.getStorerating());
-                    favouriteAllResponse.setStorelikecount(successNotification.getStorelikecount());
-                    favouriteAllResponse.setStorefollowcount(successNotification.getStorefollowcount());
-                    favouriteAllResponse.setStoretiming(successNotification.getStoretiming());
-                    favouriteAllResponse.setStoreContact(successNotification.getStoreContact());
-                    favouriteAllResponse.setStoreName(successNotification.getStoreName());
-                    favouriteAllResponse.setStoreImage(successNotification.getStoreImage());
-                    favouriteAllResponse.setStoreType(successNotification.getStoreType());
-                    favouriteAllResponse.setStoreWebsite(successNotification.getStoreWebsite());
-                    favouriteAllResponse.setWorkingDays(successNotification.getWorkingDays());
-                    favouriteAllResponse.setStoreLocation(successNotification.getStoreLocation());
+                if (!favouriteResponse.getSuccess().getNotification().isEmpty()) {
+                    for (FavouriteResponse.Success.Notification successNotification : favouriteResponse.getSuccess().getNotification()) {
+
+                        FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
+
+                        favouriteAllResponse.setLayoutNo(Integer.parseInt(successNotification.getLayout()));
+                        favouriteAllResponse.setSender(successNotification.getSender());
+                        favouriteAllResponse.setAction(successNotification.getAction());
+                        favouriteAllResponse.setReceiver(successNotification.getReceiver());
+
+                        favouriteAllResponse.setVehicleId(successNotification.getVehicleId());
+                        favouriteAllResponse.setProductId(successNotification.getProductId());
+                        favouriteAllResponse.setServiceId(successNotification.getServiceId());
+                        favouriteAllResponse.setStoreId(successNotification.getStoreId());
+                        favouriteAllResponse.setGroupId(successNotification.getGroupId());
+
+                        favouriteAllResponse.setSenderprofession(successNotification.getSenderprofession());
+                        favouriteAllResponse.setSenderwebsite(successNotification.getSenderwebsite());
+                        favouriteAllResponse.setSendercity(successNotification.getSendercity());
+                        favouriteAllResponse.setSenderlikecount(successNotification.getSenderlikecount());
+                        favouriteAllResponse.setSenderfollowcount(successNotification.getSenderfollowcount());
+                        favouriteAllResponse.setSenderlikestatus(successNotification.getSenderlikestatus());
+                        favouriteAllResponse.setSenderfollowstatus(successNotification.getSenderfollowstatus());
+
+                        favouriteAllResponse.setReceivername(successNotification.getReceivername());
+                        favouriteAllResponse.setReceiverPic(successNotification.getReceiverPic());
+                        favouriteAllResponse.setReceiverprofession(successNotification.getReceiverprofession());
+                        favouriteAllResponse.setReceiverwebsite(successNotification.getReceiverwebsite());
+                        favouriteAllResponse.setReceivercity(successNotification.getReceivercity());
+                        favouriteAllResponse.setReceiverlikecount(successNotification.getReceiverlikecount());
+                        favouriteAllResponse.setReceiverfollowcount(successNotification.getReceiverfollowcount());
+                        favouriteAllResponse.setReceiverlikestatus(successNotification.getReceiverlikestatus());
+                        favouriteAllResponse.setReceiverfollowstatus(successNotification.getReceiverfollowstatus());
+
+                        favouriteAllResponse.setStorelikestatus(successNotification.getStorelikestatus());
+                        favouriteAllResponse.setStorefollowstatus(successNotification.getStorefollowstatus());
+                        favouriteAllResponse.setStorerating(successNotification.getStorerating());
+                        favouriteAllResponse.setStorelikecount(successNotification.getStorelikecount());
+                        favouriteAllResponse.setStorefollowcount(successNotification.getStorefollowcount());
+                        favouriteAllResponse.setStoretiming(successNotification.getStoretiming());
+                        favouriteAllResponse.setStoreContact(successNotification.getStoreContact());
+                        favouriteAllResponse.setStoreName(successNotification.getStoreName());
+                        favouriteAllResponse.setStoreImage(successNotification.getStoreImage());
+                        favouriteAllResponse.setStoreType(successNotification.getStoreType());
+                        favouriteAllResponse.setStoreWebsite(successNotification.getStoreWebsite());
+                        favouriteAllResponse.setWorkingDays(successNotification.getWorkingDays());
+                        favouriteAllResponse.setStoreLocation(successNotification.getStoreLocation());
+
+                        favouriteAllResponse.setGroupVehicles(successNotification.getGroupVehicles());
+                        favouriteAllResponse.setGroupName(successNotification.getGroupName());
+                        favouriteAllResponse.setGroupMembers(successNotification.getGroupMembers());
+                        favouriteAllResponse.setGroupImage(successNotification.getGroupImage());
+
+                        favouriteAllResponse.setProductlikestatus(successNotification.getProductlikestatus());
+                        favouriteAllResponse.setProductfollowstatus(successNotification.getProductfollowstatus());
+                        favouriteAllResponse.setProductlikecount(successNotification.getProductlikecount());
+                        favouriteAllResponse.setProductfollowcount(successNotification.getProductfollowcount());
+                        favouriteAllResponse.setProductName(successNotification.getProductName());
+                        favouriteAllResponse.setProductType(successNotification.getProductType());
+                        favouriteAllResponse.setProductimages(successNotification.getProductimages());
+
+                        favouriteAllResponse.setServicelikestatus(successNotification.getServicelikestatus());
+                        favouriteAllResponse.setServicefollowstatus(successNotification.getServicefollowstatus());
+                        favouriteAllResponse.setServicelikecount(successNotification.getServicelikecount());
+                        favouriteAllResponse.setServicefollowcount(successNotification.getServicefollowcount());
+                        favouriteAllResponse.setServiceName(successNotification.getServiceName());
+                        favouriteAllResponse.setServiceType(successNotification.getServiceType());
+                        favouriteAllResponse.setServiceimages(successNotification.getServiceimages());
+
+                        favouriteAllResponse.setVehiclelikestatus(successNotification.getVehiclelikestatus());
+                        favouriteAllResponse.setVehiclefollowstatus(successNotification.getVehiclefollowstatus());
+                        favouriteAllResponse.setVehiclelikecount(successNotification.getVehiclelikecount());
+                        favouriteAllResponse.setVehiclefollowcount(successNotification.getVehiclefollowcount());
+                        favouriteAllResponse.setVehicleContact(successNotification.getVehicleContact());
+                        favouriteAllResponse.setTitle(successNotification.getTitle());
+                        favouriteAllResponse.setImage(successNotification.getImage());
+                        favouriteAllResponse.setYear(successNotification.getYear());
 
 
-                    /*private String groupVehicles;
-                    private String groupName;
-                    private String groupImage;
-                    private String groupMembers;
-                    private String productlikestatus;
-                    private String productfollowstatus;
-                    private String productlikecount;
-                    private String productfollowcount;
-                    private String productName;
-                    private String productType;
-                    private String productimages;
-                    private String servicelikestatus;
-                    private String servicefollowstatus;
-                    private String servicelikecount;
-                    private String servicefollowcount;
-                    private String seriveName;
-                    private String serviceType;
-                    private String serviceimages;
-                    private String vehiclelikestatus;
-                    private String vehiclefollowstatus;
-                    private Integer vehiclelikecount;
-                    private String vehiclefollowcount;
-                    private String vehicleContact;
-                    private String title;
-                    private String image;
-                    private String year;*/
-                    mainList.add(favouriteAllResponse);
+                        mainList.add(favouriteAllResponse);
+                    }
                 }
 
                 //BuyerSearch
-                //successBuyerList.clear();
-                for (FavouriteResponse.Success.BuyerSearch successBuyerSearch : favouriteResponse.getSuccess().getBuyerSearch()) {
+                if (!favouriteResponse.getSuccess().getBuyerSearch().isEmpty()) {
+                    for (FavouriteResponse.Success.BuyerSearch successBuyerSearch : favouriteResponse.getSuccess().getBuyerSearch()) {
 
-                    FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
-                    favouriteAllResponse.setLayoutNo(111);
-                    mainList.add(favouriteAllResponse);
+                        FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
+                        favouriteAllResponse.setLayoutNo(111);
+                        favouriteAllResponse.setFavid(successBuyerSearch.getFavid());
+                        favouriteAllResponse.setVvehicleId(successBuyerSearch.getVvehicleId());
+                        favouriteAllResponse.setVtitle(successBuyerSearch.getVtitle());
+                        favouriteAllResponse.setVcontactNo(successBuyerSearch.getVcontactNo());
+                        favouriteAllResponse.setVcategory(successBuyerSearch.getVcategory());
+                        favouriteAllResponse.setVmodel(successBuyerSearch.getVmodel());
+                        favouriteAllResponse.setVmanufacturer(successBuyerSearch.getVmanufacturer());
+                        favouriteAllResponse.setVVersion(successBuyerSearch.getVVersion());
+                        favouriteAllResponse.setVrtoCity(successBuyerSearch.getVrtoCity());
+                        favouriteAllResponse.setVlocationCity(successBuyerSearch.getVlocationCity());
+                        favouriteAllResponse.setVlocationState(successBuyerSearch.getVlocationState());
+                        favouriteAllResponse.setVlocationCountry(successBuyerSearch.getVlocationCountry());
+                        favouriteAllResponse.setVmonthOfRegistration(successBuyerSearch.getVmonthOfRegistration());
+                        favouriteAllResponse.setVyearOfRegistration(successBuyerSearch.getVyearOfRegistration());
+                        favouriteAllResponse.setVmonthOfManufacture(successBuyerSearch.getVmonthOfManufacture());
+                        favouriteAllResponse.setVyearOfManufacture(successBuyerSearch.getVyearOfManufacture());
+                        favouriteAllResponse.setVcolor(successBuyerSearch.getVcolor());
+                        favouriteAllResponse.setVregistrationNumber(successBuyerSearch.getVregistrationNumber());
+                        favouriteAllResponse.setVrcAvailable(successBuyerSearch.getVrcAvailable());
+                        favouriteAllResponse.setVinsuranceValid(successBuyerSearch.getVinsuranceValid());
+                        favouriteAllResponse.setVinsuranceIdv(successBuyerSearch.getVinsuranceIdv());
+                        favouriteAllResponse.setVtaxValidity(successBuyerSearch.getVtaxValidity());
+                        favouriteAllResponse.setVtaxPaidUpto(successBuyerSearch.getVtaxPaidUpto());
+                        favouriteAllResponse.setVfitnessValidity(successBuyerSearch.getVfitnessValidity());
+                        favouriteAllResponse.setVpermitValidity(successBuyerSearch.getVpermitValidity());
+                        favouriteAllResponse.setVpermitYesno(successBuyerSearch.getVpermitYesno());
+                        favouriteAllResponse.setVfitnessYesno(successBuyerSearch.getVfitnessYesno());
+                        favouriteAllResponse.setVfualType(successBuyerSearch.getVfualType());
+                        favouriteAllResponse.setVseatingCapacity(successBuyerSearch.getVseatingCapacity());
+                        favouriteAllResponse.setVpermit(successBuyerSearch.getVpermit());
+                        favouriteAllResponse.setVkmsRunning(successBuyerSearch.getVkmsRunning());
+                        favouriteAllResponse.setvHrsRunning(successBuyerSearch.getVHrsRunning());
+                        favouriteAllResponse.setVnoOfOwners(successBuyerSearch.getVnoOfOwners());
+                        favouriteAllResponse.setVhypothication(successBuyerSearch.getVhypothication());
+                        favouriteAllResponse.setVengineNo(successBuyerSearch.getVengineNo());
+                        favouriteAllResponse.setVchassisNo(successBuyerSearch.getVchassisNo());
+                        favouriteAllResponse.setVprice(successBuyerSearch.getVprice());
+                        favouriteAllResponse.setVimage(successBuyerSearch.getVimage());
+                        favouriteAllResponse.setVdrive(successBuyerSearch.getVdrive());
+                        favouriteAllResponse.setVtransmission(successBuyerSearch.getVtransmission());
+                        favouriteAllResponse.setVbodyType(successBuyerSearch.getVbodyType());
+                        favouriteAllResponse.setVboatType(successBuyerSearch.getVboatType());
+                        favouriteAllResponse.setVrvType(successBuyerSearch.getVrvType());
+                        favouriteAllResponse.setVapplication(successBuyerSearch.getVapplication());
+                        favouriteAllResponse.setVtyreCondition(successBuyerSearch.getVtyreCondition());
+                        favouriteAllResponse.setVbusType(successBuyerSearch.getVbusType());
+                        favouriteAllResponse.setVairCondition(successBuyerSearch.getVairCondition());
+                        favouriteAllResponse.setVinvoice(successBuyerSearch.getVinvoice());
+                        favouriteAllResponse.setVimplements(successBuyerSearch.getVimplements());
+                        favouriteAllResponse.setVfinanceReq(successBuyerSearch.getVfinanceReq());
+                        favouriteAllResponse.setVprivacy(successBuyerSearch.getVprivacy());
+                        favouriteAllResponse.setVviewcount(successBuyerSearch.getVviewcount());
+                        favouriteAllResponse.setVcallcount(successBuyerSearch.getVcallcount());
+                        favouriteAllResponse.setVdate(successBuyerSearch.getVdate());
+                        favouriteAllResponse.setVstartPrice(successBuyerSearch.getVstartPrice());
+                        favouriteAllResponse.setVreservePrice(successBuyerSearch.getVreservePrice());
+                        favouriteAllResponse.setVstatus(successBuyerSearch.getVstatus());
+                        favouriteAllResponse.setSendername(successBuyerSearch.getSendername());
+                        favouriteAllResponse.setSenderPic(successBuyerSearch.getSenderPic());
 
+
+                        mainList.add(favouriteAllResponse);
+
+                    }
                 }
 
                 //Seller
-                //successSellerList.clear();
-                for (FavouriteResponse.Success.SellerVehicle successSellerVehicle : favouriteResponse.getSuccess().getSellerVehicle()) {
+                if (!favouriteResponse.getSuccess().getSellerVehicle().isEmpty()) {
+                    for (FavouriteResponse.Success.SellerVehicle successSellerVehicle : favouriteResponse.getSuccess().getSellerVehicle()) {
 
-                    FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
-                    favouriteAllResponse.setLayoutNo(112);
-                    mainList.add(favouriteAllResponse);
+                        FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
+                        favouriteAllResponse.setLayoutNo(112);
+
+                        favouriteAllResponse.setFavid(successSellerVehicle.getFavid());
+                        favouriteAllResponse.setVvehicleId(successSellerVehicle.getVvehicleId());
+                        favouriteAllResponse.setVtitle(successSellerVehicle.getVtitle());
+                        favouriteAllResponse.setVcontactNo(successSellerVehicle.getVcontactNo());
+                        favouriteAllResponse.setVcategory(successSellerVehicle.getVcategory());
+                        favouriteAllResponse.setVmodel(successSellerVehicle.getVmodel());
+                        favouriteAllResponse.setVmanufacturer(successSellerVehicle.getVmanufacturer());
+                        favouriteAllResponse.setVVersion(successSellerVehicle.getVVersion());
+                        favouriteAllResponse.setVrtoCity(successSellerVehicle.getVrtoCity());
+                        favouriteAllResponse.setVlocationCity(successSellerVehicle.getVlocationCity());
+                        favouriteAllResponse.setVlocationState(successSellerVehicle.getVlocationState());
+                        favouriteAllResponse.setVlocationCountry(successSellerVehicle.getVlocationCountry());
+                        favouriteAllResponse.setVmonthOfRegistration(successSellerVehicle.getVmonthOfRegistration());
+                        favouriteAllResponse.setVyearOfRegistration(successSellerVehicle.getVyearOfRegistration());
+                        favouriteAllResponse.setVmonthOfManufacture(successSellerVehicle.getVmonthOfManufacture());
+                        favouriteAllResponse.setVyearOfManufacture(successSellerVehicle.getVyearOfManufacture());
+                        favouriteAllResponse.setVcolor(successSellerVehicle.getVcolor());
+                        favouriteAllResponse.setVregistrationNumber(successSellerVehicle.getVregistrationNumber());
+                        favouriteAllResponse.setVrcAvailable(successSellerVehicle.getVrcAvailable());
+                        favouriteAllResponse.setVinsuranceValid(successSellerVehicle.getVinsuranceValid());
+                        favouriteAllResponse.setVinsuranceIdv(successSellerVehicle.getVinsuranceIdv());
+                        favouriteAllResponse.setVtaxValidity(successSellerVehicle.getVtaxValidity());
+                        favouriteAllResponse.setVtaxPaidUpto(successSellerVehicle.getVtaxPaidUpto());
+                        favouriteAllResponse.setVfitnessValidity(successSellerVehicle.getVfitnessValidity());
+                        favouriteAllResponse.setVpermitValidity(successSellerVehicle.getVpermitValidity());
+                        favouriteAllResponse.setVpermitYesno(successSellerVehicle.getVpermitYesno());
+                        favouriteAllResponse.setVfitnessYesno(successSellerVehicle.getVfitnessYesno());
+                        favouriteAllResponse.setVfualType(successSellerVehicle.getVfualType());
+                        favouriteAllResponse.setVseatingCapacity(successSellerVehicle.getVseatingCapacity());
+                        favouriteAllResponse.setVpermit(successSellerVehicle.getVpermit());
+                        favouriteAllResponse.setVkmsRunning(successSellerVehicle.getVkmsRunning());
+                        favouriteAllResponse.setvHrsRunning(successSellerVehicle.getVHrsRunning());
+                        favouriteAllResponse.setVnoOfOwners(successSellerVehicle.getVnoOfOwners());
+                        favouriteAllResponse.setVhypothication(successSellerVehicle.getVhypothication());
+                        favouriteAllResponse.setVengineNo(successSellerVehicle.getVengineNo());
+                        favouriteAllResponse.setVchassisNo(successSellerVehicle.getVchassisNo());
+                        favouriteAllResponse.setVprice(successSellerVehicle.getVprice());
+                        favouriteAllResponse.setVimage(successSellerVehicle.getVimage());
+                        favouriteAllResponse.setVdrive(successSellerVehicle.getVdrive());
+                        favouriteAllResponse.setVtransmission(successSellerVehicle.getVtransmission());
+                        favouriteAllResponse.setVbodyType(successSellerVehicle.getVbodyType());
+                        favouriteAllResponse.setVboatType(successSellerVehicle.getVboatType());
+                        favouriteAllResponse.setVrvType(successSellerVehicle.getVrvType());
+                        favouriteAllResponse.setVapplication(successSellerVehicle.getVapplication());
+                        favouriteAllResponse.setVtyreCondition(successSellerVehicle.getVtyreCondition());
+                        favouriteAllResponse.setVbusType(successSellerVehicle.getVbusType());
+                        favouriteAllResponse.setVairCondition(successSellerVehicle.getVairCondition());
+                        favouriteAllResponse.setVinvoice(successSellerVehicle.getVinvoice());
+                        favouriteAllResponse.setVimplements(successSellerVehicle.getVimplements());
+                        favouriteAllResponse.setVfinanceReq(successSellerVehicle.getVfinanceReq());
+                        favouriteAllResponse.setVprivacy(successSellerVehicle.getVprivacy());
+                        favouriteAllResponse.setVviewcount(successSellerVehicle.getVviewcount());
+                        favouriteAllResponse.setVcallcount(successSellerVehicle.getVcallcount());
+                        favouriteAllResponse.setVdate(successSellerVehicle.getVdate());
+                        favouriteAllResponse.setVstartPrice(successSellerVehicle.getVstartPrice());
+                        favouriteAllResponse.setVreservePrice(successSellerVehicle.getVreservePrice());
+                        favouriteAllResponse.setVstatus(successSellerVehicle.getVstatus());
+                        favouriteAllResponse.setSendername(successSellerVehicle.getSendername());
+                        favouriteAllResponse.setSenderPic(successSellerVehicle.getSenderPic());
+
+                        favouriteAllResponse.setSsearchId(successSellerVehicle.getSsearchId());
+                        favouriteAllResponse.setScontactNo(successSellerVehicle.getScontactNo());
+                        favouriteAllResponse.setSstatus(successSellerVehicle.getSstatus());
+                        favouriteAllResponse.setScategory(successSellerVehicle.getScategory());
+                        favouriteAllResponse.setSmanufacturer(successSellerVehicle.getSmanufacturer());
+                        favouriteAllResponse.setSmodel(successSellerVehicle.getSmodel());
+                        favouriteAllResponse.setSversion(successSellerVehicle.getSversion());
+                        favouriteAllResponse.setSrtoCity(successSellerVehicle.getSrtoCity());
+                        favouriteAllResponse.setSrtoCity2(successSellerVehicle.getSrtoCity2());
+                        favouriteAllResponse.setSrtoCity3(successSellerVehicle.getSrtoCity3());
+                        favouriteAllResponse.setSrtoCity4(successSellerVehicle.getSrtoCity4());
+                        favouriteAllResponse.setSrtoCity5(successSellerVehicle.getSrtoCity5());
+                        favouriteAllResponse.setSlocationCity(successSellerVehicle.getSlocationCity());
+                        favouriteAllResponse.setSlocationCity2(successSellerVehicle.getSlocationCity2());
+                        favouriteAllResponse.setSlocationCity3(successSellerVehicle.getSlocationCity3());
+                        favouriteAllResponse.setSlocationCity4(successSellerVehicle.getSlocationCity4());
+                        favouriteAllResponse.setSlocationCity5(successSellerVehicle.getSlocationCity5());
+                        favouriteAllResponse.setSlocationState(successSellerVehicle.getSlocationState());
+                        favouriteAllResponse.setSyearOfRegistration(successSellerVehicle.getSyearOfRegistration());
+                        favouriteAllResponse.setScolor(successSellerVehicle.getScolor());
+                        favouriteAllResponse.setSrcAvailable(successSellerVehicle.getSrcAvailable());
+                        favouriteAllResponse.setSyearOfManufacture(successSellerVehicle.getSyearOfManufacture());
+                        favouriteAllResponse.setSinsuranceValid(successSellerVehicle.getSinsuranceValid());
+                        favouriteAllResponse.setStaxValidity(successSellerVehicle.getStaxValidity());
+                        favouriteAllResponse.setSfitnessValidity(successSellerVehicle.getSfitnessValidity());
+                        favouriteAllResponse.setSpermitValidity(successSellerVehicle.getSpermitValidity());
+                        favouriteAllResponse.setSfualType(successSellerVehicle.getSfualType());
+                        favouriteAllResponse.setSseatingCapacity(successSellerVehicle.getSseatingCapacity());
+                        favouriteAllResponse.setSpermit(successSellerVehicle.getSpermit());
+                        favouriteAllResponse.setSkmsRunning(successSellerVehicle.getSkmsRunning());
+                        favouriteAllResponse.setSnoOfOwners(successSellerVehicle.getSnoOfOwners());
+                        favouriteAllResponse.setShypothication(successSellerVehicle.getShypothication());
+                        favouriteAllResponse.setSprice(successSellerVehicle.getSprice());
+                        favouriteAllResponse.setSdrive(successSellerVehicle.getSdrive());
+                        favouriteAllResponse.setStransmission(successSellerVehicle.getStransmission());
+                        favouriteAllResponse.setSbodyType(successSellerVehicle.getSbodyType());
+                        favouriteAllResponse.setSboatType(successSellerVehicle.getSboatType());
+                        favouriteAllResponse.setSrvType(successSellerVehicle.getSrvType());
+                        favouriteAllResponse.setSapplication(successSellerVehicle.getSapplication());
+                        favouriteAllResponse.setSdate(successSellerVehicle.getSdate());
+                        favouriteAllResponse.setScalldate(successSellerVehicle.getScalldate());
+                        favouriteAllResponse.setSstopdate(successSellerVehicle.getSstopdate());
+                        favouriteAllResponse.setStyreCondition(successSellerVehicle.getStyreCondition());
+                        favouriteAllResponse.setSimplements(successSellerVehicle.getSimplements());
+                        favouriteAllResponse.setSbusType(successSellerVehicle.getSbusType());
+                        favouriteAllResponse.setSairCondition(successSellerVehicle.getSairCondition());
+                        favouriteAllResponse.setSimplements(successSellerVehicle.getSimplements());
+                        favouriteAllResponse.setSbusType(successSellerVehicle.getSbusType());
+                        favouriteAllResponse.setSairCondition(successSellerVehicle.getSairCondition());
+                        favouriteAllResponse.setSfinanceReq(successSellerVehicle.getSfinanceReq());
+                        favouriteAllResponse.setSinvoice(successSellerVehicle.getSinvoice());
+
+                        mainList.add(favouriteAllResponse);
+                    }
                 }
 
                 //Search
-                //successSearchList.clear();
-                for (FavouriteResponse.Success.Search successSearch : favouriteResponse.getSuccess().getSearch()) {
+                if (!favouriteResponse.getSuccess().getSearch().isEmpty()) {
+                    for (FavouriteResponse.Success.Search successSearch : favouriteResponse.getSuccess().getSearch()) {
 
-                    FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
-                    favouriteAllResponse.setLayoutNo(113);
-                    mainList.add(favouriteAllResponse);
+                        FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
+                        favouriteAllResponse.setLayoutNo(113);
+
+                        favouriteAllResponse.setSearchId(successSearch.getSearchId());
+                        favouriteAllResponse.setDate(successSearch.getDate());
+                        favouriteAllResponse.setDatetime(successSearch.getDatetime());
+                        favouriteAllResponse.setCategory(successSearch.getCategory());
+                        favouriteAllResponse.setBrand(successSearch.getBrand());
+                        favouriteAllResponse.setModel(successSearch.getModel());
+                        favouriteAllResponse.setRtoCity(successSearch.getRtoCity());
+                        favouriteAllResponse.setLocationCity(successSearch.getLocationCity());
+                        favouriteAllResponse.setColor(successSearch.getColor());
+                        favouriteAllResponse.setPrice(successSearch.getPrice());
+                        favouriteAllResponse.setYearOfManufactur(successSearch.getYearOfManufactur());
+                        favouriteAllResponse.setFavid(successSearch.getFavid());
+                        favouriteAllResponse.setImages(successSearch.getImages());
+
+                        mainList.add(favouriteAllResponse);
+                    }
                 }
 
 
