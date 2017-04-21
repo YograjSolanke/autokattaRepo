@@ -290,7 +290,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/expander"
+
                 android:id="@+id/postdownarrow"
                 android:layout_centerVertical="true"
                 android:layout_alignBottom="@+id/match_count"
@@ -304,7 +304,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/contrst"
+
                 android:id="@+id/postuparrow"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
