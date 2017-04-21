@@ -46,19 +46,20 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-005 on 20/4/17.
  */
 
-public class CreateGroupFragment extends Fragment implements View.OnClickListener,RequestNotifier {
+public class CreateGroupFragment extends Fragment implements View.OnClickListener, RequestNotifier {
     View mCreateGroup;
     EditText mGroupTitle;
     Button mAddmember;
     String lastWord = "";
     ImageView mGroupImg;
-    String mediaPath,mContact;
+    String mediaPath = "", mContact;
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
     String fname;
     File file;
-    Bundle b=new Bundle();
-ApiCall mApiCall;
+    Bundle b = new Bundle();
+    ApiCall mApiCall;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,7 +68,8 @@ ApiCall mApiCall;
         mGroupTitle = (EditText) mCreateGroup.findViewById(R.id.group_title);
         mAddmember = (Button) mCreateGroup.findViewById(R.id.BtnAddMember);
         mGroupImg = (ImageView) mCreateGroup.findViewById(R.id.group_profile_pic);
-mApiCall=new ApiCall(getActivity(),this);
+        mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+        mApiCall = new ApiCall(getActivity(), this);
         mGroupImg.setOnClickListener(this);
         mAddmember.setOnClickListener(this);
         return mCreateGroup;
@@ -81,7 +83,7 @@ mApiCall=new ApiCall(getActivity(),this);
                     Snackbar.make(view, "Please provide group name and optional group icon", Snackbar.LENGTH_LONG).show();
                 } else {
 
-                    mApiCall.createGroups(mGroupTitle.getText().toString(),lastWord,mContact);
+                    mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);
                     //   createGroups(GroupTitle.getText().toString(), lastWord);
 
 //                            CreateGroup groupRequest = new CreateGroup(sendGroupData(),GroupsCreateFragment.this);
@@ -118,7 +120,6 @@ mApiCall=new ApiCall(getActivity(),this);
         });
         builder.show();
     }
-
 
 
     @Override
@@ -267,26 +268,24 @@ mApiCall=new ApiCall(getActivity(),this);
 
     @Override
     public void notifyString(String str) {
-      if (str!=null)
-      {
-          CustomToast.customToast(getActivity(), "Group created Successfully");
-          getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", str).apply();
-          uploadImage(mediaPath);
+        if (str != null) {
+            CustomToast.customToast(getActivity(), "Group created Successfully");
+            getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", str).apply();
+            if (!mediaPath.equals("")) {
+                uploadImage(mediaPath);
+            }
+            b.putString("GrpId", str);
+            b.putString("call", "newGroup");
+            GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
+            fragment2.setArguments(b);   // send values to another fragment
 
-          GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
-          b.putString("GrpId", str);
-          b.putString("call", "newGroup");
-          fragment2.setArguments(b);   // send values to another fragment
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.group_container, fragment2);
+            fragmentTransaction.commit();
 
-          FragmentManager fragmentManager = getFragmentManager();
-          FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-          fragmentTransaction.replace(R.id.group_container, fragment2);
-          fragmentTransaction.addToBackStack("groupcontactfragment");
-          fragmentTransaction.commit();
-      }
-      else
-      {
-        CustomToast.customToast(getActivity(), "Something went wrong Please try again");
-      }
+        } else {
+            CustomToast.customToast(getActivity(), "Something went wrong Please try again");
+        }
     }
 }

@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,34 +28,28 @@ import static autokatta.com.fragment.GroupContactFragment.AddContacts;
 
 public class GroupContactListAdapter extends BaseAdapter {
 
-    private List<Success>originalData = null;
+
     private List<Success>filteredData = null;
     private ItemFilter mFilter = new ItemFilter();
-
-    private LayoutInflater mInflater;
+    private List<GetRegisteredContactsResponse.Success> mList;
+    private List<GetRegisteredContactsResponse.Success> mListCopy;
     Activity activity;
     CheckBox checkbox;
-    ArrayList<Boolean> positionArray;
-    ArrayList<String> contactlist;
-    public GroupContactListAdapter(Activity a, ArrayList<GetRegisteredContactsResponse.Success> data) {
-        this.filteredData = data ;
-        this.originalData = data ;
-        this.activity=a;
+    ArrayList<Boolean> positionArray=new ArrayList<>();
+    ArrayList<String> contactlist=new ArrayList<>();
+    public GroupContactListAdapter(Activity a, ArrayList<GetRegisteredContactsResponse.Success> mList) {
+        this.activity = a;
+        this.mList = mList;
+        this.mListCopy=mList;
 
-        contactlist=new ArrayList<>(filteredData.size());
-
-        positionArray = new ArrayList<>(filteredData.size());
-        for(int i =0;i<filteredData.size();i++) {
-            positionArray.add(false);
-            contactlist.add("0");
+            for (int i = 0; i < mList.size(); i++) {
+                contactlist.add("0");
+                positionArray.add(false);
         }
-        mInflater = (LayoutInflater)activity.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     public int getCount() {
-        return filteredData.size();
+        return mList.size();
     }
 
     public Object getItem(int position) {
@@ -68,53 +63,42 @@ public class GroupContactListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
-        // A ViewHolder keeps references to children views to avoid unnecessary calls
-        // to findViewById() on each row.
-        final ViewHolder holder;
 
-        // When convertView is not null, we can reuse it directly, there is no need
-        // to reinflate it. We only inflate a new View when the convertView supplied
-        // by ListView is null.
-        if (convertView == null) {
+       ViewHolder contactListHolder = null;
+        if (convertView == null){
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.group_contact_list_adapter, null);
 
-            // Creates a ViewHolder and store references to the two children views
-            // we want to bind data to.
-            holder = new ViewHolder();
-            holder.text = (TextView) convertView.findViewById(R.id.contact_name);
-            holder.text1 = (TextView) convertView.findViewById(R.id.contact_no);
-            holder.checkBox = (CheckBox) convertView.findViewById( R.id.checkall);
 
-
-            convertView.setTag(holder);
+            contactListHolder = new ViewHolder();
+            contactListHolder.mName = (TextView) convertView.findViewById(R.id.contact_name);
+            contactListHolder.mContact = (TextView) convertView.findViewById(R.id.contact_no);
+            contactListHolder.checkBox = (CheckBox) convertView.findViewById( R.id.checkall);
+            convertView.setTag(contactListHolder);
+        }else {
+            contactListHolder = (ViewHolder) convertView.getTag();
+            contactListHolder.checkBox.setOnCheckedChangeListener(null);
         }
-        else
-        {
-            // Get the ViewHolder back to get fast access to the TextView
-            // and the ImageView.
-            holder = (ViewHolder) convertView.getTag();
-            holder.checkBox.setOnCheckedChangeListener(null);
-        }
+        Log.i("aaaaaaaaaaaaaaaaa","->"+mList);
+        GetRegisteredContactsResponse.Success success = mList.get(position);
+        contactListHolder.mName.setText(success.getUsername());
+        contactListHolder.mContact.setText(success.getContact());
+
+        final ViewHolder ContactListHolder = contactListHolder;
 
 
-        String contact_name=filteredData.get(position).getUsername();
-        String arr[]=contact_name.split("-");
-        holder.text.setText(arr[0]);
-        holder.text1.setText(arr[1]);
+        contactListHolder.checkBox.setFocusable(false);
+        contactListHolder.checkBox.setChecked(positionArray.get(position));
 
-        // holder.checkBox.setOnClickListener(this);
-        holder.checkBox.setFocusable(false);
-        holder.checkBox.setChecked(positionArray.get(position));
-
-        holder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        final ViewHolder finalContactListHolder = contactListHolder;
+        contactListHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked ){
 
                     positionArray.set(position, true);
-                    contactlist.set(position,holder.text1.getText().toString());
+                    contactlist.set(position, mList.get(position).getContact());
 
                 }else{
                     positionArray.set(position, false);
@@ -142,8 +126,9 @@ public class GroupContactListAdapter extends BaseAdapter {
     }
 
 
-    static class ViewHolder {
-        TextView text,text1;
+    private class ViewHolder {
+        TextView mName;
+        TextView mContact;
         CheckBox checkBox ;
     }
 
@@ -159,7 +144,7 @@ public class GroupContactListAdapter extends BaseAdapter {
 
             FilterResults results = new FilterResults();
 
-            final List<Success> list = originalData;
+            final List<Success> list = mList;
 
             int count = list.size();
             final ArrayList<Success> nlist = new ArrayList<Success>(count);

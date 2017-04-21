@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +32,7 @@ import autokatta.com.fragment.GroupNextTabFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
+import autokatta.com.view.GroupTabs;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -47,6 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     private Context mContext;
     private List<ModelGroups> mItemList = new ArrayList<>();
     private String GroupType, keyword, mGroupid, mGroupName, mGroupImage;
+    FragmentActivity ctx;
  //   private String mycontact = "8007855589";
 
     // Provide a reference to the views for each data item
@@ -230,6 +233,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         if (str != "") {
             if (str.equals("success")) {
                 CustomToast.customToast(mContext, "Group Deleted Successfuly !!!");
+                Intent i=new Intent(mActivity, GroupTabs.class);
+                mActivity.startActivity(i);
+
             } else {
                 CustomToast.customToast(mContext, "Group Not Deleted !!!");
 

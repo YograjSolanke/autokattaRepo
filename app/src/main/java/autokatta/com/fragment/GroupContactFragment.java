@@ -1,9 +1,12 @@
 package autokatta.com.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,16 +34,18 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-005 on 20/4/17.
  */
 
-public class GroupContactFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,RequestNotifier {
-View mGcontact;
-    String mContact,mGroup_id,grp_id,call,grp1_id,pass_id;
+public class GroupContactFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+    View mGcontact;
+    String mContact, mGroup_id, grp_id, call, grp1_id, pass_id;
     ListView lv;
     ApiCall mApiCall;
     String receiver_contact;
     GroupContactListAdapter CntctListadapter;
     Bundle args = new Bundle();
+
     public static Button AddContacts;
     EditText inputSearch;
+    ArrayList<String> clist = new ArrayList<>();
     ArrayList<GetRegisteredContactsResponse.Success> cntlist = new ArrayList<>();
 
     boolean flag = true;
@@ -49,20 +54,23 @@ View mGcontact;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mGcontact = inflater.inflate(R.layout.group_contact_list, container, false);
 
-        mContact=getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+        mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
-        mGroup_id=getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+        mGroup_id = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("group_id", "");
-         mApiCall=new ApiCall(getActivity(),this);
+        mApiCall = new ApiCall(getActivity(), this);
 
+
+        System.out.println("----------------->GroupID" + mGroup_id);
         AddContacts = (Button) mGcontact.findViewById(R.id.add_contacts);
         inputSearch = (EditText) mGcontact.findViewById(R.id.inputSearch);
         lv = (ListView) mGcontact.findViewById(R.id.list_view);
 
 
-
+        args = getArguments();
         mApiCall.getRegisteredContacts();
 
         grp_id = args.getString("GrpId", "");
@@ -80,7 +88,8 @@ View mGcontact;
             pass_id = grp_id;
         }
 
-
+        System.out.println("----------------->grp_id" + grp_id);
+        System.out.println("----------------->grp_id1" + grp1_id);
 
         AddContacts.setEnabled(false);
 
@@ -94,14 +103,14 @@ View mGcontact;
                 final ArrayList<String> GetList = args.getStringArrayList("list");
                 System.out.println("List From Web Service: " + GetList);
 
-                cntlist = CntctListadapter.checkboxselect();
+                clist = CntctListadapter.checkboxselect();
 
-                for (int i = 0; i < cntlist.size(); i++) {
-                    if (!cntlist.get(i).equals("0")) {
+                for (int i = 0; i < clist.size(); i++) {
+                    if (!clist.get(i).equals("0")) {
                         if (allcontacts.equals(""))
-                            allcontacts = String.valueOf(cntlist.get(i));
+                            allcontacts = clist.get(i);
                         else
-                            allcontacts = allcontacts + "," + cntlist.get(i);
+                            allcontacts = allcontacts + "," + clist.get(i);
 
                     }
                 }
@@ -123,15 +132,15 @@ View mGcontact;
                 else if (call.equalsIgnoreCase("existGroup")) {
 
                     //For Group Which Doesn't Have Any Contact No In WebService
-                    if (GetList.size() == 0) {
+                    if (cntlist.size() == 0) {
                         flag = true;
 
                     }
 
                     //If Group Already Contains Selected Contact
                     else {
-                        for (int i = 0; i < GetList.size(); i++) {
-                            String no = GetList.get(i);
+                        for (int i = 0; i < cntlist.size(); i++) {
+                            String no = String.valueOf(cntlist.get(i).getContact());
 
                             String[] parts = allcontacts.split(",");
 
@@ -142,29 +151,28 @@ View mGcontact;
                                             "Sorry..No Is Already added in Group",
                                             Snackbar.LENGTH_LONG).show();
                                     flag = false;
-                                }
+                                }/*else
+                                {
+                                mApiCall.addContactInGroup(pass_id,parts[j]);
+                                }*/
                             }
                         }
                     }
                 }
                 if (!flag) {
-/*
 
-                    GroupTabFrag frag = new GroupTabFrag();
-                    args.putString("id", pass_id);
+                    GroupNextTabFragment groupMyJoined=new GroupNextTabFragment();
+                    args.putString("id",pass_id);
                     args.putString("call", "groupContact");
-                    args.putString("grouptype", "MyGroups");
-                    frag.setArguments(args);
+                    args.putString("grouptype", "groups");
+                    groupMyJoined.setArguments(args);
 
                     System.out.println("Back To Fragment From Group Contact Fragment:\n");
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, frag);
-                    // fragmentTransaction.addToBackStack("grouptabfrag");
-
-                    //content_frame is a Id  of Frame Layout
+                    fragmentTransaction.replace(R.id.group_container, groupMyJoined);
                     fragmentTransaction.commit();
-*/
+
 
                 }
 
@@ -173,29 +181,28 @@ View mGcontact;
                         allcontacts = allcontacts + "," + mContact;
                     }
 
-                   mApiCall.addContactInGroup(pass_id,allcontacts);
+                    mApiCall.addContactInGroup(pass_id, allcontacts);
                     String[] parts = allcontacts.split(",");
 
                     for (int i = 0; i < parts.length; i++) {
 
                         receiver_contact = parts[i];
                         if (!receiver_contact.equalsIgnoreCase(mContact)) {
-                            mApiCall.groupLikeNotification(pass_id,mContact,receiver_contact,"3");
+                           // mApiCall.groupLikeNotification(pass_id, mContact, receiver_contact, "3");
                         }
                     }
 
-/*
-
-                    GroupTabFrag frag2 = new GroupTabFrag();    // Call Another Fragment
-                    args.putString("id", pass_id);
+                    GroupNextTabFragment groupMyJoined=new GroupNextTabFragment();
+                    args.putString("id",pass_id);
                     args.putString("call", "groupContact");
-                    args.putString("grouptype", "MyGroups");
-                    frag2.setArguments(args);
+                    args.putString("grouptype", "groups");
+                    groupMyJoined.setArguments(args);
+
+                    System.out.println("Back To Fragment From Group Contact Fragment:\n");
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, frag2);
+                    fragmentTransaction.replace(R.id.group_container, groupMyJoined);
                     fragmentTransaction.commit();
-*/
 
 
                     System.out.println("All contacts ::" + allcontacts);
@@ -227,9 +234,6 @@ View mGcontact;
         });
 
 
-
-
-
         return mGcontact;
     }
 
@@ -240,7 +244,7 @@ View mGcontact;
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
+        if (response != null) {
             GetRegisteredContactsResponse mGetRegisteredContactsResponse = (GetRegisteredContactsResponse) response.body();
             for (GetRegisteredContactsResponse.Success contactRegistered : mGetRegisteredContactsResponse.getSuccess()) {
                 contactRegistered.setContact(contactRegistered.getContact());
@@ -250,6 +254,7 @@ View mGcontact;
 
             CntctListadapter = new GroupContactListAdapter(getActivity(), cntlist);
             lv.setAdapter(CntctListadapter);
+            CntctListadapter.notifyDataSetChanged();
 
         }
     }
@@ -261,16 +266,13 @@ View mGcontact;
 
     @Override
     public void notifyString(String str) {
-if(str!=null)
-{
-    if (str.equals("success_add_contact"))
-    {
-        CustomToast.customToast(getActivity(),"Contact Added Successfully");
-    }else
-    {
-        CustomToast.customToast(getActivity(),"Notification Sent Successfully");
-    }
-}
+        if (str != null) {
+            if (str.equals("success_add_contact")) {
+                CustomToast.customToast(getActivity(), "Contact Added Successfully");
+            } else {
+                CustomToast.customToast(getActivity(), "Error");
+            }
+        }
 
     }
 }
