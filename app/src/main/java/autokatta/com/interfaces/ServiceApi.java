@@ -1066,8 +1066,22 @@ public interface ServiceApi {
     Call<String> notificationLikegroup(@Query("groupid") String groupid, @Query("sender_contact") String mycontact,@Query("receiver_contact") String OtherContact, @Query("layout") String layout);
 
 
-
-
-
+    //update a store...
+    @POST("updateStore.php")
+    Call<String> updateStore(@Query("storename") String storename,
+                             @Query("store_id") String store_id,
+                             @Query("location") String location,
+                             @Query("website") String website,
+                             @Query("open") String open,
+                             @Query("close") String close,
+                             @Query("profile") String profile,
+                             @Query("category") String category,
+                             @Query("working_days") String working_days,
+                             @Query("storeDescription") String storeDescription,
+                             @Query("storetype") String storetype,
+                             @Query("address") String address,
+                             @Query("coverImage") String coverImage,
+                             @Query("brandTags") String textbrand,
+                             @Query("Brands") String strBrandSpinner);
 
 }

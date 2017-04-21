@@ -156,6 +156,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         if (callFrom.equals("StoreViewActivity")) {
             store_id = bundle.getString("store_id");
             create.setText("update");
+            textstore.setText("Update Store");
             mApiCall.getStoreData(myContact, store_id);
         }
 

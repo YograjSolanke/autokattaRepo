@@ -1,26 +1,16 @@
 package autokatta.com.view;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-
-import java.util.ArrayList;
 
 import autokatta.com.R;
 import autokatta.com.initial_fragment.MyStoreListFragment;
 import autokatta.com.my_store.CreateStoreFragment;
-import autokatta.com.response.MyStoreResponse;
 
 public class MyStoreListActivity extends AppCompatActivity {
-
-    RecyclerView mRecyclerView;
-    FloatingActionButton fabCreateStore;
-    String callType;
-    ArrayList<MyStoreResponse.Success> storeResponseArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
