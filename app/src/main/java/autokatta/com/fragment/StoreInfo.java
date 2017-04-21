@@ -82,11 +82,6 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 CreateStoreFragment addAdmin = new CreateStoreFragment();
                 addAdmin.setArguments(bundle);
 
-
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.storeviewFrame, addAdmin).addToBackStack("StoreInfo").commit();
-
                 Intent intent = new Intent(getActivity(), MyStoreListActivity.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);

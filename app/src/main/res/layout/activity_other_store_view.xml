@@ -103,10 +103,10 @@
 
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/editStore"
+            android:id="@+id/add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mode_edit_white_24dp"
+            android:src="@drawable/ic_cart_plus"
             fab:fab_label="Add"
             fab:fab_size="mini" />
 

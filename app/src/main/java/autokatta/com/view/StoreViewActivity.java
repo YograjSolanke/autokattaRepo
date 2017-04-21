@@ -1,11 +1,14 @@
 package autokatta.com.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -30,6 +34,8 @@ import autokatta.com.fragment.StoreProducts;
 import autokatta.com.fragment.StoreServices;
 import autokatta.com.fragment.StoreVehicles;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.my_store.AddProductFragment;
+import autokatta.com.my_store.AddServiceFragment;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
 import retrofit2.Response;
@@ -56,7 +62,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     TabLayout tabLayout;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
-    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap;
+    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap, mAdd;
     StoreInfo storeInfo;
     StoreProducts storeProducts;
     StoreServices storeServices;
@@ -78,6 +84,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
         mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
         mRate = (FloatingActionButton) findViewById(R.id.rate);
+        mAdd = (FloatingActionButton) findViewById(R.id.add);
         mGoogleMap = (FloatingActionButton) findViewById(R.id.gotoMap);
         storerating = (RatingBar) findViewById(R.id.store_rating);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -91,6 +98,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mFollow.setOnClickListener(this);
         mRate.setOnClickListener(this);
         mGoogleMap.setOnClickListener(this);
+        mAdd.setOnClickListener(this);
 
 
 
@@ -345,7 +353,66 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                 menuRed.setClosedOnTouchOutside(true);
                 break;
+
+            case R.id.add:
+
+                showAddAlert();
+
+                break;
         }
+
+    }
+
+    private void showAddAlert() {
+
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(StoreViewActivity.this);
+        builderSingle.setIcon(R.drawable.ic_cart_plus);
+        builderSingle.setTitle("Select One Name:-");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(StoreViewActivity.this, android.R.layout.select_dialog_singlechoice);
+        arrayAdapter.add("Add Product");
+        arrayAdapter.add("Add Service");
+        arrayAdapter.add("Add Vehicle");
+
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strName = arrayAdapter.getItem(which);
+                Bundle bundle = new Bundle();
+                bundle.putString("store_id", store_id);
+
+                if (strName.equals("Add Product")) {
+
+                    AddProductFragment addAdmin = new AddProductFragment();
+                    addAdmin.setArguments(bundle);
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+
+                } else if (strName.equals("Add Service")) {
+
+                    AddServiceFragment addAdmin = new AddServiceFragment();
+                    addAdmin.setArguments(bundle);
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+
+                } else if (strName.equals("Add Vehicle")) {
+
+                }
+
+            }
+        });
+        builderSingle.show();
+
 
     }
 
@@ -389,7 +456,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mLike.setVisibility(View.GONE);
                     mFollow.setVisibility(View.GONE);
                     mRate.setVisibility(View.GONE);
-                    mGoogleMap.setVisibility(View.GONE);
                 }
 
 
