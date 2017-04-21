@@ -29,6 +29,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.Db_AutokattaContactResponse;
 import autokatta.com.response.StoreOldAdminResponse;
+import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
 
 /**
@@ -112,18 +113,14 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
 
                 Bundle b = new Bundle();
-                b.putString("action", "main");
+                // b.putString("action", "main");
                 b.putString("store_id", store_id);
 
 
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
-                    /*StoreviewFragment fragment = new StoreviewFragment();
-                    fragment.setArguments(b);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.myStoreListFrame, fragment);
-                    //    fragmentTransaction.addToBackStack("store_view");
-                    fragmentTransaction.commit();*/
+                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
+                    intent.putExtras(b);
+                    getActivity().startActivity(intent);
                 } else {
                     Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
                     getActivity().startActivity(i);
@@ -212,7 +209,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
                     } /*else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));*/
-                    if (callFrom.equalsIgnoreCase("storeview") && !(alreadyAdmin.size() == 0))
+                    if (!(alreadyAdmin.size() == 0))
                         adapter = new StoreAdminAdapter(getActivity(), contactdata, alreadyAdmin);
                     else {
                         adapter = new StoreAdminAdapter(getActivity(), contactdata);
@@ -249,17 +246,14 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
             if (str.startsWith("success")) {
                 Bundle b = new Bundle();
-                b.putString("action", "main");
+                //  b.putString("action", "main");
                 b.putString("store_id", store_id);
 
 
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
-                    /*StoreviewFragment fragment = new StoreviewFragment();
-                    fragment.setArguments(b);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.myStoreListFrame, fragment);
-                    fragmentTransaction.commit();*/
+                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
+                    intent.putExtras(b);
+                    getActivity().startActivity(intent);
                 } else {
                     Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
                     getActivity().startActivity(i);

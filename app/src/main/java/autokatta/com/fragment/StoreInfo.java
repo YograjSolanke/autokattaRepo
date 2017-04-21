@@ -56,14 +56,10 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
         editStore.setOnClickListener(this);
         Bundle b = getArguments();
         Store_id = b.getString("store_id");
-        StoreContact = b.getString("StoreContact");
+        //  StoreContact = b.getString("StoreContact");
         getStoredata(myContact, Store_id);
 
 
-        if (StoreContact.contains(myContact)) {
-            editStore.setVisibility(View.VISIBLE);
-
-        }
 
 
         return mAbout;
@@ -110,6 +106,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
 
                     storeName.setText(success.getName());
+                    StoreContact = success.getContact();
                     storeLocation.setText(success.getLocation());
                     storeWebsite.setText(success.getWebsite());
                     storeWorkDays.setText(success.getWorkingDays());
@@ -119,6 +116,12 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                     storeDescription.setText(success.getStoreDescription());
                     storeType.setText(success.getStoreType());
                     storeServiceOffered.setText(success.getCategory());
+
+
+                    if (StoreContact.contains(myContact)) {
+                        editStore.setVisibility(View.VISIBLE);
+
+                    }
                 }
 
 

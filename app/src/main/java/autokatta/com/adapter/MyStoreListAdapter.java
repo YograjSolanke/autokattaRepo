@@ -273,7 +273,6 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             public void onClick(View view) {
                 Bundle b = new Bundle();
 
-                b.putString("StoreContact", mStoreList.get(holder.getAdapterPosition()).getContact());
                 b.putString("store_id", mStoreList.get(holder.getAdapterPosition()).getId());
                 Intent intent = new Intent(mActivity, StoreViewActivity.class);
                 intent.putExtras(b);

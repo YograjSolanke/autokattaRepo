@@ -434,7 +434,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                                                         int id) {
 
                                     Bundle b = new Bundle();
-                                    b.putString("call","interestbased");
+                                        b.putString("className", "interestbased");
                                     CreateStoreFragment fr = new CreateStoreFragment();
                                     fr.setArguments(b);
                                         finish();

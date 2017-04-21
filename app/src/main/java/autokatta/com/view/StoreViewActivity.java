@@ -52,6 +52,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     String preoverall = "";
     Double storelattitude;
     Double storelongitude;
+    ViewPager viewPager;
+    TabLayout tabLayout;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
     FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap;
@@ -78,6 +80,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mRate = (FloatingActionButton) findViewById(R.id.rate);
         mGoogleMap = (FloatingActionButton) findViewById(R.id.gotoMap);
         storerating = (RatingBar) findViewById(R.id.store_rating);
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
+        viewPager = (ViewPager) findViewById(R.id.other_store_viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
         storerating.setRating(2);
 
         mCall.setOnClickListener(this);
@@ -109,30 +115,18 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             public void run() {
                 try {
                     if (getIntent().getExtras() != null) {
-                        mOtherContact = getIntent().getExtras().getString("StoreContact");
                         store_id = getIntent().getExtras().getString("store_id");
-                    }
+                        getOtherStore(mLoginContact, store_id);
 
-                    if (mOtherContact.contains(mLoginContact)) {
-                        mCall.setVisibility(View.GONE);
-                        mLike.setVisibility(View.GONE);
-                        mFollow.setVisibility(View.GONE);
-                        mRate.setVisibility(View.GONE);
-                        mGoogleMap.setVisibility(View.GONE);
+
                     }
 
                     mBundle.putString("store_id", store_id);
-                    mBundle.putString("StoreContact", mOtherContact);
-                    getOtherStore(mLoginContact, store_id);
-
-                    collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-                    mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
-                    ViewPager viewPager = (ViewPager) findViewById(R.id.other_store_viewpager);
                     if (viewPager != null) {
                         setupViewPager(viewPager);
                     }
 
-                    TabLayout tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
+
                     tabLayout.setupWithViewPager(viewPager);
 
                 } catch (Exception e) {
@@ -377,6 +371,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
                     userName = success.getName();
                     dp = success.getStoreImage();
+                    mOtherContact = success.getContact();
                     mLikestr=success.getLikestatus();
                     mFolllowstr=success.getFollowstatus();
                     preoverall = success.getRate();
@@ -388,6 +383,20 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     storelattitude = success.getLatitude();
                     storelongitude = success.getLongitude();
                 }
+
+                if (mOtherContact.contains(mLoginContact)) {
+                    mCall.setVisibility(View.GONE);
+                    mLike.setVisibility(View.GONE);
+                    mFollow.setVisibility(View.GONE);
+                    mRate.setVisibility(View.GONE);
+                    mGoogleMap.setVisibility(View.GONE);
+                }
+
+
+                mBundle.putString("StoreContact", mOtherContact);
+
+
+
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + dp;
                 Glide.with(this)
                         .load(dp_path)

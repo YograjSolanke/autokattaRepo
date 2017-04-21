@@ -16,10 +16,10 @@ public class CreateStoreContainer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_store_container);
 
-        String mCall = getIntent().getExtras().getString("call");
+        String mCall = getIntent().getExtras().getString("className");
         Log.i("mCall", "->" + mCall);
         Bundle bundle = new Bundle();
-        bundle.putString("call", mCall);
+        bundle.putString("className", mCall);
         CreateStoreFragment storeFragment = new CreateStoreFragment();
         storeFragment.setArguments(bundle);
         FragmentManager manager = getSupportFragmentManager();

@@ -76,7 +76,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
-            storetype = "", store_id;
+            storetype = "", store_id, preLastWord = "", preCoverLastWord;
     Multispinner weekspn, brandSpinner;
     MultiAutoCompleteTextView multiautotext, multiautobrand;
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
@@ -155,6 +155,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         if (callFrom.equals("StoreViewActivity")) {
             store_id = bundle.getString("store_id");
+
             create.setText("update");
             textstore.setText("Update Store");
             mApiCall.getStoreData(myContact, store_id);
@@ -320,7 +321,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 } else if (!rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
                     storetype = "service & vehicle";
                 } else if (rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
-                    storetype = "all";
+                    storetype = "product,service,vehicle";
                 }
 
                 Log.i("store type", ":" + storetype);
@@ -412,7 +413,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     Toast.makeText(getActivity(), "Enter Valid Open Time And Close Time", Toast.LENGTH_SHORT).show();
                 } else if (flagtime) {
                     Toast.makeText(getActivity(), "Close Time Should Be Graeter Than Open Time", Toast.LENGTH_SHORT).show();
-                } else if (workdays.equals("-Select Working Days-")) {
+                } else if (workdays.equals("-Select Working Days-") || workdays.equals("")) {
                     Toast.makeText(getActivity(), "Please select Working Days", Toast.LENGTH_LONG).show();
                 } else if (storetype.equalsIgnoreCase("")) {
                     Toast.makeText(getActivity(), "Please select store type", Toast.LENGTH_LONG).show();
@@ -426,13 +427,25 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     brandSpinner.requestFocus();
                 } else {
 
-                    createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription
-                            , finalbrandtags, strBrandSpinner);
+                    if (create.getText().toString().equalsIgnoreCase("create")) {
+                        createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription
+                                , finalbrandtags, strBrandSpinner);
+                    } else {
+
+                        if (lastWord.equals(""))
+                            lastWord = preLastWord;
+                        if (coverlastWord.equals(""))
+                            coverlastWord = preCoverLastWord;
+                        updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription, storetype, address,
+                                coverlastWord, finalbrandtags, strBrandSpinner);
+
+                    }
                 }
 
         }
 
     }
+
 
     public void onPickImage(View view, String whichButton) {
         getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().putString("imageCallStore", whichButton).apply();
@@ -735,6 +748,16 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
     }
 
+
+    private void updateStore(String name, String store_id, String location, String website, String stropen, String strclose,
+                             String lastWord, String category, String workdays, String storeDescription, String storetype,
+                             String address, String coverlastWord, String finalbrandtags, String strBrandSpinner) {
+
+
+        mApiCall.updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription,
+                storetype, address, coverlastWord, finalbrandtags, strBrandSpinner);
+    }
+
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
@@ -800,7 +823,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         bundle = new Bundle();
                         bundle.putString("store_id", id);
                         bundle.putString("call", callFrom);
-                        bundle.putString("storetype", storetype);
+
 
                         //getActivity().finish();
 
@@ -833,6 +856,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             storeaddress.setText(success.getAddress());
                             edtStoreDesc.setText(success.getStoreDescription());
                             multiautotext.setText(success.getCategory());
+                            preLastWord = success.getStoreImage();
+                            preCoverLastWord = success.getCoverImage();
                             String storeType = success.getStoreType();
 
                             if (storeType.equalsIgnoreCase("product")) {
@@ -840,6 +865,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             } else if (storeType.equalsIgnoreCase("service")) {
                                 rbtstoreservice.setChecked(true);
                             } else if (storeType.equalsIgnoreCase("vehicle")) {
+                                rbtstorevehicle.setChecked(true);
+                            } else if (storeType.equalsIgnoreCase("product & service")) {
+                                rbtstoreproduct.setChecked(true);
+                                rbtstoreservice.setChecked(true);
+                            } else if (storeType.equalsIgnoreCase("product & vehicle")) {
+                                rbtstoreproduct.setChecked(true);
+                                rbtstorevehicle.setChecked(true);
+                            } else if (storeType.equalsIgnoreCase("service & vehicle")) {
+                                rbtstoreservice.setChecked(true);
                                 rbtstorevehicle.setChecked(true);
                             } else {
                                 rbtstoreproduct.setChecked(true);
@@ -882,6 +916,27 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         if (str != null) {
             if (str.equalsIgnoreCase("brand_tag_added")) {
                 Toast.makeText(getActivity(), "New brand tag added", Toast.LENGTH_SHORT).show();
+            } else if (str.equals("store_updated")) {
+
+                CustomToast.customToast(getActivity(), "Store Updated");
+                uploadImage(picturePath);
+                uploadImage(coverpicturePath);
+
+
+                bundle = new Bundle();
+                bundle.putString("store_id", store_id);
+                bundle.putString("call", callFrom);
+
+
+                //getActivity().finish();
+
+                AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
+                addAdmin.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+
+
             }
         } else
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));

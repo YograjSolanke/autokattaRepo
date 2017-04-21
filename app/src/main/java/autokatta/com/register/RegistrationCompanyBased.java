@@ -402,7 +402,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
                                         Bundle b = new Bundle();
-                                        b.putString("call", "interestbased");
+                                        b.putString("className", "interestbased");
                                         Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
                                         intent.putExtras(b);
                                         startActivity(intent);
