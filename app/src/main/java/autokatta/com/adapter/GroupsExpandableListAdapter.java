@@ -123,8 +123,6 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                 Intent i=new Intent(mContext, GroupsActivity.class);
                 mContext.getSharedPreferences(mContext.getString(R.string.my_preference),MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
                 mContext.startActivity(i);
-
-
             }
         });
         return convertView;

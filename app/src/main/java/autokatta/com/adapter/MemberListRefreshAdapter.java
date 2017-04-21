@@ -221,7 +221,6 @@ if (mCallFrom!="profile")
                         FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.profile_groups_container, groupVehicleList);
-                        fragmentTransaction.addToBackStack("groupvehiclelist");
                         fragmentTransaction.commit();
                     }else
                         if (mCallFrom.equals("groups"))
@@ -229,7 +228,6 @@ if (mCallFrom!="profile")
                         FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.group_container, groupVehicleList);
-                        fragmentTransaction.addToBackStack("groupvehiclelist");
                         fragmentTransaction.commit();
                     }
                 }

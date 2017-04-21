@@ -1,6 +1,7 @@
 package autokatta.com.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.EndlessRecyclerOnScrollListener;
 import autokatta.com.response.GetGroupVehiclesResponse;
+import autokatta.com.view.GroupsActivity;
 import retrofit2.Response;
 
 /**
@@ -56,6 +59,19 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroupVehicleList = inflater.inflate(R.layout.fragment_group_vehicle_list, container, false);
+        mGroupVehicleList.setFocusableInTouchMode(true);
+        mGroupVehicleList.requestFocus();
+        mGroupVehicleList.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().finish();
+                    startActivity(new Intent(getActivity(), GroupsActivity.class));
+                    return true;
+                }
+                return false;
+            }
+        });
         mRecyclerView = (RecyclerView) mGroupVehicleList.findViewById(R.id.rv_recycler_view);
         editbrand = (EditText) mGroupVehicleList.findViewById(R.id.editbrand);
         editmodel = (EditText) mGroupVehicleList.findViewById(R.id.editmodel);

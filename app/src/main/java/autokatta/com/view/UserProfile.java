@@ -1,5 +1,8 @@
 package autokatta.com.view;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -8,12 +11,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
@@ -45,8 +50,12 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mLoginContact=getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE)
-                .getString("loginContact","");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "");
         mUserProfileBundle = new Bundle();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +92,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
      */
     private void getProfileData() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
-        mApiCall.profileAbout(mLoginContact,mLoginContact);
+        mApiCall.profileAbout(mLoginContact, mLoginContact);
     }
 
     /*
@@ -137,5 +146,28 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(UserProfile.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
+            finish();
+        } else {
+            finish();
+            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
+        }
     }
 }

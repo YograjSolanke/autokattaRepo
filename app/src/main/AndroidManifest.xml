@@ -344,10 +344,14 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".other.SearchActivity"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.GroupsActivity"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.ShareWithinAppActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"

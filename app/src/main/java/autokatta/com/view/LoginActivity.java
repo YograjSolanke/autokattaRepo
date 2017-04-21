@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.net.SocketTimeoutException;
 
 import autokatta.com.AutokattaMainActivity;
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     SessionManagement session;
     String userName;
     String password;
+    KProgressHUD hud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mPassword.setError(getString(R.string.err_password));
         } else {
             ApiCall mApiCall = new ApiCall(LoginActivity.this, this);
+            hud = KProgressHUD.create(LoginActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please wait")
+                    .setMaxProgress(100)
+                    .show();
             mApiCall.userLogin(userName, password);
         }
     }
@@ -95,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                hud.dismiss();
                 LoginResponse mLoginResponse = (LoginResponse) response.body();
                 String myContact = mUserName.getText().toString();
                 if (!mLoginResponse.getSuccess().isEmpty()) {
@@ -111,9 +120,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     CustomToast.customToast(getApplicationContext(), mLoginResponse.getError().get(0));
                 }
             } else {
+                hud.dismiss();
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
         } else {
+            hud.dismiss();
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
@@ -121,12 +132,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
+            hud.dismiss();
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
+            hud.dismiss();
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
+            hud.dismiss();
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else {
+            hud.dismiss();
             Log.i("Check Class-", "Login Activity");
         }
     }
