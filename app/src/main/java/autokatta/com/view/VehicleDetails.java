@@ -1,12 +1,14 @@
 package autokatta.com.view;
 
 import android.Manifest.permission;
+import android.app.ActivityOptions;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
@@ -46,7 +49,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     String name;
     FloatingActionMenu mFab;
     FloatingActionButton mLike, mCall, mAutoshare, mShare;
-    String mVehicle_Id, Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage,imgUrl;
+    String mVehicle_Id, Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     String contact, mLikestr, prefcontact, allDetails;
     ApiCall mApiCall;
 
@@ -56,6 +59,10 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         setContentView(R.layout.activity_vehicle_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mFab = (FloatingActionMenu) findViewById(R.id.menu_red);
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
@@ -240,11 +247,11 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 manager.enqueue(request);
 
                 imageFilePath = "/storage/emulated/0/Download/" + filename;
-                System.out.println("ImageFilePath:"+imageFilePath);
+                System.out.println("ImageFilePath:" + imageFilePath);
 
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/vehicle/" +mVehicle_Id);
+                        + "\n" + "http://autokatta.com/vehicle/" + mVehicle_Id);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                 startActivity(Intent.createChooser(intent, "Autokatta"));
@@ -295,6 +302,27 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
             startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in vehicle Details Fragment\n");
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(VehicleDetails.this, R.anim.pull_in_left, R.anim.push_out_right);
+            finish();
+        } else {
+            finish();
         }
     }
 }

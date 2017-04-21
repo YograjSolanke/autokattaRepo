@@ -25,6 +25,7 @@ import autokatta.com.response.GetGroupContactsResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by ak-001 on 25/3/17.
  */
@@ -36,7 +37,8 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     FloatingActionButton floatCreateGroup;
     List<GetGroupContactsResponse.Success> mSuccesses = new ArrayList<>();
     MemberListRefreshAdapter mMemberListAdapter;
-String mCallfrom;
+    String mCallfrom;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,8 +61,8 @@ String mCallfrom;
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getGroupContact(getActivity().getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE)
-                        .getString("group_id",""));
+                getGroupContact(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("group_id", ""));
             }
         });
 
@@ -68,8 +70,8 @@ String mCallfrom;
         if (bundle != null) {
             mCallfrom = bundle.getString("profile");
             Log.i("Other", "->" + mCallfrom);
-        }else
-            mCallfrom="groups";
+        } else
+            mCallfrom = "groups";
         return mMemberList;
     }
 
@@ -83,11 +85,11 @@ String mCallfrom;
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
+        if (response != null) {
+            if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 GetGroupContactsResponse mGetGroupContactsResponse = (GetGroupContactsResponse) response.body();
-                for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()){
+                for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
                     success.setUsername(success.getUsername());
                     success.setContact(success.getContact());
                     success.setStatus(success.getStatus());
@@ -96,24 +98,21 @@ String mCallfrom;
                     success.setVehiclecount(success.getVehiclecount());
                     mSuccesses.add(success);
                 }
-                if (mCallfrom.equals("profile"))
-                {
-                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses,mCallfrom);
+                if (mCallfrom.equals("profile")) {
+                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses, mCallfrom);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
 
-                }else
-                if (mCallfrom.equals("groups"))
-                {
+                } else if (mCallfrom.equals("groups")) {
                     mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
-                   }
+                }
 
-            }else {
+            } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
-        }else {
+        } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -139,7 +138,7 @@ String mCallfrom;
     @Override
     public void onRefresh() {
         mSuccesses.clear();
-        getGroupContact(getActivity().getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE)
-                .getString("group_id",""));
+        getGroupContact(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("group_id", ""));
     }
 }

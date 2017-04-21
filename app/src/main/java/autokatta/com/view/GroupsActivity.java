@@ -1,8 +1,9 @@
 package autokatta.com.view;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -21,9 +22,13 @@ public class GroupsActivity extends AppCompatActivity {
         }
         setTitle("Groups");
         GroupDetailTabs groupDetailTabs = new GroupDetailTabs();
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.profile_groups_container, groupDetailTabs).addToBackStack("GroupActivity").commit();
+        fragmentTransaction.replace(R.id.profile_groups_container, groupDetailTabs).addToBackStack("GroupActivity").commit();*/
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.profile_groups_container, groupDetailTabs, "GroupActivity")
+                .addToBackStack("GroupActivity")
+                .commit();
     }
 
     @Override
@@ -39,11 +44,31 @@ public class GroupsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), GroupsActivity.class), options.toBundle());
+            finish();
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
+                    startActivity(new Intent(getApplicationContext(), UserProfile.class), options.toBundle());
+                    finish();
+                } else {
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), UserProfile.class));
+                }
+            }
+        }
+        /*if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         } else {
             this.finish();
-        }
+        }*/
         //additional code
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);

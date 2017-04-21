@@ -20,15 +20,16 @@ public class GroupDetailTabs extends Fragment {
     View mGroupDetail;
     MemberListFragment memberListFragment;
     GroupVehicleList groupVehicleList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroupDetail = inflater.inflate(R.layout.fragment_group_details, container, false);
-        Bundle b=new Bundle();
+        Bundle b = new Bundle();
         b.putString("profile", "profile");
-        memberListFragment=new MemberListFragment();
+        memberListFragment = new MemberListFragment();
         memberListFragment.setArguments(b);
-        groupVehicleList=new GroupVehicleList();
+        groupVehicleList = new GroupVehicleList();
         groupVehicleList.setArguments(b);
 
         ViewPager mViewPager = (ViewPager) mGroupDetail.findViewById(R.id.groups_details_viewpager);

@@ -1,7 +1,6 @@
 package autokatta.com.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +28,6 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.EndlessRecyclerOnScrollListener;
 import autokatta.com.response.GetGroupVehiclesResponse;
-import autokatta.com.view.GroupsActivity;
 import retrofit2.Response;
 
 /**
@@ -41,7 +38,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     View mGroupVehicleList;
     String brand = "", model = "", version = "", city = "", RTOcity = "", reg_year = "",
             mgf_year = "", price = "", kmsrunning = "", no_of_owner = "";
-    EditText editbrand,editmodel,editversion,editcity,editregyr,editmgfyr,editprice,editkms,editowner;
+    EditText editbrand, editmodel, editversion, editcity, editregyr, editmgfyr, editprice, editkms, editowner;
     AutoCompleteTextView editRTOcity;
     ImageView filterimg;
     RelativeLayout relativefilter;
@@ -59,7 +56,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroupVehicleList = inflater.inflate(R.layout.fragment_group_vehicle_list, container, false);
-        mGroupVehicleList.setFocusableInTouchMode(true);
+        /*mGroupVehicleList.setFocusableInTouchMode(true);
         mGroupVehicleList.requestFocus();
         mGroupVehicleList.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -71,7 +68,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 }
                 return false;
             }
-        });
+        });*/
         mRecyclerView = (RecyclerView) mGroupVehicleList.findViewById(R.id.rv_recycler_view);
         editbrand = (EditText) mGroupVehicleList.findViewById(R.id.editbrand);
         editmodel = (EditText) mGroupVehicleList.findViewById(R.id.editmodel);
@@ -156,17 +153,17 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     private void getGroupVehicles() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getGroupVehicles(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-                .getString("group_id",""),brand,model,version,city,RTOcity,reg_year,mgf_year,price,kmsrunning,no_of_owner);
+                .getString("group_id", ""), brand, model, version, city, RTOcity, reg_year, mgf_year, price, kmsrunning, no_of_owner);
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
+        if (response != null) {
+            if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
-                if (response.body() instanceof GetGroupVehiclesResponse){
+                if (response.body() instanceof GetGroupVehiclesResponse) {
                     GetGroupVehiclesResponse mGetGroupVehiclesResponse = (GetGroupVehiclesResponse) response.body();
-                    for (GetGroupVehiclesResponse.Success success : mGetGroupVehiclesResponse.getSuccess()){
+                    for (GetGroupVehiclesResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
                         success.setVehicleId(success.getVehicleId());
                         success.setTitle(success.getTitle());
                         success.setCategory(success.getCategory());
@@ -214,11 +211,11 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                     mRecyclerView.setAdapter(mGroupVehicleRefreshAdapter);
                     mGroupVehicleRefreshAdapter.notifyDataSetChanged();
                 }
-            }else {
+            } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
-        }else {
+        } else {
             mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
