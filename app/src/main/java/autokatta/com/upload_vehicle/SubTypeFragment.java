@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -843,9 +843,13 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 b.putInt("call", 1);
                 SelectedImagesFragment mSelectedImagesFragment = new SelectedImagesFragment();
                 mSelectedImagesFragment.setArguments(b);
-                FragmentManager manager = getFragmentManager();
+                /*FragmentManager manager = getFragmentManager();
                 FragmentTransaction mFragmentTransaction = manager.beginTransaction();
-                mFragmentTransaction.replace(R.id.vehicle_upload_container, mSelectedImagesFragment).addToBackStack("selectedimagefragment").commit();
+                mFragmentTransaction.replace(R.id.vehicle_upload_container, mSelectedImagesFragment).addToBackStack("selectedimagefragment").commit();*/
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.vehicle_upload_container, mSelectedImagesFragment, "selectedimagefragment")
+                        .addToBackStack("selectedimagefragment")
+                        .commit();
 
             }
             System.out.println(selectedimg);
@@ -867,9 +871,11 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         success.setRtoCityName(success.getRtoCityName());
                         mRtoCity.add(success.getRtoCityName());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, mRtoCity);
-                    mRTOcity.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                                android.R.layout.simple_spinner_item, mRtoCity);
+                        mRTOcity.setAdapter(adapter);
+                    }
                 }
                 //Vehicle color
                 else if (response.body() instanceof GetVehicleColor) {
@@ -879,10 +885,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         success.setColor(success.getColor());
                         mVehicleColor.add(success.getColor());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_item, mVehicleColor);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mSetColorSpinner.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                                android.R.layout.simple_spinner_item, mVehicleColor);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mSetColorSpinner.setAdapter(adapter);
+                    }
                     mSetColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -909,10 +917,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         success.setTitle(success.getTitle());
                         mBodyType.add(success.getTitle());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, mBodyType);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mBodyTypeSpinner.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                                android.R.layout.simple_spinner_item, mBodyType);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mBodyTypeSpinner.setAdapter(adapter);
+                    }
                     mBodyTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -941,10 +951,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         success.setImplementName(success.getImplementName());
                         mVehicleImplements.add(success.getImplementName());
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_item, mVehicleImplements);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mImplementSpinner.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                                android.R.layout.simple_spinner_item, mVehicleImplements);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mImplementSpinner.setAdapter(adapter);
+                    }
                     mImplementSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -974,19 +986,22 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         bodySuccess.setBodyManufacturerName(bodySuccess.getBodyManufacturerName());
                         bodyManufacturerlist.add(bodySuccess.getBodyManufacturerName());
                     }
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, bodyManufacturerlist);
-                    autoBodymanufacturer.setAdapter(dataAdapter);
-
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                                android.R.layout.simple_spinner_item, bodyManufacturerlist);
+                        autoBodymanufacturer.setAdapter(dataAdapter);
+                    }
 
                     for (BodyAndSeatResponse.Success.SeatManufacturer seatSuccess : bodyAndSeatResponse.getSuccess().getSeatManufacturers()) {
                         seatSuccess.setSeatManufacturerId(seatSuccess.getSeatManufacturerId());
                         seatSuccess.setSeatManufacturerName(seatSuccess.getSeatManufacturerName());
                         seatManufacturerlist.add(seatSuccess.getSeatManufacturerName());
                     }
-                    ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, seatManufacturerlist);
-                    autoSeatmanufacturer.setAdapter(dataAdapter1);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(getActivity(),
+                                android.R.layout.simple_spinner_item, seatManufacturerlist);
+                        autoSeatmanufacturer.setAdapter(dataAdapter1);
+                    }
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -1069,6 +1084,33 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
         }
         return false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    public void onBackPressed() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Fragment f = fm.findFragmentById(R.id.vehicle_upload_container);
+
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        }
     }
     /*private void makeMonth() {
         myp = new MonthYearPicker(getActivity());

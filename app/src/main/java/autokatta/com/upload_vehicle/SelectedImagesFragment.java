@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -214,11 +215,15 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
                     b.putInt("Activity", 1);
                     ImageEditFragment fragment2 = new ImageEditFragment();
                     fragment2.setArguments(b);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.vehicle_upload_container, fragment2);
                     fragmentTransaction.addToBackStack("imageeditfragment");
-                    fragmentTransaction.commit();
+                    fragmentTransaction.commit();*/
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.vehicle_upload_container, fragment2, "imageeditfragment")
+                            .addToBackStack("imageeditfragment")
+                            .commit();
 
                 }
             });
@@ -232,5 +237,32 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
             container.removeView((LinearLayout) object);
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    public void onBackPressed() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Fragment f = fm.findFragmentById(R.id.vehicle_upload_container);
+
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        }
     }
 }

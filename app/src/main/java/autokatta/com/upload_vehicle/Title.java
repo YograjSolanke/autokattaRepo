@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -584,10 +585,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mSubTypeList1.put(subTypeResponse.getName(), subTypeResponse.getId());
                     }
                     parsedData.addAll(mSubTypeList);
-                    ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, parsedData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mSubType.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter =
+                                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, parsedData);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mSubType.setAdapter(adapter);
+                    }
                     mSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -624,11 +627,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mBrandIdList.add("other");
                     brandData.addAll(mBrandIdList);
                     Log.i("ListBrand", "->" + mBrandIdList);
-                    ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, brandData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mBrandSpinner.setAdapter(adapter);
-                    mModelSpinner.setAdapter(null);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter =
+                                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, brandData);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mBrandSpinner.setAdapter(adapter);
+                        mModelSpinner.setAdapter(null);
+                    }
                     mBrandSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -704,11 +709,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mModelIdList.add("other");
                     modelData.addAll(mModelIdList);
                     Log.i("ListModel", "->" + mModelIdList);
-                    ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, modelData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mModelSpinner.setAdapter(adapter);
-                    mVersionSpinner.setAdapter(null);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter =
+                                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, modelData);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mModelSpinner.setAdapter(adapter);
+                        mVersionSpinner.setAdapter(null);
+                    }
                     mModelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -784,10 +791,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mVersionIdList.add("other");
                     versionData.addAll(mVersionIdList);
                     Log.i("ListVersion", "->" + mVersionIdList);
-                    ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, versionData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mVersionSpinner.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter =
+                                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, versionData);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mVersionSpinner.setAdapter(adapter);
+                    }
                     mVersionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -858,9 +867,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mBreakList1.put(success.getTitle(), success.getId());
                     }
                     breakListData.addAll(mBreakList);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, breakListData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mBreakSpinner.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, breakListData);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mBreakSpinner.setAdapter(adapter);
+                    }
                     mBreakSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -931,9 +942,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mPumpList1.put(success.getTitle(), success.getId());
                     }
                     pumpListData.addAll(mPumpList);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, pumpListData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mPumpSpinner.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, pumpListData);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mPumpSpinner.setAdapter(adapter);
+                    }
                     mPumpSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1160,11 +1173,42 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Kms", strKms).apply();
 
 
-                    FragmentManager manager = getFragmentManager();
+                    /*FragmentManager manager = getFragmentManager();
                     FragmentTransaction mTransaction = manager.beginTransaction();
-                    mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();
+                    mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();*/
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.vehicle_upload_container, new SubTypeFragment(), "title")
+                            .addToBackStack("title")
+                            .commit();
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    public void onBackPressed() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Fragment f = fm.findFragmentById(R.id.vehicle_upload_container);
+
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
         }
     }
 }

@@ -1,13 +1,11 @@
 package autokatta.com.upload_vehicle;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,9 +52,13 @@ public class VehicleList extends Fragment implements RequestNotifier {
                 if (s != null) {
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryName", s).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryId", subTypeId).apply();
-                    FragmentManager manager = getFragmentManager();
+                    /*FragmentManager manager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                    fragmentTransaction.replace(R.id.vehicle_upload_container, new Title()).addToBackStack("vehicle_list").commit();
+                    fragmentTransaction.replace(R.id.vehicle_upload_container, new Title()).addToBackStack("vehicle_list").commit();*/
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.vehicle_upload_container, new Title(), "vehicle_list")
+                            .addToBackStack("vehicle_list")
+                            .commit();
                 }
             }
         });
@@ -108,26 +110,30 @@ public class VehicleList extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyString(String str) {
-        if (str != null) {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-            alertDialog.setTitle("Upload Vehicle");
-            alertDialog.setMessage("You already uploaded" + str + " vehicles. you want to upload another vehicle?");
-            alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    getVehicleList();
-                }
-            });
-            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
-                    dialog.cancel();
-                    getActivity().finish();
-                }
-            });
-            alertDialog.show();
-        } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        try {
+            if (str != null) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle("Upload Vehicle");
+                alertDialog.setMessage("You already uploaded" + str + " vehicles. you want to upload another vehicle?");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        getVehicleList();
+                    }
+                });
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
+                        dialog.cancel();
+                        getActivity().finish();
+                    }
+                });
+                alertDialog.show();
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
