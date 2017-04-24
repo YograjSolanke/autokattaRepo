@@ -55,7 +55,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService imple
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> callFirebase = serviceApi.firebaseToken(textContact, token);
-                callFirebase.enqueue(new Callback<String>() {
+                callFireba  se.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         Log.i("response","firebase"+response.body());

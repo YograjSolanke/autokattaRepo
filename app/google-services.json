@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "918667959986",
-    "firebase_url": "https://autokatta-55600.firebaseio.com",
-    "project_id": "autokatta-55600",
-    "storage_bucket": "autokatta-55600.appspot.com"
+    "project_number": "470987547698",
+    "firebase_url": "https://autokatta-2dd3d.firebaseio.com",
+    "project_id": "autokatta-2dd3d",
+    "storage_bucket": "autokatta-2dd3d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:918667959986:android:f19b8b08703e8314",
+        "mobilesdk_app_id": "1:470987547698:android:f19b8b08703e8314",
         "android_client_info": {
           "package_name": "autokatta.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "918667959986-7m3n2s2o5od2mgqohj8q5b65io0vqnmc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "autokatta.com",
-            "certificate_hash": "f20873c7ae5aa5e1452fea87eefcefd949fc647c"
-          }
-        },
-        {
-          "client_id": "918667959986-lu5r2l5st5f9g4me62dproc9amqfq2v8.apps.googleusercontent.com",
+          "client_id": "470987547698-lef73gn2q97jch6sq01h2a3v4fo5b6m1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB68_shthw-wiOFQbsI3AhQMk0moGS8Kgk"
+          "current_key": "AIzaSyB-NRdvxVksJll9Hii-JWTduzGku88fxg0"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "918667959986-lu5r2l5st5f9g4me62dproc9amqfq2v8.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
