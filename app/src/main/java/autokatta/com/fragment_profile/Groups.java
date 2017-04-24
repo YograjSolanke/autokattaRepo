@@ -46,6 +46,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     GroupsExpandableListAdapter adapter;
     FloatingActionButton mCreateGroup;
     String contact;
+    String GroupType;
 
     public Groups() {
         //empty constructor...
@@ -66,11 +67,13 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
         if (bundle != null) {
             contact = bundle.getString("otherContact");
             Log.i("Other", "->" + contact);
+            GroupType="OtherGroup";
             getGroups();
         } else {
             contact = mSharedPreferences.getString("loginContact", "");
             Log.i("User", "->" + contact);
             mCreateGroup.setVisibility(View.VISIBLE);
+            GroupType="MyGroup";
             getGroups();
         }
 
@@ -116,7 +119,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
                 mGroupList.put(mHeaderList.get(0), list);
                 mGroupList.put(mHeaderList.get(1), list1);
 
-                adapter = new GroupsExpandableListAdapter(getActivity(), mHeaderList, mGroupList);
+                adapter = new GroupsExpandableListAdapter(getActivity(), mHeaderList, mGroupList,GroupType);
                 groupExpandableListView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 

@@ -14,6 +14,8 @@ import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.events.MyActiveAuctionFragment;
 import autokatta.com.events.MyActiveExchangeMelaFrament;
 import autokatta.com.events.MyActiveLoanMelaFragment;
+import autokatta.com.events.MyActiveSaleMelaFragment;
+import autokatta.com.events.MyActiveServiceFragment;
 
 /**
  * Created by ak-004 on 30/3/17.
@@ -63,6 +65,8 @@ public class MyActiveEventsTabFragment extends Fragment {
         tabAdapterName.addFragment(new MyActiveAuctionFragment(), "Auction");
         tabAdapterName.addFragment(new MyActiveLoanMelaFragment(), "Loan Mela");
         tabAdapterName.addFragment(new MyActiveExchangeMelaFrament(), "Exchange Mela");
+        tabAdapterName.addFragment(new MyActiveServiceFragment(), "Service ");
+        tabAdapterName.addFragment(new MyActiveSaleMelaFragment(), "Sale Mela");
 
         viewPager.setAdapter(tabAdapterName);
     }

@@ -33,8 +33,16 @@ public class GroupDetailTabs extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroupDetail = inflater.inflate(R.layout.fragment_group_details, container, false);
-        Bundle b = new Bundle();
-        b.putString("call", "profile");
+        Bundle b=new Bundle();
+        Bundle        b1=getArguments();
+
+        if (b1!=null)
+        {
+            b1.getString("grouptype");
+            b.putString("grouptype", "OtherGroup");
+        }else {
+            b.putString("grouptype", "profile");
+        }
         memberListFragment = new MemberListFragment();
         memberListFragment.setArguments(b);
         groupVehicleList = new GroupVehicleList();
