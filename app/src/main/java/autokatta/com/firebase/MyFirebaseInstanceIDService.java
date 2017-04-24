@@ -1,18 +1,18 @@
 package autokatta.com.firebase;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import java.util.concurrent.TimeUnit;
+import java.net.SocketTimeoutException;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelFirebase;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 
 
@@ -41,12 +41,12 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService imple
     private void sendRegistrationToServer(final String token) {
         try {
             textContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
-            //if (textContact != null) {
-            ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
-            ModelFirebase firebase = new ModelFirebase();
-            firebase.setContactNumber("7841023392");
-            firebase.setTokenKey(token);
-            mApiCall.firebaseToken("7841023392", token);
+            if (textContact != null) {
+                ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
+                ModelFirebase firebase = new ModelFirebase();
+                firebase.setContactNumber(textContact);
+                firebase.setTokenKey(token);
+                mApiCall.firebaseToken(textContact, token);
 
                 /*Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(getString(R.string.base_url))
@@ -96,27 +96,13 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService imple
                         return params;
                     }
                 };
-                requestQueue.add(stringRequest);
+                requestQueue.add(stringRequest);*/
             } else {
                 Toast.makeText(getApplicationContext(), "Contact is null", Toast.LENGTH_SHORT).show();
-            }*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /***
-     * Retrofit Logs
-     ***/
-    private OkHttpClient.Builder initLog() {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        // add your other interceptors …
-        // add logging as last interceptor
-        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
-        return httpClient;
     }
 
     @Override
@@ -126,11 +112,22 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService imple
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "MyFirebaseInstanceIDService");
+        }
     }
 
     @Override
     public void notifyString(String str) {
-
+        if (str != null) {
+            Log.i("Firebase Instlled:", "->" + str);
+            getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putBoolean("isRegistered", true).apply();
+        }
     }
 }

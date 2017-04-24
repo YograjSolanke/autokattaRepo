@@ -21,12 +21,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import autokatta.com.adapter.TabAdapter;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.AuctionNotification;
 import autokatta.com.fragment.FavoriteNotificationFragment;
@@ -34,10 +37,12 @@ import autokatta.com.fragment.SocialFragment;
 import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
+import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.MapsActivity;
 import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
 import autokatta.com.register.RegistrationContinue;
+import autokatta.com.response.ModelFirebase;
 import autokatta.com.view.BlackListedMemberActivity;
 import autokatta.com.view.BroadcastMessageActivity;
 import autokatta.com.view.BrowseStoreActivity;
@@ -57,10 +62,11 @@ import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.SearchVehicleActivity;
 import autokatta.com.view.UserProfile;
 import autokatta.com.view.VehicleUpload;
+import retrofit2.Response;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
-public class AutokattaMainActivity extends AppCompatActivity { /*implements SearchView.OnQueryTextListener,
+public class AutokattaMainActivity extends AppCompatActivity implements RequestNotifier { /*implements SearchView.OnQueryTextListener,
         SearchView.OnCloseListener{*/
 
     private DrawerLayout mDrawerLayout;
@@ -85,6 +91,7 @@ public class AutokattaMainActivity extends AppCompatActivity { /*implements Sear
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
+        fcmRegister();
        /* DbOperation dbAdpter = new DbOperation(getApplicationContext());
         dbAdpter.OPEN();
         Cursor cursor = dbAdpter.getAutokattaContact();
@@ -353,6 +360,46 @@ public class AutokattaMainActivity extends AppCompatActivity { /*implements Sear
 
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnCloseListener(this);*/
+    }
+
+    private void fcmRegister() {
+        if (!getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getBoolean("isRegistered", false)) {
+            final String contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
+            Log.i("Number is", "->" + contact);
+            if (contact != null) {
+                final String key = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("fcm_key", null);
+                Log.i("FCM is", "->" + key);
+                if (key != null) {
+                    ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
+                    ModelFirebase firebase = new ModelFirebase();
+                    firebase.setContactNumber(contact);
+                    firebase.setTokenKey(key);
+                    mApiCall.firebaseToken(contact, key);
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Again Contact is null", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Firebase done", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            Log.i("Firebase Instlled:", "->" + str);
+            getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putBoolean("isRegistered", true).apply();
+        }
     }
 
     /*@Override
