@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/relBC"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/bcChatTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/new_circle"
+            android:padding="15dp"
+            android:text="Business Chat"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/bcChatCnt"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignStart="@id/bcChatTxt"
+            android:layout_alignTop="@id/bcChatTxt"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="45dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/new_circle"
+            android:gravity="center"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:text="Cnt"
+            android:textColor="@color/textColor" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/relBC">
+
+        <TextView
+            android:id="@+id/testDriveTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/new_circle"
+            android:padding="15dp"
+            android:text="Test Drive"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/testDriveCnt"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignStart="@id/testDriveTxt"
+            android:layout_alignTop="@id/testDriveTxt"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="45dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/new_circle"
+            android:gravity="center"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:text="Cnt"
+            android:textColor="@color/textColor" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relDealer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/relTest">
+
+        <TextView
+            android:id="@+id/newDealerTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/new_circle"
+            android:padding="15dp"
+            android:text="New Dealer"
+            android:textColor="@color/textColor" />
+
+        <TextView
+            android:id="@+id/newDealerCnt"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignStart="@id/newDealerTxt"
+            android:layout_alignTop="@id/newDealerTxt"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="45dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/new_circle"
+            android:gravity="center"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:text="Cnt"
+            android:textColor="@color/textColor" />
+    </RelativeLayout>
+</RelativeLayout>

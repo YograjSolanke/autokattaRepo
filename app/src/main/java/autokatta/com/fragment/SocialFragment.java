@@ -11,12 +11,16 @@ import android.view.ViewGroup;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.enquiries.AllEnquiryTabFragment;
 
 /**
  * Created by ak-001 on 17/3/17.
  */
 
 public class SocialFragment extends Fragment {
+
+    public SocialFragment() {
+    }
 
     View mSocialFragment;
     @Nullable
@@ -41,6 +45,7 @@ public class SocialFragment extends Fragment {
         TabAdapterName adapter = new TabAdapterName(getActivity().getSupportFragmentManager());
         adapter.addFragment(new SellerNotificationFragment(), "Seller");
         adapter.addFragment(new BuyerNotificationFragment(), "Buyer");
+        adapter.addFragment(new AllEnquiryTabFragment(), "Enquiries");
         viewPager.setAdapter(adapter);
     }
 }
