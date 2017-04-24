@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import autokatta.com.R;
-import autokatta.com.fragment.GroupDetailTabs;
+import autokatta.com.initial_fragment.GroupDetailTabs;
 
 public class GroupsActivity extends AppCompatActivity {
 

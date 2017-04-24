@@ -1,4 +1,4 @@
-package autokatta.com.fragment;
+package autokatta.com.initial_fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.groups.GroupCommunicationFragment;
+import autokatta.com.groups.GroupProductsFragment;
+import autokatta.com.groups.GroupServicesFragment;
+import autokatta.com.groups.GroupVehicleList;
+import autokatta.com.groups.MemberListFragment;
 
 /**
  * Created by ak-005 on 17/4/17.
@@ -18,6 +23,9 @@ import autokatta.com.adapter.TabAdapterName;
 
 public class GroupDetailTabs extends Fragment {
     View mGroupDetail;
+    GroupCommunicationFragment communicationListFragment;
+    GroupProductsFragment productListFragment;
+    GroupServicesFragment serviceListFragment;
     MemberListFragment memberListFragment;
     GroupVehicleList groupVehicleList;
 
@@ -26,7 +34,7 @@ public class GroupDetailTabs extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroupDetail = inflater.inflate(R.layout.fragment_group_details, container, false);
         Bundle b = new Bundle();
-        b.putString("groups", "profile");
+        b.putString("call", "profile");
         memberListFragment = new MemberListFragment();
         memberListFragment.setArguments(b);
         groupVehicleList = new GroupVehicleList();
@@ -45,8 +53,11 @@ public class GroupDetailTabs extends Fragment {
 
     private void setupViewPager(ViewPager mViewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getFragmentManager());
+        tabAdapterName.addFragment(communicationListFragment, "Communication");
         tabAdapterName.addFragment(memberListFragment, "Group Members");
         tabAdapterName.addFragment(groupVehicleList, "Group Vehicles");
+        tabAdapterName.addFragment(productListFragment, "Products");
+        tabAdapterName.addFragment(serviceListFragment, "Services");
         mViewPager.setAdapter(tabAdapterName);
     }
 }

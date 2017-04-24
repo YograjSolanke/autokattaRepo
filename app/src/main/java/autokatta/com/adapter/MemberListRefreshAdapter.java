@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.fragment.GroupVehicleList;
+import autokatta.com.groups.GroupVehicleList;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.view.OtherProfile;
