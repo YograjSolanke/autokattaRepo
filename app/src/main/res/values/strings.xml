@@ -13,6 +13,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- Enquires -->
+    <string name="test_drive">Test Drive</string>
+    <string name="new_dealer">New Dealer</string>
+
     <!-- Navigation Drawer Items...-->
     <string name="home">Home</string>
     <string name="my_profile">My Profile</string>

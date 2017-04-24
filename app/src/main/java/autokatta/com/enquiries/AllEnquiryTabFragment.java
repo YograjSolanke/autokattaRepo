@@ -33,12 +33,12 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
         mEnquiryTab = inflater.inflate(R.layout.fragment_all_enquiry_tab, container, false);
 
         relativeBC = (RelativeLayout) mEnquiryTab.findViewById(R.id.relBC);
-        relativeTestDrive = (RelativeLayout) mEnquiryTab.findViewById(R.id.relTest);
-        relativeNewDealer = (RelativeLayout) mEnquiryTab.findViewById(R.id.relDealer);
+        /*relativeTestDrive = (RelativeLayout) mEnquiryTab.findViewById(R.id.relTest);
+        relativeNewDealer = (RelativeLayout) mEnquiryTab.findViewById(R.id.relDealer);*/
 
         relativeBC.setOnClickListener(this);
-        relativeTestDrive.setOnClickListener(this);
-        relativeNewDealer.setOnClickListener(this);
+        /*relativeTestDrive.setOnClickListener(this);
+        relativeNewDealer.setOnClickListener(this);*/
 
         return mEnquiryTab;
     }
@@ -51,12 +51,12 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
                 startActivity(new Intent(getActivity(), BussinessChatActivity.class));
                 break;
 
-            case R.id.relTest:
-
-                break;
-
-            case R.id.relDealer:
-                break;
+//            case R.id.relTest:
+//
+//                break;
+//
+//            case R.id.relDealer:
+//                break;
         }
     }
 }
