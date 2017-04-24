@@ -1,6 +1,7 @@
 package autokatta.com.apicall;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -118,6 +119,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiCall {
     private Activity mContext;
+    private Context context;
     private RequestNotifier mNotifier;
     private ConnectionDetector mConnectionDetector;
 
@@ -127,6 +129,11 @@ public class ApiCall {
         this.mNotifier = mNotifier;
         mConnectionDetector = new ConnectionDetector(mContext);
 
+    }
+
+    public ApiCall(Context mContext, RequestNotifier mNotifier) {
+        this.context = mContext;
+        this.mNotifier = mNotifier;
     }
 
     public static Retrofit getRetrofit() {
@@ -6569,6 +6576,38 @@ Get saved search Seller list
         }
     }
 
+    /*
+    Firebase Device Registration...
+     */
+    public void firebaseToken(String contactNo, String token) {
+        try {
+//            if (mConnectionDetector.isConnectedToInternet()){
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(context.getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(initLog().build())
+                    .build();
+            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+            Call<String> firebase = serviceApi.firebaseToken(contactNo, token);
+            firebase.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    mNotifier.notifyString(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    mNotifier.notifyError(t);
+                }
+            });
+
+           /* }else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /***
      * Retrofit Logs

@@ -1084,4 +1084,7 @@ public interface ServiceApi {
                              @Query("brandTags") String textbrand,
                              @Query("Brands") String strBrandSpinner);
 
+    //Device Registration...
+    @POST("deviceRegistration.php")
+    Call<String> firebaseToken(@Query("contact") String contact, @Query("token") String token);
 }

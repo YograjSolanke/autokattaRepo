@@ -54,13 +54,29 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
+
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="autokatta.com.AutokattaMainActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="autokatta.com" />
+                <data
+                    android:scheme="autokatta"
+                    android:host="autokatta" />
+            </intent-filter>
         </activity>
+
         <activity
             android:name=".view.UserProfile"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
@@ -388,6 +404,7 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
+        <!--Google Location Api Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -395,6 +412,24 @@
         <activity
             android:name=".other.MapsActivity"
             android:label="@string/title_activity_maps" />
+
+        <service
+            android:name=".firebase.MyFirebaseMessagingService"
+            android:exported="false"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".firebase.MyFirebaseInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
