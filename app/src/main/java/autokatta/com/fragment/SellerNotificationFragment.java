@@ -17,9 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -48,17 +47,16 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     public SellerNotificationFragment() {
     }
 
-    public ArrayList<SellerResponse.Success.SavedSearch> mainList = new ArrayList<>();
-    public ArrayList<SellerResponse.Success.MatchedResult> childlist;
+    public List<SellerResponse.Success.SavedSearch> mainList = new ArrayList<>();
+    public List<SellerResponse.Success.MatchedResult> childlist;
 
     private LinearLayout mLinearListView;
     boolean isFirstViewClick[];
     String myContact;
     LinearLayout mLinearScrollSecond[];
-    TableRow tablerow1;
+    RelativeLayout relativeLayout;
     Button compare;
     String getBundle_vehicle_id = "";
-    String bundle_vehicle_id = "";
 
     ApiCall mApiCall;
 
@@ -74,19 +72,19 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
         mLinearListView = (LinearLayout) view.findViewById(R.id.linear_ListView);
 
-        tablerow1 = (TableRow) view.findViewById(R.id.tablerow1);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.tablerow1);
         compare = (Button) view.findViewById(R.id.conpare);
         mApiCall = new ApiCall(getActivity(), this);
 
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "7841023392");
-        //mApiCall.getSavedSearchSellerList(myContact);
-        mApiCall.getSavedSearchSellerList("2020202020");
+        mApiCall.getSavedSearchSellerList(myContact);
+        //mApiCall.getSavedSearchSellerList("2020202020");
 
         return view;
     }
 
-    public void VisibleCompareButton(ArrayList<Integer> vehicleids) {
+    public void VisibleCompareButton(List<Integer> vehicleids) {
         int flag = 0;
         getBundle_vehicle_id = "";
         for (int i = 0; i < vehicleids.size(); i++) {
@@ -101,11 +99,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
         }
 
         if (flag > 1)
-            tablerow1.setVisibility(View.VISIBLE);
+            relativeLayout.setVisibility(View.VISIBLE);
         else
-            tablerow1.setVisibility(View.GONE);
+            relativeLayout.setVisibility(View.GONE);
 
-        System.out.println("getBundle_vehicle_id..............................." + getBundle_vehicle_id);
     }
 
     public void setViewsVisible(int s) {
@@ -207,7 +204,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     // int mFlippingsell = 0;
 
                     inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View mLinearView = inflater.inflate(R.layout.seller_row_first1, null);
+                    View mLinearView = inflater.inflate(R.layout.seller_row, null);
 
                     final TextView mTitleName = (TextView) mLinearView.findViewById(R.id.settitle);
                     final TextView mModelName = (TextView) mLinearView.findViewById(R.id.setmodel);
@@ -280,21 +277,19 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     mkmsname.setText(mainList.get(i).getKmsRunning());
                     mlocationname.setText(mainList.get(i).getLocationCity());
                     mregnoname.setText(mainList.get(i).getRegistrationNumber());
-                    ///
 
                     if (!(mainList.get(i).getMatchedResult().size() == 0))
                         msellerMatchCount.setText(String.valueOf(mainList.get(i).getMatchedResult().size()));
                     else
                         msellerMatchCount.setText("0");
 
-                    System.out.println("match count=" + mainList.get(i).getMatchedResult().size());
 
                     if (mainList.get(i).getMatchedResult().size() == 0) {
                         msellerdownarrow.setVisibility(View.GONE);
                         mselleruparrow.setVisibility(View.GONE);
                     }
 
-                    final ArrayList<Integer> checkedvehicle_ids = new ArrayList<>(mainList.get(i).getMatchedResult().size());
+                    final List<Integer> checkedvehicle_ids = new ArrayList<>(mainList.get(i).getMatchedResult().size());
 //
                     for (int j = 0; j < mainList.get(i).getMatchedResult().size(); j++) {
                         checkedvehicle_ids.add(0);
@@ -308,7 +303,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         LayoutInflater inflater2 = null;
                         int showcheckboc = 0;
                         inflater2 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View mLinearView2 = inflater2.inflate(R.layout.saved_search_seller_list_adapter, null);
+                        View mLinearView2 = inflater2.inflate(R.layout.seller_list_adapter, null);
 
                         TextView mtitle = (TextView) mLinearView2.findViewById(R.id.title);
                         checkBox[j] = (CheckBox) mLinearView2.findViewById(R.id.checkauc);
@@ -505,7 +500,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                         final String imagenames = mainList.get(i).getMatchedResult().get(j).getImage();
 
-                        ArrayList<String> iname = new ArrayList<String>();
+                        List<String> iname = new ArrayList<String>();
 
 
                         try {
@@ -555,13 +550,13 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         }
 
 
-                        if (showcheckboc == 0) {
+                        if (showcheckboc == 0)
                             checkBox[j].setVisibility(View.VISIBLE);
-                        }
 
 
+                        final int finalI = i;
                         final int finalJ = j;
-//
+
                         final int v_ids = Integer.parseInt(mainList.get(i).getMatchedResult().get(j).getVehicleId());
 
                         checkBox[j].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -569,35 +564,21 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                                 if (isChecked) {
-                                    Toast.makeText(getActivity(), "checked" + finalJ, Toast.LENGTH_LONG).show();
-
                                     checkedvehicle_ids.set(finalJ, v_ids);
                                     VisibleCompareButton(checkedvehicle_ids);
 
-                                    System.out.println("vehicle_id" + bundle_vehicle_id + checkedvehicle_ids);
-//
                                 } else {
-                                    Toast.makeText(getActivity(), "unchecked" + finalJ, Toast.LENGTH_LONG).show();
                                     checkedvehicle_ids.set(finalJ, 0);
-
-//                                    getBundle_vehicle_id="";
                                     VisibleCompareButton(checkedvehicle_ids);
-//
-                                    System.out.println("bundle_vehicle_idsssssssssss=" + bundle_vehicle_id + checkedvehicle_ids);
-
-//
                                 }
                             }
                         });
 
 
-                        final int finalI = i;
-                        final int finalJ1 = j;
-
                         mUserName.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String recieverContact = mainList.get(finalI).getMatchedResult().get(finalJ1).getContactNo();
+                                String recieverContact = mainList.get(finalI).getMatchedResult().get(finalJ).getContactNo();
                                 if (!recieverContact.equals(myContact)) {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("contactOtherProfile", recieverContact);
@@ -611,7 +592,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         mCallimg.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String recieverContact = mainList.get(finalI).getMatchedResult().get(finalJ1).getContactNo();
+                                String recieverContact = mainList.get(finalI).getMatchedResult().get(finalJ).getContactNo();
 
                                 Calendar c = Calendar.getInstance();
                                 System.out.println("Current time => " + c.getTime());
@@ -629,7 +610,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         });
 
 
-                        if (mainList.get(finalI).getMatchedResult().get(finalJ1).getFavstatus().equalsIgnoreCase("yes")) {
+                        if (mainList.get(finalI).getMatchedResult().get(finalJ).getFavstatus().equalsIgnoreCase("yes")) {
                             mFavimg.setImageResource(R.drawable.fav2);
                             mFavimg.setEnabled(false);
                         } else {
@@ -639,14 +620,14 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         mFavimg.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String VehiId = mainList.get(finalI).getMatchedResult().get(finalJ1).getVehicleId();
-                                String SellerId = mainList.get(finalI).getMatchedResult().get(finalJ1).getSearchId()
+                                String VehiId = mainList.get(finalI).getMatchedResult().get(finalJ).getVehicleId();
+                                String SellerId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId()
                                         + "," + VehiId;
 
                                 mApiCall.addRemovefavouriteStatus(myContact, "", "", SellerId);
                                 mFavimg.setImageResource(R.drawable.fav2);
 
-                                mainList.get(finalI).getMatchedResult().get(finalJ1).setFavstatus("yes");
+                                mainList.get(finalI).getMatchedResult().get(finalJ).setFavstatus("yes");
                             }
 
 

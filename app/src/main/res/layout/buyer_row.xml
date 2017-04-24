@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    >
+
+    <RelativeLayout
+        android:id="@+id/linearFirst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/dialog_holo_light_frame">
+
+
+        <RelativeLayout
+            android:id="@+id/rel"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#C8C9CC"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/ttile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dip"
+                android:text="Category:"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/settitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/ttile"
+                android:text="--"
+                android:textColor="#808080" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rel">
+
+            <ViewFlipper
+                android:id="@+id/buyervehicalimgflicker"
+                android:layout_width="80dip"
+                android:layout_height="80dip"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:flipInterval="500"></ViewFlipper>
+
+            <TextView
+                android:id="@+id/bbrand"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="Brand"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/setbrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/bbrand"
+                android:layout_toStartOf="@+id/buyervehicalimgflicker"
+                android:text="--"
+                android:textColor="#808080" />
+
+            <TextView
+                android:id="@+id/mmodel"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setbrand"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="Model"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/setmodel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setbrand"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/mmodel"
+                android:layout_toStartOf="@+id/buyervehicalimgflicker"
+                android:text="--"
+                android:textColor="#808080" />
+
+            <TextView
+                android:id="@+id/pprice"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setmodel"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="Price"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/setprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setmodel"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/pprice"
+                android:layout_toStartOf="@+id/buyervehicalimgflicker"
+                android:text="--"
+                android:textColor="#808080" />
+
+
+            <TextView
+                android:id="@+id/yyear"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setprice"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="Year"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/setyear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setprice"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/yyear"
+                android:layout_toStartOf="@+id/buyervehicalimgflicker"
+                android:text="--"
+                android:textColor="#808080" />
+
+            <TextView
+                android:id="@+id/yrto"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setyear"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="RTO City"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/setrto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setyear"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/yrto"
+                android:layout_toStartOf="@+id/buyervehicalimgflicker"
+                android:text="--"
+                android:textColor="#808080" />
+
+            <TextView
+                android:id="@+id/ykms"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setrto"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="Kms :"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/setkms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setrto"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/ykms"
+                android:layout_toStartOf="@+id/buyervehicalimgflicker"
+                android:text="--"
+                android:textColor="#808080" />
+
+            <TextView
+                android:id="@+id/llocation"
+                android:layout_width="80dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setkms"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="Location"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/setlocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setkms"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/llocation"
+                android:text="--"
+                android:textColor="#808080" />
+
+            <TextView
+                android:id="@+id/yreg"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setlocation"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="Registration No :"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/setregno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setlocation"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/yreg"
+                android:text="--"
+                android:textColor="#808080" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/rel1"
+            android:background="#cccccc">
+
+        </View>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/view"
+            android:background="#2C3343">
+
+            <TextView
+                android:id="@+id/matching_leads_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/match_count"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="5dp"
+                android:text="Buyer Leads"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/match_count"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@+id/matching_leads_txt"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/postdownarrow"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignBottom="@+id/match_count"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="3dp"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/postuparrow"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignBottom="@+id/match_count"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="3dp"
+                android:contentDescription="@string/app_name"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linear_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>

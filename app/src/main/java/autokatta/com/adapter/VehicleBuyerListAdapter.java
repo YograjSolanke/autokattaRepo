@@ -65,7 +65,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
 
     @Override
     public VehicleBuyerListAdapter.BuyerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.vehicle_buyer_list_adapter, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.buyer_list_adapter, parent, false);
         BuyerHolder holder = new BuyerHolder(view);
         return holder;
     }

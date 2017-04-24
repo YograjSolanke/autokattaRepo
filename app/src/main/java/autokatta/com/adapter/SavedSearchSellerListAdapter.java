@@ -64,7 +64,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
     @Override
     public SavedSearchSellerListAdapter.SellerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_search_seller_list_adapter, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.seller_list_adapter, parent, false);
         SellerHolder holder = new SellerHolder(view);
         return holder;
     }
