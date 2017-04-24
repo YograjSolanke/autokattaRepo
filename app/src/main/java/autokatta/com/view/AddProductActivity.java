@@ -1,11 +1,10 @@
-package autokatta.com.my_store;
+package autokatta.com.view;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,19 +24,15 @@ import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
+import autokatta.com.response.ProductAddedResponse;
 import retrofit2.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-004 on 21/4/17.
  */
 
-public class AddProductFragment extends Fragment implements RequestNotifier, View.OnClickListener {
+public class AddProductActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
-    public AddProductFragment() {
-
-    }
 
     private ApiCall apiCall;
     String store_id, myContact;
@@ -53,23 +48,25 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
     final ArrayList<String> brandTags = new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View root = inflater.inflate(R.layout.add_product_fragment, container, false);
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_product_fragment);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
-        Bundle b = getArguments();
-        store_id = b.getString("store_id");
+
+        store_id = getIntent().getExtras().getString("store_id");
 
 
-        productname = (EditText) root.findViewById(R.id.editproductname);
-        productprice = (EditText) root.findViewById(R.id.editproductprice);
-        productdetails = (EditText) root.findViewById(R.id.editproductdetails);
-        save = (Button) root.findViewById(R.id.btnsave);
-        producttype = (EditText) root.findViewById(R.id.editproducttype);
-        multiautotext = (MultiAutoCompleteTextView) root.findViewById(R.id.multiautotext);
-        autoCategory = (MultiAutoCompleteTextView) root.findViewById(R.id.multiautocategory);
-        multiautobrand = (MultiAutoCompleteTextView) root.findViewById(R.id.multiautobrand);
+        productname = (EditText) findViewById(R.id.editproductname);
+        productprice = (EditText) findViewById(R.id.editproductprice);
+        productdetails = (EditText) findViewById(R.id.editproductdetails);
+        save = (Button) findViewById(R.id.btnsave);
+        producttype = (EditText) findViewById(R.id.editproducttype);
+        multiautotext = (MultiAutoCompleteTextView) findViewById(R.id.multiautotext);
+        autoCategory = (MultiAutoCompleteTextView) findViewById(R.id.multiautocategory);
+        multiautobrand = (MultiAutoCompleteTextView) findViewById(R.id.multiautobrand);
 
 
         multiautotext.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -108,8 +105,6 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
             }
         });
 
-
-        return root;
     }
 
     @Override
@@ -233,7 +228,7 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
                 //fields validation
                 if (name.equals("") && price.equals("") && details.equals("") && type.equals("")) {
 
-                    Toast.makeText(getActivity(), "Please Enter All details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddProductActivity.this, "Please Enter All details", Toast.LENGTH_SHORT).show();
                 } else if (type.equals("")) {
                     producttype.setError("Enter Product Type");
                 } else if (name.equals("")) {
@@ -243,10 +238,10 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
                 } else if (details.equals("")) {
                     productdetails.setError("Enter Product details");
                 } else if (category.equalsIgnoreCase("")) {
-                    Toast.makeText(getActivity(), "Please Select Product Category", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddProductActivity.this, "Please Select Product Category", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    //  createProduct();
+                    createProduct(store_id, name, price, details, "", type, "", category, finalbrandtags);
 
                 }
 
@@ -255,6 +250,20 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
 
         }
 
+    }
+
+    private void createProduct(String store_id,
+                               String product_name,
+                               String price,
+                               String product_details,
+                               String product_tags,
+                               String product_type,
+                               String images,
+                               String category,
+                               String brandtags) {
+
+        ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
+        mApiCall.addProduct(store_id, product_name, price, product_details, product_tags, product_type, images, category, brandtags);
     }
 
     @Override
@@ -268,10 +277,10 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
                         for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
                             module.add(message.getTitle());
                         }
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, module);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddProductActivity.this, R.layout.addproductspinner_color, module);
                         autoCategory.setAdapter(dataadapter);
                     } else
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                        CustomToast.customToast(AddProductActivity.this, getString(R.string.no_response));
                 } else if (response.body() instanceof BrandsTagResponse) {
                     BrandsTagResponse brandsTagResponse = (BrandsTagResponse) response.body();
                     List<String> brands = new ArrayList<>();
@@ -279,7 +288,7 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
                         for (BrandsTagResponse.Success success : brandsTagResponse.getSuccess()) {
                             brands.add(success.getTag());
                         }
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, brands);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddProductActivity.this, R.layout.addproductspinner_color, brands);
                         multiautobrand.setAdapter(dataadapter);
                     }
                 } else if (response.body() instanceof GetTagsResponse) {
@@ -289,20 +298,22 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
                         for (GetTagsResponse.Success success : tagsResponse.getSuccess()) {
                             tags.add(success.getTag());
                         }
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, tags);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddProductActivity.this, R.layout.addproductspinner_color, tags);
                         multiautotext.setAdapter(dataadapter);
                     }
                 } else if (response.body() instanceof OtherBrandTagAddedResponse) {
-                    CustomToast.customToast(getActivity(), "Brand Tag added successfully");
+                    CustomToast.customToast(AddProductActivity.this, "Brand Tag added successfully");
                 } else if (response.body() instanceof OtherTagAddedResponse) {
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID();
                     tagflag = true;
+                } else if (response.body() instanceof ProductAddedResponse) {
+                    CustomToast.customToast(AddProductActivity.this, "Product added successfully");
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                CustomToast.customToast(AddProductActivity.this, getString(R.string._404));
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(AddProductActivity.this, getString(R.string.no_response));
         }
 
     }
@@ -335,7 +346,7 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
    Add Other Brand Tags...
     */
     private void addOtherBrandTags(String brandtagpart) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
         mApiCall.addOtherBrandTags(brandtagpart, "1");
     }
 
@@ -343,7 +354,7 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
     Add Other Tags...
      */
     private void addOtherTags() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
         mApiCall._autoAddTags(tagpart, "1");
     }
 
@@ -351,7 +362,7 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
     Get Tags...
      */
     private void getTags() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
         mApiCall._autoGetTags("1");
     }
 
@@ -359,7 +370,7 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
     Get Brand Tags...
      */
     private void getBrandTags() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
         mApiCall.getBrandTags("1");
     }
 
@@ -368,7 +379,7 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
     Get Module...
      */
     private void getCategory() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
         mApiCall.Categories("Product");
     }
 }

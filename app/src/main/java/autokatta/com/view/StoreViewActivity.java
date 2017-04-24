@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,8 +32,6 @@ import autokatta.com.fragment.StoreProducts;
 import autokatta.com.fragment.StoreServices;
 import autokatta.com.fragment.StoreVehicles;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.my_store.AddProductFragment;
-import autokatta.com.my_store.AddServiceFragment;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
 import retrofit2.Response;
@@ -382,6 +378,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             }
         });
 
+
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -391,19 +388,17 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                 if (strName.equals("Add Product")) {
 
-                    AddProductFragment addAdmin = new AddProductFragment();
-                    addAdmin.setArguments(bundle);
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+                    Intent intent = new Intent(StoreViewActivity.this, AddProductActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
+
 
                 } else if (strName.equals("Add Service")) {
-
-                    AddServiceFragment addAdmin = new AddServiceFragment();
-                    addAdmin.setArguments(bundle);
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+                    Intent intent = new Intent(StoreViewActivity.this, AddServiceActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
 
                 } else if (strName.equals("Add Vehicle")) {
 

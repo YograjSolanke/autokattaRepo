@@ -94,9 +94,9 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         return mStoreList.size();
     }
 
-    public MyStoreListAdapter(Activity mActivity, List<MyStoreResponse.Success> mItemList) {
+    public MyStoreListAdapter(Activity mActivity1, List<MyStoreResponse.Success> mItemList) {
         try {
-            this.mActivity = mActivity;
+            this.mActivity = mActivity1;
             this.mStoreList = mItemList;
             myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                     getString("loginContact", "");
@@ -277,6 +277,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                 Intent intent = new Intent(mActivity, StoreViewActivity.class);
                 intent.putExtras(b);
                 mActivity.startActivity(intent);
+                mActivity.finish();
             }
         });
 

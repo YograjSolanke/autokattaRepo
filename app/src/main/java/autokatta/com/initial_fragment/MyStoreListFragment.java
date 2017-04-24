@@ -40,6 +40,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     FloatingActionButton fabCreateStore;
     ArrayList<MyStoreResponse.Success> storeResponseArrayList;
     ApiCall apiCall;
+    String myContact;
 
     public MyStoreListFragment() {
         //empty fragment
@@ -53,6 +54,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         fabCreateStore = (FloatingActionButton) mMyStoreList.findViewById(R.id.fabCreateStore);
         mRecyclerView = (RecyclerView) mMyStoreList.findViewById(R.id.rv_recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyStoreList.findViewById(R.id.swipeRefreshLayoutMyStoreList);
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392");
 
         apiCall = new ApiCall(getActivity(), this);
         mRecyclerView.setHasFixedSize(true);
@@ -72,7 +74,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                String myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392");
+
                 apiCall.MyStoreList(myContact);
             }
         });
