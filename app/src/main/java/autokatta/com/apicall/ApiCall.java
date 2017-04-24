@@ -89,7 +89,10 @@ import autokatta.com.response.MyUpcomingAuctionResponse;
 import autokatta.com.response.MyUpcomingExchangeMelaResponse;
 import autokatta.com.response.MyUpcomingLoanMelaResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
+import autokatta.com.response.OtherBrandTagAddedResponse;
+import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.PriceSuggestionResponse;
+import autokatta.com.response.ProductAddedResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SampleResponse;
@@ -97,6 +100,7 @@ import autokatta.com.response.SearchPersonResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SearchVehicleResponse;
 import autokatta.com.response.SellerResponse;
+import autokatta.com.response.ServiceAddedResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreInventoryResponse;
@@ -5128,27 +5132,23 @@ Get saved search Seller list
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
-                //JSON to Gson conversion
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
 
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> forgetPasswordResponseCall = serviceApi.addOtherBrandTags(brandtag, type);
-                forgetPasswordResponseCall.enqueue(new Callback<String>() {
+                Call<OtherBrandTagAddedResponse> forgetPasswordResponseCall = serviceApi.addOtherBrandTags(brandtag, type);
+                forgetPasswordResponseCall.enqueue(new Callback<OtherBrandTagAddedResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        mNotifier.notifyString(response.body());
+                    public void onResponse(Call<OtherBrandTagAddedResponse> call, Response<OtherBrandTagAddedResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<OtherBrandTagAddedResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -5807,15 +5807,15 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> addTags = serviceApi._autoAddTags(tag, type);
-                addTags.enqueue(new Callback<String>() {
+                Call<OtherTagAddedResponse> addTags = serviceApi._autoAddTags(tag, type);
+                addTags.enqueue(new Callback<OtherTagAddedResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<OtherTagAddedResponse> call, Response<OtherTagAddedResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<OtherTagAddedResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -6604,6 +6604,89 @@ Get saved search Seller list
            /* }else {
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
             }*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+ Add product
+  */
+    public void addProduct(String store_id,
+                           String product_name,
+                           String price,
+                           String product_details,
+                           String product_tags,
+                           String product_type,
+                           String images,
+                           String category,
+                           String brandtags) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ProductAddedResponse> addTags = serviceApi.addProduct(store_id, product_name, price, product_details,
+                        product_tags, product_type, images, category, brandtags);
+                addTags.enqueue(new Callback<ProductAddedResponse>() {
+                    @Override
+                    public void onResponse(Call<ProductAddedResponse> call, Response<ProductAddedResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProductAddedResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+Add service
+ */
+    public void addService(String store_id,
+                           String service_name,
+                           String price,
+                           String service_details,
+                           String service_tags,
+                           String service_type,
+                           String images,
+                           String category,
+                           String brandtags) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ServiceAddedResponse> addTags = serviceApi.addService(store_id, service_name, price, service_details,
+                        service_tags, service_type, images, category, brandtags);
+                addTags.enqueue(new Callback<ServiceAddedResponse>() {
+                    @Override
+                    public void onResponse(Call<ServiceAddedResponse> call, Response<ServiceAddedResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServiceAddedResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
         } catch (Exception e) {
             e.printStackTrace();
         }

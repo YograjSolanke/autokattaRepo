@@ -23,6 +23,8 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetTagsResponse;
+import autokatta.com.response.OtherBrandTagAddedResponse;
+import autokatta.com.response.OtherTagAddedResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -290,6 +292,11 @@ public class AddProductFragment extends Fragment implements RequestNotifier, Vie
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, tags);
                         multiautotext.setAdapter(dataadapter);
                     }
+                } else if (response.body() instanceof OtherBrandTagAddedResponse) {
+                    CustomToast.customToast(getActivity(), "Brand Tag added successfully");
+                } else if (response.body() instanceof OtherTagAddedResponse) {
+                    tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID();
+                    tagflag = true;
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

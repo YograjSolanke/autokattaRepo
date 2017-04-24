@@ -77,7 +77,10 @@ import autokatta.com.response.MyUpcomingAuctionResponse;
 import autokatta.com.response.MyUpcomingExchangeMelaResponse;
 import autokatta.com.response.MyUpcomingLoanMelaResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
+import autokatta.com.response.OtherBrandTagAddedResponse;
+import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.PriceSuggestionResponse;
+import autokatta.com.response.ProductAddedResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.SampleResponse;
@@ -85,6 +88,7 @@ import autokatta.com.response.SearchPersonResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SearchVehicleResponse;
 import autokatta.com.response.SellerResponse;
+import autokatta.com.response.ServiceAddedResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreInventoryResponse;
@@ -861,7 +865,7 @@ public interface ServiceApi {
 
     //add other Brand tags
     @POST("add_OtherBrand_tags.php")
-    Call<String> addOtherBrandTags(@Query("tag") String brandtag, @Query("type") String type);
+    Call<OtherBrandTagAddedResponse> addOtherBrandTags(@Query("tag") String brandtag, @Query("type") String type);
 
     //update_tag_association.php
     @POST("update_tag_association.php")
@@ -953,7 +957,7 @@ public interface ServiceApi {
 
     //get tags
     @GET("add_other_tags.php")
-    Call<String> _autoAddTags(@Query("tag") String tag, @Query("type") String type);
+    Call<OtherTagAddedResponse> _autoAddTags(@Query("tag") String tag, @Query("type") String type);
 
     //Likes in Product View
     @POST("newlikes.php")
@@ -1092,4 +1096,30 @@ public interface ServiceApi {
     //Device Registration...
     @POST("deviceRegistration.php")
     Call<String> firebaseToken(@Query("contact") String contact, @Query("token") String token);
+
+
+    //add product into store...
+    @POST("addSore_product.php")
+    Call<ProductAddedResponse> addProduct(@Query("store_id") String store_id,
+                                          @Query("product_name") String product_name,
+                                          @Query("price") String price,
+                                          @Query("product_details") String product_details,
+                                          @Query("product_tags") String product_tags,
+                                          @Query("product_type") String product_type,
+                                          @Query("images") String images,
+                                          @Query("category") String category,
+                                          @Query("brandtags") String brandtags);
+
+
+    //add service into store...
+    @POST("addSore_product.php")
+    Call<ServiceAddedResponse> addService(@Query("store_id") String store_id,
+                                          @Query("service_name") String service_name,
+                                          @Query("price") String price,
+                                          @Query("service_details") String service_details,
+                                          @Query("service_tags") String service_tags,
+                                          @Query("service_type") String service_type,
+                                          @Query("images") String images,
+                                          @Query("category") String category,
+                                          @Query("brandtags") String brandtags);
 }
