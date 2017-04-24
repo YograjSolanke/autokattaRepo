@@ -2220,6 +2220,71 @@ Upload Vehicle
         }
     }
 
+    /*
+    Get Group Products
+     */
+
+    public void getGroupProducts(String groupId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetGroupContactsResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupContacts(groupId);
+                mGetGroupContactsResponseCall.enqueue(new Callback<GetGroupContactsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetGroupContactsResponse> call, Response<GetGroupContactsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetGroupContactsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Group Services
+     */
+
+    public void getGroupService(String groupId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetGroupContactsResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupContacts(groupId);
+                mGetGroupContactsResponseCall.enqueue(new Callback<GetGroupContactsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetGroupContactsResponse> call, Response<GetGroupContactsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetGroupContactsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /*
    create Auction Event
