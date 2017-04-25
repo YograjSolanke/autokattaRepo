@@ -24,6 +24,7 @@ public class GroupsActivity extends AppCompatActivity {
         GroupDetailTabs groupDetailTabs = new GroupDetailTabs();
         Intent i=getIntent();
         String grouptype= i.getStringExtra("grouptype");
+        String className = i.getStringExtra("className");
         if (grouptype!=null)
         {
             b.putString("grouptype",i.getStringExtra("grouptype"));

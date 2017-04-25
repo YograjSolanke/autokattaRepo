@@ -33,20 +33,29 @@ public class GroupDetailTabs extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroupDetail = inflater.inflate(R.layout.fragment_group_details, container, false);
-        Bundle b=new Bundle();
-        Bundle        b1=getArguments();
+        Bundle b = new Bundle();
+        Bundle b1 = getArguments();
 
-        if (b1!=null)
-        {
+        if (b1 != null) {
             b1.getString("grouptype");
-            b.putString("grouptype", "OtherGroup");
-        }else {
+            b.putString("grouptype", b1.getString("grouptype"));
+        } else {
             b.putString("grouptype", "profile");
         }
         memberListFragment = new MemberListFragment();
         memberListFragment.setArguments(b);
+
         groupVehicleList = new GroupVehicleList();
         groupVehicleList.setArguments(b);
+
+        communicationListFragment = new GroupCommunicationFragment();
+        communicationListFragment.setArguments(b);
+
+        productListFragment = new GroupProductsFragment();
+        productListFragment.setArguments(b);
+
+        serviceListFragment = new GroupServicesFragment();
+        serviceListFragment.setArguments(b);
 
         ViewPager mViewPager = (ViewPager) mGroupDetail.findViewById(R.id.groups_details_viewpager);
         if (mViewPager != null) {
@@ -60,7 +69,7 @@ public class GroupDetailTabs extends Fragment {
     }
 
     private void setupViewPager(ViewPager mViewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getActivity().getSupportFragmentManager());
         tabAdapterName.addFragment(communicationListFragment, "Communication");
         tabAdapterName.addFragment(memberListFragment, "Group Members");
         tabAdapterName.addFragment(groupVehicleList, "Group Vehicles");

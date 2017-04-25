@@ -68,13 +68,12 @@ public class GroupEditFragment extends android.support.v4.app.Fragment implement
     ImageUpload mImageUpload;
     String mediaPath = "", mContact;
     Uri selectedImage = null;
-    Bitmap  bitmapRotate;
+    Bitmap bitmapRotate;
     String fname;
     File file;
     Bitmap bitmap;
     String lastWord = "", localImage;
     String bundle_image;
-
 
 
     @Nullable
@@ -112,7 +111,7 @@ public class GroupEditFragment extends android.support.v4.app.Fragment implement
             if (!bundle_image.equals("") || !bundle_image.equalsIgnoreCase(null) || !bundle_image.equalsIgnoreCase("null")) {
                 try {
                     Glide.with(getActivity())
-                            .load("http://autokatta.com/mobile/profile_profile_pics/"+bundle_image)
+                            .load("http://autokatta.com/mobile/group_profile_pics/" + bundle_image)
                             .bitmapTransform(new CropCircleTransformation(getActivity()))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mGroup_image);
@@ -149,7 +148,6 @@ public class GroupEditFragment extends android.support.v4.app.Fragment implement
         });
         return view;
     }
-
 
 
     public void onPickImage(View view) {
@@ -292,6 +290,7 @@ public class GroupEditFragment extends android.support.v4.app.Fragment implement
             }
         });
     }
+
     //    In some mobiles image will get rotate so to correting that this code will help us
     private int getImageOrientation() {
         final String[] imageColumns = {MediaStore.Images.Media._ID, MediaStore.Images.ImageColumns.ORIENTATION};
@@ -321,30 +320,29 @@ public class GroupEditFragment extends android.support.v4.app.Fragment implement
 
     @Override
     public void notifyString(String str) {
-        Log.i("SStttrrrr","str"+str);
-        if (str!="")
-{
-    CustomToast.customToast(getActivity(),"Group Updated Successfully");
-    uploadImage(mediaPath);
-    MyGroupsFragment frag = new MyGroupsFragment();
-    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-    FragmentTransaction mTransaction = fragmentManager.beginTransaction();
-    mTransaction.replace(R.id.group_container, frag).commit();
+        Log.i("SStttrrrr", "str" + str);
+        if (str != "") {
+            CustomToast.customToast(getActivity(), "Group Updated Successfully");
+            uploadImage(mediaPath);
+            MyGroupsFragment frag = new MyGroupsFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction mTransaction = fragmentManager.beginTransaction();
+            mTransaction.replace(R.id.group_container, frag).commit();
 
-}else
-if (str.equals("successsuccess1group_profile_pics/"+str))
-{
-    try {
-        Glide.with(getActivity())
-                .load("http://autokatta.com/mobile/profile_profile_pics/" + str)
-                .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                .into(mGroup_image);
-    } catch (Exception e) {
-        e.printStackTrace();
-        Toast.makeText(getActivity(), "Error uploading image", Toast.LENGTH_LONG).show();
+        } else if (str.equals("successsuccess1group_profile_pics/" + str)) {
+            try {
+                Glide.with(getActivity())
+                        .load("http://autokatta.com/mobile/group_profile_pics/" + str)
+                        .bitmapTransform(new CropCircleTransformation(getActivity()))
+                        .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                        .into(mGroup_image);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getActivity(), "Error uploading image", Toast.LENGTH_LONG).show();
+            }
+        }
     }
-}
-    }
+
     public void onBackPressed() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         Fragment f = fm.findFragmentById(R.id.group_container);
@@ -354,6 +352,7 @@ if (str.equals("successsuccess1group_profile_pics/"+str))
         }
 
     }
+
     @Override
     public void onResume() {
 

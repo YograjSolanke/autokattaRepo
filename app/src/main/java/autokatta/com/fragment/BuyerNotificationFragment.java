@@ -350,8 +350,15 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             DateFormat date = new SimpleDateFormat(" MMM dd ");
                             DateFormat time = new SimpleDateFormat(" hh:mm a");
 
+                            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
+                            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+
+                            /*holder.uploadDates.setText(newDateFormat.format(inputDate.parse(mGetOwnVehiclesList.get(position).getUploaddate())));
+
                             mItemNameCity.setText("Last call on:" + date.format(lastcall) +
-                                    time.format(lastcall));
+                                    time.format(lastcall));*/
+
+                            mItemNameCity.setText("Last call on:" + newDateFormat.format(inputDate.parse(lastcall)) + time.format(inputDate.parse(lastcall)));
 
                         } catch (Exception e) {
                             e.printStackTrace();
