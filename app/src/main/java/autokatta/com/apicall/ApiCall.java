@@ -6726,7 +6726,8 @@ Get saved search Seller list
                            String product_type,
                            String images,
                            String category,
-                           String brandtags) {
+                           String brandtags,
+                           String group_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -6737,7 +6738,7 @@ Get saved search Seller list
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<ProductAddedResponse> addTags = serviceApi.addProduct(store_id, product_name, price, product_details,
-                        product_tags, product_type, images, category, brandtags);
+                        product_tags, product_type, images, category, brandtags, group_id);
                 addTags.enqueue(new Callback<ProductAddedResponse>() {
                     @Override
                     public void onResponse(Call<ProductAddedResponse> call, Response<ProductAddedResponse> response) {
@@ -6767,7 +6768,8 @@ Add service
                            String service_type,
                            String images,
                            String category,
-                           String brandtags) {
+                           String brandtags,
+                           String group_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -6778,7 +6780,7 @@ Add service
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<ServiceAddedResponse> addTags = serviceApi.addService(store_id, service_name, price, service_details,
-                        service_tags, service_type, images, category, brandtags);
+                        service_tags, service_type, images, category, brandtags, group_id);
                 addTags.enqueue(new Callback<ServiceAddedResponse>() {
                     @Override
                     public void onResponse(Call<ServiceAddedResponse> call, Response<ServiceAddedResponse> response) {

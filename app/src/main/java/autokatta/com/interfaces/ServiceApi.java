@@ -1113,7 +1113,8 @@ public interface ServiceApi {
                                           @Query("product_type") String product_type,
                                           @Query("images") String images,
                                           @Query("category") String category,
-                                          @Query("brandtags") String brandtags);
+                                          @Query("brandtags") String brandtags,
+                                          @Query("group_id") String group_id);
 
 
     //add service into store...
@@ -1126,7 +1127,8 @@ public interface ServiceApi {
                                           @Query("service_type") String service_type,
                                           @Query("images") String images,
                                           @Query("category") String category,
-                                          @Query("brandtags") String brandtags);
+                                          @Query("brandtags") String brandtags,
+                                          @Query("group_id") String group_id);
 
 
     @Multipart
