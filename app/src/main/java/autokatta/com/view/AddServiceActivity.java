@@ -606,7 +606,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddServiceActivity.this);
 
         // set the dialog title
-        builder.setTitle("Select Groups From Following")
+        builder.setTitle("Select Groups Where You Want Show this Service")
                 .setCancelable(true)
                 .setMultiChoiceItems(choices, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override

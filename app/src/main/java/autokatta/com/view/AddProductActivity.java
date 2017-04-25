@@ -276,16 +276,16 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     if (stringTitles.length == 0) {
 
                         new AlertDialog.Builder(AddProductActivity.this)
-                                .setTitle("No groups to dispaly")
+                                .setTitle("No groups to display")
                                 .setMessage("Do you want to create group?")
 
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-//                                        GroupsCreateFragment frag2 = new GroupsCreateFragment();    // Call Another Fragment
+//                                        CreateGroupFragment frag2 = new CreateGroupFragment();    // Call Another Fragment
 //
-//                                        FragmentManager fragmentManager = getFragmentManager();
+//                                        FragmentManager fragmentManager = getSupportFragmentManager();
 //                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                                        fragmentTransaction.replace(R.id.containerView, frag2);
+//                                        fragmentTransaction.replace(R.id.storeviewFrame, frag2);
 //                                        fragmentTransaction.commit();
                                     }
                                 })
@@ -608,7 +608,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddProductActivity.this);
 
         // set the dialog title
-        builder.setTitle("Select Groups From Following")
+        builder.setTitle("Select Groups Where You Want Show this Product")
                 .setCancelable(true)
                 .setMultiChoiceItems(choices, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override

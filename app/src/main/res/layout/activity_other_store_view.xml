@@ -81,7 +81,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<include layout="@layout/content_other_profile" />-->
+    <include layout="@layout/content_other_store_view" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu_red"

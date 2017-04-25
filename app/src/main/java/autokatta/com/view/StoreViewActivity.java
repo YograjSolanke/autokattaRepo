@@ -364,7 +364,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(StoreViewActivity.this);
         builderSingle.setIcon(R.drawable.ic_cart_plus);
-        builderSingle.setTitle("Select One Name:-");
+        builderSingle.setTitle("Select One:-");
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(StoreViewActivity.this, android.R.layout.select_dialog_singlechoice);
         arrayAdapter.add("Add Product");
