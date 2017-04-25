@@ -1122,4 +1122,16 @@ public interface ServiceApi {
                                           @Query("images") String images,
                                           @Query("category") String category,
                                           @Query("brandtags") String brandtags);
+
+
+    @Multipart
+    @POST("upload_product_pics.php")
+    Call<String> uploadProductPic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+
+
+    @Multipart
+    @POST("upload_service_pics.php")
+    Call<String> uploadServicePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+
+
 }

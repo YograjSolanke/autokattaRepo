@@ -21,12 +21,15 @@ import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
@@ -34,6 +37,11 @@ import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.ProductAddedResponse;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -345,6 +353,9 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                 } else if (response.body() instanceof ProductAddedResponse) {
                     CustomToast.customToast(AddProductActivity.this, "Product added successfully");
 
+
+                    uploadImage(allimgpath);
+
                     Bundle b = new Bundle();
                     b.putString("store_id", store_id);
                     Intent intent = new Intent(AddProductActivity.this, StoreViewActivity.class);
@@ -513,5 +524,35 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     private void getCategory() {
         ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
         mApiCall.Categories("Product");
+    }
+
+
+    private void uploadImage(String picturePath) {
+        Log.i("PAth", "->" + picturePath);
+        List<String> imgList = Arrays.asList(picturePath.split(","));
+        int s = imgList.size();
+        for (int i = 0; i < imgList.size(); i++) {
+
+
+            File file = new File(imgList.get(i));
+            // Parsing any Media type file
+            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+            RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+            ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+            Call<String> call = getResponse.uploadProductPic(fileToUpload, filename);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    Log.i("image", "->" + response.body());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
+        }
     }
 }
