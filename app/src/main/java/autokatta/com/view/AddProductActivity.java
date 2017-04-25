@@ -1,16 +1,25 @@
 package autokatta.com.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
+
+import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
+import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
+import com.nguyenhoanglam.imagepicker.model.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +43,11 @@ import retrofit2.Response;
 public class AddProductActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
 
-    private ApiCall apiCall;
+
     String store_id, myContact;
     EditText productname, productprice, productdetails, producttype;
     MultiAutoCompleteTextView multiautotext, autoCategory, multiautobrand;
-    Button save;
+    Button save, addphotos;
     String tagpart = "", tagid = "", brandtagpart = "", finalbrandtags = "";
     String idlist = "", product_id;
     boolean tagflag = false;
@@ -46,6 +55,10 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     final ArrayList<String> tagname = new ArrayList<String>();
     final ArrayList<String> brandtagId = new ArrayList<>();
     final ArrayList<String> brandTags = new ArrayList<>();
+    AlertDialog alertDialog;
+    String allimgpath = "";
+    ArrayList<Image> mImages = new ArrayList<>();
+    int REQUEST_CODE_PICKER = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +76,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         productprice = (EditText) findViewById(R.id.editproductprice);
         productdetails = (EditText) findViewById(R.id.editproductdetails);
         save = (Button) findViewById(R.id.btnsave);
+        addphotos = (Button) findViewById(R.id.btnaddphotos);
         producttype = (EditText) findViewById(R.id.editproducttype);
         multiautotext = (MultiAutoCompleteTextView) findViewById(R.id.multiautotext);
         autoCategory = (MultiAutoCompleteTextView) findViewById(R.id.multiautocategory);
@@ -73,6 +87,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         autoCategory.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         save.setOnClickListener(this);
+        addphotos.setOnClickListener(this);
         getCategory();
         getTags();
         getBrandTags();
@@ -248,6 +263,26 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
                 break;
 
+            case R.id.btnaddphotos:
+
+                LayoutInflater layoutInflater = LayoutInflater.from(AddProductActivity.this);
+                View mViewDialogOtp = layoutInflater.inflate(R.layout.custom_alert_dialog_image, null);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(AddProductActivity.this);
+                builder1.setTitle("Upload Image");
+                builder1.setIcon(R.mipmap.ic_launcher);
+                builder1.setView(mViewDialogOtp);
+
+                ImageView mGallery = (ImageView) mViewDialogOtp.findViewById(R.id.gallery);
+                mGallery.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        start();
+                    }
+                });
+                alertDialog = builder1.create();
+                alertDialog.show();
+                break;
+
         }
 
     }
@@ -304,10 +339,18 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                 } else if (response.body() instanceof OtherBrandTagAddedResponse) {
                     CustomToast.customToast(AddProductActivity.this, "Brand Tag added successfully");
                 } else if (response.body() instanceof OtherTagAddedResponse) {
+                    CustomToast.customToast(AddProductActivity.this, "Other Tag added successfully");
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID();
                     tagflag = true;
                 } else if (response.body() instanceof ProductAddedResponse) {
                     CustomToast.customToast(AddProductActivity.this, "Product added successfully");
+
+                    Bundle b = new Bundle();
+                    b.putString("store_id", store_id);
+                    Intent intent = new Intent(AddProductActivity.this, StoreViewActivity.class);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                    finish();
                 }
             } else {
                 CustomToast.customToast(AddProductActivity.this, getString(R.string._404));
@@ -316,6 +359,95 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
             CustomToast.customToast(AddProductActivity.this, getString(R.string.no_response));
         }
 
+    }
+
+    private void start() {
+        ImagePicker.create(this)
+                .folderMode(true) // set folder mode (false by default)
+                .folderTitle("Folder") // folder selection title
+                .imageTitle("Tap to select") // image selection title
+                .single() // single mode
+                .multi() // multi mode (default mode)
+                .limit(10) // max images can be selected (999 by default)
+                .showCamera(true) // show camera or not (true by default)
+                .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
+                .origin(mImages) // original selected images, used in multi mode
+                .start(REQUEST_CODE_PICKER); // start image picker activity with request code
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
+            mImages = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
+            StringBuilder sb = new StringBuilder();
+            ArrayList<String> addData = new ArrayList<>();
+            ArrayList<String> mPath = new ArrayList<>();
+            for (int i = 0; i < mImages.size(); i++) {
+                sb.append(mImages.get(i).getPath());
+                mPath.add(mImages.get(i).getPath());
+            }
+            ArrayList<String> mPath1 = new ArrayList<>();
+            int cnt = 0;
+            String selectImages = "";
+            String selectedimg = "";
+            String allimg = "";
+            for (int i = 0; i < mPath.size(); i++) {
+                cnt++;
+                if (cnt <= 12) {
+                    selectImages = mPath.get(i);
+                    String lastWord = selectImages.substring(selectImages.lastIndexOf("/") + 1);
+                    mPath1.add(selectImages);
+                    if (allimgpath.equalsIgnoreCase("")) {
+                        allimgpath = "" + selectImages;
+                    } else {
+                        allimgpath = allimgpath + "," + selectImages;
+                    }
+                    if (selectedimg.equalsIgnoreCase("") && allimg.equalsIgnoreCase("")) {
+                        selectedimg = "" + selectImages;
+                        allimg = "" + lastWord.replace(" ", "");
+                    } else {
+                        selectedimg = selectedimg + "," + selectImages;
+                        allimg = allimg + "," + lastWord.replace(" ", "");
+                    }
+
+                } else {
+                    Toast.makeText(AddProductActivity.this,
+                            "You can upload 12 picture only",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            if (cnt == 0) {
+                Toast.makeText(AddProductActivity.this,
+                        "Please select at least one image",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(AddProductActivity.this,
+                        "You've selected Total " + cnt + " image(s).",
+                        Toast.LENGTH_LONG).show();
+                Log.d("SelectedImages", selectImages);
+
+                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("images", allimgpath).apply();
+
+
+                alertDialog.dismiss();
+
+//                Bundle b = new Bundle();
+//                b.putStringArrayList("IMAGE", mPath1);
+//                b.putInt("call", 1);
+//                SelectedImagesFragment mSelectedImagesFragment = new SelectedImagesFragment();
+//                mSelectedImagesFragment.setArguments(b);
+//
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.vehicle_upload_container, mSelectedImagesFragment, "selectedimagefragment")
+//                        .addToBackStack("selectedimagefragment")
+//                        .commit();
+
+            }
+            System.out.println("selected images=" + selectedimg);
+            System.out.println(selectedimg);
+        }
+        //textView.setText(sb.toString());
     }
 
     @Override

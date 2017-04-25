@@ -189,11 +189,20 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnaddphotos"
+                android:text="Add Photos +"
+                android:textAllCaps="false"
+                android:layout_below="@+id/linearproductdetails" />
+
             <LinearLayout
                 android:id="@+id/linearbtnsave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linearproductdetails"
+                android:layout_below="@id/btnaddphotos"
                 android:layout_marginTop="5dp">
 
                 <RelativeLayout

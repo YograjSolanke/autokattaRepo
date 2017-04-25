@@ -402,6 +402,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                 } else if (strName.equals("Add Vehicle")) {
 
+                    Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
+                    startActivity(intent);
+                    finish();
+
                 }
 
             }
