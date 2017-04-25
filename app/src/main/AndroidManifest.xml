@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="autokatta.com">
+          package="autokatta.com">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission
         android:name="android.permission.VIBRATE"
-        android:maxSdkVersion="18" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        android:maxSdkVersion="18"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     //for google map route
 
     <!--
@@ -41,10 +41,10 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="autokatta.com.broadcastreceiver.Receiver" />
+                <action android:name="autokatta.com.broadcastreceiver.Receiver"/>
             </intent-filter>
         </receiver>
 
@@ -54,60 +54,58 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
-
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="autokatta.com.AutokattaMainActivity" />
+                android:value="autokatta.com.AutokattaMainActivity"/>
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"/>
 
             <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:scheme="http"
-                    android:host="autokatta.com" />
+                    android:host="autokatta.com"
+                    android:scheme="http"/>
                 <data
-                    android:scheme="autokatta"
-                    android:host="autokatta" />
+                    android:host="autokatta"
+                    android:scheme="autokatta"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.UserProfile"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.MyAutokattaContactsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_autokatta_contacts"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.UploadVehicleIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.MyStoreListActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_store_list"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".other.SplashActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
@@ -115,299 +113,301 @@
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Registration.RegistrationActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_registration"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.BrowseStoreActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_browse_store"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.VehicleUpload"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_vehicle_upload"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.SearchStoreActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_search_store"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.OTP" />
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".view.OTP"/>
         <activity
             android:name=".view.MySearchActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_search"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.Forget_Password"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_forget__password"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.NewPassword"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.MyUploadedVehiclesActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_uploaded_vehicles"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.MyActiveEventsTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_active_events_tab"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.MySavedAuctionEventActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_saved_auction_event"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.BlackListedMemberActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_black_listed_member"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Registration.ContinueRegistration"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_continue_registration"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.MyUpcomingEventsTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_upcoming_events_tab"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.Create_Event"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_create_event"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.MyBroadcastGroupsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_broadcast_groups"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Registration.ContinueNextRegistration"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="Continue Next Registration"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.MyEndedEventTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_ended_event"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.GroupTabs"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_group_tabs"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.VehicleDetails"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_vehicle_details"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Registration.CompanyBasedRegistrationActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.OtherProfile"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_other_profile"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
 
         <!-- Service for Background task -->
         <service
             android:name=".broadcastreceiver.BackgroundService"
-            android:exported="false" />
+            android:exported="false"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="0310abc2483857212f40bd7bad891e166bf94ec4" />
+            android:value="0310abc2483857212f40bd7bad891e166bf94ec4"/>
 
         <activity
             android:name=".Registration.CompanyBasedInvitation"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"/>
         <activity
             android:name=".Registration.SkillsBasedInvitation"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"/>
         <activity
             android:name=".Registration.InviteFriends"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"/>
         <activity
             android:name=".auction.PreviewLiveEvents"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_preview_live_events"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".auction.LiveAuctionEventBiding"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".events.PreviewMyActiveAuctionActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".events.PreviewNextMyActiveAuctionActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.BroadcastMessageActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_broadcast_message"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.BussinessChatActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_bussiness_chat"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".events.MyEndedAuctionPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".events.MyEndedAuctionPreviewNextActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".auction.PreviewGoingEvents"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_preview_going_events"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".auction.PreviewUpcomingEvent"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_preview_upcoming_events"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".register.Registration"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.SearchVehicleActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_search_vehicle"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".register.RegistrationContinue"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".register.NextRegistrationContinue"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".register.RegistrationCompanyBased"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".register.InvitationCompanyBased"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".register.CreateStoreContainer"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".auction.MyAuctionVehicleDetails"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_my_auction_vehicle_details"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.StoreViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_other_store_view"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".auction.AdminVehicleDetails"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_admin_vehicle_details"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".other.SearchActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.GroupsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.AddProductActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.AddServiceActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.ShareWithinAppActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.GET_CONTENT" />
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <action android:name="android.intent.action.GET_CONTENT"/>
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:mimeType="*/*" />
+                <data android:mimeType="*/*"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".view.LocalityActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_locality"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".initial_fragment.LocalityFragment"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"/>
 
         <!-- Meta data for Google Map API key -->
-        <!--<meta-data
+        <!--
+            <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBy7JK3GnLrzdxf_VS-ghgUSwwdNy6DmH0" />-->
+            android:value="AIzaSyBy7JK3GnLrzdxf_VS-ghgUSwwdNy6DmH0" />
+        -->
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -416,37 +416,54 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
-        <!--Google Location Api Key -->
+        <!-- Google Location Api Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key"/>
 
         <activity
             android:name=".other.MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"/>
 
         <service
             android:name=".firebase.MyFirebaseMessagingService"
-            android:exported="false"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-
         <service
             android:name=".firebase.MyFirebaseInstanceIDService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
         <activity android:name=".firebase.FirebaseActivity">
             <intent-filter>
-                <action android:name="OPEN_ACTIVITY_1" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="OPEN_ACTIVITY_1"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".events.ActiveLoanMelaPreviewActivity">
+        </activity>
+        <activity
+            android:name=".events.ActiveExchangeMelaPreviewActivity"
+            android:label="@string/title_activity_active_exchange_mela_preview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".events.ActiveServiceMelaActivity"
+            android:label="@string/title_activity_active_service_mela"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".events.ActiveSaleMelaActivity"
+            android:label="@string/title_activity_active_sale_mela"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

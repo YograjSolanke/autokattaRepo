@@ -172,4 +172,7 @@
     <string name="title_activity_share_within_app">ShareWithinAppActivity</string>
     <string name="title_activity_locality">LocalityActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_active_exchange_mela_preview">ActiveExchangeMelaPreviewActivity</string>
+    <string name="title_activity_active_service_mela">ActiveServiceMelaActivity</string>
+    <string name="title_activity_active_sale_mela">ActiveSaleMelaActivity</string>
 </resources>

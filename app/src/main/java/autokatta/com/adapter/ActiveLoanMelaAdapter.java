@@ -1,9 +1,12 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.events.ActiveLoanMelaPreviewActivity;
 import autokatta.com.response.MyActiveLoanMelaResponse;
 
 /**
@@ -21,6 +25,7 @@ import autokatta.com.response.MyActiveLoanMelaResponse;
 public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAdapter.LoanHolder> {
     List<MyActiveLoanMelaResponse.Success> mMainlist = new ArrayList<>();
     Activity mActivity;
+    FragmentActivity ctx;
 
 
     public ActiveLoanMelaAdapter(Activity activity, List<MyActiveLoanMelaResponse.Success> itemlist) {
@@ -50,6 +55,16 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
         holder.endtime.setText(mMainlist.get(position).getEndTime());
         holder.location.setText(mMainlist.get(position).getLocation());
         holder.address.setText(mMainlist.get(position).getAddress());
+
+        holder.image.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.finish();
+                Intent i=new Intent(mActivity, ActiveLoanMelaPreviewActivity.class);
+                mActivity.startActivity(i);
+
+            }
+        });
 
     }
 
