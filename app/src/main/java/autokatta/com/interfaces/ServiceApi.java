@@ -768,6 +768,11 @@ public interface ServiceApi {
                                          @Query("skills") String skills, @Query("city") String city,
                                          @Query("sub_profession") String sub_profession, @Query("reg_id") String reg_id);
 
+
+    //Update Profile Username And Image
+    @GET("update_profile.php")
+    Call<String> _autokattaUpdateUserName( @Query("username") String username,@Query("profile_pic") String profile_pic,@Query("reg_id") String reg_id);
+
     //Update Profile
     @POST("getColors.php")
     Call<ColorResponse> _autokattaGetAllColor();
