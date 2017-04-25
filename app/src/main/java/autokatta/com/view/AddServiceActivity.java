@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -36,6 +37,7 @@ import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
+import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.ServiceAddedResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -63,10 +65,15 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     final ArrayList<String> tagname = new ArrayList<String>();
     final ArrayList<String> brandtagId = new ArrayList<>();
     final ArrayList<String> brandTags = new ArrayList<>();
+    ArrayList<String> groupId = new ArrayList<>();
+    ArrayList<String> groupTitle = new ArrayList<>();
+    String[] stringTitles = new String[0], stringIds = new String[0];
     AlertDialog alertDialog;
     String allimgpath = "";
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
+    String stringgroupids = "";
+    String name, price, details, type, name1, category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +105,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         getCategory();
         getTags();
         getBrandTags();
+        getGroupData();
 
         multiautotext.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -149,7 +157,6 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnsave:
-                String name, price, details, type, name1, category;
 
                 name = servicename.getText().toString();
                 price = serviceprice.getText().toString();
@@ -279,7 +286,36 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     Toast.makeText(AddServiceActivity.this, "Please Select Service Category", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags);
+                    if (stringTitles.length == 0) {
+
+                        new AlertDialog.Builder(AddServiceActivity.this)
+                                .setTitle("No groups to dispaly")
+                                .setMessage("Do you want to create group?")
+
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+//                                        GroupsCreateFragment frag2 = new GroupsCreateFragment();    // Call Another Fragment
+//
+//                                        FragmentManager fragmentManager = getFragmentManager();
+//                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                                        fragmentTransaction.replace(R.id.containerView, frag2);
+//                                        fragmentTransaction.commit();
+                                    }
+                                })
+
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    } else
+                        alertBoxToSelectExcelSheet(stringTitles);
+
+
+                    // createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags,"");
 
                 }
 
@@ -318,10 +354,11 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                                String service_type,
                                String images,
                                String category,
-                               String brandtags) {
+                               String brandtags,
+                               String group_id) {
 
         ApiCall mApiCall = new ApiCall(AddServiceActivity.this, this);
-        mApiCall.addService(store_id, service_name, price, service_details, service_tags, service_type, images, category, brandtags);
+        mApiCall.addService(store_id, service_name, price, service_details, service_tags, service_type, images, category, brandtags, group_id);
     }
     @Override
     public void notifySuccess(Response<?> response) {
@@ -376,6 +413,15 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     intent.putExtras(b);
                     startActivity(intent);
                     finish();
+                } else if (response.body() instanceof ProfileGroupResponse) {
+                    ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
+                    for (ProfileGroupResponse.MyGroup success : profileGroupResponse.getSuccess().getMyGroups()) {
+                        groupId.add(success.getId());
+                        groupTitle.add(success.getTitle());
+                    }
+
+                    stringTitles = groupTitle.toArray(new String[groupTitle.size()]);
+                    stringIds = groupId.toArray(new String[groupId.size()]);
                 }
             } else {
                 CustomToast.customToast(AddServiceActivity.this, getString(R.string._404));
@@ -506,6 +552,11 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         mApiCall.getBrandTags("2");
     }
 
+    private void getGroupData() {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.Groups(myContact);
+    }
+
 
     /*
     Get Module...
@@ -542,5 +593,77 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                 }
             });
         }
+    }
+
+
+    ///////////////////////////////////////////////
+    public void alertBoxToSelectExcelSheet(final String[] choices) {
+
+        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        mSelectedItems.clear();
+        stringgroupids = "";
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddServiceActivity.this);
+
+        // set the dialog title
+        builder.setTitle("Select Groups From Following")
+                .setCancelable(true)
+                .setMultiChoiceItems(choices, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(choices[which]);
+
+                        } else if (mSelectedItems.contains(choices[which])) {
+
+                            mSelectedItems.remove(choices[which]);
+
+                        }
+                    }
+
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            for (int j = 0; j < stringTitles.length; j++) {
+                                if (mSelectedItems.get(i).equals(stringTitles[j])) {
+                                    if (stringgroupids.equals("")) {
+                                        stringgroupids = groupId.get(j);
+                                    } else {
+                                        stringgroupids = stringgroupids + "," + groupId.get(j);
+
+                                    }
+                                }
+                            }
+
+                        }
+
+                        System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+                        createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
+
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // removes the AlertDialog in the screen
+
+                        stringgroupids = "";
+                        System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+                        createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
+
+
+                    }
+
+                })
+
+                .show();
+
     }
 }

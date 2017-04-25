@@ -443,7 +443,6 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/dash1"
-                            android:hint="type"
                             android:textColor="#2C3343"
                             android:textColorHint="#000000"
                             android:textSize="15sp" />

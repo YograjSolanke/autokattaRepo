@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +38,7 @@ import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.ProductAddedResponse;
+import autokatta.com.response.ProfileGroupResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -64,11 +66,15 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     final ArrayList<String> tagname = new ArrayList<String>();
     final ArrayList<String> brandtagId = new ArrayList<>();
     final ArrayList<String> brandTags = new ArrayList<>();
+    ArrayList<String> groupId = new ArrayList<>();
+    ArrayList<String> groupTitle = new ArrayList<>();
+    String[] stringTitles = new String[0], stringIds = new String[0];
     AlertDialog alertDialog;
     String allimgpath = "";
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
-
+    String stringgroupids = "";
+    String name, price, details, type, name1, category;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +106,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         getCategory();
         getTags();
         getBrandTags();
+        getGroupData();
 
         multiautotext.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -135,7 +142,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnsave:
-                String name, price, details, type, name1, category;
+
 
                 name = productname.getText().toString();
                 price = productprice.getText().toString();
@@ -265,7 +272,36 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     Toast.makeText(AddProductActivity.this, "Please Select Product Category", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags);
+
+                    if (stringTitles.length == 0) {
+
+                        new AlertDialog.Builder(AddProductActivity.this)
+                                .setTitle("No groups to dispaly")
+                                .setMessage("Do you want to create group?")
+
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+//                                        GroupsCreateFragment frag2 = new GroupsCreateFragment();    // Call Another Fragment
+//
+//                                        FragmentManager fragmentManager = getFragmentManager();
+//                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                                        fragmentTransaction.replace(R.id.containerView, frag2);
+//                                        fragmentTransaction.commit();
+                                    }
+                                })
+
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    } else
+                        alertBoxToSelectExcelSheet(stringTitles);
+
+                    // createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags,"");
 
                 }
 
@@ -304,10 +340,11 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                                String product_type,
                                String images,
                                String category,
-                               String brandtags) {
+                               String brandtags,
+                               String group_id) {
 
         ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
-        mApiCall.addProduct(store_id, product_name, price, product_details, product_tags, product_type, images, category, brandtags);
+        mApiCall.addProduct(store_id, product_name, price, product_details, product_tags, product_type, images, category, brandtags, group_id);
     }
 
     @Override
@@ -363,6 +400,15 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     intent.putExtras(b);
                     startActivity(intent);
                     finish();
+                } else if (response.body() instanceof ProfileGroupResponse) {
+                    ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
+                    for (ProfileGroupResponse.MyGroup success : profileGroupResponse.getSuccess().getMyGroups()) {
+                        groupId.add(success.getId());
+                        groupTitle.add(success.getTitle());
+                    }
+
+                    stringTitles = groupTitle.toArray(new String[groupTitle.size()]);
+                    stringIds = groupId.toArray(new String[groupId.size()]);
                 }
             } else {
                 CustomToast.customToast(AddProductActivity.this, getString(R.string._404));
@@ -516,6 +562,11 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         mApiCall.Categories("Product");
     }
 
+    private void getGroupData() {
+        ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
+        mApiCall.Groups(myContact);
+    }
+
 
     private void uploadImage(String picturePath) {
         Log.i("PAth", "->" + picturePath);
@@ -544,5 +595,77 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                 }
             });
         }
+    }
+
+
+    ///////////////////////////////////////////////
+    public void alertBoxToSelectExcelSheet(final String[] choices) {
+
+        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        mSelectedItems.clear();
+        stringgroupids = "";
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddProductActivity.this);
+
+        // set the dialog title
+        builder.setTitle("Select Groups From Following")
+                .setCancelable(true)
+                .setMultiChoiceItems(choices, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(choices[which]);
+
+                        } else if (mSelectedItems.contains(choices[which])) {
+
+                            mSelectedItems.remove(choices[which]);
+
+                        }
+                    }
+
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            for (int j = 0; j < stringTitles.length; j++) {
+                                if (mSelectedItems.get(i).equals(stringTitles[j])) {
+                                    if (stringgroupids.equals("")) {
+                                        stringgroupids = groupId.get(j);
+                                    } else {
+                                        stringgroupids = stringgroupids + "," + groupId.get(j);
+
+                                    }
+                                }
+                            }
+
+                        }
+
+                        System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+                        createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
+
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // removes the AlertDialog in the screen
+
+                        stringgroupids = "";
+                        System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+                        createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
+
+
+                    }
+
+                })
+
+                .show();
+
     }
 }
