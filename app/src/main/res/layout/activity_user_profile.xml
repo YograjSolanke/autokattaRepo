@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -66,13 +66,25 @@
     <!--<include layout="@layout/nested_scrollview"/>-->
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_edit_prof"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="top|right|end"
-        android:src="@mipmap/ic_menu"
+        android:src="@mipmap/ic_prof_edit"
         android:layout_margin="@dimen/fab_margin"
+
+        android:clickable="true"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_edit_done"
+        android:layout_height="43dp"
+        android:layout_width="43dp"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="top|right|end"
+        android:src="@drawable/done"
+        android:visibility="gone"
+        android:layout_margin="@dimen/fab_margin"
+
         android:clickable="true"/>
 
 </android.support.design.widget.CoordinatorLayout>
