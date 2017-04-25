@@ -22,29 +22,31 @@ import autokatta.com.response.GetRegisteredContactsResponse.Success;
 
 import static autokatta.com.fragment.GroupContactFragment.AddContacts;
 
+
 /**
  * Created by ak-005 on 20/4/17.
  */
 
 public class GroupContactListAdapter extends BaseAdapter {
 
-
-    private List<Success>filteredData = null;
     private ItemFilter mFilter = new ItemFilter();
     private List<GetRegisteredContactsResponse.Success> mList;
     private List<GetRegisteredContactsResponse.Success> mListCopy;
     Activity activity;
     CheckBox checkbox;
-    ArrayList<Boolean> positionArray=new ArrayList<>();
-    ArrayList<String> contactlist=new ArrayList<>();
-    public GroupContactListAdapter(Activity a, ArrayList<GetRegisteredContactsResponse.Success> mList) {
-        this.activity = a;
-        this.mList = mList;
-        this.mListCopy=mList;
+    private List<Boolean> positionArray = new ArrayList<>();
+    private List<String> contactlist = new ArrayList<>();
 
-            for (int i = 0; i < mList.size(); i++) {
-                contactlist.add("0");
-                positionArray.add(false);
+
+    public GroupContactListAdapter(Activity a, List<GetRegisteredContactsResponse.Success> mListt) {
+        this.activity = a;
+        this.mList = mListt;
+        this.mListCopy = mListt;
+
+
+        for (int i = 0; i < mList.size(); i++) {
+            contactlist.add("0");
+            positionArray.add(false);
         }
     }
 
@@ -64,8 +66,8 @@ public class GroupContactListAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
 
-       ViewHolder contactListHolder = null;
-        if (convertView == null){
+        ViewHolder contactListHolder = null;
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.group_contact_list_adapter, null);
 
@@ -73,13 +75,13 @@ public class GroupContactListAdapter extends BaseAdapter {
             contactListHolder = new ViewHolder();
             contactListHolder.mName = (TextView) convertView.findViewById(R.id.contact_name);
             contactListHolder.mContact = (TextView) convertView.findViewById(R.id.contact_no);
-            contactListHolder.checkBox = (CheckBox) convertView.findViewById( R.id.checkall);
+            contactListHolder.checkBox = (CheckBox) convertView.findViewById(R.id.checkall);
             convertView.setTag(contactListHolder);
-        }else {
+        } else {
             contactListHolder = (ViewHolder) convertView.getTag();
             contactListHolder.checkBox.setOnCheckedChangeListener(null);
         }
-        Log.i("aaaaaaaaaaaaaaaaa","->"+mList);
+        Log.i("aaaaaaaaaaaaaaaaa", "->" + mList);
         GetRegisteredContactsResponse.Success success = mList.get(position);
         contactListHolder.mName.setText(success.getUsername());
         contactListHolder.mContact.setText(success.getContact());
@@ -95,14 +97,14 @@ public class GroupContactListAdapter extends BaseAdapter {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked ){
+                if (isChecked) {
 
                     positionArray.set(position, true);
                     contactlist.set(position, mList.get(position).getContact());
 
-                }else{
+                } else {
                     positionArray.set(position, false);
-                    contactlist.set(position,"0");
+                    contactlist.set(position, "0");
                 }
 
                 //For Button visible/invisible
@@ -120,7 +122,7 @@ public class GroupContactListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public ArrayList checkboxselect() {
+    public List checkboxselect() {
         // TODO Auto-generated method stub
         return contactlist;
     }
@@ -129,7 +131,7 @@ public class GroupContactListAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView mName;
         TextView mContact;
-        CheckBox checkBox ;
+        CheckBox checkBox;
     }
 
     public Filter getFilter() {
@@ -144,12 +146,12 @@ public class GroupContactListAdapter extends BaseAdapter {
 
             FilterResults results = new FilterResults();
 
-            final List<Success> list = mList;
+            final List<Success> list = mListCopy;
 
             int count = list.size();
             final ArrayList<Success> nlist = new ArrayList<Success>(count);
 
-            Success filterableString ;
+            Success filterableString;
 
             for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);
@@ -167,7 +169,7 @@ public class GroupContactListAdapter extends BaseAdapter {
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredData = (ArrayList<Success>) results.values;
+            mList = (ArrayList<Success>) results.values;
             notifyDataSetChanged();
         }
 

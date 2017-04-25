@@ -1,13 +1,14 @@
 package autokatta.com.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.adapter.GroupContactListAdapter;
@@ -26,6 +28,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetRegisteredContactsResponse;
+import autokatta.com.view.GroupsActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -34,7 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-005 on 20/4/17.
  */
 
-public class GroupContactFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+public class GroupContactFragment extends Fragment implements RequestNotifier {
     View mGcontact;
     String mContact, mGroup_id, grp_id, call, grp1_id, pass_id;
     ListView lv;
@@ -45,8 +48,8 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
 
     public static Button AddContacts;
     EditText inputSearch;
-    ArrayList<String> clist = new ArrayList<>();
-    ArrayList<GetRegisteredContactsResponse.Success> cntlist = new ArrayList<>();
+    List<String> clist = new ArrayList<>();
+    List<GetRegisteredContactsResponse.Success> cntlist = new ArrayList<>();
 
     boolean flag = true;
     String allcontacts = "";
@@ -57,6 +60,10 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
         inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mGcontact = inflater.inflate(R.layout.group_contact_list, container, false);
 
+        AddContacts = (Button) mGcontact.findViewById(R.id.add_contacts);
+        inputSearch = (EditText) mGcontact.findViewById(R.id.inputSearch);
+        lv = (ListView) mGcontact.findViewById(R.id.list_view);
+
         mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
         mGroup_id = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
@@ -65,9 +72,6 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
 
 
         System.out.println("----------------->GroupID" + mGroup_id);
-        AddContacts = (Button) mGcontact.findViewById(R.id.add_contacts);
-        inputSearch = (EditText) mGcontact.findViewById(R.id.inputSearch);
-        lv = (ListView) mGcontact.findViewById(R.id.list_view);
 
 
         args = getArguments();
@@ -100,7 +104,7 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
                 // TODO Auto-generated method stub
 
 
-                final ArrayList<String> GetList = args.getStringArrayList("list");
+                List<String> GetList = args.getStringArrayList("list");
                 System.out.println("List From Web Service: " + GetList);
 
                 clist = CntctListadapter.checkboxselect();
@@ -139,29 +143,27 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
 
                     //If Group Already Contains Selected Contact
                     else {
-                        for (int i = 0; i < cntlist.size(); i++) {
-                            String no = String.valueOf(cntlist.get(i).getContact());
+                        for (int i = 0; i < GetList.size(); i++) {
+                            String no = GetList.get(i);
 
                             String[] parts = allcontacts.split(",");
 
                             for (int j = 0; j < parts.length; j++) {
                                 if (parts[j].contains(no)) {
-
+/*
                                     Snackbar.make(v,
                                             "Sorry..No Is Already added in Group",
-                                            Snackbar.LENGTH_LONG).show();
+                                            Snackbar.LENGTH_LONG).show();*/
+                                    CustomToast.customToast(getActivity(), "Sorry..No Is Already added in Group");
                                     flag = false;
-                                }/*else
-                                {
-                                mApiCall.addContactInGroup(pass_id,parts[j]);
-                                }*/
+                                }
                             }
                         }
                     }
                 }
                 if (!flag) {
 
-                    GroupNextTabFragment groupMyJoined=new GroupNextTabFragment();
+                    /*GroupNextTabFragment groupMyJoined=new GroupNextTabFragment();
                     args.putString("id",pass_id);
                     args.putString("call", "groupContact");
                     args.putString("grouptype", "groups");
@@ -171,12 +173,16 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.group_container, groupMyJoined);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.commit();*/
+
+                    Intent intent = new Intent(getActivity(), GroupsActivity.class);
+                    intent.putExtra("grouptype", "MyGroup");
+                    intent.putExtra("className", "GroupContactFragment");
+                    getActivity().startActivity(intent);
+                    getActivity().finish();
 
 
-                }
-
-                if (flag) {
+                } else if (flag) {
                     if (call.equalsIgnoreCase("newGroup")) {
                         allcontacts = allcontacts + "," + mContact;
                     }
@@ -188,11 +194,11 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
 
                         receiver_contact = parts[i];
                         if (!receiver_contact.equalsIgnoreCase(mContact)) {
-                           // mApiCall.groupLikeNotification(pass_id, mContact, receiver_contact, "3");
+                            // mApiCall.groupLikeNotification(pass_id, mContact, receiver_contact, "3");
                         }
                     }
 
-                    GroupNextTabFragment groupMyJoined=new GroupNextTabFragment();
+                    /*GroupNextTabFragment groupMyJoined=new GroupNextTabFragment();
                     args.putString("id",pass_id);
                     args.putString("call", "groupContact");
                     args.putString("grouptype", "groups");
@@ -202,7 +208,7 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.group_container, groupMyJoined);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.commit();*/
 
 
                     System.out.println("All contacts ::" + allcontacts);
@@ -237,19 +243,50 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
         return mGcontact;
     }
 
-    @Override
-    public void onRefresh() {
-
-    }
 
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
+            cntlist.clear();
+
+            Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+            String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                    ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+            Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
+
+            int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
             GetRegisteredContactsResponse mGetRegisteredContactsResponse = (GetRegisteredContactsResponse) response.body();
             for (GetRegisteredContactsResponse.Success contactRegistered : mGetRegisteredContactsResponse.getSuccess()) {
                 contactRegistered.setContact(contactRegistered.getContact());
                 contactRegistered.setUsername(contactRegistered.getUsername());
-                cntlist.add(contactRegistered);
+                String contact = contactRegistered.getContact();
+                if (contact.length() > 10)
+                    contact = contact.substring(contact.length() - 10);
+
+                people.moveToFirst();
+                do {
+                    String name = people.getString(indexName);
+                    String number = people.getString(indexNumber);
+
+                    number = number.replaceAll("-", "").replace("(", "").replace(")", "").replaceAll(" ", "");
+
+                    if (number.length() > 10)
+                        number = number.substring(number.length() - 10);
+
+                    if (contact.equalsIgnoreCase(number) && !contact.equals(mContact)) {
+                        /*names.add(name + "-" + number);
+                        numbers.add(number);*/
+                        contactRegistered.setContact(number);
+                        contactRegistered.setUsername(name);
+                        cntlist.add(contactRegistered);
+                    }
+
+                } while (people.moveToNext());
+
+                //cntlist.add(contactRegistered);
             }
 
             CntctListadapter = new GroupContactListAdapter(getActivity(), cntlist);
@@ -267,8 +304,13 @@ public class GroupContactFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success_add_contact")) {
+            if (str.startsWith("success_add_contact")) {
                 CustomToast.customToast(getActivity(), "Contact Added Successfully");
+                Intent intent = new Intent(getActivity(), GroupsActivity.class);
+                intent.putExtra("grouptype", "MyGroup");
+                intent.putExtra("className", "GroupContactFragment");
+                getActivity().startActivity(intent);
+                getActivity().finish();
             } else {
                 CustomToast.customToast(getActivity(), "Error");
             }

@@ -28,6 +28,7 @@ public class GroupsActivity extends AppCompatActivity {
         if (grouptype!=null)
         {
             b.putString("grouptype",i.getStringExtra("grouptype"));
+            b.putString("className", i.getStringExtra("className"));
             groupDetailTabs.setArguments(b);
         }
         getSupportFragmentManager().beginTransaction()

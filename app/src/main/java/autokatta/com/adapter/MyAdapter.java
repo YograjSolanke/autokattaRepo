@@ -167,20 +167,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                         .putString("group_id", mItemList.get(position).getId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
                         .putString("grouptype", GroupType).apply();
-                /*FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
-                FragmentTransaction mTransaction = fragmentManager.beginTransaction();
-                mTransaction.replace(R.id.group_container, new GroupNextTabFragment()).commit();*/
-
 
                 Intent intent = new Intent(mActivity, GroupsActivity.class);
                 //intent.putExtras();
                 if (GroupType.equals("JoinedGroups")) {
-                    intent.putExtra("grouptype", "OtherGroup");
+                    intent.putExtra("grouptype", "JoinedGroups");
                 } else {
-                    intent.putExtra("grouptype", "MyGroup");
+                    intent.putExtra("grouptype", "MyGroups");
                 }
-
-
                 intent.putExtra("className", "MyAdapter");
                 mActivity.startActivity(intent);
             }

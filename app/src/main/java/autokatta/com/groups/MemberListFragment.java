@@ -2,7 +2,10 @@
 package autokatta.com.groups;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -42,11 +45,12 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     FloatingActionButton floatCreateGroup;
     List<GetGroupContactsResponse.Success> mSuccesses = new ArrayList<>();
     List<String> mlist = new ArrayList<>();
+    List<String> ContactNoList;
     MemberListRefreshAdapter mMemberListAdapter;
     String call;
     Bundle bundle = new Bundle();
     String group_id;
-    String mCallfrom;
+    String mCallfrom = "";
 
     @Nullable
     @Override
@@ -87,10 +91,10 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         if (bundle != null) {
             mCallfrom = bundle.getString("grouptype");
             Log.i("Other", "->" + mCallfrom);
-        } else
-            mCallfrom = "groups";
+        } /*else
+            mCallfrom = "groups";*/
 //For Other Profile
-        if (mCallfrom.equalsIgnoreCase("OtherGroup")) {
+        if (mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("JoinedGroups")) {
             floatCreateGroup.setVisibility(View.GONE);
         }
 
@@ -101,24 +105,23 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
 
                 GroupContactFragment fragment = new GroupContactFragment();
                 Bundle b = new Bundle();
-                //pass Group Id to ContactFrag as a Bundle
                 b.putString("id", group_id);
-                // b.putStringArrayList("list",);
+                b.putStringArrayList("list", (ArrayList<String>) ContactNoList);
                 b.putString("call", "existGroup");
                 fragment.setArguments(b);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 ///If call from Profile
-                if (mCallfrom.equalsIgnoreCase("profile")) {
+                /*if (mCallfrom.equalsIgnoreCase("profile")) {*/
                     fragmentTransaction.replace(R.id.profile_groups_container, fragment);
                     fragmentTransaction.addToBackStack("groupcontactfragment");
                     fragmentTransaction.commit();
-                } else {
+               /* } else {
                     fragmentTransaction.replace(R.id.group_container, fragment);
                     fragmentTransaction.addToBackStack("groupcontactfragment");
                     fragmentTransaction.commit();
-                }
+                }*/
             }
         });
 
@@ -138,8 +141,15 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                ContactNoList = new ArrayList<>();
+                ContactNoList.clear();
                 mSuccesses.clear();
                 mSwipeRefreshLayout.setRefreshing(false);
+
+                Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+                String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                        ContactsContract.CommonDataKinds.Phone.NUMBER};
+
                 GetGroupContactsResponse mGetGroupContactsResponse = (GetGroupContactsResponse) response.body();
                 for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
                     success.setUsername(success.getUsername());
@@ -148,18 +158,71 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     success.setDp(success.getDp());
                     success.setMember(success.getMember());
                     success.setVehiclecount(success.getVehiclecount());
+                    if (success.getStatus().equals("null"))
+                        success.setStatus("No Status");
+
+
+                    success.setContact(success.getContact().replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "").
+                            replace("(", "").replace(")", ""));
+
+                    if (success.getContact().length() > 10)
+                        success.setContact(success.getContact().substring(success.getContact().length() - 10));
+
+                    Boolean found = false;
+
+                    Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
+                    int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                    int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+                    try {
+                        people.moveToFirst();
+                        do {
+                            String namesfound = people.getString(indexName);
+                            String numberfound = people.getString(indexNumber);
+
+                            numberfound = numberfound.replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "");
+                            numberfound = numberfound.replace("(", "").replace(")", "");
+
+                            if (numberfound.length() > 10)
+                                numberfound = numberfound.substring(numberfound.length() - 10);
+
+                            //Remove All Space From Web Service Contacts And Mobile Contacts And Match Each Other
+                            if (success.getContact().equalsIgnoreCase(numberfound)) {
+                                //NameList.add(namesfound+"="+getcont+"="+status+"="+image+"="+userName+"="+type+"="+vehicle_cnt);
+                                success.setUsername(namesfound);
+                                ContactNoList.add(success.getContact());
+
+
+                                found = true;
+                                break;
+                            }
+
+                        } while (people.moveToNext());
+
+                        if (!found) {
+                            // NameList.add("Unknown="+getcont+"="+status+"="+image+"="+userName+"="+type+"="+vehicle_cnt);
+                            success.setUsername("Unknown");
+                            ContactNoList.add(success.getContact());
+
+
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     mSuccesses.add(success);
+
                 }
-                if (mCallfrom.equals("profile")) {
+                /*if (mCallfrom.equals("profile")) {
                     mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses, mCallfrom);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
 
-                } else if (mCallfrom.equals("groups") || mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("MyGroup")) {
-                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses);
+                } else if (mCallfrom.equals("groups") || mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("MyGroup")) {*/
+                mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses, mCallfrom);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
-                }
+                //}
 
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

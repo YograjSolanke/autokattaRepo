@@ -38,15 +38,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
     private Activity mActivity;
     private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
-    String mCallFrom;
+    private String mCallFrom;
+    private String myContact;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mContact, mVehicleCount, mAdmin;
         ImageView mCall, mProfilePic;
         Button mOption;
-
         RelativeLayout mRelativeLayout;
-
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -64,12 +63,16 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     public MemberListRefreshAdapter(Activity mActivity, List<GetGroupContactsResponse.Success> mItemList) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", "");
     }
 
     public MemberListRefreshAdapter(Activity mActivity, List<GetGroupContactsResponse.Success> mItemList, String mCallfrom) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
         this.mCallFrom = mCallfrom;
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", "");
     }
 
     @Override
@@ -111,34 +114,31 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             holder.mCall.setVisibility(View.INVISIBLE);
         }
 
-        String groupName = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE)
-                .getString("group_type", "");
+        /*String groupName = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("group_type", "");*/
         if (!mItemList.get(position).getMember().equals("Unknown")) {
             //If no is in mobile contact, number is invisible
             holder.mContact.setVisibility(View.INVISIBLE);
             //If type is admin
             if (mItemList.get(position).getMember().equals("Admin")) {
                 //if MyGroups
-                if (groupName.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
-                        .equalsIgnoreCase(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                                Context.MODE_PRIVATE).getString("loginContact", ""))) {
+                if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
+                        .equalsIgnoreCase(myContact)) {
                     holder.mName.setText("You");
                     holder.mContact.setVisibility(View.INVISIBLE);
                     holder.mOption.setVisibility(View.VISIBLE);
                 }
                 //if Other Groups
-                else if (!groupName.equalsIgnoreCase("MyGroups")) {
+                else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
                     if (mItemList.get(position).getContact()
-                            .equalsIgnoreCase(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                                    Context.MODE_PRIVATE).getString("loginContact", ""))) {
+                            .equalsIgnoreCase(myContact)) {
                         holder.mName.setText("You");
                         holder.mContact.setVisibility(View.INVISIBLE);
                     } else
                         holder.mName.setText(mItemList.get(position).getUsername());
                 }
             }
-            if (mItemList.get(position).getContact().equalsIgnoreCase(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                    Context.MODE_PRIVATE).getString("loginContact", ""))) {
+            if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
                 holder.mName.setText("You");
                 holder.mContact.setVisibility(View.INVISIBLE);
 
@@ -146,17 +146,15 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         } else if (mItemList.get(position).getUsername().equals("Unknown")) {
             if (mItemList.get(position).getMember().equals("Admin")) {
                 //If MyGroups
-                if (groupName.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
-                        .equalsIgnoreCase(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                                Context.MODE_PRIVATE).getString("loginContact", ""))) {
+                if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
+                        .equalsIgnoreCase(myContact)) {
                     holder.mName.setText("You");
                     holder.mContact.setVisibility(View.INVISIBLE);
                     holder.mOption.setVisibility(View.VISIBLE);
                 }
                 //If OtherGroup
-                else if (!groupName.equalsIgnoreCase("MyGroups")) {
-                    if (mItemList.get(position).getContact().equalsIgnoreCase(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                            Context.MODE_PRIVATE).getString("loginContact", ""))) {
+                else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
+                    if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
                         holder.mName.setText("You");
                         holder.mContact.setVisibility(View.INVISIBLE);
                     } else
@@ -165,21 +163,20 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             } else
                 holder.mAdmin.setVisibility(View.INVISIBLE);
 
-            if (mItemList.get(position).getContact().equalsIgnoreCase(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                    Context.MODE_PRIVATE).getString("loginContact", ""))) {
+            if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
                 holder.mName.setText("You");
                 holder.mContact.setVisibility(View.INVISIBLE);
             }
         }
 
-        if (!groupName.equals("MyGroups")) {
+        if (!mCallFrom.equals("MyGroups")) {
             if (holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("member")) {
                 holder.mOption.setText("Leave");
             } else {
                 holder.mOption.setVisibility(View.INVISIBLE);
             }
         }
-        if (groupName.equals("MyGroups")) {
+        if (mCallFrom.equals("MyGroups")) {
             if (holder.mName.getText().toString().equals("You")) {
                 holder.mOption.setText("Leave");
             } else if (!holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("Admin")) {
@@ -195,9 +192,9 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             }
         });
 
-        if (mCallFrom != "profile") {
+        /*if (mCallFrom != "profile") {
             mCallFrom = "groups";
-        }
+        }*/
         holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,25 +208,19 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     groupVehicleList.setArguments(bundle);
 
                     System.out.println("--------------------------->" + mCallFrom);
-                    if (mCallFrom.equalsIgnoreCase("profile")) {
-                        /*FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.profile_groups_container, groupVehicleList);
-                        fragmentTransaction.commit();*/
+                  /*  if (mCallFrom.equalsIgnoreCase("profile")) {
+
                         ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.profile_groups_container, groupVehicleList, "MemberList")
                                 .addToBackStack("MemberList")
                                 .commit();
-                    } else if (mCallFrom.equals("groups")) {
-                       /* FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.group_container, groupVehicleList);
-                        fragmentTransaction.commit();*/
-                        ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.profile_groups_container, groupVehicleList, "MemberList")
-                                .addToBackStack("MemberList")
-                                .commit();
-                    }
+                    } else if (mCallFrom.equals("groups")) {*/
+
+                    ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.profile_groups_container, groupVehicleList, "MemberList")
+                            .addToBackStack("MemberList")
+                            .commit();
+                    //}
                 }
             }
         });
@@ -237,8 +228,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         holder.mProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.mContact.getText().toString().equals(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                        Context.MODE_PRIVATE).getString("loginContact", ""))) {
+                if (holder.mContact.getText().toString().equals(myContact)) {
                     Log.e("You", "->");
                 } else {
                     Bundle bundle = new Bundle();

@@ -39,9 +39,10 @@ public class GroupDetailTabs extends Fragment {
         if (b1 != null) {
             b1.getString("grouptype");
             b.putString("grouptype", b1.getString("grouptype"));
-        } else {
+            b.putString("className", b1.getString("className"));
+        }/* else {
             b.putString("grouptype", "profile");
-        }
+        }*/
         memberListFragment = new MemberListFragment();
         memberListFragment.setArguments(b);
 

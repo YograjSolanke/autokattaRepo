@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -97,7 +98,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final ChildView mView;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -118,12 +119,16 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View view) {
 
+                Log.i("header", mListHeaders.get(groupPosition));
                 Intent i = new Intent(mContext, GroupsActivity.class);
                 mContext.getSharedPreferences(mContext.getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
                 //If Call From OtherProfile
                 if (GroupType.equalsIgnoreCase("OtherGroup")) {
                     i.putExtra("grouptype", "OtherGroup");
-                    i.putExtra("className", "GroupsExpandableListAdapter");
+                    i.putExtra("className", "OtherProfile");
+                } else {
+                    i.putExtra("grouptype", mListHeaders.get(groupPosition));
+                    i.putExtra("className", "SimpleProfile");
                 }
                 mContext.startActivity(i);
             }
