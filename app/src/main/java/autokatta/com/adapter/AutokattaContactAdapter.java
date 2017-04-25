@@ -136,14 +136,14 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
 
         //calling Functionality
-        holder.imgCall.setOnClickListener(new View.OnClickListener() {
+       /* holder.imgCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 call(contactdata.get(holder.getAdapterPosition()).getContact());
 
             }
-        });
+        });*/
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             Bundle bundle = new Bundle();

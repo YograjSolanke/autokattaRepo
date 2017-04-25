@@ -28,11 +28,11 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.GroupEditFragment;
-import autokatta.com.fragment.GroupNextTabFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.view.GroupTabs;
+import autokatta.com.view.GroupsActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -166,10 +166,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
                         .putString("group_id", mItemList.get(position).getId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
-                        .putString("group_type", GroupType).apply();
-                FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
+                        .putString("grouptype", GroupType).apply();
+                /*FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
                 FragmentTransaction mTransaction = fragmentManager.beginTransaction();
-                mTransaction.replace(R.id.group_container, new GroupNextTabFragment()).commit();
+                mTransaction.replace(R.id.group_container, new GroupNextTabFragment()).commit();*/
+
+
+                Intent intent = new Intent(mActivity, GroupsActivity.class);
+                //intent.putExtras();
+                if (GroupType.equals("JoinedGroups")) {
+                    intent.putExtra("grouptype", "OtherGroup");
+                } else {
+                    intent.putExtra("grouptype", "MyGroup");
+                }
+
+
+                intent.putExtra("className", "MyAdapter");
+                mActivity.startActivity(intent);
             }
         });
         if (GroupType.equals("JoinedGroups")) {

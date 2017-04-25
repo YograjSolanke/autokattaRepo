@@ -27,12 +27,13 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<String> mListHeaders;
     private HashMap<String, List<ModelGroups>> mSettingList;
-String GroupType;
-    public GroupsExpandableListAdapter(Context mContext, List<String> mListHeaders, HashMap<String, List<ModelGroups>> mSettingList,String grpType) {
+    private String GroupType;
+
+    public GroupsExpandableListAdapter(Context mContext, List<String> mListHeaders, HashMap<String, List<ModelGroups>> mSettingList, String grpType) {
         this.mContext = mContext;
         this.mListHeaders = mListHeaders;
         this.mSettingList = mSettingList;
-        this.GroupType=grpType;
+        this.GroupType = grpType;
     }
 
     @Override
@@ -117,12 +118,12 @@ String GroupType;
             @Override
             public void onClick(View view) {
 
-                Intent i=new Intent(mContext, GroupsActivity.class);
-                mContext.getSharedPreferences(mContext.getString(R.string.my_preference),MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
-              //If Call From OtherProfile
-                if (GroupType.equalsIgnoreCase("OtherGroup"))
-                {
-                    i.putExtra("grouptype","OtherGroup");
+                Intent i = new Intent(mContext, GroupsActivity.class);
+                mContext.getSharedPreferences(mContext.getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
+                //If Call From OtherProfile
+                if (GroupType.equalsIgnoreCase("OtherGroup")) {
+                    i.putExtra("grouptype", "OtherGroup");
+                    i.putExtra("className", "GroupsExpandableListAdapter");
                 }
                 mContext.startActivity(i);
             }

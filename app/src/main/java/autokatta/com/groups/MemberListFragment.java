@@ -138,6 +138,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mSuccesses.clear();
                 mSwipeRefreshLayout.setRefreshing(false);
                 GetGroupContactsResponse mGetGroupContactsResponse = (GetGroupContactsResponse) response.body();
                 for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
@@ -154,7 +155,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
 
-                } else if (mCallfrom.equals("groups") || mCallfrom.equalsIgnoreCase("OtherGroup")) {
+                } else if (mCallfrom.equals("groups") || mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("MyGroup")) {
                     mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
