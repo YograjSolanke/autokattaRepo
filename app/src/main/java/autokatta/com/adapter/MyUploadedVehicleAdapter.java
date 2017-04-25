@@ -56,16 +56,13 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     @Override
     public MyUploadedVehicleAdapter.VehicleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_uploaded_vehicle_adapter, parent, false);
-
         VehicleHolder holder = new VehicleHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, final int position) {
-
         ArrayList<String> vimages = new ArrayList<>();
-
         holder.edittitles.setText(mMainList.get(position).getTitle());
         holder.editprices.setText(mMainList.get(position).getPrice());
         holder.editcategorys.setText(mMainList.get(position).getCategory());
@@ -264,7 +261,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     b.putString("noofleads", mMainList.get(holder.getAdapterPosition()).getBuyerLeads());
                     b.putString("rto_city", mMainList.get(holder.getAdapterPosition()).getRtoCity());
                     b.putString("manufacture_year", mMainList.get(holder.getAdapterPosition()).getYearOfManufacture());
-
 
                     UploadedVehicleBuyerList frag = new UploadedVehicleBuyerList();
                     frag.setArguments(b);

@@ -190,9 +190,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
-
                         if (menuItem.getItemId() == R.id.home) {
-
+                            startActivity(new Intent(AutokattaMainActivity.this, AutokattaMainActivity.class));
+                            finish();
                         } else if (menuItem.getItemId() == R.id.profile) {
                             startActivity(new Intent(AutokattaMainActivity.this, UserProfile.class));
                         } else if (menuItem.getItemId() == R.id.my_contacts) {
@@ -380,7 +380,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 Toast.makeText(getApplicationContext(), "Again Contact is null", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Firebase done", Toast.LENGTH_SHORT).show();
+            Log.e("Firebase", "done");
         }
     }
 

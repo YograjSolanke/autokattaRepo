@@ -401,7 +401,6 @@ public class About extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 if (response.body() instanceof ProfileAboutResponse) {
                     ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                     if (!mProfileAboutResponse.getSuccess().isEmpty()) {
@@ -429,79 +428,72 @@ public class About extends Fragment implements RequestNotifier {
                 } else if (response.body() instanceof GetCompaniesResponse) {
                     GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();
                     if (!mGetCompanyList.getSuccess().isEmpty()) {
-
                         for (GetCompaniesResponse.Success companyResponse : mGetCompanyList.getSuccess()) {
                             companyResponse.setCompid(companyResponse.getCompid());
                             companyResponse.setCompanyName(companyResponse.getCompanyName());
-
                             mCompanyList.add(companyResponse.getCompanyName());
                             mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompid());
-
                         }
-                        parsedDataCompany.addAll(mCompanyList);
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
-                                R.layout.addproductspinner_color, parsedDataCompany);
-                        mCompany.setAdapter(dataAdapter);
+                        if (getActivity() != null) {
+                            parsedDataCompany.addAll(mCompanyList);
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                                    R.layout.addproductspinner_color, parsedDataCompany);
+                            mCompany.setAdapter(dataAdapter);
+                        }
                     }
 
                 } else if (response.body() instanceof GetDesignationResponse) {
                     GetDesignationResponse mGetDesignationList = (GetDesignationResponse) response.body();
                     if (!mGetDesignationList.getSuccess().isEmpty()) {
-
                         for (GetDesignationResponse.Success designationResponse : mGetDesignationList.getSuccess()) {
                             designationResponse.setDesgId(designationResponse.getDesgId());
                             designationResponse.setDesignationName(designationResponse.getDesignationName());
-
                             mDesignationList.add(designationResponse.getDesignationName());
                             mDesignationList1.put(designationResponse.getDesignationName(), designationResponse.getDesgId());
-
                         }
-                        parsedDataDesignation.addAll(mDesignationList);
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
-                                R.layout.addproductspinner_color, parsedDataDesignation);
-                        mDesignation.setAdapter(dataAdapter);
+                        if (getActivity() != null) {
+                            parsedDataDesignation.addAll(mDesignationList);
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                                    R.layout.addproductspinner_color, parsedDataDesignation);
+                            mDesignation.setAdapter(dataAdapter);
+                        }
                     }
 
                 } else if (response.body() instanceof GetSkillsResponse) {
                     GetSkillsResponse mGetSkillsResponse = (GetSkillsResponse) response.body();
                     if (!mGetSkillsResponse.getSuccess().isEmpty()) {
-
                         for (GetSkillsResponse.Success skillsResponse : mGetSkillsResponse.getSuccess()) {
                             skillsResponse.setSkillId(skillsResponse.getSkillId());
                             skillsResponse.setSkillNames(skillsResponse.getSkillNames());
-
                             mSkillList.add(skillsResponse.getSkillNames());
                             mSkillList1.put(skillsResponse.getSkillNames(), skillsResponse.getSkillId());
-
                         }
-                        parsedDataSkills.addAll(mSkillList);
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
-                                R.layout.addproductspinner_color, parsedDataSkills);
-                        mSkills.setAdapter(dataAdapter);
+                        if (getActivity() != null) {
+                            parsedDataSkills.addAll(mSkillList);
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                                    R.layout.addproductspinner_color, parsedDataSkills);
+                            mSkills.setAdapter(dataAdapter);
+                        }
                     }
-
                 }
                 if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
                     final List<String> module = new ArrayList<String>();
-
                     if (!moduleResponse.getSuccess().isEmpty()) {
-
                         module.add("Select Category");
                         for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
                             module.add(message.getTitle());
-
                         }
                         module.add("Other");
                         MODULE = new String[module.size()];
                         MODULE = (String[]) module.toArray(MODULE);
-
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
-                        spinner.setAdapter(dataadapter);
-                        for (int i = 0; i < module.size(); i++) {
-                            if (subProfession.equals(module.get(i)))
-                            {
-                                spinner.setSelection(i);
+                        if (getActivity() != null) {
+                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
+                            spinner.setAdapter(dataadapter);
+                            for (int i = 0; i < module.size(); i++) {
+                                if (subProfession.equals(module.get(i))) {
+                                    spinner.setSelection(i);
+                                }
                             }
                         }
                     }

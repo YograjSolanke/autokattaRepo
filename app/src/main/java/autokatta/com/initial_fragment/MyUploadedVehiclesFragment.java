@@ -1,6 +1,5 @@
 package autokatta.com.initial_fragment;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,9 +34,9 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
-    SharedPreferences mSharedPreferences;
     List<MyUploadedVehiclesResponse.Success> myUploadedVehiclesResponseList = new ArrayList<>();
     View myVehicles;
+    String myContact;
 
     @Nullable
     @Override
@@ -46,8 +45,8 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
 
 
         apiCall = new ApiCall(getActivity(), this);
-        mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        final String myContact = mSharedPreferences.getString("loginContact", "7841023392");
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutMyUploadedVehicle);
         mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.recyclerMyUploadedVehicle);
@@ -84,15 +83,11 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 MyUploadedVehiclesResponse myVehicleResponse = (MyUploadedVehiclesResponse) response.body();
                 if (!myVehicleResponse.getSuccess().isEmpty()) {
                     for (MyUploadedVehiclesResponse.Success myVehicleSuccess : myVehicleResponse.getSuccess()) {
-
                         myVehicleSuccess.setVehicleId(myVehicleSuccess.getVehicleId());
                         myVehicleSuccess.setTitle(myVehicleSuccess.getTitle());
                         myVehicleSuccess.setPrice(myVehicleSuccess.getPrice());
@@ -109,7 +104,6 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                         myVehicleSuccess.setRtoCity(myVehicleSuccess.getRtoCity());
                         myVehicleSuccess.setLocationCity(myVehicleSuccess.getLocationCity());
                         myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
-
                         myUploadedVehiclesResponseList.add(myVehicleSuccess);
                     }
                     Log.i("size", String.valueOf(myUploadedVehiclesResponseList.size()));
@@ -117,9 +111,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                     MyUploadedVehicleAdapter adapter = new MyUploadedVehicleAdapter(getActivity(), myUploadedVehiclesResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
                 }
-
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }

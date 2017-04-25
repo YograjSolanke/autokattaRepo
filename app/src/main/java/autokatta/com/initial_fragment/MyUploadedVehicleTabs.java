@@ -1,4 +1,4 @@
-package autokatta.com.fragment;
+package autokatta.com.initial_fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,41 +12,37 @@ import android.view.ViewGroup;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.enquiries.AllEnquiryTabFragment;
+import autokatta.com.fragment.BuyerNotificationFragment;
 
 /**
- * Created by ak-001 on 17/3/17.
+ * Created by ak-001 on 25/4/17.
  */
 
-public class SocialFragment extends Fragment {
+public class MyUploadedVehicleTabs extends Fragment {
+    View mUploadedTabs;
 
-    public SocialFragment() {
-        //Empty Fragment...
+    public MyUploadedVehicleTabs() {
+        //empty constructor...
     }
 
-    View mSocialFragment;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mSocialFragment = inflater.inflate(R.layout.fragment_social_fragment, container, false);
-
-        ViewPager viewPager = (ViewPager) mSocialFragment.findViewById(R.id.social_viewpager);
+        mUploadedTabs = inflater.inflate(R.layout.fragment_social_fragment, container, false);
+        ViewPager viewPager = (ViewPager) mUploadedTabs.findViewById(R.id.social_viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
-
-        TabLayout tabLayout = (TabLayout) mSocialFragment.findViewById(R.id.social_tabs);
+        TabLayout tabLayout = (TabLayout) mUploadedTabs.findViewById(R.id.social_tabs);
         tabLayout.setupWithViewPager(viewPager);
-        /*tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);*/
-
-        return mSocialFragment;
+        return mUploadedTabs;
     }
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getChildFragmentManager());
-        adapter.addFragment(new SellerNotificationFragment(), "Seller");
-        adapter.addFragment(new BuyerNotificationFragment(), "Buyer");
-        adapter.addFragment(new AllEnquiryTabFragment(), "Enquiries");
+        adapter.addFragment(new MyUploadedVehiclesFragment(), "Vehicles");
+        adapter.addFragment(new BuyerNotificationFragment(), "Products");
+        adapter.addFragment(new AllEnquiryTabFragment(), "Services");
         viewPager.setAdapter(adapter);
     }
 }

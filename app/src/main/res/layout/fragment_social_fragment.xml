@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <View
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:id="@+id/v1"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
@@ -15,9 +15,9 @@
         android:id="@+id/social_tabs"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        android:background="#2C3343"
+        android:background="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorPrimary"
-        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/colorAccent"
         android:longClickable="true"
         android:layout_width="match_parent"
