@@ -1117,7 +1117,7 @@ public interface ServiceApi {
 
 
     //add service into store...
-    @POST("addSore_product.php")
+    @POST("addstore_newServices.php")
     Call<ServiceAddedResponse> addService(@Query("store_id") String store_id,
                                           @Query("service_name") String service_name,
                                           @Query("price") String price,

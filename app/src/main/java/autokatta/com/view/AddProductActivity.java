@@ -59,6 +59,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     String tagpart = "", tagid = "", brandtagpart = "", finalbrandtags = "";
     String idlist = "", product_id;
     boolean tagflag = false;
+    String allimg = "";
     final ArrayList<String> id = new ArrayList<String>();
     final ArrayList<String> tagname = new ArrayList<String>();
     final ArrayList<String> brandtagId = new ArrayList<>();
@@ -71,7 +72,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_product_fragment);
+        setContentView(R.layout.add_product_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
@@ -134,7 +135,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnsave:
-                String name, price, details, tags, type, name1, price1, details1, type1, tags1, category, category1, brands, brands1;
+                String name, price, details, type, name1, category;
 
                 name = productname.getText().toString();
                 price = productprice.getText().toString();
@@ -264,7 +265,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     Toast.makeText(AddProductActivity.this, "Please Select Product Category", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    createProduct(store_id, name, price, details, "", type, "", category, finalbrandtags);
+                    createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags);
 
                 }
 
@@ -401,7 +402,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
             int cnt = 0;
             String selectImages = "";
             String selectedimg = "";
-            String allimg = "";
+
             for (int i = 0; i < mPath.size(); i++) {
                 cnt++;
                 if (cnt <= 12) {
@@ -443,19 +444,8 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
                 alertDialog.dismiss();
 
-//                Bundle b = new Bundle();
-//                b.putStringArrayList("IMAGE", mPath1);
-//                b.putInt("call", 1);
-//                SelectedImagesFragment mSelectedImagesFragment = new SelectedImagesFragment();
-//                mSelectedImagesFragment.setArguments(b);
-//
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.vehicle_upload_container, mSelectedImagesFragment, "selectedimagefragment")
-//                        .addToBackStack("selectedimagefragment")
-//                        .commit();
-
             }
-            System.out.println("selected images=" + selectedimg);
+            System.out.println("all selected images=" + allimg);
             System.out.println(selectedimg);
         }
         //textView.setText(sb.toString());
