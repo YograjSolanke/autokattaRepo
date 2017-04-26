@@ -40,7 +40,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-    String mOtherContact, mLoginContact, store_id,mFolllowstr,mLikestr;
+    String mOtherContact, mLoginContact, store_id, mFolllowstr, mLikestr, storeRating;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     RatingBar storerating;
@@ -87,7 +87,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
         viewPager = (ViewPager) findViewById(R.id.other_store_viewpager);
         tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
-        storerating.setRating(2);
+
 
         mCall.setOnClickListener(this);
         mLike.setOnClickListener(this);
@@ -438,6 +438,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     userName = success.getName();
                     dp = success.getStoreImage();
                     mOtherContact = success.getContact();
+                    storeRating = success.getRating();
                     mLikestr=success.getLikestatus();
                     mFolllowstr=success.getFollowstatus();
                     preoverall = success.getRate();
@@ -457,7 +458,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mRate.setVisibility(View.GONE);
                 }
 
-
+                storerating.setRating(Float.parseFloat(storeRating));
                 mBundle.putString("StoreContact", mOtherContact);
 
 

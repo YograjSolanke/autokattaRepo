@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.my_store.ProductView;
+import autokatta.com.my_store.ProductViewActivity;
 import autokatta.com.response.GetSearchProductResponse;
 
 /**
@@ -132,7 +132,7 @@ public class SearchProductAdapter extends BaseAdapter {
                 b.putString("storerating", obj.getStorerating());
                 b.putString("brandtags_list", obj.getBrandtags());
 
-                ProductView frag = new ProductView();
+                ProductViewActivity frag = new ProductViewActivity();
                 frag.setArguments(b);
 
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();

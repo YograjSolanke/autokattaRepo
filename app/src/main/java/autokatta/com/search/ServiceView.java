@@ -754,8 +754,8 @@ public class ServiceView extends Fragment implements RequestNotifier {
      */
     private void sendproductrating() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall._autokattaProductNewRatings(contact, id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
-                , String.valueOf(tmrate), "service");
+        mApiCall.sendNewrating(contact, "", id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+                , String.valueOf(tmrate), "", "", "service");
     }
 
     /*
@@ -763,8 +763,8 @@ public class ServiceView extends Fragment implements RequestNotifier {
      */
     private void sendupdatedproductrating() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall._autokattaProductUpdateRatings(contact, id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
-                , String.valueOf(tmrate), "service");
+        mApiCall.sendUpdatedrating(contact, "", id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+                , String.valueOf(tmrate), "", "", "service");
     }
 
     /*

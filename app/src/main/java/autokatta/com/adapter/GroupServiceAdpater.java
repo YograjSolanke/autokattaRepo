@@ -160,7 +160,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
 //                b.putString("brandtags_list", brandtags_list.get(position).toString());
 //
 //
-//                ProductView frag = new ProductView();
+//                ProductViewActivity frag = new ProductViewActivity();
 //                frag.setArguments(b);
 //
 //                FragmentManager fragmentManager = ctx.getSupportFragmentManager();

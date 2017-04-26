@@ -983,18 +983,6 @@ public interface ServiceApi {
     Call<String> _autokattaProductViewUnlike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                              @Query("layout") String layout, @Query("product_id") String productId);
 
-    //Product Ratings
-    @POST("newrating.php")
-    Call<String> _autokattaProductNewRatings(@Query("contact") String contact, @Query("product_id") String productId,
-                                             @Query("rate") String rate, @Query("rate1") String rate1, @Query("rate2") String rate2,
-                                             @Query("rate3") String rate3, @Query("type") String type);
-
-    //Update Ratings
-    @POST("updateRatings.php")
-    Call<String> _autokattaProductUpdateRatings(@Query("contact") String contact, @Query("product_id") String productId,
-                                                @Query("rate") String rate, @Query("rate1") String rate1, @Query("rate2") String rate2,
-                                                @Query("rate3") String rate3, @Query("type") String type);
-
     //Share data within app
     @POST("newShare.php")
     Call<String> _autokattaShareData(@Query("sender_contact") String sender_contact, @Query("receiver_contact") String receiver_contact,
