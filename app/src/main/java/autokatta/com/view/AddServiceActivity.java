@@ -294,12 +294,9 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-//                                        GroupsCreateFragment frag2 = new GroupsCreateFragment();    // Call Another Fragment
-//
-//                                        FragmentManager fragmentManager = getFragmentManager();
-//                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                                        fragmentTransaction.replace(R.id.containerView, frag2);
-//                                        fragmentTransaction.commit();
+                                        Intent intent = new Intent(AddServiceActivity.this, GroupTabs.class);
+                                        intent.putExtra("ClassName", "AddServiceActivity");
+                                        startActivity(intent);
                                     }
                                 })
 

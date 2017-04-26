@@ -281,12 +281,11 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-//                                        CreateGroupFragment frag2 = new CreateGroupFragment();    // Call Another Fragment
-//
-//                                        FragmentManager fragmentManager = getSupportFragmentManager();
-//                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                                        fragmentTransaction.replace(R.id.storeviewFrame, frag2);
-//                                        fragmentTransaction.commit();
+
+
+                                        Intent intent = new Intent(AddProductActivity.this, GroupTabs.class);
+                                        intent.putExtra("ClassName", "AddProductActivity");
+                                        startActivity(intent);
                                     }
                                 })
 

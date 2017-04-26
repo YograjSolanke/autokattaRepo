@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.broadcastreceiver.Receiver;
+import autokatta.com.fragment.CreateGroupFragment;
 import autokatta.com.fragment.GroupMyJoined;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
@@ -51,9 +52,16 @@ public class GroupTabs extends AppCompatActivity {
             //    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
 
-        FragmentManager mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.group_container, new GroupMyJoined()).commit();
+        if (getIntent().getExtras() != null) {
+            FragmentManager mFragmentManager = getSupportFragmentManager();
+            FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.group_container, new CreateGroupFragment()).commit();
+
+        } else {
+            FragmentManager mFragmentManager = getSupportFragmentManager();
+            FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.group_container, new GroupMyJoined()).commit();
+        }
     }
 
     @Override
