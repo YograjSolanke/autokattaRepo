@@ -27,7 +27,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment.GroupEditFragment;
+import autokatta.com.groups.GroupEditFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
@@ -238,7 +238,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     @Override
     public void notifyString(String str) {
-        if (str != "") {
+        if (str != null) {
             if (str.equals("success")) {
                 CustomToast.customToast(mContext, "Group Deleted Successfuly !!!");
                 Intent i = new Intent(mActivity, GroupTabs.class);

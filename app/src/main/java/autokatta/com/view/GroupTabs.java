@@ -18,8 +18,8 @@ import android.view.MenuItem;
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.broadcastreceiver.Receiver;
-import autokatta.com.fragment.CreateGroupFragment;
-import autokatta.com.fragment.GroupMyJoined;
+import autokatta.com.initial_fragment.CreateGroupFragment;
+import autokatta.com.initial_fragment.GroupMyJoined;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 

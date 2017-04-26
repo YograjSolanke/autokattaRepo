@@ -20,7 +20,7 @@ import autokatta.com.R;
 import autokatta.com.response.GetRegisteredContactsResponse;
 import autokatta.com.response.GetRegisteredContactsResponse.Success;
 
-import static autokatta.com.fragment.GroupContactFragment.AddContacts;
+import static autokatta.com.groups.GroupContactFragment.AddContacts;
 
 
 /**

@@ -1,4 +1,4 @@
-package autokatta.com.fragment;
+package autokatta.com.initial_fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.groups.JoinedGroupsFragment;
+import autokatta.com.groups.MyGroupsFragment;
 
 /**
  * Created by ak-001 on 25/3/17.

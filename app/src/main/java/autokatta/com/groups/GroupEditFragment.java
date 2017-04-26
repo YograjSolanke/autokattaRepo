@@ -1,4 +1,4 @@
-package autokatta.com.fragment;
+package autokatta.com.groups;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,12 +16,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,72 +35,118 @@ import java.util.Random;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
+import static autokatta.com.R.id.group_image;
 
 /**
- * Created by ak-005 on 20/4/17.
+ * Created by ak-005 on 3/4/17.
  */
 
-public class CreateGroupFragment extends Fragment implements View.OnClickListener, RequestNotifier {
-    View mCreateGroup;
-    EditText mGroupTitle;
-    Button mAddmember;
-    String lastWord = "";
-    ImageView mGroupImg;
+public class GroupEditFragment extends android.support.v4.app.Fragment implements RequestNotifier {
+
+    ImageView mGroup_image;
+    EditText group_name;
+    Button BtnUpdateGroup;
+    ApiCall mApiCall;
+    String group_name_update;
+    String bundle_id;
+    ImageUpload mImageUpload;
     String mediaPath = "", mContact;
     Uri selectedImage = null;
-    Bitmap bitmap, bitmapRotate;
+    Bitmap bitmapRotate;
     String fname;
     File file;
-    Bundle b = new Bundle();
-    ApiCall mApiCall;
+    Bitmap bitmap;
+    String lastWord = "", localImage;
+    String bundle_image;
+
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mCreateGroup = inflater.inflate(R.layout.create_group_fragment, container, false);
-
-        mGroupTitle = (EditText) mCreateGroup.findViewById(R.id.group_title);
-        mAddmember = (Button) mCreateGroup.findViewById(R.id.BtnAddMember);
-        mGroupImg = (ImageView) mCreateGroup.findViewById(R.id.group_profile_pic);
-        mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_group_edit, container, false);
+        group_name = (EditText) view.findViewById(R.id.group_name);
+        mGroup_image = (ImageView) view.findViewById(group_image);
+        BtnUpdateGroup = (Button) view.findViewById(R.id.BtnUpdateGroup);
         mApiCall = new ApiCall(getActivity(), this);
-        mGroupImg.setOnClickListener(this);
-        mAddmember.setOnClickListener(this);
-        return mCreateGroup;
-    }
+        Bundle bundle = getArguments();
+        //get the values out by key
+        bundle_id = bundle.getString("bundle_id");
+        String bundle_name = bundle.getString("bundle_name");
+        bundle_image = bundle.getString("bundle_image");
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.BtnAddMember:
-                if (mGroupTitle.getText().toString().equalsIgnoreCase("") || mGroupTitle.getText().toString().startsWith(" ")) {
-                    Snackbar.make(view, "Please provide group name and optional group icon", Snackbar.LENGTH_LONG).show();
-                } else {
+        bundle_image = bundle_image.replaceAll(" ", "%20");
 
-                    mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);
-                    //   createGroups(GroupTitle.getText().toString(), lastWord);
+        group_name.setText(bundle_name);
 
-//                            CreateGroup groupRequest = new CreateGroup(sendGroupData(),GroupsCreateFragment.this);
-//                            groupRequest.sendRequest();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
+        // Change base URL to your upload server URL.
+        mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
+
+        try {
+
+            if (bundle_image.equals("") || bundle_image.equalsIgnoreCase(null) || bundle_image.equalsIgnoreCase("null")) {
+
+                mGroup_image.setBackgroundResource(R.drawable.profile);
+
+            }
+            if (!bundle_image.equals("") || !bundle_image.equalsIgnoreCase(null) || !bundle_image.equalsIgnoreCase("null")) {
+                try {
+                    Glide.with(getActivity())
+                            .load("http://autokatta.com/mobile/group_profile_pics/" + bundle_image)
+                            .bitmapTransform(new CropCircleTransformation(getActivity()))
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mGroup_image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Error uploading image", Toast.LENGTH_LONG).show();
                 }
-                break;
-            case R.id.group_profile_pic:
-                onPickImage(view);
-                break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        mGroup_image.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPickImage(view);
+            }
+        });
+
+        BtnUpdateGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                group_name_update = group_name.getText().toString();
+                if (group_name_update.equals("")) {
+                    Snackbar.make(v, "Please provide group name", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    if (lastWord != "")
+                        mApiCall.editGroup(group_name_update, bundle_id, lastWord);
+                    else
+                        mApiCall.editGroup(group_name_update, bundle_id, bundle_image);
+                }
+            }
+        });
+        return view;
     }
 
 
@@ -136,7 +188,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
-                mGroupImg.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                mGroup_image.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 cursor.close();
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
@@ -158,7 +210,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                             bitmapRotate = bitmap;
                             bitmap.recycle();
                         }
-                        mGroupImg.setImageBitmap(bitmapRotate);
+                        mGroup_image.setImageBitmap(bitmapRotate);
 
 //                            Saving image to mobile internal memory for sometime
                         String root = getActivity().getApplicationContext().getFilesDir().toString();
@@ -268,24 +320,72 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void notifyString(String str) {
-        if (str != null) {
-            CustomToast.customToast(getActivity(), "Group created Successfully");
-            getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", str).apply();
-            if (!mediaPath.equals("")) {
-                uploadImage(mediaPath);
+        Log.i("SStttrrrr", "str" + str);
+        if (str != "") {
+            CustomToast.customToast(getActivity(), "Group Updated Successfully");
+            uploadImage(mediaPath);
+            MyGroupsFragment frag = new MyGroupsFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction mTransaction = fragmentManager.beginTransaction();
+            mTransaction.replace(R.id.group_container, frag).commit();
+
+        } else if (str.equals("successsuccess1group_profile_pics/" + str)) {
+            try {
+                Glide.with(getActivity())
+                        .load("http://autokatta.com/mobile/group_profile_pics/" + str)
+                        .bitmapTransform(new CropCircleTransformation(getActivity()))
+                        .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                        .into(mGroup_image);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getActivity(), "Error uploading image", Toast.LENGTH_LONG).show();
             }
-            b.putString("GrpId", str);
-            b.putString("call", "newGroup");
-            GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
-            fragment2.setArguments(b);   // send values to another fragment
-
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.group_container, fragment2);
-            fragmentTransaction.commit();
-
-        } else {
-            CustomToast.customToast(getActivity(), "Something went wrong Please try again");
         }
     }
+
+    public void onBackPressed() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Fragment f = fm.findFragmentById(R.id.group_container);
+
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        group_name.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    group_name.clearFocus();
+                }
+                return false;
+            }
+        });
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+
+                    onBackPressed();
+                    return true;
+
+                }
+
+                return false;
+            }
+        });
+
+    }
+
+
 }

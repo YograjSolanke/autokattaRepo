@@ -1,4 +1,4 @@
-package autokatta.com.fragment;
+package autokatta.com.groups;
 
 import android.content.Context;
 import android.content.Intent;
