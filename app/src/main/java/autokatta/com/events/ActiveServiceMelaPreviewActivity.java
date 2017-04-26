@@ -8,18 +8,18 @@ import android.support.v7.widget.Toolbar;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
-import autokatta.com.fragment.StoreInfo;
 
-public class ActiveLoanMelaPreviewActivity extends AppCompatActivity {
+public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
+
     ViewPager mViewPager;
     TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_active_loan_mela_preview);
-        mViewPager = (ViewPager) findViewById(R.id.activity_myactive_event_preview_viewpager);
-        mTabLayout = (TabLayout) findViewById(R.id.activity_myactive_event_preview_tab);
+        setContentView(R.layout.activity_active_service_mela_preview);
+        mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
+        mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -35,11 +35,12 @@ public class ActiveLoanMelaPreviewActivity extends AppCompatActivity {
     }
 
 
-        private void setupViewPager(ViewPager viewPager) {
-            TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-            adapter.addFragment(new StoreInfo(), "Analytics");
-            adapter.addFragment(new StoreInfo(), "Sale Description");
-            viewPager.setAdapter(adapter);
-        }
+    private void setupViewPager(ViewPager viewPager) {
+        TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
+        adapter.addFragment(new ServiceParticipantsFragment(), "Participants");
+        adapter.addFragment(new ServiceMelaAnalyticsFragment(), "Analytics");
+
+        viewPager.setAdapter(adapter);
     }
 
+}

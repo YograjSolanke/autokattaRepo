@@ -448,21 +448,24 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".events.ActiveLoanMelaPreviewActivity">
-        </activity>
         <activity
             android:name=".events.ActiveExchangeMelaPreviewActivity"
             android:label="@string/title_activity_active_exchange_mela_preview"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".events.ActiveServiceMelaActivity"
-            android:label="@string/title_activity_active_service_mela"
+            android:name=".events.ActiveSaleMelaPreviewActivity"
+            android:label="@string/title_activity_active_sale_mela_preview"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".events.ActiveSaleMelaActivity"
-            android:label="@string/title_activity_active_sale_mela"
+            android:name=".events.ActiveServiceMelaPreviewActivity"
+            android:label="@string/title_activity_active_service_mela_preview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".events.ActiveLoanmelaPreviewActivity"
+            android:label="@string/title_activity_active_loanmela_preview"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

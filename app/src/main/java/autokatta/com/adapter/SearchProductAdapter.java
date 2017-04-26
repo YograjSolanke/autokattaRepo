@@ -3,9 +3,6 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.my_store.ProductViewActivity;
 import autokatta.com.response.GetSearchProductResponse;
 
 /**
@@ -132,13 +128,13 @@ public class SearchProductAdapter extends BaseAdapter {
                 b.putString("storerating", obj.getStorerating());
                 b.putString("brandtags_list", obj.getBrandtags());
 
-                ProductViewActivity frag = new ProductViewActivity();
+               /* ProductViewActivity frag = new ProductViewActivity();
                 frag.setArguments(b);
 
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.search_product, frag);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
             }
         });
         return convertView;

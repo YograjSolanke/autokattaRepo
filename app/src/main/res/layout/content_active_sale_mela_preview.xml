@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:fitsSystemWindows="true"
-    >
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/preview_myactive_loanmela_viewpager"
+        android:id="@+id/preview_myactive_mela_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/preview_myactive_loanmela_tabs"
+        android:id="@+id/preview_myactive_mela_tabs"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom"
+        android:background="@color/colorPrimary"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/white"
         app:tabGravity="fill"
-        app:tabIndicatorColor="#C8C9CC"
-        app:tabMode="fixed"
-        app:tabTextColor="#ffffff" />
+        app:tabMode="fixed"/>
 
 
     <android.support.design.widget.AppBarLayout
@@ -43,13 +43,42 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="bottom"
-            app:expandedTitleMarginTop="55dp"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:layout_marginLeft="220dp">
+                <TextView
+                    android:id="@+id/live_timer"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="100dp"
+                    android:gravity="center"
+                    android:text="Timer"
+                    android:textColor="@color/red"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:visibility="visible"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="136dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="195dp"
                 android:layout_marginTop="40dp"
                 android:fitsSystemWindows="true"
                 android:orientation="vertical"
@@ -61,29 +90,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Active Loan Mela"
+                    android:text="Active Sale Mela"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:id="@+id/live_timer"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginTop="25dp"
-                    android:gravity="center"
-                    android:text="Timer"
-                    android:textColor="@color/red"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:textStyle="bold"/>
 
                 <RelativeLayout
                     android:id="@+id/rl3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp">
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="30dp">
 
                     <TextView
                         android:id="@+id/start"
@@ -91,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:text="Start:"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/start_date"
@@ -101,7 +117,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/start"
                         android:text="Date"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
 
                     <TextView
                         android:id="@+id/and"
@@ -110,7 +126,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/start_date"
                         android:text="&amp;"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
 
                     <TextView
                         android:id="@+id/start_time"
@@ -119,7 +135,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and"
                         android:text="Time"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
 
                     <TextView
                         android:id="@+id/end2"
@@ -128,7 +144,7 @@
                         android:layout_below="@+id/start_date"
                         android:text="End:"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/end_date"
@@ -138,7 +154,7 @@
                         android:layout_below="@+id/start_date"
                         android:layout_toEndOf="@+id/end2"
                         android:text="Date"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
 
                     <TextView
                         android:id="@+id/and2"
@@ -148,7 +164,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/end_date"
                         android:text="&amp;"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
 
                     <TextView
                         android:id="@+id/end_time"
@@ -158,24 +174,8 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and2"
                         android:text="Time"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
 
-                    <!--                    <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_toEndOf="@+id/end_time">
-
-                                            <Button
-                                                android:id="@+id/btngotolive"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="40dp"
-                                                android:layout_marginStart="@dimen/card_margin"
-                                                android:background="@color/medium_sea_green"
-                                                android:text="Go to live"
-                                                android:textAllCaps="false"
-                                                android:textColor="@color/white"
-                                                android:visibility="visible" />
-                                        </RelativeLayout>-->
                 </RelativeLayout>
 
 
@@ -183,7 +183,8 @@
                     android:id="@+id/rlLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp">
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="15dp">
 
                     <TextView
                         android:id="@+id/txtLocation"
@@ -191,7 +192,7 @@
                         android:layout_height="wrap_content"
                         android:text="Location:"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/location"
@@ -201,19 +202,11 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/txtLocation"
                         android:text="location"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
                 </RelativeLayout>
 
 
             </LinearLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginTop="@dimen/margin_small"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

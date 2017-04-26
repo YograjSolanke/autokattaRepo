@@ -65,14 +65,14 @@
                     android:layout_height="60dp"
                     android:id="@+id/loanmelaimg"
                     android:layout_below="@+id/rl1"
-                    android:src="@drawable/preview"
                     android:layout_above="@+id/rl4"/>
-                <TextView
+                    <!--android:src="@drawable/preview"-->
+               <!-- <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Preview"
                     android:textColor="@color/stateBlue"
-                    android:layout_below="@id/loanmelaimg"/>
+                    android:layout_below="@id/loanmelaimg"/>-->
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -248,7 +248,7 @@
                 android:background="@android:drawable/dialog_holo_light_frame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_below="@+id/relativelayoutmain">
 
                 <LinearLayout
@@ -256,15 +256,13 @@
                     android:orientation="horizontal"
                     android:background="#80bebebe"
                     android:id="@+id/relatebutton"
-
                     android:layout_width="match_parent"
                     android:layout_height="40dp">
 
                     <Button
                         android:layout_weight="1"
-
                         android:textColor="@color/white"
-                        android:background="@drawable/button_background"
+                        android:background="@drawable/buttonback"
                         android:text="Preview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -275,28 +273,30 @@
                     <Button
                         android:layout_marginLeft="1dp"
                         android:textColor="@color/white"
-                        android:background="@drawable/button_background"
+                        android:background="@drawable/buttonback"
                         android:layout_weight="1"
                         android:layout_toRightOf="@+id/going"
                         android:text="Share"
                         android:id="@+id/share"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
 
                     <RelativeLayout
                         android:id="@+id/relativeshare"
                         android:layout_weight="1"
-                        android:background="@drawable/button_background"
+                        android:background="@drawable/buttonback"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="1dp"
-                        android:layout_height="40dp">
+                        android:layout_height="40dp"
+                        android:visibility="gone">
 
                         <ImageButton
                             android:layout_marginLeft="2dp"
                             android:textColor="@color/white"
                             android:src="@drawable/autoshare"
 
-                            android:background="@drawable/button_background"
+                            android:background="@drawable/buttonback"
                             android:textAllCaps="false"
                             android:layout_toRightOf="@+id/going"
                             android:text="Share"
@@ -313,7 +313,7 @@
                             android:layout_marginLeft="5dp"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
-                            android:background="@drawable/button_background"
+                            android:background="@drawable/buttonback"
                             android:layout_width="50dp"
                             android:layout_toRightOf="@+id/share1"
                             android:layout_height="wrap_content" />

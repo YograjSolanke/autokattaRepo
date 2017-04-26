@@ -175,4 +175,8 @@
     <string name="title_activity_active_exchange_mela_preview">ActiveExchangeMelaPreviewActivity</string>
     <string name="title_activity_active_service_mela">ActiveServiceMelaActivity</string>
     <string name="title_activity_active_sale_mela">ActiveSaleMelaActivity</string>
+    <string name="title_activity_active_sale_mela_preview">ActiveSaleMelaPreviewActivity</string>
+    <string name="title_activity_active_service_mela_preview">ActiveServiceMelaPreviewActivity
+    </string>
+    <string name="title_activity_active_loanmela_preview">ActiveLoanmelaPreviewActivity</string>
 </resources>
