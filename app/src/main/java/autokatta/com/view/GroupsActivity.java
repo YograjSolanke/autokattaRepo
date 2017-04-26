@@ -11,7 +11,8 @@ import autokatta.com.R;
 import autokatta.com.initial_fragment.GroupDetailTabs;
 
 public class GroupsActivity extends AppCompatActivity {
-    Bundle b=new Bundle();
+    Bundle b = new Bundle();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,13 +23,13 @@ public class GroupsActivity extends AppCompatActivity {
         }
         setTitle("Groups");
         GroupDetailTabs groupDetailTabs = new GroupDetailTabs();
-        Intent i=getIntent();
-        String grouptype= i.getStringExtra("grouptype");
+        Intent i = getIntent();
+        String grouptype = i.getStringExtra("grouptype");
         String className = i.getStringExtra("className");
-        if (grouptype!=null)
-        {
-            b.putString("grouptype",i.getStringExtra("grouptype"));
+        if (grouptype != null) {
+            b.putString("grouptype", i.getStringExtra("grouptype"));
             b.putString("className", i.getStringExtra("className"));
+            b.putString("bundle_GroupId", i.getStringExtra("bundle_GroupId"));
             groupDetailTabs.setArguments(b);
         }
         getSupportFragmentManager().beginTransaction()

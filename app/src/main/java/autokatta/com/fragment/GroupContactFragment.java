@@ -178,6 +178,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     Intent intent = new Intent(getActivity(), GroupsActivity.class);
                     intent.putExtra("grouptype", "MyGroup");
                     intent.putExtra("className", "GroupContactFragment");
+                    intent.putExtra("bundle_GroupId", pass_id);
                     getActivity().startActivity(intent);
                     getActivity().finish();
 
@@ -309,6 +310,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 Intent intent = new Intent(getActivity(), GroupsActivity.class);
                 intent.putExtra("grouptype", "MyGroup");
                 intent.putExtra("className", "GroupContactFragment");
+                intent.putExtra("bundle_GroupId", pass_id);
                 getActivity().startActivity(intent);
                 getActivity().finish();
             } else {

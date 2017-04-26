@@ -2221,6 +2221,89 @@ Upload Vehicle
     }
 
     /*
+    Delete Group Members
+     */
+    public void DeleteGroupMembers(String group_id, String grouptype, String contact, String mycontact,
+                                   String next, String membercount) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<String> mUploadVehicle = mServiceApi._autokattaDeleteGroupMembers(group_id, grouptype, contact, mycontact,
+                        next, membercount);
+
+                mUploadVehicle.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /*
+    Make Group Admins
+     */
+    public void makeGroupAdmin(String mGroupId, String contact, String action) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<String> mUploadVehicle = mServiceApi._autokattaMakeGroupAdmin(mGroupId, contact, action);
+
+                mUploadVehicle.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
     Get Group Products
      */
 
@@ -6598,7 +6681,7 @@ Get saved search Seller list
     Notifiction in group like
      */
 
-    public void groupLikeNotification(String groupid, String mycontact, String othercontact,String layout) {
+    public void groupLikeNotification(String groupid, String mycontact, String othercontact, String layout) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6615,7 +6698,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi.notificationLikegroup(groupid, mycontact, othercontact,layout);
+                Call<String> mUnfollowResponse = serviceApi.notificationLikegroup(groupid, mycontact, othercontact, layout);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

@@ -411,6 +411,16 @@ public interface ServiceApi {
     @GET("getGroupContacts.php")
     Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("group_id") String groupId);
 
+    //delete group members...
+    @POST("deleteMyGroupMembers.php")
+    Call<String> _autokattaDeleteGroupMembers(@Query("group_id") String group_id, @Query("grouptype") String grouptype,
+                                              @Query("contact") String contact, @Query("mycontact") String mycontact,
+                                              @Query("next") String next, @Query("membercount") String membercount);
+
+    //make group admin
+    @POST("makeAdmin.php")
+    Call<String> _autokattaMakeGroupAdmin(@Query("groupid") String mGroupId, @Query("contact") String contact,
+                                          @Query("action") String action);
 
     //Create an Auction
     @GET("createAuction.php")
@@ -771,7 +781,7 @@ public interface ServiceApi {
 
     //Update Profile Username And Image
     @GET("update_profile.php")
-    Call<String> _autokattaUpdateUserName( @Query("username") String username,@Query("profile_pic") String profile_pic,@Query("reg_id") String reg_id);
+    Call<String> _autokattaUpdateUserName(@Query("username") String username, @Query("profile_pic") String profile_pic, @Query("reg_id") String reg_id);
 
     //Update Profile
     @POST("getColors.php")
@@ -1068,16 +1078,16 @@ public interface ServiceApi {
 
     //Create Groups
     @POST("createGroup.php")
-    Call<String> createGroup(@Query("title") String title, @Query("image") String image,@Query("admin_contact") String admin_contact);
+    Call<String> createGroup(@Query("title") String title, @Query("image") String image, @Query("admin_contact") String admin_contact);
 
     //Add contacts to  Groups
     @POST("add_contacts.php")
     Call<String> addContactToGroup(@Query("groupid") String groupid, @Query("contacts") String contacts);
 
 
- //Notification Like Group
+    //Notification Like Group
     @POST("newlikes.php")
-    Call<String> notificationLikegroup(@Query("groupid") String groupid, @Query("sender_contact") String mycontact,@Query("receiver_contact") String OtherContact, @Query("layout") String layout);
+    Call<String> notificationLikegroup(@Query("groupid") String groupid, @Query("sender_contact") String mycontact, @Query("receiver_contact") String OtherContact, @Query("layout") String layout);
 
 
     //update a store...
@@ -1139,6 +1149,5 @@ public interface ServiceApi {
     @Multipart
     @POST("upload_service_pics.php")
     Call<String> uploadServicePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
-
 
 }

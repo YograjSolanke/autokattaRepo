@@ -17,8 +17,6 @@ import autokatta.com.R;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.view.GroupsActivity;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by ak-001 on 20/3/17.
  */
@@ -120,8 +118,9 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
 
                 Log.i("header", mListHeaders.get(groupPosition));
+                Log.i("GroupId", "Profile->" + rowItem.getId());
                 Intent i = new Intent(mContext, GroupsActivity.class);
-                mContext.getSharedPreferences(mContext.getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
+                //mContext.getSharedPreferences(mContext.getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
                 //If Call From OtherProfile
                 if (GroupType.equalsIgnoreCase("OtherGroup")) {
                     i.putExtra("grouptype", "OtherGroup");
@@ -130,6 +129,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                     i.putExtra("grouptype", mListHeaders.get(groupPosition));
                     i.putExtra("className", "SimpleProfile");
                 }
+                i.putExtra("bundle_GroupId", rowItem.getId());
                 mContext.startActivity(i);
             }
         });

@@ -50,7 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     private List<ModelGroups> mItemList = new ArrayList<>();
     private String GroupType, keyword, mGroupid, mGroupName, mGroupImage;
     FragmentActivity ctx;
- //   private String mycontact = "8007855589";
+    //   private String mycontact = "8007855589";
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -139,7 +139,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 //                                groups = obj.groupId;
                                 keyword = "delete";
                                 //new DeleteGroup().execute();
-                                mApiCall.deleteGroup(mGroupid, keyword, mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),MODE_PRIVATE).getString("loginContact",""));
+                                mApiCall.deleteGroup(mGroupid, keyword, mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 //                                grouplist.remove(position);
 //                                notifyDataSetChanged();
                             }
@@ -163,11 +163,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         holder.mCardView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
+                /*mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
                         .putString("group_id", mItemList.get(position).getId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
-                        .putString("grouptype", GroupType).apply();
-
+                        .putString("grouptype", GroupType).apply();*/
+                mGroupid = mItemList.get(position).getId();
                 Intent intent = new Intent(mActivity, GroupsActivity.class);
                 //intent.putExtras();
                 if (GroupType.equals("JoinedGroups")) {
@@ -176,6 +176,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                     intent.putExtra("grouptype", "MyGroups");
                 }
                 intent.putExtra("className", "MyAdapter");
+                intent.putExtra("bundle_GroupId", mGroupid);
                 mActivity.startActivity(intent);
             }
         });
@@ -240,7 +241,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         if (str != "") {
             if (str.equals("success")) {
                 CustomToast.customToast(mContext, "Group Deleted Successfuly !!!");
-                Intent i=new Intent(mActivity, GroupTabs.class);
+                Intent i = new Intent(mActivity, GroupTabs.class);
                 mActivity.startActivity(i);
 
             } else {
