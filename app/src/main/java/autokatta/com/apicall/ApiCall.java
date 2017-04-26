@@ -2119,6 +2119,39 @@ Upload Vehicle
         }
     }
 
+    /*
+    Get My Vehicles...
+     */
+    public void getMyVehicles(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<GetGroupVehiclesResponse> mVehiclesResponse = mServiceApi._autokattaMyUploadedVehicles(contact);
+                mVehiclesResponse.enqueue(new Callback<GetGroupVehiclesResponse>() {
+                    @Override
+                    public void onResponse(Call<GetGroupVehiclesResponse> call, Response<GetGroupVehiclesResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetGroupVehiclesResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /*
    Get Special Clauses For Auction

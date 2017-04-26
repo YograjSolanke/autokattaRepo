@@ -149,6 +149,26 @@ public class GetGroupVehiclesResponse {
         @Expose
         private String username;
 
+
+        private String singleImage;
+        private String AllImage;
+
+        public String getSingleImage() {
+            return singleImage;
+        }
+
+        public void setSingleImage(String singleImage) {
+            this.singleImage = singleImage;
+        }
+
+        public String getAllImage() {
+            return AllImage;
+        }
+
+        public void setAllImage(String allImage) {
+            AllImage = allImage;
+        }
+
         public String getVehicleId() {
             return vehicleId;
         }

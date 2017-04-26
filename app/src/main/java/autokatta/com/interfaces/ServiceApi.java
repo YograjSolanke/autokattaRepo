@@ -39,7 +39,6 @@ import autokatta.com.response.GetFollowersResponse;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.response.GetLiveEventsResponse;
-import autokatta.com.response.GetMyUploadedVehicleResponse;
 import autokatta.com.response.GetOwnVehiclesResponse;
 import autokatta.com.response.GetPumpResponse;
 import autokatta.com.response.GetRTOCityResponse;
@@ -395,7 +394,7 @@ public interface ServiceApi {
 
     //Get My Uploaded Vehicle...
     @GET("getMyUploadedVehicles.php")
-    Call<GetMyUploadedVehicleResponse> _autokattaMyUploadedVehicles(@Query("contact") String contact);
+    Call<GetGroupVehiclesResponse> _autokattaMyUploadedVehicles(@Query("contact") String contact);
 
 
     //Get SpecialCaluses For Auction

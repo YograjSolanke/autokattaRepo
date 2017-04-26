@@ -8,18 +8,18 @@
         android:id="@+id/filterimg"
         android:layout_width="40dip"
         android:layout_height="40dip"
+        android:layout_marginTop="@dimen/fab_margin"
         android:contentDescription="@string/app_name"
         android:padding="5dp"
-        android:layout_marginTop="@dimen/fab_margin"
         android:src="@drawable/filter" />
 
     <TextView
         android:id="@+id/filtertxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fab_margin"
         android:layout_toEndOf="@+id/filterimg"
         android:padding="5dp"
-        android:layout_marginTop="@dimen/fab_margin"
         android:text="Apply filter to search"
         android:textColor="#2C3343" />
 
@@ -37,435 +37,449 @@
             android:paddingTop="5dp"
             android:visibility="gone">
 
-                <RelativeLayout
-                    android:id="@+id/relativebrand"
+            <RelativeLayout
+                android:id="@+id/relativebrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/textbrand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Brand"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editbrand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash1"
+                    android:hint="Enter brand"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textbrand"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="Brand"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/relativemodel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativebrand"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/dash1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textmodel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Model"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editbrand"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash1"
-                        android:hint="Enter brand"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativemodel"
+                <EditText
+                    android:id="@+id/editmodel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativebrand"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash2"
+                    android:hint="Enter model"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textmodel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="Model"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/relativeversion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativemodel"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/dash2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textversion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Version"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editmodel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash2"
-                        android:hint="Enter model"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativeversion"
+                <EditText
+                    android:id="@+id/editversion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativemodel"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash3"
+                    android:hint="Enter version"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textversion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="Version"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/relativecity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeversion"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/dash3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textcity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="City"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editversion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash3"
-                        android:hint="Enter version"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativecity"
+                <EditText
+                    android:id="@+id/editcity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeversion"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
-
-                    <TextView
-                        android:id="@+id/textcity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="City"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/dash4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editcity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash4"
-                        android:hint="Enter city"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash4"
+                    android:hint="Enter city"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
 
-                <RelativeLayout
-                    android:id="@+id/relativertocity"
+            <RelativeLayout
+                android:id="@+id/relativertocity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativecity"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/textrtocity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="RTOCity"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/editrtocity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativecity"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash5"
+                    android:hint="Enter RTO city"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textrtocity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="RTOCity"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/relativeregyear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativertocity"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/dash5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textregyear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="RegistrationYear"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/editrtocity"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash5"
-                        android:hint="Enter RTO city"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativeregyear"
+                <EditText
+                    android:id="@+id/editregyear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativertocity"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash6"
+                    android:hint="Enter RegistrationYear"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textregyear"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="RegistrationYear"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/relativemgfyear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeregyear"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/dash6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textmgfyear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="ManufactureYear"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editregyear"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash6"
-                        android:hint="Enter RegistrationYear"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativemgfyear"
+                <EditText
+                    android:id="@+id/editmgfyear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeregyear"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash7"
+                    android:hint="Enter ManufactureYear"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textmgfyear"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="ManufactureYear"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/relativeprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativemgfyear"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/dash7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Price"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editmgfyear"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash7"
-                        android:hint="Enter ManufactureYear"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativeprice"
+                <EditText
+                    android:id="@+id/editprice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativemgfyear"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash8"
+                    android:hint="Enter price"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textprice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="Price"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/relativekmsrunning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeprice"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/dash8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textkmsrunning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="KmsRunning"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editprice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash8"
-                        android:hint="Enter price"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativekmsrunning"
+                <EditText
+                    android:id="@+id/editkmsrun"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeprice"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash9"
+                    android:hint="Enter Kms"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textkmsrunning"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="KmsRunning"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+            <RelativeLayout
+                android:id="@+id/relativenoofowner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativekmsrunning"
+                android:layout_marginTop="5dp"
+                android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/dash9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textowner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="No of Owners"
+                    android:textAlignment="center"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editkmsrun"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash9"
-                        android:hint="Enter Kms"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/dash10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#2C3343"
+                    android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/relativenoofowner"
+                <EditText
+                    android:id="@+id/editowners"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativekmsrunning"
-                    android:layout_marginTop="5dp"
-                    android:visibility="visible">
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash10"
+                    android:hint="Enter no of owners"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textowner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="No of Owners"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/dash10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="#2C3343"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editowners"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@+id/dash10"
-                        android:hint="Enter no of owners"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-                        android:textSize="12sp" />
-                </RelativeLayout>
+            <Button
+                android:id="@+id/goSearch"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/background"
+                android:text="Filter All"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:layout_below="@+id/relativenoofowner"
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </RelativeLayout>
     </ScrollView>
 
@@ -474,28 +488,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_above="@+id/goSearch"
         android:layout_below="@+id/filtertxt"
+        android:layout_marginTop="@dimen/fab_margin"
         android:visibility="visible">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"  />
+            android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <Button
-        android:id="@+id/goSearch"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/background"
-        android:text="Filter All"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="15sp" />
 </RelativeLayout>
