@@ -34,6 +34,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.File;
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 
 import autokatta.com.R;
@@ -127,7 +128,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         /*
         Banner...
          */
-        Hash_file_maps = new HashMap<String, String>();
+        /*Hash_file_maps = new HashMap<String, String>();
         sliderLayout = (SliderLayout) findViewById(R.id.slider);
         Hash_file_maps.put("Android CupCake", "http://androidblog.esy.es/images/cupcake-1.png");
         Hash_file_maps.put("Android Donut", "http://androidblog.esy.es/images/donut-2.png");
@@ -151,7 +152,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());
         sliderLayout.setDuration(3000);
-        sliderLayout.addOnPageChangeListener(this);
+        sliderLayout.addOnPageChangeListener(this);*/
 
     }
 
@@ -202,14 +203,72 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                         mLike.setLabelTextColor(Color.RED);
                         mFab.setClosedOnTouchOutside(true);
                     }
-                    String dp_path = "http://autokatta.com/mobile/uploads/" + dp;
+
+                    if (contact.equals(prefcontact)) {
+                        mLike.setVisibility(View.GONE);
+                        mCall.setVisibility(View.GONE);
+                    }
+
+                    Hash_file_maps = new HashMap<String, String>();
+                    sliderLayout = (SliderLayout) findViewById(R.id.slider);
+                    String dp_path = "http://autokatta.com/mobile/uploads/";// + dp;
                     /*Glide.with(this)
                             .load(dp_path)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(mVehiclePicture);*/
-                    collapsingToolbar.setTitle(name);
+
+
+                    String firstWord = "", all = "";
+                    if (dp.contains(",")) {
+                        /*String arr[] = dp.split(",", 2);
+
+                        for (int i=0; i<arr.length; i++){
+                            Hash_file_maps.put("Image-"+i,dp_path+arr[0]);
+                        }*/
+
+                        String[] items = dp.split(",");
+                        for (String item : items) {
+                            Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
+                        }
+                        /*
+
+                        success.setSingleImage(dp_path+firstWord);
+                        Hash_file_maps.put(""dp_path+firstWord);
+                        all = dp.replace(",", "/ ");
+
+                        //success.setAllImage(all);*/
+
+                    } else {
+
+                        /*success.setSingleImage(firstWord);
+                        success.setAllImage(all);*/
+                        Hash_file_maps.put("Image-" + dp, dp_path + dp.replaceAll(" ", ""));
+                    }
+
+
                 }
+
+                /* Banner...*/
+
+                for (String name : Hash_file_maps.keySet()) {
+                    TextSliderView textSliderView = new TextSliderView(VehicleDetails.this);
+                    textSliderView
+                            .description(name)
+                            .image(Hash_file_maps.get(name))
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(this);
+                    textSliderView.bundle(new Bundle());
+                    textSliderView.getBundle()
+                            .putString("extra", name);
+                    sliderLayout.addSlider(textSliderView);
+                }
+                sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                sliderLayout.setCustomAnimation(new DescriptionAnimation());
+                sliderLayout.setDuration(3000);
+                sliderLayout.addOnPageChangeListener(this);
+                collapsingToolbar.setTitle(name);
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
@@ -220,7 +279,16 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Vehicle Details Activity");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -266,7 +334,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 } else {
                     imgUrl = "http://autokatta.com/mobile/uploads/" + mSendImage;
                 }
-                Log.e("TAG", "img : " + imgUrl);
+                Log.e("TAG", "dp : " + imgUrl);
 
                 DownloadManager.Request request = new DownloadManager.Request(
                         Uri.parse(imgUrl));
@@ -274,12 +342,12 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 String filename = URLUtil.guessFileName(imgUrl, null, MimeTypeMap.getFileExtensionFromUrl(imgUrl));
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
                 Log.e("ShareImagePath :", filename);
-                Log.e("TAG", "img : " + imgUrl);
+                Log.e("TAG", "dp : " + imgUrl);
 
                 DownloadManager manager = (DownloadManager) getApplication()
                         .getSystemService(Context.DOWNLOAD_SERVICE);
 
-                Log.e("TAG", "img URL: " + imgUrl);
+                Log.e("TAG", "dp URL: " + imgUrl);
 
                 manager.enqueue(request);
 

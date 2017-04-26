@@ -28,29 +28,35 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.VehicleDetails;
+import retrofit2.Response;
 
 /**
  * Created by ak-001 on 25/3/17.
  */
 
-public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicleRefreshAdapter.MyViewHolder> {
-     Activity mActivity;
+public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicleRefreshAdapter.MyViewHolder> implements RequestNotifier {
+    Activity mActivity;
     private List<GetGroupVehiclesResponse.Success> mItemList = new ArrayList<>();
-String allDetails;
-    String imgUrl;
-    String mContact;
+    private String allDetails;
+    private String imgUrl;
+    private String myContact;
+    private ApiCall mApiCall;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
         TextView mRegistrationNo, mTitle, mPrice, mModel, mBrand, mUpdatedBy, mLocation, mRtoCity, mYearOfMfg, mKmsHrs;
-        ImageView mShareAutokatta, mShareOther, mLike, mCall;
+        ImageView mShareAutokatta, mShareOther, mLike, mCall, mUnlike;
         ImageView mCardImage;
 
         MyViewHolder(View itemView) {
@@ -70,17 +76,19 @@ String allDetails;
             mShareAutokatta = (ImageView) itemView.findViewById(R.id.share_autokatta);
             mShareOther = (ImageView) itemView.findViewById(R.id.share_other);
             mLike = (ImageView) itemView.findViewById(R.id.like);
+            mUnlike = (ImageView) itemView.findViewById(R.id.unlike);
             mCall = (ImageView) itemView.findViewById(R.id.call);
             mCardImage = (ImageView) itemView.findViewById(R.id.card_image);
 
         }
     }
 
-    public GroupVehicleRefreshAdapter(Activity mActivity, List<GetGroupVehiclesResponse.Success> mItemList) {
-        this.mActivity = mActivity;
+    public GroupVehicleRefreshAdapter(Activity mActivity1, List<GetGroupVehiclesResponse.Success> mItemList) {
+        this.mActivity = mActivity1;
         this.mItemList = mItemList;
+        mApiCall = new ApiCall(mActivity, this);
 
-        mContact=mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),Context.MODE_PRIVATE).getString("loginContact","");
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
     }
 
     @Override
@@ -88,12 +96,11 @@ String allDetails;
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_card_group_vehicle, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(GroupVehicleRefreshAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final GroupVehicleRefreshAdapter.MyViewHolder holder, final int position) {
         String register = mItemList.get(position).getRegistrationNumber();
         SpannableString sp = new SpannableString(mActivity.getString(R.string.no_register) + register);
         sp.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.no_register).length(),
@@ -150,12 +157,12 @@ String allDetails;
                 mActivity.getString(R.string.kms_hrs).length() + kms_hrs.length(), 0);
         holder.mKmsHrs.setText(sp8);
 
-        if (mItemList.get(position).getImage().equals("") || mItemList.get(position).getImage().equals(null) ||
-                mItemList.get(position).getImage().equals("null") ) {
+        if (mItemList.get(position).getSingleImage().equals("") || mItemList.get(position).getSingleImage().equals(null) ||
+                mItemList.get(position).getSingleImage().equals("null")) {
             holder.mCardImage.setBackgroundResource(R.mipmap.ic_launcher);
-        }else {
+        } else {
             //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-            String dppath = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getImage();
+            String dppath = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getSingleImage();
             Glide.with(mActivity)
                     .load(dppath)
                     //.bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
@@ -163,6 +170,21 @@ String allDetails;
                     //.placeholder(R.drawable.logo) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.mCardImage);
+        }
+
+        if (mItemList.get(position).getVehiclelikestatus().equalsIgnoreCase("yes")) {
+            holder.mLike.setVisibility(View.GONE);
+            holder.mUnlike.setVisibility(View.VISIBLE);
+        }
+        if (mItemList.get(position).getVehiclelikestatus().equalsIgnoreCase("no")) {
+            holder.mLike.setVisibility(View.VISIBLE);
+            holder.mUnlike.setVisibility(View.GONE);
+        }
+
+        if (mItemList.get(position).getContact().equals(myContact)) {
+            holder.mLike.setVisibility(View.GONE);
+            holder.mUnlike.setVisibility(View.GONE);
+            holder.mCall.setVisibility(View.GONE);
         }
         //Share In App
         holder.mShareAutokatta.setOnClickListener(new OnClickListener() {
@@ -183,11 +205,11 @@ String allDetails;
                                         mItemList.get(position).getModel() + "=" +
                                         mItemList.get(position).getYearOfManufacture() + "=" +
                                         mItemList.get(position).getKmsRunning() + "=" +
-                                        mItemList.get(position).getRTOCity()+ "=" +
+                                        mItemList.get(position).getRTOCity() + "=" +
                                         mItemList.get(position).getLocationCity() + "=" +
-                                        mItemList.get(position).getRegistrationNumber()+ "=" +
-                                        mItemList.get(position).getImage() + "=" +
-                                       mContact+"="+"0";
+                                        mItemList.get(position).getRegistrationNumber() + "=" +
+                                        mItemList.get(position).getSingleImage() + "=" +
+                                        myContact + "=" + "0";
 
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allDetails).apply();
@@ -196,7 +218,7 @@ String allDetails;
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_keyword", "vehicle").apply();
 
-                                Intent i=new Intent(mActivity, ShareWithinAppActivity.class);
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
                                 mActivity.startActivity(i);
                                 mActivity.finish();
 
@@ -214,10 +236,10 @@ String allDetails;
                                         mItemList.get(position).getModel() + "=" +
                                         mItemList.get(position).getYearOfManufacture() + "=" +
                                         mItemList.get(position).getKmsRunning() + "=" +
-                                        mItemList.get(position).getRTOCity()+ "=" +
+                                        mItemList.get(position).getRTOCity() + "=" +
                                         mItemList.get(position).getLocationCity() + "=" +
-                                        mItemList.get(position).getRegistrationNumber()+ "=" +
-                                        mItemList.get(position).getImage() + "=" +
+                                        mItemList.get(position).getRegistrationNumber() + "=" +
+                                        mItemList.get(position).getSingleImage() + "=" +
                                         mItemList.get(position).getContact();
 
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
@@ -227,7 +249,7 @@ String allDetails;
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_keyword", "vehicle").apply();
 
-                                Intent i=new Intent(mActivity, ShareWithinAppActivity.class);
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
                                 mActivity.startActivity(i);
                                 mActivity.finish();
 
@@ -250,15 +272,15 @@ String allDetails;
                             public void onClick(DialogInterface dialog, int which) {
                                 //ChoiceContact = obj.vehicleContact;
                                 //Rcontact=holder.contact.getText().toString();
-                                System.out.println("Choice contact before share applying yes........"+mContact);
+                                System.out.println("Choice contact before share applying yes........" + myContact);
                                 String imageFilePath;
                                 Intent intent = new Intent(Intent.ACTION_SEND);
 
 
-                                if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null)) {
-                                    imgUrl="http://autokatta.com/mobile/uploads/"+"abc.jpg";
+                                if (mItemList.get(position).getSingleImage().equalsIgnoreCase("") || mItemList.get(position).getSingleImage().equalsIgnoreCase(null)) {
+                                    imgUrl = "http://autokatta.com/mobile/uploads/" + "abc.jpg";
                                 } else {
-                                    imgUrl = "http://autokatta.com/mobile/uploads/"+mItemList.get(position).getImage();
+                                    imgUrl = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getSingleImage();
                                 }
                                 Log.e("TAG", "img : " + imgUrl);
 
@@ -278,11 +300,11 @@ String allDetails;
                                 manager.enqueue(request);
 
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:"+imageFilePath);
+                                System.out.println("ImageFilePath:" + imageFilePath);
 
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + mContact);
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + myContact);
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
@@ -293,16 +315,16 @@ String allDetails;
                             public void onClick(DialogInterface dialog, int which) {
 
                                 //ChoiceContact = Contact;
-                                System.out.println("Choice contact before share applying yes........"+ mItemList.get(position).getContact());
-                                System.out.println("Choice contact before share applying yes........"+mContact);
+                                System.out.println("Choice contact before share applying yes........" + mItemList.get(position).getContact());
+                                System.out.println("Choice contact before share applying yes........" + myContact);
                                 String imageFilePath;
                                 Intent intent = new Intent(Intent.ACTION_SEND);
 
 
-                                if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null)) {
-                                    imgUrl="http://autokatta.com/mobile/uploads/"+"abc.jpg";
+                                if (mItemList.get(position).getSingleImage().equalsIgnoreCase("") || mItemList.get(position).getSingleImage().equalsIgnoreCase(null)) {
+                                    imgUrl = "http://autokatta.com/mobile/uploads/" + "abc.jpg";
                                 } else {
-                                    imgUrl = "http://autokatta.com/mobile/uploads/"+mItemList.get(position).getImage();
+                                    imgUrl = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getSingleImage();
                                 }
                                 Log.e("TAG", "img : " + imgUrl);
 
@@ -322,11 +344,11 @@ String allDetails;
                                 manager.enqueue(request);
 
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:"+imageFilePath);
+                                System.out.println("ImageFilePath:" + imageFilePath);
 
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + mItemList.get(position).getContact() );
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + mItemList.get(position).getContact());
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
@@ -355,7 +377,44 @@ String allDetails;
             }
         });
 
+        holder.mLike.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.mLike.setVisibility(View.GONE);
+                holder.mUnlike.setVisibility(View.VISIBLE);
 
+                mItemList.get(position).setVehiclelikestatus("yes");
+
+                sendLike(mItemList.get(position).getContact(), mItemList.get(position).getVehicleId());
+            }
+        });
+
+        holder.mUnlike.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.mLike.setVisibility(View.VISIBLE);
+                holder.mUnlike.setVisibility(View.GONE);
+
+                mItemList.get(position).setVehiclelikestatus("no");
+
+                sendUnlike(mItemList.get(position).getContact(), mItemList.get(position).getVehicleId());
+            }
+        });
+
+    }
+
+    /*
+    Like
+     */
+    private void sendLike(String Rcontact, String vehicleId) {
+        mApiCall.vehicleLike(Rcontact, myContact, "4", vehicleId);
+    }
+
+    /*
+    Unlike...
+     */
+    private void sendUnlike(String Rcontact, String vehicleId) {
+        mApiCall.vehicleUnLike(Rcontact, myContact, "4", vehicleId);
     }
 
 
@@ -368,10 +427,42 @@ String allDetails;
             System.out.println("No Activity Found For Call in Car Details Fragment\n");
         }
     }
+
     @Override
     public int getItemCount() {
         return mItemList.size();
     }
 
+    @Override
+    public void notifySuccess(Response<?> response) {
 
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "GroupVehiclRefresh Adapter");
+            error.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            if (str.equals("success_like")) {
+                CustomToast.customToast(mActivity, " Liked Successfully");
+
+            } else if (str.equals("success_unlike")) {
+                CustomToast.customToast(mActivity, " UnLiked Successfully");
+
+            }
+        }
+    }
 }

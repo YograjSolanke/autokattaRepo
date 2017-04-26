@@ -214,8 +214,10 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     CustomToast.customToast(mActivity, "No Vehicle Present");
                 } else {
                     Bundle bundle = new Bundle();
-                    bundle.putString("contact", holder.mContact.getText().toString());
-                    bundle.putString("call", "my");
+                    bundle.putString("Rcontact", holder.mContact.getText().toString());
+                    bundle.putString("grouptype", mCallFrom);
+                    bundle.putString("className", "MemberListRefreshAdapter");
+                    bundle.putString("bundle_GroupId", mGroupId);
                     GroupVehicleList groupVehicleList = new GroupVehicleList();
                     groupVehicleList.setArguments(bundle);
 
