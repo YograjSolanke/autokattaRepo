@@ -40,6 +40,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.SaleMelaCreateResponse;
+import autokatta.com.view.MyActiveEventsTabActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -74,7 +75,7 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
     EditText eventname, startdate, starttime, enddate, endtime, eventaddress, eventdetails;
     AutoCompleteTextView eventlocation;
     String myContact;
-    String mediaPath = "";
+    String mediaPath = "", startDateTime;
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
 
@@ -201,6 +202,7 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                     eventaddress.setError("Enter address");
                     eventaddress.requestFocus();
                 } else {
+                    //startDateTime=stdate+" "+sttime;
                     apiCall.createSaleMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
                     //uploadImage(mediaPath);
                 }
@@ -224,6 +226,12 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                     CustomToast.customToast(getActivity(), "Sale Mela Created Successfully");
                     uploadImage(mediaPath);
 
+                    /*String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+                    Log.i("date","current"+date);
+                    Log.i("date","event"+startDateTime);*/
+                    startActivity(new Intent(getActivity(), MyActiveEventsTabActivity.class));
+                    getActivity().finish();
+
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -243,6 +251,7 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
+            Log.i("Check class", "CreateSaleMela Fragment");
             error.printStackTrace();
         }
 

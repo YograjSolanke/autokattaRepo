@@ -3750,6 +3750,134 @@ get All Vehicles for auction
     }
 
     /*
+    Get All Live Loan Events...
+     */
+    public void getLiveLoanEvents(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetLiveLoanEventsResponse> mLiveEvents = serviceApi.getLiveLoanEvents(contact);
+                mLiveEvents.enqueue(new Callback<GetLiveLoanEventsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetLiveLoanEventsResponse> call, Response<GetLiveLoanEventsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetLiveLoanEventsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get All Live Exchange Events...
+     */
+    public void getLiveExchangeEvents(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetLiveExchangeEventsResponse> mLiveEvents = serviceApi.getLiveExchangeEvents(contact);
+                mLiveEvents.enqueue(new Callback<GetLiveExchangeEventsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetLiveExchangeEventsResponse> call, Response<GetLiveExchangeEventsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetLiveExchangeEventsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get All Live Sale Events...
+     */
+    public void getLiveSaleEvents(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetLiveSaleEventsResponse> mLiveEvents = serviceApi.getLiveSaleEvents(contact);
+                mLiveEvents.enqueue(new Callback<GetLiveSaleEventsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetLiveSaleEventsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get All Live Service Events...
+     */
+    public void getLiveServiceEvents(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetLiveServiceEventsResponse> mLiveEvents = serviceApi.getLiveServiceEvents(contact);
+                mLiveEvents.enqueue(new Callback<GetLiveServiceEventsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetLiveServiceEventsResponse> call, Response<GetLiveServiceEventsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetLiveServiceEventsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
     Get Going Events...
      */
     public void geGoingAuctionEvents(String userName) {
@@ -6891,7 +7019,7 @@ get product data
     /*
 get All Sale Mela data
 */
-    public void getSaleMelaDetails( String contact) {
+    public void getSaleMelaDetails(String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -6925,7 +7053,7 @@ get All Sale Mela data
     /*
 get ServiceMela Data
 */
-    public void getServiceMelaDetails( String contact) {
+    public void getServiceMelaDetails(String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -6936,7 +7064,7 @@ get ServiceMela Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyActiveServiceMelaResponse> mServiceMelaResponse = serviceApi._autokattaGetServiceMelaDetails( contact);
+                Call<MyActiveServiceMelaResponse> mServiceMelaResponse = serviceApi._autokattaGetServiceMelaDetails(contact);
                 mServiceMelaResponse.enqueue(new Callback<MyActiveServiceMelaResponse>() {
                     @Override
                     public void onResponse(Call<MyActiveServiceMelaResponse> call, Response<MyActiveServiceMelaResponse> response) {

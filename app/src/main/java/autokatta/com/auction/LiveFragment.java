@@ -93,6 +93,8 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                     getAuctionEvent();
                     getLoanMela();
                     getExchangeEvent();
+                    getSaleEvent();
+                    getServiceEvent();
 
                     mAuctionEvent.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -149,13 +151,36 @@ public class LiveFragment extends Fragment implements RequestNotifier {
     Loan Mela...
      */
     private void getLoanMela() {
-
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getLiveLoanEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
     }
 
     /*
     Exchange Event...
      */
     private void getExchangeEvent() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getLiveExchangeEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
+    }
+
+    /*
+    Sale Event...
+     */
+    private void getSaleEvent() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getLiveSaleEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
+    }
+
+    /*
+    Service Event...
+     */
+    private void getServiceEvent() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getLiveServiceEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
 
     }
 

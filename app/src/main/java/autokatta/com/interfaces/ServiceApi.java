@@ -523,8 +523,24 @@ public interface ServiceApi {
     Call<String> deleteGroup(@Query("group_id") String group_id, @Query("keyword") String keyword, @Query("contact") String contact);
 
     //All Live Events
-    @GET("getAllLiveEvents.php")
-    Call<GetLiveEventsResponse> getLiveEvents(@Query("contact") String userName);
+    @POST("getAllLiveEvents.php")
+    Call<GetLiveEventsResponse> getLiveEvents(@Query("contact") String contact);
+
+    //All Live Loan Events
+    @POST("getAllLiveLoanEvents.php")
+    Call<GetLiveLoanEventsResponse> getLiveLoanEvents(@Query("contact") String contact);
+
+    //All Live Exchange Events
+    @POST("getAllLiveExchangeEvents.php")
+    Call<GetLiveExchangeEventsResponse> getLiveExchangeEvents(@Query("contact") String contact);
+
+    //All Live Sale Events
+    @POST("getAllLiveSaleEvents.php")
+    Call<GetLiveSaleEventsResponse> getLiveSaleEvents(@Query("contact") String contact);
+
+    //All Live Service Events
+    @POST("getAllLiveServiceEvents.php")
+    Call<GetLiveServiceEventsResponse> getLiveServiceEvents(@Query("contact") String contact);
 
     //All Live Events
     @GET("getAllGoingEventsByMe.php")
@@ -1069,7 +1085,7 @@ public interface ServiceApi {
 
     //get Service Mela data
     @POST("getAllMyServiceMela.php")
-    Call<MyActiveServiceMelaResponse> _autokattaGetServiceMelaDetails( @Query("mycontact") String mycontact);
+    Call<MyActiveServiceMelaResponse> _autokattaGetServiceMelaDetails(@Query("mycontact") String mycontact);
 
     //get Sale Mela data
     @POST("getAllMySaleMela.php")
