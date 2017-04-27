@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.my_store.ServiceViewActivity;
 import autokatta.com.response.GetServiceSearchResponse;
-import autokatta.com.search.ServiceView;
 
 /**
  * Created by ak-001 on 18/4/17.
@@ -137,7 +137,7 @@ public class SearchServiceAdapter extends BaseAdapter {
                 b.putString("brandtags_list", obj.getBrandtags());
 
 
-                ServiceView frag = new ServiceView();
+                ServiceViewActivity frag = new ServiceViewActivity();
                 frag.setArguments(b);
 
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();

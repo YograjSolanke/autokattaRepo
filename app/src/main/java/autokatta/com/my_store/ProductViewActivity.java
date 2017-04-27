@@ -65,7 +65,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, psharecnt,
             pimages, plikestatus, action, id, pcategory, str_category, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
     ImageView picture, edit, check, callme, deleteproduct;
-
     String result, allDetails;
     final ArrayList<String> spnid = new ArrayList<String>();
     final ArrayList<String> tagname = new ArrayList<String>();
@@ -98,7 +97,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String idlist = "", product_id;
     boolean tagflag = false;
     ConnectionDetector mConnectionDetector;
-    ArrayList<String> images = new ArrayList<String>();
+    ArrayList<String> imageslist = new ArrayList<String>();
     ApiCall mApiCall;
 
     @Override
@@ -181,6 +180,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             public void run() {
                 try {
                     getCategory();
+                    getProductData(id, contact);
 
                     // b = getArguments();
                     id = b.getString("pid");
@@ -322,10 +322,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         String[] parts = pimages.split(",");
                         photocount.setText(parts.length + " Photos");
                         for (int l = 0; l < parts.length; l++) {
-                            images.add(parts[l]);
+                            imageslist.add(parts[l]);
                             System.out.println(parts[l]);
                         }
-                        pimagename = "http://autokatta.com/mobile/Product_pics/" + images.get(0);
+                        pimagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
                         pimagename = pimagename.replaceAll(" ", "%20");
                         try {
                             Glide.with(ProductViewActivity.this)
@@ -369,7 +369,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     if (pimages.equals("")) {
                         imagename = "http://autokatta.com/mobile/Product_pics/autokattalogofinaltry.jpg";
                     } else {
-                        imagename = "http://autokatta.com/mobile/Product_pics/" + images.get(0);
+                        imagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
                     }
 
                 } catch (Exception e) {
@@ -378,6 +378,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             }
         });
 
+    }
+
+    private void getProductData(String id, String contact) {
+        ApiCall mApicall = new ApiCall(this, this);
     }
 
     /*
@@ -595,7 +599,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 updetails = productdetails.getText().toString();
                 upcat = spinCategory.getSelectedItem().toString();
                 String text = producttags.getText().toString();
-
+                ArrayList<String> images = new ArrayList<String>();
                 ArrayList<String> othertag = new ArrayList<String>();
                 if (text.endsWith(","))
                     text = text.substring(0, text.length() - 1);
@@ -830,7 +834,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 break;
             case R.id.linearshare1:
 
-                allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + images.get(0);
+                allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + imageslist.get(0);
 
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
@@ -845,14 +849,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 break;
             case R.id.linearshare:
 
-                ArrayList<String> images = new ArrayList<String>();
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 String imageFilePath;
                 if (pimages.equalsIgnoreCase("") || pimages.equalsIgnoreCase(null) ||
                         pimages.equalsIgnoreCase("null")) {
                     imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
                 } else {
-                    pimagename = "http://autokatta.com/mobile/Product_pics/" + images.get(0);
+                    pimagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
                 }
                 Log.e("TAG", "img : " + imagename);
                 DownloadManager.Request request = new DownloadManager.Request(

@@ -1,23 +1,20 @@
-package autokatta.com.search;
+package autokatta.com.my_store;
 
 import android.app.DownloadManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.AdapterView;
@@ -46,6 +43,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.search.ProductImageSlider;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -53,11 +51,9 @@ import retrofit2.Response;
  * Created by ak-001 on 19/4/17.
  */
 
-public class ServiceView extends Fragment implements RequestNotifier {
-    View mServiceView;
+public class ServiceViewActivity extends AppCompatActivity implements RequestNotifier {
+   
     String contact;
-    public static final String gal = "gallarypath";
-    String gallarypath = "";
     Bundle b = new Bundle();
     String id, action, name, web, rating, receiver_contact, sname, sprice, sdetails,
             stags, stype, scategory, slikecnt, slikestatus, simages, srating, srate, srate1, srate2, srate3, store_id, storecontact, brandtags_list;
@@ -72,7 +68,6 @@ public class ServiceView extends Fragment implements RequestNotifier {
     int lcnt;
     Button post, btnchat;
     String reviewstring = "";
-    ProgressDialog pDialog;
     ArrayList<String> images = new ArrayList<String>();
 
     final ArrayList<String> spnid = new ArrayList<String>();
@@ -88,82 +83,81 @@ public class ServiceView extends Fragment implements RequestNotifier {
 
     //product updating variables
     String uptype, upname, upprice, updetails, uptags, upimgs, upcat, allDetails = "", imagename = "", brandtagpart = "", finalbrandtags = "";
-    LinearLayout linearbtns, lineartxts;
     RelativeLayout spinnerlayout, relativewritereview;
     Spinner spinCategory;
     String simagename = "";
-    int spinnerposition = 0;
-    int rate;
     TextView photocount;
-    final ArrayList<String> brandtagId = new ArrayList<>();
     final ArrayList<String> brandTags = new ArrayList<>();
 
     String tagpart = "", tagid = "";
     String idlist = "";
     boolean tagflag = false;
     ConnectionDetector mConnectionDetector;
+    ApiCall mApiCall;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mServiceView = inflater.inflate(R.layout.service_new_view, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.product_new_view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        contact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+        mApiCall = new ApiCall(ServiceViewActivity.this, this);
+        contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
-        mConnectionDetector = new ConnectionDetector(getActivity());
+        mConnectionDetector = new ConnectionDetector(this);
 
-        storename = (TextView) mServiceView.findViewById(R.id.txtstorename);
-        website = (TextView) mServiceView.findViewById(R.id.txtstorewebsite);
-        servicename = (EditText) mServiceView.findViewById(R.id.txtsname);
-        serviceprice = (EditText) mServiceView.findViewById(R.id.txtsprice);
-        servicedetails = (EditText) mServiceView.findViewById(R.id.txtsdetails);
-        servicetags = (MultiAutoCompleteTextView) mServiceView.findViewById(R.id.txtstags);
-        servicetype = (EditText) mServiceView.findViewById(R.id.txtstype);
-        picture = (ImageView) mServiceView.findViewById(R.id.profile);
-        edit = (ImageView) mServiceView.findViewById(R.id.editservice);
-        check = (ImageView) mServiceView.findViewById(R.id.checkservice);
-        spinCategory = (Spinner) mServiceView.findViewById(R.id.spincategory);
-        spinnerlayout = (RelativeLayout) mServiceView.findViewById(R.id.linearcategory);
-        callme = (ImageView) mServiceView.findViewById(R.id.call);
-        textlike = (TextView) mServiceView.findViewById(R.id.txtlike);
-        textshare = (TextView) mServiceView.findViewById(R.id.txtshare);
-        linearlike = (LinearLayout) mServiceView.findViewById(R.id.linearlike);
-        linearunlike = (LinearLayout) mServiceView.findViewById(R.id.linearunlike);
-        linearshare = (LinearLayout) mServiceView.findViewById(R.id.linearshare);
-        linearshare1 = (LinearLayout) mServiceView.findViewById(R.id.linearshare1);
-        linearreview = (LinearLayout) mServiceView.findViewById(R.id.linearreview);
-        post = (Button) mServiceView.findViewById(R.id.btnpost);
-        btnchat = (Button) mServiceView.findViewById(R.id.btnchat);
-        photocount = (TextView) mServiceView.findViewById(R.id.no_of_photos);
-        multiautobrand = (MultiAutoCompleteTextView) mServiceView.findViewById(R.id.txtbrandptags);
+        storename = (TextView) findViewById(R.id.txtstorename);
+        website = (TextView) findViewById(R.id.txtstorewebsite);
+        servicename = (EditText) findViewById(R.id.txtsname);
+        serviceprice = (EditText) findViewById(R.id.txtsprice);
+        servicedetails = (EditText) findViewById(R.id.txtsdetails);
+        servicetags = (MultiAutoCompleteTextView) findViewById(R.id.txtstags);
+        servicetype = (EditText) findViewById(R.id.txtstype);
+        picture = (ImageView) findViewById(R.id.profile);
+        edit = (ImageView) findViewById(R.id.editservice);
+        check = (ImageView) findViewById(R.id.checkservice);
+        spinCategory = (Spinner) findViewById(R.id.spincategory);
+        spinnerlayout = (RelativeLayout) findViewById(R.id.linearcategory);
+        callme = (ImageView) findViewById(R.id.call);
+        textlike = (TextView) findViewById(R.id.txtlike);
+        textshare = (TextView) findViewById(R.id.txtshare);
+        linearlike = (LinearLayout) findViewById(R.id.linearlike);
+        linearunlike = (LinearLayout) findViewById(R.id.linearunlike);
+        linearshare = (LinearLayout) findViewById(R.id.linearshare);
+        linearshare1 = (LinearLayout) findViewById(R.id.linearshare1);
+        linearreview = (LinearLayout) findViewById(R.id.linearreview);
+        post = (Button) findViewById(R.id.btnpost);
+        btnchat = (Button) findViewById(R.id.btnchat);
+        photocount = (TextView) findViewById(R.id.no_of_photos);
+        multiautobrand = (MultiAutoCompleteTextView) findViewById(R.id.txtbrandptags);
 
 
-        deleteservice = (ImageView) mServiceView.findViewById(R.id.deleteproduct);
+        deleteservice = (ImageView) findViewById(R.id.deleteproduct);
 
-        relativerate = (RelativeLayout) mServiceView.findViewById(R.id.relativerateservice);
-        relativewritereview = (RelativeLayout) mServiceView.findViewById(R.id.linearwritereview);
-        writereview = (EditText) mServiceView.findViewById(R.id.editwritereview);
-        pricebar = (RatingBar) mServiceView.findViewById(R.id.pricebar);
-        qualitybar = (RatingBar) mServiceView.findViewById(R.id.qualitybar);
-        tmbar = (RatingBar) mServiceView.findViewById(R.id.tmbar);
-        overallbar = (RatingBar) mServiceView.findViewById(R.id.overallbar);
-        servicerating = (RatingBar) mServiceView.findViewById(R.id.servicerating);
-        storerating = (RatingBar) mServiceView.findViewById(R.id.storerating);
-        submitfeedback = (Button) mServiceView.findViewById(R.id.btnfeedback);
+        relativerate = (RelativeLayout) findViewById(R.id.relativerateservice);
+        relativewritereview = (RelativeLayout) findViewById(R.id.linearwritereview);
+        writereview = (EditText) findViewById(R.id.editwritereview);
+        pricebar = (RatingBar) findViewById(R.id.pricebar);
+        qualitybar = (RatingBar) findViewById(R.id.qualitybar);
+        tmbar = (RatingBar) findViewById(R.id.tmbar);
+        overallbar = (RatingBar) findViewById(R.id.overallbar);
+        servicerating = (RatingBar) findViewById(R.id.servicerating);
+        storerating = (RatingBar) findViewById(R.id.storerating);
+        submitfeedback = (Button) findViewById(R.id.btnfeedback);
 
         overallbar.setEnabled(false);
         storerating.setEnabled(false);
         servicerating.setEnabled(false);
 
-        getActivity().runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
                     if (!mConnectionDetector.isConnectedToInternet()) {
-                        Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ServiceViewActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     } else {
                         getCategory();
-                        b = getArguments();
                         id = b.getString("sid");
                         name = b.getString("storename");
                         web = b.getString("storewebsite");
@@ -338,7 +332,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
 
                                 reviewstring = writereview.getText().toString();
                                 if (reviewstring.equalsIgnoreCase("")) {
-                                    Toast.makeText(getActivity(), "Please provide review first.....", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ServiceViewActivity.this, "Please provide review first.....", Toast.LENGTH_SHORT).show();
                                 } else {
                                     reviewTask();
                                 }
@@ -383,10 +377,10 @@ public class ServiceView extends Fragment implements RequestNotifier {
                                 simagename = simagename.replaceAll(" ", "%20");
                                 try {
 
-                                    Glide.with(getActivity())
+                                    Glide.with(ServiceViewActivity.this)
                                             .load(simagename)
                                             .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                            .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                            .bitmapTransform(new CropCircleTransformation(ServiceViewActivity.this))
                                             .placeholder(R.drawable.logo)
                                             .into(picture);
 
@@ -410,7 +404,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
                                 ProductImageSlider fragment = new ProductImageSlider();
                                 fragment.setArguments(b);
 
-                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentManager fragmentManager = getSupportFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.search_product, fragment);
                                 fragmentTransaction.addToBackStack("serviceimageslider");
@@ -424,7 +418,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
                                 // @Here are the list of items to be shown in the list
                                 if (storecontact.contains(",")) {
                                     final String[] items = storecontact.split(",");
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceViewActivity.this);
                                     builder.setTitle("Make your selection");
                                     builder.setItems(items, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int item) {
@@ -609,9 +603,9 @@ public class ServiceView extends Fragment implements RequestNotifier {
                             @Override
                             public void onClick(View view) {
                                 if (!mConnectionDetector.isConnectedToInternet()) {
-                                    Toast.makeText(getActivity(), "Please try later", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ServiceViewActivity.this, "Please try later", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    new AlertDialog.Builder(getActivity())
+                                    new AlertDialog.Builder(ServiceViewActivity.this)
                                             .setTitle("Delete?")
                                             .setMessage("Are You Sure You Want To Delete This Service?")
 
@@ -699,7 +693,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
                                 Log.e("ShareImagePath :", filename);
                                 Log.e("TAG", "img : " + simagename);
 
-                                DownloadManager manager = (DownloadManager) getActivity().getApplication()
+                                DownloadManager manager = (DownloadManager) getApplication()
                                         .getSystemService(Context.DOWNLOAD_SERVICE);
 
                                 Log.e("TAG", "img URL: " + simagename);
@@ -738,14 +732,14 @@ public class ServiceView extends Fragment implements RequestNotifier {
                 }
             }
         });
-        return mServiceView;
+
     }
 
     /*
     Delete Service
      */
     private void deleteservice() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.deleteService(id, "delete");
     }
 
@@ -753,7 +747,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Ratings...
      */
     private void sendproductrating() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.sendNewrating(contact, "", id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(tmrate), "", "", "service");
     }
@@ -762,7 +756,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Update Ratings...
      */
     private void sendupdatedproductrating() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.sendUpdatedrating(contact, "", id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(tmrate), "", "", "service");
     }
@@ -771,7 +765,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Done Task...
      */
     private void Donetask() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.updateStoreService(upname, uptype, updetails, upprice, uptags, id, upcat, finalbrandtags);
     }
 
@@ -779,7 +773,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Review Task...
      */
     private void reviewTask() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.postProductReview(contact, receiver_contact, id, reviewstring);
     }
 
@@ -809,7 +803,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     private void call(String storecontact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + storecontact));
         try {
-            getActivity().startActivity(in);
+            startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Service View Fragment\n");
         }
@@ -819,7 +813,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Get Category...
      */
     private void getCategory() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.Categories("Service");
     }
 
@@ -827,7 +821,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Get Tags...
      */
     private void getTags() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall._autoGetTags("2");
     }
 
@@ -835,7 +829,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Get Brand Tags...
      */
     private void getBrandTags() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.getBrandTags("2");
     }
 
@@ -843,7 +837,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Add Other Tags...
      */
     private void addOtherTags() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall._autoAddTags(tagpart, "2");
     }
 
@@ -851,7 +845,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
    Add Other Brand Tags...
     */
     private void addOtherBrandTags(String brandtagpart) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.addOtherBrandTags(brandtagpart, "2");
     }
 
@@ -859,7 +853,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Unlike...
      */
     private void sendUnlike() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall._autokattaProductViewUnlike(contact, receiver_contact, "6", id);
     }
 
@@ -867,7 +861,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
     Like
      */
     private void sendLike() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall._autokattaProductView(contact, receiver_contact, "6", id);
     }
 
@@ -882,16 +876,16 @@ public class ServiceView extends Fragment implements RequestNotifier {
                         for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
                             module.add(message.getTitle());
                         }
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, module);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(ServiceViewActivity.this, R.layout.addproductspinner_color, module);
                         spinCategory.setAdapter(dataadapter);
                     } else
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                        CustomToast.customToast(ServiceViewActivity.this, getString(R.string.no_response));
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                CustomToast.customToast(ServiceViewActivity.this, getString(R.string._404));
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(ServiceViewActivity.this, getString(R.string.no_response));
         }
     }
 
@@ -912,7 +906,7 @@ public class ServiceView extends Fragment implements RequestNotifier {
      */
 
     private void updatetagids() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
         mApiCall.updateTagAssociation(id, idlist);
     }
 }

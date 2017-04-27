@@ -14,103 +14,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.AdminExcelSheetResponse;
-import autokatta.com.response.AdminVehiclesResponse;
-import autokatta.com.response.AllStatesResponse;
-import autokatta.com.response.ApprovedVehicleResponse;
-import autokatta.com.response.AuctionAllVehicleResponse;
-import autokatta.com.response.AuctionAnalyticsResponse;
-import autokatta.com.response.AuctionCreateResponse;
-import autokatta.com.response.AuctionParticipantsResponse;
-import autokatta.com.response.AuctionReauctionVehicleResponse;
-import autokatta.com.response.BlacklistMemberResponse;
-import autokatta.com.response.BodyAndSeatResponse;
-import autokatta.com.response.BrandsTagResponse;
-import autokatta.com.response.BroadcastMessageResponse;
-import autokatta.com.response.BroadcastReceivedResponse;
-import autokatta.com.response.BroadcastSendResponse;
-import autokatta.com.response.BrowseStoreResponse;
-import autokatta.com.response.BuyerResponse;
-import autokatta.com.response.CategoryResponse;
-import autokatta.com.response.ChatElementDetails;
-import autokatta.com.response.ColorResponse;
-import autokatta.com.response.CreateStoreResponse;
-import autokatta.com.response.CreateUserResponse;
-import autokatta.com.response.EndedAuctionApprovedVehiResponse;
-import autokatta.com.response.ExchangeMelaCreateResponse;
-import autokatta.com.response.FavouriteResponse;
-import autokatta.com.response.GetAdminVehicleResponse;
-import autokatta.com.response.GetAuctionEventResponse;
-import autokatta.com.response.GetBodyTypeResponse;
-import autokatta.com.response.GetBrandModelVersionResponse;
-import autokatta.com.response.GetBreaks;
-import autokatta.com.response.GetCompaniesResponse;
-import autokatta.com.response.GetContactByCompanyResponse;
-import autokatta.com.response.GetDesignationResponse;
-import autokatta.com.response.GetDistrictsResponse;
-import autokatta.com.response.GetFollowersResponse;
-import autokatta.com.response.GetGroupContactsResponse;
-import autokatta.com.response.GetGroupVehiclesResponse;
-import autokatta.com.response.GetLiveEventsResponse;
-import autokatta.com.response.GetOwnVehiclesResponse;
-import autokatta.com.response.GetPumpResponse;
-import autokatta.com.response.GetRTOCityResponse;
-import autokatta.com.response.GetRegisteredContactsResponse;
-import autokatta.com.response.GetSearchAuctionResponse;
-import autokatta.com.response.GetSearchProductResponse;
-import autokatta.com.response.GetServiceSearchResponse;
-import autokatta.com.response.GetSkillsResponse;
-import autokatta.com.response.GetStatesResponse;
-import autokatta.com.response.GetStoreProfileInfoResponse;
-import autokatta.com.response.GetTagsResponse;
-import autokatta.com.response.GetVehicleBrandResponse;
-import autokatta.com.response.GetVehicleByIdResponse;
-import autokatta.com.response.GetVehicleColor;
-import autokatta.com.response.GetVehicleForAuctionResponse;
-import autokatta.com.response.GetVehicleImplementsResponse;
-import autokatta.com.response.GetVehicleListResponse;
-import autokatta.com.response.GetVehicleModelResponse;
-import autokatta.com.response.GetVehicleSubTypeResponse;
-import autokatta.com.response.GetVehicleVersionResponse;
-import autokatta.com.response.IndustryResponse;
-import autokatta.com.response.LoanMelaCreateResponse;
-import autokatta.com.response.LoginResponse;
-import autokatta.com.response.MyActiveAuctionAboveReservedResponse;
-import autokatta.com.response.MyActiveAuctionHighBidResponse;
-import autokatta.com.response.MyActiveAuctionNoBidResponse;
-import autokatta.com.response.MyActiveAuctionResponse;
-import autokatta.com.response.MyActiveExchangeMelaResponse;
-import autokatta.com.response.MyActiveLoanMelaResponse;
-import autokatta.com.response.MyBroadcastGroupsResponse;
-import autokatta.com.response.MySavedAuctionResponse;
-import autokatta.com.response.MySearchResponse;
-import autokatta.com.response.MyStoreResponse;
-import autokatta.com.response.MyUpcomingAuctionResponse;
-import autokatta.com.response.MyUpcomingExchangeMelaResponse;
-import autokatta.com.response.MyUpcomingLoanMelaResponse;
-import autokatta.com.response.MyUploadedVehiclesResponse;
-import autokatta.com.response.OtherBrandTagAddedResponse;
-import autokatta.com.response.OtherTagAddedResponse;
-import autokatta.com.response.PriceSuggestionResponse;
-import autokatta.com.response.ProductAddedResponse;
-import autokatta.com.response.ProfileAboutResponse;
-import autokatta.com.response.ProfileGroupResponse;
-import autokatta.com.response.SaleMelaCreateResponse;
-import autokatta.com.response.SampleResponse;
-import autokatta.com.response.SearchPersonResponse;
-import autokatta.com.response.SearchStoreResponse;
-import autokatta.com.response.SearchVehicleResponse;
-import autokatta.com.response.SellerResponse;
-import autokatta.com.response.ServiceAddedResponse;
-import autokatta.com.response.ServiceMelaCreateResponse;
-import autokatta.com.response.SpecialClauseAddResponse;
-import autokatta.com.response.SpecialClauseGetResponse;
-import autokatta.com.response.StoreInventoryResponse;
-import autokatta.com.response.StoreOldAdminResponse;
-import autokatta.com.response.StoreResponse;
-import autokatta.com.response.YourBidResponse;
-import autokatta.com.response.getBussinessChatResponse;
-import autokatta.com.response.getDealsResponse;
+import autokatta.com.response.*;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -6914,6 +6818,75 @@ Add service
             e.printStackTrace();
         }
     }
+
+
+    /*
+get product data
+*/
+    public void getProductDetails(String product_id, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ProductResponse> mUnfollowResponse = serviceApi.getProductDetails(product_id, contact);
+                mUnfollowResponse.enqueue(new Callback<ProductResponse>() {
+                    @Override
+                    public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProductResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+get product data
+*/
+    public void getServiceDetails(String service_id, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ServiceResponse> mUnfollowResponse = serviceApi.getServiceDetails(service_id, contact);
+                mUnfollowResponse.enqueue(new Callback<ServiceResponse>() {
+                    @Override
+                    public void onResponse(Call<ServiceResponse> call, Response<ServiceResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServiceResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs
