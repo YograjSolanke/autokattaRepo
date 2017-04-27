@@ -3,9 +3,6 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.my_store.ServiceViewActivity;
 import autokatta.com.response.GetServiceSearchResponse;
 
 /**
@@ -137,14 +133,14 @@ public class SearchServiceAdapter extends BaseAdapter {
                 b.putString("brandtags_list", obj.getBrandtags());
 
 
-                ServiceViewActivity frag = new ServiceViewActivity();
-                frag.setArguments(b);
-
-                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.search_product, frag);
-                fragmentTransaction.addToBackStack("service_view");
-                fragmentTransaction.commit();
+//                ServiceViewActivity frag = new ServiceViewActivity();
+//                frag.setArguments(b);
+//
+//                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.search_product, frag);
+//                fragmentTransaction.addToBackStack("service_view");
+//                fragmentTransaction.commit();
             }
         });
 

@@ -46,6 +46,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetTagsResponse;
+import autokatta.com.response.ProductResponse;
 import autokatta.com.search.ProductImageSlider;
 import autokatta.com.view.ShareWithinAppActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -174,38 +175,15 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         linearshare.setOnClickListener(this);
         seellreview.setOnClickListener(this);
 
+        product_id = getIntent().getExtras().getString("product_id");
+
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    getCategory();
-                    getProductData(id, contact);
 
-                    // b = getArguments();
-                    id = b.getString("pid");
-                    name = b.getString("storename");
-                    web = b.getString("storewebsite");
-                    rating = b.getString("storerating");
-                    receiver_contact = b.getString("storecontact");
-                    pname = b.getString("name");
-                    pprice = b.getString("price");
-                    pdetails = b.getString("details");
-                    ptags = b.getString("tags");
-                    ptype = b.getString("type");
-                    pimages = b.getString("images");
-                    prating = b.getString("prating");
-                    pcategory = b.getString("category");
-                    plikestatus = b.getString("likestatus");
-                    plikecnt = b.getString("plikecnt");
-                    psharecnt = b.getString("psharecnt");
-                    prate = b.getString("prate");
-                    prate1 = b.getString("prate1");
-                    prate2 = b.getString("prate2");
-                    prate3 = b.getString("prate3");
-                    store_id = b.getString("store_id");
-                    storecontact = b.getString("storecontact");
-                    brandtags_list = b.getString("brandtags_list");
+                    getCategory();
+                getProductData(product_id, contact);
 
                     producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                     multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -265,116 +243,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         }
                     });
 
-                    txtlike.setText("Like(" + plikecnt + ")");
-
-                    if (storecontact.contains(contact)) {
-                        edit.setVisibility(View.VISIBLE);
-                        deleteproduct.setVisibility(View.VISIBLE);
-                        callme.setVisibility(View.GONE);
-                        relativerate.setVisibility(View.GONE);
-                        relativewritereview.setVisibility(View.GONE);
-                        linearlike.setEnabled(false);
-                        linearreview.setEnabled(false);
-                    } else {
-                        callme.setVisibility(View.VISIBLE);
-                        relativerate.setVisibility(View.VISIBLE);
-                        linearreview.setEnabled(true);
-                        edit.setVisibility(View.GONE);
-                        deleteproduct.setVisibility(View.GONE);
-                        if (plikestatus.equals("yes")) {
-                            linearlike.setVisibility(View.GONE);
-                            linearunlike.setVisibility(View.VISIBLE);
-                        } else if (plikestatus.equalsIgnoreCase("no")) {
-                            linearlike.setVisibility(View.VISIBLE);
-                            linearunlike.setVisibility(View.GONE);
-                        }
-                    }
-
-
-                    //***************************setting previous rating*******************************
-                    if (!prate.equals("0")) {
-                        overallbar.setRating(Float.parseFloat(prate));
-                    }
-                    if (!prate1.equals("0")) {
-                        pricebar.setRating(Float.parseFloat(prate1));
-                    }
-                    if (!prate2.equals("0")) {
-                        qualitybar.setRating(Float.parseFloat(prate2));
-                    }
-                    if (!prate3.equals("0")) {
-                        stockbar.setRating(Float.parseFloat(prate3));
-                    }
-
-                    //rating conditions for store
-                    if (!rating.equals("null")) {
-                        storerating.setRating(Float.parseFloat(rating));
-                    }
-                    //rating conditions for product
-
-                    if (!prating.equals("null")) {
-                        productrating.setRating(Float.parseFloat(prating));
-                    }
-
-                    if (pimages.equals("")) {
-                        picture.setImageResource(R.drawable.store);
-                        photocount.setText("0 Photos");
-                    } else {
-                        String[] parts = pimages.split(",");
-                        photocount.setText(parts.length + " Photos");
-                        for (int l = 0; l < parts.length; l++) {
-                            imageslist.add(parts[l]);
-                            System.out.println(parts[l]);
-                        }
-                        pimagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
-                        pimagename = pimagename.replaceAll(" ", "%20");
-                        try {
-                            Glide.with(ProductViewActivity.this)
-                                    .load(pimagename)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .bitmapTransform(new CropCircleTransformation(ProductViewActivity.this))
-                                    .placeholder(R.drawable.logo)
-                                    .into(picture);
-                        } catch (Exception e) {
-                            System.out.println("Error in uploading images");
-                        }
-                    }
-
-                    //...
-
-                    storename.setText(name);
-                    website.setText(web);
-                    productname.setText(pname);
-                    productprice.setText(pprice);
-                    productdetails.setText(pdetails);
-                    producttags.setText(ptags);
-                    producttype.setText(ptype);
-                    multiautobrand.setText(brandtags_list);
-
-                    storename.setEnabled(false);
-                    website.setEnabled(false);
-                    productname.setEnabled(false);
-                    productprice.setEnabled(false);
-                    productdetails.setEnabled(false);
-                    producttags.setEnabled(false);
-                    producttype.setEnabled(false);
-                    multiautobrand.setEnabled(false);
-
-                    if (pimages.equals("")) {
-                        picture.setEnabled(false);
-                    }
-
-                    //like code
-                    lcnt = Integer.parseInt(plikecnt);
-
-                    if (pimages.equals("")) {
-                        imagename = "http://autokatta.com/mobile/Product_pics/autokattalogofinaltry.jpg";
-                    } else {
-                        imagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         });
 
@@ -382,6 +250,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     private void getProductData(String id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
+        mApicall.getProductDetails(id, contact);
     }
 
     /*
@@ -509,7 +378,149 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(this, R.layout.addproductspinner_color, tags);
                         producttags.setAdapter(dataadapter);
                     }
+                } else if (response.body() instanceof ProductResponse) {
+                    ProductResponse productresponse = (ProductResponse) response.body();
+                    if (!productresponse.getSuccess().isEmpty()) {
+
+                        for (ProductResponse.Success success : productresponse.getSuccess()) {
+
+                            id = success.getProductId();
+                            name = success.getStoreName();
+                            web = success.getStoreWebsite();
+                            rating = success.getStoreRating();
+                            receiver_contact = success.getStoreContact();
+                            pname = success.getProductName();
+                            pprice = success.getPrice();
+                            pdetails = success.getProductDetails();
+                            ptags = success.getProductTagNames();
+                            ptype = success.getProductType();
+                            pimages = success.getImages();
+                            prating = success.getProductrating();
+                            pcategory = success.getCategory();
+                            plikestatus = success.getProductlikestatus();
+                            plikecnt = success.getProductlikecount();
+                            prate = success.getPrate();
+                            prate1 = success.getPrate1();
+                            prate2 = success.getPrate2();
+                            prate3 = success.getPrate3();
+                            store_id = success.getStoreId();
+                            storecontact = success.getStoreContact();
+                            brandtags_list = success.getBrandtags();
+
+                            txtlike.setText("Like(" + plikecnt + ")");
+
+                            if (storecontact.contains(contact)) {
+                                edit.setVisibility(View.VISIBLE);
+                                deleteproduct.setVisibility(View.VISIBLE);
+                                callme.setVisibility(View.GONE);
+                                relativerate.setVisibility(View.GONE);
+                                relativewritereview.setVisibility(View.GONE);
+                                linearlike.setEnabled(false);
+                                linearreview.setEnabled(false);
+                            } else {
+                                callme.setVisibility(View.VISIBLE);
+                                relativerate.setVisibility(View.VISIBLE);
+                                linearreview.setEnabled(true);
+                                edit.setVisibility(View.GONE);
+                                deleteproduct.setVisibility(View.GONE);
+                                if (plikestatus.equals("yes")) {
+                                    linearlike.setVisibility(View.GONE);
+                                    linearunlike.setVisibility(View.VISIBLE);
+                                } else if (plikestatus.equalsIgnoreCase("no")) {
+                                    linearlike.setVisibility(View.VISIBLE);
+                                    linearunlike.setVisibility(View.GONE);
+                                }
+                            }
+
+
+                            //***************************setting previous rating*******************************
+                            if (!prate.equals("0")) {
+                                overallbar.setRating(Float.parseFloat(prate));
+                            }
+                            if (!prate1.equals("0")) {
+                                pricebar.setRating(Float.parseFloat(prate1));
+                            }
+                            if (!prate2.equals("0")) {
+                                qualitybar.setRating(Float.parseFloat(prate2));
+                            }
+                            if (!prate3.equals("0")) {
+                                stockbar.setRating(Float.parseFloat(prate3));
+                            }
+
+                            //rating conditions for store
+                            if (!rating.equals("null")) {
+                                storerating.setRating(Float.parseFloat(rating));
+                            }
+                            //rating conditions for product
+
+                            if (!prating.equals("null")) {
+                                productrating.setRating(Float.parseFloat(prating));
+                            }
+
+                            if (pimages.equals("")) {
+                                picture.setImageResource(R.drawable.store);
+                                photocount.setText("0 Photos");
+                            } else {
+                                String[] parts = pimages.split(",");
+                                photocount.setText(parts.length + " Photos");
+                                for (int l = 0; l < parts.length; l++) {
+                                    imageslist.add(parts[l]);
+                                    System.out.println(parts[l]);
+                                }
+                                pimagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
+                                pimagename = pimagename.replaceAll(" ", "%20");
+                                try {
+                                    Glide.with(ProductViewActivity.this)
+                                            .load(pimagename)
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .bitmapTransform(new CropCircleTransformation(ProductViewActivity.this))
+                                            .placeholder(R.drawable.logo)
+                                            .into(picture);
+                                } catch (Exception e) {
+                                    System.out.println("Error in uploading images");
+                                }
+                            }
+
+                            //...
+
+                            storename.setText(name);
+                            website.setText(web);
+                            productname.setText(pname);
+                            productprice.setText(pprice);
+                            productdetails.setText(pdetails);
+                            producttags.setText(ptags);
+                            producttype.setText(ptype);
+                            multiautobrand.setText(brandtags_list);
+
+                            storename.setEnabled(false);
+                            website.setEnabled(false);
+                            productname.setEnabled(false);
+                            productprice.setEnabled(false);
+                            productdetails.setEnabled(false);
+                            producttags.setEnabled(false);
+                            producttype.setEnabled(false);
+                            multiautobrand.setEnabled(false);
+
+                            if (pimages.equals("")) {
+                                picture.setEnabled(false);
+                            }
+
+                            //like code
+                            lcnt = Integer.parseInt(plikecnt);
+
+                            if (pimages.equals("")) {
+                                imagename = "http://autokatta.com/mobile/Product_pics/autokattalogofinaltry.jpg";
+                            } else {
+                                imagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
+                            }
+
+                        }
+
+
+                    }
+
                 }
+
             } else {
                 CustomToast.customToast(ProductViewActivity.this, getString(R.string._404));
             }
