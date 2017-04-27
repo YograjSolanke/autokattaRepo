@@ -95,12 +95,14 @@ import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProductAddedResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.response.SaleMelaCreateResponse;
 import autokatta.com.response.SampleResponse;
 import autokatta.com.response.SearchPersonResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SearchVehicleResponse;
 import autokatta.com.response.SellerResponse;
 import autokatta.com.response.ServiceAddedResponse;
+import autokatta.com.response.ServiceMelaCreateResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreInventoryResponse;
@@ -1883,6 +1885,82 @@ public class ApiCall {
 
                     @Override
                     public void onFailure(Call<ExchangeMelaCreateResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+create Sale Mela Event
+ */
+    public void createSaleMela(String title, String location,
+                               String address, String start_date,
+                               String start_time, String end_date,
+                               String end_time, String image,
+                               String details, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<SaleMelaCreateResponse> mGetVehicleImplementation = mServiceApi._createSaleMela(title, location, address,
+                        start_date, start_time, end_date, end_time, image, details, contact);
+                mGetVehicleImplementation.enqueue(new Callback<SaleMelaCreateResponse>() {
+                    @Override
+                    public void onResponse(Call<SaleMelaCreateResponse> call, Response<SaleMelaCreateResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<SaleMelaCreateResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+create Service Mela Event
+*/
+    public void createServiceMela(String title, String location,
+                                  String address, String start_date,
+                                  String start_time, String end_date,
+                                  String end_time, String image,
+                                  String details, String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<ServiceMelaCreateResponse> mGetVehicleImplementation = mServiceApi._createServiceMela(title, location, address,
+                        start_date, start_time, end_date, end_time, image, details, contact);
+                mGetVehicleImplementation.enqueue(new Callback<ServiceMelaCreateResponse>() {
+                    @Override
+                    public void onResponse(Call<ServiceMelaCreateResponse> call, Response<ServiceMelaCreateResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServiceMelaCreateResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

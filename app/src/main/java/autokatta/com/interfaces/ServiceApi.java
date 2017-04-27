@@ -82,12 +82,14 @@ import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.ProductAddedResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.response.SaleMelaCreateResponse;
 import autokatta.com.response.SampleResponse;
 import autokatta.com.response.SearchPersonResponse;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.response.SearchVehicleResponse;
 import autokatta.com.response.SellerResponse;
 import autokatta.com.response.ServiceAddedResponse;
+import autokatta.com.response.ServiceMelaCreateResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.response.StoreInventoryResponse;
@@ -343,6 +345,21 @@ public interface ServiceApi {
                                                          @Query("end_time") String end_time, @Query("image") String image,
                                                          @Query("details") String details, @Query("contact") String contact);
 
+    //create Sale mela event
+    @GET("createSaleMela.php")
+    Call<SaleMelaCreateResponse> _createSaleMela(@Query("title") String title, @Query("location") String location,
+                                                 @Query("address") String address, @Query("start_date") String start_date,
+                                                 @Query("start_time") String start_time, @Query("end_date") String end_date,
+                                                 @Query("end_time") String end_time, @Query("image") String image,
+                                                 @Query("details") String details, @Query("contact") String contact);
+
+    //create Service mela event
+    @GET("createServiceMela.php")
+    Call<ServiceMelaCreateResponse> _createServiceMela(@Query("title") String title, @Query("location") String location,
+                                                       @Query("address") String address, @Query("start_date") String start_date,
+                                                       @Query("start_time") String start_time, @Query("end_date") String end_date,
+                                                       @Query("end_time") String end_time, @Query("image") String image,
+                                                       @Query("details") String details, @Query("contact") String contact);
 
     //get My Broadcast groups
     @POST("getBroadcastGroups.php")

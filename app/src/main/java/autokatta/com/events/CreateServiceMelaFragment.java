@@ -39,7 +39,7 @@ import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.response.ServiceMelaCreateResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -201,7 +201,7 @@ public class CreateServiceMelaFragment extends Fragment implements RequestNotifi
                     eventaddress.setError("Enter address");
                     eventaddress.requestFocus();
                 } else {
-                    //apiCall.createExchangeMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
+                    apiCall.createServiceMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
                     //uploadImage(mediaPath);
                 }
 
@@ -217,9 +217,9 @@ public class CreateServiceMelaFragment extends Fragment implements RequestNotifi
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                ExchangeMelaCreateResponse createResponse = (ExchangeMelaCreateResponse) response.body();
+                ServiceMelaCreateResponse createResponse = (ServiceMelaCreateResponse) response.body();
                 if (createResponse.getSuccess() != null) {
-                    String id = createResponse.getSuccess().getExchangeID().toString();
+                    String id = createResponse.getSuccess().getServiceID().toString();
                     Log.i("ServiceMelaId", "->" + id);
                     CustomToast.customToast(getActivity(), "Service Mela Created Successfully");
                     uploadImage(mediaPath);
