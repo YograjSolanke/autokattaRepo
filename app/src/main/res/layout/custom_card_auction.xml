@@ -240,7 +240,6 @@
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/auctioneer_layout"
                     android:layout_marginTop="3dp"
                     android:background="#cccccc" />
 
@@ -342,19 +341,33 @@
                         android:id="@+id/auction_preview"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/spinner_height"
                         android:layout_weight="1"
                         android:background="@color/medium_sea_green"
                         android:text="PREVIEW"
                         android:layout_marginEnd="@dimen/margin_small"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/auction_going"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_weight="1"
+                        android:background="@color/medium_sea_green"
+                        android:text="GOING"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                     <Button
                         android:id="@+id/auction_share"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/spinner_height"
                         android:layout_weight="1"
                         android:background="@color/medium_sea_green"
                         android:text="SHARE"
@@ -362,7 +375,6 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>

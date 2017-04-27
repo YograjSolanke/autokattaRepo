@@ -45,7 +45,12 @@ public class LiveFragment extends Fragment implements RequestNotifier {
     AuctionNotificationAdapter mAdapter;
     boolean isFirstViewClick;
     LinearLayout mAuctionEventLinear;
+    LinearLayout mServiceEventLinear;
     TextView mEventCount;
+    RelativeLayout mAuctionEvent;
+    RelativeLayout mLoanMela;
+    RelativeLayout mExchangeEvent;
+    RelativeLayout mServiceEvent;
     boolean isNetworkAvailable;
 
     @Nullable
@@ -63,10 +68,14 @@ public class LiveFragment extends Fragment implements RequestNotifier {
             }
         }, intentFilter);
 
-        final RelativeLayout mAuctionEvent = (RelativeLayout) mLive.findViewById(R.id.auction_event);
-        RelativeLayout mLoanMela = (RelativeLayout) mLive.findViewById(R.id.loan_mela_layout);
-        RelativeLayout mExchangeEvent = (RelativeLayout) mLive.findViewById(R.id.exchange_event_layout);
+        mAuctionEvent = (RelativeLayout) mLive.findViewById(R.id.auction_event);
+        mLoanMela = (RelativeLayout) mLive.findViewById(R.id.loan_mela_layout);
+        mExchangeEvent = (RelativeLayout) mLive.findViewById(R.id.exchange_event_layout);
+        mServiceEvent = (RelativeLayout) mLive.findViewById(R.id.service_event_layout);
+
         mAuctionEventLinear = (LinearLayout) mLive.findViewById(R.id.event_horizontal);
+        mServiceEventLinear = (LinearLayout) mLive.findViewById(R.id.service_event_horizontal);
+
         mEventCount = (TextView) mLive.findViewById(R.id.event_count);
         TextView mLoanMelaCount = (TextView) mLive.findViewById(R.id.loan_mela_count);
         TextView mExchangeEventCount = (TextView) mLive.findViewById(R.id.exchange_event_count);
@@ -99,6 +108,24 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                                     mAuctionEventLinear.setVisibility(View.GONE);
                                 }
                             }
+                        }
+                    });
+
+                    mServiceEvent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            /*if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                            } else {*/
+
+                            if (!isFirstViewClick) {
+                                isFirstViewClick = true;
+                                mServiceEventLinear.setVisibility(View.VISIBLE);
+                            } else {
+                                isFirstViewClick = false;
+                                mServiceEventLinear.setVisibility(View.GONE);
+                            }
+                            // }
                         }
                     });
                 } catch (Exception e) {
@@ -162,10 +189,7 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                         success.setOpenClose(success.getOpenClose());
                         success.setShowPrice(success.getShowPrice());
                         success.setBlackListStatus(success.getBlackListStatus());
-
-
                         success.setAuctioncategory(success.getAuctioncategory());
-
 
                         if (success.getStockLocation().equals(""))
                             success.setStockLocation(success.getLocation());
