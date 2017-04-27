@@ -64,7 +64,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     Bundle b = new Bundle();
     //variables for getting data through bundle form adapter
     String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, psharecnt,
-            pimages, plikestatus, action, id, pcategory, str_category, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
+            pimages, plikestatus, action, pcategory, str_category, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
     ImageView picture, edit, check, callme, deleteproduct;
     String result, allDetails;
     final ArrayList<String> spnid = new ArrayList<String>();
@@ -258,7 +258,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendupdatedproductrating() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.sendUpdatedrating(contact, "", id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendUpdatedrating(contact, "", product_id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(stockrate), "", "", "product");
     }
 
@@ -267,7 +267,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendproductrating() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.sendNewrating(contact, "", id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendNewrating(contact, "", product_id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(stockrate), "", "", "product");
     }
 
@@ -284,7 +284,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendLike() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall._autokattaProductView(contact, receiver_contact, "5", id);
+        mApiCall._autokattaProductView(contact, receiver_contact, "5", product_id);
     }
 
     /*
@@ -292,7 +292,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void deleteproduct() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.deleteProduct(id, "delete");
+        mApiCall.deleteProduct(product_id, "delete");
     }
 
     /*
@@ -332,7 +332,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void reviewTask() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.postProductReview(contact, receiver_contact, id, reviewstring);
+        mApiCall.postProductReview(contact, receiver_contact, product_id, reviewstring);
     }
 
     /*
@@ -384,7 +384,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                         for (ProductResponse.Success success : productresponse.getSuccess()) {
 
-                            id = success.getProductId();
+                            product_id = success.getProductId();
                             name = success.getStoreName();
                             web = success.getStoreWebsite();
                             rating = success.getStoreRating();
@@ -889,7 +889,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my product on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/product/" + id);
+                        + "\n" + "http://autokatta.com/product/" + product_id);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                 startActivity(Intent.createChooser(intent, "Autokatta"));
@@ -898,7 +898,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             case R.id.btnseeall:
 
 
-                b.putString("product_id", id);
+                b.putString("product_id", product_id);
                 b.putString("action", action);
                             /*SeeAllReviews frag = new SeeAllReviews();
                             frag.setArguments(b);
