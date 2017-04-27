@@ -30,6 +30,10 @@ import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetLiveEventsResponse;
+import autokatta.com.response.GetLiveExchangeEventsResponse;
+import autokatta.com.response.GetLiveLoanEventsResponse;
+import autokatta.com.response.GetLiveSaleEventsResponse;
+import autokatta.com.response.GetLiveServiceEventsResponse;
 import retrofit2.Response;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
@@ -41,6 +45,7 @@ import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 public class LiveFragment extends Fragment implements RequestNotifier {
     View mLive;
     List<GetLiveEventsResponse.Success> mLiveEventList = new ArrayList<>();
+    List<GetLiveLoanEventsResponse.Success> mLiveLoanEventList = new ArrayList<>();
     RecyclerView mEventRecyclerView;
     AuctionNotificationAdapter mAdapter;
     boolean isFirstViewClick;
@@ -192,6 +197,11 @@ public class LiveFragment extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 GetLiveEventsResponse mGetLiveEventsResponse = (GetLiveEventsResponse) response.body();
+                GetLiveLoanEventsResponse mGetLiveLoanEventsResponse = (GetLiveLoanEventsResponse) response.body();
+                GetLiveExchangeEventsResponse mGetLiveExchangeEventsResponse = (GetLiveExchangeEventsResponse) response.body();
+                GetLiveSaleEventsResponse mGetLiveSaleEventsResponse = (GetLiveSaleEventsResponse) response.body();
+                GetLiveServiceEventsResponse mGetLiveServiceEventsResponse = (GetLiveServiceEventsResponse) response.body();
+
                 if (response.body() instanceof GetLiveEventsResponse) {
                     mLiveEventList.clear();
                     for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
@@ -229,6 +239,146 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                     mEventRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
+                //Loan Event
+                else if (response.body() instanceof GetLiveLoanEventsResponse) {
+                    mLiveLoanEventList.clear();
+                    for (GetLiveLoanEventsResponse.Success success : mGetLiveLoanEventsResponse.getSuccess()) {
+                        success.setId(success.getId());
+                        success.setLoanOwnerName(success.getLoanOwnerName());
+                        success.setName(success.getName());
+                        success.setContact(success.getContact());
+                        success.setStartDate(success.getStartDate());
+                        success.setStartTime(success.getStartTime());
+                        success.setEndDate(success.getEndDate());
+                        success.setEndTime(success.getEndTime());
+                        success.setLocation(success.getLocation());
+                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                        success.setEndDateTime(success.getEndDateTime());
+                        success.setStartDateTime(success.getStartDateTime());
+
+                        success.setKeyWord("loan");
+                        mLiveLoanEventList.add(success);
+                    }
+                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
+                    mEventRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+                //Exchange Event
+                else if (response.body() instanceof GetLiveEventsResponse) {
+                    mLiveEventList.clear();
+                    for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
+                        success.setAuctionId(success.getAuctionId());
+                        success.setAuctioneer(success.getAuctioneer());
+                        success.setActionTitle(success.getActionTitle());
+                        success.setContact(success.getContact());
+                        success.setStartDate(success.getStartDate());
+                        success.setStartTime(success.getStartTime());
+                        success.setEndDate(success.getEndDate());
+                        success.setEndTime(success.getEndTime());
+                        success.setAuctionType(success.getAuctionType());
+                        success.setLocation(success.getLocation());
+                        success.setSpecialClauses(success.getClausesNames());
+                        success.setVehicleIds(success.getVehicleIds());
+                        success.setNoOfVehicles(success.getNoOfVehicles());
+                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                        success.setEndDateTime(success.getEndDateTime());
+                        success.setStartDateTime(success.getStartDateTime());
+                        success.setOpenClose(success.getOpenClose());
+                        success.setShowPrice(success.getShowPrice());
+                        success.setBlackListStatus(success.getBlackListStatus());
+                        success.setAuctioncategory(success.getAuctioncategory());
+
+                        if (success.getStockLocation().equals(""))
+                            success.setStockLocation(success.getLocation());
+                        else
+                            success.setStockLocation(success.getStockLocation());
+
+                        success.setKeyWord("auction");
+                        mLiveEventList.add(success);
+                    }
+                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
+                    mEventRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+                //Sale Event
+                else if (response.body() instanceof GetLiveEventsResponse) {
+                    mLiveEventList.clear();
+                    for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
+                        success.setAuctionId(success.getAuctionId());
+                        success.setAuctioneer(success.getAuctioneer());
+                        success.setActionTitle(success.getActionTitle());
+                        success.setContact(success.getContact());
+                        success.setStartDate(success.getStartDate());
+                        success.setStartTime(success.getStartTime());
+                        success.setEndDate(success.getEndDate());
+                        success.setEndTime(success.getEndTime());
+                        success.setAuctionType(success.getAuctionType());
+                        success.setLocation(success.getLocation());
+                        success.setSpecialClauses(success.getClausesNames());
+                        success.setVehicleIds(success.getVehicleIds());
+                        success.setNoOfVehicles(success.getNoOfVehicles());
+                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                        success.setEndDateTime(success.getEndDateTime());
+                        success.setStartDateTime(success.getStartDateTime());
+                        success.setOpenClose(success.getOpenClose());
+                        success.setShowPrice(success.getShowPrice());
+                        success.setBlackListStatus(success.getBlackListStatus());
+                        success.setAuctioncategory(success.getAuctioncategory());
+
+                        if (success.getStockLocation().equals(""))
+                            success.setStockLocation(success.getLocation());
+                        else
+                            success.setStockLocation(success.getStockLocation());
+
+                        success.setKeyWord("auction");
+                        mLiveEventList.add(success);
+                    }
+                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
+                    mEventRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+                //Service Event
+                else if (response.body() instanceof GetLiveEventsResponse) {
+                    mLiveEventList.clear();
+                    for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
+                        success.setAuctionId(success.getAuctionId());
+                        success.setAuctioneer(success.getAuctioneer());
+                        success.setActionTitle(success.getActionTitle());
+                        success.setContact(success.getContact());
+                        success.setStartDate(success.getStartDate());
+                        success.setStartTime(success.getStartTime());
+                        success.setEndDate(success.getEndDate());
+                        success.setEndTime(success.getEndTime());
+                        success.setAuctionType(success.getAuctionType());
+                        success.setLocation(success.getLocation());
+                        success.setSpecialClauses(success.getClausesNames());
+                        success.setVehicleIds(success.getVehicleIds());
+                        success.setNoOfVehicles(success.getNoOfVehicles());
+                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                        success.setEndDateTime(success.getEndDateTime());
+                        success.setStartDateTime(success.getStartDateTime());
+                        success.setOpenClose(success.getOpenClose());
+                        success.setShowPrice(success.getShowPrice());
+                        success.setBlackListStatus(success.getBlackListStatus());
+                        success.setAuctioncategory(success.getAuctioncategory());
+
+                        if (success.getStockLocation().equals(""))
+                            success.setStockLocation(success.getLocation());
+                        else
+                            success.setStockLocation(success.getStockLocation());
+
+                        success.setKeyWord("auction");
+                        mLiveEventList.add(success);
+                    }
+                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
+                    mEventRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
                 /*Snackbar.make(mLive.findViewById(R.id.activity_autokatta_main),"No Internet", Snackbar.LENGTH_LONG)
