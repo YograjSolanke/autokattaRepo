@@ -12,6 +12,7 @@ import autokatta.com.initial_fragment.GroupDetailTabs;
 
 public class GroupsActivity extends AppCompatActivity {
     Bundle b = new Bundle();
+    String className;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class GroupsActivity extends AppCompatActivity {
         GroupDetailTabs groupDetailTabs = new GroupDetailTabs();
         Intent i = getIntent();
         String grouptype = i.getStringExtra("grouptype");
-        String className = i.getStringExtra("className");
+        className = i.getStringExtra("className");
         if (grouptype != null) {
             b.putString("grouptype", i.getStringExtra("grouptype"));
             b.putString("className", i.getStringExtra("className"));
@@ -61,13 +62,15 @@ public class GroupsActivity extends AppCompatActivity {
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
-                    startActivity(new Intent(getApplicationContext(), UserProfile.class), options.toBundle());
-                    finish();
-                } else {
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), UserProfile.class));
+                if (className == null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
+                        startActivity(new Intent(getApplicationContext(), UserProfile.class), options.toBundle());
+                        finish();
+                    } else {
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), UserProfile.class));
+                    }
                 }
             }
         }
