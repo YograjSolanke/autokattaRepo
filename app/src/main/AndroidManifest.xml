@@ -379,6 +379,18 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
         <activity
+            android:name=".my_store.ProductViewActivity"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".my_store.ServiceViewActivity"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".view.ShareWithinAppActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
