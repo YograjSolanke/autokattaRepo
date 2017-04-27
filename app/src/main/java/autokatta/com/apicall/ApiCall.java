@@ -6888,6 +6888,74 @@ get product data
     }
 
 
+    /*
+get All Sale Mela data
+*/
+    public void getSaleMelaDetails( String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyActiveSaleMelaResponse> mSaleMelaResponse = serviceApi._autokattaGetSaleMelaDetails(contact);
+                mSaleMelaResponse.enqueue(new Callback<MyActiveSaleMelaResponse>() {
+                    @Override
+                    public void onResponse(Call<MyActiveSaleMelaResponse> call, Response<MyActiveSaleMelaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyActiveSaleMelaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+get ServiceMela Data
+*/
+    public void getServiceMelaDetails( String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyActiveServiceMelaResponse> mServiceMelaResponse = serviceApi._autokattaGetServiceMelaDetails( contact);
+                mServiceMelaResponse.enqueue(new Callback<MyActiveServiceMelaResponse>() {
+                    @Override
+                    public void onResponse(Call<MyActiveServiceMelaResponse> call, Response<MyActiveServiceMelaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyActiveServiceMelaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /***
      * Retrofit Logs
      ***/
