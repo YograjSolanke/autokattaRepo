@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="autokatta.com.events.ActiveServiceMelaPreviewActivity">
+    tools:context="autokatta.com.events.MyEndedLoanMelaPreviewActivity">
 
 
 
-    <include layout="@layout/content_active_service_mela_preview"/>
+    <include layout="@layout/content_my_ended_loan_mela_preview"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

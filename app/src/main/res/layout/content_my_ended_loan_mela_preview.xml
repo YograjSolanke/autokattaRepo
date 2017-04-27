@@ -21,10 +21,10 @@
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom"
         android:background="@color/colorPrimary"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/white"
         app:tabGravity="fill"
+        app:tabTextColor="@color/white"
+        app:tabIndicatorColor="@color/orange"
+        app:tabSelectedTextColor="@color/orange"
         app:tabMode="fixed"/>
 
 
@@ -43,7 +43,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="bottom"
-            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginEnd="20dp"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -61,7 +61,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="100dp"
                     android:gravity="center"
-                    android:text="Timer"
+                    android:text="Finished"
                     android:textColor="@color/red"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Active Mela"
+                    android:text="Ended Loan Mela"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
 

@@ -44,7 +44,7 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity {
             mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
             mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-         //   setSupportActionBar(toolbar);
+            setSupportActionBar(toolbar);
 
             mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
             mStartdate = (TextView) findViewById(R.id.start_date);

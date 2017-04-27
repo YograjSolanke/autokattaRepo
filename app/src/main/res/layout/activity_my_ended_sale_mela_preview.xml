@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="autokatta.com.events.ActiveServiceMelaPreviewActivity">
+    tools:context="autokatta.com.events.MyEndedSaleMelaPreviewActivity">
 
 
 
-    <include layout="@layout/content_active_service_mela_preview"/>
+    <include layout="@layout/content_my_ended_sale_mela_preview"/>
 
 </android.support.design.widget.CoordinatorLayout>

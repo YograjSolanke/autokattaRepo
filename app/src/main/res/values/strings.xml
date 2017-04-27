@@ -179,4 +179,11 @@
     <string name="title_activity_active_service_mela_preview">ActiveServiceMelaPreviewActivity
     </string>
     <string name="title_activity_active_loanmela_preview">ActiveLoanmelaPreviewActivity</string>
+    <string name="title_activity_my_ended_exchange_preview">MyEndedExchangePreviewActivity</string>
+    <string name="title_activity_my_ended_loan_mela">MyEndedLoanMelaActivity</string>
+    <string name="title_activity_my_ended_loan_mela_preview">MyEndedLoanMelaPreviewActivity</string>
+    <string name="title_activity_my_ended_service_mela">MyEndedServiceMelaActivity</string>
+    <string name="title_activity_my_ended_service_mela_preview">MyEndedServiceMelaPreviewActivity
+    </string>
+    <string name="title_activity_my_ended_sale_mela_preview">MyEndedSaleMelaPreviewActivity</string>
 </resources>

@@ -468,6 +468,26 @@
             android:label="@string/title_activity_active_loanmela_preview"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".events.MyEndedExchangePreviewActivity"
+            android:label="@string/title_activity_my_ended_exchange_preview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".events.MyEndedLoanMelaPreviewActivity"
+            android:label="@string/title_activity_my_ended_loan_mela_preview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".events.MyEndedServiceMelaPreviewActivity"
+            android:label="@string/title_activity_my_ended_service_mela_preview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".events.MyEndedSaleMelaPreviewActivity"
+            android:label="@string/title_activity_my_ended_sale_mela_preview"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
