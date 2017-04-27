@@ -1085,10 +1085,10 @@ public interface ServiceApi {
 
     //get Service Mela data
     @POST("getAllMyServiceMela.php")
-    Call<MyActiveServiceMelaResponse> _autokattaGetServiceMelaDetails(@Query("mycontact") String mycontact);
+    Call<MyActiveServiceMelaResponse> _autokattaGetServiceMelaDetails(@Query("contact") String mycontact);
 
     //get Sale Mela data
     @POST("getAllMySaleMela.php")
-    Call<MyActiveSaleMelaResponse> _autokattaGetSaleMelaDetails(@Query("mycontact") String mycontact);
+    Call<MyActiveSaleMelaResponse> _autokattaGetSaleMelaDetails(@Query("contact") String mycontact);
 
 }
