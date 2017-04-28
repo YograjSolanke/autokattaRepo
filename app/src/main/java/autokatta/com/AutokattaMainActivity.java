@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import autokatta.com.adapter.TabAdapter;
 import autokatta.com.apicall.ApiCall;
@@ -375,6 +378,37 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     firebase.setContactNumber(contact);
                     firebase.setTokenKey(key);
                     mApiCall.firebaseToken(contact, key);
+                } else {
+                    String fcm = FirebaseInstanceId.getInstance().getToken();
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("fcm_key", fcm).apply();
+                    ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
+                    ModelFirebase firebase = new ModelFirebase();
+                    firebase.setContactNumber(contact);
+                    firebase.setTokenKey(fcm);
+                    mApiCall.firebaseToken(contact, fcm);
+                    /*Intent intent = new Intent(getApplicationContext(), DeleteTokenService.class);
+                    startService(intent);*/
+                    // Check for current token
+                    /*try {
+                        String originalToken = getTokenFromPrefs();
+                        Log.d("", "Token before deletion: " + originalToken);
+
+                        // Resets Instance ID and revokes all tokens.
+                        FirebaseInstanceId.getInstance().deleteInstanceId();
+
+                        // Clear current saved token
+                        saveTokenToPrefs("");
+
+                        // Check for success of empty token
+                        String tokenCheck = getTokenFromPrefs();
+                        Log.d("", "Token deleted. Proof: " + tokenCheck);
+
+                        // Now manually call onTokenRefresh()
+                        Log.d("", "Getting new token");
+                        FirebaseInstanceId.getInstance().getToken();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }*/
                 }
             } else {
                 Toast.makeText(getApplicationContext(), "Again Contact is null", Toast.LENGTH_SHORT).show();
@@ -397,11 +431,25 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            Log.i("Firebase Instlled:", "->" + str);
+            Log.i("Firebase Installed:", "->" + str);
             getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putBoolean("isRegistered", true).apply();
         }
     }
 
+    private void saveTokenToPrefs(String _token) {
+        // Access Shared Preferences
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // Save to SharedPreferences
+        editor.putString("fcm_key", _token);
+        editor.apply();
+    }
+
+    private String getTokenFromPrefs() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getString("fcm_key", null);
+    }
     /*@Override
     public boolean onClose() {
         return false;
