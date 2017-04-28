@@ -363,34 +363,38 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                         CustomToast.customToast(AddProductActivity.this, getString(R.string.no_response));
                 } else if (response.body() instanceof BrandsTagResponse) {
                     BrandsTagResponse brandsTagResponse = (BrandsTagResponse) response.body();
-                    List<String> brands = new ArrayList<>();
+                    brandTags.clear();
                     if (!brandsTagResponse.getSuccess().isEmpty()) {
                         for (BrandsTagResponse.Success success : brandsTagResponse.getSuccess()) {
-                            brands.add(success.getTag());
+                            brandTags.add(success.getTag());
                         }
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddProductActivity.this, R.layout.addproductspinner_color, brands);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddProductActivity.this, R.layout.addproductspinner_color, brandTags);
                         multiautobrand.setAdapter(dataadapter);
                     }
                 } else if (response.body() instanceof GetTagsResponse) {
                     GetTagsResponse tagsResponse = (GetTagsResponse) response.body();
-                    List<String> tags = new ArrayList<>();
+                    id.clear();
+                    tagname.clear();
                     if (!tagsResponse.getSuccess().isEmpty()) {
                         for (GetTagsResponse.Success success : tagsResponse.getSuccess()) {
-                            tags.add(success.getTag());
+                            tagname.add(success.getTag());
+                            id.add(success.getId());
                         }
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddProductActivity.this, R.layout.addproductspinner_color, tags);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddProductActivity.this, R.layout.addproductspinner_color, tagname);
                         multiautotext.setAdapter(dataadapter);
                     }
                 } else if (response.body() instanceof OtherBrandTagAddedResponse) {
                     CustomToast.customToast(AddProductActivity.this, "Brand Tag added successfully");
                 } else if (response.body() instanceof OtherTagAddedResponse) {
                     CustomToast.customToast(AddProductActivity.this, "Other Tag added successfully");
-                    tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID();
+                    tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
                     tagflag = true;
                 } else if (response.body() instanceof ProductAddedResponse) {
                     CustomToast.customToast(AddProductActivity.this, "Product added successfully");
 
-
+                    ProductAddedResponse productAddedResponse = (ProductAddedResponse) response.body();
+                    String product_id = productAddedResponse.getSuccess().getProductId().toString();
+                    sendTags(product_id);
                     uploadImage(allimgpath);
 
                     Bundle b = new Bundle();
@@ -504,6 +508,14 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     @Override
     public void notifyString(String str) {
 
+        if (str != null) {
+
+            if (str.equals("success")) {
+                CustomToast.customToast(AddProductActivity.this, "Tags sent");
+            }
+
+        }
+
     }
 
     public void check() {
@@ -519,6 +531,10 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
     }
 
+    private void sendTags(String product_id) {
+        ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
+        mApiCall.TagAssociation(product_id, "", idlist);
+    }
 
     /*
    Add Other Brand Tags...
