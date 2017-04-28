@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.events.ActiveServiceMelaPreviewActivity;
+import autokatta.com.events.ActiveSaleMelaPreviewActivity;
 import autokatta.com.response.MyActiveSaleMelaResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 
@@ -74,8 +74,9 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
                 b.putString("endtime",mMainlist.get(position).getEndTime());
                 b.putString("location",mMainlist.get(position).getLocation());
                 b.putString("enddatetime",mMainlist.get(position).getEndDateTime());
+                b.putString("saleid",mMainlist.get(position).getId());
                 mActivity.finish();
-                Intent i=new Intent(mActivity, ActiveServiceMelaPreviewActivity.class);
+                Intent i=new Intent(mActivity, ActiveSaleMelaPreviewActivity.class);
                 i.putExtras(b);
                 mActivity.startActivity(i);
 

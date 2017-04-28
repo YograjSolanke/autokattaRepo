@@ -29,7 +29,7 @@ import autokatta.com.view.ShareWithinAppActivity;
 public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchangeMelaAdapter.ExchangeHolder> {
     List<MyActiveExchangeMelaResponse.Success> mMainlist = new ArrayList<>();
     Activity mActivity;
-String allDetails;
+    String allDetails;
 
     public ActiveExchangeMelaAdapter(Activity activity, List<MyActiveExchangeMelaResponse.Success> itemlist) {
 
@@ -62,16 +62,17 @@ String allDetails;
         holder.mPreview.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle b=new Bundle();
-                b.putString("title",mMainlist.get(position).getName());
-                b.putString("startdate",mMainlist.get(position).getStartDate());
-                b.putString("starttime",mMainlist.get(position).getStartTime());
-                b.putString("enddate",mMainlist.get(position).getEndDate());
-                b.putString("endtime",mMainlist.get(position).getEndTime());
-                b.putString("location",mMainlist.get(position).getLocation());
-                b.putString("enddatetime",mMainlist.get(position).getEndDateTime());
+                Bundle b = new Bundle();
+                b.putString("title", mMainlist.get(position).getName());
+                b.putString("startdate", mMainlist.get(position).getStartDate());
+                b.putString("starttime", mMainlist.get(position).getStartTime());
+                b.putString("enddate", mMainlist.get(position).getEndDate());
+                b.putString("endtime", mMainlist.get(position).getEndTime());
+                b.putString("location", mMainlist.get(position).getLocation());
+                b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
+                b.putString("exchangeid", mMainlist.get(position).getId());
                 mActivity.finish();
-                Intent i=new Intent(mActivity, ActiveExchangeMelaPreviewActivity.class);
+                Intent i = new Intent(mActivity, ActiveExchangeMelaPreviewActivity.class);
                 i.putExtras(b);
                 mActivity.startActivity(i);
 
@@ -79,9 +80,6 @@ String allDetails;
         });
 //Share Within App
         holder.relativeshare.setOnClickListener(new View.OnClickListener() {
-
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
 
             @Override
             public void onClick(View v) {
@@ -96,10 +94,10 @@ String allDetails;
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-             //   mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                 //       putString("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
+                //   mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                //       putString("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "loanmela").apply();
+                        putString("Share_keyword", "exchangemela").apply();
 
                 Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
                 mActivity.startActivity(i);
@@ -153,7 +151,7 @@ String allDetails;
 
         TextView title, enddate, endtime, startdate, starttime, location, address, details;
         ImageView image;
-        Button mPreview,mShare;
+        Button mPreview, mShare;
         RelativeLayout relativeshare;
 
         public ExchangeHolder(View itemView) {
@@ -168,8 +166,8 @@ String allDetails;
             endtime = (TextView) itemView.findViewById(R.id.editText);
             image = (ImageView) itemView.findViewById(R.id.loanmelaimg);
             details = (TextView) itemView.findViewById(R.id.typeofauction2);
-            mPreview= (Button) itemView.findViewById(R.id.button);
-            mShare= (Button) itemView.findViewById(R.id.share);
+            mPreview = (Button) itemView.findViewById(R.id.button);
+            mShare = (Button) itemView.findViewById(R.id.share);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
 
 
