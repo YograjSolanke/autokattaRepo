@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class UpcomingExchangeAdapter extends RecyclerView.Adapter<UpcomingExchan
         TextView title, enddate, endtime, startdate, starttime, location, address, details, Type;
         ImageView image;
         Button mPreview, mShare;
+        RelativeLayout relativeLayout;
 
         ExchangeHolder(View itemView) {
             super(itemView);
@@ -83,9 +85,11 @@ public class UpcomingExchangeAdapter extends RecyclerView.Adapter<UpcomingExchan
             Type = (TextView) itemView.findViewById(R.id.auctiontitle2);
             mPreview = (Button) itemView.findViewById(R.id.button);
             mShare = (Button) itemView.findViewById(R.id.share);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rel);
 
-            mPreview.setVisibility(View.GONE);
-            mShare.setVisibility(View.GONE);
+            /*mPreview.setVisibility(View.GONE);
+            mShare.setVisibility(View.GONE);*/
+            relativeLayout.setVisibility(View.GONE);
 
         }
     }

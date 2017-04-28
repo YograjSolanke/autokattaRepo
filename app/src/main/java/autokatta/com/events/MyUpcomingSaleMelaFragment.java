@@ -102,7 +102,7 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
 
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    UpcomingExchangeAdapter adapter = new UpcomingExchangeAdapter(getActivity(), upcomingExchangeResponseList, "Sale Mela");
+                    UpcomingExchangeAdapter adapter = new UpcomingExchangeAdapter(getActivity(), upcomingExchangeResponseList, "Sale Mela :");
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     Log.i("size sale list up", String.valueOf(upcomingExchangeResponseList.size()));

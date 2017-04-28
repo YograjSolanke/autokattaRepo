@@ -102,7 +102,7 @@ public class MyUpcomingExchangeMelaFragment extends Fragment implements SwipeRef
 
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    UpcomingExchangeAdapter adapter = new UpcomingExchangeAdapter(getActivity(), upcomingExchangeResponseList, "Exchange Mela");
+                    UpcomingExchangeAdapter adapter = new UpcomingExchangeAdapter(getActivity(), upcomingExchangeResponseList, "Exchange Mela :");
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     Log.i("size exchange list up", String.valueOf(upcomingExchangeResponseList.size()));
