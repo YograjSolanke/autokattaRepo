@@ -2,7 +2,6 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,9 +26,10 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
-import autokatta.com.view.ProductViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
+
+//import autokatta.com.view.ProductViewActivity;
 
 /**
  * Created by ak-004 on 17/4/17.
@@ -140,10 +140,10 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
             @Override
             public void onClick(View view) {
 
-                String proId = product.getProductId();
+                /*String proId = product.getProductId();
                 Intent intent = new Intent(activity, ProductViewActivity.class);
                 intent.putExtra("product_id", proId);
-                activity.startActivity(intent);
+                activity.startActivity(intent);*/
 
             }
         });

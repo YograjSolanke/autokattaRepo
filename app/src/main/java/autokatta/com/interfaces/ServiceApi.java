@@ -686,9 +686,9 @@ public interface ServiceApi {
 
     //Get Ignore Going me...
     @POST("addIgnoreGoingMe.php")
-    Call<String> addIgnoreGoingMe(@Query("contact") String contact, @Query("auction_id") String auctionId,
+    Call<String> addIgnoreGoingMe(@Query("contact") String contact, @Query("auction_id") String auctionId, @Query("loan_id") String loanId,
+                                  @Query("exchange_id") String exchangeId, @Query("sale_id") String saleId, @Query("service_id") String serviceId,
                                   @Query("action") String action);
-
 
     //send Chat Message
     @GET("savechatmessage.php")

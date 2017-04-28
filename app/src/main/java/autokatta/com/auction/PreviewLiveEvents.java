@@ -359,7 +359,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
 
                                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                                                 Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
-                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "going");
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "going");
                                                 add.enqueue(new Callback<String>() {
                                                     @Override
                                                     public void onResponse(Call<String> call, Response<String> response) {
@@ -410,8 +410,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                                                         .build();
 
                                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                Call<String> add = serviceApi.addIgnoreGoingMe(auction_id, getSharedPreferences(getString(R.string.my_preference),
-                                                        Context.MODE_PRIVATE).getString("loginContact", ""), "going");
+                                                Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "going");
                                                 add.enqueue(new Callback<String>() {
                                                     @Override
                                                     public void onResponse(Call<String> call, Response<String> response) {
@@ -459,8 +459,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                                 .build();
 
                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                        Call<String> add = serviceApi.addIgnoreGoingMe(auction_id, getSharedPreferences(getString(R.string.my_preference),
-                                Context.MODE_PRIVATE).getString("loginContact", ""), "going");
+                        Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
+                                Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "ignore");
                         add.enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
@@ -522,7 +522,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(intent);
                 finish();
-break;
+                break;
         }
     }
 

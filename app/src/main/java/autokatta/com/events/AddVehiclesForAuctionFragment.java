@@ -821,8 +821,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             UserId = success.getUserId();
                         }
 
-                        Log.i("Size---", "Sheet" + sheet.length());
-
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }

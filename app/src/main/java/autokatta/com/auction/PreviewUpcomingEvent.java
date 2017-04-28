@@ -354,8 +354,8 @@ public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNo
                                                         .build();
 
                                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                Call<String> add = serviceApi.addIgnoreGoingMe(auction_id, getSharedPreferences(getString(R.string.my_preference),
-                                                        Context.MODE_PRIVATE).getString("loginContact", ""), "going");
+                                                Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "going");
                                                 add.enqueue(new Callback<String>() {
                                                     @Override
                                                     public void onResponse(Call<String> call, Response<String> response) {
@@ -406,8 +406,8 @@ public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNo
                                                         .build();
 
                                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                Call<String> add = serviceApi.addIgnoreGoingMe(auction_id, getSharedPreferences(getString(R.string.my_preference),
-                                                        Context.MODE_PRIVATE).getString("loginContact", ""), "going");
+                                                Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "going");
                                                 add.enqueue(new Callback<String>() {
                                                     @Override
                                                     public void onResponse(Call<String> call, Response<String> response) {
@@ -454,8 +454,8 @@ public class PreviewUpcomingEvent extends AppCompatActivity implements RequestNo
                                 .build();
 
                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                        Call<String> add = serviceApi.addIgnoreGoingMe(auction_id, getSharedPreferences(getString(R.string.my_preference),
-                                Context.MODE_PRIVATE).getString("loginContact", ""), "going");
+                        Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
+                                Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "going");
                         add.enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {

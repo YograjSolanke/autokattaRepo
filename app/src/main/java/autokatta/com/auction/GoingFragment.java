@@ -156,10 +156,10 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                         success.setKeyWord("auction");
                         mLiveEventList.add(success);
                     }
-                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
+                    /*mEventCount.setText(String.valueOf(mLiveEventList.size()));
                     mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Going");
                     mEventRecyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();*/
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

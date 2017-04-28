@@ -34,6 +34,7 @@ import autokatta.com.response.GetLiveExchangeEventsResponse;
 import autokatta.com.response.GetLiveLoanEventsResponse;
 import autokatta.com.response.GetLiveSaleEventsResponse;
 import autokatta.com.response.GetLiveServiceEventsResponse;
+import autokatta.com.response.ModelLiveFragment;
 import retrofit2.Response;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
@@ -44,18 +45,21 @@ import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
 public class LiveFragment extends Fragment implements RequestNotifier {
     View mLive;
-    List<GetLiveEventsResponse.Success> mLiveEventList = new ArrayList<>();
-    List<GetLiveLoanEventsResponse.Success> mLiveLoanEventList = new ArrayList<>();
-    RecyclerView mEventRecyclerView;
+    List<ModelLiveFragment> mLiveEventList = new ArrayList<>();
+    List<ModelLiveFragment> mLiveLoanEventList = new ArrayList<>();
+    List<ModelLiveFragment> mLiveExchangeEventList = new ArrayList<>();
+    List<ModelLiveFragment> mLiveServiceEventList = new ArrayList<>();
+    List<ModelLiveFragment> mLiveSaleEventList = new ArrayList<>();
+    RecyclerView mEventRecyclerView, mLoanMelaRecyclerView, mExchangeEventRecyclerView, mServiceEventRecyclerView, mSaleEventRecyclerView;
     AuctionNotificationAdapter mAdapter;
     boolean isFirstViewClick;
-    LinearLayout mAuctionEventLinear;
+    LinearLayout mAuctionEventLinear, mLoanMelaLinear, mExchangeEventLinear, mSaleEventLinear;
     LinearLayout mServiceEventLinear;
-    TextView mEventCount;
+    TextView mEventCount, mLoanMelaCount, mExchangeEventCount, mSaleEventCount, mServiceEventCount;
     RelativeLayout mAuctionEvent;
     RelativeLayout mLoanMela;
     RelativeLayout mExchangeEvent;
-    RelativeLayout mServiceEvent;
+    RelativeLayout mServiceEvent, mSaleEvent;
     boolean isNetworkAvailable;
 
     @Nullable
@@ -77,19 +81,40 @@ public class LiveFragment extends Fragment implements RequestNotifier {
         mLoanMela = (RelativeLayout) mLive.findViewById(R.id.loan_mela_layout);
         mExchangeEvent = (RelativeLayout) mLive.findViewById(R.id.exchange_event_layout);
         mServiceEvent = (RelativeLayout) mLive.findViewById(R.id.service_event_layout);
+        mSaleEvent = (RelativeLayout) mLive.findViewById(R.id.sale_event_layout);
 
         mAuctionEventLinear = (LinearLayout) mLive.findViewById(R.id.event_horizontal);
+        mLoanMelaLinear = (LinearLayout) mLive.findViewById(R.id.loan_horizontal);
+        mExchangeEventLinear = (LinearLayout) mLive.findViewById(R.id.exchange_event_horizontal);
+        mSaleEventLinear = (LinearLayout) mLive.findViewById(R.id.sale_event_horizontal);
         mServiceEventLinear = (LinearLayout) mLive.findViewById(R.id.service_event_horizontal);
 
         mEventCount = (TextView) mLive.findViewById(R.id.event_count);
-        TextView mLoanMelaCount = (TextView) mLive.findViewById(R.id.loan_mela_count);
-        TextView mExchangeEventCount = (TextView) mLive.findViewById(R.id.exchange_event_count);
+        mLoanMelaCount = (TextView) mLive.findViewById(R.id.loan_mela_count);
+        mExchangeEventCount = (TextView) mLive.findViewById(R.id.exchange_event_count);
+        mSaleEventCount = (TextView) mLive.findViewById(R.id.sale_event_count);
+        mServiceEventCount = (TextView) mLive.findViewById(R.id.service_event_count);
+
         mEventRecyclerView = (RecyclerView) mLive.findViewById(R.id.event_recycler_view);
-        RecyclerView mLoanMelaRecyclerView = (RecyclerView) mLive.findViewById(R.id.loan_mela_recycler_view);
-        RecyclerView mExchangeEventRecyclerView = (RecyclerView) mLive.findViewById(R.id.exchange_event_recycler_view);
+        mLoanMelaRecyclerView = (RecyclerView) mLive.findViewById(R.id.loan_mela_recycler_view);
+        mExchangeEventRecyclerView = (RecyclerView) mLive.findViewById(R.id.exchange_event_recycler_view);
+        mServiceEventRecyclerView = (RecyclerView) mLive.findViewById(R.id.service_event_recycler_view);
+        mSaleEventRecyclerView = (RecyclerView) mLive.findViewById(R.id.sale_event_recycler_view);
 
         mEventRecyclerView.setHasFixedSize(true);
         mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        mLoanMelaRecyclerView.setHasFixedSize(true);
+        mLoanMelaRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        mExchangeEventRecyclerView.setHasFixedSize(true);
+        mExchangeEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        mServiceEventRecyclerView.setHasFixedSize(true);
+        mServiceEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        mSaleEventRecyclerView.setHasFixedSize(true);
+        mSaleEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -118,21 +143,71 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                         }
                     });
 
+                    mLoanMela.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (!isFirstViewClick) {
+                                    isFirstViewClick = true;
+                                    mLoanMelaLinear.setVisibility(View.VISIBLE);
+                                } else {
+                                    isFirstViewClick = false;
+                                    mLoanMelaLinear.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    });
+
+                    mExchangeEvent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (!isFirstViewClick) {
+                                    isFirstViewClick = true;
+                                    mExchangeEventLinear.setVisibility(View.VISIBLE);
+                                } else {
+                                    isFirstViewClick = false;
+                                    mExchangeEventLinear.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    });
+
                     mServiceEvent.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            /*if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                            if (mLiveEventList == null || mLiveEventList.size() == 0) {
                                 Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
-                            } else {*/
-
-                            if (!isFirstViewClick) {
-                                isFirstViewClick = true;
-                                mServiceEventLinear.setVisibility(View.VISIBLE);
                             } else {
-                                isFirstViewClick = false;
-                                mServiceEventLinear.setVisibility(View.GONE);
+                                if (!isFirstViewClick) {
+                                    isFirstViewClick = true;
+                                    mServiceEventLinear.setVisibility(View.VISIBLE);
+                                } else {
+                                    isFirstViewClick = false;
+                                    mServiceEventLinear.setVisibility(View.GONE);
+                                }
                             }
-                            // }
+                        }
+                    });
+
+                    mSaleEvent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (!isFirstViewClick) {
+                                    isFirstViewClick = true;
+                                    mSaleEventLinear.setVisibility(View.VISIBLE);
+                                } else {
+                                    isFirstViewClick = false;
+                                    mSaleEventLinear.setVisibility(View.GONE);
+                                }
+                            }
                         }
                     });
                 } catch (Exception e) {
@@ -196,43 +271,39 @@ public class LiveFragment extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                GetLiveEventsResponse mGetLiveEventsResponse = (GetLiveEventsResponse) response.body();
-                GetLiveLoanEventsResponse mGetLiveLoanEventsResponse = (GetLiveLoanEventsResponse) response.body();
-                GetLiveExchangeEventsResponse mGetLiveExchangeEventsResponse = (GetLiveExchangeEventsResponse) response.body();
-                GetLiveSaleEventsResponse mGetLiveSaleEventsResponse = (GetLiveSaleEventsResponse) response.body();
-                GetLiveServiceEventsResponse mGetLiveServiceEventsResponse = (GetLiveServiceEventsResponse) response.body();
-
                 if (response.body() instanceof GetLiveEventsResponse) {
                     mLiveEventList.clear();
+                    GetLiveEventsResponse mGetLiveEventsResponse = (GetLiveEventsResponse) response.body();
                     for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
-                        success.setAuctionId(success.getAuctionId());
-                        success.setAuctioneer(success.getAuctioneer());
-                        success.setActionTitle(success.getActionTitle());
-                        success.setContact(success.getContact());
-                        success.setStartDate(success.getStartDate());
-                        success.setStartTime(success.getStartTime());
-                        success.setEndDate(success.getEndDate());
-                        success.setEndTime(success.getEndTime());
-                        success.setAuctionType(success.getAuctionType());
-                        success.setLocation(success.getLocation());
-                        success.setSpecialClauses(success.getClausesNames());
-                        success.setVehicleIds(success.getVehicleIds());
-                        success.setNoOfVehicles(success.getNoOfVehicles());
-                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-                        success.setEndDateTime(success.getEndDateTime());
-                        success.setStartDateTime(success.getStartDateTime());
-                        success.setOpenClose(success.getOpenClose());
-                        success.setShowPrice(success.getShowPrice());
-                        success.setBlackListStatus(success.getBlackListStatus());
-                        success.setAuctioncategory(success.getAuctioncategory());
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setAuctionId(success.getAuctionId());
+                        model.setUsername(success.getAuctioneer());
+                        model.setName(success.getActionTitle());
+                        model.setContact(success.getContact());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setAuctionType(success.getAuctionType());
+                        model.setLocation(success.getLocation());
+                        model.setSpecialClauses(success.getClausesNames());
+                        model.setVehicleIds(success.getVehicleIds());
+                        model.setNoOfVehicles(success.getNoOfVehicles());
+                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setOpenClose(success.getOpenClose());
+                        model.setShowPrice(success.getShowPrice());
+                        model.setBlackListStatus(success.getBlackListStatus());
+                        model.setAuctionCategory(success.getAuctioncategory());
 
                         if (success.getStockLocation().equals(""))
-                            success.setStockLocation(success.getLocation());
+                            model.setLocation(success.getLocation());
                         else
-                            success.setStockLocation(success.getStockLocation());
+                            model.setLocation(success.getStockLocation());
 
-                        success.setKeyWord("auction");
-                        mLiveEventList.add(success);
+                        model.setKeyWord("auction");
+                        mLiveEventList.add(model);
                     }
                     mEventCount.setText(String.valueOf(mLiveEventList.size()));
                     mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
@@ -242,140 +313,124 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                 //Loan Event
                 else if (response.body() instanceof GetLiveLoanEventsResponse) {
                     mLiveLoanEventList.clear();
+                    GetLiveLoanEventsResponse mGetLiveLoanEventsResponse = (GetLiveLoanEventsResponse) response.body();
                     for (GetLiveLoanEventsResponse.Success success : mGetLiveLoanEventsResponse.getSuccess()) {
-                        success.setId(success.getId());
-                        success.setLoanOwnerName(success.getLoanOwnerName());
-                        success.setName(success.getName());
-                        success.setContact(success.getContact());
-                        success.setStartDate(success.getStartDate());
-                        success.setStartTime(success.getStartTime());
-                        success.setEndDate(success.getEndDate());
-                        success.setEndTime(success.getEndTime());
-                        success.setLocation(success.getLocation());
-                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-                        success.setEndDateTime(success.getEndDateTime());
-                        success.setStartDateTime(success.getStartDateTime());
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setLoan_id(success.getId());
+                        model.setUsername(success.getLoanOwnerName());
+                        model.setName(success.getName());
+                        model.setContact(success.getContact());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setLocation(success.getLocation());
+                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setStartDateTime(success.getStartDateTime());
 
-                        success.setKeyWord("loan");
-                        mLiveLoanEventList.add(success);
+                        model.setKeyWord("loan");
+                        mLiveLoanEventList.add(model);
                     }
-                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
-                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
-                    mEventRecyclerView.setAdapter(mAdapter);
+                    mLoanMelaCount.setText(String.valueOf(mLiveLoanEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveLoanEventList, "Live");
+                    mLoanMelaRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
                 //Exchange Event
-                else if (response.body() instanceof GetLiveEventsResponse) {
-                    mLiveEventList.clear();
-                    for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
-                        success.setAuctionId(success.getAuctionId());
-                        success.setAuctioneer(success.getAuctioneer());
-                        success.setActionTitle(success.getActionTitle());
-                        success.setContact(success.getContact());
-                        success.setStartDate(success.getStartDate());
-                        success.setStartTime(success.getStartTime());
-                        success.setEndDate(success.getEndDate());
-                        success.setEndTime(success.getEndTime());
-                        success.setAuctionType(success.getAuctionType());
-                        success.setLocation(success.getLocation());
-                        success.setSpecialClauses(success.getClausesNames());
-                        success.setVehicleIds(success.getVehicleIds());
-                        success.setNoOfVehicles(success.getNoOfVehicles());
-                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-                        success.setEndDateTime(success.getEndDateTime());
-                        success.setStartDateTime(success.getStartDateTime());
-                        success.setOpenClose(success.getOpenClose());
-                        success.setShowPrice(success.getShowPrice());
-                        success.setBlackListStatus(success.getBlackListStatus());
-                        success.setAuctioncategory(success.getAuctioncategory());
+                else if (response.body() instanceof GetLiveExchangeEventsResponse) {
+                    mLiveExchangeEventList.clear();
+                    GetLiveExchangeEventsResponse mGetLiveExchangeEventsResponse = (GetLiveExchangeEventsResponse) response.body();
+                    for (GetLiveExchangeEventsResponse.Success success : mGetLiveExchangeEventsResponse.getSuccess()) {
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setExchange_id(success.getId());
+                        model.setContact(success.getContact());
+                        model.setName(success.getName());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setLocation(success.getLocation());
+                        model.setAddress(success.getAddress());
+                        model.setImage(success.getImage());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setCreateDate(success.getCreateDate());
+                        model.setDetails(success.getDetails());
+                        model.setUsername(success.getExchangeOwnerName());
+                        model.setExchangeOwnerName(success.getExchangeOwnerName());
+                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
 
-                        if (success.getStockLocation().equals(""))
-                            success.setStockLocation(success.getLocation());
-                        else
-                            success.setStockLocation(success.getStockLocation());
-
-                        success.setKeyWord("auction");
-                        mLiveEventList.add(success);
+                        model.setKeyWord("exchange");
+                        mLiveExchangeEventList.add(model);
                     }
-                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
-                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
-                    mEventRecyclerView.setAdapter(mAdapter);
+                    mExchangeEventCount.setText(String.valueOf(mLiveExchangeEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveExchangeEventList, "Live");
+                    mExchangeEventRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
                 //Sale Event
-                else if (response.body() instanceof GetLiveEventsResponse) {
-                    mLiveEventList.clear();
-                    for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
-                        success.setAuctionId(success.getAuctionId());
-                        success.setAuctioneer(success.getAuctioneer());
-                        success.setActionTitle(success.getActionTitle());
-                        success.setContact(success.getContact());
-                        success.setStartDate(success.getStartDate());
-                        success.setStartTime(success.getStartTime());
-                        success.setEndDate(success.getEndDate());
-                        success.setEndTime(success.getEndTime());
-                        success.setAuctionType(success.getAuctionType());
-                        success.setLocation(success.getLocation());
-                        success.setSpecialClauses(success.getClausesNames());
-                        success.setVehicleIds(success.getVehicleIds());
-                        success.setNoOfVehicles(success.getNoOfVehicles());
-                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-                        success.setEndDateTime(success.getEndDateTime());
-                        success.setStartDateTime(success.getStartDateTime());
-                        success.setOpenClose(success.getOpenClose());
-                        success.setShowPrice(success.getShowPrice());
-                        success.setBlackListStatus(success.getBlackListStatus());
-                        success.setAuctioncategory(success.getAuctioncategory());
+                else if (response.body() instanceof GetLiveSaleEventsResponse) {
+                    mLiveSaleEventList.clear();
+                    GetLiveSaleEventsResponse mGetLiveSaleEventsResponse = (GetLiveSaleEventsResponse) response.body();
+                    for (GetLiveSaleEventsResponse.Success success : mGetLiveSaleEventsResponse.getSuccess()) {
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setSale_id(success.getId());
+                        model.setContact(success.getContact());
+                        model.setName(success.getName());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setLocation(success.getLocation());
+                        model.setAddress(success.getAddress());
+                        model.setImage(success.getImage());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setCreateDate(success.getCreateDate());
+                        model.setDetails(success.getDetails());
+                        model.setUsername(success.getSaleOwnerName());
+                        model.setSaleOwnerName(success.getSaleOwnerName());
+                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
 
-                        if (success.getStockLocation().equals(""))
-                            success.setStockLocation(success.getLocation());
-                        else
-                            success.setStockLocation(success.getStockLocation());
-
-                        success.setKeyWord("auction");
-                        mLiveEventList.add(success);
+                        model.setKeyWord("sale");
+                        mLiveSaleEventList.add(model);
                     }
-                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
-                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
-                    mEventRecyclerView.setAdapter(mAdapter);
+                    mSaleEventCount.setText(String.valueOf(mLiveSaleEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveSaleEventList, "Live");
+                    mSaleEventRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
                 //Service Event
-                else if (response.body() instanceof GetLiveEventsResponse) {
-                    mLiveEventList.clear();
-                    for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
-                        success.setAuctionId(success.getAuctionId());
-                        success.setAuctioneer(success.getAuctioneer());
-                        success.setActionTitle(success.getActionTitle());
-                        success.setContact(success.getContact());
-                        success.setStartDate(success.getStartDate());
-                        success.setStartTime(success.getStartTime());
-                        success.setEndDate(success.getEndDate());
-                        success.setEndTime(success.getEndTime());
-                        success.setAuctionType(success.getAuctionType());
-                        success.setLocation(success.getLocation());
-                        success.setSpecialClauses(success.getClausesNames());
-                        success.setVehicleIds(success.getVehicleIds());
-                        success.setNoOfVehicles(success.getNoOfVehicles());
-                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-                        success.setEndDateTime(success.getEndDateTime());
-                        success.setStartDateTime(success.getStartDateTime());
-                        success.setOpenClose(success.getOpenClose());
-                        success.setShowPrice(success.getShowPrice());
-                        success.setBlackListStatus(success.getBlackListStatus());
-                        success.setAuctioncategory(success.getAuctioncategory());
+                else if (response.body() instanceof GetLiveServiceEventsResponse) {
+                    mLiveServiceEventList.clear();
+                    GetLiveServiceEventsResponse mGetLiveServiceEventsResponse = (GetLiveServiceEventsResponse) response.body();
+                    for (GetLiveServiceEventsResponse.Success success : mGetLiveServiceEventsResponse.getSuccess()) {
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setService_id(success.getId());
+                        model.setContact(success.getContact());
+                        model.setName(success.getName());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setLocation(success.getLocation());
+                        model.setAddress(success.getAddress());
+                        model.setImage(success.getImage());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setCreateDate(success.getCreateDate());
+                        model.setDetails(success.getDetails());
+                        model.setUsername(success.getServiceOwnerName());
+                        model.setServiceOwnerName(success.getServiceOwnerName());
+                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
 
-                        if (success.getStockLocation().equals(""))
-                            success.setStockLocation(success.getLocation());
-                        else
-                            success.setStockLocation(success.getStockLocation());
-
-                        success.setKeyWord("auction");
-                        mLiveEventList.add(success);
+                        model.setKeyWord("service");
+                        mLiveServiceEventList.add(model);
                     }
-                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
-                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Live");
-                    mEventRecyclerView.setAdapter(mAdapter);
+                    mServiceEventCount.setText(String.valueOf(mLiveServiceEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveServiceEventList, "Live");
+                    mServiceEventRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 }
 
