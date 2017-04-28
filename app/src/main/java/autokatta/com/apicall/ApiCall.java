@@ -7084,6 +7084,113 @@ get ServiceMela Data
     }
 
 
+
+
+
+
+       /*
+    update product
+     */
+
+    public void updateProduct(String store_id,
+                              String product_id,
+                              String product_name,
+                              String price,
+                              String product_details,
+                              String product_tags,
+                              String product_type,
+                              String images,
+                              String category,
+                              String brandtags) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mUnfollowResponse = serviceApi.updateProduct(store_id, product_id, product_name, price, product_details, product_tags,
+                        product_type, images, category, brandtags);
+                mUnfollowResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+       /*
+    update Service
+     */
+
+    public void updateService(String store_id,
+                              String service_id,
+                              String service_name,
+                              String price,
+                              String service_details,
+                              String service_tags,
+                              String service_type,
+                              String images,
+                              String category,
+                              String brandtags) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mUnfollowResponse = serviceApi.updateService(store_id, service_id, service_name, price, service_details, service_tags,
+                        service_type, images, category, brandtags);
+                mUnfollowResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/

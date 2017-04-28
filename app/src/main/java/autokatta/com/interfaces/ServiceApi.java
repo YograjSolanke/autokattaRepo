@@ -1091,4 +1091,33 @@ public interface ServiceApi {
     @POST("getAllMySaleMela.php")
     Call<MyActiveSaleMelaResponse> _autokattaGetSaleMelaDetails(@Query("contact") String mycontact);
 
+
+    //update product details
+    @POST("updateStoreProduct.php")
+    Call<String> updateProduct(@Query("store_id") String store_id,
+                               @Query("product_id") String product_id,
+                               @Query("product_name") String product_name,
+                               @Query("price") String price,
+                               @Query("product_details") String product_details,
+                               @Query("product_tags") String product_tags,
+                               @Query("product_type") String product_type,
+                               @Query("images") String images,
+                               @Query("category") String category,
+                               @Query("brandtags") String brandtags);
+
+
+    //update Service details
+    @POST("updateStoreService.php")
+    Call<String> updateService(@Query("store_id") String store_id,
+                               @Query("service_id") String service_id,
+                               @Query("service_name") String service_name,
+                               @Query("service_price") String price,
+                               @Query("service_details") String service_details,
+                               @Query("service_tags") String service_tags,
+                               @Query("service_type") String service_type,
+                               @Query("images") String images,
+                               @Query("category") String category,
+                               @Query("brandtags") String brandtags);
+
+
 }
