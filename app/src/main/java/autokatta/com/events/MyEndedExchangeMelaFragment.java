@@ -20,7 +20,7 @@ import autokatta.com.adapter.EndedExchangeAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.MyActiveExchangeMelaResponse;
+import autokatta.com.response.EndedSaleMelaResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -36,7 +36,7 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
-    List<MyActiveExchangeMelaResponse.Success> activeExchangeMelaList = new ArrayList<>();
+    List<EndedSaleMelaResponse.Success> activeExchangeMelaList = new ArrayList<>();
 
     public MyEndedExchangeMelaFragment() {
         //empty constructor
@@ -84,10 +84,10 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
 
             if (response.isSuccessful()) {
 
-                MyActiveExchangeMelaResponse myActiveexchangeMelaResponse = (MyActiveExchangeMelaResponse) response.body();
-                if (!myActiveexchangeMelaResponse.getSuccess().isEmpty()) {
+                EndedSaleMelaResponse endedSaleMelaResponse = (EndedSaleMelaResponse) response.body();
+                if (!endedSaleMelaResponse.getSuccess().isEmpty()) {
 
-                    for (MyActiveExchangeMelaResponse.Success ExchangeSuccess : myActiveexchangeMelaResponse.getSuccess()) {
+                    for (EndedSaleMelaResponse.Success ExchangeSuccess : endedSaleMelaResponse.getSuccess()) {
 
                         ExchangeSuccess.setId(ExchangeSuccess.getId());
                         ExchangeSuccess.setName(ExchangeSuccess.getName());

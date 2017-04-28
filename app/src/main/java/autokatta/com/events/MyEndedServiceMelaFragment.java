@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.EndedLoanMelaAdapter;
+import autokatta.com.adapter.MyEndedServiceMelaAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.MyActiveLoanMelaResponse;
-import autokatta.com.response.MyActiveLoanMelaResponse.Success;
+import autokatta.com.response.EndedSaleMelaResponse;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-005 on 27/4/17.
@@ -34,7 +35,7 @@ public class MyEndedServiceMelaFragment extends Fragment implements SwipeRefresh
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
-    List<Success> activeLoanMelaResponseList = new ArrayList<>();
+    List<EndedSaleMelaResponse.Success> endedServiceMelaResponseList = new ArrayList<>();
 
     public MyEndedServiceMelaFragment() {
         //empty constructor
@@ -65,7 +66,7 @@ public class MyEndedServiceMelaFragment extends Fragment implements SwipeRefresh
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-               // apiCall.getEndedLoanMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                apiCall.getEndedServiceMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
             }
         });
         return mEndedLoan;
@@ -82,10 +83,10 @@ public class MyEndedServiceMelaFragment extends Fragment implements SwipeRefresh
 
             if (response.isSuccessful()) {
 
-                MyActiveLoanMelaResponse myActiveLoanMelaResponse = (MyActiveLoanMelaResponse) response.body();
-                if (!myActiveLoanMelaResponse.getSuccess().isEmpty()) {
+                EndedSaleMelaResponse endedSaleMelaResponse = (EndedSaleMelaResponse) response.body();
+                if (!endedSaleMelaResponse.getSuccess().isEmpty()) {
 
-                    for (MyActiveLoanMelaResponse.Success loanSuccess : myActiveLoanMelaResponse.getSuccess()) {
+                    for (EndedSaleMelaResponse.Success loanSuccess : endedSaleMelaResponse.getSuccess()) {
 
                         loanSuccess.setId(loanSuccess.getId());
                         loanSuccess.setName(loanSuccess.getName());
@@ -99,13 +100,13 @@ public class MyEndedServiceMelaFragment extends Fragment implements SwipeRefresh
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
 
-                        activeLoanMelaResponseList.add(loanSuccess);
+                        endedServiceMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    EndedLoanMelaAdapter adapter = new EndedLoanMelaAdapter(getActivity(), activeLoanMelaResponseList);
+                    MyEndedServiceMelaAdapter adapter = new MyEndedServiceMelaAdapter(getActivity(), endedServiceMelaResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    Log.i("size loan list", String.valueOf(activeLoanMelaResponseList.size()));
+                    Log.i("size loan list", String.valueOf(endedServiceMelaResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
 
@@ -125,7 +126,7 @@ public class MyEndedServiceMelaFragment extends Fragment implements SwipeRefresh
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "My Active Loan Mela Fragment");
+            Log.i("Check Class-", "Ended Service  Mela Fragment");
             error.printStackTrace();
         }
     }

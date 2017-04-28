@@ -24,12 +24,15 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime;
+    String strEndDateTime,strExchangeID;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
+
+    ExchangeMelaParticipantsFragment exchangeMelaParticipantsFragment=new ExchangeMelaParticipantsFragment();
+    ExchangeMelaAnalyticsFragment exchangeMelaAnalyticsFragment =new ExchangeMelaAnalyticsFragment();
 
     ViewPager mViewPager;
     TabLayout mTabLayout;
@@ -60,24 +63,7 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
-
-        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mStartdate = (TextView) findViewById(R.id.start_date);
-        mStartTime = (TextView) findViewById(R.id.start_time);
-        mEndTime = (TextView) findViewById(R.id.end_time);
-        mEndDate = (TextView) findViewById(R.id.end_date);
-        mLocation = (TextView) findViewById(R.id.location);
-        txtTimer = (TextView) findViewById(R.id.live_timer);
-        mtitle = (TextView) findViewById(R.id.loan_text);
-
-        //get Data from Adapter
-        strTitle = getIntent().getExtras().getString("title");
-        strStartdate = getIntent().getExtras().getString("startdate");
-        strStarttime = getIntent().getExtras().getString("starttime");
-        strEnddate = getIntent().getExtras().getString("enddate");
-        strEndTime = getIntent().getExtras().getString("endtime");
-        strLocation = getIntent().getExtras().getString("location");
-        strEndDateTime = getIntent().getExtras().getString("enddatetime");
+        strExchangeID = getIntent().getExtras().getString("exchangeid");
 
 
         runOnUiThread(new Runnable() {
@@ -92,6 +78,9 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
+                b.putString("exchangeid",strExchangeID);
+                exchangeMelaAnalyticsFragment.setArguments(b);
+                exchangeMelaParticipantsFragment.setArguments(b);
                 if (mViewPager != null) {
                     setupViewPager(mViewPager);
                 }
@@ -102,8 +91,8 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new EndedExchangeMelaParticipantsFragment(), "Participants");
-        adapter.addFragment(new EndedExchangeMelaAnalyticsFragment(), "Analytics");
+        adapter.addFragment(exchangeMelaParticipantsFragment, "Participants");
+        adapter.addFragment(exchangeMelaAnalyticsFragment, "Analytics");
         viewPager.setAdapter(adapter);
     }
 

@@ -21,11 +21,13 @@ public class MyEndedSaleMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime;
+    String strEndDateTime,strSaleid;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
 
 
+    SaleMelaParticipantsFragment saleMelaParticipantsFragment=new SaleMelaParticipantsFragment();
+    SaleMelaAnalyticsFragment saleMelaAnalyticsFragment=new SaleMelaAnalyticsFragment();
     ViewPager mViewPager;
     TabLayout mTabLayout;
     @Override
@@ -54,24 +56,7 @@ public class MyEndedSaleMelaPreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
-
-        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mStartdate = (TextView) findViewById(R.id.start_date);
-        mStartTime = (TextView) findViewById(R.id.start_time);
-        mEndTime = (TextView) findViewById(R.id.end_time);
-        mEndDate = (TextView) findViewById(R.id.end_date);
-        mLocation = (TextView) findViewById(R.id.location);
-        txtTimer = (TextView) findViewById(R.id.live_timer);
-        mtitle = (TextView) findViewById(R.id.loan_text);
-
-        //get Data from Adapter
-        strTitle = getIntent().getExtras().getString("title");
-        strStartdate = getIntent().getExtras().getString("startdate");
-        strStarttime = getIntent().getExtras().getString("starttime");
-        strEnddate = getIntent().getExtras().getString("enddate");
-        strEndTime = getIntent().getExtras().getString("endtime");
-        strLocation = getIntent().getExtras().getString("location");
-        strEndDateTime = getIntent().getExtras().getString("enddatetime");
+        strSaleid=getIntent().getExtras().getString("saleid");
 
 
         runOnUiThread(new Runnable() {
@@ -86,6 +71,10 @@ public class MyEndedSaleMelaPreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
+                b.putString("saleid",strSaleid);
+                saleMelaAnalyticsFragment.setArguments(b);
+                saleMelaParticipantsFragment.setArguments(b);
+
                 if (mViewPager != null) {
                     setupViewPager(mViewPager);
                 }
@@ -96,8 +85,8 @@ public class MyEndedSaleMelaPreviewActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new EndedSaleMelaParticipantsFragment(), "Participants");
-        adapter.addFragment(new EndedSaleMelaAnalyticsFragment(), "Analytics");
+        adapter.addFragment(saleMelaParticipantsFragment, "Participants");
+        adapter.addFragment(saleMelaAnalyticsFragment, "Analytics");
         viewPager.setAdapter(adapter);
     }
 

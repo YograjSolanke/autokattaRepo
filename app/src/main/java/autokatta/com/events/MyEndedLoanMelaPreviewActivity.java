@@ -20,11 +20,12 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime;
+    String strEndDateTime,strloanid;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
 
-
+    LoanMelaAnalyticsFragment loanMelaAnalyticsFragment= new LoanMelaAnalyticsFragment();
+    LoanMelaParticipantsFragment loanMelaParticipantsFragment= new LoanMelaParticipantsFragment();
     ViewPager mViewPager;
     TabLayout mTabLayout;
     @Override
@@ -85,6 +86,10 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
             mEndDate.setText(strEnddate);
             mEndTime.setText(strEndTime);
             mLocation.setText(strLocation);
+
+            b.putString("loanid",strloanid);
+            loanMelaAnalyticsFragment.setArguments(b);
+            loanMelaParticipantsFragment.setArguments(b);
             if (mViewPager != null) {
                 setupViewPager(mViewPager);
             }
@@ -95,8 +100,8 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
 }
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new EndedLoanMelaParticipantsFragment(), "Participants");
-        adapter.addFragment(new EndedLoanMelaAnalyticsFragment(), "Analytics");
+        adapter.addFragment(loanMelaParticipantsFragment, "Participants");
+        adapter.addFragment(loanMelaAnalyticsFragment, "Analytics");
         viewPager.setAdapter(adapter);
     }
 

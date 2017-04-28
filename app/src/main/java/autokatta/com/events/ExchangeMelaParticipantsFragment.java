@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.AuctionParticipantAdapter;
+import autokatta.com.adapter.ExchangeParticipantsAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.AuctionParticipantsResponse;
-import autokatta.com.response.AuctionParticipantsResponse.Success;
+import autokatta.com.response.ExchangeMelaParticipantsResponse;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-005 on 26/4/17.
@@ -33,8 +34,8 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
     View mAuctionParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strAuctionId = "";
-    List<Success> participantList = new ArrayList<>();
+    private String strExchangeId = "";
+    List<ExchangeMelaParticipantsResponse.Success> participantList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -58,7 +59,7 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
             public void run() {
                 try {
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strExchangeId = bundle.getString("exchangeid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -69,7 +70,7 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
 
-                            getAuctionParticipant(strAuctionId);
+                            getExchangeParticipant(strExchangeId);
                         }
                     });
                 } catch (Exception e) {
@@ -85,11 +86,11 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void getAuctionParticipant(String strAuctionId) {
+    private void getExchangeParticipant(String strExchangeId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
         /*to do new  webservice*/
-//        apiCall.AuctionParticipantData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-//                .getString("loginContact", ""), strAuctionId);
+        apiCall.getExchangeMelaParticipants(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""), strExchangeId);
         // apiCall.AuctionParticipantData("9890950817", "1047");
     }
 
@@ -99,9 +100,9 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
         if (response != null) {
             if (response.isSuccessful()) {
                 participantList.clear();
-                AuctionParticipantsResponse participantsResponse = (AuctionParticipantsResponse) response.body();
+                ExchangeMelaParticipantsResponse participantsResponse = (ExchangeMelaParticipantsResponse) response.body();
 
-                for (AuctionParticipantsResponse.Success success : participantsResponse.getSuccess()) {
+                for (ExchangeMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
 
                     success.setContact(success.getContact());
                     success.setProfilePhoto(success.getProfilePhoto());
@@ -114,7 +115,7 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
                     participantList.add(success);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
-                AuctionParticipantAdapter adapter = new AuctionParticipantAdapter(getActivity(), strAuctionId, participantList);
+                ExchangeParticipantsAdapter adapter = new ExchangeParticipantsAdapter(getActivity(), strExchangeId, participantList);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {

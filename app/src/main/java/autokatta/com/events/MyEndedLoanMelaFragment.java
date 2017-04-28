@@ -20,7 +20,7 @@ import autokatta.com.adapter.EndedLoanMelaAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.MyActiveLoanMelaResponse;
+import autokatta.com.response.EndedSaleMelaResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -36,7 +36,7 @@ public class MyEndedLoanMelaFragment extends Fragment implements SwipeRefreshLay
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
-    List<MyActiveLoanMelaResponse.Success> activeLoanMelaResponseList = new ArrayList<>();
+    List<EndedSaleMelaResponse.Success> activeLoanMelaResponseList = new ArrayList<>();
 
     public MyEndedLoanMelaFragment() {
         //empty constructor
@@ -84,10 +84,10 @@ public class MyEndedLoanMelaFragment extends Fragment implements SwipeRefreshLay
 
             if (response.isSuccessful()) {
 
-                MyActiveLoanMelaResponse myActiveLoanMelaResponse = (MyActiveLoanMelaResponse) response.body();
-                if (!myActiveLoanMelaResponse.getSuccess().isEmpty()) {
+                EndedSaleMelaResponse endedSaleMelaResponse = (EndedSaleMelaResponse) response.body();
+                if (!endedSaleMelaResponse.getSuccess().isEmpty()) {
 
-                    for (MyActiveLoanMelaResponse.Success loanSuccess : myActiveLoanMelaResponse.getSuccess()) {
+                    for (EndedSaleMelaResponse.Success loanSuccess : endedSaleMelaResponse.getSuccess()) {
 
                         loanSuccess.setId(loanSuccess.getId());
                         loanSuccess.setName(loanSuccess.getName());

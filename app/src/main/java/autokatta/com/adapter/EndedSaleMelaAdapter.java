@@ -20,22 +20,21 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.events.MyEndedSaleMelaPreviewActivity;
 import autokatta.com.networkreceiver.ConnectionDetector;
-import autokatta.com.response.MyActiveLoanMelaResponse;
-import autokatta.com.response.MyActiveLoanMelaResponse.Success;
+import autokatta.com.response.EndedSaleMelaResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 
 /**
- * Created by ak-005 on 27/4/17.
+ * Created by ak-005 on 28/4/17.
  */
 
-public class MyEndedSaleMelaAdapter extends RecyclerView.Adapter<MyEndedSaleMelaAdapter.LoanHolder>  {
+public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdapter.LoanHolder> {
 
     private Activity mActivity;
-    private List<Success> mMainList = new ArrayList<>();
+    private List<EndedSaleMelaResponse.Success> mMainList = new ArrayList<>();
     private ConnectionDetector mConnectionDetector;
     private String myContact;
     String allDetails;
-    public MyEndedSaleMelaAdapter(Activity activity, List<MyActiveLoanMelaResponse.Success> itemlist) {
+    public EndedSaleMelaAdapter(Activity activity, List<EndedSaleMelaResponse.Success> itemlist) {
         this.mActivity = activity;
         this.mMainList = itemlist;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
@@ -47,7 +46,7 @@ public class MyEndedSaleMelaAdapter extends RecyclerView.Adapter<MyEndedSaleMela
 
 
     @Override
-    public MyEndedSaleMelaAdapter.LoanHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EndedSaleMelaAdapter.LoanHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ended_loan_adapter, parent, false);
@@ -57,7 +56,7 @@ public class MyEndedSaleMelaAdapter extends RecyclerView.Adapter<MyEndedSaleMela
     }
 
     @Override
-    public void onBindViewHolder(MyEndedSaleMelaAdapter.LoanHolder holder, final int position) {
+    public void onBindViewHolder(EndedSaleMelaAdapter.LoanHolder holder, final int position) {
 
         holder.title.setText(mMainList.get(position).getName());
         holder.startdate.setText(mMainList.get(position).getStartDate());
@@ -125,7 +124,7 @@ public class MyEndedSaleMelaAdapter extends RecyclerView.Adapter<MyEndedSaleMela
                 //   mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                 //       putString("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "loanmela").apply();
+                        putString("Share_keyword", "endedsalemela").apply();
 
                 Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
                 mActivity.startActivity(i);
@@ -155,7 +154,7 @@ public class MyEndedSaleMelaAdapter extends RecyclerView.Adapter<MyEndedSaleMela
 //                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
 //                        putString("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "endedexchangemela").apply();
+                        putString("Share_keyword", "endedsalemela").apply();
 
                 System.out.println("Share Image \n");
 
@@ -205,4 +204,3 @@ public class MyEndedSaleMelaAdapter extends RecyclerView.Adapter<MyEndedSaleMela
         }
     }
 }
-

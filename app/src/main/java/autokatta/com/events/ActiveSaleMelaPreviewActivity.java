@@ -30,11 +30,13 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime;
+    String strEndDateTime,strSaleid;
     TextView txtTimer;
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
+    SaleMelaParticipantsFragment saleMelaParticipantsFragment=new SaleMelaParticipantsFragment();
+    SaleMelaAnalyticsFragment saleMelaAnalyticsFragment=new SaleMelaAnalyticsFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,7 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
+        strSaleid=getIntent().getExtras().getString("saleid");
 
         runOnUiThread(new Runnable() {
             @Override
@@ -73,6 +76,10 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
+                b.putString("saleid",strSaleid);
+                saleMelaAnalyticsFragment.setArguments(b);
+                saleMelaParticipantsFragment.setArguments(b);
+
                 if (mViewPager != null) {
                     setupViewPager(mViewPager);
                 }
@@ -139,8 +146,8 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new SaleMelaParticipantsFragment(), "Participants");
-        adapter.addFragment(new SaleMelaAnalyticsFragment(), "Analytics");
+        adapter.addFragment(saleMelaParticipantsFragment, "Participants");
+        adapter.addFragment(saleMelaAnalyticsFragment, "Analytics");
         viewPager.setAdapter(adapter);
     }
 

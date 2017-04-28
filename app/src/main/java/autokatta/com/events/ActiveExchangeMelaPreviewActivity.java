@@ -27,12 +27,15 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime;
+    String strEndDateTime,strExchangeID;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
+
+    ExchangeMelaParticipantsFragment exchangeMelaParticipantsFragment=new ExchangeMelaParticipantsFragment();
+    ExchangeMelaAnalyticsFragment exchangeMelaAnalyticsFragment =new ExchangeMelaAnalyticsFragment();
 
         ViewPager mViewPager;
         TabLayout mTabLayout;
@@ -63,6 +66,7 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity {
             strEndTime = getIntent().getExtras().getString("endtime");
             strLocation = getIntent().getExtras().getString("location");
             strEndDateTime = getIntent().getExtras().getString("enddatetime");
+            strExchangeID = getIntent().getExtras().getString("exchangeid");
 
             runOnUiThread(new Runnable() {
                 @Override
@@ -75,6 +79,9 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity {
                     mEndDate.setText(strEnddate);
                     mEndTime.setText(strEndTime);
                     mLocation.setText(strLocation);
+                    b.putString("exchangeid",strExchangeID);
+                    exchangeMelaAnalyticsFragment.setArguments(b);
+                    exchangeMelaParticipantsFragment.setArguments(b);
                     if (mViewPager != null) {
                         setupViewPager(mViewPager);
                     }
@@ -141,8 +148,8 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new ExchangeMelaParticipantsFragment(), "Participants");
-        adapter.addFragment(new ExchangeMelaAnalyticsFragment(), "Analytics");
+        adapter.addFragment(exchangeMelaParticipantsFragment, "Participants");
+        adapter.addFragment(exchangeMelaAnalyticsFragment, "Analytics");
         viewPager.setAdapter(adapter);
     }
 

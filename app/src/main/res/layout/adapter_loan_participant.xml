@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/auction_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/card_margin"
+        android:layout_marginLeft="@dimen/card_margin"
+        android:layout_marginRight="@dimen/card_margin"
+        android:layout_marginTop="@dimen/card_margin"
+        android:foreground="?attr/selectableItemBackground">
+
+
+        <RelativeLayout
+
+            android:id="@+id/Rel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:contentDescription="@string/app_name"
+                android:id="@+id/userimage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp" />
+
+            <RelativeLayout
+                android:id="@+id/relname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toStartOf="@+id/call"
+                android:layout_toEndOf="@+id/userimage">
+
+                <TextView
+                    android:id="@+id/nametxt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Name: "
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/nametxt"
+                    android:text="name"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rellocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userimage"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/locationtxt"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text="Location: "
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/locationtxt"
+                    android:text="location"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rellimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rellocation"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/limit_for_auction"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text="Limit for auction:"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/limit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/limit_for_auction"
+                    android:text="Limit for auction"
+                    android:textColor="#808080" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/relincreaselimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rellimit"
+                android:layout_marginStart="5dp"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:id="@+id/increaselimit"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Increase limit:"
+                    android:textColor="#808080"
+                    android:textStyle="bold"></TextView>
+
+                <EditText
+                    android:id="@+id/inclimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/increaselimit"
+                    android:hint="Increase Limit"
+                    android:inputType="number"
+                    android:textColor="#808080"
+                    android:textColorHint="#848484"
+                    android:textSize="12sp">
+
+                </EditText>
+
+                <Button
+                    android:id="@+id/btnLimit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/buttonback"
+                    android:text="Confirm"
+                    android:textColor="@color/white" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/relusertype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relname"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@+id/call"
+                android:layout_toEndOf="@+id/userimage">
+
+                <TextView
+                    android:id="@+id/usertypetxt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Profession: "
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/usertype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/usertypetxt"
+                    android:text="user"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <ImageView
+                android:contentDescription="@string/app_name"
+                android:id="@+id/call"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/call_icon" />
+
+            <LinearLayout
+                android:id="@+id/relreminder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relincreaselimit"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/reminder_for_limit"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.50"
+                    android:background="@drawable/buttonback"
+                    android:text="Reminder for limit"
+                    android:textColor="@color/white"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/blacklist"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="0.50"
+                    android:background="@drawable/buttonback"
+                    android:text="Add to blacklist"
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/removeblacklist"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="0.50"
+                    android:background="@drawable/orange_back"
+                    android:text="Remove from blacklist"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
+
+                <!-- <ImageView
+                     android:id="@+id/img"
+                     android:layout_width="25dp"
+                     android:layout_height="25dp"
+                     android:layout_alignParentRight="true"
+                     android:layout_marginLeft="5dp"
+                     android:layout_marginRight="10dp"
+                     android:layout_marginTop="10dp"
+                     android:layout_weight="0.10"
+                     android:background="@drawable/blocked"
+                     android:visibility="gone" />-->
+
+            </LinearLayout>
+            <!--
+                        <com.github.clans.fab.FloatingActionMenu
+                            android:id="@+id/menu_red"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/fab_margin"
+                            app:layout_anchor="@id/appbar"
+                            app:layout_anchorGravity="end|top"
+                            app:menu_fab_size="mini"
+                            fab:menu_labels_singleLine="true"
+                            android:layout_alignParentEnd="true"
+                            fab:menu_openDirection="down">
+
+                            <com.github.clans.fab.FloatingActionButton
+                                android:id="@+id/gotolive"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/event"
+                                fab:fab_label="Go Live"
+                                fab:fab_size="mini" />
+
+                            <com.github.clans.fab.FloatingActionButton
+                                android:id="@+id/clauses"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/clauses"
+                                fab:fab_label="Clauses"
+                                fab:fab_size="mini" />
+
+
+                        </com.github.clans.fab.FloatingActionMenu>-->
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

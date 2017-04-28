@@ -20,7 +20,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.events.MyEndedLoanMelaPreviewActivity;
 import autokatta.com.networkreceiver.ConnectionDetector;
-import autokatta.com.response.MyActiveLoanMelaResponse;
+import autokatta.com.response.EndedSaleMelaResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 
 /**
@@ -30,11 +30,11 @@ import autokatta.com.view.ShareWithinAppActivity;
 public class EndedLoanMelaAdapter extends RecyclerView.Adapter<EndedLoanMelaAdapter.LoanHolder> {
 
     private Activity mActivity;
-    private List<MyActiveLoanMelaResponse.Success> mMainList = new ArrayList<>();
+    private List<EndedSaleMelaResponse.Success> mMainList = new ArrayList<>();
     private ConnectionDetector mConnectionDetector;
     private String myContact;
 String allDetails;
-    public EndedLoanMelaAdapter(Activity activity, List<MyActiveLoanMelaResponse.Success> itemlist) {
+    public EndedLoanMelaAdapter(Activity activity, List<EndedSaleMelaResponse.Success> itemlist) {
         this.mActivity = activity;
         this.mMainList = itemlist;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
@@ -93,6 +93,7 @@ String allDetails;
                 b.putString("endtime",mMainList.get(position).getEndTime());
                 b.putString("location",mMainList.get(position).getLocation());
                 b.putString("enddatetime",mMainList.get(position).getEndDateTime());
+                b.putString("loanid",mMainList.get(position).getId());
                 mActivity.finish();
                 Intent i=new Intent(mActivity, MyEndedLoanMelaPreviewActivity.class);
 

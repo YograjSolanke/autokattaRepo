@@ -20,7 +20,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.events.MyEndedExchangePreviewActivity;
 import autokatta.com.networkreceiver.ConnectionDetector;
-import autokatta.com.response.MyActiveExchangeMelaResponse;
+import autokatta.com.response.EndedSaleMelaResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 
 /**
@@ -30,12 +30,12 @@ import autokatta.com.view.ShareWithinAppActivity;
 public class EndedExchangeAdapter extends RecyclerView.Adapter<EndedExchangeAdapter.ExchangeHolder> {
 
     private Activity mActivity;
-    private List<MyActiveExchangeMelaResponse.Success> mMainList = new ArrayList<>();
+    private List<EndedSaleMelaResponse.Success> mMainList = new ArrayList<>();
     private ConnectionDetector mConnectionDetector;
     private String myContact;
     String allDetails;
 
-    public EndedExchangeAdapter(Activity activity, List<MyActiveExchangeMelaResponse.Success> itemlist) {
+    public EndedExchangeAdapter(Activity activity, List<EndedSaleMelaResponse.Success> itemlist) {
         this.mActivity = activity;
         this.mMainList = itemlist;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
@@ -92,6 +92,7 @@ public class EndedExchangeAdapter extends RecyclerView.Adapter<EndedExchangeAdap
                     b.putString("endtime",mMainList.get(position).getEndTime());
                     b.putString("location",mMainList.get(position).getLocation());
                     b.putString("enddatetime",mMainList.get(position).getEndDateTime());
+                    b.putString("exchangeid",mMainList.get(position).getId());
                     mActivity.finish();
                     Intent i=new Intent(mActivity, MyEndedExchangePreviewActivity.class);
                     i.putExtras(b);

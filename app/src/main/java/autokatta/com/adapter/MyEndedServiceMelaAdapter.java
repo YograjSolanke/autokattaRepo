@@ -18,10 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.events.MyEndedLoanMelaPreviewActivity;
+import autokatta.com.events.MyEndedServiceMelaPreviewActivity;
 import autokatta.com.networkreceiver.ConnectionDetector;
-import autokatta.com.response.MyActiveLoanMelaResponse;
-import autokatta.com.response.MyActiveLoanMelaResponse.Success;
+import autokatta.com.response.EndedSaleMelaResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 
 /**
@@ -30,11 +29,11 @@ import autokatta.com.view.ShareWithinAppActivity;
 
 public class MyEndedServiceMelaAdapter extends RecyclerView.Adapter<MyEndedServiceMelaAdapter.LoanHolder> {
     private Activity mActivity;
-    private List<Success> mMainList = new ArrayList<>();
+    private List<EndedSaleMelaResponse.Success> mMainList = new ArrayList<>();
     private ConnectionDetector mConnectionDetector;
     private String myContact;
     String allDetails;
-    public MyEndedServiceMelaAdapter(Activity activity, List<MyActiveLoanMelaResponse.Success> itemlist) {
+    public MyEndedServiceMelaAdapter(Activity activity, List<EndedSaleMelaResponse.Success> itemlist) {
         this.mActivity = activity;
         this.mMainList = itemlist;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
@@ -93,8 +92,9 @@ public class MyEndedServiceMelaAdapter extends RecyclerView.Adapter<MyEndedServi
                 b.putString("endtime",mMainList.get(position).getEndTime());
                 b.putString("location",mMainList.get(position).getLocation());
                 b.putString("enddatetime",mMainList.get(position).getEndDateTime());
+                b.putString("serviceid",mMainList.get(position).getId());
                 mActivity.finish();
-                Intent i=new Intent(mActivity, MyEndedLoanMelaPreviewActivity.class);
+                Intent i=new Intent(mActivity, MyEndedServiceMelaPreviewActivity.class);
 
                 i.putExtras(b);
                 mActivity.startActivity(i);
@@ -123,7 +123,7 @@ public class MyEndedServiceMelaAdapter extends RecyclerView.Adapter<MyEndedServi
                 //   mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                 //       putString("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "loanmela").apply();
+                        putString("Share_keyword", "endedservicemela").apply();
 
                 Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
                 mActivity.startActivity(i);
@@ -196,9 +196,6 @@ public class MyEndedServiceMelaAdapter extends RecyclerView.Adapter<MyEndedServi
             mPreview= (Button) itemView.findViewById(R.id.button);
             mShare= (Button) itemView.findViewById(R.id.share);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
-
-
-
 
         }
     }

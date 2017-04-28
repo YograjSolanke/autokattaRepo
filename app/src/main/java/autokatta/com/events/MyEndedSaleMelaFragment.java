@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.EndedLoanMelaAdapter;
+import autokatta.com.adapter.EndedSaleMelaAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.MyActiveLoanMelaResponse;
-import autokatta.com.response.MyActiveLoanMelaResponse.Success;
+import autokatta.com.response.EndedSaleMelaResponse;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-005 on 27/4/17.
@@ -35,7 +36,7 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
-    List<Success> activeLoanMelaResponseList = new ArrayList<>();
+    List<EndedSaleMelaResponse.Success> endedSaleMelaResponseList = new ArrayList<>();
 
     public MyEndedSaleMelaFragment() {
         //empty constructor
@@ -66,7 +67,7 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-               // apiCall.getEndedLoanMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                apiCall.getEndedSaleMelaDetails(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
             }
         });
         return mEndedLoan;
@@ -83,10 +84,10 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
 
             if (response.isSuccessful()) {
 
-                MyActiveLoanMelaResponse myActiveLoanMelaResponse = (MyActiveLoanMelaResponse) response.body();
-                if (!myActiveLoanMelaResponse.getSuccess().isEmpty()) {
+                EndedSaleMelaResponse myEndedSaleMelaResponse = (EndedSaleMelaResponse) response.body();
+                if (!myEndedSaleMelaResponse.getSuccess().isEmpty()) {
 
-                    for (MyActiveLoanMelaResponse.Success loanSuccess : myActiveLoanMelaResponse.getSuccess()) {
+                    for (EndedSaleMelaResponse.Success loanSuccess : myEndedSaleMelaResponse.getSuccess()) {
 
                         loanSuccess.setId(loanSuccess.getId());
                         loanSuccess.setName(loanSuccess.getName());
@@ -100,13 +101,13 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
 
-                        activeLoanMelaResponseList.add(loanSuccess);
+                        endedSaleMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    EndedLoanMelaAdapter adapter = new EndedLoanMelaAdapter(getActivity(), activeLoanMelaResponseList);
+                    EndedSaleMelaAdapter adapter = new EndedSaleMelaAdapter(getActivity(), endedSaleMelaResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    Log.i("size loan list", String.valueOf(activeLoanMelaResponseList.size()));
+                    Log.i("size loan list", String.valueOf(endedSaleMelaResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
 

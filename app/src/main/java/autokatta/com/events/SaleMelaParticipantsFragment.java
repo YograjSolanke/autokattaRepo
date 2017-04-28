@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.AuctionParticipantAdapter;
+import autokatta.com.adapter.SaleParticipantsAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.AuctionParticipantsResponse;
-import autokatta.com.response.AuctionParticipantsResponse.Success;
+import autokatta.com.response.SaleMelaParticipantsResponse;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-005 on 26/4/17.
@@ -34,8 +35,8 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
     View mAuctionParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strAuctionId = "";
-    List<Success> participantList = new ArrayList<>();
+    private String strSaleId = "";
+    List<SaleMelaParticipantsResponse.Success> participantList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -59,7 +60,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
             public void run() {
                 try {
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strSaleId = bundle.getString("saleid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -70,7 +71,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
 
-                            getAuctionParticipant(strAuctionId);
+                            getSaleParticipant(strSaleId);
                         }
                     });
                 } catch (Exception e) {
@@ -86,10 +87,10 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void getAuctionParticipant(String strAuctionId) {
+    private void getSaleParticipant(String strSaleId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-//        apiCall.AuctionParticipantData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-//                .getString("loginContact", ""), strAuctionId);
+        apiCall.getSaleMelaParticipants(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""), strSaleId);
         // apiCall.AuctionParticipantData("9890950817", "1047");
     }
 
@@ -99,9 +100,9 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
         if (response != null) {
             if (response.isSuccessful()) {
                 participantList.clear();
-                AuctionParticipantsResponse participantsResponse = (AuctionParticipantsResponse) response.body();
+                SaleMelaParticipantsResponse participantsResponse = (SaleMelaParticipantsResponse) response.body();
 
-                for (AuctionParticipantsResponse.Success success : participantsResponse.getSuccess()) {
+                for (SaleMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
 
                     success.setContact(success.getContact());
                     success.setProfilePhoto(success.getProfilePhoto());
@@ -114,7 +115,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
                     participantList.add(success);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
-                AuctionParticipantAdapter adapter = new AuctionParticipantAdapter(getActivity(), strAuctionId, participantList);
+                SaleParticipantsAdapter adapter = new SaleParticipantsAdapter(getActivity(), strSaleId, participantList);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {

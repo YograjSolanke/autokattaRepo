@@ -29,9 +29,11 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime;
+    String strEndDateTime,strServiceid;
     TextView txtTimer;
     CountDownTimer cdt;
+    ServiceParticipantsFragment serviceParticipantsFragment=new ServiceParticipantsFragment();
+    ServiceMelaAnalyticsFragment serviceMelaAnalyticsFragment=new ServiceMelaAnalyticsFragment();
 
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
@@ -61,6 +63,7 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
+        strServiceid = getIntent().getExtras().getString("serviceid");
 
         runOnUiThread(new Runnable() {
             @Override
@@ -73,6 +76,10 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
+                b.putString("serviceid",strServiceid);
+                serviceMelaAnalyticsFragment.setArguments(b);
+                serviceParticipantsFragment.setArguments(b);
+
                 if (mViewPager != null) {
                     setupViewPager(mViewPager);
                 }
@@ -139,8 +146,8 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new ServiceParticipantsFragment(), "Participants");
-        adapter.addFragment(new ServiceMelaAnalyticsFragment(), "Analytics");
+        adapter.addFragment(serviceParticipantsFragment, "Participants");
+        adapter.addFragment(serviceMelaAnalyticsFragment, "Analytics");
 
         viewPager.setAdapter(adapter);
     }

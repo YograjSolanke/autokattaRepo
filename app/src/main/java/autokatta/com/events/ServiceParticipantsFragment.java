@@ -16,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.AuctionParticipantAdapter;
+import autokatta.com.adapter.ServiceParticipantsAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.AuctionParticipantsResponse;
-import autokatta.com.response.AuctionParticipantsResponse.Success;
+import autokatta.com.response.ServiceMelaParticipantsResponse;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-005 on 26/4/17.
@@ -34,8 +35,8 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
     View mAuctionParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strAuctionId = "";
-    List<Success> participantList = new ArrayList<>();
+    private String strServiceId = "";
+    List<ServiceMelaParticipantsResponse.Success> participantList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -59,7 +60,7 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
             public void run() {
                 try {
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strServiceId = bundle.getString("serviceid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -70,7 +71,7 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
 
-                            getAuctionParticipant(strAuctionId);
+                            getServiceParticipant(strServiceId);
                         }
                     });
                 } catch (Exception e) {
@@ -86,10 +87,10 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void getAuctionParticipant(String strAuctionId) {
+    private void getServiceParticipant(String strServiceId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-//        apiCall.AuctionParticipantData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-//                .getString("loginContact", ""), strAuctionId);
+        apiCall.getServiceMelaParticipants(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""), strServiceId);
         // apiCall.AuctionParticipantData("9890950817", "1047");
     }
 
@@ -99,9 +100,9 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
         if (response != null) {
             if (response.isSuccessful()) {
                 participantList.clear();
-                AuctionParticipantsResponse participantsResponse = (AuctionParticipantsResponse) response.body();
+                ServiceMelaParticipantsResponse participantsResponse = (ServiceMelaParticipantsResponse) response.body();
 
-                for (AuctionParticipantsResponse.Success success : participantsResponse.getSuccess()) {
+                for (ServiceMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
 
                     success.setContact(success.getContact());
                     success.setProfilePhoto(success.getProfilePhoto());
@@ -114,7 +115,7 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
                     participantList.add(success);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
-                AuctionParticipantAdapter adapter = new AuctionParticipantAdapter(getActivity(), strAuctionId, participantList);
+                ServiceParticipantsAdapter adapter = new ServiceParticipantsAdapter(getActivity(), strServiceId, participantList);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {

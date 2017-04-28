@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
@@ -28,6 +32,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbOperation;
+import autokatta.com.fragment.ChatFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.Db_AutokattaContactResponse;
@@ -58,7 +63,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         CardView mCardView;
         ImageView imgProfile, imgCall;
         TextView mTextName, mTextNumber, mTextStatus;
-        Button btnFollow, btnUnfollow;
+        Button btnFollow, btnUnfollow, btnsendmsg;
 
         private YoHolder(View itemView) {
             super(itemView);
@@ -70,7 +75,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             mTextStatus = (TextView) itemView.findViewById(R.id.txtstatus);
             btnFollow = (Button) itemView.findViewById(R.id.btnfollow);
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
-
+            btnsendmsg = (Button) itemView.findViewById(R.id.btnsendmsg);
 
         }
 
@@ -145,6 +150,28 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             }
         });*/
 
+       /*Send Message*/
+       holder.btnsendmsg.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               ChatFragment object = new ChatFragment();
+               Bundle b = new Bundle();
+               b.putString("sender", contactdata.get(position).getContact());
+               b.putString("sendername", contactdata.get(position).getUsername());
+               b.putString("product_id", "");
+               b.putString("service_id", "");
+               b.putString("vehicle_id", "");
+
+               object.setArguments(b);
+               FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
+               FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+               fragmentTransaction.replace(R.id.my_autokattaContact_container, object);
+               fragmentTransaction.addToBackStack("chatactivity");
+               fragmentTransaction.commit();
+           }
+       });
+
+        /*go to other profile*/
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             Bundle bundle = new Bundle();
 
