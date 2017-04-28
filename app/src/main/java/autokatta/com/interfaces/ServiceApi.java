@@ -120,9 +120,17 @@ public interface ServiceApi {
     @POST("getUpcomingLoanMela.php")
     Call<MyUpcomingLoanMelaResponse> __autokattaGetMyUpcomingLoanMela(@Query("contact") String myContact);
 
-    //get My Upcoming Loan Mela
+    //get My Upcoming Exchange Mela
     @POST("getUpcomingExchangeMela.php")
     Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingExchangeMela(@Query("contact") String myContact);
+
+    //get My Upcoming Sale Mela
+    @POST("getUpcomingSaleMela.php")
+    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingSaleMela(@Query("contact") String myContact);
+
+    //get My Upcoming Service Mela
+    @POST("getUpcomingServiceMela.php")
+    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingServiceMela(@Query("contact") String myContact);
 
     //get saved Auctions
     @POST("getMySavedAuction.php")

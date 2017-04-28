@@ -26,10 +26,10 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-003 on 23/3/17.
+ * Created by ak-003 on 28/4/17.
  */
 
-public class MyUpcomingExchangeMelaFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
     View mMyUpcomngExchange;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -38,7 +38,7 @@ public class MyUpcomingExchangeMelaFragment extends Fragment implements SwipeRef
     List<MyUpcomingExchangeMelaResponse.Success> upcomingExchangeResponseList = new ArrayList<>();
 
 
-    public MyUpcomingExchangeMelaFragment() {
+    public MyUpcomingSaleMelaFragment() {
         //empty constructor
     }
 
@@ -68,7 +68,7 @@ public class MyUpcomingExchangeMelaFragment extends Fragment implements SwipeRef
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyUpcomingExchangeMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                apiCall.MyUpcomingSaleMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
             }
         });
         return mMyUpcomngExchange;
@@ -102,10 +102,10 @@ public class MyUpcomingExchangeMelaFragment extends Fragment implements SwipeRef
 
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    UpcomingExchangeAdapter adapter = new UpcomingExchangeAdapter(getActivity(), upcomingExchangeResponseList, "Exchange Mela");
+                    UpcomingExchangeAdapter adapter = new UpcomingExchangeAdapter(getActivity(), upcomingExchangeResponseList, "Sale Mela");
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    Log.i("size exchange list up", String.valueOf(upcomingExchangeResponseList.size()));
+                    Log.i("size sale list up", String.valueOf(upcomingExchangeResponseList.size()));
 
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
@@ -127,7 +127,7 @@ public class MyUpcomingExchangeMelaFragment extends Fragment implements SwipeRef
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "My Upcoming Exchange Mela");
+            Log.i("Check Class-", "My Upcoming Sale Mela");
             error.printStackTrace();
         }
     }
@@ -141,5 +141,5 @@ public class MyUpcomingExchangeMelaFragment extends Fragment implements SwipeRef
     public void onRefresh() {
 
     }
-
 }
+
