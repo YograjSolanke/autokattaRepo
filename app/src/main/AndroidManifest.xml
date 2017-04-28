@@ -379,13 +379,13 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".my_store.ProductViewActivity"
+            android:name=".view.ProductViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".my_store.ServiceViewActivity"
+            android:name=".view.ServiceViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"

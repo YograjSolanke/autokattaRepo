@@ -24,10 +24,10 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.my_store.ProductViewActivity;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
+import autokatta.com.view.ProductViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 

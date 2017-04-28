@@ -819,7 +819,7 @@ public interface ServiceApi {
 
     //update_tag_association.php
     @POST("update_tag_association.php")
-    Call<String> updateTagAssociation(@Query("service_id") String serviceId, @Query("tag_id") String tagId);
+    Call<String> updateTagAssociation(@Query("product_id") String product_id, @Query("service_id") String serviceId, @Query("tag_id") String tagId);
 
     //update Store Service
     @POST("updateStoreService.php")

@@ -5533,7 +5533,7 @@ Get saved search Seller list
     /*
     updateTagAssociation
      */
-    public void updateTagAssociation(String serviceId, String tagId) {
+    public void updateTagAssociation(String product_id, String serviceId, String tagId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5548,7 +5548,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> updateStore = serviceApi.updateTagAssociation(serviceId, tagId);
+                Call<String> updateStore = serviceApi.updateTagAssociation(product_id, serviceId, tagId);
                 updateStore.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

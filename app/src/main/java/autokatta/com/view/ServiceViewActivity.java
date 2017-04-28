@@ -1,4 +1,4 @@
-package autokatta.com.my_store;
+package autokatta.com.view;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -896,8 +896,15 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     @Override
     public void notifyString(String str) {
-        if (str.equals("success_updateStoreService")) {
-            updatetagids();
+        if (str != null) {
+
+
+            if (str.equals("Service_updated_successfully")) {
+                CustomToast.customToast(ServiceViewActivity.this, "Service Updated");
+                updatetagids();
+            }
+
+
         }
     }
 
@@ -907,6 +914,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     private void updatetagids() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.updateTagAssociation(id, idlist);
+        mApiCall.updateTagAssociation("", id, idlist);
     }
 }
