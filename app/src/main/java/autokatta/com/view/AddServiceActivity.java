@@ -73,7 +73,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
     String stringgroupids = "";
-    String name, price, details, type, name1, category;
+    String name, price, details, type, category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

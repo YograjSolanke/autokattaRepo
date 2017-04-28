@@ -92,7 +92,7 @@
             android:id="@+id/storerating"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/call"
             android:layout_marginBottom="5dp"
@@ -199,7 +199,7 @@
                             android:id="@+id/productrating"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
-                            android:layout_height="24dp"
+                            android:layout_height="wrap_content"
                             android:numStars="5"
                             android:stepSize="1.0"
                             android:theme="@style/RatingBar" />
@@ -805,13 +805,15 @@
 
                             <RatingBar
                                 android:id="@+id/pricebar"
-                                style="@style/foodRatingBar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
-                                android:layout_height="24dp"
+                                android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
-                                android:stepSize="0.5" />
+                                android:isIndicator="false"
+                                android:stepSize="1.0"
+                                android:theme="@style/RatingBar" />
 
                         </RelativeLayout>
 
@@ -832,13 +834,15 @@
 
                             <RatingBar
                                 android:id="@+id/qualitybar"
-                                style="@style/foodRatingBar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
-                                android:layout_height="24dp"
+                                android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
-                                android:stepSize="0.5" />
+                                android:isIndicator="false"
+                                android:stepSize="1.0"
+                                android:theme="@style/RatingBar" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -858,13 +862,15 @@
 
                             <RatingBar
                                 android:id="@+id/stockbar"
-                                style="@style/foodRatingBar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
-                                android:layout_height="24dp"
+                                android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
-                                android:stepSize="0.5" />
+                                android:isIndicator="false"
+                                android:stepSize="1.0"
+                                android:theme="@style/RatingBar" />
 
                         </RelativeLayout>
 
@@ -890,14 +896,15 @@
 
                             <RatingBar
                                 android:id="@+id/overallbar"
-                                style="@style/foodRatingBar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
-                                android:layout_height="24dp"
+                                android:layout_height="wrap_content"
                                 android:layout_below="@+id/allrating"
                                 android:layout_centerHorizontal="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
-                                android:stepSize="0.5" />
+                                android:stepSize="1.0"
+                                android:theme="@style/RatingBar" />
 
                             <Button
                                 android:id="@+id/btnfeedback"
@@ -907,7 +914,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="10dp"
                                 android:layout_marginTop="10dp"
-                                android:background="@drawable/button_background"
+                                android:background="@drawable/buttonback"
                                 android:text="Submit Your Feedback"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"

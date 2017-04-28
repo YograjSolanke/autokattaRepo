@@ -414,6 +414,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             prate3 = success.getPrate3();
                             store_id = success.getStoreId();
                             storecontact = success.getStoreContact();
+                            storecontact = "3030303030";
                             brandtags_list = success.getBrandtags();
 
                             txtlike.setText("Like(" + plikecnt + ")");
