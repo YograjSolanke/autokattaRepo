@@ -7092,8 +7092,7 @@ get ServiceMela Data
     update product
      */
 
-    public void updateProduct(String store_id,
-                              String product_id,
+    public void updateProduct(String product_id,
                               String product_name,
                               String price,
                               String product_details,
@@ -7118,7 +7117,7 @@ get ServiceMela Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi.updateProduct(store_id, product_id, product_name, price, product_details, product_tags,
+                Call<String> mUnfollowResponse = serviceApi.updateProduct(product_id, product_name, price, product_details, product_tags,
                         product_type, images, category, brandtags);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
@@ -7145,8 +7144,7 @@ get ServiceMela Data
     update Service
      */
 
-    public void updateService(String store_id,
-                              String service_id,
+    public void updateService(String service_id,
                               String service_name,
                               String price,
                               String service_details,
@@ -7171,7 +7169,7 @@ get ServiceMela Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi.updateService(store_id, service_id, service_name, price, service_details, service_tags,
+                Call<String> mUnfollowResponse = serviceApi.updateService(service_id, service_name, price, service_details, service_tags,
                         service_type, images, category, brandtags);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override

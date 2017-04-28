@@ -1094,8 +1094,7 @@ public interface ServiceApi {
 
     //update product details
     @POST("updateStoreProduct.php")
-    Call<String> updateProduct(@Query("store_id") String store_id,
-                               @Query("product_id") String product_id,
+    Call<String> updateProduct(@Query("product_id") String product_id,
                                @Query("product_name") String product_name,
                                @Query("price") String price,
                                @Query("product_details") String product_details,
@@ -1108,8 +1107,7 @@ public interface ServiceApi {
 
     //update Service details
     @POST("updateStoreService.php")
-    Call<String> updateService(@Query("store_id") String store_id,
-                               @Query("service_id") String service_id,
+    Call<String> updateService(@Query("service_id") String service_id,
                                @Query("service_name") String service_name,
                                @Query("service_price") String price,
                                @Query("service_details") String service_details,
