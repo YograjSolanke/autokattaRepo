@@ -1091,6 +1091,10 @@ public interface ServiceApi {
     @POST("getAllMySaleMela.php")
     Call<MyActiveSaleMelaResponse> _autokattaGetSaleMelaDetails(@Query("contact") String mycontact);
 
+   //get Ended Sale Mela data
+    @POST("getEndedSaleMela.php")
+    Call<EndedSaleMelaResponse> _autokattaGetEndedSaleMelaDetails(@Query("contact") String mycontact);
+
 
     //update product details
     @POST("updateStoreProduct.php")
