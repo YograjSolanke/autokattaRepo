@@ -7263,6 +7263,39 @@ get Ended Sale Mela Data
         }
     }
 
+    /*
+get Ended Service Mela Data
+*/
+    public void getEndedServiceMela(String contact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<EndedSaleMelaResponse> mServiceMelaResponse = serviceApi._autokattaGetEndedServiceMelaDetails(contact);
+                mServiceMelaResponse.enqueue(new Callback<EndedSaleMelaResponse>() {
+                    @Override
+                    public void onResponse(Call<EndedSaleMelaResponse> call, Response<EndedSaleMelaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<EndedSaleMelaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /*
