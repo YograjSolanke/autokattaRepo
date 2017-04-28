@@ -416,12 +416,12 @@ public interface ServiceApi {
 
     //get Ended Loan Mela
     @POST("getEndedLoanMela.php")
-    Call<MyActiveLoanMelaResponse> getEndedLoanMela(@Query("contact") String myContact);
+    Call<EndedSaleMelaResponse> getEndedLoanMela(@Query("contact") String myContact);
 
 
     //get Ended Exchange Mela
     @POST("getEndedExchangeMela.php")
-    Call<MyActiveExchangeMelaResponse> getEndedExchangeMela(@Query("contact") String myContact);
+    Call<EndedSaleMelaResponse> getEndedExchangeMela(@Query("contact") String myContact);
 
     //set vehicle privacy
     @POST("vehicle_group_store_ref.php")

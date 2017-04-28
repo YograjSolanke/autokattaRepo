@@ -2953,75 +2953,6 @@ Upload Vehicle
 
 
      /*
-        Ended Loan Mela
-     */
-
-    public void getEndedLoanMela(String myContact) {
-
-        try {
-            if (mConnectionDetector.isConnectedToInternet()) {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(initLog().build())
-                        .build();
-
-                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyActiveLoanMelaResponse> myActiveLoanMela = serviceApi.getEndedLoanMela(myContact);
-                myActiveLoanMela.enqueue(new Callback<MyActiveLoanMelaResponse>() {
-                    @Override
-                    public void onResponse(Call<MyActiveLoanMelaResponse> call, Response<MyActiveLoanMelaResponse> response) {
-                        mNotifier.notifySuccess(response);
-                    }
-
-                    @Override
-                    public void onFailure(Call<MyActiveLoanMelaResponse> call, Throwable t) {
-                        mNotifier.notifyError(t);
-                    }
-                });
-            } else
-                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /*
-        Ended Exchange Mela
-     */
-
-    public void getEndedExchangeMela(String myContact) {
-
-        try {
-            if (mConnectionDetector.isConnectedToInternet()) {
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(initLog().build())
-                        .build();
-
-                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyActiveExchangeMelaResponse> myActiveLoanMela = serviceApi.getEndedExchangeMela(myContact);
-                myActiveLoanMela.enqueue(new Callback<MyActiveExchangeMelaResponse>() {
-                    @Override
-                    public void onResponse(Call<MyActiveExchangeMelaResponse> call, Response<MyActiveExchangeMelaResponse> response) {
-                        mNotifier.notifySuccess(response);
-                    }
-
-                    @Override
-                    public void onFailure(Call<MyActiveExchangeMelaResponse> call, Throwable t) {
-                        mNotifier.notifyError(t);
-                    }
-                });
-            } else
-                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-     /*
         Set vehicle Privacy to show it in groups and stores
      */
 
@@ -7500,6 +7431,76 @@ get ExchangeMela Participants Data
             e.printStackTrace();
         }
     }
+
+/*
+        Ended Loan Mela
+     */
+
+    public void getEndedLoanMela(String myContact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<EndedSaleMelaResponse> myActiveLoanMela = serviceApi.getEndedLoanMela(myContact);
+                myActiveLoanMela.enqueue(new Callback<EndedSaleMelaResponse>() {
+                    @Override
+                    public void onResponse(Call<EndedSaleMelaResponse> call, Response<EndedSaleMelaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<EndedSaleMelaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+        Ended Exchange Mela
+     */
+
+    public void getEndedExchangeMela(String myContact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<EndedSaleMelaResponse> myActiveLoanMela = serviceApi.getEndedExchangeMela(myContact);
+                myActiveLoanMela.enqueue(new Callback<EndedSaleMelaResponse>() {
+                    @Override
+                    public void onResponse(Call<EndedSaleMelaResponse> call, Response<EndedSaleMelaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<EndedSaleMelaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
