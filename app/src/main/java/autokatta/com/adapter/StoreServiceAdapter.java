@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
+import autokatta.com.view.ServiceViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -138,40 +140,10 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                Bundle b = new Bundle();
-//                b.putString("name", name.get(position).toString());
-//                b.putString("pid", id.get(position).toString());
-//
-//                b.putString("price", price.get(position).toString());
-//                b.putString("details", details.get(position).toString());
-//                b.putString("tags", tags.get(position).toString());
-//                b.putString("type", type.get(position).toString());
-//                b.putString("likestatus", plikestatus.get(position).toString());
-//                b.putString("images", image.get(position).toString());
-//                b.putString("category", category.get(position).toString());
-//                b.putString("plikecnt", plike.get(position).toString());
-//                b.putString("prating", prating.get(position).toString());
-//                b.putString("prate", prate.get(position).toString());
-//                b.putString("prate1", prate1.get(position).toString());
-//                b.putString("prate2", prate2.get(position).toString());
-//                b.putString("prate3", prate3.get(position).toString());
-//                b.putString("store_id", store_id);
-//                b.putString("storecontact", storecontact);
-//                b.putString("storename", storename);
-//                b.putString("storewebsite", storewebsite);
-//                b.putString("storerating", storerating);
-//                b.putString("brandtags_list", brandtags_list.get(position).toString());
-//
-//
-//                ProductViewActivity frag = new ProductViewActivity();
-//                frag.setArguments(b);
-//
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, frag);
-//                fragmentTransaction.addToBackStack("product_view");
-//                fragmentTransaction.commit();
+                String serviceId = service.getServiceId();
+                Intent intent = new Intent(activity, ServiceViewActivity.class);
+                intent.putExtra("service_id", serviceId);
+                activity.startActivity(intent);
 
             }
         });

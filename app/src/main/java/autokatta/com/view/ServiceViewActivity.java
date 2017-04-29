@@ -167,6 +167,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
 
         service_id = getIntent().getExtras().getString("service_id");
+        //service_id="115";
 
 
         runOnUiThread(new Runnable() {
@@ -363,7 +364,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendUnlike() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall._autokattaProductViewUnlike(contact, receiver_contact, "6", id);
+        mApiCall._autokattaProductViewUnlike(contact, receiver_contact, "6", service_id);
     }
 
     /*
@@ -371,7 +372,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendLike() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall._autokattaProductView(contact, receiver_contact, "6", id);
+        mApiCall._autokattaProductView(contact, receiver_contact, "6", service_id);
     }
 
     @Override
@@ -427,21 +428,21 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             web = success.getStoreWebsite();
                             rating = success.getStoreRating();
                             receiver_contact = success.getStoreContact();
-                            sname = b.getString("name");
-                            sprice = b.getString("price");
-                            sdetails = b.getString("details");
-                            stags = b.getString("tags");
-                            stype = b.getString("type");
-                            simages = b.getString("images");
-                            srating = b.getString("srating");
-                            scategory = b.getString("category");
+                            sname = success.getName();
+                            sprice = success.getPrice();
+                            sdetails = success.getDetails();
+                            stags = success.getServicetags();
+                            stype = success.getType();
+                            simages = success.getImages();
+                            srating = success.getServicerating();
+                            scategory = success.getCategory();
 
-                            slikecnt = b.getString("slikecnt");
-                            slikestatus = b.getString("slikestatus");
-                            srate = b.getString("srate");
-                            srate1 = b.getString("srate1");
-                            srate2 = b.getString("srate2");
-                            srate3 = b.getString("srate3");
+                            slikecnt = success.getServicelikecount();
+                            slikestatus = success.getServicelikestatus();
+                            srate = success.getSrate();
+                            srate1 = success.getSrate1();
+                            srate2 = success.getSrate2();
+                            srate3 = success.getSrate3();
                             store_id = success.getStoreId();
                             storecontact = success.getStoreContact();
                             storecontact = "3030303030";
@@ -450,7 +451,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
                             textlike.setText("like(" + slikecnt + ")");
 
-                            if (contact.equals(storecontact)) {
+                            if (storecontact.contains(contact)) {
 
                                 edit.setVisibility(View.VISIBLE);
                                 deleteservice.setVisibility(View.VISIBLE);
@@ -591,6 +592,27 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             if (str.equals("Service_updated_successfully")) {
                 CustomToast.customToast(ServiceViewActivity.this, "Service Updated");
                 updatetagids();
+            } else if (str.equals("success_tag_updation")) {
+                CustomToast.customToast(ServiceViewActivity.this, "Tags Updated");
+            } else if (str.equals("success_rating_submitted")) {
+                CustomToast.customToast(getApplicationContext(), "Rating Submitted");
+                Intent intent = new Intent(this, ServiceViewActivity.class);
+                intent.putExtra("service_id", service_id);
+                startActivity(intent);
+
+            } else if (str.equals("success_rating_updated")) {
+                CustomToast.customToast(getApplicationContext(), "Rating updated");
+                Intent intent = new Intent(this, ServiceViewActivity.class);
+                intent.putExtra("service_id", service_id);
+                startActivity(intent);
+
+            } else if (str.equals("success")) {
+
+                CustomToast.customToast(getApplicationContext(), "Service Deleted");
+                Intent intent = new Intent(this, StoreViewActivity.class);
+                intent.putExtra("store_id", store_id);
+                startActivity(intent);
+
             }
 
 
@@ -720,13 +742,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 }
                 //field validation
                 if (uptype.equals("")) {
-                    servicetype.setError("Enter Product Type");
+                    servicetype.setError("Enter service Type");
                 } else if (upname.equals("")) {
-                    servicename.setError("Enter Product Name");
+                    servicename.setError("Enter Service Name");
                 } else if (upprice.equals("")) {
-                    serviceprice.setError("Enter Product Price");
+                    serviceprice.setError("Enter Service Price");
                 } else if (updetails.equals("")) {
-                    servicedetails.setError("Enter Product Details");
+                    servicedetails.setError("Enter Service Details");
                 } else {
                     servicename.setEnabled(false);
                     serviceprice.setEnabled(false);

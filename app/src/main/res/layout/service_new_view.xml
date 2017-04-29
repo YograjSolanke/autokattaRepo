@@ -807,6 +807,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
+                                android:isIndicator="false"
                                 style="?android:attr/ratingBarStyleSmall"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
@@ -837,6 +838,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
+                                android:isIndicator="false"
                                 style="?android:attr/ratingBarStyleSmall"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
@@ -866,6 +868,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
+                                android:isIndicator="false"
                                 style="?android:attr/ratingBarStyleSmall"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
