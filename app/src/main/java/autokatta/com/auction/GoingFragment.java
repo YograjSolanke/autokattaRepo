@@ -30,6 +30,7 @@ import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetLiveEventsResponse;
+import autokatta.com.response.ModelLiveFragment;
 import retrofit2.Response;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
@@ -125,6 +126,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                 if (response.body() instanceof GetLiveEventsResponse) {
                     mLiveEventList.clear();
                     for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
+                        ModelLiveFragment model = new ModelLiveFragment();
                         success.setAuctionId(success.getAuctionId());
                         success.setAuctioneer(success.getAuctioneer());
                         success.setActionTitle(success.getActionTitle());

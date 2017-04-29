@@ -25,7 +25,6 @@ public class GetLiveSaleEventsResponse {
 
 
     public class Success {
-
         @SerializedName("Id")
         @Expose
         private String id;
@@ -74,9 +73,27 @@ public class GetLiveSaleEventsResponse {
         @SerializedName("saleOwnerName")
         @Expose
         private String saleOwnerName;
+        @SerializedName("ExchangeOwnerName")
+        @Expose
+        private String exchangeOwnerName;
+        @SerializedName("loanOwnerName")
+        @Expose
+        private String loanOwnerName;
+        @SerializedName("serviceOwnerName")
+        @Expose
+        private String serviceOwnerName;
         @SerializedName("ignoreGoingStatus")
         @Expose
         private String ignoreGoingStatus;
+        @SerializedName("mycontact")
+        @Expose
+        private String mycontact;
+        @SerializedName("blackListStatus")
+        @Expose
+        private String blackListStatus;
+        @SerializedName("eventOwner")
+        @Expose
+        private String eventOwner;
 
         private String keyWord;
 
@@ -214,6 +231,54 @@ public class GetLiveSaleEventsResponse {
 
         public void setSaleOwnerName(String saleOwnerName) {
             this.saleOwnerName = saleOwnerName;
+        }
+
+        public String getExchangeOwnerName() {
+            return exchangeOwnerName;
+        }
+
+        public void setExchangeOwnerName(String exchangeOwnerName) {
+            this.exchangeOwnerName = exchangeOwnerName;
+        }
+
+        public String getLoanOwnerName() {
+            return loanOwnerName;
+        }
+
+        public void setLoanOwnerName(String loanOwnerName) {
+            this.loanOwnerName = loanOwnerName;
+        }
+
+        public String getServiceOwnerName() {
+            return serviceOwnerName;
+        }
+
+        public void setServiceOwnerName(String serviceOwnerName) {
+            this.serviceOwnerName = serviceOwnerName;
+        }
+
+        public String getMycontact() {
+            return mycontact;
+        }
+
+        public void setMycontact(String mycontact) {
+            this.mycontact = mycontact;
+        }
+
+        public String getBlackListStatus() {
+            return blackListStatus;
+        }
+
+        public void setBlackListStatus(String blackListStatus) {
+            this.blackListStatus = blackListStatus;
+        }
+
+        public String getEventOwner() {
+            return eventOwner;
+        }
+
+        public void setEventOwner(String eventOwner) {
+            this.eventOwner = eventOwner;
         }
 
         public String getIgnoreGoingStatus() {

@@ -146,7 +146,7 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                     mLoanMela.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                            if (mLiveLoanEventList == null || mLiveLoanEventList.size() == 0) {
                                 Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {
@@ -163,7 +163,7 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                     mExchangeEvent.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                            if (mLiveExchangeEventList == null || mLiveExchangeEventList.size() == 0) {
                                 Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {
@@ -180,7 +180,7 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                     mServiceEvent.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                            if (mLiveServiceEventList == null || mLiveServiceEventList.size() == 0) {
                                 Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {
@@ -197,7 +197,7 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                     mSaleEvent.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (mLiveEventList == null || mLiveEventList.size() == 0) {
+                            if (mLiveSaleEventList == null || mLiveSaleEventList.size() == 0) {
                                 Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {

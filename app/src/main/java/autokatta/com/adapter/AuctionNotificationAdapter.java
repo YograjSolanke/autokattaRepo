@@ -77,7 +77,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
     class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mAuctionCardView;
         TextView mAuctioneer, mAuctioneerTitle, mAuctioneerNoOfVehicles, mAuctioneerType, mTimer, mStartDate, mStartTime,
-                mEndDate, mEndTime, mAuction_category, mStockLocation, closeopentxt;
+                mEndDate, mEndTime, mAuction_category, mStockLocation, closeopentxt, title;
         Button mSpecialClauses, mAuctionPreview, mShare, mAuctionGoing;
         ImageView mStamp;
         RelativeLayout profilenamerel1, profilenamerel2, Rl_auction_category;
@@ -87,6 +87,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             mAuctionCardView = (CardView) itemView.findViewById(R.id.auction_card_view);
             mAuctioneer = (TextView) itemView.findViewById(R.id.auctioneer_name);
             mAuctioneerTitle = (TextView) itemView.findViewById(R.id.auctioneer_title);
+            title = (TextView) itemView.findViewById(R.id.title);
             mAuctioneerNoOfVehicles = (TextView) itemView.findViewById(R.id.auctioneer_no_of_vehicles);
             mAuctioneerType = (TextView) itemView.findViewById(R.id.auctioneer_type);
             closeopentxt = (TextView) itemView.findViewById(R.id.closeopentxt);
@@ -254,6 +255,19 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             holder.Rl_auction_category.setVisibility(View.GONE);
             holder.mSpecialClauses.setVisibility(View.GONE);
             holder.closeopentxt.setVisibility(View.GONE);
+        }
+
+        /*
+        Set title...
+         */
+        if (mItemList.get(position).getKeyWord().equals("sale")) {
+            holder.title.setText("Sale Title");
+        } else if (mItemList.get(position).getKeyWord().equals("loan")) {
+            holder.title.setText("Loan Title");
+        } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+            holder.title.setText("Exchange Title");
+        } else if (mItemList.get(position).getKeyWord().equals("service")) {
+            holder.title.setText("Service Title");
         }
 
         holder.mAuctionGoing.setOnClickListener(new OnClickListener() {

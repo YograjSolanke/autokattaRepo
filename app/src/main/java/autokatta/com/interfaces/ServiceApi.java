@@ -550,9 +550,41 @@ public interface ServiceApi {
     @POST("getAllLiveServiceEvents.php")
     Call<GetLiveServiceEventsResponse> getLiveServiceEvents(@Query("contact") String contact);
 
-    //All Live Events
+    //All Upcoming Sale Events Events
+    @POST("getAllUpcomingSaleEvents.php")
+    Call<GetLiveSaleEventsResponse> getUpcomingSaleEvents(@Query("contact") String contact);
+
+    //All Upcoming Loan Events Events
+    @POST("getAllUpcomingLoanEvents.php")
+    Call<GetLiveSaleEventsResponse> getUpcomingLoanEvents(@Query("contact") String contact);
+
+    //All Upcoming Exchange Events Events
+    @POST("getAllUpcomingExchangeEvents.php")
+    Call<GetLiveSaleEventsResponse> getUpcomingExchangeEvents(@Query("contact") String contact);
+
+    //All Upcoming Service Events Events
+    @POST("getAllUpcomingServiceEvents.php")
+    Call<GetLiveSaleEventsResponse> getUpcomingServiceEvents(@Query("contact") String contact);
+
+    //All Going Events
     @GET("getAllGoingEventsByMe.php")
     Call<GetLiveEventsResponse> getGoingEvents(@Query("contact") String userName);
+
+    //All Going Loan Events
+    @GET("getAllGoingLoanEventsByMe.php")
+    Call<GetLiveEventsResponse> getGoingLoanEvents(@Query("contact") String userName);
+
+    //All Going Exchange Events
+    @GET("getAllGoingExchangeEventsByMe.php")
+    Call<GetLiveEventsResponse> getGoingExchangeEvents(@Query("contact") String userName);
+
+    //All Going Service Events
+    @GET("getAllGoingServiceEventsByMe.php")
+    Call<GetLiveEventsResponse> getGoingServiceEvents(@Query("contact") String userName);
+
+    //All Going Sale Events
+    @GET("getAllGoingSaleEventsByMe.php")
+    Call<GetLiveEventsResponse> getGoingSaleEvents(@Query("contact") String userName);
 
     //All Upcoming Events
     @GET("getAllUpcomingEventsUpto50kms.php")

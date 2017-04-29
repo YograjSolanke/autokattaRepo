@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,8 +29,13 @@ import autokatta.com.adapter.AuctionNotificationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetLiveEventsResponse;
+import autokatta.com.response.GetLiveSaleEventsResponse;
+import autokatta.com.response.ModelLiveFragment;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
@@ -40,12 +46,21 @@ import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
 public class UpComingFragment extends Fragment implements RequestNotifier {
     View mUpComing;
-    List<GetLiveEventsResponse.Success> mLiveEventList = new ArrayList<>();
-    RecyclerView mEventRecyclerView;
+    List<ModelLiveFragment> mLiveEventList = new ArrayList<>();
+    List<ModelLiveFragment> mLiveLoanEventList = new ArrayList<>();
+    List<ModelLiveFragment> mLiveExchangeEventList = new ArrayList<>();
+    List<ModelLiveFragment> mLiveServiceEventList = new ArrayList<>();
+    List<ModelLiveFragment> mLiveSaleEventList = new ArrayList<>();
+    RecyclerView mEventRecyclerView, mLoanMelaRecyclerView, mExchangeEventRecyclerView, mServiceEventRecyclerView, mSaleRecyclerView;
     AuctionNotificationAdapter mAdapter;
     boolean isFirstViewClick;
-    LinearLayout mAuctionEventLinear;
-    TextView mEventCount;
+    LinearLayout mAuctionEventLinear, mLoanMelaLinear, mExchangeEventLinear, mSaleEventLinear;
+    LinearLayout mServiceEventLinear;
+    TextView mEventCount, mLoanMelaCount, mExchangeEventCount, mSaleCount, mServiceCount;
+    RelativeLayout mAuctionEvent;
+    RelativeLayout mLoanMela;
+    RelativeLayout mExchangeEvent;
+    RelativeLayout mServiceEvent, mSaleEvent;
     boolean isNetworkAvailable;
 
     @Nullable
@@ -59,28 +74,58 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
             public void onReceive(Context context, Intent intent) {
                 isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
                 String networkStatus = isNetworkAvailable ? "Connected" : "Disconnected";
-//                Snackbar.make(mLive.findViewById(R.id.activity_autokatta_main), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mUpComing.findViewById(R.id.activity_autokatta_main), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
             }
         }, intentFilter);
 
-        final RelativeLayout mAuctionEvent = (RelativeLayout) mUpComing.findViewById(R.id.auction_event);
-        RelativeLayout mLoanMela = (RelativeLayout) mUpComing.findViewById(R.id.loan_mela_layout);
-        RelativeLayout mExchangeEvent = (RelativeLayout) mUpComing.findViewById(R.id.exchange_event_layout);
+        mAuctionEvent = (RelativeLayout) mUpComing.findViewById(R.id.auction_event);
+        mLoanMela = (RelativeLayout) mUpComing.findViewById(R.id.loan_mela_layout);
+        mExchangeEvent = (RelativeLayout) mUpComing.findViewById(R.id.exchange_event_layout);
+        mServiceEvent = (RelativeLayout) mUpComing.findViewById(R.id.service_event_layout);
+        mSaleEvent = (RelativeLayout) mUpComing.findViewById(R.id.sale_event_layout);
+
         mAuctionEventLinear = (LinearLayout) mUpComing.findViewById(R.id.event_horizontal);
+        mLoanMelaLinear = (LinearLayout) mUpComing.findViewById(R.id.loan_horizontal);
+        mExchangeEventLinear = (LinearLayout) mUpComing.findViewById(R.id.exchange_event_horizontal);
+        mSaleEventLinear = (LinearLayout) mUpComing.findViewById(R.id.sale_event_horizontal);
+        mServiceEventLinear = (LinearLayout) mUpComing.findViewById(R.id.service_event_horizontal);
+
         mEventCount = (TextView) mUpComing.findViewById(R.id.event_count);
-        TextView mLoanMelaCount = (TextView) mUpComing.findViewById(R.id.loan_mela_count);
-        TextView mExchangeEventCount = (TextView) mUpComing.findViewById(R.id.exchange_event_count);
+        mLoanMelaCount = (TextView) mUpComing.findViewById(R.id.loan_mela_count);
+        mExchangeEventCount = (TextView) mUpComing.findViewById(R.id.exchange_event_count);
+        mSaleCount = (TextView) mUpComing.findViewById(R.id.sale_event_count);
+        mServiceCount = (TextView) mUpComing.findViewById(R.id.service_event_count);
+
         mEventRecyclerView = (RecyclerView) mUpComing.findViewById(R.id.event_recycler_view);
-        RecyclerView mLoanMelaRecyclerView = (RecyclerView) mUpComing.findViewById(R.id.loan_mela_recycler_view);
-        RecyclerView mExchangeEventRecyclerView = (RecyclerView) mUpComing.findViewById(R.id.exchange_event_recycler_view);
+        mLoanMelaRecyclerView = (RecyclerView) mUpComing.findViewById(R.id.loan_mela_recycler_view);
+        mExchangeEventRecyclerView = (RecyclerView) mUpComing.findViewById(R.id.exchange_event_recycler_view);
+        mServiceEventRecyclerView = (RecyclerView) mUpComing.findViewById(R.id.service_event_recycler_view);
+        mSaleRecyclerView = (RecyclerView) mUpComing.findViewById(R.id.sale_event_recycler_view);
 
         mEventRecyclerView.setHasFixedSize(true);
         mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        mLoanMelaRecyclerView.setHasFixedSize(true);
+        mLoanMelaRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        mExchangeEventRecyclerView.setHasFixedSize(true);
+        mExchangeEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        mServiceEventRecyclerView.setHasFixedSize(true);
+        mServiceEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        mSaleRecyclerView.setHasFixedSize(true);
+        mSaleRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
                     geUpcomingAuctionEvents();
+                    getUpcomingLoanEvents();
+                    getUpcomingExchangeEvents();
+                    getUpcomingServiceEvents();
+                    getUpcomingSaleEvents();
                     mAuctionEvent.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -97,12 +142,268 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                             }
                         }
                     });
+
+                    mLoanMela.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mLiveLoanEventList == null || mLiveLoanEventList.size() == 0) {
+                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (!isFirstViewClick) {
+                                    isFirstViewClick = true;
+                                    mLoanMelaLinear.setVisibility(View.VISIBLE);
+                                } else {
+                                    isFirstViewClick = false;
+                                    mLoanMelaLinear.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    });
+
+                    mExchangeEvent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mLiveExchangeEventList == null || mLiveExchangeEventList.size() == 0) {
+                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (!isFirstViewClick) {
+                                    isFirstViewClick = true;
+                                    mExchangeEventLinear.setVisibility(View.VISIBLE);
+                                } else {
+                                    isFirstViewClick = false;
+                                    mExchangeEventLinear.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    });
+
+                    mServiceEvent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mLiveServiceEventList == null || mLiveServiceEventList.size() == 0) {
+                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (!isFirstViewClick) {
+                                    isFirstViewClick = true;
+                                    mServiceEventLinear.setVisibility(View.VISIBLE);
+                                } else {
+                                    isFirstViewClick = false;
+                                    mServiceEventLinear.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    });
+
+                    mSaleEvent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mLiveSaleEventList == null || mLiveSaleEventList.size() == 0) {
+                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                            } else {
+                                if (!isFirstViewClick) {
+                                    isFirstViewClick = true;
+                                    mSaleEventLinear.setVisibility(View.VISIBLE);
+                                } else {
+                                    isFirstViewClick = false;
+                                    mSaleEventLinear.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
         return mUpComing;
+    }
+
+    /*
+    Service Events...
+     */
+    private void getUpcomingServiceEvents() {
+        ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+        Call<GetLiveSaleEventsResponse> call = getResponse.getUpcomingServiceEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
+        call.enqueue(new Callback<GetLiveSaleEventsResponse>() {
+            @Override
+            public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
+                GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
+                    ModelLiveFragment model = new ModelLiveFragment();
+                    model.setExchange_id(success.getId());
+                    model.setContact(success.getContact());
+                    model.setName(success.getName());
+                    model.setStartDate(success.getStartDate());
+                    model.setStartTime(success.getStartTime());
+                    model.setEndDate(success.getEndDate());
+                    model.setEndTime(success.getEndTime());
+                    model.setLocation(success.getLocation());
+                    model.setAddress(success.getAddress());
+                    model.setImage(success.getImage());
+                    model.setStartDateTime(success.getStartDateTime());
+                    model.setEndDateTime(success.getEndDateTime());
+                    model.setCreateDate(success.getCreateDate());
+                    model.setDetails(success.getDetails());
+                    model.setUsername(success.getUsername());
+                    model.setUsername(success.getServiceOwnerName());
+                    model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+
+                    model.setKeyWord("service");
+                    mLiveServiceEventList.add(model);
+                }
+                mServiceCount.setText(String.valueOf(mLiveServiceEventList.size()));
+                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveServiceEventList, "Upcoming");
+                mServiceEventRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<GetLiveSaleEventsResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    /*
+    Exchange Events
+     */
+    private void getUpcomingExchangeEvents() {
+        ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+        Call<GetLiveSaleEventsResponse> call = getResponse.getUpcomingExchangeEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
+        call.enqueue(new Callback<GetLiveSaleEventsResponse>() {
+            @Override
+            public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
+                GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
+                    ModelLiveFragment model = new ModelLiveFragment();
+                    model.setExchange_id(success.getId());
+                    model.setContact(success.getContact());
+                    model.setName(success.getName());
+                    model.setStartDate(success.getStartDate());
+                    model.setStartTime(success.getStartTime());
+                    model.setEndDate(success.getEndDate());
+                    model.setEndTime(success.getEndTime());
+                    model.setLocation(success.getLocation());
+                    model.setAddress(success.getAddress());
+                    model.setImage(success.getImage());
+                    model.setStartDateTime(success.getStartDateTime());
+                    model.setEndDateTime(success.getEndDateTime());
+                    model.setCreateDate(success.getCreateDate());
+                    model.setDetails(success.getDetails());
+                    model.setUsername(success.getUsername());
+                    model.setUsername(success.getExchangeOwnerName());
+                    model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+
+                    model.setKeyWord("exchange");
+                    mLiveExchangeEventList.add(model);
+                }
+                mExchangeEventCount.setText(String.valueOf(mLiveExchangeEventList.size()));
+                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveExchangeEventList, "Upcoming");
+                mExchangeEventRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<GetLiveSaleEventsResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    /*
+    Loan Events...
+     */
+    private void getUpcomingLoanEvents() {
+        ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+        Call<GetLiveSaleEventsResponse> call = getResponse.getUpcomingLoanEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
+        call.enqueue(new Callback<GetLiveSaleEventsResponse>() {
+            @Override
+            public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
+                GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
+                    ModelLiveFragment model = new ModelLiveFragment();
+                    model.setExchange_id(success.getId());
+                    model.setContact(success.getContact());
+                    model.setName(success.getName());
+                    model.setStartDate(success.getStartDate());
+                    model.setStartTime(success.getStartTime());
+                    model.setEndDate(success.getEndDate());
+                    model.setEndTime(success.getEndTime());
+                    model.setLocation(success.getLocation());
+                    model.setAddress(success.getAddress());
+                    model.setImage(success.getImage());
+                    model.setStartDateTime(success.getStartDateTime());
+                    model.setEndDateTime(success.getEndDateTime());
+                    model.setCreateDate(success.getCreateDate());
+                    model.setDetails(success.getDetails());
+                    model.setUsername(success.getUsername());
+                    model.setUsername(success.getLoanOwnerName());
+                    model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+
+                    model.setKeyWord("loan");
+                    mLiveLoanEventList.add(model);
+                }
+                mLoanMelaCount.setText(String.valueOf(mLiveLoanEventList.size()));
+                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveLoanEventList, "Upcoming");
+                mLoanMelaRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<GetLiveSaleEventsResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    /*
+    Get Upcoming Sale Events...
+     */
+    private void getUpcomingSaleEvents() {
+        ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+        Call<GetLiveSaleEventsResponse> call = getResponse.getUpcomingSaleEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
+        call.enqueue(new Callback<GetLiveSaleEventsResponse>() {
+            @Override
+            public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
+                GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
+                    ModelLiveFragment model = new ModelLiveFragment();
+                    model.setExchange_id(success.getId());
+                    model.setContact(success.getContact());
+                    model.setName(success.getName());
+                    model.setStartDate(success.getStartDate());
+                    model.setStartTime(success.getStartTime());
+                    model.setEndDate(success.getEndDate());
+                    model.setEndTime(success.getEndTime());
+                    model.setLocation(success.getLocation());
+                    model.setAddress(success.getAddress());
+                    model.setImage(success.getImage());
+                    model.setStartDateTime(success.getStartDateTime());
+                    model.setEndDateTime(success.getEndDateTime());
+                    model.setCreateDate(success.getCreateDate());
+                    model.setDetails(success.getDetails());
+                    model.setUsername(success.getUsername());
+                    model.setUsername(success.getSaleOwnerName());
+                    model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+
+                    model.setKeyWord("sale");
+                    mLiveSaleEventList.add(model);
+                }
+                mSaleCount.setText(String.valueOf(mLiveSaleEventList.size()));
+                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveSaleEventList, "Upcoming");
+                mSaleRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<GetLiveSaleEventsResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     /*
@@ -122,41 +423,40 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                 if (response.body() instanceof GetLiveEventsResponse) {
                     mLiveEventList.clear();
                     for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
-                        success.setAuctionId(success.getAuctionId());
-                        success.setAuctioneer(success.getAuctioneer());
-                        success.setActionTitle(success.getActionTitle());
-                        success.setContact(success.getContact());
-                        success.setStartDate(success.getStartDate());
-                        success.setStartTime(success.getStartTime());
-                        success.setEndDate(success.getEndDate());
-                        success.setEndTime(success.getEndTime());
-                        success.setAuctionType(success.getAuctionType());
-                        success.setLocation(success.getLocation());
-                        success.setSpecialClauses(success.getClausesNames());
-                        success.setVehicleIds(success.getVehicleIds());
-                        success.setNoOfVehicles(success.getNoOfVehicles());
-                        success.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-                        success.setEndDateTime(success.getEndDateTime());
-                        success.setStartDateTime(success.getStartDateTime());
-                        success.setOpenClose(success.getOpenClose());
-                        success.setShowPrice(success.getShowPrice());
-                        success.setBlackListStatus(success.getBlackListStatus());
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setAuctionId(success.getAuctionId());
+                        model.setUsername(success.getAuctioneer());
+                        model.setName(success.getActionTitle());
+                        model.setContact(success.getContact());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setAuctionType(success.getAuctionType());
+                        model.setLocation(success.getLocation());
+                        model.setSpecialClauses(success.getClausesNames());
+                        model.setVehicleIds(success.getVehicleIds());
+                        model.setNoOfVehicles(success.getNoOfVehicles());
+                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setOpenClose(success.getOpenClose());
+                        model.setShowPrice(success.getShowPrice());
+                        model.setBlackListStatus(success.getBlackListStatus());
+                        model.setAuctionCategory(success.getAuctioncategory());
 
-                        success.setAuctioncategory(success.getAuctioncategory());
-
-
-                        if (success.getStockLocation().equals(""))
-                            success.setStockLocation(success.getLocation());
+                        if (model.getStockLocation().equals(""))
+                            model.setLocation(success.getLocation());
                         else
-                            success.setStockLocation(success.getStockLocation());
+                            model.setLocation(success.getStockLocation());
 
-                        success.setKeyWord("auction");
-                        mLiveEventList.add(success);
+                        model.setKeyWord("auction");
+                        mLiveEventList.add(model);
                     }
-                   /* mEventCount.setText(String.valueOf(mLiveEventList.size()));
+                    mEventCount.setText(String.valueOf(mLiveEventList.size()));
                     mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveEventList, "Upcoming");
                     mEventRecyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();*/
+                    mAdapter.notifyDataSetChanged();
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
