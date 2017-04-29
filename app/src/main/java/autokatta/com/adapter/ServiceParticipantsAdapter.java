@@ -155,7 +155,7 @@ public class ServiceParticipantsAdapter extends RecyclerView.Adapter<ServicePart
         TextView Username, Location, Profession;
         ImageView Profilepic, Call;
 
-        Button  AddBlacklist, RemoveBacklist, ConfirmLimit;
+        Button AddBlacklist, RemoveBacklist, ConfirmLimit;
 
         ServiceAdapter(View itemView) {
             super(itemView);
@@ -183,7 +183,7 @@ public class ServiceParticipantsAdapter extends RecyclerView.Adapter<ServicePart
     private void addToBlacklist(String rContact) {
         ApiCall mApiCall = new ApiCall(mActivity, this);
         mApiCall.Add_RemoveBlacklistContact(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""), strServiceId, rContact, keyword);
+                .getString("loginContact", ""), strServiceId, rContact, keyword, "Service");
     }
 
     @Override
@@ -200,7 +200,7 @@ public class ServiceParticipantsAdapter extends RecyclerView.Adapter<ServicePart
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Loan Participants Adapter");
+            Log.i("Check Class-", "Service Participants Adapter");
             error.printStackTrace();
         }
 

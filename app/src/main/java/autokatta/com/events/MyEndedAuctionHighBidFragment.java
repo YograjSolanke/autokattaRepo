@@ -533,7 +533,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
     }
 
     private void addToBlacklist(String rContact) {
-        mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword);
+        mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
         //mApiCall.Add_RemoveBlacklistContact(myContact, "1047", rContact, keyword);
     }
 

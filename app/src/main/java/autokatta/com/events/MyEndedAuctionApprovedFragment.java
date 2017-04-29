@@ -454,7 +454,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
     }
 
     private void addToBlacklist(String rContact) {
-        mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword);
+        mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
         //mApiCall.Add_RemoveBlacklistContact(myContact, "379", rContact, keyword);
     }
 

@@ -183,7 +183,7 @@ public class SaleParticipantsAdapter extends RecyclerView.Adapter<SaleParticipan
     private void addToBlacklist(String rContact) {
         ApiCall mApiCall = new ApiCall(mActivity, this);
         mApiCall.Add_RemoveBlacklistContact(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""), strSaleId, rContact, keyword);
+                .getString("loginContact", ""), strSaleId, rContact, keyword, "Sale");
     }
 
     @Override
@@ -200,7 +200,7 @@ public class SaleParticipantsAdapter extends RecyclerView.Adapter<SaleParticipan
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Loan Participants Adapter");
+            Log.i("Check Class-", "Sale Participants Adapter");
             error.printStackTrace();
         }
 

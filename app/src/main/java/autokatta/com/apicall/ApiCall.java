@@ -4138,7 +4138,7 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //Add remove a blacklist contact in auction
-    public void Add_RemoveBlacklistContact(String myContact, String strAuctionId, String rContact, String keyword) {
+    public void Add_RemoveBlacklistContact(String myContact, String strAuctionId, String rContact, String keyword, String eventType) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4155,7 +4155,7 @@ params.put("auction_id", bundleAuctionId);
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> addRemoveBlacklist = serviceApi._autokattaAddRemoveBlacklist(myContact, strAuctionId, rContact, keyword);
+                Call<String> addRemoveBlacklist = serviceApi._autokattaAddRemoveBlacklist(myContact, strAuctionId, rContact, keyword, eventType);
                 addRemoveBlacklist.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -7226,8 +7226,6 @@ get ServiceMela Data
     }
 
 
-
-
     /*
 get Ended Sale Mela Data
 */
@@ -7295,10 +7293,9 @@ get Ended Service Mela Data
     }
 
 
-
     /*
 get LoanMela Participants Data*/
-    public void getLoanMelaParticipants (String contact,String loanid) {
+    public void getLoanMelaParticipants(String contact, String loanid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7309,7 +7306,7 @@ get LoanMela Participants Data*/
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<LoanMelaParticipantsResponse> mServiceMelaResponse = serviceApi._autokattagetConfirmedParticipants_Loan(contact,loanid);
+                Call<LoanMelaParticipantsResponse> mServiceMelaResponse = serviceApi._autokattagetConfirmedParticipants_Loan(contact, loanid);
                 mServiceMelaResponse.enqueue(new Callback<LoanMelaParticipantsResponse>() {
                     @Override
                     public void onResponse(Call<LoanMelaParticipantsResponse> call, Response<LoanMelaParticipantsResponse> response) {
@@ -7329,10 +7326,9 @@ get LoanMela Participants Data*/
     }
 
 
-
     /*
 get SaleMela Participants Data*/
-    public void getSaleMelaParticipants(String contact,String saleid) {
+    public void getSaleMelaParticipants(String contact, String saleid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7343,7 +7339,7 @@ get SaleMela Participants Data*/
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<SaleMelaParticipantsResponse> mServiceMelaResponse = serviceApi._autokattagetConfirmedParticipants_Sale(contact,saleid);
+                Call<SaleMelaParticipantsResponse> mServiceMelaResponse = serviceApi._autokattagetConfirmedParticipants_Sale(contact, saleid);
                 mServiceMelaResponse.enqueue(new Callback<SaleMelaParticipantsResponse>() {
                     @Override
                     public void onResponse(Call<SaleMelaParticipantsResponse> call, Response<SaleMelaParticipantsResponse> response) {
@@ -7363,11 +7359,10 @@ get SaleMela Participants Data*/
     }
 
 
-
     /*
 get Service Mela Participants Data
 */
-    public void getServiceMelaParticipants(String contact,String Serviceid) {
+    public void getServiceMelaParticipants(String contact, String Serviceid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7378,7 +7373,7 @@ get Service Mela Participants Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ServiceMelaParticipantsResponse> mServiceMelaResponse = serviceApi._autokattagetConfirmedParticipants_Service(contact,Serviceid);
+                Call<ServiceMelaParticipantsResponse> mServiceMelaResponse = serviceApi._autokattagetConfirmedParticipants_Service(contact, Serviceid);
                 mServiceMelaResponse.enqueue(new Callback<ServiceMelaParticipantsResponse>() {
                     @Override
                     public void onResponse(Call<ServiceMelaParticipantsResponse> call, Response<ServiceMelaParticipantsResponse> response) {
@@ -7398,11 +7393,10 @@ get Service Mela Participants Data
     }
 
 
-
     /*
 get ExchangeMela Participants Data
 */
-    public void getExchangeMelaParticipants(String mycontact,String exchangeid) {
+    public void getExchangeMelaParticipants(String mycontact, String exchangeid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7413,7 +7407,7 @@ get ExchangeMela Participants Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ExchangeMelaParticipantsResponse> mServiceMelaResponse = serviceApi._autokattagetConfirmedParticipants_Exchange(mycontact,exchangeid);
+                Call<ExchangeMelaParticipantsResponse> mServiceMelaResponse = serviceApi._autokattagetConfirmedParticipants_Exchange(mycontact, exchangeid);
                 mServiceMelaResponse.enqueue(new Callback<ExchangeMelaParticipantsResponse>() {
                     @Override
                     public void onResponse(Call<ExchangeMelaParticipantsResponse> call, Response<ExchangeMelaParticipantsResponse> response) {
@@ -7500,8 +7494,6 @@ get ExchangeMela Participants Data
             e.printStackTrace();
         }
     }
-
-
 
 
     /***

@@ -620,7 +620,8 @@ public interface ServiceApi {
     //Add/remove blacklist contact
     @POST("addRemoveToBlacklist.php")
     Call<String> _autokattaAddRemoveBlacklist(@Query("mycontact") String myContact, @Query("auction_id") String strAuctionId,
-                                              @Query("contact") String rContact, @Query("keyword") String keyword);
+                                              @Query("contact") String rContact, @Query("keyword") String keyword,
+                                              @Query("eventType") String eventType);
 
     // Get Auction Analytics
     @POST("get_analytics_count.php")

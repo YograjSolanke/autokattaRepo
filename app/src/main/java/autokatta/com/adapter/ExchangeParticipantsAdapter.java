@@ -183,7 +183,7 @@ public class ExchangeParticipantsAdapter extends RecyclerView.Adapter<ExchangePa
     private void addToBlacklist(String rContact) {
         ApiCall mApiCall = new ApiCall(mActivity, this);
         mApiCall.Add_RemoveBlacklistContact(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""), strExchangeId, rContact, keyword);
+                .getString("loginContact", ""), strExchangeId, rContact, keyword, "Exchange");
     }
 
     @Override

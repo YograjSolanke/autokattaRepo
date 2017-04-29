@@ -64,7 +64,6 @@ public class LoanParticipantAdapter extends RecyclerView.Adapter<LoanParticipant
         holder.Profession.setText(obj.getProfession());
 
 
-
         if (!obj.getProfilePhoto().equals(null) || !obj.getProfilePhoto().equals("") || !obj.getProfilePhoto().equals("null")) {
 
             Glide.with(mActivity)
@@ -185,7 +184,7 @@ public class LoanParticipantAdapter extends RecyclerView.Adapter<LoanParticipant
     private void addToBlacklist(String rContact) {
         ApiCall mApiCall = new ApiCall(mActivity, this);
         mApiCall.Add_RemoveBlacklistContact(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""), strLoanId, rContact, keyword);
+                .getString("loginContact", ""), strLoanId, rContact, keyword, "Loan");
     }
 
     @Override
