@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -30,6 +29,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import autokatta.com.adapter.TabAdapter;
 import autokatta.com.apicall.ApiCall;
@@ -69,15 +73,15 @@ import retrofit2.Response;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
-public class AutokattaMainActivity extends AppCompatActivity implements RequestNotifier { /*implements SearchView.OnQueryTextListener,
-        SearchView.OnCloseListener{*/
-
+public class AutokattaMainActivity extends AppCompatActivity implements RequestNotifier {
     private DrawerLayout mDrawerLayout;
     boolean isNetworkAvailable;
     SessionManagement session;
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
     private SearchView mSearchView;
+    //qr code scanner object
+    private IntentIntegrator qrScan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +99,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
         fcmRegister();
+        //intializing scan object
+        qrScan = new IntentIntegrator(this);
        /* DbOperation dbAdpter = new DbOperation(getApplicationContext());
         dbAdpter.OPEN();
         Cursor cursor = dbAdpter.getAutokattaContact();
@@ -289,6 +295,10 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             case R.id.action_searchs:
                 setupSearchView();
                 return true;
+
+            case R.id.qr_code_scan:
+                qrScan.initiateScan();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -344,25 +354,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     private void setupSearchView() {
         Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
         startActivity(intent);
-       /* mSearchView.setIconifiedByDefault(true);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        if (searchManager != null) {
-            List<SearchableInfo> searchables = searchManager.getSearchablesInGlobalSearch();
-
-            // Try to use the "applications" global search provider
-            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
-            for (SearchableInfo inf : searchables) {
-                if (inf.getSuggestAuthority() != null
-                        && inf.getSuggestAuthority().startsWith("applications")) {
-                    info = inf;
-                }
-            }
-            mSearchView.setSearchableInfo(info);
-        }
-
-        mSearchView.setOnQueryTextListener(this);
-        mSearchView.setOnCloseListener(this);*/
     }
 
     private void fcmRegister() {
@@ -386,29 +377,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     firebase.setContactNumber(contact);
                     firebase.setTokenKey(fcm);
                     mApiCall.firebaseToken(contact, fcm);
-                    /*Intent intent = new Intent(getApplicationContext(), DeleteTokenService.class);
-                    startService(intent);*/
-                    // Check for current token
-                    /*try {
-                        String originalToken = getTokenFromPrefs();
-                        Log.d("", "Token before deletion: " + originalToken);
-
-                        // Resets Instance ID and revokes all tokens.
-                        FirebaseInstanceId.getInstance().deleteInstanceId();
-
-                        // Clear current saved token
-                        saveTokenToPrefs("");
-
-                        // Check for success of empty token
-                        String tokenCheck = getTokenFromPrefs();
-                        Log.d("", "Token deleted. Proof: " + tokenCheck);
-
-                        // Now manually call onTokenRefresh()
-                        Log.d("", "Getting new token");
-                        FirebaseInstanceId.getInstance().getToken();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
                 }
             } else {
                 Toast.makeText(getApplicationContext(), "Again Contact is null", Toast.LENGTH_SHORT).show();
@@ -436,41 +404,33 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         }
     }
 
-    private void saveTokenToPrefs(String _token) {
-        // Access Shared Preferences
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        // Save to SharedPreferences
-        editor.putString("fcm_key", _token);
-        editor.apply();
-    }
-
-    private String getTokenFromPrefs() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        return preferences.getString("fcm_key", null);
-    }
-    /*@Override
-    public boolean onClose() {
-        return false;
-    }
-
     @Override
-    public boolean onQueryTextSubmit(String query) {
-        SearchFragment searchTabFragment = new SearchFragment();
-        *//*Bundle bundle = new Bundle();
-        bundle.putString("searchText", query);
-        searchTabFragment.setArguments(bundle);*//*
-       *//* FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction xfragmentTransaction = manager.beginTransaction();
-        xfragmentTransaction.replace(R.id.content_frame_main, searchTabFragment).commit();*//*
-        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-        startActivity(intent);
-        return false;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            //if qrcode has nothing in it
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
+            } else {
+                //if qr contains data
+                try {
+                    //converting the data to json
+                    JSONObject obj = new JSONObject(result.getContents());
+                    /*//setting values to textviews
+                    textViewName.setText(obj.getString("name"));
+                    textViewAddress.setText(obj.getString("address"));*/
+                    Toast.makeText(getApplicationContext(), " " + obj.getString("name") + "" + obj.getString("address"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //if control comes here
+                    //that means the encoded format not matches
+                    //in this case you can display whatever data is available on the qrcode
+                    //to a toast
+                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
-    }*/
 }
