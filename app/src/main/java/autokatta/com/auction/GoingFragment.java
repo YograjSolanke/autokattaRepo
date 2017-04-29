@@ -229,6 +229,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
             @Override
             public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
                 GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                mLiveSaleEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
                     model.setExchange_id(success.getId());
@@ -276,6 +277,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
             @Override
             public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
                 GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                mLiveServiceEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
                     model.setExchange_id(success.getId());
@@ -323,6 +325,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
             @Override
             public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
                 GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                mLiveExchangeEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
                     model.setExchange_id(success.getId());
@@ -370,6 +373,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
             @Override
             public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
                 GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                mLiveLoanEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
                     model.setExchange_id(success.getId());
