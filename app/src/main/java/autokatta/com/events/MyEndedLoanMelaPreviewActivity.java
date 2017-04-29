@@ -54,24 +54,7 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
-
-        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mStartdate = (TextView) findViewById(R.id.start_date);
-        mStartTime = (TextView) findViewById(R.id.start_time);
-        mEndTime = (TextView) findViewById(R.id.end_time);
-        mEndDate = (TextView) findViewById(R.id.end_date);
-        mLocation = (TextView) findViewById(R.id.location);
-        txtTimer = (TextView) findViewById(R.id.live_timer);
-        mtitle = (TextView) findViewById(R.id.loan_text);
-
-        //get Data from Adapter
-        strTitle = getIntent().getExtras().getString("title");
-        strStartdate = getIntent().getExtras().getString("startdate");
-        strStarttime = getIntent().getExtras().getString("starttime");
-        strEnddate = getIntent().getExtras().getString("enddate");
-        strEndTime = getIntent().getExtras().getString("endtime");
-        strLocation = getIntent().getExtras().getString("location");
-        strEndDateTime = getIntent().getExtras().getString("enddatetime");
+        strloanid = getIntent().getExtras().getString("loanid");
 
 
     runOnUiThread(new Runnable() {

@@ -166,7 +166,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
                FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                fragmentTransaction.replace(R.id.my_autokattaContact_container, object);
-               fragmentTransaction.addToBackStack("chatactivity");
+               fragmentTransaction.addToBackStack("autokattacontact");
                fragmentTransaction.commit();
            }
        });
