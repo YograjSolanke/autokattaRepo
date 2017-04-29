@@ -201,11 +201,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         switch (v.getId()) {
             case R.id.btnSub:
                 vehiclenotext = edtvehicleno.getText().toString();
-                vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
-                subcattext = mSpinnerSubType.getSelectedItem().toString();
-                brandtext = mSpinnerBrand.getSelectedItem().toString();
-                modeltext = mSpinnerModel.getSelectedItem().toString();
-                versiontext = mSpinnerVersion.getSelectedItem().toString();
+
                 yeartext = edtyear.getText().toString();
                 taxvaltext = edttax.getText().toString();
                 permitvaltext = edtpermit.getText().toString();
@@ -216,6 +212,47 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 nextservice = edtnextservice.getText().toString();
 
                 int flag = 0;
+
+                if(vehicletypetext.equals("")||vehicletypetext.equals(null)||vehicletypetext.equalsIgnoreCase("---Select Vehicle---"))
+                {
+                    vehicletypetext=vehiType;
+                }else
+                {
+                    vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
+                }
+
+                if(brandtext.equals("")||brandtext.equals(null)||brandtext.equalsIgnoreCase("Select Brands"))
+                {
+                    brandtext=vehiBrand;
+                }else
+                {
+                    brandtext = mSpinnerBrand.getSelectedItem().toString();
+                }
+                if(modeltext.equals("")||modeltext.equals(null)||modeltext.equalsIgnoreCase("Select Model"))
+                {
+                    modeltext=vehiModel;
+
+                }else {
+                    modeltext = mSpinnerModel.getSelectedItem().toString();
+                }
+                if(versiontext.equals("")||versiontext.equals(null)||versiontext.equalsIgnoreCase("Select Version"))
+                {
+                    versiontext=vehiVersion;
+
+                }else
+                {
+                    versiontext = mSpinnerVersion.getSelectedItem().toString();
+                }
+                if(subcattext.equals("")||subcattext.equals(null)||subcattext.equalsIgnoreCase("Select vehicle Sub Types"))
+                {
+                    subcattext=vehiSubcat;
+
+                }else
+                {
+                    subcattext = mSpinnerSubType.getSelectedItem().toString();
+                }
+
+
                 if (!yeartext.equals("")) {
                     flag = 1;
                 } else {
