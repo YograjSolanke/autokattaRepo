@@ -121,11 +121,12 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     Intent intent = new Intent(getActivity(), StoreViewActivity.class);
                     intent.putExtras(b);
                     getActivity().startActivity(intent);
+
                 } else {
                     Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
                     getActivity().startActivity(i);
                 }
-
+                getActivity().finish();
 
             }
         });
@@ -258,6 +259,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
                     getActivity().startActivity(i);
                 }
+                getActivity().finish();
             }
 
         } else

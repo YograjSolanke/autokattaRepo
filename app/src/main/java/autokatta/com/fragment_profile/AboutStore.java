@@ -1,6 +1,7 @@
 package autokatta.com.fragment_profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +22,19 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetStoreProfileInfoResponse;
+import autokatta.com.view.MyStoreListActivity;
 import retrofit2.Response;
 
 /**
  * Created by ak-001 on 18/3/17.
  */
 
-public class AboutStore extends Fragment implements RequestNotifier {
+public class AboutStore extends Fragment implements RequestNotifier, View.OnClickListener {
     View mAboutStore;
     ListView mListView;
     List<GetStoreProfileInfoResponse.Success> mSuccesses = new ArrayList<>();
     ProfileMyStoreAdapter myStoreAdapter;
+    FloatingActionButton mCreateStore;
 
     public AboutStore(){
         //empty constructor...
@@ -41,6 +46,10 @@ public class AboutStore extends Fragment implements RequestNotifier {
         mAboutStore = inflater.inflate(R.layout.fragment_store_layout, container, false);
 
         mListView = (ListView) mAboutStore.findViewById(R.id.store_list);
+        mCreateStore = (FloatingActionButton) mAboutStore.findViewById(R.id.create_store);
+
+        mCreateStore.setOnClickListener(this);
+
         ViewCompat.setNestedScrollingEnabled(mListView, true);
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -92,5 +101,20 @@ public class AboutStore extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.create_store:
+
+                Bundle bundle = new Bundle();
+                // bundle.putString("store_id", Store_id);
+                bundle.putString("className", "AboutStore");
+                Intent intent = new Intent(getActivity(), MyStoreListActivity.class);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+                break;
+        }
     }
 }

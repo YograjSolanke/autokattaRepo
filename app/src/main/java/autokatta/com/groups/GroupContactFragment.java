@@ -305,7 +305,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.startsWith("success_add_contact")) {
+            if (str.startsWith("success")) {
                 CustomToast.customToast(getActivity(), "Contact Added Successfully");
                 Intent intent = new Intent(getActivity(), GroupsActivity.class);
                 intent.putExtra("grouptype", "MyGroup");

@@ -25,7 +25,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.response.ProfileGroupResponse;
-import autokatta.com.view.Create_Event;
+import autokatta.com.view.GroupTabs;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -59,6 +59,8 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
 
         groupExpandableListView = (ExpandableListView) mGroups.findViewById(R.id.groupexpanablelistview);
         mCreateGroup = (FloatingActionButton) mGroups.findViewById(R.id.create_group);
+
+        mCreateGroup.setOnClickListener(this);
 
         ViewCompat.setNestedScrollingEnabled(groupExpandableListView, true);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
@@ -152,8 +154,11 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.create_event:
-                startActivity(new Intent(getActivity(), Create_Event.class));
+            case R.id.create_group:
+                Intent intent = new Intent(getActivity(), GroupTabs.class);
+                intent.putExtra("ClassName", "Groups");
+                startActivity(intent);
+                getActivity().finish();
                 break;
         }
     }

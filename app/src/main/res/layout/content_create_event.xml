@@ -27,12 +27,13 @@
                 android:layout_marginStart="40dp">
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:id="@+id/auctionImage"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/event" />
+                    android:src="@mipmap/auction" />
 
 
                 <TextView
@@ -58,12 +59,13 @@
                 android:layout_marginTop="10dp">
 
                 <ImageView
+                    android:contentDescription="@string/app_name"
                     android:id="@+id/loanMelaImage"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/lonemelaimage" />
+                    android:src="@mipmap/loan_mela" />
 
                 <TextView
                     android:id="@+id/textloanmela"
@@ -93,7 +95,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/exchangeimage" />
+                    android:src="@mipmap/exchange_event" />
 
                 <TextView
                     android:id="@+id/textexchangemela"
@@ -123,7 +125,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/salemela" />
+                    android:src="@mipmap/sale" />
 
                 <TextView
                     android:id="@+id/textsalemela"
@@ -153,7 +155,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/service" />
+                    android:src="@mipmap/service" />
 
                 <TextView
                     android:id="@+id/textservicemela"

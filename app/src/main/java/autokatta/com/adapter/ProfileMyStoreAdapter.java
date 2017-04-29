@@ -2,6 +2,8 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.GetStoreProfileInfoResponse;
+import autokatta.com.view.StoreViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -54,7 +57,7 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder mViewHolder;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -80,6 +83,20 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
                 .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                 .override(110, 100)
                 .into(mViewHolder.imageView);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle b = new Bundle();
+                // b.putString("action", "main");
+                b.putString("store_id", mItemList.get(position).getStoreId());
+
+                Intent intent = new Intent(mActivity, StoreViewActivity.class);
+                intent.putExtras(b);
+                mActivity.startActivity(intent);
+                mActivity.finish();
+            }
+        });
 
         return convertView;
     }

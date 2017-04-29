@@ -19,7 +19,7 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:visibility="gone"
+        android:visibility="visible"
         android:src="@mipmap/ic_menu"
         app:layout_anchor="@id/appbar" />
 </RelativeLayout>

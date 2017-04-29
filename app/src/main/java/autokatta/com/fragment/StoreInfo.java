@@ -13,7 +13,6 @@ import android.widget.TextView;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.my_store.CreateStoreFragment;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.MyStoreListActivity;
@@ -79,13 +78,10 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 bundle.putString("store_id", Store_id);
                 bundle.putString("className", "StoreViewActivity");
 
-                CreateStoreFragment addAdmin = new CreateStoreFragment();
-                addAdmin.setArguments(bundle);
-
                 Intent intent = new Intent(getActivity(), MyStoreListActivity.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
-                //getActivity().finish();
+                getActivity().finish();
 
 
                 break;
