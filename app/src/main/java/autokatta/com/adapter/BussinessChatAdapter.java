@@ -1,10 +1,9 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -92,11 +91,16 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
 
             BussinessMsgSenders obj = new BussinessMsgSenders();
             obj.setArguments(b);
-            FragmentManager fragmentManager = mActivity.getFragmentManager();
+            /*FragmentManager fragmentManager = mActivity.getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.bussines_chat_container, obj);
             fragmentTransaction.addToBackStack("chatactivity");
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
+
+            ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.bussines_chat_container, obj, "chatactivity")
+                    .addToBackStack("chatactivity")
+                    .commit();
 
         }
     }
@@ -115,24 +119,18 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-
-
         holder.mKeyword.setText(mItemList.get(position).getKeyword());
-
         holder.mTitle.setText(mItemList.get(position).getTitle());
         if (holder.mKeyword.getText().toString().equalsIgnoreCase("Product")) {
             holder.mTitle.setText(mItemList.get(position).getProductName());
-
         }
         if (holder.mKeyword.getText().toString().equalsIgnoreCase("Service")) {
             holder.mTitle.setText(mItemList.get(position).getName());
-
         }
         holder.mCategory.setText(mItemList.get(position).getCategory());
         holder.mBrand.setText(mItemList.get(position).getSubCategory());
         holder.mModel.setText(mItemList.get(position).getModel());
         holder.mPrice.setText(mItemList.get(position).getPrice());
-
 
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Vehicle"))
             fullpath = vehi_img_url + mItemList.get(position).getImage();
@@ -141,10 +139,8 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Service"))
             fullpath = service_img_url + mItemList.get(position).getImages();
 
-
         fullpath = fullpath.replaceAll(" ", "%20");
         try {
-
             Glide.with(mActivity)
                     .load(fullpath)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
