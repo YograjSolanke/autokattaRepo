@@ -70,8 +70,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ChatFragment extends Fragment implements RequestNotifier, View.OnClickListener {
 
     public ChatFragment() {
-
-
+        //empty fragment...
     }
 
     private ListView listView;
@@ -79,7 +78,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
     ImageUpload mImageUpload;
     TextView addimagetext;
     AlertDialog alert;
-    TextView BrdmessageText, msgFrom, dateNtime;
+    TextView msgFrom;
     String service_id = "", product_id = "", vehicle_id = "";
     Uri selectedImage = null;
     Bitmap  bitmapRotate;
@@ -88,18 +87,12 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
     String mediaPath="";
     ApiCall apiCall;
     ArrayList<BroadcastMessageResponse.Success> chatlist = new ArrayList<>();
-
-
     //  MultipartEntity entity;
     String lastWord = "";
-
     String Sendercontact, sendername;
     private Button buttonRep;
     ChatAdapter adapter;
-
-    String picturePath = "";
     Bitmap bitmap;
-    String userSelected = "";
     String myContact;
     TextView Title, Category, Brand, Model, Keyword, price, chatwithtext;
     ImageView Image;
@@ -113,21 +106,16 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
 
         final View root = inflater.inflate(R.layout.chat_fragment, null);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-
         // Change base URL to your upload server URL.
         mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
-
         buttonRep = (Button) root.findViewById(R.id.replay);
         listView = (ListView) root.findViewById(R.id.msgview);
         msgFrom = (TextView) root.findViewById(R.id.msgFrom);
         chatwithtext = (TextView) root.findViewById(R.id.chatwithtext);
         apiCall = new ApiCall(getActivity(), this);
-
         Keyword = (TextView) root.findViewById(R.id.keyword);
         Title = (TextView) root.findViewById(R.id.settitle);
         Category = (TextView) root.findViewById(R.id.setcategory);
@@ -141,10 +129,8 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
         relPrice = (RelativeLayout) root.findViewById(R.id.relative5);
         MainRel = (RelativeLayout) root.findViewById(R.id.MainRel);
         relativeprofile = (RelativeLayout) root.findViewById(R.id.relativeprofile);
-
         relativeprofile.setOnClickListener(this);
         buttonRep.setOnClickListener(this);
-
 
         try {
             Bundle b = getArguments();
@@ -154,15 +140,11 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
             service_id = b.getString("service_id");
             vehicle_id = b.getString("vehicle_id");
 
-
             chatwithtext.setText(sendername);
-
             apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);
-
             if (product_id.equals("") && service_id.equals("") && vehicle_id.equals(""))
                 MainRel.setVisibility(View.GONE);
             else {
-
                 apiCall.getChatElementData(product_id, service_id, vehicle_id);
             }
 
@@ -177,7 +159,6 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.relativeprofile):
-
                 Bundle b = new Bundle();
                 b.putString("action", "other");
                 b.putString("contact", Sendercontact);
@@ -186,11 +167,8 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
                 getActivity().startActivity(intent);
                 break;
             case (R.id.replay):
-
                 sendmessage();
                 break;
-
-
         }
 
     }
@@ -198,109 +176,77 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
     @Override
     public void notifySuccess(Response<?> response) {
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
         if (response != null) {
             if (response.isSuccessful()) {
-
                 /*
                         Response to get chat message
                  */
                 if (response.body() instanceof BroadcastMessageResponse) {
                     BroadcastMessageResponse moduleResponse = (BroadcastMessageResponse) response.body();
                     chatlist.clear();
-
                     if (!moduleResponse.getSuccess().isEmpty()) {
-
                         for (BroadcastMessageResponse.Success message : moduleResponse.getSuccess()) {
                             message.setSender(message.getSender());
                             message.setReceiver(message.getReceiver());
                             message.setMessage(message.getMessage());
                             message.setImage(message.getImage());
-
                             Date d = null;
                             try {
                                 d = f.parse(message.getDate());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-
                             message.setNewDate(d);
-
                             chatlist.add(message);
-
                         }
-
                         adapter = new ChatAdapter(getActivity(), myContact, chatlist);
                         listView.setAdapter(adapter);
                         listView.setSelection(chatlist.size() - 1);
-
-
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
-
                  /*
                       Chat Element  Response
                  */
                 if (response.body() instanceof ChatElementDetails) {
                     ChatElementDetails chatElementDetails = (ChatElementDetails) response.body();
-
                     if (chatElementDetails.getSuccess() != null) {
                         if (!chatElementDetails.getSuccess().getProduct().isEmpty()) {
                             for (ChatElementDetails.Success.Product product : chatElementDetails.getSuccess().getProduct()) {
-
-
                                 Keyword.setText(product.getKeyword());
                                 Title.setText(product.getProductName());
                                 price.setText(product.getPrice());
                                 fullpath = prduct_img_url + product.getImages();
-
                                 fullpath = fullpath.replaceAll(" ", "%20");
-
-
                                 Glide.with(getActivity())
                                         .load(fullpath)
                                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                                         .bitmapTransform(new CropCircleTransformation(getActivity()))
                                         .placeholder(R.drawable.logo)
                                         .into(Image);
-
-
                                 relCategory.setVisibility(View.GONE);
                                 relBrand.setVisibility(View.GONE);
                                 relModel.setVisibility(View.GONE);
                             }
-
-
                         } else if (!chatElementDetails.getSuccess().getService().isEmpty()) {
                             for (ChatElementDetails.Success.Service service : chatElementDetails.getSuccess().getService()) {
-
-
                                 Keyword.setText(service.getKeyword());
                                 Title.setText(service.getName());
                                 price.setText(service.getPrice());
                                 fullpath = service_img_url + service.getImages();
-
                                 fullpath = fullpath.replaceAll(" ", "%20");
-
-
                                 Glide.with(getActivity())
                                         .load(fullpath)
                                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                                         .bitmapTransform(new CropCircleTransformation(getActivity()))
                                         .placeholder(R.drawable.logo)
                                         .into(Image);
-
-
                                 relCategory.setVisibility(View.GONE);
                                 relBrand.setVisibility(View.GONE);
                                 relModel.setVisibility(View.GONE);
                             }
-
                         } else if (!chatElementDetails.getSuccess().getVehicle().isEmpty()) {
                             for (ChatElementDetails.Success.Vehicle vehicle : chatElementDetails.getSuccess().getVehicle()) {
-
-
                                 Keyword.setText(vehicle.getKeyword());
                                 Title.setText(vehicle.getTitle());
                                 price.setText(vehicle.getPrice());
@@ -308,38 +254,28 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
                                 Brand.setText(vehicle.getManufacturer());
                                 Model.setText(vehicle.getModel());
                                 fullpath = vehi_img_url + vehicle.getImage();
-
                                 fullpath = fullpath.replaceAll(" ", "%20");
-
-
                                 Glide.with(getActivity())
                                         .load(fullpath)
                                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                                         .bitmapTransform(new CropCircleTransformation(getActivity()))
                                         .placeholder(R.drawable.logo)
                                         .into(Image);
-
                             }
-
-
                         }
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
-
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
-
-
     }
 
     @Override
     public void notifyError(Throwable error) {
-
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
@@ -359,30 +295,21 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
             if (str.equalsIgnoreCase("success")) {
                 uploadImage(mediaPath);
                 listView.setAdapter(null);
-
                 apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);
-
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
-
     }
-
-
     //alert dialog box method to show pop up to send message and image in broadcast group
 
     public void sendmessage() {
-
         lastWord = "";
-
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-
         View convertView = inflater.inflate(R.layout.custom_broadmessage_layout, null);
-
         final EditText message = (EditText) convertView.findViewById(R.id.statustext);
         Button send = (Button) convertView.findViewById(R.id.btnsend);
         Button cancel = (Button) convertView.findViewById(R.id.btncancel);
@@ -392,25 +319,19 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
         alertDialog.setView(convertView);
         alert = alertDialog.show();
         alertDialog.setTitle("Send Message");
-
-
         message.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //wordCount.setText("200");
-//				wordCount.setText(s.length());
                 wordCount.setText(String.valueOf(200 - s.length()));
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
                 // TODO Auto-generated method stub
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 // TODO Auto-generated method stub
             }
         });
@@ -418,27 +339,20 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
         SpannableString spanString = new SpannableString("Add Image");
         spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
         addimagetext.setText(spanString);
-
         addimagetext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onPickImage(v);
-
             }
         });
-
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 apiCall.sendChatMessage(myContact, Sendercontact, message.getText().toString(), lastWord, product_id, service_id, vehicle_id);
                 alert.dismiss();
-
             }
         });
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -446,7 +360,6 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
 
             }
         });
-
     }
 
 
@@ -493,8 +406,6 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
-
-
             } else if (requestCode == 101) {
                 if (resultCode == RESULT_OK) {
                     if (data != null) {
@@ -511,7 +422,6 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
                             bitmap.recycle();
                         }
                         uploadImage.setImageBitmap(bitmapRotate);
-
 //                            Saving image to mobile internal memory for sometime
                         String root = getActivity().getApplicationContext().getFilesDir().toString();
                         File myDir = new File(root + "/androidlift");
@@ -520,7 +430,6 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
                         Random generator = new Random();
                         int n = 10000;
                         n = generator.nextInt(n);
-
 //                            Give the file name that u want
                         fname = "Autokatta" + n + ".jpg";
 

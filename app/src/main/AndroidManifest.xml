@@ -14,18 +14,13 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission
         android:name="android.permission.VIBRATE"
         android:maxSdkVersion="18"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    //for google map route
 
-    <!--
-     <permission
-         android:name="com.javapapers.android.permission.MAPS_RECEIVE"
-         android:protectionLevel="signature" />
-    -->
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"

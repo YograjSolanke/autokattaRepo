@@ -3,8 +3,6 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,11 +50,16 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
 
             ChatFragment obj = new ChatFragment();
             obj.setArguments(b);
-            FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
+            /*FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.bussines_chat_container,obj);
             fragmentTransaction.addToBackStack("bussinessmsgsender");
             fragmentTransaction.commit();
+*/
+            ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.bussines_chat_container, obj, "bussinessmsgsender")
+                    .addToBackStack("bussinessmsgsender")
+                    .commit();
 
         }
     }

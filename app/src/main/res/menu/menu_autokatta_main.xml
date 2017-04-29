@@ -13,4 +13,10 @@
         android:title="@string/app_name"
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/qr_code_scan"
+        android:title="@string/app_name"
+        android:icon="@mipmap/ic_qrcode_scan"
+        app:showAsAction="ifRoom" />
 </menu>
