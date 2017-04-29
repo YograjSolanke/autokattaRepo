@@ -55,6 +55,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
     @Override
     public void onBindViewHolder(ActiveSaleMelaAdapter.LoanHolder holder, final int position) {
 
+        holder.mtitle.setText("Sale Title:");
         holder.title.setText(mMainlist.get(position).getName());
         holder.startdate.setText(mMainlist.get(position).getStartDate());
         holder.starttime.setText(mMainlist.get(position).getStartTime());
@@ -157,7 +158,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
 
     static class LoanHolder extends RecyclerView.ViewHolder {
 
-        TextView title, enddate, endtime, startdate, starttime, location, address, details;
+        TextView title, enddate, endtime, startdate, starttime, location, address, details,mtitle;
         ImageView image;
         Button mPreview,mShare;
         RelativeLayout relativeshare;
@@ -175,6 +176,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
             details = (TextView) itemView.findViewById(R.id.typeofauction2);
             mPreview= (Button) itemView.findViewById(R.id.button);
             mShare= (Button) itemView.findViewById(R.id.share);
+            mtitle= (TextView) itemView.findViewById(R.id.title2);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
 
         }

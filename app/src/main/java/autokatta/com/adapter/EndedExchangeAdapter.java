@@ -59,6 +59,7 @@ public class EndedExchangeAdapter extends RecyclerView.Adapter<EndedExchangeAdap
     @Override
     public void onBindViewHolder(EndedExchangeAdapter.ExchangeHolder holder, final int position) {
 
+        holder.mtitle.setText("Exchange Title:");
         holder.title.setText(mMainList.get(position).getName());
         holder.startdate.setText(mMainList.get(position).getStartDate());
         holder.starttime.setText(mMainList.get(position).getStartTime());
@@ -177,7 +178,7 @@ public class EndedExchangeAdapter extends RecyclerView.Adapter<EndedExchangeAdap
     static class ExchangeHolder extends RecyclerView.ViewHolder {
 
 
-        TextView title, enddate, endtime, startdate, starttime, location, address, details;
+        TextView title, enddate, endtime, startdate, starttime, location, address, details,mtitle;
         ImageView image;
         Button mPreview,mShare;
         RelativeLayout relativeshare;
@@ -193,6 +194,7 @@ public class EndedExchangeAdapter extends RecyclerView.Adapter<EndedExchangeAdap
             endtime = (TextView) view.findViewById(R.id.editText);
             image = (ImageView) view.findViewById(R.id.loanmelaimg);
             details = (TextView) view.findViewById(R.id.typeofauction2);
+            mtitle = (TextView) view.findViewById(R.id.title2);
             mPreview= (Button) itemView.findViewById(R.id.button);
             mShare= (Button) itemView.findViewById(R.id.share);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);

@@ -30,7 +30,7 @@
                     android:layout_height="40dp">
 
                     <TextView
-                        android:id="@+id/auctiontitle2"
+                        android:id="@+id/title2"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
                         android:textStyle="bold"
@@ -50,8 +50,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/auctiontitle2"
-                        android:layout_toEndOf="@+id/auctiontitle2"
+                        android:layout_toRightOf="@+id/title2"
+                        android:layout_toEndOf="@+id/title2"
                         android:enabled="false" />
                 </RelativeLayout>
 
