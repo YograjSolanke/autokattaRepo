@@ -198,11 +198,11 @@
                         <RatingBar
                             android:id="@+id/productrating"
                             style="?android:attr/ratingBarStyleSmall"
+                            android:stepSize="1.0"
+                            android:theme="@style/RatingBar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:numStars="5"
-                            android:stepSize="1.0"
-                            android:theme="@style/RatingBar" />
+                            android:numStars="5" />
 
                     </LinearLayout>
 

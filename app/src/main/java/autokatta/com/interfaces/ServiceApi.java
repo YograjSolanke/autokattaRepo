@@ -868,14 +868,6 @@ public interface ServiceApi {
     Call<String> tagAssociation(@Query("product_id") String product_id, @Query("service_id") String serviceId, @Query("tag_id") String tagId);
 
 
-
-    //update Store Service
-    @POST("updateStoreService.php")
-    Call<String> updateStoreService(@Query("service_name") String name, @Query("service_type") String type,
-                                    @Query("service_details") String details, @Query("service_price") String price,
-                                    @Query("service_tags") String tags, @Query("service_id") String id,
-                                    @Query("category") String category, @Query("brandtags") String brandTags);
-
        /*
     Get all products,service and vehicles related to single store
      */

@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -49,7 +47,6 @@ import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.ProductResponse;
-import autokatta.com.search.ProductImageSlider;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -64,10 +61,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     EditText productname, productprice, productdetails, producttype, writereview;
     Bundle b = new Bundle();
     //variables for getting data through bundle form adapter
-    String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, psharecnt,
-            pimages, plikestatus, action, pcategory, str_category, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
+    String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, pimages, plikestatus, action, pcategory, str_category, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
     ImageView picture, edit, check, callme, deleteproduct;
-    String result, allDetails;
+    String allDetails;
     final ArrayList<String> spnid = new ArrayList<String>();
     final ArrayList<String> tagname = new ArrayList<String>();
 
@@ -414,7 +410,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             prate3 = success.getPrate3();
                             store_id = success.getStoreId();
                             storecontact = success.getStoreContact();
-                            storecontact = "3030303030";
+                            //  storecontact = "3030303030";
                             brandtags_list = success.getBrandtags();
 
                             txtlike.setText("Like(" + plikecnt + ")");
@@ -555,6 +551,25 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 updatetagids();
             } else if (str.equals("success_tag_updation")) {
                 CustomToast.customToast(ProductViewActivity.this, "Tags Updated");
+            } else if (str.equals("success_rating_submitted")) {
+                CustomToast.customToast(getApplicationContext(), "Rating Submitted");
+                Intent intent = new Intent(this, ProductViewActivity.class);
+                intent.putExtra("product_id", product_id);
+                startActivity(intent);
+
+            } else if (str.equals("success_rating_updated")) {
+                CustomToast.customToast(getApplicationContext(), "Rating updated");
+                Intent intent = new Intent(this, ProductViewActivity.class);
+                intent.putExtra("product_id", product_id);
+                startActivity(intent);
+
+            } else if (str.equals("success")) {
+
+                CustomToast.customToast(getApplicationContext(), "Product Deleted");
+                Intent intent = new Intent(this, StoreViewActivity.class);
+                intent.putExtra("store_id", store_id);
+                startActivity(intent);
+
             }
 
 
@@ -817,15 +832,15 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             }*/
                 break;
             case R.id.profile:
-                b.putString("images", pimages);
-                ProductImageSlider fragment = new ProductImageSlider();
-                fragment.setArguments(b);
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.search_product, fragment);
-                fragmentTransaction.addToBackStack("productimageslider");
-                fragmentTransaction.commit();
+//                b.putString("images", simages);
+//                ServiceImageSlider fragment = new ServiceImageSlider();
+//                fragment.setArguments(b);
+//
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.containerView, fragment);
+//                fragmentTransaction.addToBackStack("serviceimageslider");
+//                fragmentTransaction.commit();
                 break;
             case R.id.deleteproduct:
 
@@ -881,9 +896,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", store_id).apply();
+                        putString("Share_product_id", product_id).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "store").apply();
+                        putString("Share_keyword", "product").apply();
 
                 Intent i = new Intent(ProductViewActivity.this, ShareWithinAppActivity.class);
                 startActivity(i);

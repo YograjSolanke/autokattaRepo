@@ -5490,47 +5490,8 @@ Get saved search Seller list
     }
 
     /*
-    updateStoreService
-     */
-    public void updateStoreService(String name, String type, String details, String price, String tags, String id,
-                                   String category, String brandTags) {
-        try {
-            if (mConnectionDetector.isConnectedToInternet()) {
-                //JSON to Gson conversion
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .client(initLog().build())
-                        .build();
-
-                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> updateStore = serviceApi.updateStoreService(name, type, details, price, tags, id, category, brandTags);
-                updateStore.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        mNotifier.notifyString(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        mNotifier.notifyError(t);
-                    }
-                });
-            } else {
-                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
-    updateTagAssociation
-     */
+ updateTagAssociation
+  */
     public void updateTagAssociation(String product_id, String serviceId, String tagId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
