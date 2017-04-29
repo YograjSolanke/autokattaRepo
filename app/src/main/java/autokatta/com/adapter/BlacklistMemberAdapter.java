@@ -31,45 +31,35 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class BlacklistMemberAdapter extends RecyclerView.Adapter<BlacklistMemberAdapter.MemberHolder> implements RequestNotifier {
-
-
     Activity activity;
     List<BlacklistMemberResponse.Success> mMainlist = new ArrayList<>();
     ApiCall apicall;
 
     public BlacklistMemberAdapter(Activity activity, List<BlacklistMemberResponse.Success> successList) {
-
         this.activity = activity;
         this.mMainlist = successList;
         apicall = new ApiCall(activity, this);
-
     }
 
 
     @Override
     public BlacklistMemberAdapter.MemberHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blacklist_member_adapter, parent, false);
-
         MemberHolder holder = new MemberHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final BlacklistMemberAdapter.MemberHolder holder, int position) {
-
-
         holder.UserName.setText(mMainlist.get(position).getUsername());
         holder.UserNumber.setText(mMainlist.get(position).getBlacklistContact());
-
         //Set User Profile pic
         if (mMainlist.get(position).getUserimage().equals("null") || mMainlist.get(position).getUserimage().equals(null) ||
                 mMainlist.get(position).getUserimage().equals("")) {
             holder.UserPic.setBackgroundResource(R.drawable.profile);
-
         }
         if (!mMainlist.get(position).getUserimage().equals("null") || !mMainlist.get(position).getUserimage().equals(null) ||
                 !mMainlist.get(position).getUserimage().equals("")) {
-
             Glide.with(activity)
                     .load("http://autokatta.com/mobile/profile_profile_pics/" + mMainlist.get(position).getUserimage())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -89,12 +79,10 @@ public class BlacklistMemberAdapter extends RecyclerView.Adapter<BlacklistMember
         holder.RemBlacklist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392");
+                String myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 apicall.removeFromBlacklist(myContact, mMainlist.get(holder.getAdapterPosition()).getBlacklistContact(), "remove");
                 mMainlist.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
-
             }
         });
 
@@ -117,35 +105,24 @@ public class BlacklistMemberAdapter extends RecyclerView.Adapter<BlacklistMember
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
             if (str.equalsIgnoreCase("success")) {
-
             } else
                 CustomToast.customToast(activity, activity.getString(R.string.no_response));
-
         }
     }
 
     static class MemberHolder extends RecyclerView.ViewHolder {
-
-
         ImageView UserPic, UserCall;
         TextView UserName, UserNumber;
         Button RemBlacklist;
-
-
         MemberHolder(View view) {
             super(view);
-
             UserName = (TextView) view.findViewById(R.id.txtname);
             UserNumber = (TextView) view.findViewById(R.id.txtnumber);
-
             UserPic = (ImageView) view.findViewById(R.id.userimage);
             UserCall = (ImageView) view.findViewById(R.id.callimage);
-
             RemBlacklist = (Button) view.findViewById(R.id.btnremove);
-
         }
     }
 

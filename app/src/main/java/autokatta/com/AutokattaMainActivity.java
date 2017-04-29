@@ -121,7 +121,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             public void onReceive(Context context, Intent intent) {
                 isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
                 String networkStatus = isNetworkAvailable ? "Connected" : "Disconnected";
-                //Snackbar.make(findViewById(R.id.activity_autokatta_main), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(findViewById(R.id.activity_autokatta_main), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
                 Snackbar.make(findViewById(R.id.activity_autokatta_main), "No Internet", Snackbar.LENGTH_LONG)
                         .setAction("Go Online", null).show();
             }

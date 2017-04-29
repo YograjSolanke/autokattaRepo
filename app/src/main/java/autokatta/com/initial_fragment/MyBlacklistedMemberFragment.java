@@ -38,19 +38,15 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
     SharedPreferences sharedPreferences;
     List<BlacklistMemberResponse.Success> blacklistMemberList = new ArrayList<>();
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_blacklisted_members, container, false);
-
-
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutBlacklist);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_recycler_view);
         apiCall = new ApiCall(getActivity(), this);
         sharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
         // final String myContact = sharedPreferences.getString("loginContact", "7841023392");
-
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
@@ -66,7 +62,7 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(true);
-                apiCall.getBlackListMembers(sharedPreferences.getString("loginContact", "7841023392"));
+                apiCall.getBlackListMembers(sharedPreferences.getString("loginContact", ""));
             }
         });
 
@@ -81,23 +77,16 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 BlacklistMemberResponse blacklistMemberResponse = (BlacklistMemberResponse) response.body();
                 if (!blacklistMemberResponse.getSuccess().isEmpty()) {
                     for (BlacklistMemberResponse.Success success : blacklistMemberResponse.getSuccess()) {
-
                         success.setId(success.getId());
                         success.setBlacklistContact(success.getBlacklistContact());
                         success.setUsername(success.getUsername());
                         success.setUserimage(success.getUserimage());
-
                         blacklistMemberList.add(success);
-
-
                     }
 
                     Log.i("Ssize", String.valueOf(blacklistMemberList.size()));
@@ -106,7 +95,6 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
                     adapter.notifyDataSetChanged();
                     swipeRefreshLayout.setRefreshing(false);
                 }
-
 
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.fragment.BroadcastReceivedFragment;
@@ -23,16 +21,12 @@ import autokatta.com.fragment.BroadcastSendFragment;
 public class BroadcastMessageFragment extends Fragment {
 
     public BroadcastMessageFragment() {
-
+        //empty fragment...
     }
-
 
     View view;
     TabLayout broadcast_message_tab;
     ViewPager broadcast_message_viewpager;
-
-
-    GoogleApiClient googleApiClient;
 
     @Nullable
     @Override
@@ -46,19 +40,14 @@ public class BroadcastMessageFragment extends Fragment {
             setupViewPager(broadcast_message_viewpager);
         }
 
-
         broadcast_message_tab.setupWithViewPager(broadcast_message_viewpager);
-
         return view;
     }
 
     private void setupViewPager(ViewPager viewPager) {
-
-        TabAdapterName tabAdapterName = new TabAdapterName(getActivity().getSupportFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new BroadcastReceivedFragment(), "Received");
         tabAdapterName.addFragment(new BroadcastSendFragment(), "Sent");
-
         viewPager.setAdapter(tabAdapterName);
     }
-
 }

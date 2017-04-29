@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -35,8 +33,6 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class BroadcastReceivedFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
-
-
     public BroadcastReceivedFragment() {
         //Empty Constructor
     }
@@ -53,7 +49,6 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.my_broadcast_message_list, null);
-
         recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -61,7 +56,6 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
         mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
         recyclerView.setHasFixedSize(true);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
 
         //Set animation attribute to each item
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -85,14 +79,11 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
-
                 BroadcastReceivedResponse mGetGroupVehiclesResponse = (BroadcastReceivedResponse) response.body();
                 for (BroadcastReceivedResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
-
                     success.setSender(success.getSender());
                     success.setSendername(success.getSendername());
                     broadcastMessageArrayList.add(success);
@@ -102,7 +93,6 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
                 msgSenderAdapter = new MsgReplyAdapter(getActivity(), broadcastMessageArrayList);
                 recyclerView.setAdapter(msgSenderAdapter);
                 msgSenderAdapter.notifyDataSetChanged();
-
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -111,8 +101,6 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
             mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
-
-
     }
 
     @Override
@@ -127,7 +115,6 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
             Log.i("Check Class-"
                     , "BroadcastReceivedFragment");
         }
-
     }
 
     @Override
@@ -141,7 +128,6 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-
     ////////////////////////// Adapter Class /////////////////////////////////////////////
 
     public class MsgReplyAdapter extends RecyclerView.Adapter<MsgReplyAdapter.MyViewHolder> {
@@ -149,29 +135,19 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
         ArrayList<BroadcastReceivedResponse.Success> broadcastMessageArrayList;
         Activity activity;
 
-
         //ViewHolder Class
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-
             TextView msgFrom, msgFromCnt;
-
-
             public MyViewHolder(View itemView) {
                 super(itemView);
-
                 msgFrom = (TextView) itemView.findViewById(R.id.msgFrom);
                 msgFromCnt = (TextView) itemView.findViewById(R.id.msgFromCnt);
-
-
                 itemView.setOnClickListener(this);
                 itemView.setOnLongClickListener(this);
             }
 
             @Override
             public void onClick(View v) {
-                //Toast.makeText(activity,"onClick----",Toast.LENGTH_SHORT).show();
-
-
                 ChatFragment object = new ChatFragment();
                 Bundle b = new Bundle();
                 b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).getSender());
@@ -181,11 +157,16 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
                 b.putString("vehicle_id", "");
 
                 object.setArguments(b);
-                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+                /*FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.BrdcastMsgFrame, object);
                 fragmentTransaction.addToBackStack("chatactivity");
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
+
+                ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.BrdcastMsgFrame, object, "chatactivity")
+                        .addToBackStack("chatactivity")
+                        .commit();
 
             }
 
@@ -206,15 +187,12 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_sender_layout, parent, false);
-
             return new MyViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-
             BroadcastReceivedResponse.Success broadcastMessageObj = broadcastMessageArrayList.get(position);
-
             holder.msgFromCnt.setText(broadcastMessageObj.getSender());
             holder.msgFrom.setText(broadcastMessageObj.getSendername());
         }
