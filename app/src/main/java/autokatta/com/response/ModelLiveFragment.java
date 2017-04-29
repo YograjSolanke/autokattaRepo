@@ -311,6 +311,7 @@ public class ModelLiveFragment {
         this.contact = contact;
     }
 
+
     public String getName() {
         return name;
     }
