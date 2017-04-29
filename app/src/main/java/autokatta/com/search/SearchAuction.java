@@ -33,12 +33,10 @@ import retrofit2.Response;
 public class SearchAuction extends Fragment implements RequestNotifier {
     View mSearchAuction;
     private ListView searchList;
-    //AllSearchEventCustomAdapter adapter;
 
-    String searchString, firstWord;
+    String searchString;
     private ArrayList<ModelSearchAuction> allSearchDataArrayList = new ArrayList<>();
     private ArrayList<ModelSearchAuction> allSearchDataArrayList_new = new ArrayList<>();
-    //private ArrayList<AllSearchData> allSearchDataArrayList_new;
     AllSearchEventCustomAdapter adapter;
     String myContact;
     ImageView filterImg;
@@ -59,10 +57,11 @@ public class SearchAuction extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 bundle = getArguments();
-                searchString = bundle.getString("searchText1");
-                System.out.println("Auction" + searchString);
-                getSearchAuction(searchString);
-
+                if (bundle != null) {
+                    searchString = bundle.getString("searchText1");
+                    System.out.println("Auction" + searchString);
+                    getSearchAuction(searchString);
+                }
                 filterImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

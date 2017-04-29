@@ -65,10 +65,11 @@ public class SearchPerson extends Fragment implements RequestNotifier {
             public void run() {
                 try {
                     Bundle bundle = getArguments();
-                    searchString = bundle.getString("searchText1");
-                    System.out.println("Person" + searchString);
-                    getSearchResults(searchString);
-
+                    if (bundle != null) {
+                        searchString = bundle.getString("searchText1");
+                        System.out.println("Person" + searchString);
+                        getSearchResults(searchString);
+                    }
                     filterImg.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

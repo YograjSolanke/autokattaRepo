@@ -27,14 +27,11 @@ import autokatta.com.response.GetSearchProductResponse;
 
 public class SearchProductAdapter extends BaseAdapter {
     Activity activity;
-    List<GetSearchProductResponse.Success> allSearchData = new ArrayList<>();
-    private LayoutInflater inflater;
+    private List<GetSearchProductResponse.Success> allSearchData = new ArrayList<>();
 
     public SearchProductAdapter(Activity activity, List<GetSearchProductResponse.Success> allSearchDataArrayList) {
         this.activity = activity;
         this.allSearchData = allSearchDataArrayList;
-        inflater = (LayoutInflater) activity.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -49,7 +46,7 @@ public class SearchProductAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return allSearchData.get(position).hashCode();
     }
 
     private class YoHolder {
@@ -63,8 +60,9 @@ public class SearchProductAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         YoHolder yoHolder = null;
         if (convertView == null) {
-            yoHolder = new YoHolder();
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.product_new, null);
+            yoHolder = new YoHolder();
             yoHolder.productName = (TextView) convertView.findViewById(R.id.edittxt);
             yoHolder.productPrice = (TextView) convertView.findViewById(R.id.priceedit);
             yoHolder.productDetails = (TextView) convertView.findViewById(R.id.editdetails);

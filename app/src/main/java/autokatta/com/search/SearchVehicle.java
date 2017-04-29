@@ -60,10 +60,11 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
             public void run() {
                 try {
                     bundle = getArguments();
-                    searchString = bundle.getString("searchText1");
-                    System.out.println("Vehicle" + searchString);
-                    getSearchResults(searchString);
-
+                    if (bundle != null) {
+                        searchString = bundle.getString("searchText1");
+                        System.out.println("Vehicle" + searchString);
+                        getSearchResults(searchString);
+                    }
                     advanceSearch.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -45,7 +45,6 @@ public class SearchStore extends Fragment implements RequestNotifier {
     private List<MyStoreResponse.Success> allSearchDataArrayList = new ArrayList<>();
     private List<MyStoreResponse.Success> allSearchDataArrayList_new = new ArrayList<>();
     HashSet<String> categoryHashSet;
-    String myContact;
     ImageView filterImg;
     MyStoreListAdapter adapter;
     CheckedCategoryAdapter categoryAdapter;
@@ -69,17 +68,21 @@ public class SearchStore extends Fragment implements RequestNotifier {
         mLayoutManager.setStackFromEnd(true);
         searchList.setLayoutManager(mLayoutManager);
 
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-                .getString("loginContact", "");
-
-        try {
-            Bundle bundle = getArguments();
-            searchString = bundle.getString("searchText1");
-            System.out.println("Store" + searchString);
-            getSearchResults(searchString);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Bundle bundle = getArguments();
+                    if (bundle != null) {
+                        searchString = bundle.getString("searchText1");
+                        System.out.println("Store" + searchString);
+                        getSearchResults(searchString);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         filterImg.setOnClickListener(new View.OnClickListener() {
             @Override
