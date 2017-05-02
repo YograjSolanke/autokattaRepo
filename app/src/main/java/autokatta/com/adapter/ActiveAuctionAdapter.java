@@ -47,17 +47,13 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
         this.activity = activity;
         this.auctionDetailsArrayList = itemist;
         this.counters = new HashMap<TextView, CountDownTimer>();
-
-
     }
-
 
     @Override
     public ActiveAuctionAdapter.AuctionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.active_auction_adapter, parent, false);
-
         AuctionHolder vh = new AuctionHolder(v);
         handler = new Handler();
         return vh;
@@ -75,7 +71,6 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
         holder.mAuction_category.setText(auctionDetailsArrayList.get(position).getAuctioncategory());
         holder.mStockLocation.setText(auctionDetailsArrayList.get(position).getStockLocation());
 
-
         final TextView tv = holder.timer;
         CountDownTimer cdt = counters.get(holder.timer);
         if (cdt != null) {
@@ -86,14 +81,9 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date futureDate = dateFormat.parse(auctionDetailsArrayList.get(position).getEndDateTime());
-
             Date currentDate = dateFormat.parse(auctionDetailsArrayList.get(position).getStartDateTime());
-
-
             Date now = new Date();
-
             long difference = futureDate.getTime() - now.getTime();
-
             cdt = new CountDownTimer(difference, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -133,7 +123,6 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 @Override
                 public void onFinish() {
                     tv.setText("Finished");
-
                     // mailAuctionData();
                 }
             };
@@ -146,28 +135,21 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
             e.printStackTrace();
         }
 
-
         special_clause = auctionDetailsArrayList.get(position).getSpecialClauses();
-
         spcl = special_clause.replaceAll(",", "\n");
-
 
         holder.btnclause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
                 alertDialog.setTitle("Special Clauses");
-
                 final TextView input = new TextView(activity);
                 input.setText(spcl);
-
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
                 alertDialog.setView(input);
-
                 alertDialog.setNeutralButton("cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -184,7 +166,6 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
         holder.preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Bundle b = new Bundle();
                 b.putString("auctionid", auctionDetailsArrayList.get(position).getAuctionId());
                 b.putString("auctiontitle", auctionDetailsArrayList.get(position).getActionTitle());
@@ -200,8 +181,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 b.putString("category", auctionDetailsArrayList.get(position).getAuctioncategory());
                 b.putString("location", auctionDetailsArrayList.get(position).getStockLocation());
 
-                activity.finish();
-
+                //activity.finish();
                 Intent intent = new Intent(activity, PreviewMyActiveAuctionActivity.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);
@@ -255,7 +235,6 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                         auctionDetailsArrayList.get(position).getAuctionType() + "=" +
                         "0" + "=" + "0" + "=" + "a";
 
-
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
@@ -264,9 +243,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                         putString("Share_keyword", "auction").apply();
 
                 System.out.println("Share Image \n");
-
                 intent.setType("text/plain");
-
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
                 activity.startActivity(intent);
@@ -301,9 +278,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
             preview = (Button) view.findViewById(R.id.button);
 
             btnshare = (Button) view.findViewById(R.id.share);
-
             relativeshare = (RelativeLayout) view.findViewById(R.id.relativeshare);
-
             timer = (TextView) view.findViewById(R.id.timer);
             btnclause = (Button) view.findViewById(R.id.btnclauses);
             mAuction_category = (TextView) view.findViewById(R.id.auction_category);

@@ -139,7 +139,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
                     Intent intent = new Intent(mActivity, MyAuctionVehicleDetails.class);
                     intent.putExtras(b);
                     mActivity.startActivity(intent);
-                    mActivity.finish();
+                    //mActivity.finish();
                                 /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.containerView, frag);
@@ -154,7 +154,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
                     Intent intent = new Intent(mActivity, AdminVehicleDetails.class);
                     intent.putExtras(b);
                     mActivity.startActivity(intent);
-                    mActivity.finish();
+                    //mActivity.finish();
                                 /*Toast.makeText(getActivity(),"Admin vehicle",Toast.LENGTH_SHORT).show();
                                 Bundle b = new Bundle();
                                 b.putString("vehicle_id", VehiId);

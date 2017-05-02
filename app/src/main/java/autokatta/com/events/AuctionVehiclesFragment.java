@@ -126,11 +126,13 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
                     vehicles.add(vehicle);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
-                PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(getActivity(), vehicles, strAuctionId, "0",
-                        getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-                                .getString("loginContact", ""));
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                if (getActivity() != null) {
+                    PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(getActivity(), vehicles, strAuctionId, "0",
+                            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                    .getString("loginContact", ""));
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));

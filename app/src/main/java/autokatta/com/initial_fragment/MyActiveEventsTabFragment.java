@@ -26,7 +26,7 @@ public class MyActiveEventsTabFragment extends Fragment {
     TabLayout mTabLayout;
 
     public MyActiveEventsTabFragment() {
-
+        //myActiveEventsTabFragment empty constructor
     }
 
     @Nullable
@@ -37,21 +37,15 @@ public class MyActiveEventsTabFragment extends Fragment {
         mViewPager = (ViewPager) view.findViewById(R.id.activity_myactive_event_viewpager);
         mTabLayout = (TabLayout) view.findViewById(R.id.activity_myactive_event_tab);
 
-
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-
                     if (mViewPager != null) {
                         setUpPager(mViewPager);
                     }
 
-
                     mTabLayout.setupWithViewPager(mViewPager);
-                    //        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-                    //        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -61,13 +55,12 @@ public class MyActiveEventsTabFragment extends Fragment {
     }
 
     private void setUpPager(ViewPager viewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getActivity().getSupportFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new MyActiveAuctionFragment(), "Auction");
         tabAdapterName.addFragment(new MyActiveLoanMelaFragment(), "Loan Mela");
         tabAdapterName.addFragment(new MyActiveExchangeMelaFrament(), "Exchange Mela");
         tabAdapterName.addFragment(new MyActiveServiceFragment(), "Service ");
         tabAdapterName.addFragment(new MyActiveSaleMelaFragment(), "Sale Mela");
-
         viewPager.setAdapter(tabAdapterName);
     }
 }

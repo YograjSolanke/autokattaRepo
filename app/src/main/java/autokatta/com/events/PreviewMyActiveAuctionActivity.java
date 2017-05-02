@@ -2,6 +2,7 @@ package autokatta.com.events;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,7 +63,10 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         strAuctionId = getIntent().getExtras().getString("auctionid");
         strAuctionTitle = getIntent().getExtras().getString("auctiontitle");
         strVehicleCount = getIntent().getExtras().getString("vehicle_count");
@@ -111,6 +116,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
             public void run() {
                 try {
                     mCollapsingToolbar.setTitle(strAuctionTitle);
+                    mCollapsingToolbar.setExpandedTitleColor(Color.parseColor("#00FFFFFF"));
                     txtStartDate.setText(strStartDate);
                     txtStartTime.setText(strStartTime);
                     txtEndDate.setText(strEndDate);
@@ -301,6 +307,31 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 }
 
