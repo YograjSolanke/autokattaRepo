@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <RelativeLayout
@@ -71,7 +72,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
             android:background="@color/background"
-            android:text="chat"
+            android:text="Send Enquiry"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="10sp"
@@ -135,21 +136,31 @@
                         android:text="Photos"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/profile"
+
+                    <com.daimajia.slider.library.SliderLayout
+                        android:id="@+id/slider"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_below="@+id/no_of_photos"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:contentDescription="@string/app_name"
-                        android:visibility="visible" />
+                        android:fitsSystemWindows="true"
+                        app:layout_collapseMode="parallax" />
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/profile"-->
+                    <!--android:layout_width="150dp"-->
+                    <!--android:layout_height="150dp"-->
+                    <!--android:layout_below="@+id/no_of_photos"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:contentDescription="@string/app_name"-->
+                    <!--android:visibility="visible" />-->
 
                     <LinearLayout
                         android:id="@+id/lineartxts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/profile"
+                        android:layout_below="@+id/slider"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
@@ -189,7 +200,7 @@
                         android:id="@+id/linearstars"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/profile"
+                        android:layout_below="@+id/slider"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="35dp"

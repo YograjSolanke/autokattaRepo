@@ -28,11 +28,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.R;
@@ -46,14 +50,14 @@ import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.ServiceResponse;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 /**
  * Created by ak-001 on 19/4/17.
  */
 
-public class ServiceViewActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
+public class ServiceViewActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener,
+        BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
    
     String contact;
     Bundle b = new Bundle();
@@ -62,7 +66,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     TextView storename, website, textlike, textshare;
     EditText servicename, servicetype, serviceprice, servicedetails, writereview;
     ImageView check, edit, callme, deleteservice;
-    ImageView picture;
+
 
     Button submitfeedback;
     RelativeLayout relativerate;
@@ -97,6 +101,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     boolean tagflag = false;
     ConnectionDetector mConnectionDetector;
     ApiCall mApiCall;
+    SliderLayout sliderLayout;
+    HashMap<String, String> Hash_file_maps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +123,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         servicedetails = (EditText) findViewById(R.id.txtsdetails);
         servicetags = (MultiAutoCompleteTextView) findViewById(R.id.txtstags);
         servicetype = (EditText) findViewById(R.id.txtstype);
-        picture = (ImageView) findViewById(R.id.profile);
         edit = (ImageView) findViewById(R.id.editservice);
         check = (ImageView) findViewById(R.id.checkservice);
         spinCategory = (Spinner) findViewById(R.id.spincategory);
@@ -157,7 +162,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         callme.setOnClickListener(this);
         post.setOnClickListener(this);
         btnchat.setOnClickListener(this);
-        picture.setOnClickListener(this);
         deleteservice.setOnClickListener(this);
         linearlike.setOnClickListener(this);
         linearunlike.setOnClickListener(this);
@@ -445,7 +449,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             srate3 = success.getSrate3();
                             store_id = success.getStoreId();
                             storecontact = success.getStoreContact();
-                            storecontact = "3030303030";
                             brandtags_list = success.getBrandtags();
 
 
@@ -499,40 +502,50 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             servicetype.setEnabled(false);
                             multiautobrand.setEnabled(false);
 
-                            try {
-                                if (simages.equals("")) {
-                                    picture.setImageResource(R.drawable.store);
-                                    photocount.setText("0 Photos");
+
+                            if (!simages.equals("")) {
+                                //silder code?????????????????????????????????????????????????????????????????
+                                Hash_file_maps = new HashMap<String, String>();
+                                sliderLayout = (SliderLayout) findViewById(R.id.slider);
+                                String dp_path = "http://autokatta.com/mobile/Service_pics/";// + dp;
+
+                                if (simages.contains(",")) {
+
+                                    String[] items = simages.split(",");
+                                    for (String item : items) {
+                                        Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
+                                    }
+
                                 } else {
-                                    String[] parts = simages.split(",");
-                                    photocount.setText(parts.length + " Photos");
-                                    for (int l = 0; l < parts.length; l++) {
-                                        imageslist.add(parts[l]);
-                                        System.out.println(parts[l]);
-                                    }
-                                    simagename = "http://autokatta.com/mobile/Service_pics/" + imageslist.get(0);
-                                    simagename = simagename.replaceAll(" ", "%20");
-                                    try {
 
-                                        Glide.with(ServiceViewActivity.this)
-                                                .load(simagename)
-                                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                                .bitmapTransform(new CropCircleTransformation(ServiceViewActivity.this))
-                                                .placeholder(R.drawable.logo)
-                                                .into(picture);
 
-                                    } catch (Exception e) {
-                                        System.out.println("Error in uploading images");
-                                    }
+                                    Hash_file_maps.put("Image-" + simages, dp_path + simages.replaceAll(" ", ""));
                                 }
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
+
+
+
+                /* Banner...*/
+
+                                for (String name : Hash_file_maps.keySet()) {
+                                    TextSliderView textSliderView = new TextSliderView(ServiceViewActivity.this);
+                                    textSliderView
+                                            .description(name)
+                                            .image(Hash_file_maps.get(name))
+                                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                                            .setOnSliderClickListener(this);
+                                    textSliderView.bundle(new Bundle());
+                                    textSliderView.getBundle()
+                                            .putString("extra", name);
+                                    sliderLayout.addSlider(textSliderView);
+                                }
+                                sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                                sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                                sliderLayout.setCustomAnimation(new DescriptionAnimation());
+                                sliderLayout.setDuration(3000);
+                                sliderLayout.addOnPageChangeListener(this);
                             }
 
-                            if (simages.equals("")) {
-                                picture.setEnabled(false);
-                            }
 
                             //***************************setting previous rating*******************************
                             if (!srate.equals("0")) {
@@ -557,10 +570,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 servicerating.setRating(Float.parseFloat(srating));
                             }
 
-
                             //like code
                             lcnt = Integer.parseInt(slikecnt);
-                            imagename = "http://autokatta.com/mobile/Product_pics/autokattalogofinaltry.jpg";
 
 
                         }
@@ -967,6 +978,26 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);
+
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
     }
 }

@@ -29,11 +29,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.R;
@@ -47,13 +51,13 @@ import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.ProductResponse;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 /**
  * Created by ak-001 on 18/4/17.
  */
-public class ProductViewActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
+public class ProductViewActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener,
+        BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     Button post, btnchat;
     Spinner spinCategory;
@@ -62,7 +66,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     Bundle b = new Bundle();
     //variables for getting data through bundle form adapter
     String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, pimages, plikestatus, action, pcategory, str_category, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
-    ImageView picture, edit, check, callme, deleteproduct;
+    ImageView edit, check, callme, deleteproduct;
     String allDetails;
     final ArrayList<String> spnid = new ArrayList<String>();
     final ArrayList<String> tagname = new ArrayList<String>();
@@ -97,6 +101,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     ConnectionDetector mConnectionDetector;
     ArrayList<String> imageslist = new ArrayList<String>();
     ApiCall mApiCall;
+    SliderLayout sliderLayout;
+    HashMap<String, String> Hash_file_maps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +123,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         productdetails = (EditText) findViewById(R.id.txtpdetails);
         producttags = (MultiAutoCompleteTextView) findViewById(R.id.txtptags);
         producttype = (EditText) findViewById(R.id.txtptype);
-        picture = (ImageView) findViewById(R.id.profile);
         edit = (ImageView) findViewById(R.id.editproduct);
         check = (ImageView) findViewById(R.id.checkproduct);
 
@@ -163,7 +168,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         callme.setOnClickListener(this);
         post.setOnClickListener(this);
         btnchat.setOnClickListener(this);
-        picture.setOnClickListener(this);
         deleteproduct.setOnClickListener(this);
         linearlike.setOnClickListener(this);
         linearunlike.setOnClickListener(this);
@@ -464,28 +468,28 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             }
 
                             if (pimages.equals("")) {
-                                picture.setImageResource(R.drawable.store);
                                 photocount.setText("0 Photos");
-                            } else {
-                                String[] parts = pimages.split(",");
-                                photocount.setText(parts.length + " Photos");
-                                for (int l = 0; l < parts.length; l++) {
-                                    imageslist.add(parts[l]);
-                                    System.out.println(parts[l]);
-                                }
-                                pimagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
-                                pimagename = pimagename.replaceAll(" ", "%20");
-                                try {
-                                    Glide.with(ProductViewActivity.this)
-                                            .load(pimagename)
-                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                            .bitmapTransform(new CropCircleTransformation(ProductViewActivity.this))
-                                            .placeholder(R.drawable.logo)
-                                            .into(picture);
-                                } catch (Exception e) {
-                                    System.out.println("Error in uploading images");
-                                }
                             }
+//                            else {
+//                                String[] parts = pimages.split(",");
+//                                photocount.setText(parts.length + " Photos");
+//                                for (int l = 0; l < parts.length; l++) {
+//                                    imageslist.add(parts[l]);
+//                                    System.out.println(parts[l]);
+//                                }
+//                                pimagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
+//                                pimagename = pimagename.replaceAll(" ", "%20");
+//                                try {
+//                                    Glide.with(ProductViewActivity.this)
+//                                            .load(pimagename)
+//                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                            .bitmapTransform(new CropCircleTransformation(ProductViewActivity.this))
+//                                            .placeholder(R.drawable.logo)
+//                                            .into(picture);
+//                                } catch (Exception e) {
+//                                    System.out.println("Error in uploading images");
+//                                }
+//                            }
 
                             //...
 
@@ -507,23 +511,59 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             producttype.setEnabled(false);
                             multiautobrand.setEnabled(false);
 
-                            if (pimages.equals("")) {
-                                picture.setEnabled(false);
-                            }
-
                             //like code
                             lcnt = Integer.parseInt(plikecnt);
 
-                            if (pimages.equals("")) {
-                                imagename = "http://autokatta.com/mobile/Product_pics/autokattalogofinaltry.jpg";
-                            } else {
-                                imagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
-                            }
 
                         }
 
+                        if (!pimages.equals("")) {
 
+
+                            //silder code?????????????????????????????????????????????????????????????????
+                            Hash_file_maps = new HashMap<String, String>();
+                            sliderLayout = (SliderLayout) findViewById(R.id.slider);
+                            String dp_path = "http://autokatta.com/mobile/Product_pics/";// + dp;
+
+                            if (pimages.contains(",")) {
+
+                                String[] items = pimages.split(",");
+                                for (String item : items) {
+                                    Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
+                                }
+
+                            } else {
+
+
+                                Hash_file_maps.put("Image-" + pimages, dp_path + pimages.replaceAll(" ", ""));
+                            }
+
+
+
+
+                /* Banner...*/
+
+                            for (String name : Hash_file_maps.keySet()) {
+                                TextSliderView textSliderView = new TextSliderView(ProductViewActivity.this);
+                                textSliderView
+                                        .description(name)
+                                        .image(Hash_file_maps.get(name))
+                                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                                        .setOnSliderClickListener(this);
+                                textSliderView.bundle(new Bundle());
+                                textSliderView.getBundle()
+                                        .putString("extra", name);
+                                sliderLayout.addSlider(textSliderView);
+                            }
+                            sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                            sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                            sliderLayout.setCustomAnimation(new DescriptionAnimation());
+                            sliderLayout.setDuration(3000);
+                            sliderLayout.addOnPageChangeListener(this);
+                        }
                     }
+                    //??????????????????????????????????????????????????????????????????????????//
+
 
                 }
 
@@ -796,6 +836,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 break;
             case R.id.btnchat:
 
+                ApiCall mpApicall = new ApiCall(this, this);
+                mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", product_id,
+                        "", "");
+
                  /*if (storecontact.contains(contact)) {
                                 ProductSeviceVehicleMsgSender object = new ProductSeviceVehicleMsgSender();
                                 Bundle b = new Bundle();
@@ -965,6 +1009,26 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.updateProduct(product_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);
+
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
     }
 }
