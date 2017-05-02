@@ -954,10 +954,22 @@ public interface ServiceApi {
     Call<String> _autokattaProductView(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                        @Query("layout") String layout, @Query("product_id") String productid);
 
+
+    //Likes in service View
+    @POST("newlikes.php")
+    Call<String> _autokattaServiceView(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
+                                       @Query("layout") String layout, @Query("service_id") String service_id);
+
     //UnLikes in Product unlike
     @POST("newUnlikes.php")
     Call<String> _autokattaProductViewUnlike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                              @Query("layout") String layout, @Query("product_id") String productId);
+
+
+    //UnLikes in Service unlike
+    @POST("newUnlikes.php")
+    Call<String> _autokattaServiceViewUnlike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
+                                             @Query("layout") String layout, @Query("service_id") String service_id);
 
     //Share data within app
     @POST("newShare.php")
