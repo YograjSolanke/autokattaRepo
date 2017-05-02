@@ -873,8 +873,7 @@ public interface ServiceApi {
      */
 
     @GET("getProductByCategory.php")
-    Call<StoreInventoryResponse> getStoreInventory(@Query("store_id") String store_id, @Query("mycontact") String mycontact,
-                                                   @Query("storecontact") String storecontact);
+    Call<StoreInventoryResponse> getStoreInventory(@Query("store_id") String store_id, @Query("mycontact") String mycontact);
 
     /*
     Like

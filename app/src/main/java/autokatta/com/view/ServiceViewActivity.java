@@ -364,7 +364,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendUnlike() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall._autokattaProductViewUnlike(contact, receiver_contact, "6", service_id);
+        mApiCall._autokattaServiceViewUnlike(contact, receiver_contact, "6", service_id);
     }
 
     /*
@@ -372,7 +372,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendLike() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall._autokattaProductView(contact, receiver_contact, "6", service_id);
+        mApiCall._autokattaServiceView(contact, receiver_contact, "6", service_id);
     }
 
     @Override

@@ -459,7 +459,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 }
 
                 storerating.setRating(Float.parseFloat(storeRating));
-                mBundle.putString("StoreContact", mOtherContact);
+                //  mBundle.putString("StoreContact", mOtherContact);
 
 
 

@@ -69,8 +69,6 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
 
         Bundle bundle = getArguments();
         store_id = bundle.getString("store_id");
-        storeContact = bundle.getString("StoreContact");
-        //  System.out.println("Product Response============="+response);
 
         //getData();//Get Api...
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -82,15 +80,15 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getStoreVehicles(store_id, Sharedcontact, storeContact);
+                getStoreVehicles(store_id, Sharedcontact);
             }
         });
         return mVehicle;
     }
 
-    private void getStoreVehicles(String store_id, String sharedcontact, String storeContact) {
+    private void getStoreVehicles(String store_id, String sharedcontact) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.getStoreInventory(store_id, sharedcontact, storeContact);
+        apiCall.getStoreInventory(store_id, sharedcontact);
     }
 
     @Override

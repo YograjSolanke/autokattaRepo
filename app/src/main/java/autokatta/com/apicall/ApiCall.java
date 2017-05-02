@@ -5570,7 +5570,7 @@ Get saved search Seller list
     Get all products,service and vehicles related to single store
      */
 
-    public void getStoreInventory(String store_id, String mycontact, String storecontact) {
+    public void getStoreInventory(String store_id, String mycontact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -5579,7 +5579,7 @@ Get saved search Seller list
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<StoreInventoryResponse> mGetAuction = mServiceApi.getStoreInventory(store_id, mycontact, storecontact);
+                Call<StoreInventoryResponse> mGetAuction = mServiceApi.getStoreInventory(store_id, mycontact);
                 mGetAuction.enqueue(new Callback<StoreInventoryResponse>() {
                     @Override
                     public void onResponse(Call<StoreInventoryResponse> call, Response<StoreInventoryResponse> response) {
