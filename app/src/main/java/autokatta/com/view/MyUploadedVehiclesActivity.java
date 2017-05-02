@@ -15,6 +15,7 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_uploaded_vehicles);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -24,11 +25,10 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    setSupportActionBar(toolbar);
-                    if (getSupportActionBar() != null) {
-                        getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    }
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.myUploadedVehicleFrame, new MyUploadedVehicleTabs(), "MyUploadedVehicleTabs")
+                            .addToBackStack("MyUploadedVehicleTabs")
+                            .commit();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -37,10 +37,6 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
         /*FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.myUploadedVehicleFrame, new MyUploadedVehiclesFragment()).commit();*/
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.myUploadedVehicleFrame, new MyUploadedVehicleTabs(), "MyUploadedVehicleTabs")
-                .addToBackStack("MyUploadedVehicleTabs")
-                .commit();
     }
 
     @Override

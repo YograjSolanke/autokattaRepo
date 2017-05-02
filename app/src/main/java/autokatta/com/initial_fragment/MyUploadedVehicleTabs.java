@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -20,6 +21,7 @@ import autokatta.com.fragment.BuyerNotificationFragment;
 
 public class MyUploadedVehicleTabs extends Fragment {
     View mUploadedTabs;
+    TabLayout tabLayout;
 
     public MyUploadedVehicleTabs() {
         //empty constructor...
@@ -33,16 +35,36 @@ public class MyUploadedVehicleTabs extends Fragment {
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
-        TabLayout tabLayout = (TabLayout) mUploadedTabs.findViewById(R.id.social_tabs);
+        tabLayout = (TabLayout) mUploadedTabs.findViewById(R.id.social_tabs);
         tabLayout.setupWithViewPager(viewPager);
+        //setupTabIcons();
         return mUploadedTabs;
     }
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getChildFragmentManager());
-        adapter.addFragment(new MyUploadedVehiclesFragment(), "Vehicles");
         adapter.addFragment(new BuyerNotificationFragment(), "Products");
         adapter.addFragment(new AllEnquiryTabFragment(), "Services");
+        adapter.addFragment(new MyUploadedVehiclesFragment(), "Used Vehicle");
+        adapter.addFragment(new NewVehicle(), "New Vehicle");
         viewPager.setAdapter(adapter);
+    }
+
+    private void setupTabIcons() {
+        TextView tabOne = (TextView) LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.tab_custom_demo, null);
+        tabOne.setText("Products");
+        tabLayout.getTabAt(0).setCustomView(tabOne);
+
+        TextView tabTwo = (TextView) LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.tab_custom_demo, null);
+        tabTwo.setText("Services");
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+
+        TextView tabThree = (TextView) LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.tab_custom_demo, null);
+        tabThree.setText("Used Vehicle");
+        tabLayout.getTabAt(2).setCustomView(tabThree);
+
+        TextView tabfour = (TextView) LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.tab_custom_demo, null);
+        tabfour.setText("New Vehicle");
+        tabLayout.getTabAt(3).setCustomView(tabfour);
     }
 }
