@@ -74,7 +74,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     public void onBindViewHolder(final BrowseStoreAdapter.StoreHolder holder, final int position) {
 
         final BrowseStoreResponse.Success success = mMainlist.get(holder.getAdapterPosition());
-            mApiCall =new ApiCall(activity,this);
+        mApiCall = new ApiCall(activity, this);
 
         holder.storename.setText(success.getStoreName());
         holder.storelocation.setText(success.getLocation());
@@ -130,7 +130,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     .into(holder.store_image);
         }
 
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+        holder.btndetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -163,7 +163,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     StoreId = success.getStoreId();
                     mApiCall.otherStoreLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                            .getString("loginContact", ""),StoreContact,"2",StoreId);
+                            .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //sendLike(StoreId, StoreContact);
 
                     holder.linearunlike.setVisibility(View.VISIBLE);
@@ -193,8 +193,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     likecountint = Integer.parseInt(likecountstr);
 
                     StoreId = success.getStoreId();
-        mApiCall.otherStoreUnlike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-        .getString("loginContact", ""),StoreContact,"2",StoreId);
+                    mApiCall.otherStoreUnlike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //    sendUnLike(StoreId, StoreContact);
 
                     holder.linearunlike.setVisibility(View.INVISIBLE);
@@ -224,7 +224,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     StoreId = success.getStoreId();
                     mApiCall.otherStoreFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                            .getString("loginContact", ""),StoreContact,"2",StoreId);
+                            .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //sendFollower(StoreId, StoreContact);
                     holder.linearfollow.setVisibility(View.INVISIBLE);
                     holder.linearunfollow.setVisibility(View.VISIBLE);
@@ -253,7 +253,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     StoreId = success.getStoreId();
                     mApiCall.otherStoreUnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                            .getString("loginContact", ""),StoreContact,"2",StoreId);
+                            .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //sendFollower(StoreId, StoreContact);
                     holder.linearunfollow.setVisibility(View.VISIBLE);
                     holder.linearunfollow.setVisibility(View.INVISIBLE);
@@ -309,7 +309,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "store").apply();
 
-                Intent i=new Intent(activity, ShareWithinAppActivity.class);
+                Intent i = new Intent(activity, ShareWithinAppActivity.class);
                 activity.startActivity(i);
                 activity.finish();
 

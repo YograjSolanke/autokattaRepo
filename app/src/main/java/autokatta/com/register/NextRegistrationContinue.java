@@ -201,7 +201,11 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         switch (v.getId()) {
             case R.id.btnSub:
                 vehiclenotext = edtvehicleno.getText().toString();
-
+                vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
+                brandtext = mSpinnerBrand.getSelectedItem().toString();
+                modeltext = mSpinnerModel.getSelectedItem().toString();
+                versiontext = mSpinnerVersion.getSelectedItem().toString();
+                subcattext = mSpinnerSubType.getSelectedItem().toString();
                 yeartext = edtyear.getText().toString();
                 taxvaltext = edttax.getText().toString();
                 permitvaltext = edtpermit.getText().toString();
@@ -212,11 +216,13 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 nextservice = edtnextservice.getText().toString();
 
                 int flag = 0;
+/*
 
-                if(vehicletypetext.equals("")||vehicletypetext.equals(null)||vehicletypetext.equalsIgnoreCase("---Select Vehicle---"))
+                if(vehicletypetext.equals("")||vehicletypetext.equals(null)||mSpinnerVehitype.getSelectedItem().toString().equalsIgnoreCase("----Select Vehicle----"))
                 {
                     vehicletypetext=vehiType;
                 }else
+
                 {
                     vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
                 }
@@ -252,12 +258,13 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     subcattext = mSpinnerSubType.getSelectedItem().toString();
                 }
 
+*/
 
                 if (!yeartext.equals("")) {
                     flag = 1;
                 } else {
                     flag = 0;
-                    edtyear.setError("Please prodive purchase date");
+                    edtyear.setError("Please provide purchase date");
                 }
 
                 if (!taxvaltext.equalsIgnoreCase("")) {
@@ -496,7 +503,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     mVehicleTypeList.clear();
                     mVehicleTypeList1.clear();
                     parsedData1.clear();
-                    mVehicleTypeList.add("----Select Vehicle----");
+                    mVehicleTypeList.add("Select Vehicle");
                     GetVehicleListResponse mGetVehicleListResponse = (GetVehicleListResponse) response.body();
                     if (!mGetVehicleListResponse.getSuccess().isEmpty()) {
                         for (GetVehicleListResponse.Success vehicleTypeResonse : mGetVehicleListResponse.getSuccess()) {

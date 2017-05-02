@@ -39,14 +39,13 @@
             android:scrollbars="vertical"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
-    <android.support.design.widget.FloatingActionButton
+   <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_vehicle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:src="@mipmap/ic_car" />
+        android:src="@mipmap/ic_plus" />
     </RelativeLayout>
 
 </RelativeLayout>

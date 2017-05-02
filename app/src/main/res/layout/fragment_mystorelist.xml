@@ -24,6 +24,6 @@
         android:layout_alignEnd="@id/swipeRefreshLayoutMyStoreList"
         android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@mipmap/ic_plus" />
 
 </RelativeLayout>

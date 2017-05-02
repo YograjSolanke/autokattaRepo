@@ -377,7 +377,7 @@
                         android:id="@+id/likeimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@mipmap/ic_like"
+                        android:background="@drawable/likeicon"
                         android:contentDescription="@string/app_name" />
 
                     <TextView
@@ -401,7 +401,7 @@
                         android:id="@+id/unlikeimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@mipmap/ic_like"
+                        android:background="@drawable/likeicon"
                         android:contentDescription="@string/app_name" />
 
                     <TextView
@@ -433,7 +433,7 @@
                         android:id="@+id/shareimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@android:drawable/ic_menu_share"
+                        android:background="@mipmap/ic_share"
                         android:contentDescription="@string/app_name" />
 
                     <TextView
@@ -495,12 +495,13 @@
                     android:layout_weight="1"
                     android:gravity="center">
 
+
                     <ImageView
+                        android:background="@drawable/followicon"
                         android:id="@+id/followimg"
                         android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@mipmap/ic_follow"
-                        android:contentDescription="@string/app_name" />
+                        android:layout_height="20dp" />
+
 
                     <TextView
                         android:id="@+id/followtxt"
@@ -523,7 +524,7 @@
                         android:id="@+id/unfollowimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@mipmap/ic_follow"
+                        android:background="@drawable/followicon"
                         android:contentDescription="@string/app_name" />
 
                     <TextView
