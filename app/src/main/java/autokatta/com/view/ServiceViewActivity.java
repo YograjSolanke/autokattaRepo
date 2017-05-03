@@ -451,6 +451,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             storecontact = success.getStoreContact();
                             brandtags_list = success.getBrandtags();
 
+                            getChatEnquiryStatus(contact, receiver_contact, service_id);
 
                             textlike.setText("like(" + slikecnt + ")");
 
@@ -632,6 +633,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
 
         }
+    }
+
+
+    private void getChatEnquiryStatus(String contact, String receiver_contact, String service_id) {
+
+        ApiCall mApicall = new ApiCall(this, this);
+        mApicall.getChatEnquiryStatus(contact, receiver_contact, "", service_id, "");
     }
 
     /*

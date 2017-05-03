@@ -185,7 +185,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                 getCategory();
                 getProductData(product_id, contact);
-                getChatEnquiryStatus(contact, receiver_contact, product_id);
+
 
 
                 producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -425,11 +425,14 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             //  storecontact = "3030303030";
                             brandtags_list = success.getBrandtags();
 
+
+                            getChatEnquiryStatus(contact, receiver_contact, product_id);
+
                             txtlike.setText("Like(" + plikecnt + ")");
 
                             if (storecontact.contains(contact)) {
 
-                                btnchat.setVisibility(View.GONE);
+                                //  btnchat.setVisibility(View.GONE);
                                 edit.setVisibility(View.VISIBLE);
                                 deleteproduct.setVisibility(View.VISIBLE);
                                 callme.setVisibility(View.GONE);
@@ -623,6 +626,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             } else if (str.equals("success_message_saved")) {
 
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
+
+            } else if (str.equals("yes")) {
+                btnchat.setText("Chat");
+
+            } else if (str.equals("no")) {
+                btnchat.setText("Send Enquiry");
 
             }
 
