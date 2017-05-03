@@ -624,6 +624,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 intent.putExtra("store_id", store_id);
                 startActivity(intent);
 
+            } else if (str.equals("success_message_saved")) {
+
+                CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
+
             }
 
 
@@ -816,6 +820,9 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 break;
 
             case R.id.btnchat:
+                ApiCall mpApicall = new ApiCall(this, this);
+                mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", "",
+                        service_id, "");
 
 
                  /*if (storecontact.contains(contact)) {

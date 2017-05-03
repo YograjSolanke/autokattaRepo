@@ -610,7 +610,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 intent.putExtra("store_id", store_id);
                 startActivity(intent);
 
+            } else if (str.equals("success_message_saved")) {
+
+                CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
+
             }
+
 
 
         }

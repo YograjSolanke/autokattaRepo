@@ -292,7 +292,7 @@ public class ChatFragment extends Fragment implements RequestNotifier, View.OnCl
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equalsIgnoreCase("success")) {
+            if (str.equalsIgnoreCase("success_message_saved")) {
                 uploadImage(mediaPath);
                 listView.setAdapter(null);
                 apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);

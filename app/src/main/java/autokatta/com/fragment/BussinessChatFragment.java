@@ -38,8 +38,6 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
     ApiCall apiCall;
     List<getBussinessChatResponse.Success> mSuccesses = new ArrayList<>();
     BussinessChatAdapter mBussinessChatAdapter;
-
-
     FragmentActivity ctx;
 
     @Nullable
