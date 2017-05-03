@@ -458,36 +458,37 @@
         <activity
             android:name=".events.ActiveExchangeMelaPreviewActivity"
             android:label="@string/title_activity_active_exchange_mela_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.ActiveSaleMelaPreviewActivity"
             android:label="@string/title_activity_active_sale_mela_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.ActiveServiceMelaPreviewActivity"
             android:label="@string/title_activity_active_service_mela_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.ActiveLoanmelaPreviewActivity"
             android:label="@string/title_activity_active_loanmela_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.MyEndedExchangePreviewActivity"
             android:label="@string/title_activity_my_ended_exchange_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.MyEndedLoanMelaPreviewActivity"
             android:label="@string/title_activity_my_ended_loan_mela_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.MyEndedServiceMelaPreviewActivity"
             android:label="@string/title_activity_my_ended_service_mela_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".events.MyEndedSaleMelaPreviewActivity"
             android:label="@string/title_activity_my_ended_sale_mela_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".view.ManualEnquiry"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.ManualEnquiry" />
+        <activity android:name=".view.AddManualEnquiry"></activity>
     </application>
 
 </manifest>
