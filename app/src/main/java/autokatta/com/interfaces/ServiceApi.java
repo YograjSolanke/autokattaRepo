@@ -1191,4 +1191,12 @@ public interface ServiceApi {
                                @Query("brandtags") String brandtags);
 
 
+    //get chat enquiry status
+    @POST("getEnquiryChatStatus.php")
+    Call<String> getChatEnquiryStatus(@Query("sender") String sender, @Query("receiver") String receiver,
+                                      @Query("product_id") String product_id,
+                                      @Query("service_id") String service_id,
+                                      @Query("vehicle_id") String vehicle_id);
+
+
 }

@@ -185,6 +185,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                 getCategory();
                 getProductData(product_id, contact);
+                getChatEnquiryStatus(contact, receiver_contact, product_id);
+
 
                 producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                 multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -247,6 +249,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             }
         });
 
+    }
+
+    private void getChatEnquiryStatus(String contact, String receiver_contact, String product_id) {
+
+        ApiCall mApicall = new ApiCall(this, this);
+        mApicall.getChatEnquiryStatus(contact, receiver_contact, product_id, "", "");
     }
 
     private void getProductData(String id, String contact) {
@@ -420,6 +428,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             txtlike.setText("Like(" + plikecnt + ")");
 
                             if (storecontact.contains(contact)) {
+
+                                btnchat.setVisibility(View.GONE);
                                 edit.setVisibility(View.VISIBLE);
                                 deleteproduct.setVisibility(View.VISIBLE);
                                 callme.setVisibility(View.GONE);
