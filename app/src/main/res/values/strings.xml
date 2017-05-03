@@ -15,7 +15,9 @@
 
     <!-- Enquires -->
     <string name="test_drive">Test Drive</string>
+    <string name="manual_enquiry">Manual Enquiry</string>
     <string name="new_dealer">New Dealer</string>
+    <string name="manual_add">Add</string>
 
     <!-- Navigation Drawer Items...-->
     <string name="home">Home</string>
@@ -83,6 +85,15 @@
     <string name="search_button">Search</string>
     <string name="demo_min_label">Min</string>
     <string name="demo_max_label">MAx</string>
+
+    <!-- Manual enquiry-->
+    <string name="enquiry_form">Enquiry Form</string>
+    <string name="first_name">First Name</string>
+    <string name="name">Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="surname">Surname</string>
+    <string name="go_profile">Go Profile</string>
+    <string name="select">Select</string>
 
     <!--Login Activity -->
     <string name="username">Mobile Number</string>

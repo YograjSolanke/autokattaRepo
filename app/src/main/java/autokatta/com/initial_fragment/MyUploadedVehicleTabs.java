@@ -30,7 +30,7 @@ public class MyUploadedVehicleTabs extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mUploadedTabs = inflater.inflate(R.layout.fragment_social_fragment, container, false);
+        mUploadedTabs = inflater.inflate(R.layout.fragment_my_uploaded_vehicle, container, false);
         ViewPager viewPager = (ViewPager) mUploadedTabs.findViewById(R.id.social_viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);

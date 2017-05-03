@@ -19,4 +19,10 @@
         android:title="@string/app_name"
         android:icon="@mipmap/ic_qrcode_scan"
         app:showAsAction="ifRoom" />
+
+    <!-- <item
+         android:id="@+id/account_edit"
+         android:title="@string/app_name"
+         android:icon="@mipmap/ic_account_edit"
+         app:showAsAction="ifRoom" />-->
 </menu>

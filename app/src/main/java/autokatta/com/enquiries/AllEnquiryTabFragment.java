@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import autokatta.com.R;
 import autokatta.com.view.BussinessChatActivity;
+import autokatta.com.view.ManualEnquiry;
 
 /**
  * Created by ak-003 on 24/4/17.
@@ -27,7 +29,7 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
     }
 
     View mEnquiryTab;
-    RelativeLayout relativeBC, relativeTestDrive, relativeNewDealer;
+    RelativeLayout relativeBC, relativeTestDrive, relativeNewDealer, relativeManualEnquiry;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
     CardView mCardBc;
@@ -39,14 +41,14 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
         mEnquiryTab = inflater.inflate(R.layout.fragment_all_enquiry_tab, container, false);
 
         relativeBC = (RelativeLayout) mEnquiryTab.findViewById(R.id.relBC);
-        mCardBc = (CardView) mEnquiryTab.findViewById(R.id.view1);
-        mImageView1 = (ImageView) mEnquiryTab.findViewById(R.id.imageView1);
-        /*relativeTestDrive = (RelativeLayout) mEnquiryTab.findViewById(R.id.relTest);
-        relativeNewDealer = (RelativeLayout) mEnquiryTab.findViewById(R.id.relDealer);*/
+        relativeTestDrive = (RelativeLayout) mEnquiryTab.findViewById(R.id.relTD);
+        relativeNewDealer = (RelativeLayout) mEnquiryTab.findViewById(R.id.relND);
+        relativeManualEnquiry = (RelativeLayout) mEnquiryTab.findViewById(R.id.relME);
 
         relativeBC.setOnClickListener(this);
-        /*relativeTestDrive.setOnClickListener(this);
-        relativeNewDealer.setOnClickListener(this);*/
+        relativeTestDrive.setOnClickListener(this);
+        relativeNewDealer.setOnClickListener(this);
+        relativeManualEnquiry.setOnClickListener(this);
 
         return mEnquiryTab;
     }
@@ -59,12 +61,17 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
                 startActivity(new Intent(getActivity(), BussinessChatActivity.class));
                 break;
 
-//            case R.id.relTest:
-//
-//                break;
-//
-//            case R.id.relDealer:
-//                break;
+            case R.id.relTD:
+                Toast.makeText(getActivity(), "Test Drive", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.relND:
+                Toast.makeText(getActivity(), "New Dealer", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.relME:
+                startActivity(new Intent(getActivity(), ManualEnquiry.class));
+                break;
         }
     }
 }

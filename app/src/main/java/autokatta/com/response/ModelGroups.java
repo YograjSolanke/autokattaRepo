@@ -6,8 +6,8 @@ package autokatta.com.response;
 
 public class ModelGroups {
 
-    private String id, title, image, groupCount, adminVehicleCount;
-    private int vehicleCount;
+    private String id, title, image, adminVehicleCount;
+    private Integer vehicleCount, groupCount;
 
     public String getId() {
         return id;
@@ -33,11 +33,11 @@ public class ModelGroups {
         this.image = image;
     }
 
-    public String getGroupCount() {
+    public Integer getGroupCount() {
         return groupCount;
     }
 
-    public void setGroupCount(String groupCount) {
+    public void setGroupCount(Integer groupCount) {
         this.groupCount = groupCount;
     }
 

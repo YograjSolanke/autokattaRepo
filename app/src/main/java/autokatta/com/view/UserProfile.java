@@ -18,6 +18,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -62,23 +63,25 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
     String mUserName;
     CollapsingToolbarLayout collapsingToolbar;
     String mLoginContact;
-    FloatingActionButton mfab_edit,mfab_done;
+    FloatingActionButton mfab_edit, mfab_done;
     Bitmap bitmap;
     String lastWord = "";
     String mediaPath = "";
     Uri selectedImage = null;
-    Bitmap  bitmapRotate;
+    Bitmap bitmapRotate;
     String fname;
     File file;
     String dp;
     String RegID;
+    private SearchView mSearchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mfab_edit = (FloatingActionButton) findViewById(R.id.fab_edit_prof);
-        mfab_done= (FloatingActionButton) findViewById(R.id.fab_edit_done);
+        mfab_done = (FloatingActionButton) findViewById(R.id.fab_edit_done);
         mfab_done.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
 
@@ -120,7 +123,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
                 Snackbar.make(view, "Edit enable", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 mProfilePicture.setEnabled(true);
-               mfab_done.setVisibility(View.VISIBLE);
+                mfab_done.setVisibility(View.VISIBLE);
                 mfab_edit.setVisibility(View.GONE);
 
             }
@@ -139,12 +142,12 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
             public void onClick(View view) {
                 Snackbar.make(view, "Edit disable", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-               // mUserName = mUserName.toString();
+                // mUserName = mUserName.toString();
                 updateProfile();
                 uploadImage(mediaPath);
                 mfab_done.setVisibility(View.GONE);
                 mfab_edit.setVisibility(View.VISIBLE);
-                 mProfilePicture.setEnabled(false);
+                mProfilePicture.setEnabled(false);
                 collapsingToolbar.setEnabled(false);
             }
         });
@@ -153,6 +156,20 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
     }
 
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_autokatta_main, menu);
+        mSearchView = (SearchView) menu.findItem(R.id.action_searchs).getActionView();
+        *//*mSearchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setupSearchView();
+            }
+        });*//*
+
+        return true;
+    }*/
 
     /*
     API Call for get profile data...
@@ -161,16 +178,18 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
         mApiCall.profileAbout(mLoginContact, mLoginContact);
     }
- /*
-    API Call for get profile data...
-     */
- private void updateProfile() {
-     ApiCall mApiCall = new ApiCall(UserProfile.this, this);
-     if (lastWord!="") {
-         mApiCall.updateUsername(mUserName, lastWord, RegID);
-     }else
-         mApiCall.updateUsername(mUserName, dp,RegID );
-     }
+
+    /*
+       API Call for get profile data...
+        */
+    private void updateProfile() {
+        ApiCall mApiCall = new ApiCall(UserProfile.this, this);
+        if (lastWord != "") {
+            mApiCall.updateUsername(mUserName, lastWord, RegID);
+        } else
+            mApiCall.updateUsername(mUserName, dp, RegID);
+    }
+
     /*
     SETUP TABS INTO VIEWPAGER...
      */
@@ -196,7 +215,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
                     mUserName = mProfileAboutResponse.getSuccess().get(0).getUsername();
-                    RegID=mProfileAboutResponse.getSuccess().get(0).getRegId();
+                    RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
                     String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
                     Glide.with(this)
                             .load(dp_path)
@@ -204,7 +223,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(mProfilePicture);
                     collapsingToolbar.setTitle(mUserName);
-
                 } else {
 
                 }
@@ -224,9 +242,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (!str.equals("")) {
-            System.out.println("Imagggggggggggggggggggeeeeeeeeeeeeee"+str);
-            if (str.equals("Success_update_profile"))
-            {
+            System.out.println("Imagggggggggggggggggggeeeeeeeeeeeeee" + str);
+            if (str.equals("Success_update_profile")) {
                 CustomToast.customToast(getApplicationContext(), "Profile Updated Successfully");
                 getProfileData();
                 mProfilePicture.setEnabled(false);
@@ -407,6 +424,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
             return 0;
         }
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -3,7 +3,6 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +41,7 @@ public class ProfileGroupResponse {
         private String modifiedDate;
         @SerializedName("groupcount")
         @Expose
-        private String groupcount;
+        private Integer groupcount;
         @SerializedName("vehiclecount")
         @Expose
         private Integer vehiclecount;
@@ -79,11 +78,11 @@ public class ProfileGroupResponse {
             this.modifiedDate = modifiedDate;
         }
 
-        public String getGroupcount() {
+        public Integer getGroupcount() {
             return groupcount;
         }
 
-        public void setGroupcount(String groupcount) {
+        public void setGroupcount(Integer groupcount) {
             this.groupcount = groupcount;
         }
 
@@ -113,7 +112,7 @@ public class ProfileGroupResponse {
         private String modifiedDate;
         @SerializedName("groupcount")
         @Expose
-        private String groupcount;
+        private Integer groupcount;
         @SerializedName("vehiclecount")
         @Expose
         private Integer vehiclecount;
@@ -156,11 +155,11 @@ public class ProfileGroupResponse {
             this.modifiedDate = modifiedDate;
         }
 
-        public String getGroupcount() {
+        public Integer getGroupcount() {
             return groupcount;
         }
 
-        public void setGroupcount(String groupcount) {
+        public void setGroupcount(Integer groupcount) {
             this.groupcount = groupcount;
         }
 

@@ -416,6 +416,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 try {
                     //converting the data to json
                     JSONObject obj = new JSONObject(result.getContents());
+                    Log.i("JSON", "RESULT" + result.getContents());
                     /*//setting values to textviews
                     textViewName.setText(obj.getString("name"));
                     textViewAddress.setText(obj.getString("address"));*/

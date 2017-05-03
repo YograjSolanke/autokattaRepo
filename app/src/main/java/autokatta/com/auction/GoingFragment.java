@@ -429,8 +429,8 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     for (GetLiveEventsResponse.Success success : mGetLiveEventsResponse.getSuccess()) {
                         ModelLiveFragment model = new ModelLiveFragment();
                         model.setAuctionId(success.getAuctionId());
-                        model.setAuctioneer(success.getAuctioneer());
-                        model.setActionTitle(success.getActionTitle());
+                        model.setUsername(success.getAuctioneer());
+                        model.setName(success.getActionTitle());
                         model.setContact(success.getContact());
                         model.setStartDate(success.getStartDate());
                         model.setStartTime(success.getStartTime());
