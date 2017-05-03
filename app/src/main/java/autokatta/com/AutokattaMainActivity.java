@@ -1,5 +1,6 @@
 package autokatta.com;
 
+import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -352,8 +353,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     }
 
     private void setupSearchView() {
-        Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-        startActivity(intent);
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(AutokattaMainActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+        startActivity(new Intent(getApplicationContext(), SearchActivity.class), options.toBundle());
     }
 
     private void fcmRegister() {
