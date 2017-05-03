@@ -52,6 +52,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     String preprrate = "";
     String pretmrate = "";
     String preoverall = "";
+    String isDealing = "";
     Double storelattitude;
     Double storelongitude;
     ViewPager viewPager;
@@ -64,6 +65,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     StoreServices storeServices;
     StoreVehicles storeVehicles;
     ApiCall mApiCall;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +97,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mRate.setOnClickListener(this);
         mGoogleMap.setOnClickListener(this);
         mAdd.setOnClickListener(this);
-
 
 
         storeInfo = new StoreInfo();
@@ -321,20 +322,20 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 break;
             case R.id.like_l:
                 if (mLikestr.equalsIgnoreCase("no")) {
-                    mApiCall.otherStoreLike(mLoginContact,mOtherContact, "2",store_id);
+                    mApiCall.otherStoreLike(mLoginContact, mOtherContact, "2", store_id);
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.otherStoreUnlike(mLoginContact,mOtherContact, "2",store_id);
+                    mApiCall.otherStoreUnlike(mLoginContact, mOtherContact, "2", store_id);
                     menuRed.setClosedOnTouchOutside(true);
                 }
 
                 break;
             case R.id.follow_f:
                 if (mFolllowstr.equalsIgnoreCase("no")) {
-                    mApiCall.otherStoreFollow(mLoginContact,mOtherContact, "2",store_id);
+                    mApiCall.otherStoreFollow(mLoginContact, mOtherContact, "2", store_id);
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.otherStoreUnFollow(mLoginContact,mOtherContact, "2",store_id);
+                    mApiCall.otherStoreUnFollow(mLoginContact, mOtherContact, "2", store_id);
                     menuRed.setClosedOnTouchOutside(true);
                 }
                 break;
@@ -386,26 +387,81 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
 
-                if (strName.equals("Add Product")) {
+                if (strName != null) {
+                    if (strName.equals("Add Product")) {
 
-                    Intent intent = new Intent(StoreViewActivity.this, AddProductActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    finish();
+                        Intent intent = new Intent(StoreViewActivity.this, AddProductActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
 
 
-                } else if (strName.equals("Add Service")) {
-                    Intent intent = new Intent(StoreViewActivity.this, AddServiceActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    finish();
+                    } else if (strName.equals("Add Service")) {
+                        Intent intent = new Intent(StoreViewActivity.this, AddServiceActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
 
-                } else if (strName.equals("Add Vehicle")) {
+                    } else if (strName.equals("Add Vehicle")) {
 
-                    Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
-                    startActivity(intent);
-                    finish();
+                        if (isDealing.equalsIgnoreCase("false")) {
+                            Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            //Toast.makeText(getApplicationContext(), "new vehicle", Toast.LENGTH_SHORT).show();
+                            alertVehicle();
+                        }
 
+                    }
+                }
+
+            }
+        });
+        builderSingle.show();
+
+
+    }
+
+    private void alertVehicle() {
+
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(StoreViewActivity.this);
+        builderSingle.setIcon(R.drawable.ic_cart_plus);
+        builderSingle.setTitle("Select Vehicle Type");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(StoreViewActivity.this, android.R.layout.select_dialog_singlechoice);
+        arrayAdapter.add("Used Vehicle");
+        arrayAdapter.add("New Vehicle");
+
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String strName = arrayAdapter.getItem(which);
+
+                if (strName != null) {
+                    if (strName.equals("Used Vehicle")) {
+
+                        //Toast.makeText(getApplicationContext(), "used vehicle", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
+                        startActivity(intent);
+                        finish();
+
+                    } else if (strName.equals("New Vehicle")) {
+
+                        //Toast.makeText(getApplicationContext(), "new vehicle", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
 
             }
@@ -439,8 +495,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     dp = success.getStoreImage();
                     mOtherContact = success.getContact();
                     storeRating = success.getRating();
-                    mLikestr=success.getLikestatus();
-                    mFolllowstr=success.getFollowstatus();
+                    mLikestr = success.getLikestatus();
+                    mFolllowstr = success.getFollowstatus();
                     preoverall = success.getRate();
                     precsrate = success.getRate1();
                     preqwrate = success.getRate2();
@@ -449,6 +505,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     pretmrate = success.getRate5();
                     storelattitude = success.getLatitude();
                     storelongitude = success.getLongitude();
+                    isDealing = success.getIsDealing();
                 }
 
                 if (mOtherContact.contains(mLoginContact)) {
@@ -460,7 +517,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                 storerating.setRating(Float.parseFloat(storeRating));
                 //  mBundle.putString("StoreContact", mOtherContact);
-
 
 
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + dp;
@@ -510,22 +566,22 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 CustomToast.customToast(getApplicationContext(), " Following Successfully");
                 mFollow.setLabelText("Following");
                 mFollow.setLabelTextColor(Color.RED);
-                mFolllowstr="yes";
+                mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
                 CustomToast.customToast(getApplicationContext(), " UnFollowed Successfully");
                 mFollow.setLabelText("Follow");
                 mFollow.setLabelTextColor(Color.WHITE);
-                mFolllowstr="no";
+                mFolllowstr = "no";
             } else if (str.equals("success_like")) {
                 CustomToast.customToast(getApplicationContext(), " Liked Successfully");
                 mLike.setLabelText("Liked");
                 mLike.setLabelTextColor(Color.RED);
-                mLikestr="yes";
+                mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
                 CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
                 mLike.setLabelText("Like");
                 mLike.setLabelTextColor(Color.WHITE);
-                mLikestr="no";
+                mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
                 CustomToast.customToast(getApplicationContext(), "Rating Submitted");
             } else if (str.equals("success_rating_updated")) {
@@ -535,6 +591,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             }
         }
     }
+
     //Calling Functio
     private void call() {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mOtherContact));

@@ -111,6 +111,19 @@ public class StoreResponse {
         @Expose
         private Double longitude;
 
+        @SerializedName("isDealing")
+        @Expose
+        private String isDealing;
+
+
+        public String getIsDealing() {
+            return isDealing;
+        }
+
+        public void setIsDealing(String isDealing) {
+            this.isDealing = isDealing;
+        }
+
         public String getId() {
             return id;
         }

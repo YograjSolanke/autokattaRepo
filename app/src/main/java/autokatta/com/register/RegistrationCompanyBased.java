@@ -121,8 +121,10 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
 
 
         prefs = getApplicationContext().getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);
-        System.out.println("Registration id in company based registeration" + RegiId);
 
+
+        RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", "");
+        System.out.println("Registration id in company based registeration" + RegiId);
         mApiCall.getCompany();
         mApiCall.getDeals();
         mApiCall.getDesignation();
@@ -605,6 +607,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     // addnewcompanyName(updatecompany);
                     mApiCall.addNewCompany(updatecompany);
                     //addNewCompanyName(updatecompany);
+                }
                     strCompany = autoCompany.getText().toString();
                     //***************************************************************
                     String splChrs = "-/@#$%^&_+=()";
@@ -648,8 +651,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     } else if (strDeal.equals("") || strDeal.equals("null") || strDeal.equals(null)) {
                         autoDeals.setError("Enter Deals Name");
                         autoDeals.requestFocus();
-                    }
-                } else {
+                    } else {
                     mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState, autoCompany.getText().toString(), autoDesignation.getText().toString(), Skills, Deals);
                 }
 

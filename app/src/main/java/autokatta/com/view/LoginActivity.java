@@ -110,6 +110,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String id = mLoginResponse.getSuccess().get(0).getRegID();
                     Log.i("id", "->" + id);
                     CustomToast.customToast(getApplicationContext(), "Login Successful");
+                    if (getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", null) != null) {
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", id).apply();
+                    }
+
                     getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginContact", myContact).apply();
                     session.createLoginSession(userName, password);
                     Intent is = new Intent(LoginActivity.this, BackgroundService.class);
