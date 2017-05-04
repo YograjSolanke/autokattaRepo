@@ -24,6 +24,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastReceivedResponse;
+import autokatta.com.view.ChatFragment;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;

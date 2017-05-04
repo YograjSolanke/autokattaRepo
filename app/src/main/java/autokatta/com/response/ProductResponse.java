@@ -106,6 +106,9 @@ public class ProductResponse {
         @SerializedName("prate3")
         @Expose
         private String prate3;
+        @SerializedName("storeOwner")
+        @Expose
+        private String storeOwner;
         @SerializedName("productrating")
         @Expose
         private String productrating;
@@ -179,6 +182,14 @@ public class ProductResponse {
 
         public String getProductDetails() {
             return productDetails;
+        }
+
+        public String getStoreOwner() {
+            return storeOwner;
+        }
+
+        public void setStoreOwner(String storeOwner) {
+            this.storeOwner = storeOwner;
         }
 
         public void setProductDetails(String productDetails) {

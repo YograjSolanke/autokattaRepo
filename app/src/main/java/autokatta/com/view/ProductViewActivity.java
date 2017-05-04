@@ -65,7 +65,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     EditText productname, productprice, productdetails, producttype, writereview;
     Bundle b = new Bundle();
     //variables for getting data through bundle form adapter
-    String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, pimages, plikestatus, action, pcategory, str_category, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
+    String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, pimages, plikestatus, action, pcategory, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
     ImageView edit, check, callme, deleteproduct;
     String allDetails;
     final ArrayList<String> spnid = new ArrayList<String>();
@@ -88,7 +88,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     MultiAutoCompleteTextView producttags, multiautobrand;
     RelativeLayout relativerate;
     RatingBar pricebar, qualitybar, stockbar, overallbar, productrating, storerating;
-    String store_id, storecontact;
+    String store_id, storecontact, storeowner;
 
     //product updating variables
     String uptype, upname, upprice, updetails, uptags, upimgs, upcat, upbrandlist;
@@ -423,6 +423,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             store_id = success.getStoreId();
                             storecontact = success.getStoreContact();
                             //  storecontact = "3030303030";
+                            storeowner = success.getStoreOwner();
                             brandtags_list = success.getBrandtags();
 
 
@@ -860,9 +861,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 break;
             case R.id.btnchat:
 
-                ApiCall mpApicall = new ApiCall(this, this);
-                mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", product_id,
-                        "", "");
+                if (btnchat.getText().toString().equalsIgnoreCase("send enquiry")) {
+                    ApiCall mpApicall = new ApiCall(this, this);
+                    mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", product_id,
+                            "", "");
+                } else {
+
+                }
 
                  /*if (storecontact.contains(contact)) {
                                 ProductSeviceVehicleMsgSender object = new ProductSeviceVehicleMsgSender();

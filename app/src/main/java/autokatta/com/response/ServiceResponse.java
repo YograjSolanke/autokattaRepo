@@ -100,6 +100,9 @@ public class ServiceResponse {
         @SerializedName("servicetags")
         @Expose
         private String servicetags;
+        @SerializedName("storeOwner")
+        @Expose
+        private String storeOwner;
 
         public String getId() {
             return id;
@@ -301,5 +304,12 @@ public class ServiceResponse {
             this.servicetags = servicetags;
         }
 
+        public String getStoreOwner() {
+            return storeOwner;
+        }
+
+        public void setStoreOwner(String storeOwner) {
+            this.storeOwner = storeOwner;
+        }
     }
 }

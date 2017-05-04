@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.fragment.ChatFragment;
 import autokatta.com.response.BroadcastReceivedResponse;
+import autokatta.com.view.ChatFragment;
 
 /**
  * Created by ak-005 on 10/4/17.
