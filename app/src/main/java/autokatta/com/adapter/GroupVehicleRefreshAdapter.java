@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -58,6 +60,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         TextView mRegistrationNo, mTitle, mPrice, mModel, mBrand, mUpdatedBy, mLocation, mRtoCity, mYearOfMfg, mKmsHrs;
         ImageView mShareAutokatta, mShareOther, mLike, mCall, mUnlike;
         ImageView mCardImage;
+        RelativeLayout mRlike,mRunlike;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -75,10 +78,12 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
             mShareAutokatta = (ImageView) itemView.findViewById(R.id.share_autokatta);
             mShareOther = (ImageView) itemView.findViewById(R.id.share_other);
-            mLike = (ImageView) itemView.findViewById(R.id.like);
-            mUnlike = (ImageView) itemView.findViewById(R.id.unlike);
+          //  mLike = (ImageView) itemView.findViewById(R.id.like);
+          //  mUnlike = (ImageView) itemView.findViewById(R.id.unlike);
             mCall = (ImageView) itemView.findViewById(R.id.call);
             mCardImage = (ImageView) itemView.findViewById(R.id.card_image);
+            mRlike= (RelativeLayout) itemView.findViewById(R.id.rellike);
+            mRunlike= (RelativeLayout) itemView.findViewById(R.id.relunlike);
 
         }
     }
@@ -173,17 +178,20 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         }
 
         if (mItemList.get(position).getVehiclelikestatus().equalsIgnoreCase("yes")) {
-            holder.mLike.setVisibility(View.GONE);
-            holder.mUnlike.setVisibility(View.VISIBLE);
+            holder.mRlike.setVisibility(View.GONE);
+            holder.mRunlike.setVisibility(View.VISIBLE);
         }
         if (mItemList.get(position).getVehiclelikestatus().equalsIgnoreCase("no")) {
-            holder.mLike.setVisibility(View.VISIBLE);
-            holder.mUnlike.setVisibility(View.GONE);
+            holder.mRlike.setVisibility(View.VISIBLE);
+            holder.mRunlike.setVisibility(View.GONE);
         }
 
         if (mItemList.get(position).getContact().equals(myContact)) {
-            holder.mLike.setVisibility(View.GONE);
-            holder.mUnlike.setVisibility(View.GONE);
+            Snackbar.make(holder.mCardView, "You Can't Like Your Profile: ", Snackbar.LENGTH_LONG).show();
+           /* holder.mLike.setVisibility(View.VISIBLE);
+            holder.mLike.setEnabled(false);
+            holder.mUnlike.setVisibility(View.VISIBLE);
+            holder.mUnlike.setEnabled(false);*/
             holder.mCall.setVisibility(View.GONE);
         }
         //Share In App
@@ -377,23 +385,28 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             }
         });
 
-        holder.mLike.setOnClickListener(new OnClickListener() {
+        holder.mRlike.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.mLike.setVisibility(View.GONE);
-                holder.mUnlike.setVisibility(View.VISIBLE);
 
-                mItemList.get(position).setVehiclelikestatus("yes");
+                if (mItemList.get(position).getContact().equals(myContact)) {
+                    Snackbar.make(holder.mCardView, "You Can't Like Your Own Vehicle ", Snackbar.LENGTH_LONG).show();
+                }else
+                {
+                    holder.mRlike.setVisibility(View.GONE);
+                    holder.mRunlike.setVisibility(View.VISIBLE);
+                    mItemList.get(position).setVehiclelikestatus("yes");
 
-                sendLike(mItemList.get(position).getContact(), mItemList.get(position).getVehicleId());
+                    sendLike(mItemList.get(position).getContact(), mItemList.get(position).getVehicleId());
+                }
             }
         });
 
-        holder.mUnlike.setOnClickListener(new OnClickListener() {
+        holder.mRunlike.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.mLike.setVisibility(View.VISIBLE);
-                holder.mUnlike.setVisibility(View.GONE);
+                holder.mRlike.setVisibility(View.VISIBLE);
+                holder.mRunlike.setVisibility(View.GONE);
 
                 mItemList.get(position).setVehiclelikestatus("no");
 

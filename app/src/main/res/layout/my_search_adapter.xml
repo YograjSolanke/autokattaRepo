@@ -84,6 +84,7 @@
                     android:padding="7dp"
                     android:layout_below="@+id/deletevehi"
                     android:layout_alignParentEnd="true"
+                    android:tint="@color/button_grey"
                     android:src="@android:drawable/ic_menu_share" />
 
                 <ImageView

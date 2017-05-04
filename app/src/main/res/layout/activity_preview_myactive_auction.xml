@@ -299,7 +299,7 @@
             android:id="@+id/gotolive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/auction"
+            android:src="@mipmap/auctionwhite"
             fab:fab_label="Go Live"
             fab:fab_size="mini" />
 
@@ -307,7 +307,7 @@
             android:id="@+id/clauses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/clauses"
+            android:src="@mipmap/clause"
             fab:fab_label="Clauses"
             fab:fab_size="mini" />
 

@@ -174,43 +174,141 @@
                     tools:text="@string/kms_hrs" />
             </LinearLayout>
         </LinearLayout>
+        <View
 
-        <ImageButton
-            android:id="@+id/share_autokatta"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/cards_button_width"
-            android:layout_height="@dimen/cards_button_height"
+            android:layout_below="@+id/linear_card"
+
+            android:background="#cccccc"
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp">
+
+        </View>
+        <LinearLayout
+            android:layout_below="@+id/linear_card"
+            android:orientation="horizontal"
+            android:id="@+id/relalike2"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:weightSum="1"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/linear_card"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/autoshare" />
+            android:layout_alignParentStart="true">
+            <RelativeLayout
+                android:id="@+id/relative"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="10dp"
+                android:layout_below="@id/linear_card"
+                >
 
-        <ImageButton
-            android:id="@+id/share_other"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/cards_button_width"
-            android:layout_height="@dimen/cards_button_height"
-            android:layout_below="@+id/linear_card"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_toStartOf="@id/share_autokatta"
-            android:contentDescription="@string/app_name"
-            android:tint="@color/button_grey"
-            app:srcCompat="@android:drawable/ic_menu_share" />
+                <RelativeLayout
 
-        <ImageButton
-            android:id="@+id/call"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/cards_button_width"
-            android:layout_height="@dimen/cards_button_height"
-            android:layout_below="@+id/linear_card"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_toStartOf="@id/share_other"
-            android:contentDescription="@string/app_name"
-            android:tint="@color/button_grey"
-            app:srcCompat="@android:drawable/ic_menu_call" />
+                    android:gravity="center"
+                    android:id="@+id/rellike"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent">
 
-        <ImageButton
+                    <ImageView
+                        android:background="@drawable/likeicon"
+                        android:id="@+id/likeimg"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+
+                        android:layout_toRightOf="@id/likeimg"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/liketxt"
+                        android:layout_marginTop="8dp"
+                        android:text="Like"
+                        android:textColor="#808080"
+                        android:textSize="17dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/relunlike"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:background="@drawable/unlikethumb"
+                        android:id="@+id/unlikeimg"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+
+                    <TextView
+
+                        android:layout_toRightOf="@id/unlikeimg"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/unlike"
+                        android:text="Unlike"
+                        android:textColor="@color/red"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+            <View
+                android:layout_gravity="center"
+                android:background="#cccccc"
+                android:layout_width="1dp"
+                android:layout_height="20dp"></View>
+
+            <ImageButton
+                android:id="@+id/call"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/cards_button_width"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linear_card"
+                android:layout_marginEnd="30dp"
+                android:contentDescription="@string/app_name"
+                android:tint="@color/button_grey"
+                app:srcCompat="@android:drawable/ic_menu_call"/>
+            <View
+                android:layout_gravity="center"
+                android:background="#cccccc"
+                android:layout_width="1dp"
+                android:layout_height="20dp"></View>
+
+
+
+
+            <ImageButton
+                android:id="@+id/share_other"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/cards_button_width"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:tint="@color/button_grey"
+                app:srcCompat="@android:drawable/ic_menu_share"/>
+            <View
+                android:layout_gravity="center"
+                android:background="#cccccc"
+                android:layout_width="1dp"
+                android:layout_height="20dp"></View>
+
+            <ImageButton
+                android:id="@+id/share_autokatta"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/cards_button_width"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/autoshare"/>
+
+        </LinearLayout>
+     <!--   <ImageButton
             android:id="@+id/like"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/cards_button_width"
@@ -220,9 +318,9 @@
             android:layout_toStartOf="@id/call"
             android:contentDescription="@string/app_name"
             android:tint="@color/button_grey"
-            app:srcCompat="@mipmap/like"
-            android:visibility="visible" />
-
+            app:srcCompat="@drawable/likeicon"
+            android:visibility="visible" />-->
+<!--
         <ImageButton
             android:id="@+id/unlike"
             style="?android:attr/borderlessButtonStyle"
@@ -233,7 +331,8 @@
             android:layout_toStartOf="@id/call"
             android:contentDescription="@string/app_name"
             app:srcCompat="@drawable/unlikethumb"
-            android:visibility="gone" />
+            android:visibility="gone" />-->
 
     </RelativeLayout>
+
 </android.support.v7.widget.CardView>

@@ -223,7 +223,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         });
 
 
-        holder.vehidetails.setOnClickListener(new View.OnClickListener() {
+       /* holder.vehidetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle b = new Bundle();
@@ -238,10 +238,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 //                fragmentTransaction.commit();
 
             }
-        });
+        });*/
 
 
-        holder.mcardView.setOnClickListener(new View.OnClickListener() {
+        holder.vehidetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

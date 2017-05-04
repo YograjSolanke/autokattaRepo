@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,8 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     ListView mListView;
     List<GetStoreProfileInfoResponse.Success> mSuccesses = new ArrayList<>();
     ProfileMyStoreAdapter myStoreAdapter;
-    FloatingActionButton mCreateStore;
+    android.support.design.widget.FloatingActionButton mCreateStore;
+    //FloatingActionButton mCreateStore;
 
     public AboutStore(){
         //empty constructor...

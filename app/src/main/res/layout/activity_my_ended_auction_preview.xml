@@ -297,7 +297,7 @@
             android:id="@+id/gotoauction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/auction"
+            android:src="@mipmap/auctionwhite"
             fab:fab_label="Go to Auction"
             fab:fab_size="mini" />
 

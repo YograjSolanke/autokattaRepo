@@ -255,7 +255,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     mApiCall.otherStoreUnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                             .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //sendFollower(StoreId, StoreContact);
-                    holder.linearunfollow.setVisibility(View.VISIBLE);
+                    holder.linearfollow.setVisibility(View.VISIBLE);
                     holder.linearunfollow.setVisibility(View.INVISIBLE);
 
                     followcountint--;
