@@ -51,16 +51,12 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-
                 mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
                 mRecyclerView.setHasFixedSize(true);
-
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 layoutManager.setReverseLayout(true);
                 layoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(layoutManager);
-
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
@@ -80,10 +76,7 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
         });
 
         return view;
-
-
     }
-
 
     @Override
     public void onRefresh() {
@@ -92,16 +85,12 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 MySavedAuctionResponse savedAuctionResponse = (MySavedAuctionResponse) response.body();
                 if (!savedAuctionResponse.getSuccess().isEmpty()) {
                     mysavedAuctionList = new ArrayList<>();
                     for (MySavedAuctionResponse.Success success : savedAuctionResponse.getSuccess()) {
-
                         success.setAuctionId(success.getAuctionId());
                         success.setActionTitle(success.getActionTitle());
                         success.setStartDate(success.getStartDate());
@@ -112,27 +101,18 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
                         success.setSpecialClauses(success.getSpecialClauses());
                         success.setSpecialPosition(success.getSpecialPosition());
                         success.setPositionArray(success.getPositionArray());
-
                         success.setAuctioncategory(success.getAuctioncategory());
                         if (success.getStockLocation().equals(""))
                             success.setStockLocation(success.getLocation());
                         else
                             success.setStockLocation(success.getStockLocation());
-                        
                         mysavedAuctionList.add(success);
-
-
                     }
-
-                    Log.i("Ssize", String.valueOf(mysavedAuctionList.size()));
                     mSwipeRefreshLayout.setRefreshing(false);
                     SavedAuctionAdapter adapter = new SavedAuctionAdapter(getActivity(), mysavedAuctionList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
                 }
-
-
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
@@ -140,12 +120,10 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
-
     }
 
     @Override
     public void notifyError(Throwable error) {
-
         if (error instanceof SocketTimeoutException) {
             Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
@@ -154,7 +132,7 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
             Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
-                    , "MySavedAuctionEventfragment");
+                    , "SavedAuctionFragment");
             error.printStackTrace();
         }
     }

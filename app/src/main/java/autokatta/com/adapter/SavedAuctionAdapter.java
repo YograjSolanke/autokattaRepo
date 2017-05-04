@@ -34,7 +34,6 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
     public SavedAuctionAdapter(Activity activity, List<MySavedAuctionResponse.Success> itemlist) {
         this.activity = activity;
         this.mMainlist = itemlist;
-
     }
 
 
@@ -47,8 +46,6 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
 
     @Override
     public void onBindViewHolder(SavedAuctionAdapter.AuctionHolder holder, final int position) {
-
-
         holder.title.setText(mMainlist.get(position).getActionTitle());
         holder.start_date.setText(mMainlist.get(position).getStartDate());
         holder.start_time.setText(mMainlist.get(position).getStartTime());
@@ -67,15 +64,12 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setTitle("Special Clauses");
                 builder.setCancelable(true);
                 builder.setItems(clauses, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
-
                         dialog.dismiss();
-
                     }
                 }).show();
             }
@@ -84,9 +78,7 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
         holder.btnactivate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Bundle b = new Bundle();
-
                 b.putString("auction_id", mMainlist.get(position).getAuctionId());
                 b.putString("title", mMainlist.get(position).getActionTitle());
                 b.putString("startdate", mMainlist.get(position).getStartDate());
@@ -94,15 +86,10 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
                 b.putString("enddate", mMainlist.get(position).getEndDate());
                 b.putString("endtime", mMainlist.get(position).getEndTime());
                 b.putString("className", "SavedAuction");
-//                b.putString("cluase", cluases);
-//                b.putString("ids", ids);
                 b.putString("cluases", mMainlist.get(position).getSpecialClauses());
                 b.putString("category", mMainlist.get(position).getAuctioncategory());
                 b.putString("location", mMainlist.get(position).getStockLocation());
-//
-                //Boolean [] array=(Boolean[]) mMainlist.get(position).getPositionArray().toArray();
                 b.putBooleanArray("positionArray", mMainlist.get(position).getPositionArray());
-
                 AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -113,8 +100,6 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
 
             }
         });
-
-
     }
 
     @Override
