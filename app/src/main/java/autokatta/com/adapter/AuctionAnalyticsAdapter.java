@@ -32,22 +32,17 @@ public class AuctionAnalyticsAdapter extends RecyclerView.Adapter<AuctionAnalyti
 
     @Override
     public AuctionAnalyticsAdapter.AuctionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_auction_analytics, parent, false);
-
         return new AuctionHolder(view);
     }
 
     @Override
     public void onBindViewHolder(AuctionAnalyticsAdapter.AuctionHolder holder, int position) {
-
         AuctionAnalyticsResponse.Success obj = mAnalyticsList.get(position);
-
         holder.reachd.setText(obj.getReachedCount());
         holder.going.setText(obj.getGoingCount());
         holder.ignore.setText(obj.getIgnoreCount());
         holder.share.setText(obj.getSharedCount());
-
         holder.goingstud.setText(obj.getGoingStudent());
         holder.goingselfemp.setText(obj.getGoingSelfStudent());
         holder.goingemp.setText(obj.getGoingEmployee());
@@ -88,21 +83,17 @@ public class AuctionAnalyticsAdapter extends RecyclerView.Adapter<AuctionAnalyti
 
         AuctionHolder(View itemView) {
             super(itemView);
-
             reachd = (TextView) itemView.findViewById(R.id.reached);
             going = (TextView) itemView.findViewById(R.id.goingcnt);
             ignore = (TextView) itemView.findViewById(R.id.ignore);
             share = (TextView) itemView.findViewById(R.id.share);
-
             goingstud = (TextView) itemView.findViewById(R.id.studcnt);
             goingselfemp = (TextView) itemView.findViewById(R.id.selfemp);
             goingemp = (TextView) itemView.findViewById(R.id.emp);
             ignorestud = (TextView) itemView.findViewById(R.id.studignorecnt);
             ignoreselfemp = (TextView) itemView.findViewById(R.id.selfempignore);
             ignoreemp = (TextView) itemView.findViewById(R.id.empignore);
-
             gotolive = (Button) itemView.findViewById(R.id.live);
-
         }
     }
 }

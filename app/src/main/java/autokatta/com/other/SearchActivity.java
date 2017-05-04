@@ -59,9 +59,9 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
     @Override
     public void onBackPressed() {
-        /*super.onBackPressed();
+        super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
     private void setupSearchView() {

@@ -99,22 +99,17 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             if (response.isSuccessful()) {
                 analyticsList.clear();
                 AuctionAnalyticsResponse analyticsResponse = (AuctionAnalyticsResponse) response.body();
-
                 for (AuctionAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
-
                     success.setReachedCount(success.getReachedCount());
                     success.setGoingCount(success.getGoingCount());
                     success.setIgnoreCount(success.getIgnoreCount());
                     success.setSharedCount(success.getSharedCount());
-
                     success.setGoingStudent(success.getGoingStudent());
                     success.setGoingSelfStudent(success.getGoingSelfStudent());
                     success.setGoingEmployee(success.getGoingEmployee());
-
                     success.setIgnoreStudent(success.getIgnoreStudent());
                     success.setIgnoreSelfStudent(success.getIgnoreSelfStudent());
                     success.setIgnoreEmployee(success.getIgnoreEmployee());
-
                     analyticsList.add(success);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);

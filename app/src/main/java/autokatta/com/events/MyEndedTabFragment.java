@@ -39,7 +39,7 @@ public class MyEndedTabFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager mViewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new MyEndedEventFragment(), "My Ended Events");
         tabAdapterName.addFragment(new MyParticipatedEndedFragment(), "My Participated Ended");
         mViewPager.setAdapter(tabAdapterName);

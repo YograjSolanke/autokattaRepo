@@ -6,13 +6,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 
 public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
-    Bundle b=new Bundle();
+    Bundle b = new Bundle();
     TextView mStartdate, mStartTime, mEndTime, mEndDate, mLocation, mtitle;
     String strTitle;
     String strStartdate;
@@ -20,23 +21,27 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime,strloanid;
+    String strEndDateTime, strloanid;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
 
-    LoanMelaAnalyticsFragment loanMelaAnalyticsFragment= new LoanMelaAnalyticsFragment();
-    LoanMelaParticipantsFragment loanMelaParticipantsFragment= new LoanMelaParticipantsFragment();
+    LoanMelaAnalyticsFragment loanMelaAnalyticsFragment = new LoanMelaAnalyticsFragment();
+    LoanMelaParticipantsFragment loanMelaParticipantsFragment = new LoanMelaParticipantsFragment();
     ViewPager mViewPager;
     TabLayout mTabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_ended_loan_mela_preview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
-
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mStartdate = (TextView) findViewById(R.id.start_date);
         mStartTime = (TextView) findViewById(R.id.start_time);
@@ -57,30 +62,29 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
         strloanid = getIntent().getExtras().getString("loanid");
 
 
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Set Data
+                mtitle.setText("Ended Loan Mela");
+                mCollapsingToolbar.setTitle(strTitle);
+                mStartTime.setText(strStarttime);
+                mStartdate.setText(strStartdate);
+                mEndDate.setText(strEnddate);
+                mEndTime.setText(strEndTime);
+                mLocation.setText(strLocation);
 
-            //Set Data
-            mtitle.setText("Ended Loan Mela");
-            mCollapsingToolbar.setTitle(strTitle);
-            mStartTime.setText(strStarttime);
-            mStartdate.setText(strStartdate);
-            mEndDate.setText(strEnddate);
-            mEndTime.setText(strEndTime);
-            mLocation.setText(strLocation);
-
-            b.putString("loanid",strloanid);
-            loanMelaAnalyticsFragment.setArguments(b);
-            loanMelaParticipantsFragment.setArguments(b);
-            if (mViewPager != null) {
-                setupViewPager(mViewPager);
+                b.putString("loanid", strloanid);
+                loanMelaAnalyticsFragment.setArguments(b);
+                loanMelaParticipantsFragment.setArguments(b);
+                if (mViewPager != null) {
+                    setupViewPager(mViewPager);
+                }
+                mTabLayout.setupWithViewPager(mViewPager);
             }
-            mTabLayout.setupWithViewPager(mViewPager);
+        });
+    }
 
-        }
-    });
-}
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
         adapter.addFragment(loanMelaParticipantsFragment, "Participants");
@@ -88,4 +92,29 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        /*finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
+        finishActivity(1);
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(MyEndedLoanMelaPreviewActivity.this, R.anim.left_to_right, R.anim.right_to_left);
+            startActivity(new Intent(getApplicationContext(), MyEndedEventTabActivity.class), options.toBundle());
+            finish();
+        } else {
+            finish();
+            startActivity(new Intent(getApplicationContext(), MyEndedEventTabActivity.class));
+        }*/
+    }
 }

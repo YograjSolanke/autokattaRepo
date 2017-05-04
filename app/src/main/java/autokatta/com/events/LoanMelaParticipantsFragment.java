@@ -103,7 +103,6 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
                 LoanMelaParticipantsResponse participantsResponse = (LoanMelaParticipantsResponse) response.body();
 
                 for (LoanMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
-
                     success.setContact(success.getContact());
                     success.setProfilePhoto(success.getProfilePhoto());
                     success.setUsername(success.getUsername());
@@ -111,7 +110,6 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
                     success.setProfession(success.getProfession());
                     success.setSubprofession(success.getSubprofession());
                     success.setBlackliststatus(success.getBlackliststatus());
-
                     participantList.add(success);
                 }
                 mSwipeRefreshLayout.setRefreshing(false);

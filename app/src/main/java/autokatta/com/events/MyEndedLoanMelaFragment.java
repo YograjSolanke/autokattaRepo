@@ -81,14 +81,10 @@ public class MyEndedLoanMelaFragment extends Fragment implements SwipeRefreshLay
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 EndedSaleMelaResponse endedSaleMelaResponse = (EndedSaleMelaResponse) response.body();
                 if (!endedSaleMelaResponse.getSuccess().isEmpty()) {
-
                     for (EndedSaleMelaResponse.Success loanSuccess : endedSaleMelaResponse.getSuccess()) {
-
                         loanSuccess.setId(loanSuccess.getId());
                         loanSuccess.setName(loanSuccess.getName());
                         loanSuccess.setLocation(loanSuccess.getLocation());
@@ -100,7 +96,6 @@ public class MyEndedLoanMelaFragment extends Fragment implements SwipeRefreshLay
                         loanSuccess.setImage(loanSuccess.getImage());
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
-
                         activeLoanMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);

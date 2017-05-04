@@ -50,22 +50,17 @@ public class LoanParticipantAdapter extends RecyclerView.Adapter<LoanParticipant
     @Override
     public LoanParticipantAdapter.LoanAdapter onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loan_participant, parent, false);
-
         return new LoanAdapter(v);
     }
 
     @Override
     public void onBindViewHolder(final LoanParticipantAdapter.LoanAdapter holder, int position) {
-
         final LoanMelaParticipantsResponse.Success obj = mParticipantList.get(position);
-
         holder.Username.setText(obj.getUsername());
         holder.Location.setText(obj.getLocation());
         holder.Profession.setText(obj.getProfession());
 
-
         if (!obj.getProfilePhoto().equals(null) || !obj.getProfilePhoto().equals("") || !obj.getProfilePhoto().equals("null")) {
-
             Glide.with(mActivity)
                     .load("http://autokatta.com/mobile/profile_profile_pics/" + obj.getProfilePhoto())
                     .bitmapTransform(new CropCircleTransformation(mActivity))
@@ -75,12 +70,10 @@ public class LoanParticipantAdapter extends RecyclerView.Adapter<LoanParticipant
         } else
             holder.Profilepic.setBackgroundResource(R.drawable.profile);
 
-
         //Calling Functionality
         holder.Call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Rcontact = holder.Contact.getText().toString();
                 call(obj.getContact());
                 System.out.println("Calling Image Called From vehicle image load adapter \n");
@@ -102,13 +95,11 @@ public class LoanParticipantAdapter extends RecyclerView.Adapter<LoanParticipant
                 new AlertDialog.Builder(mActivity)
                         .setTitle("Add To Blacklist")
                         .setMessage("Are you sure?")
-
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 holder.AddBlacklist.setVisibility(View.GONE);
                                 holder.RemoveBacklist.setVisibility(View.VISIBLE);
-
                                 keyword = "blacklist";
                                 /*Rcontact = holder.Contact.getText().toString();
                                 System.out.println("Receiver Contact for blacklist:-" + Rcontact);*/

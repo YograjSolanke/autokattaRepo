@@ -43,7 +43,7 @@ public class MyEndedEventFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager mViewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new MyEndedAuctionFragment(), "Auction");
         tabAdapterName.addFragment(new MyEndedLoanMelaFragment(), "Loan Mela");
         tabAdapterName.addFragment(new MyEndedExchangeMelaFragment(), "Exchange Mela");

@@ -33,15 +33,14 @@ public class EndedLoanMelaAdapter extends RecyclerView.Adapter<EndedLoanMelaAdap
     private List<EndedSaleMelaResponse.Success> mMainList = new ArrayList<>();
     private ConnectionDetector mConnectionDetector;
     private String myContact;
-String allDetails;
+    String allDetails;
+
     public EndedLoanMelaAdapter(Activity activity, List<EndedSaleMelaResponse.Success> itemlist) {
         this.mActivity = activity;
         this.mMainList = itemlist;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
         mConnectionDetector = new ConnectionDetector(mActivity);
-
-
     }
 
 
@@ -57,7 +56,6 @@ String allDetails;
 
     @Override
     public void onBindViewHolder(EndedLoanMelaAdapter.LoanHolder holder, final int position) {
-
         holder.title.setText(mMainList.get(position).getName());
         holder.startdate.setText(mMainList.get(position).getStartDate());
         holder.starttime.setText(mMainList.get(position).getStartTime());
@@ -65,7 +63,6 @@ String allDetails;
         holder.endtime.setText(mMainList.get(position).getEndTime());
         holder.location.setText(mMainList.get(position).getLocation());
         holder.address.setText(mMainList.get(position).getAddress());
-
 
         if (!mMainList.get(position).getImage().equals("null") || !mMainList.get(position).getImage().equals("") ||
                 !mMainList.get(position).getImage().equals(null)) {
@@ -85,20 +82,20 @@ String allDetails;
         holder.mPreview.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle b=new Bundle();
-                b.putString("title",mMainList.get(position).getName());
-                b.putString("startdate",mMainList.get(position).getStartDate());
-                b.putString("starttime",mMainList.get(position).getStartTime());
-                b.putString("enddate",mMainList.get(position).getEndDate());
-                b.putString("endtime",mMainList.get(position).getEndTime());
-                b.putString("location",mMainList.get(position).getLocation());
-                b.putString("enddatetime",mMainList.get(position).getEndDateTime());
-                b.putString("loanid",mMainList.get(position).getId());
-                mActivity.finish();
-                Intent i=new Intent(mActivity, MyEndedLoanMelaPreviewActivity.class);
-
+                Bundle b = new Bundle();
+                b.putString("title", mMainList.get(position).getName());
+                b.putString("startdate", mMainList.get(position).getStartDate());
+                b.putString("starttime", mMainList.get(position).getStartTime());
+                b.putString("enddate", mMainList.get(position).getEndDate());
+                b.putString("endtime", mMainList.get(position).getEndTime());
+                b.putString("location", mMainList.get(position).getLocation());
+                b.putString("enddatetime", mMainList.get(position).getEndDateTime());
+                b.putString("loanid", mMainList.get(position).getId());
+                //mActivity.finish();
+                Intent i = new Intent(mActivity, MyEndedLoanMelaPreviewActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 i.putExtras(b);
-                mActivity.startActivity(i);
+                mActivity.startActivityForResult(i, 1);
 
             }
         });
@@ -179,7 +176,7 @@ String allDetails;
 
         TextView title, enddate, endtime, startdate, starttime, location, address, details;
         ImageView image;
-        Button mPreview,mShare;
+        Button mPreview, mShare;
         RelativeLayout relativeshare;
 
 
@@ -194,11 +191,9 @@ String allDetails;
             endtime = (TextView) view.findViewById(R.id.editText);
             image = (ImageView) view.findViewById(R.id.loanmelaimg);
             details = (TextView) view.findViewById(R.id.typeofauction2);
-            mPreview= (Button) itemView.findViewById(R.id.button);
-            mShare= (Button) itemView.findViewById(R.id.share);
+            mPreview = (Button) itemView.findViewById(R.id.button);
+            mShare = (Button) itemView.findViewById(R.id.share);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
-
-
 
 
         }
