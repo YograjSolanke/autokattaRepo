@@ -177,22 +177,16 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         });
 
         selectAuctionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             int count = 0;
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 singleAuctionId = String.valueOf(auctionIds.get(position));
-
                 if (count != 0) {
                     if (singleAuctionId.equals("0"))
                         singleAuctionId = "";
-
                     getReauctionedData(singleAuctionId);
-
                 }
                 count++;
-
             }
 
             @Override
@@ -209,9 +203,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
         switch (v.getId()) {
-
             case (R.id.startdate):
-
                 if (action == MotionEvent.ACTION_DOWN) {
                     //whichclick = "enddate";
                     startDate.setInputType(InputType.TYPE_NULL);
@@ -220,7 +212,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 }
                 break;
             case (R.id.enddate):
-
                 if (action == MotionEvent.ACTION_DOWN) {
                     //whichclick = "enddate";
                     endDate.setInputType(InputType.TYPE_NULL);
@@ -229,7 +220,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 }
                 break;
             case (R.id.starttime):
-
                 if (action == MotionEvent.ACTION_DOWN) {
                     //whichclick = "enddate";
                     startTime.setInputType(InputType.TYPE_NULL);
@@ -239,7 +229,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 break;
 
             case (R.id.endtime):
-
                 if (action == MotionEvent.ACTION_DOWN) {
                     //whichclick = "enddate";
                     endTime.setInputType(InputType.TYPE_NULL);
@@ -256,20 +245,12 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         switch (v.getId()) {
 
             case R.id.btnspecial_clauses:
-                /*       final ArrayList<String> getClauses = getClause();
-                //  final String getClauses1=getClause1();
-
-                System.out.println("rutu------------- Clauses==============" + getClauses);*/
-
                 String[] getIdsArray = new String[getClauses.size()];
                 getIdsArray = getClauses.toArray(getIdsArray);
-
                 specialClausesIDUpdate = "";
                 specialClausesUpdate = "";
-
                 final ArrayList seletedItems = new ArrayList();
                 final ArrayList<String> selectedIds = new ArrayList<String>();
-
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setTitle("Select Special clauses")
                         .setCancelable(true)
@@ -290,9 +271,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 Toast.makeText(getActivity(), "Selected clauses" + selectedIds, Toast.LENGTH_LONG).show();
-
-//                                if (bundlepositionArray!=null)
-//                                {
                                 for (int i = 0; i < bundlepositionArray.length; i++) {
                                     if (bundlepositionArray[i]) {
                                         if (specialClausesIDUpdate.equals("")) {
@@ -302,12 +280,8 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                                             specialClausesUpdate = specialClausesUpdate + "," + getClauses.get(i);
                                             specialClausesIDUpdate = specialClausesIDUpdate + "," + getIds.get(i);
                                         }
-
                                     }
                                 }
-                                // }
-                                System.out.println("specialClausesIDUpdate" + specialClausesIDUpdate);
-
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
@@ -319,7 +293,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 break;
 
             case R.id.editpencil:
-
                 auctionTitle.setEnabled(true);
                 startDate.setEnabled(true);
                 startTime.setEnabled(true);
@@ -329,93 +302,71 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 btnspecial_clauses.setVisibility(View.VISIBLE);
                 editpencil.setVisibility(View.GONE);
                 donecheck.setVisibility(View.VISIBLE);
-
                 break;
 
             case R.id.btnbyteam:
-
                 btnbyteam.setTextColor(getResources().getColor(R.color.orange));
                 btnbyself.setTextColor(getResources().getColor(R.color.white));
                 btnbyadmin.setTextColor(getResources().getColor(R.color.white));
                 btnbyreauction.setTextColor(getResources().getColor(R.color.white));
-
                 byteam_listview.setVisibility(View.VISIBLE);
                 byself_listview.setVisibility(View.GONE);
                 byadmin_listview.setVisibility(View.GONE);
                 byreauction_listview.setVisibility(View.GONE);
                 selectAuctionsSpinner.setVisibility(View.GONE);
-
                 txtSheets.setVisibility(View.GONE);
-
                 break;
 
             case R.id.btnbyself:
-
                 btnbyteam.setTextColor(getResources().getColor(R.color.white));
                 btnbyself.setTextColor(getResources().getColor(R.color.orange));
                 btnbyadmin.setTextColor(getResources().getColor(R.color.white));
                 btnbyreauction.setTextColor(getResources().getColor(R.color.white));
-
                 byteam_listview.setVisibility(View.GONE);
                 byself_listview.setVisibility(View.VISIBLE);
                 byadmin_listview.setVisibility(View.GONE);
                 byreauction_listview.setVisibility(View.GONE);
                 selectAuctionsSpinner.setVisibility(View.GONE);
-
                 txtSheets.setVisibility(View.GONE);
-
                 break;
 
             case R.id.btnbyadmin:
-
                 btnbyteam.setTextColor(getResources().getColor(R.color.white));
                 btnbyself.setTextColor(getResources().getColor(R.color.white));
                 btnbyadmin.setTextColor(getResources().getColor(R.color.orange));
                 btnbyreauction.setTextColor(getResources().getColor(R.color.white));
-
                 byteam_listview.setVisibility(View.GONE);
                 byself_listview.setVisibility(View.GONE);
                 byadmin_listview.setVisibility(View.VISIBLE);
                 byreauction_listview.setVisibility(View.GONE);
                 selectAuctionsSpinner.setVisibility(View.GONE);
-
                 txtSheets.setVisibility(View.VISIBLE);
-
                 break;
 
             case R.id.btnbyreauction:
-
                 btnbyteam.setTextColor(getResources().getColor(R.color.white));
                 btnbyself.setTextColor(getResources().getColor(R.color.white));
                 btnbyadmin.setTextColor(getResources().getColor(R.color.white));
                 btnbyreauction.setTextColor(getResources().getColor(R.color.orange));
-
                 byteam_listview.setVisibility(View.GONE);
                 byself_listview.setVisibility(View.GONE);
                 byadmin_listview.setVisibility(View.GONE);
                 byreauction_listview.setVisibility(View.VISIBLE);
                 selectAuctionsSpinner.setVisibility(View.VISIBLE);
-
                 txtSheets.setVisibility(View.GONE);
-
                 break;
 
             case R.id.txtSheets:
-
                 String sheetarr[] = sheet.split(",");
                 alertBoxToSelectExcelSheet(sheetarr);
-
                 break;
 
             case R.id.donecheck:
-
                 auctionTitleUpdate = auctionTitle.getText().toString();
                 startDateUpdate = startDate.getText().toString();
                 startTimeUpdate = startTime.getText().toString();
                 endDateUpdate = endDate.getText().toString();
                 endTimeUpdate = endTime.getText().toString();
-
-
                 if (auctionTitleUpdate.equals("")) {
                     auctionTitle.setError("Enter auction title");
                     Toast.makeText(getActivity(), "Enter auction title", Toast.LENGTH_LONG).show();
@@ -450,7 +401,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     UpdateAuctionData();
                 }
 
-
                 break;
 
             case R.id.buttonnext:
@@ -459,11 +409,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 List<AuctionAllVehicleData> byselfVehiclesData = new ArrayList<>();
                 List<AuctionAllVehicleData> reauctionVehiclesData = new ArrayList<>();
                 List<AuctionAllVehicleData> adminVehiclesData = new ArrayList<>();
-
                 byselfVehiclesData = selfadapter.checkboxVehicleData();
                 reauctionVehiclesData = reauctionadapter.checkboxVehicleData();
                 adminVehiclesData = adminadapter.checkboxVehicleData();
-
                 for (int i = 0; i < byselfVehiclesData.size(); i++) {
                     finalVehiclesData.add(byselfVehiclesData.get(i));
                 }
@@ -474,20 +422,11 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     finalVehiclesData.add(adminVehiclesData.get(i));
                 }
 
-                Log.i("byself vehicles", String.valueOf(byselfVehiclesData.size()));
-                Log.i("reauction vehicles", String.valueOf(reauctionVehiclesData.size()));
-                Log.i("admin vehicles", String.valueOf(adminVehiclesData.size()));
-
-                Log.i("final vehicles", String.valueOf(finalVehiclesData.size()));
-
                 if (finalVehiclesData.size() == 0)
                     Toast.makeText(getActivity(), "Please select vehicle(s)", Toast.LENGTH_LONG).show();
                 else {
                     Toast.makeText(getActivity(), "Please confirm vehicles that you selected now", Toast.LENGTH_LONG).show();
-
-
                     Bundle bundle = new Bundle();
-
                     bundle.putSerializable("finalVehiclesData", (Serializable) finalVehiclesData);
                     bundle.putString("auction_id", auction_id);
                     bundle.putString("title", auctionTitle.getText().toString());
@@ -515,8 +454,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         fragmentTransaction.addToBackStack("AuctionCreateConfirm");
                         fragmentTransaction.commit();
                     }
-
-
                 }
                 break;
 
@@ -524,19 +461,15 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     }
 
     private void getexcelFilesName() {
-
         mApiCall.ExcelSheetName(contactnumber);
     }
 
     //alert box to get Excel sheet names
     public void alertBoxToSelectExcelSheet(final String[] choices) {
-
         final ArrayList<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
         ExcelsheetName = "";
-
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-
         // set the dialog title
         builder.setTitle("Choose Excel sheet name from following")
                 .setCancelable(true)
@@ -545,11 +478,8 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
                             mSelectedItems.add(choices[which]);
-
                         } else if (mSelectedItems.contains(choices[which])) {
-
                             mSelectedItems.remove(choices[which]);
-
                         }
                     }
 
@@ -559,8 +489,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-
-
                         for (int i = 0; i < mSelectedItems.size(); i++) {
                             if (ExcelsheetName.equals("")) {
                                 ExcelsheetName = mSelectedItems.get(i);
@@ -569,12 +497,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         }
 
                         ExcelsheetName = ExcelsheetName.replaceAll(" ", "");
-
                         if (!ExcelsheetName.equals("")) {
-
                             getVehiclesByExcelSheet(ExcelsheetName);
                             dialog.dismiss();
-
                             Toast.makeText(getActivity(), "Web Service call to get vehicles", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity(), "Please select checkbox", Toast.LENGTH_SHORT).show();
@@ -600,7 +525,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     }
 
     private void getAllVehicles() {
-
         mApiCall.AllAuctionVehicle(contactnumber);
     }
 
@@ -623,16 +547,13 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 /*
                         AuctionAllVehicleData to get All vehicles data
                  */
                 if (response.body() instanceof AuctionAllVehicleResponse) {
-
                     ArrayList<AuctionAllVehicleData> uploadedVehicleData = new ArrayList<>();
                     ArrayList<AuctionAllVehicleData> reauctionAuctionAllVehicleData = new ArrayList<>();
                     ArrayList<AuctionAllVehicleData> adminVehicleData = new ArrayList<>();
-
                     AuctionAllVehicleResponse auctionAllVehicleResponse = (AuctionAllVehicleResponse) response.body();
                         /*
                         Uploaded vehicle data
@@ -640,9 +561,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     if (!auctionAllVehicleResponse.getSuccess().getUploadedVehicles().isEmpty()) {
                         uploadedVehicleData.clear();
                         for (AuctionAllVehicleResponse.Success.UploadedVehicle uploadSuccess : auctionAllVehicleResponse.getSuccess().getUploadedVehicles()) {
-
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
-
                             auctionAllVehicleData.setVehicleId(uploadSuccess.getVehicleId());
                             auctionAllVehicleData.setVehicleTitle(uploadSuccess.getTitle());
                             auctionAllVehicleData.setVehicleCategory(uploadSuccess.getCategory());
@@ -661,17 +580,13 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             String img = uploadSuccess.getImage();
                             if (img.contains(",")) {
                                 String arr[] = img.split(",", 2);
-
                                 auctionAllVehicleData.setVehicleSingleImage(arr[0]);
-
                                 String all = img.replace(",", "/ ");
                                 auctionAllVehicleData.setVehicleImages(all);
-
                             } else {
                                 auctionAllVehicleData.setVehicleSingleImage(img);
                                 auctionAllVehicleData.setVehicleImages(img);
                             }
-
                             uploadedVehicleData.add(auctionAllVehicleData);
                         }
                     }
@@ -681,9 +596,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     if (!auctionAllVehicleResponse.getSuccess().getReauctionVehicles().isEmpty()) {
                         reauctionAuctionAllVehicleData.clear();
                         for (AuctionAllVehicleResponse.Success.ReauctionVehicle reauctionSuccess : auctionAllVehicleResponse.getSuccess().getReauctionVehicles()) {
-
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
-
                             auctionAllVehicleData.setVehicleId(reauctionSuccess.getVehicleId());
                             auctionAllVehicleData.setVehicleTitle(reauctionSuccess.getTitle());
                             auctionAllVehicleData.setVehicleCategory(reauctionSuccess.getCategory());
@@ -702,17 +615,13 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             String img = reauctionSuccess.getImage();
                             if (img.contains(",")) {
                                 String arr[] = img.split(",", 2);
-
                                 auctionAllVehicleData.setVehicleSingleImage(arr[0]);
-
                                 String all = img.replace(",", "/ ");
                                 auctionAllVehicleData.setVehicleImages(all);
-
                             } else {
                                 auctionAllVehicleData.setVehicleSingleImage(img);
                                 auctionAllVehicleData.setVehicleImages(img);
                             }
-
                             reauctionAuctionAllVehicleData.add(auctionAllVehicleData);
                         }
                     }
@@ -722,9 +631,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     if (!auctionAllVehicleResponse.getSuccess().getAdminVehicles().isEmpty()) {
                         adminVehicleData.clear();
                         for (AuctionAllVehicleResponse.Success.AdminVehicle adminSuccess : auctionAllVehicleResponse.getSuccess().getAdminVehicles()) {
-
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
-
                             auctionAllVehicleData.setVehicleId("A " + adminSuccess.getVehicleId());
                             auctionAllVehicleData.setVehicleContact(adminSuccess.getContactNo());
                             auctionAllVehicleData.setVehicleLotNo(adminSuccess.getLotNo());
@@ -747,36 +654,25 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             String img = adminSuccess.getImage();
                             if (img.contains(",")) {
                                 String arr[] = img.split(",", 2);
-
                                 auctionAllVehicleData.setVehicleSingleImage(arr[0]);
-
                                 String all = img.replace(",", "/ ");
                                 auctionAllVehicleData.setVehicleImages(all);
-
                             } else {
                                 auctionAllVehicleData.setVehicleSingleImage(img);
                                 auctionAllVehicleData.setVehicleImages(img);
                             }
-
                             adminVehicleData.add(auctionAllVehicleData);
                         }
                     }
                     if (!auctionAllVehicleResponse.getSuccess().getAuctions().isEmpty()) {
-
                         auctionIds.add(0);
                         auctionTitles.add("Select auction here");
                         for (AuctionAllVehicleResponse.Success.Auction auctionSuccess : auctionAllVehicleResponse.getSuccess().getAuctions()) {
-
                             auctionIds.add(Integer.valueOf(auctionSuccess.getAuctionId()));
                             auctionTitles.add(auctionSuccess.getActionTitle() + " " + "Vehicles:" + auctionSuccess.getReauctionvehiCount());
 
                         }
                     }
-
-                    Log.i("Size---", "upload" + uploadedVehicleData.size());
-                    Log.i("Size---", "reauction" + reauctionAuctionAllVehicleData.size());
-                    Log.i("Size---", "admin" + adminVehicleData.size());
-                    Log.i("Size---", "auction" + auctionTitles.size());
 
                     selfadapter = new AuctionBySelfVehiclesAdapter(getActivity(), uploadedVehicleData);
                     byself_listview.setAdapter(selfadapter);
@@ -797,13 +693,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         txtSheets.setText(spanString);
                     }
 
-
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                             android.R.layout.simple_list_item_1, auctionTitles);
                     System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!=" + auctionTitle);
-
                     selectAuctionsSpinner.setAdapter(adapter);
-
                 }
 
 
@@ -815,7 +708,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     sheet = "";
                     UserId = "";
                     if (!adminResponse.getSuccess().isEmpty()) {
-
                         for (AdminExcelSheetResponse.Success success : adminResponse.getSuccess()) {
                             sheet = success.getExcelSheetName();
                             UserId = success.getUserId();
@@ -829,19 +721,13 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 /*
                         AuctionAllVehicleData to get AdminVehicles data
                  */
-                else if (response.body() instanceof AdminVehiclesResponse)
-
-                {
+                else if (response.body() instanceof AdminVehiclesResponse) {
                     AdminVehiclesResponse adminResponse = (AdminVehiclesResponse) response.body();
                     ArrayList<AuctionAllVehicleData> adminData = new ArrayList<>();
-
                     if (!adminResponse.getSuccess().isEmpty()) {
-
                         adminData.clear();
                         for (AdminVehiclesResponse.Success success : adminResponse.getSuccess()) {
-
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
-
                             auctionAllVehicleData.setVehicleId("A " + success.getId());
                             auctionAllVehicleData.setVehicleContact(success.getContactNo());
                             auctionAllVehicleData.setVehicleLotNo(success.getLotNo());
@@ -863,12 +749,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             String img = success.getUploadedImages();
                             if (img.contains(",")) {
                                 String arr[] = img.split(",", 2);
-
                                 auctionAllVehicleData.setVehicleSingleImage(arr[0]);
-
                                 String all = img.replace(",", "/ ");
                                 auctionAllVehicleData.setVehicleImages(all);
-
                             } else {
                                 auctionAllVehicleData.setVehicleSingleImage(img);
                                 auctionAllVehicleData.setVehicleImages(img);
@@ -876,13 +759,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
                             adminData.add(auctionAllVehicleData);
                         }
-                        Log.i("Size---", "Admin!!" + adminData.size());
+
                         adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminData);
-
                         byadmin_listview.setAdapter(adminadapter);
-
                         btnbyadmin.setText("By admin(" + String.valueOf(adminData.size()) + ")");
-
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
@@ -896,10 +776,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     if (!reauctionResponse.getSuccess().isEmpty()) {
                         reaucionData.clear();
                         for (AuctionReauctionVehicleResponse.Success reauctionSuccess : reauctionResponse.getSuccess()) {
-
-
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
-
                             auctionAllVehicleData.setVehicleId(reauctionSuccess.getVehicleId());
                             auctionAllVehicleData.setVehicleTitle(reauctionSuccess.getTitle());
                             auctionAllVehicleData.setVehicleCategory(reauctionSuccess.getCategory());
@@ -918,9 +795,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             String img = reauctionSuccess.getImage();
                             if (img.contains(",")) {
                                 String arr[] = img.split(",", 2);
-
                                 auctionAllVehicleData.setVehicleSingleImage(arr[0]);
-
                                 String all = img.replace(",", "/ ");
                                 auctionAllVehicleData.setVehicleImages(all);
 
@@ -931,7 +806,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
                             reaucionData.add(auctionAllVehicleData);
                         }
-                        Log.i("Size---", "Reauction!!" + reaucionData.size());
                         reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reaucionData);
                         byreauction_listview.setAdapter(reauctionadapter);
                         btnbyreauction.setText("Reauction(" + String.valueOf(reaucionData.size()) + ")");
@@ -946,22 +820,17 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 else if (response.body() instanceof SpecialClauseGetResponse) {
                     SpecialClauseGetResponse moduleResponse = (SpecialClauseGetResponse) response.body();
                     if (!moduleResponse.getSuccess().isEmpty()) {
-
                         getIds.clear();
                         getClauses.clear();
-
                         for (SpecialClauseGetResponse.Success message : moduleResponse.getSuccess()) {
                             getIds.add(message.getClauseId());
                             getClauses.add(message.getClause());
-
                         }
-                        Log.i("Size---", "Clauses" + getIds.size());
                     }
                 }
 
             } else
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
-
         }
     }
 
@@ -986,7 +855,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
             if (str.startsWith("Success")) {
                 Toast.makeText(getActivity(), "Update Successfull",
                         Toast.LENGTH_LONG).show();
-
                 auctionTitle.setEnabled(false);
                 startDate.setEnabled(false);
                 startTime.setEnabled(false);
@@ -996,7 +864,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 btnspecial_clauses.setVisibility(View.GONE);
                 editpencil.setVisibility(View.VISIBLE);
                 donecheck.setVisibility(View.GONE);
-
                 //Update data in SqLite
                 /*sqlite_obj.open();
                 SQlitewallDB.DatabaseHelper obg = new SQlitewallDB.DatabaseHelper(getActivity());
