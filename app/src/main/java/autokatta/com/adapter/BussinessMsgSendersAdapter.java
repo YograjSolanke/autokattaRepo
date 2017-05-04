@@ -1,8 +1,8 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.BroadcastReceivedResponse;
-import autokatta.com.view.ChatFragment;
+import autokatta.com.view.ChatActivity;
 
 /**
  * Created by ak-005 on 10/4/17.
@@ -48,19 +48,9 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
             b.putString("service_id", service_id);
             b.putString("vehicle_id", vehicle_id);
 
-            ChatFragment obj = new ChatFragment();
-            obj.setArguments(b);
-            /*FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.bussines_chat_container,obj);
-            fragmentTransaction.addToBackStack("bussinessmsgsender");
-            fragmentTransaction.commit();
-*/
-            ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.bussines_chat_container, obj, "bussinessmsgsender")
-                    .addToBackStack("bussinessmsgsender")
-                    .commit();
-
+            Intent intent = new Intent(mActivity, ChatActivity.class);
+            intent.putExtras(b);
+            mActivity.startActivity(intent);
         }
     }
 

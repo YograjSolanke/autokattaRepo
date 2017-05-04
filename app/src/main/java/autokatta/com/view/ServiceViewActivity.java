@@ -61,7 +61,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
    
     String contact;
     Bundle b = new Bundle();
-    String id, action, name, web, rating, receiver_contact, sname, sprice, sdetails,
+    String id, action, name, web, rating, receiver_contact, sname, sprice, sdetails, storeowner,
             stags, stype, scategory, slikecnt, slikestatus, simages, srating, srate, srate1, srate2, srate3, store_id, storecontact, brandtags_list;
     TextView storename, website, textlike, textshare;
     EditText servicename, servicetype, serviceprice, servicedetails, writereview;
@@ -449,6 +449,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             srate3 = success.getSrate3();
                             store_id = success.getStoreId();
                             storecontact = success.getStoreContact();
+                            storeowner = success.getStoreOwner();
                             brandtags_list = success.getBrandtags();
 
                             getChatEnquiryStatus(contact, receiver_contact, service_id);
@@ -828,9 +829,23 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 break;
 
             case R.id.btnchat:
-                ApiCall mpApicall = new ApiCall(this, this);
-                mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", "",
-                        service_id, "");
+                if (btnchat.getText().toString().equalsIgnoreCase("send enquiry")) {
+                    ApiCall mpApicall = new ApiCall(this, this);
+                    mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", "",
+                            service_id, "");
+                } else {
+
+                    Bundle b = new Bundle();
+                    b.putString("sender", storecontact);
+                    b.putString("sendername", storeowner);
+                    b.putString("product_id", "");
+                    b.putString("service_id", service_id);
+                    b.putString("vehicle_id", "");
+
+                    Intent intent = new Intent(ServiceViewActivity.this, ChatActivity.class);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
 
 
                  /*if (storecontact.contains(contact)) {

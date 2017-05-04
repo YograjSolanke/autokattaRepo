@@ -387,7 +387,7 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".view.ChatFragment"
+            android:name=".view.ChatActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"

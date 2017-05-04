@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,7 +32,7 @@ import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.Db_AutokattaContactResponse;
-import autokatta.com.view.ChatFragment;
+import autokatta.com.view.ChatActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -154,20 +151,16 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
        holder.btnsendmsg.setOnClickListener(new OnClickListener() {
            @Override
            public void onClick(View view) {
-               ChatFragment object = new ChatFragment();
+
                Bundle b = new Bundle();
                b.putString("sender", contactdata.get(position).getContact());
                b.putString("sendername", contactdata.get(position).getUsername());
                b.putString("product_id", "");
                b.putString("service_id", "");
                b.putString("vehicle_id", "");
-
-               object.setArguments(b);
-               FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
-               FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-               fragmentTransaction.replace(R.id.my_autokattaContact_container, object);
-               fragmentTransaction.addToBackStack("autokattacontact");
-               fragmentTransaction.commit();
+               Intent intent = new Intent(mActivity, ChatActivity.class);
+               intent.putExtras(b);
+               mActivity.startActivity(intent);
            }
        });
 

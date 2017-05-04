@@ -1,9 +1,9 @@
 package autokatta.com.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -24,7 +24,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastReceivedResponse;
-import autokatta.com.view.ChatFragment;
+import autokatta.com.view.ChatActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -149,25 +149,16 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
             @Override
             public void onClick(View v) {
-                ChatFragment object = new ChatFragment();
+
                 Bundle b = new Bundle();
                 b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).getSender());
                 b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).getSendername());
                 b.putString("product_id", "");
                 b.putString("service_id", "");
                 b.putString("vehicle_id", "");
-
-                object.setArguments(b);
-                /*FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.BrdcastMsgFrame, object);
-                fragmentTransaction.addToBackStack("chatactivity");
-                fragmentTransaction.commit();*/
-
-                ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.BrdcastMsgFrame, object, "chatactivity")
-                        .addToBackStack("chatactivity")
-                        .commit();
+                Intent intent = new Intent(activity, ChatActivity.class);
+                intent.putExtras(b);
+                activity.startActivity(intent);
 
             }
 

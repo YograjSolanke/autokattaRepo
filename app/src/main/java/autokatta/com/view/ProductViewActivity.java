@@ -867,6 +867,18 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             "", "");
                 } else {
 
+
+                    Bundle b = new Bundle();
+                    b.putString("sender", storecontact);
+                    b.putString("sendername", storeowner);
+                    b.putString("product_id", product_id);
+                    b.putString("service_id", "");
+                    b.putString("vehicle_id", "");
+
+                    Intent intent = new Intent(ProductViewActivity.this, ChatActivity.class);
+                    intent.putExtras(b);
+                    startActivity(intent);
+
                 }
 
                  /*if (storecontact.contains(contact)) {
