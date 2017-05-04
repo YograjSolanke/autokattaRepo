@@ -187,6 +187,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                 getCategory();
                 getProductData(product_id, contact);
+                getNoOfEnquiryCount(product_id, contact);
 
 
 
@@ -251,6 +252,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             }
         });
 
+    }
+
+    private void getNoOfEnquiryCount(String product_id, String contact) {
     }
 
     private void getChatEnquiryStatus(String contact, String receiver_contact, String product_id) {
