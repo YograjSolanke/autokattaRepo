@@ -84,17 +84,17 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     Float stockrate = 0.0f;
     Float count;
     Float total;
-    Button submitfeedback, viewfeedback, seellreview;
+    Button submitfeedback, seellreview;
     MultiAutoCompleteTextView producttags, multiautobrand;
     RelativeLayout relativerate;
     RatingBar pricebar, qualitybar, stockbar, overallbar, productrating, storerating;
     String store_id, storecontact, storeowner;
 
     //product updating variables
-    String uptype, upname, upprice, updetails, uptags, upimgs, upcat, upbrandlist;
+    String uptype, upname, upprice, updetails, uptags, upimgs, upcat;
     LinearLayout linearbtns, lineartxts;
     RelativeLayout spinnerlayout, relativewritereview;
-    TextView photocount;
+    TextView photocount, no_of_enquiries;
     String tagpart = "", tagid = "";
     String idlist = "", product_id;
     boolean tagflag = false;
@@ -117,6 +117,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
         mConnectionDetector = new ConnectionDetector(this);
         storename = (TextView) findViewById(R.id.txtstorename);
+        no_of_enquiries = (TextView) findViewById(R.id.no_of_enquiries);
         website = (TextView) findViewById(R.id.txtstorewebsite);
         productname = (EditText) findViewById(R.id.txtpname);
         productprice = (EditText) findViewById(R.id.txtpprice);
@@ -155,6 +156,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         overallbar = (RatingBar) findViewById(R.id.overallbar);
         submitfeedback = (Button) findViewById(R.id.btnfeedback);
         photocount = (TextView) findViewById(R.id.no_of_photos);
+        no_of_enquiries = (TextView) findViewById(R.id.no_of_enquiries);
         multiautobrand = (MultiAutoCompleteTextView) findViewById(R.id.txtbrandptags);
 
         overallbar.setEnabled(false);
@@ -433,7 +435,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                             if (storecontact.contains(contact)) {
 
-                                //  btnchat.setVisibility(View.GONE);
+                                btnchat.setVisibility(View.GONE);
+                                no_of_enquiries.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.VISIBLE);
                                 deleteproduct.setVisibility(View.VISIBLE);
                                 callme.setVisibility(View.GONE);
@@ -881,40 +884,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                 }
 
-                 /*if (storecontact.contains(contact)) {
-                                ProductSeviceVehicleMsgSender object = new ProductSeviceVehicleMsgSender();
-                                Bundle b = new Bundle();
-                                b.putString("product_id", id);
-                                b.putString("service_id", "");
-                                b.putString("vehicle_id", "");
-
-                                object.setArguments(b);
-                                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, object);
-                                fragmentTransaction.addToBackStack("chatactivity");
-                                fragmentTransaction.commit();
-                            } else {
-                                String sender = "";
-                                if (storecontact.contains(",")) {
-                                    String parts[] = storecontact.split(",");
-                                    sender = parts[0];
-                                } else
-                                    sender = storecontact;
-                                ChatActivity object = new ChatActivity();
-                                Bundle b = new Bundle();
-                                b.putString("sender", sender);
-                                b.putString("product_id", id);
-                                b.putString("service_id", "");
-                                b.putString("vehicle_id", "");
-
-                                object.setArguments(b);
-                                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, object);
-                                fragmentTransaction.addToBackStack("chatactivity");
-                                fragmentTransaction.commit();
-                            }*/
                 break;
             case R.id.profile:
 //                b.putString("images", simages);

@@ -848,44 +848,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 }
 
 
-                 /*if (storecontact.contains(contact)) {
-                                    ProductSeviceVehicleMsgSender object = new ProductSeviceVehicleMsgSender();
-                                    Bundle b = new Bundle();
-                                    b.putString("product_id", "");
-                                    b.putString("service_id", id);
-                                    b.putString("vehicle_id", "");
-
-                                    object.setArguments(b);
-                                    FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(R.id.containerView, object);
-                                    fragmentTransaction.addToBackStack("chatactivity");
-                                    fragmentTransaction.commit();
-
-                                } else {
-
-                                    String sender = "";
-
-                                    if (storecontact.contains(",")) {
-                                        String parts[] = storecontact.split(",");
-                                        sender = parts[0];
-                                    } else
-                                        sender = storecontact;
-                                    ChatActivity object = new ChatActivity();
-                                    Bundle b = new Bundle();
-                                    b.putString("sender", sender);
-                                    b.putString("product_id", "");
-                                    b.putString("service_id", id);
-                                    b.putString("vehicle_id", "");
-
-                                    object.setArguments(b);
-                                    FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(R.id.containerView, object);
-                                    fragmentTransaction.addToBackStack("chatactivity");
-                                    fragmentTransaction.commit();
-                                }*/
-
                 break;
 
             case R.id.profile:
