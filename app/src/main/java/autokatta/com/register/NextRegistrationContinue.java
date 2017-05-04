@@ -128,7 +128,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         try {
             if (action.equalsIgnoreCase("MyVehicles")) {
                 vehiType = i.getStringExtra("vehicletype");
-                vehiYear =i.getStringExtra("vehicleyear");
+                vehiYear = i.getStringExtra("vehicleyear");
                 vehiBrand = i.getStringExtra("vehiclebrand");
                 vehiModel = i.getStringExtra("vehiclemodel");
                 vehiVersion = i.getStringExtra("vehicleversion");
@@ -807,18 +807,18 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
 
     @Override
     public void notifyString(String str) {
-        if (!str.equals("")) {
+        if (str != null) {
             if (str.equals("success")) {
                 if (action.equals("ContinueRegistration")) {
                     Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
                     startActivity(i);
                     finish();
                 } else if (action.equals("MyVehicles")) {
-                    Intent i=new Intent(getApplicationContext(),AutokattaMainActivity.class);
+                    Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
                     finish();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
-                Toast.makeText(getApplicationContext(), "Your Vehicle added Sucessfully",
+                Toast.makeText(getApplicationContext(), "Your Vehicle added Successfully",
                         Toast.LENGTH_LONG).show();
                 android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(NextRegistrationContinue.this);
                 // set title
@@ -873,21 +873,20 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
                 // show it
                 alertDialog.show();
+            } else if (str.equals("success_brand_add")) {
+                CustomToast.customToast(getApplicationContext(), "Brand added successfully");
+                getBrand(vehicle_idD, subcategoryId);
+                Log.i("msg", "Brand added successfully");
+            } else if (str.equals("success_model_add")) {
+                CustomToast.customToast(getApplicationContext(), "Model added successfully");
+                getModel(vehicle_idD, subcategoryId, brandId);
+            } else if (str.equals("success_version_add")) {
+                CustomToast.customToast(getApplicationContext(), "Version added successfully");
+                getVersion(vehicle_idD, subcategoryId, brandId, modelId);
             }
-            if (str != null) {
-                if (str.equals("success_brand_add")) {
-                    CustomToast.customToast(getApplicationContext(), "Brand added successfully");
-                    getBrand(vehicle_idD, subcategoryId);
-                    Log.i("msg", "Brand added successfully");
-                } else if (str.equals("success_model_add")) {
-                    CustomToast.customToast(getApplicationContext(), "Model added successfully");
-                    getModel(vehicle_idD, subcategoryId, brandId);
-                } else if (str.equals("success_version_add")) {
-                    CustomToast.customToast(getApplicationContext(), "Version added successfully");
-                    getVersion(vehicle_idD, subcategoryId, brandId, modelId);
-                }
-            }
-        }
+
+        } else
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
     }
 
     /*

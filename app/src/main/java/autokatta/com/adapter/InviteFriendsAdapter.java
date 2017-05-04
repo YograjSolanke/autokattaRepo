@@ -30,32 +30,32 @@ import retrofit2.Response;
  * Created by ak-005 on 31/3/17.
  */
 
-public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier{
+public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier {
     private Activity mContext;
 
 
     private List<String> originalData = null;
-   // private List<Success> filteredData = null;
+    // private List<Success> filteredData = null;
     private LayoutInflater mInflater;
     ArrayList<Boolean> positionArray;
 
-    String nameToSend,contactToSend;
-   ApiCall mApiCall;
-    String mContact,mPassword;
+    private String nameToSend, contactToSend;
+    ApiCall mApiCall;
+    private String mContact, mPassword;
 
     private List<GetRegisteredContactsResponse.Success> mList;
     private List<GetRegisteredContactsResponse.Success> mListCopy;
-   private ItemFilter mFilter = new ItemFilter();
+    private ItemFilter mFilter = new ItemFilter();
 
     public InviteFriendsAdapter(Activity mContext, List<GetRegisteredContactsResponse.Success> mList) {
         this.mContext = mContext;
         this.mList = mList;
-        this.mListCopy=mList;
+        this.mListCopy = mList;
 
     }
 
 
-    private class ContactListHolder{
+    private class ContactListHolder {
         TextView mName;
         TextView mContact;
         Button mbtnInvite;
@@ -65,20 +65,20 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ContactListHolder contactListHolder = null;
-        if (convertView == null){
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.invite_friend_adapter, null);
-            mApiCall=new ApiCall(mContext,this);
+            mApiCall = new ApiCall(mContext, this);
 
             contactListHolder = new ContactListHolder();
             contactListHolder.mName = (TextView) convertView.findViewById(R.id.txtname);
             contactListHolder.mContact = (TextView) convertView.findViewById(R.id.txtnumber);
             contactListHolder.mbtnInvite = (Button) convertView.findViewById(R.id.btninvite);
             convertView.setTag(contactListHolder);
-        }else {
+        } else {
             contactListHolder = (ContactListHolder) convertView.getTag();
         }
-        Log.i("aaaaaaaaaaaaaaaaa","->"+mList);
+        Log.i("aaaaaaaaaaaaaaaaa", "->" + mList);
         GetRegisteredContactsResponse.Success success = mList.get(position);
         contactListHolder.mName.setText(success.getUsername());
         contactListHolder.mContact.setText(success.getContact());
@@ -104,12 +104,11 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
 
                 nameToSend = ContactListHolder.mName.getText().toString();
                 contactToSend = ContactListHolder.mContact.getText().toString();
-              mApiCall.createUser(nameToSend,contactToSend);
-              //  createUser(nameToSend,contactToSend);
+                mApiCall.createUser(nameToSend, contactToSend);
+                //  createUser(nameToSend,contactToSend);
                 //sendSMSMessage(con, namep);
             }
         });
-
 
 
         return convertView;
@@ -120,8 +119,7 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
     }
 
     private class ItemFilter extends Filter {
-        protected FilterResults performFiltering(CharSequence constraint)
-        {
+        protected FilterResults performFiltering(CharSequence constraint) {
 
             String filterString = constraint.toString().toLowerCase();
 
@@ -133,16 +131,13 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
 
             final ArrayList<GetRegisteredContactsResponse.Success> nlist = new ArrayList<>(count);
 
-            GetRegisteredContactsResponse.Success filterableString ;
+            GetRegisteredContactsResponse.Success filterableString;
 
-            for (int i = 0; i < count; i++)
-            {
+            for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);
-                if(filterString.equals(""))
-                {
+                if (filterString.equals("")) {
                     nlist.add(filterableString);
-                }
-                else if(filterableString.getUsername().toLowerCase().contains(filterString)) {
+                } else if (filterableString.getUsername().toLowerCase().contains(filterString)) {
                     nlist.add(filterableString);
                 }
             }
@@ -159,6 +154,7 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
             notifyDataSetChanged();
         }
     }
+
     public int getCount() {
         return mList.size();
     }
@@ -184,13 +180,13 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
                 mUserResponse.setRegId(mUserResponse.getRegId());
                 mUserResponse.setPassword(mUserResponse.getPassword());
 
-                 mContact=mUserResponse.getContact().toString();
-                 mPassword=mUserResponse.getPassword().toString();
+                mContact = mUserResponse.getContact();
+                mPassword = mUserResponse.getPassword();
 
             }
-            sendSMSMessage(mContact,mPassword);
+            sendSMSMessage(mContact, mPassword);
 
-            System.out.println("*******Response"+mContact+"pass"+mPassword);
+            System.out.println("*******Response" + mContact + "pass" + mPassword);
         }
     }
 
@@ -203,25 +199,22 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
     public void notifyString(String str) {
 
     }
-    protected void sendSMSMessage(String con, String msg) {
+
+    private void sendSMSMessage(String con, String msg) {
         Log.i("Send SMS", "");
 
-        try
-        {
+        try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(con, null, "hi..."+msg, null, null);
+            smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
             Toast.makeText(mContext, "SMS sent.", Toast.LENGTH_LONG).show();
-            Intent i=new Intent(mContext, InviteFriends.class);
+            Intent i = new Intent(mContext, InviteFriends.class);
             mContext.startActivity(i);
             mContext.finish();
           /*  Invitefriends fr = new Invitefriends();
             mFragmentManager = ctx.getSupportFragmentManager();
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.containerView, fr).commit();*/
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Toast.makeText(mContext, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }

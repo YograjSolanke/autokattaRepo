@@ -40,25 +40,26 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
     private ItemFilter mFilter = new ItemFilter();
 
 
-    public CompanyBasedInvitationAdapter(Activity mContext,  List<GetContactByCompanyResponse.Success> mList) {
+    public CompanyBasedInvitationAdapter(Activity mContext, List<GetContactByCompanyResponse.Success> mList) {
 
         this.mContext = mContext;
         this.mList = mList;
-        this.mListCopy=mList;//for search filter
-       // mInflater= (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mListCopy = mList;//for search filter
+        // mInflater= (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
-    private class ContactListHolder{
+    private class ContactListHolder {
         TextView mName;
         TextView mContact;
         ImageView mPro_pic;
         Button mbtnInvite;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ContactListHolder contactListHolder = null;
-        if (convertView == null){
+        if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.companyinvitation_adapter, null);
 
@@ -68,10 +69,10 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
             contactListHolder.mPro_pic = (ImageView) convertView.findViewById(R.id.pro_pic);
             contactListHolder.mbtnInvite = (Button) convertView.findViewById(R.id.invite);
             convertView.setTag(contactListHolder);
-        }else {
+        } else {
             contactListHolder = (ContactListHolder) convertView.getTag();
         }
-        Log.i("aaaaaaaaaaaaaaaaa","->"+mList);
+        Log.i("aaaaaaaaaaaaaaaaa", "->" + mList);
         GetContactByCompanyResponse.Success success = mList.get(position);
         contactListHolder.mName.setText(success.getUsername());
         contactListHolder.mContact.setText(success.getContact());
@@ -86,30 +87,28 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
         });
 
         //Set Profile Photo
-        if (contactListHolder.mPro_pic.equals("") || contactListHolder.mPro_pic.equals(null) || contactListHolder.mPro_pic.equals("null"))
-        {
+        if (contactListHolder.mPro_pic.equals("") || contactListHolder.mPro_pic.equals(null) || contactListHolder.mPro_pic.equals("null")) {
             contactListHolder.mPro_pic.setBackgroundResource(R.drawable.profile);
         }
-        if (!contactListHolder.mPro_pic.equals("") || !contactListHolder.mPro_pic.equals(null) || !contactListHolder.mPro_pic.equals("null"))
-        {
+        if (!contactListHolder.mPro_pic.equals("") || !contactListHolder.mPro_pic.equals(null) || !contactListHolder.mPro_pic.equals("null")) {
             Glide.with(mContext)
-                    .load("http://autokatta.com/mobile/profile_profile_pics/"+success.getProfilePic())
+                    .load("http://autokatta.com/mobile/profile_profile_pics/" + success.getProfilePic())
                     .bitmapTransform(new CropCircleTransformation(mContext)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                    .override(110,100)
+                    .override(110, 100)
                     .into(contactListHolder.mPro_pic);
 
         }
         return convertView;
     }
+
     public Filter getFilter() {
         return mFilter;
     }
 
     private class ItemFilter extends Filter {
         @Override
-        protected FilterResults performFiltering(CharSequence constraint)
-        {
+        protected FilterResults performFiltering(CharSequence constraint) {
 
             String filterString = constraint.toString().toLowerCase();
 
@@ -121,16 +120,13 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
 
             final ArrayList<GetContactByCompanyResponse.Success> nlist = new ArrayList<>(count);
 
-            GetContactByCompanyResponse.Success filterableString ;
+            GetContactByCompanyResponse.Success filterableString;
 
-            for (int i = 0; i < count; i++)
-            {
+            for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);
-                if(filterString.equals(""))
-                {
+                if (filterString.equals("")) {
                     nlist.add(filterableString);
-                }
-                else if(filterableString.getUsername().toLowerCase().contains(filterString)) {
+                } else if (filterableString.getUsername().toLowerCase().contains(filterString)) {
                     nlist.add(filterableString);
                 }
             }
@@ -142,25 +138,21 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
 
         @SuppressWarnings("unchecked")
         @Override
-        protected void publishResults(CharSequence constraint, FilterResults results)
-        {
+        protected void publishResults(CharSequence constraint, FilterResults results) {
             mList = (ArrayList<GetContactByCompanyResponse.Success>) results.values;
             notifyDataSetChanged();
         }
 
     }
-    protected void sendSMSMessage(String con,String msg) {
+
+    private void sendSMSMessage(String con, String msg) {
         Log.i("Send SMS", "");
 
-        try
-        {
+        try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(con, null, "hi..."+msg, null, null);
+            smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
             Toast.makeText(mContext, "SMS sent.", Toast.LENGTH_LONG).show();
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Toast.makeText(mContext, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
@@ -173,12 +165,12 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position)  {
+    public Object getItem(int position) {
         return position;
     }
 
     @Override
-    public long getItemId(int position)  {
+    public long getItemId(int position) {
         return mList.get(position).hashCode();
     }
 

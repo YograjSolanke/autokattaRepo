@@ -81,6 +81,9 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
                 onPickImage(v);
             }
         });
+
+        System.out.println("Reg insss" + getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginregistrationid", ""));
     }
 
     public void onPickImage(View view) {
