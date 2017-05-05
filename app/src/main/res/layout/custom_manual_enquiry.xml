@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:weightSum="2">
 
         <TextView
@@ -18,18 +19,20 @@
             android:textStyle="bold"
             android:text="Name:" />
 
-
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
+            android:gravity="start"
+            android:textColor="@color/text_color"
             android:text="Name" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:weightSum="2">
 
         <TextView
@@ -41,18 +44,18 @@
 
         <TextView
             android:id="@+id/contact"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
+            android:textColor="@color/text_color"
+            android:gravity="start"
             android:text="Contact" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:weightSum="2">
 
         <TextView
@@ -64,15 +67,18 @@
 
         <TextView
             android:id="@+id/address"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
+            android:gravity="start"
+            android:textColor="@color/text_color"
             android:text="Address" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:weightSum="2">
 
         <TextView
@@ -84,15 +90,18 @@
 
         <TextView
             android:id="@+id/full_address"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
             android:layout_weight="1.4"
+            android:gravity="start"
             android:text="Address" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:weightSum="2">
 
         <TextView
@@ -104,15 +113,18 @@
 
         <TextView
             android:id="@+id/inventory"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
+            android:textColor="@color/text_color"
+            android:gravity="start"
             android:text="Inventory" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:weightSum="2">
 
         <TextView
@@ -124,15 +136,18 @@
 
         <TextView
             android:id="@+id/discussion"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
+            android:textColor="@color/text_color"
+            android:gravity="start"
             android:text="Discussion" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:weightSum="2">
 
         <TextView
@@ -144,14 +159,19 @@
 
         <TextView
             android:id="@+id/follow_up"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
+            android:textColor="@color/text_color"
+            android:gravity="start"
             android:text="FollowUp" />
     </LinearLayout>
 
     <View
+        android:id="@+id/view1"
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:background="@android:color/background_dark" />
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
 </LinearLayout>

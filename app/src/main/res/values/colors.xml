@@ -9,6 +9,7 @@
     <color name="color_custom_fragment_1">#E64A19</color>
     <color name="color_dark_custom_fragment_1">#BF360C</color>
     <color name="background">#2C3343</color>
+    <color name="text_color">#0078c0</color>
     <color name="black">#000000</color>
     <color name="textColor">#2C3343</color>
     <color name="hintColor">#848484</color>
