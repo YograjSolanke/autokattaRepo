@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -130,6 +131,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         mGoLive.setOnClickListener(this);
         mGoing.setOnClickListener(this);
         mShare.setOnClickListener(this);
+        mCall.setOnClickListener(this);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -241,7 +243,10 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                     whoseAuction = "otherauction";
             }
         });
+
     }
+
+
 
     /*
     Get Auction Preview By Id...
@@ -523,6 +528,14 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 startActivity(intent);
                 finish();
                 break;
+            case R.id.call_c:
+                Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + auctioncontact));
+                try {
+                    startActivity(in);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    System.out.println("No Activity Found For Call in Preview Live events\n");
+                }
+                break;
         }
     }
 
@@ -548,6 +561,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
             startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
         }
     }
+
 
     @Override
     protected void onResume() {

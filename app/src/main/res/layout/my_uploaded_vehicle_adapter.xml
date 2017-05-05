@@ -353,7 +353,7 @@
                     android:layout_marginLeft="10dp"
 
                     android:layout_toRightOf="@+id/dash"
-                    android:textColor="#808080" />
+                    android:textColor="#0f0ff0"/>
             </RelativeLayout>
 
             <RelativeLayout

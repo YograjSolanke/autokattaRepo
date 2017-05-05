@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +34,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyUploadedVehiclesResponse;
+import autokatta.com.view.VehicleDetails;
 import retrofit2.Response;
 
 /**
@@ -115,7 +118,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         holder.editbrands.setEnabled(false);
         holder.editmodels.setEnabled(false);
         holder.edituploadedon.setEnabled(false);
-        holder.editleads.setEnabled(false);
         holder.editmfgyr.setEnabled(false);
         holder.editkms.setEnabled(false);
         holder.editrto.setEnabled(false);
@@ -240,11 +242,20 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             }
         });*/
 
-
-        holder.vehidetails.setOnClickListener(new View.OnClickListener() {
+        holder.vehidetails.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Bundle bundle=new Bundle();
+                Intent i=new Intent(activity, VehicleDetails.class);
+                bundle.putString("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                i.putExtras(bundle);
+                activity.startActivity(i);
+                activity.finish();
+            }
+        });
+        holder.editleads.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 if (holder.editleads.getText().toString().equalsIgnoreCase("0")) {
                     Toast.makeText(activity, "No leads found", Toast.LENGTH_SHORT).show();
                 } else {
@@ -274,7 +285,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
             }
         });
-
     }
 
     @Override

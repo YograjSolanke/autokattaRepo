@@ -187,12 +187,12 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
 
             //Setting Spinner Values
             edtvehicleno.setText(vehino);
+            System.out.println("--------------------------------------" + mSpinnerVehitype.toString());
             mSpinnerVehitype.setSelection(getIndex(mSpinnerVehitype, vehiType));
             mSpinnerSubType.setSelection(getIndex(mSpinnerSubType, vehiSubcat));
             mSpinnerBrand.setSelection(getIndex(mSpinnerBrand, vehiBrand));
             mSpinnerModel.setSelection(getIndex(mSpinnerModel, vehiModel));
             mSpinnerVersion.setSelection(getIndex(mSpinnerVersion, vehiVersion));
-
         }
     }
 
@@ -200,12 +200,35 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSub:
+                int flag = 0;
                 vehiclenotext = edtvehicleno.getText().toString();
-                vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
-                brandtext = mSpinnerBrand.getSelectedItem().toString();
-                modeltext = mSpinnerModel.getSelectedItem().toString();
-                versiontext = mSpinnerVersion.getSelectedItem().toString();
-                subcattext = mSpinnerSubType.getSelectedItem().toString();
+                if (mSpinnerVehitype.getSelectedItem() != null && mSpinnerVehitype != null) {
+                    vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select Vehicle Type", Toast.LENGTH_SHORT).show();
+                }
+                if (mSpinnerBrand.getSelectedItem() != null && mSpinnerBrand != null) {
+                    brandtext = mSpinnerBrand.getSelectedItem().toString();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select Brand", Toast.LENGTH_SHORT).show();
+                }
+                if (mSpinnerModel.getSelectedItem() != null && mSpinnerModel != null) {
+                    modeltext = mSpinnerModel.getSelectedItem().toString();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select Model", Toast.LENGTH_SHORT).show();
+                }
+                if (mSpinnerVersion.getSelectedItem() != null && mSpinnerVersion != null) {
+                    versiontext = mSpinnerVersion.getSelectedItem().toString();
+
+                } else {
+
+                    Toast.makeText(getApplicationContext(), "Select Version", Toast.LENGTH_SHORT).show();
+                }
+                if (mSpinnerSubType.getSelectedItem() != null && mSpinnerSubType != null) {
+                    subcattext = mSpinnerSubType.getSelectedItem().toString();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Select SubType", Toast.LENGTH_SHORT).show();
+                }
                 yeartext = edtyear.getText().toString();
                 taxvaltext = edttax.getText().toString();
                 permitvaltext = edtpermit.getText().toString();
@@ -215,53 +238,9 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 lastservice = edtlastservice.getText().toString();
                 nextservice = edtnextservice.getText().toString();
 
-                int flag = 0;
-/*
-
-                if(vehicletypetext.equals("")||vehicletypetext.equals(null)||mSpinnerVehitype.getSelectedItem().toString().equalsIgnoreCase("----Select Vehicle----"))
-                {
-                    vehicletypetext=vehiType;
-                }else
-
-                {
-                    vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
-                }
-
-                if(brandtext.equals("")||brandtext.equals(null)||brandtext.equalsIgnoreCase("Select Brands"))
-                {
-                    brandtext=vehiBrand;
-                }else
-                {
-                    brandtext = mSpinnerBrand.getSelectedItem().toString();
-                }
-                if(modeltext.equals("")||modeltext.equals(null)||modeltext.equalsIgnoreCase("Select Model"))
-                {
-                    modeltext=vehiModel;
-
-                }else {
-                    modeltext = mSpinnerModel.getSelectedItem().toString();
-                }
-                if(versiontext.equals("")||versiontext.equals(null)||versiontext.equalsIgnoreCase("Select Version"))
-                {
-                    versiontext=vehiVersion;
-
-                }else
-                {
-                    versiontext = mSpinnerVersion.getSelectedItem().toString();
-                }
-                if(subcattext.equals("")||subcattext.equals(null)||subcattext.equalsIgnoreCase("Select vehicle Sub Types"))
-                {
-                    subcattext=vehiSubcat;
-
-                }else
-                {
-                    subcattext = mSpinnerSubType.getSelectedItem().toString();
-                }
-
-*/
 
                 if (!yeartext.equals("")) {
-                    flag = 1;
+                    flag=1;
                 } else {
                     flag = 0;
                     edtyear.setError("Please provide purchase date");
@@ -333,19 +312,25 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     flag = 0;
                 }
 
-                if (flag == 1 && !action.equalsIgnoreCase("MyVehicles")) {
+                if (flag == 1 && !action.equalsIgnoreCase("MyVehicles") && mSpinnerVehitype.getSelectedItem() != null && mSpinnerVehitype != null
+                        && mSpinnerBrand.getSelectedItem() != null && mSpinnerBrand != null &&
+                        mSpinnerModel.getSelectedItem() != null && mSpinnerModel != null
+                        && mSpinnerVersion.getSelectedItem() != null && mSpinnerVersion != null &&
+                        mSpinnerSubType.getSelectedItem() != null && mSpinnerSubType != null) {
                     /*Response is Success*/
                     mApicall.addOwn(contact, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                             taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
                     //addOwn();
 
-                } else if (flag == 1 && action.equalsIgnoreCase("MyVehicles")) {
+                } else if (flag == 1 && action.equalsIgnoreCase("MyVehicles") && mSpinnerVehitype.getSelectedItem() != null && mSpinnerVehitype != null
+                        && mSpinnerBrand.getSelectedItem() != null && mSpinnerBrand != null
+                        && mSpinnerModel.getSelectedItem() != null && mSpinnerModel != null
+                        && mSpinnerVersion.getSelectedItem() != null && mSpinnerVersion != null
+                        && mSpinnerSubType.getSelectedItem() != null && mSpinnerSubType != null) {
                     /*Response is success*/
                     mApicall.uploadVehicle(ids, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                             taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
                     CustomToast.customToast(getApplicationContext(), "Vehicle Uploaded Successfully!!!");
-
-
                 } else {
                     CustomToast.customToast(getApplicationContext(), "Error please provide all details Correct!!!");
                 }
@@ -517,6 +502,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         dataadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSpinnerVehitype.setAdapter(dataadapter);
                         mSpinnerSubType.setAdapter(null);
+
                         mSpinnerVehitype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
@@ -561,6 +547,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerSubType.setAdapter(adapter);
+
                     mSpinnerSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -569,6 +556,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                 subcategoryName = parsedData.get(position);
                                 ((TextView) mSpinnerSubType.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
                                 System.out.println("Sub cat is::" + subcategoryId);
+                                System.out.println("Sub cat vehicle iddd is::" + vehicle_idD);
                                 System.out.println("Sub cat name::" + subcategoryName);
                                 getBrand(vehicle_idD, subcategoryId);
                             }
@@ -600,6 +588,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerBrand.setAdapter(adapter);
                     mSpinnerModel.setAdapter(null);
+
                     mSpinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -736,6 +725,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, versionData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerVersion.setAdapter(adapter);
+
                     mSpinnerVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
