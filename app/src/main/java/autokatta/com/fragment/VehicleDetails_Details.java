@@ -13,6 +13,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.EnquiryCountResponse;
 import autokatta.com.response.GetVehicleByIdResponse;
 import retrofit2.Response;
 
@@ -23,7 +24,7 @@ import retrofit2.Response;
 public class VehicleDetails_Details extends Fragment implements RequestNotifier {
 
     View mVehicleDetails;
-    TextView mTitleStr, mPriceStr, mViewsStr, mCallStr;
+    TextView mTitleStr, mPriceStr, mViewsStr, mCallStr, mEnquiryStr;
     TextView mAddressDetails, mCategoryDetails, mSubCatDetails, mBrandDetails, mModelDetails, mVersionDetails, mYearDetails;
     @Nullable
     @Override
@@ -34,6 +35,7 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
         mPriceStr = (TextView) mVehicleDetails.findViewById(R.id.price_str);
         mViewsStr = (TextView) mVehicleDetails.findViewById(R.id.views_str);
         mCallStr = (TextView) mVehicleDetails.findViewById(R.id.call_str);
+        mEnquiryStr = (TextView) mVehicleDetails.findViewById(R.id.enquiry_str);
 
         mAddressDetails = (TextView) mVehicleDetails.findViewById(R.id.addressdetails);
         mCategoryDetails = (TextView) mVehicleDetails.findViewById(R.id.categorydetails);
@@ -50,10 +52,19 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
                                 .getString("loginContact", ""),
                         getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                 .getString("vehicle_id",""));
+                getEnquiryCount(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                .getString("loginContact", ""),
+                        getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                .getString("vehicle_id", ""));
             }
         });
 
         return mVehicleDetails;
+    }
+
+    private void getEnquiryCount(String loginContact, String vehicle_id) {
+        ApiCall mApicall = new ApiCall(getActivity(), this);
+        mApicall.getEnquiryCount(loginContact, "", "", vehicle_id);
     }
 
     /*
@@ -68,6 +79,9 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+
+                if (response.body() instanceof GetVehicleByIdResponse) {
+
                 GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
                 for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()) {
                     datum.setVehicleId(datum.getVehicleId());
@@ -120,7 +134,19 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
                     datum.setUsername(datum.getUsername());
                     datum.setStoreId(datum.getStoreId());
                     datum.setStatus(datum.getStatus());
+
                 }
+                } else if (response.body() instanceof EnquiryCountResponse) {
+                    EnquiryCountResponse enquiryCountResponse = (EnquiryCountResponse) response.body();
+                    if (enquiryCountResponse.getSuccess() != null) {
+
+                        String count = enquiryCountResponse.getSuccess().getEnquiryCount().toString();
+                        mEnquiryStr.setText(count);
+
+                    }
+                }
+
+
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }

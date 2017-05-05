@@ -55,7 +55,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     CollapsingToolbarLayout collapsingToolbar;
     String name;
     FloatingActionMenu mFab;
-    FloatingActionButton mLike, mCall, mAutoshare, mShare;
+    FloatingActionButton mLike, mCall, mAutoshare, mShare, mChat;
     String mVehicle_Id, Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     String contact, mLikestr, prefcontact, allDetails;
     ApiCall mApiCall;
@@ -77,6 +77,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
         mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
         mShare = (FloatingActionButton) findViewById(R.id.share);
+        mChat = (FloatingActionButton) findViewById(R.id.chat_c);
 
         mApiCall = new ApiCall(VehicleDetails.this, this);
         mCall.setOnClickListener(this);
@@ -84,6 +85,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mFab.setOnClickListener(this);
         mShare.setOnClickListener(this);
         mAutoshare.setOnClickListener(this);
+        mChat.setOnClickListener(this);
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -194,6 +196,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     mSendImage = datum.getImage();
                     mKms = datum.getKmsRunning();
 
+
+                    getChatEnquiryStatus(prefcontact, contact, mVehicle_Id);
+
                     if (mLikestr.equalsIgnoreCase("no")) {
                         mLike.setLabelText("Like");
                         mLike.setLabelTextColor(Color.WHITE);
@@ -207,6 +212,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     if (contact.equals(prefcontact)) {
                         mLike.setVisibility(View.GONE);
                         mCall.setVisibility(View.GONE);
+                        mChat.setVisibility(View.GONE);
                     }
 
                     Hash_file_maps = new HashMap<String, String>();
@@ -277,6 +283,11 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         }
     }
 
+    private void getChatEnquiryStatus(String prefcontact, String contact, String mVehicle_id) {
+        ApiCall mApicall = new ApiCall(this, this);
+        mApicall.getChatEnquiryStatus(prefcontact, contact, "", "", mVehicle_id);
+    }
+
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
@@ -304,6 +315,16 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 mLike.setLabelText("Like");
                 mLike.setLabelTextColor(Color.WHITE);
                 mLikestr = "no";
+            } else if (str.equals("success_message_saved")) {
+
+                CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
+
+            } else if (str.equals("yes")) {
+                mChat.setLabelText("Chat");
+
+            } else if (str.equals("no")) {
+                mChat.setLabelText("Send Enquiry");
+
             }
         }
     }
@@ -325,6 +346,34 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 }
 
                 break;
+            case R.id.chat_c:
+
+
+                if (mChat.getLabelText().toString().equalsIgnoreCase("send enquiry")) {
+                    ApiCall mpApicall = new ApiCall(this, this);
+                    mpApicall.sendChatMessage(prefcontact, contact, "Please send information About this", "", "",
+                            "", mVehicle_Id);
+                } else {
+
+
+                    Bundle b = new Bundle();
+                    b.putString("sender", contact);
+                    b.putString("sendername", name);
+                    b.putString("product_id", "");
+                    b.putString("service_id", "");
+                    b.putString("vehicle_id", mVehicle_Id);
+
+                    Intent intent = new Intent(VehicleDetails.this, ChatActivity.class);
+                    intent.putExtras(b);
+                    startActivity(intent);
+
+                }
+
+                break;
+
+
+
+
             case R.id.share:
                 String imageFilePath;
                 Intent intent = new Intent(Intent.ACTION_SEND);

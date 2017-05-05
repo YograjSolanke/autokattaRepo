@@ -92,6 +92,15 @@
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
 
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/chat_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_call"
+            fab:fab_size="mini"
+            fab:fab_label="Send Enquiry" />
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/call_c"
             android:layout_width="wrap_content"
