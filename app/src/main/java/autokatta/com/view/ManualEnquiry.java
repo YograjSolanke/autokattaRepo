@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.ManualEnquiryAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -27,7 +28,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    List<ManualEnquiryResponse> mMyGroupsList = new ArrayList<>();
+    List<ManualEnquiryResponse.Success> mMyGroupsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,15 +117,19 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
                 for (ManualEnquiryResponse.Success success : manualEnquiry.getSuccess()) {
                     success.setId(success.getId());
-                    success.setMyContact(success.getId());
-                    success.setCustName(success.getId());
-                    success.setCustAddress(success.getId());
-                    success.setCustFullAddress(success.getId());
-                    success.setCustContact(success.getId());
-                    success.setCustInventoryType(success.getId());
-                    success.setDiscussion(success.getId());
-                    success.setNextFollowupDate(success.getId());
+                    success.setMyContact(success.getMyContact());
+                    success.setCustName(success.getCustName());
+                    success.setCustAddress(success.getCustAddress());
+                    success.setCustFullAddress(success.getCustFullAddress());
+                    success.setCustContact(success.getCustContact());
+                    success.setCustInventoryType(success.getCustInventoryType());
+                    success.setDiscussion(success.getDiscussion());
+                    success.setNextFollowupDate(success.getNextFollowupDate());
+                    mMyGroupsList.add(success);
                 }
+                ManualEnquiryAdapter adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
+                mRecyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));

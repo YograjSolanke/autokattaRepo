@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingStart="@dimen/card_margin"
     android:paddingEnd="@dimen/card_margin">
 
@@ -18,7 +18,9 @@
             android:textStyle="bold"
             android:text="Name:" />
 
+
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
@@ -38,12 +40,16 @@
             android:text="Contact:" />
 
         <TextView
+            android:id="@+id/contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
             android:text="Contact" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,6 +63,7 @@
             android:text="Address:" />
 
         <TextView
+            android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
@@ -76,6 +83,7 @@
             android:text="Full Address:" />
 
         <TextView
+            android:id="@+id/full_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
@@ -95,6 +103,7 @@
             android:text="Inventory:" />
 
         <TextView
+            android:id="@+id/inventory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
@@ -114,6 +123,7 @@
             android:text="Discussion:" />
 
         <TextView
+            android:id="@+id/discussion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
@@ -133,9 +143,15 @@
             android:text="FollowUp:" />
 
         <TextView
+            android:id="@+id/follow_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.4"
             android:text="FollowUp" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@android:color/background_dark" />
 </LinearLayout>
