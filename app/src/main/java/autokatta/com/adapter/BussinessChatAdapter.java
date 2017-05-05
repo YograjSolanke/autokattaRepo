@@ -79,7 +79,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
             }
             if (   mKeyword.getText().toString().equals("Service")) {
                 b.putString("product_id", "");
-                b.putString("service_id", mItemList.get(getAdapterPosition()).getStoreId());
+                b.putString("service_id", mItemList.get(getAdapterPosition()).getId());
                 b.putString("vehicle_id", "");
             }
 

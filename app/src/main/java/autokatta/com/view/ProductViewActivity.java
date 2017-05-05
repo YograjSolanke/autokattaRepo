@@ -47,6 +47,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.EnquiryCountResponse;
 import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
@@ -117,7 +118,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
         mConnectionDetector = new ConnectionDetector(this);
         storename = (TextView) findViewById(R.id.txtstorename);
-        no_of_enquiries = (TextView) findViewById(R.id.no_of_enquiries);
         website = (TextView) findViewById(R.id.txtstorewebsite);
         productname = (EditText) findViewById(R.id.txtpname);
         productprice = (EditText) findViewById(R.id.txtpprice);
@@ -255,6 +255,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     }
 
     private void getNoOfEnquiryCount(String product_id, String contact) {
+        ApiCall mApicall = new ApiCall(this, this);
+        mApicall.getEnquiryCount(contact, product_id, "", "");
+
     }
 
     private void getChatEnquiryStatus(String contact, String receiver_contact, String product_id) {
@@ -586,6 +589,14 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     //??????????????????????????????????????????????????????????????????????????//
 
 
+                } else if (response.body() instanceof EnquiryCountResponse) {
+                    EnquiryCountResponse enquiryCountResponse = (EnquiryCountResponse) response.body();
+                    if (enquiryCountResponse.getSuccess() != null) {
+
+                        String count = enquiryCountResponse.getSuccess().getEnquiryCount().toString();
+                        no_of_enquiries.setText("No.Of Enquiries:" + count);
+
+                    }
                 }
 
             } else {

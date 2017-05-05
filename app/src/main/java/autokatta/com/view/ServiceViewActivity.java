@@ -46,6 +46,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.EnquiryCountResponse;
 import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
@@ -93,7 +94,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     RelativeLayout spinnerlayout, relativewritereview;
     Spinner spinCategory;
     String simagename = "";
-    TextView photocount;
+    TextView photocount, no_of_enquiries;
     final ArrayList<String> brandTags = new ArrayList<>();
 
     String tagpart = "", tagid = "";
@@ -118,6 +119,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
         storename = (TextView) findViewById(R.id.txtstorename);
         website = (TextView) findViewById(R.id.txtstorewebsite);
+        no_of_enquiries = (TextView) findViewById(R.id.no_of_enquiries);
         servicename = (EditText) findViewById(R.id.txtsname);
         serviceprice = (EditText) findViewById(R.id.txtsprice);
         servicedetails = (EditText) findViewById(R.id.txtsdetails);
@@ -183,6 +185,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     } else {
                         getCategory();
                         getServiceData(service_id, contact);
+                        getNoOfEnquiryCount(service_id, contact);
 
 
                         servicetags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -249,6 +252,12 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 }
             }
         });
+
+    }
+
+    private void getNoOfEnquiryCount(String service_id, String contact) {
+        ApiCall mApicall = new ApiCall(this, this);
+        mApicall.getEnquiryCount(contact, "", service_id, "");
 
     }
 
@@ -458,6 +467,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
                             if (storecontact.contains(contact)) {
 
+                                btnchat.setVisibility(View.GONE);
+                                no_of_enquiries.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.VISIBLE);
                                 deleteservice.setVisibility(View.VISIBLE);
                                 callme.setVisibility(View.GONE);
@@ -581,8 +592,15 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
                     }
 
-                }
+                } else if (response.body() instanceof EnquiryCountResponse) {
+                    EnquiryCountResponse enquiryCountResponse = (EnquiryCountResponse) response.body();
+                    if (enquiryCountResponse.getSuccess() != null) {
 
+                        String count = enquiryCountResponse.getSuccess().getEnquiryCount().toString();
+                        no_of_enquiries.setText("No.Of Enquiries:" + count);
+
+                    }
+                }
 
             } else {
                 CustomToast.customToast(ServiceViewActivity.this, getString(R.string._404));
@@ -629,6 +647,12 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             } else if (str.equals("success_message_saved")) {
 
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
+
+            } else if (str.equals("yes")) {
+                btnchat.setText("Chat");
+
+            } else if (str.equals("no")) {
+                btnchat.setText("Send Enquiry");
 
             }
 
