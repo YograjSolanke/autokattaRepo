@@ -61,7 +61,7 @@
     <string name="company_name">Company Name</string>
     <string name="designation">Designation</string>
     <string name="skills">Skills</string>
-    <string name="contact_no">Contact No</string>
+    <string name="contact_no">Contact</string>
     <string name="email">Email</string>
     <string name="website">WebSite</string>
 
@@ -96,7 +96,7 @@
     <string name="select">Select</string>
     <string name="selectStatus">Select Status</string>
     <string name="completeAddress">Complete Address</string>
-    <string name="discussion">Discussion/Follow-up</string>
+    <string name="discussion">Discussion</string>
     <string name="followdate">Follow-up Date</string>
     <string name="date">Date</string>
     <string name="time">Time</string>

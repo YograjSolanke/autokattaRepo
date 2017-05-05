@@ -77,18 +77,21 @@
                 android:ems="10"
                 android:hint="@string/contact_no"
                 android:inputType="phone"
+                android:maxLength="10"
                 android:maxLines="1"
                 android:paddingEnd="@dimen/card_margin"
                 android:paddingStart="@dimen/card_margin"
                 android:textColor="#708090" />
 
             <TextView
+                android:id="@+id/txtUser"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:text="@string/go_profile"
                 android:textColor="@color/zxing_custom_possible_result_points"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -251,7 +254,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_weight="0.5"
                 android:text="@string/discussion"
                 android:textStyle="bold" />
 
@@ -259,9 +262,9 @@
                 android:id="@+id/edtDiscussion"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_height"
-                android:layout_weight="1.6"
+                android:layout_weight="1.5"
                 android:background="@android:color/transparent"
-                android:hint="@string/completeAddress"
+                android:hint="@string/discussion"
                 android:paddingEnd="@dimen/card_margin"
                 android:paddingStart="@dimen/card_margin"
                 android:textColor="#708090" />
@@ -276,17 +279,17 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
+                android:layout_weight="1"
                 android:text="@string/followdate"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtDate"
-                android:layout_marginStart="@dimen/layout_padding"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/card_title_height"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
+                android:editable="false"
                 android:hint="@string/date"
                 android:inputType="datetime"
                 android:paddingEnd="@dimen/card_margin"
@@ -299,6 +302,7 @@
                 android:layout_height="@dimen/card_title_height"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
+                android:editable="false"
                 android:hint="@string/time"
                 android:inputType="datetime"
                 android:paddingEnd="@dimen/card_margin"
