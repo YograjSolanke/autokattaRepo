@@ -7583,6 +7583,39 @@ get ExchangeMela Participants Data
     }
 
 
+    /*
+get Enquiry count of product,service,vehicle
+*/
+    public void getEnquiryCount(String contact, String product_id, String service_id, String vehicle_id) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<EnquiryCountResponse> mServiceMelaResponse = serviceApi.getEnquiryCount(contact, product_id, service_id, vehicle_id);
+                mServiceMelaResponse.enqueue(new Callback<EnquiryCountResponse>() {
+                    @Override
+                    public void onResponse(Call<EnquiryCountResponse> call, Response<EnquiryCountResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<EnquiryCountResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/

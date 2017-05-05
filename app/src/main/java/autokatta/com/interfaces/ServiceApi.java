@@ -1199,4 +1199,12 @@ public interface ServiceApi {
                                       @Query("vehicle_id") String vehicle_id);
 
 
+    //get chat enquiry status
+    @POST("getEnquiryCount.php")
+    Call<EnquiryCountResponse> getEnquiryCount(@Query("sender") String sender,
+                                               @Query("product_id") String product_id,
+                                               @Query("service_id") String service_id,
+                                               @Query("vehicle_id") String vehicle_id);
+
+
 }
