@@ -1,5 +1,6 @@
 package autokatta.com.interfaces;
 
+import autokatta.com.request.AddManualEnquiryRequest;
 import autokatta.com.response.*;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -1145,25 +1146,26 @@ public interface ServiceApi {
     //get Ended Sale Mela data
     @POST("getEndedSaleMela.php")
     Call<EndedSaleMelaResponse> _autokattaGetEndedSaleMelaDetails(@Query("contact") String mycontact);
-//get Ended Sale Mela data
+
+    //get Ended Sale Mela data
     @POST("getEndedServiceMela.php")
     Call<EndedSaleMelaResponse> _autokattaGetEndedServiceMelaDetails(@Query("contact") String mycontact);
 
     //get Loan Mela Participants data
     @POST("getConfirmedParticipants_Loan.php")
-    Call<LoanMelaParticipantsResponse> _autokattagetConfirmedParticipants_Loan(@Query("mycontact") String mycontact,@Query("loan_id") String loan_id);
+    Call<LoanMelaParticipantsResponse> _autokattagetConfirmedParticipants_Loan(@Query("mycontact") String mycontact, @Query("loan_id") String loan_id);
 
     //get  Sale Mela Participants data
     @POST("getConfirmedParticipants_Sale.php")
-    Call<SaleMelaParticipantsResponse> _autokattagetConfirmedParticipants_Sale(@Query("mycontact") String mycontact,@Query("sale_id") String sale_id);
+    Call<SaleMelaParticipantsResponse> _autokattagetConfirmedParticipants_Sale(@Query("mycontact") String mycontact, @Query("sale_id") String sale_id);
 
     //get  Service Mela Participants data
     @POST("getConfirmedParticipants_Service.php")
-    Call<ServiceMelaParticipantsResponse> _autokattagetConfirmedParticipants_Service(@Query("mycontact") String mycontact,@Query("service_id") String service_id);
+    Call<ServiceMelaParticipantsResponse> _autokattagetConfirmedParticipants_Service(@Query("mycontact") String mycontact, @Query("service_id") String service_id);
 
     //get Exchange Mela  Participantsdata
     @POST("getConfirmedParticipants_Exchange.php")
-    Call<ExchangeMelaParticipantsResponse> _autokattagetConfirmedParticipants_Exchange(@Query("mycontact") String mycontact,@Query("exchange_id") String exchange_id);
+    Call<ExchangeMelaParticipantsResponse> _autokattagetConfirmedParticipants_Exchange(@Query("mycontact") String mycontact, @Query("exchange_id") String exchange_id);
 
     //update product details
     @POST("updateStoreProduct.php")
@@ -1209,5 +1211,9 @@ public interface ServiceApi {
     //Get Manual enquiry
     @GET("addEnquiryData.php")
     Call<ManualEnquiryResponse> getManualEnquiry(@Query("myContact") String myContact);
+
+    //Post Manual enquiry
+    @POST("addEnquiryData.php")
+    Call<AddManualEnquiryResponse> _autokattaAddManualEnquiry(@Body AddManualEnquiryRequest addManualEnquiryRequest);
 
 }

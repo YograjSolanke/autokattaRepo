@@ -129,18 +129,18 @@
         <item>Child Level 02</item>
     </string-array>
 
-       <string-array name="searchData">
+    <string-array name="searchData">
         <item>-List-</item>
         <item>Brand</item>
-        <item >Model</item>
-        <item >Version</item>
-        <item >City</item>
-        <item >RTOCity</item>
-        <item >RegistrationYear</item>
-        <item >ManufactureYear</item>
-        <item >Price</item>
-        <item >KmsRunning</item>
-        <item >NoOfOwners</item>
+        <item>Model</item>
+        <item>Version</item>
+        <item>City</item>
+        <item>RTOCity</item>
+        <item>RegistrationYear</item>
+        <item>ManufactureYear</item>
+        <item>Price</item>
+        <item>KmsRunning</item>
+        <item>NoOfOwners</item>
     </string-array>
 
     <string-array name="areaOptions">
@@ -184,4 +184,33 @@
         <item>Market Place</item>
     </string-array>
 
+    <!--Manual Enquiry Status-->
+    <string-array name="ManualEnquiryStatus">
+        <item>-Select Status-</item>
+        <item>Hot</item>
+        <item>Cold</item>
+        <item>Warm</item>
+        <item>Dropped</item>
+        <item>Booked</item>
+        <item>Delivered</item>
+        <item>Sold</item>
+        <item>Lost to competition</item>
+        <item>Postponed</item>
+        <item>FI</item>
+        <item>File login</item>
+        <item>Approved</item>
+        <item>Disbursed</item>
+        <item>File rejected</item>
+        <item>Pending</item>
+    </string-array>
+
+    <!--User Inventory
+    new vehicle, used vehicle, product, services-->
+    <string-array name="UserInventory">
+        <item>-Select Inventory-</item>
+        <item>New Vehicle</item>
+        <item>Used Vehicle</item>
+        <item>Products</item>
+        <item>Services</item>
+    </string-array>
 </resources>

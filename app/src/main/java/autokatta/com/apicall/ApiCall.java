@@ -14,6 +14,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.request.AddManualEnquiryRequest;
 import autokatta.com.response.*;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -7645,6 +7646,43 @@ get ExchangeMela Participants Data
         }
     }
 
+    /*
+      Post Manual Enquiry Details...
+    */
+
+    public void addManualEnquiryData(String myContact, String custName, String custContact, String custAddress,
+                                     String custFullAddress, String custInventoryType, String custEnquiryStatus,
+                                     String discussion, String nextFollowupDate) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest(myContact, custName, custContact, custAddress,
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate);
+
+                Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(addManualEnquiryRequest);
+                mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
+                    @Override
+                    public void onResponse(Call<AddManualEnquiryResponse> call, Response<AddManualEnquiryResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddManualEnquiryResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
@@ -7669,4 +7707,6 @@ get ExchangeMela Participants Data
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
+
 }

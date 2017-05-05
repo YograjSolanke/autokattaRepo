@@ -94,6 +94,12 @@
     <string name="surname">Surname</string>
     <string name="go_profile">Go Profile</string>
     <string name="select">Select</string>
+    <string name="selectStatus">Select Status</string>
+    <string name="completeAddress">Complete Address</string>
+    <string name="discussion">Discussion/Follow-up</string>
+    <string name="followdate">Follow-up Date</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
 
     <!--Login Activity -->
     <string name="username">Mobile Number</string>

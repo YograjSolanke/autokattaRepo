@@ -43,39 +43,17 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtName"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/card_title_height"
                 android:layout_weight="1.6"
                 android:background="@android:color/transparent"
                 android:hint="@string/name"
-                android:textColor="#708090"
                 android:paddingEnd="@dimen/card_margin"
-                android:paddingStart="@dimen/card_margin" />
+                android:paddingStart="@dimen/card_margin"
+                android:textColor="#708090" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:text="@string/last_name"
-                android:textStyle="bold" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="@dimen/card_title_height"
-                android:layout_weight="1.6"
-                android:background="@android:color/transparent"
-                android:hint="@string/surname"
-                android:textColor="#708090"
-                android:paddingEnd="@dimen/card_margin"
-                android:paddingStart="@dimen/card_margin" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,17 +69,18 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/edtContact"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/card_title_height"
                 android:layout_weight="1.2"
                 android:background="@android:color/transparent"
-                android:hint="@string/contact_no"
-                android:paddingEnd="@dimen/card_margin"
-                android:maxLines="1"
-                android:textColor="#708090"
-                android:inputType="phone"
                 android:ems="10"
-                android:paddingStart="@dimen/card_margin" />
+                android:hint="@string/contact_no"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:textColor="#708090" />
 
             <TextView
                 android:layout_width="0dp"
@@ -126,15 +105,16 @@
                 android:text="@string/address"
                 android:textStyle="bold" />
 
-            <EditText
+            <AutoCompleteTextView
+                android:id="@+id/autoAddress"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/card_title_height"
                 android:layout_weight="1.6"
                 android:background="@android:color/transparent"
                 android:hint="@string/address"
-                android:textColor="#708090"
                 android:paddingEnd="@dimen/card_margin"
-                android:paddingStart="@dimen/card_margin" />
+                android:paddingStart="@dimen/card_margin"
+                android:textColor="#708090" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,18 +127,184 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:text="@string/select"
-                android:layout_gravity="center_vertical"
+                android:text="@string/completeAddress"
                 android:textStyle="bold" />
 
-            <Spinner
+            <EditText
+                android:id="@+id/edtAddress"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_height"
+                android:layout_weight="1.6"
+                android:background="@android:color/transparent"
+                android:hint="@string/completeAddress"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:textColor="#708090" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.4"
+                android:text="@string/select"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/relInventory"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_weight="1.6"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/spnInventory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:entries="@array/UserInventory"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.4"
+                android:text="@string/select"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/relStatus"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_weight="1.6"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/spnStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:entries="@array/ManualEnquiryStatus"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="@string/discussion"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtDiscussion"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_height"
+                android:layout_weight="1.6"
+                android:background="@android:color/transparent"
+                android:hint="@string/completeAddress"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:textColor="#708090" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:text="@string/followdate"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtDate"
+                android:layout_marginStart="@dimen/layout_padding"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/card_title_height"
-                android:layout_weight="1.6"
-                android:hint="@string/address"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/date"
+                android:inputType="datetime"
                 android:paddingEnd="@dimen/card_margin"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:paddingStart="@dimen/card_margin" />
+                android:paddingStart="@dimen/card_margin"
+                android:textColor="#708090" />
+
+            <EditText
+                android:id="@+id/edtTime"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/card_title_height"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/time"
+                android:inputType="datetime"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin"
+                android:textColor="#708090" />
         </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
