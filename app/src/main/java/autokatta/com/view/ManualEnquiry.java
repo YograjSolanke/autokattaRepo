@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -94,7 +93,6 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             case R.id.add_manual:
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(ManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 startActivity(new Intent(getApplicationContext(), AddManualEnquiry.class), options.toBundle());
-                finishActivity(1);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -147,11 +145,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else {
             Log.i("Check Class-"
                     , "Manual Enquiry");

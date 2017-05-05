@@ -185,10 +185,10 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     edtAddress.setError("Enter detailed address");
                     edtAddress.requestFocus();
                 } else if (spnInventory.getSelectedItemPosition() == 0) {
-                    Toast.makeText(getApplicationContext(), "Please provide inventory", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(), "Please provide inventory");
                     spnInventory.requestFocus();
                 } else if (spnStatus.getSelectedItemPosition() == 0) {
-                    Toast.makeText(getApplicationContext(), "Please provide status", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(), "Please provide status");
                     spnStatus.requestFocus();
                 } else if (discussion.equals("")) {
                     edtDiscussion.setError("Enter discussion data");
@@ -267,17 +267,17 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 finish();
             }
         } else
-            Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else {
             Log.i("Check Class-"
                     , "Add Manual Enquiry");
