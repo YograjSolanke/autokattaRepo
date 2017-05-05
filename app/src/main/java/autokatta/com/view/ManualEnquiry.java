@@ -49,6 +49,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 mLinearLayout.setReverseLayout(true);
                 mLinearLayout.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLinearLayout);
+                mSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
+                mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);
                 mSwipeRefreshLayout.post(new Runnable() {
                     @Override
                     public void run() {
@@ -82,7 +87,6 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-
             case android.R.id.home:
                 onBackPressed();
                 break;
@@ -90,7 +94,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             case R.id.add_manual:
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(ManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 startActivity(new Intent(getApplicationContext(), AddManualEnquiry.class), options.toBundle());
-                finish();
+                finishActivity(1);
                 return true;
         }
         return super.onOptionsItemSelected(item);
