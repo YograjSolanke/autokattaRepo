@@ -53,8 +53,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyGroups = inflater.inflate(R.layout.fragment_my_groups, container, false);
 
-
-        mFab= (FloatingActionButton) mMyGroups.findViewById(R.id.fabCreateGroup);
+        mFab = (FloatingActionButton) mMyGroups.findViewById(R.id.fabCreateGroup);
         mRecyclerView = (RecyclerView) mMyGroups.findViewById(R.id.rv_recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyGroups.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView.setHasFixedSize(true);
@@ -76,7 +75,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         .getString("loginContact", ""));
             }
         });
-mFab.setOnClickListener(this);
+        mFab.setOnClickListener(this);
         mApiCall = new ApiCall(getActivity(), this);
         return mMyGroups;
     }
@@ -85,14 +84,13 @@ mFab.setOnClickListener(this);
     Get My Groups Data...
      */
     private void getData(String loginContact) {
-
         mApiCall.Groups(loginContact);
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
+        if (response != null) {
+            if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
                 for (ProfileGroupResponse.MyGroup success : profileGroupResponse.getSuccess().getMyGroups()) {
@@ -105,14 +103,14 @@ mFab.setOnClickListener(this);
                     modelGroups.setAdminVehicleCount(success.getAdminVehicleCount());
                     mMyGroupsList.add(modelGroups);
                 }
-                mMyAdapter = new MyAdapter(getActivity(), mMyGroupsList,"MyGroups");
+                mMyAdapter = new MyAdapter(getActivity(), mMyGroupsList, "MyGroups");
                 mRecyclerView.setAdapter(mMyAdapter);
                 mMyAdapter.notifyDataSetChanged();
-            }else {
+            } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
-        }else {
+        } else {
             mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
@@ -130,7 +128,6 @@ mFab.setOnClickListener(this);
             Log.i("Check Class-"
                     , "MyGroupsFragment");
         }
-
     }
 
     @Override
@@ -142,12 +139,11 @@ mFab.setOnClickListener(this);
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabCreateGroup:
-                FragmentManager fragmentManager=getFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.group_container,new CreateGroupFragment()).commit();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.group_container, new CreateGroupFragment()).commit();
                 break;
         }
-
     }
 
     @Override

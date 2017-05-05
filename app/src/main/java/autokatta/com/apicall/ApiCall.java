@@ -6233,8 +6233,6 @@ Get saved search Seller list
     }
 
 
-
-
     /*
     Product Unlike
      */
@@ -6311,7 +6309,6 @@ Get saved search Seller list
             e.printStackTrace();
         }
     }
-
 
 
     /*
@@ -7584,8 +7581,8 @@ get ExchangeMela Participants Data
 
 
     /*
-get Enquiry count of product,service,vehicle
-*/
+     Get Enquiry count of product,service,vehicle
+    */
     public void getEnquiryCount(String contact, String product_id, String service_id, String vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -7606,6 +7603,38 @@ get Enquiry count of product,service,vehicle
 
                     @Override
                     public void onFailure(Call<EnquiryCountResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+      Get Manual Enquiry Details...
+    */
+
+    public void getManualEnquiry(String myContact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact);
+                mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
+                    @Override
+                    public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ManualEnquiryResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -7640,6 +7669,4 @@ get Enquiry count of product,service,vehicle
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
-
-
 }

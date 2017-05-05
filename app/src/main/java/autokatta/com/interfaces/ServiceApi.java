@@ -1206,5 +1206,8 @@ public interface ServiceApi {
                                                @Query("service_id") String service_id,
                                                @Query("vehicle_id") String vehicle_id);
 
+    //Get Manual enquiry
+    @GET("addEnquiryData.php")
+    Call<ManualEnquiryResponse> getManualEnquiry(@Query("myContact") String myContact);
 
 }

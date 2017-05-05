@@ -3,13 +3,31 @@ package autokatta.com.view;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.ManualEnquiryResponse;
+import retrofit2.Response;
 
-public class ManualEnquiry extends AppCompatActivity {
+public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    RecyclerView mRecyclerView;
+    List<ManualEnquiryResponse> mMyGroupsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +37,35 @@ public class ManualEnquiry extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getManualData();
+                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.manual_swipeRefreshLayout);
+                mRecyclerView = (RecyclerView) findViewById(R.id.manual_recycler_view);
+                mRecyclerView.setHasFixedSize(true);
+                LinearLayoutManager mLinearLayout = new LinearLayoutManager(getApplicationContext());
+                mLinearLayout.setReverseLayout(true);
+                mLinearLayout.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLinearLayout);
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        getManualData();
+                    }
+                });
+            }
+        });
+    }
+
+    /*
+    Get Manual Data...
+     */
+    private void getManualData() {
+        ApiCall mApiCall = new ApiCall(ManualEnquiry.this, this);
+        mApiCall.getManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""));
     }
 
     @Override
@@ -45,7 +92,6 @@ public class ManualEnquiry extends AppCompatActivity {
                 finish();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -54,6 +100,58 @@ public class ManualEnquiry extends AppCompatActivity {
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
+    @Override
+    public void onRefresh() {
+        mMyGroupsList.clear();
+        getManualData();
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
+                for (ManualEnquiryResponse.Success success : manualEnquiry.getSuccess()) {
+                    success.setId(success.getId());
+                    success.setMyContact(success.getId());
+                    success.setCustName(success.getId());
+                    success.setCustAddress(success.getId());
+                    success.setCustFullAddress(success.getId());
+                    success.setCustContact(success.getId());
+                    success.setCustInventoryType(success.getId());
+                    success.setDiscussion(success.getId());
+                    success.setNextFollowupDate(success.getId());
+                }
+            } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            }
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("Check Class-"
+                    , "Manual Enquiry");
+        }
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
     /*public static boolean isValidPhone(String phone){
         String expression = "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$";
