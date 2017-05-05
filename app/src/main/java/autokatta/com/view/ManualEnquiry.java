@@ -116,7 +116,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                mMyGroupsList.clear();
                 ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
+               /* if (manualEnquiry.getError() == null) {
+                    Log.e("Error","");
+                }else {*/
                 for (ManualEnquiryResponse.Success success : manualEnquiry.getSuccess()) {
                     success.setId(success.getId());
                     success.setMyContact(success.getMyContact());
@@ -132,6 +136,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 ManualEnquiryAdapter adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                // }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));

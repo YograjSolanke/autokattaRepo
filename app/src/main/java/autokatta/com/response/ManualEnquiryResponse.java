@@ -22,6 +22,19 @@ public class ManualEnquiryResponse {
         this.success = success;
     }
 
+    @SerializedName("Error")
+    @Expose
+    private Object error;
+
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
+
     public class Success {
 
         @SerializedName("id")
