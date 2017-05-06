@@ -6,11 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,14 +111,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 GroupEditFragment frag = new GroupEditFragment();
 
                 Bundle bundle = new Bundle();
-                bundle.putString("bundle_id", mGroupid);
+                bundle.putString("bundle_GroupId", mGroupid);
                 bundle.putString("bundle_name", mGroupName);
                 bundle.putString("bundle_image", mGroupImage);
                 frag.setArguments(bundle);
 
-                FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
+                /*FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
                 FragmentTransaction mTransaction = fragmentManager.beginTransaction();
-                mTransaction.replace(R.id.group_container, frag).commit();
+                mTransaction.replace(R.id.group_container, frag).commit();*/
+                ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction().
+                        replace(R.id.group_container, frag, "groupEdit")
+                        .addToBackStack("groupEdit")
+                        .commit();
 
             }
         });
@@ -232,7 +236,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "My Adapter");
+            error.printStackTrace();
+        }
     }
 
     @Override

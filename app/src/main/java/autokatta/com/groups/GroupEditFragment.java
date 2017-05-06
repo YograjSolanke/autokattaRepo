@@ -16,7 +16,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +30,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.SocketTimeoutException;
 import java.util.Random;
 
 import autokatta.com.R;
@@ -57,7 +57,7 @@ import static autokatta.com.R.id.group_image;
  * Created by ak-005 on 3/4/17.
  */
 
-public class GroupEditFragment extends android.support.v4.app.Fragment implements RequestNotifier {
+public class GroupEditFragment extends Fragment implements RequestNotifier {
 
     ImageView mGroup_image;
     EditText group_name;
@@ -86,7 +86,7 @@ public class GroupEditFragment extends android.support.v4.app.Fragment implement
         mApiCall = new ApiCall(getActivity(), this);
         Bundle bundle = getArguments();
         //get the values out by key
-        bundle_id = bundle.getString("bundle_id");
+        bundle_id = bundle.getString("bundle_GroupId");
         String bundle_name = bundle.getString("bundle_name");
         bundle_image = bundle.getString("bundle_image");
 
@@ -315,7 +315,16 @@ public class GroupEditFragment extends android.support.v4.app.Fragment implement
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Group Edit Fragment");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -343,49 +352,6 @@ public class GroupEditFragment extends android.support.v4.app.Fragment implement
         }
     }
 
-    public void onBackPressed() {
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        Fragment f = fm.findFragmentById(R.id.group_container);
-
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
-        }
-
-    }
-
-    @Override
-    public void onResume() {
-
-        super.onResume();
-
-        group_name.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    group_name.clearFocus();
-                }
-                return false;
-            }
-        });
-
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-
-                    onBackPressed();
-                    return true;
-
-                }
-
-                return false;
-            }
-        });
-
-    }
 
 
 }

@@ -36,7 +36,7 @@ public class GroupMyJoined extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new MyGroupsFragment(), "My Groups");
         tabAdapterName.addFragment(new JoinedGroupsFragment(), "Joined Groups");
         viewPager.setAdapter(tabAdapterName);

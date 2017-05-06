@@ -30,8 +30,6 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by ak-001 on 25/3/17.
  */
@@ -105,23 +103,17 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
 
                 GroupContactFragment fragment = new GroupContactFragment();
                 Bundle b = new Bundle();
-                b.putString("id", mGroupId);
+                b.putString("bundle_GroupId", mGroupId);
                 b.putStringArrayList("list", (ArrayList<String>) ContactNoList);
                 b.putString("call", "existGroup");
                 fragment.setArguments(b);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                ///If call from Profile
-                /*if (mCallfrom.equalsIgnoreCase("profile")) {*/
                 fragmentTransaction.replace(R.id.profile_groups_container, fragment);
                 fragmentTransaction.addToBackStack("groupcontactfragment");
                 fragmentTransaction.commit();
-               /* } else {
-                    fragmentTransaction.replace(R.id.group_container, fragment);
-                    fragmentTransaction.addToBackStack("groupcontactfragment");
-                    fragmentTransaction.commit();
-                }*/
+
             }
         });
 
@@ -213,16 +205,10 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     mSuccesses.add(success);
 
                 }
-                /*if (mCallfrom.equals("profile")) {
-                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mSuccesses, mCallfrom);
-                    mRecyclerView.setAdapter(mMemberListAdapter);
-                    mMemberListAdapter.notifyDataSetChanged();
-
-                } else if (mCallfrom.equals("groups") || mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("MyGroup")) {*/
                 mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom);
                 mRecyclerView.setAdapter(mMemberListAdapter);
                 mMemberListAdapter.notifyDataSetChanged();
-                //}
+
 
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -254,7 +240,6 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onRefresh() {
         mSuccesses.clear();
-        getGroupContact(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("group_id", ""));
+        getGroupContact(mGroupId);
     }
 }

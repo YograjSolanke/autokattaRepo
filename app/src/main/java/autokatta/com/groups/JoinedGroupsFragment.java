@@ -91,6 +91,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
         if (response!=null){
             if (response.isSuccessful()){
                 mSwipeRefreshLayout.setRefreshing(false);
+                mJoinedGroupsList.clear();
                 ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
                 for (ProfileGroupResponse.JoinedGroup joinedGroup : profileGroupResponse.getSuccess().getJoinedGroups()) {
                     ModelGroups modelGroups = new ModelGroups();

@@ -92,6 +92,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                mMyGroupsList.clear();
                 ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
                 for (ProfileGroupResponse.MyGroup success : profileGroupResponse.getSuccess().getMyGroups()) {
                     ModelGroups modelGroups = new ModelGroups();

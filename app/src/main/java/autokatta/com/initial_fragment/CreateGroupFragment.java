@@ -25,6 +25,7 @@ import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.SocketTimeoutException;
 import java.util.Random;
 
 import autokatta.com.R;
@@ -70,6 +71,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         mAddmember = (Button) mCreateGroup.findViewById(R.id.BtnAddMember);
         mGroupImg = (ImageView) mCreateGroup.findViewById(R.id.group_profile_pic);
         mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
         mApiCall = new ApiCall(getActivity(), this);
         mGroupImg.setOnClickListener(this);
         mAddmember.setOnClickListener(this);
@@ -85,11 +87,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                 } else {
 
                     mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);
-                    //   createGroups(GroupTitle.getText().toString(), lastWord);
-
-//                            CreateGroup groupRequest = new CreateGroup(sendGroupData(),GroupsCreateFragment.this);
-//                            groupRequest.sendRequest();
-
                 }
                 break;
             case R.id.group_profile_pic:
@@ -264,7 +261,16 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Create Group Fragment");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -275,7 +281,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             if (!mediaPath.equals("")) {
                 uploadImage(mediaPath);
             }
-            b.putString("GrpId", str);
+            b.putString("bundle_GroupId", str);
             b.putString("call", "newGroup");
             GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
             fragment2.setArguments(b);   // send values to another fragment

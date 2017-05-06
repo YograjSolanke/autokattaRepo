@@ -1,11 +1,9 @@
 package autokatta.com.view;
 
-import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.initial_fragment.CreateGroupFragment;
@@ -56,10 +53,20 @@ public class GroupTabs extends AppCompatActivity {
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.group_container, new CreateGroupFragment()).commit();
 
+            /*getSupportFragmentManager().beginTransaction().
+                    replace(R.id.group_container, new CreateGroupFragment(), "createGroup")
+                    .addToBackStack("createGroup")
+                    .commit();*/
+
         } else {
             FragmentManager mFragmentManager = getSupportFragmentManager();
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.group_container, new GroupMyJoined()).commit();
+
+           /* getSupportFragmentManager().beginTransaction().
+                    replace(R.id.group_container, new GroupMyJoined(), "groupMyJoined")
+                    .addToBackStack("groupMyJoined")
+                    .commit();*/
         }
     }
 
@@ -73,7 +80,7 @@ public class GroupTabs extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -83,6 +90,21 @@ public class GroupTabs extends AppCompatActivity {
         } else {
             finish();
             startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
+        }
+    }*/
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 

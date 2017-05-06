@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GroupContactFragment extends Fragment implements RequestNotifier {
     View mGcontact;
-    String mContact, mGroup_id, grp_id, call, grp1_id, pass_id;
+    String mContact, mGroup_id, call;
     ListView lv;
     ApiCall mApiCall;
     String receiver_contact;
@@ -66,34 +68,16 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
         mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
-        mGroup_id = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("group_id", "");
+
         mApiCall = new ApiCall(getActivity(), this);
-
-
-        System.out.println("----------------->GroupID" + mGroup_id);
-
-
         args = getArguments();
+
         mApiCall.getRegisteredContacts();
 
-        grp_id = args.getString("GrpId", "");
-        System.out.println("Group Id From Create Fragment Bundle In Group Contact Fragment:" + grp_id);
+        mGroup_id = args.getString("bundle_GroupId", "");
+        System.out.println("Group Id From Create Fragment Bundle In Group Contact Fragment:" + mGroup_id);
 
         call = args.getString("call", "");
-
-        grp1_id = args.getString("id", "");
-        System.out.println("Group Id From Grp Member List Bundle In Group Contct Frag:" + grp1_id);
-
-
-        if (grp_id == "") {
-            pass_id = grp1_id;
-        } else if (grp1_id == "") {
-            pass_id = grp_id;
-        }
-
-        System.out.println("----------------->grp_id" + grp_id);
-        System.out.println("----------------->grp_id1" + grp1_id);
 
         AddContacts.setEnabled(false);
 
@@ -163,22 +147,10 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 }
                 if (!flag) {
 
-                    /*GroupNextTabFragment groupMyJoined=new GroupNextTabFragment();
-                    args.putString("id",pass_id);
-                    args.putString("call", "groupContact");
-                    args.putString("grouptype", "groups");
-                    groupMyJoined.setArguments(args);
-
-                    System.out.println("Back To Fragment From Group Contact Fragment:\n");
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.group_container, groupMyJoined);
-                    fragmentTransaction.commit();*/
-
                     Intent intent = new Intent(getActivity(), GroupsActivity.class);
                     intent.putExtra("grouptype", "MyGroup");
                     intent.putExtra("className", "GroupContactFragment");
-                    intent.putExtra("bundle_GroupId", pass_id);
+                    intent.putExtra("bundle_GroupId", mGroup_id);
                     getActivity().startActivity(intent);
                     getActivity().finish();
 
@@ -188,7 +160,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                         allcontacts = allcontacts + "," + mContact;
                     }
 
-                    mApiCall.addContactInGroup(pass_id, allcontacts);
+                    mApiCall.addContactInGroup(mGroup_id, allcontacts);
                     String[] parts = allcontacts.split(",");
 
                     for (int i = 0; i < parts.length; i++) {
@@ -198,19 +170,6 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             // mApiCall.groupLikeNotification(pass_id, mContact, receiver_contact, "3");
                         }
                     }
-
-                    /*GroupNextTabFragment groupMyJoined=new GroupNextTabFragment();
-                    args.putString("id",pass_id);
-                    args.putString("call", "groupContact");
-                    args.putString("grouptype", "groups");
-                    groupMyJoined.setArguments(args);
-
-                    System.out.println("Back To Fragment From Group Contact Fragment:\n");
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.group_container, groupMyJoined);
-                    fragmentTransaction.commit();*/
-
 
                     System.out.println("All contacts ::" + allcontacts);
                 }
@@ -278,8 +237,6 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                         number = number.substring(number.length() - 10);
 
                     if (contact.equalsIgnoreCase(number) && !contact.equals(mContact)) {
-                        /*names.add(name + "-" + number);
-                        numbers.add(number);*/
                         contactRegistered.setContact(number);
                         contactRegistered.setUsername(name);
                         cntlist.add(contactRegistered);
@@ -287,7 +244,6 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
                 } while (people.moveToNext());
 
-                //cntlist.add(contactRegistered);
             }
 
             CntctListadapter = new GroupContactListAdapter(getActivity(), cntlist);
@@ -299,7 +255,16 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Group Contact Fragment");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -310,7 +275,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 Intent intent = new Intent(getActivity(), GroupsActivity.class);
                 intent.putExtra("grouptype", "MyGroup");
                 intent.putExtra("className", "GroupContactFragment");
-                intent.putExtra("bundle_GroupId", pass_id);
+                intent.putExtra("bundle_GroupId", mGroup_id);
                 getActivity().startActivity(intent);
                 getActivity().finish();
             } else {
