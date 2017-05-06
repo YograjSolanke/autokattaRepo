@@ -140,7 +140,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabCreateGroup:
-                FragmentManager fragmentManager = getFragmentManager();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.group_container, new CreateGroupFragment()).commit();
                 break;
