@@ -114,6 +114,7 @@
     <!--Error Results-->
     <string name="no_internet">No Internet Connection&#8230;</string>
     <string name="_404">We are unable to process the request due to network delays&#8230;</string>
+    <string name="_404_">Delay In Network&#8230;</string>
     <string name="no_response">No response from server&#8230;try again!!!</string>
     <string name="no_patient">No patient added&#8230;please add patient!!!</string>
     <string name="err_username">username required</string>

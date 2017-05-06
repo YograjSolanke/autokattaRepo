@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
@@ -15,9 +16,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.List;
@@ -38,6 +39,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     Spinner spnInventory, spnStatus;
     String myContact;
     TextView txtUser;
+    RelativeLayout mRelative;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,66 +50,67 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-        edtName = (EditText) findViewById(R.id.edtName);
-        edtContact = (EditText) findViewById(R.id.edtContact);
-        edtAddress = (EditText) findViewById(R.id.edtAddress);
-        edtDiscussion = (EditText) findViewById(R.id.edtDiscussion);
-        autoAddress = (AutoCompleteTextView) findViewById(R.id.autoAddress);
-        spnInventory = (Spinner) findViewById(R.id.spnInventory);
-        spnStatus = (Spinner) findViewById(R.id.spnStatus);
-        edtDate = (EditText) findViewById(R.id.edtDate);
-        edtTime = (EditText) findViewById(R.id.edtTime);
-        txtUser = (TextView) findViewById(R.id.txtUser);
-
-        edtDate.setOnTouchListener(this);
-        edtTime.setOnTouchListener(this);
-        autoAddress.setAdapter(new GooglePlacesAdapter(AddManualEnquiry.this, R.layout.registration_spinner));
-
-        edtContact.addTextChangedListener(new TextWatcher() {
+        runOnUiThread(new Runnable() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void run() {
+                mRelative = (RelativeLayout) findViewById(R.id.add_manual);
+                myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+                edtName = (EditText) findViewById(R.id.edtName);
+                edtContact = (EditText) findViewById(R.id.edtContact);
+                edtAddress = (EditText) findViewById(R.id.edtAddress);
+                edtDiscussion = (EditText) findViewById(R.id.edtDiscussion);
+                autoAddress = (AutoCompleteTextView) findViewById(R.id.autoAddress);
+                spnInventory = (Spinner) findViewById(R.id.spnInventory);
+                spnStatus = (Spinner) findViewById(R.id.spnStatus);
+                edtDate = (EditText) findViewById(R.id.edtDate);
+                edtTime = (EditText) findViewById(R.id.edtTime);
+                txtUser = (TextView) findViewById(R.id.txtUser);
 
-            }
+                edtDate.setOnTouchListener(AddManualEnquiry.this);
+                edtTime.setOnTouchListener(AddManualEnquiry.this);
+                autoAddress.setAdapter(new GooglePlacesAdapter(AddManualEnquiry.this, R.layout.registration_spinner));
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                edtContact.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                txtUser.setVisibility(View.GONE);
-                if (s.length() == 10) {
-                    if (!myContact.equalsIgnoreCase(s.toString()))
-                        checkUser(s.toString());
-                    else {
-                        edtContact.requestFocus();
-                        edtContact.setError("admin not allowed");
                     }
-                }
 
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        txtUser.setVisibility(View.GONE);
+                        if (s.length() == 10) {
+                            if (!myContact.equalsIgnoreCase(s.toString()))
+                                checkUser(s.toString());
+                            else {
+                                edtContact.requestFocus();
+                                edtContact.setError("admin not allowed");
+                            }
+                        }
+                    }
 
-            }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        txtUser.setVisibility(View.GONE);
+                    }
+                });
 
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                txtUser.setVisibility(View.GONE);
-            }
-        });
-
-        txtUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.left_to_right, R.anim.right_to_left);
-                Bundle bundle = new Bundle();
-                bundle.putString("contactOtherProfile", edtContact.getText().toString());
-                Intent intent = new Intent(AddManualEnquiry.this, OtherProfile.class);
-                intent.putExtras(bundle);
-                startActivity(intent, options.toBundle());
+                txtUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.left_to_right, R.anim.right_to_left);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("contactOtherProfile", edtContact.getText().toString());
+                        Intent intent = new Intent(AddManualEnquiry.this, OtherProfile.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent, options.toBundle());
+                    }
+                });
             }
         });
     }
 
     private void checkUser(String contact) {
-
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.registrationContactValidation(contact);
     }
@@ -131,13 +134,10 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 break;
 
             case R.id.ok_manual:
-
                 String custInventoryType = "", custEnquiryStatus = "";
                 Boolean flag = false;
-
                 int strPos = spnInventory.getSelectedItemPosition();
                 int strPos1 = spnStatus.getSelectedItemPosition();
-
                 String custName = edtName.getText().toString();
                 String custContact = edtContact.getText().toString();
                 String custAddress = autoAddress.getText().toString();
@@ -145,25 +145,19 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
 
                 if (strPos != 0)
                     custInventoryType = spnInventory.getSelectedItem().toString();
-
                 if (strPos1 != 0)
                     custEnquiryStatus = spnStatus.getSelectedItem().toString();
-
 
                 String discussion = edtDiscussion.getText().toString();
                 String nextFollowupDate = edtDate.getText().toString() + " " + edtTime.getText().toString();
 
                 if (!custAddress.isEmpty()) {
-
                     List<String> resultList = GooglePlacesAdapter.getResultList();
                     for (int i = 0; i < resultList.size(); i++) {
-
                         if (custAddress.equalsIgnoreCase(resultList.get(i))) {
                             flag = true;
                             break;
-
                         } else {
-
                             flag = false;
                         }
                     }
@@ -221,7 +215,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         switch (view.getId()) {
 
             case (R.id.edtDate):
-
                 if (action == MotionEvent.ACTION_DOWN) {
                     edtDate.setInputType(InputType.TYPE_NULL);
                     edtDate.setError(null);
@@ -258,10 +251,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     @Override
     public void notifySuccess(Response<?> response) {
         AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
-
         if (enquiryResponse.getSuccess() != null) {
             if (enquiryResponse.getSuccess().getMessage().equalsIgnoreCase("Data successfully Inserted.")) {
-                Toast.makeText(getApplicationContext(), enquiryResponse.getSuccess().getMessage(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(mRelative, enquiryResponse.getSuccess().getMessage(), Snackbar.LENGTH_SHORT).show();
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 startActivity(new Intent(getApplicationContext(), ManualEnquiry.class), options.toBundle());
                 finish();
@@ -273,11 +265,11 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            Snackbar.make(mRelative, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
                     , "Add Manual Enquiry");
