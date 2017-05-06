@@ -40,7 +40,8 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
     String mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    List<StoreInventoryResponse.Success.Product> productList;
+    List<StoreInventoryResponse.Success.Product> productList = new ArrayList<>();
+    ;
     LinearLayoutManager mLayoutManager;
     StoreProductAdapter adapter;
 
@@ -83,7 +84,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        getProducts(mGroupId);
     }
 
 
@@ -94,7 +95,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
 
                 System.out.println("Product Response=============" + response);
                 mSwipeRefreshLayout.setRefreshing(false);
-                productList = new ArrayList<>();
+                productList.clear();
                 String storeContact = null;
 
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();

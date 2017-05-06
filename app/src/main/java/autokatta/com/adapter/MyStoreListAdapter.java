@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -274,10 +275,11 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                 Bundle b = new Bundle();
 
                 b.putString("store_id", mStoreList.get(holder.getAdapterPosition()).getId());
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(mActivity, StoreViewActivity.class);
                 intent.putExtras(b);
-                mActivity.startActivity(intent);
-                mActivity.finish();
+                mActivity.startActivity(intent, options.toBundle());
+                //mActivity.finish();
             }
         });
 

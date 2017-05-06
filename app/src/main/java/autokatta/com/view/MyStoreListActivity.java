@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import autokatta.com.R;
 import autokatta.com.initial_fragment.MyStoreListFragment;
@@ -45,7 +46,9 @@ public class MyStoreListActivity extends AppCompatActivity {
 
                         FragmentManager mFragmentManager = getSupportFragmentManager();
                         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                        mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment()).commit();
+                        mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment(), "myStoreListFragmennt")
+                                .addToBackStack("myStoreListFragmennt")
+                                .commit();
                     }
 
                 } catch (Exception e) {
@@ -56,5 +59,22 @@ public class MyStoreListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
 
 }

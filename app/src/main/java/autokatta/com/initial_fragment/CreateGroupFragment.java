@@ -286,7 +286,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
             fragment2.setArguments(b);   // send values to another fragment
 
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.group_container, fragment2);
             fragmentTransaction.commit();

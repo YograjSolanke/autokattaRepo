@@ -1,5 +1,6 @@
 package autokatta.com.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -77,10 +78,10 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", Store_id);
                 bundle.putString("className", "StoreViewActivity");
-
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(getActivity(), MyStoreListActivity.class);
                 intent.putExtras(bundle);
-                getActivity().startActivity(intent);
+                getActivity().startActivity(intent, options.toBundle());
                 getActivity().finish();
 
 

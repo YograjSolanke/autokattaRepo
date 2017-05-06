@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -24,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -31,6 +33,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.File;
+import java.net.SocketTimeoutException;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -73,6 +76,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     StoreServices storeServices;
     StoreVehicles storeVehicles;
     ApiCall mApiCall;
+    Toolbar toolbar;
     String storeName = "", storeImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
             storeLikeCount, storeFollowCount, strDetailsShare = "";
 
@@ -80,7 +84,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_store_view);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mApiCall = new ApiCall(StoreViewActivity.this, this);
@@ -133,6 +137,14 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             @Override
             public void run() {
                 try {
+
+                    setSupportActionBar(toolbar);
+
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    }
+
                     if (getIntent().getExtras() != null) {
                         store_id = getIntent().getExtras().getString("store_id");
                         getOtherStore(mLoginContact, store_id);
@@ -638,7 +650,17 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("Check Class-"
+                    , "StoreViewActivity");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -683,5 +705,23 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Other Profile\n");
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

@@ -40,7 +40,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     String mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    List<StoreInventoryResponse.Success.Service> serviceList;
+    List<StoreInventoryResponse.Success.Service> serviceList = new ArrayList<>();
     LinearLayoutManager mLayoutManager;
     StoreServiceAdapter adapter;
     TextView titleText;
@@ -88,7 +88,8 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
+
+        getServices(mGroupId);
     }
 
 
@@ -99,7 +100,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
 
                 System.out.println("Service Response=============" + response);
                 mSwipeRefreshLayout.setRefreshing(false);
-                serviceList = new ArrayList<>();
+                serviceList.clear();
                 String storeContact = null;
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getService().isEmpty()) {

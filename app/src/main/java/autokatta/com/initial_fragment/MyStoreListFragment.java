@@ -166,6 +166,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onRefresh() {
-
+        apiCall.MyStoreList(myContact);
     }
 }
