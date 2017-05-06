@@ -74,7 +74,7 @@ public class GroupDetailTabs extends Fragment {
     }
 
     private void setupViewPager(ViewPager mViewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getActivity().getSupportFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(communicationListFragment, "Communication");
         tabAdapterName.addFragment(memberListFragment, "Group Members");
         tabAdapterName.addFragment(groupVehicleList, "Group Vehicles");

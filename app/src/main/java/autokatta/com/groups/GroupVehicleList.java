@@ -60,6 +60,10 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     Button goSearch;
     Bundle getBundle;
 
+    public GroupVehicleList() {
+        //empty constructor...
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,7 +116,6 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 try {
                     getBundle = getArguments();
                     className = getBundle.getString("className");
-                    Log.i("className", className);
                     mGroupId = getBundle.getString("bundle_GroupId");
                     if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
                         getGroupVehicles();

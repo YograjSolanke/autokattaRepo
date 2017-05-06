@@ -62,7 +62,7 @@ public class About extends Fragment implements RequestNotifier {
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
 
     String userName, email, contact, profession, company, designation, subProfession, websitestr, city, skills;
-    String mUpdatedEmail, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills,mUpdatedSkills1, mUpdatedCity, mUpdatedWebsite;
+    String mUpdatedEmail, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedSkills1, mUpdatedCity, mUpdatedWebsite;
 
     final ArrayList<String> mSkillList = new ArrayList<>();
     final HashMap<String, String> mSkillList1 = new HashMap<>();
@@ -82,7 +82,7 @@ public class About extends Fragment implements RequestNotifier {
     RadioGroup usertype;
     RadioButton student, employee, selfemployee;
     RelativeLayout mrel;
-    String Sharedcontact,RegId;
+    String Sharedcontact, RegId;
     String spinnervalue = "";
     ApiCall mApiCall;
     String[] parts;
@@ -93,7 +93,7 @@ public class About extends Fragment implements RequestNotifier {
         mAbout = inflater.inflate(R.layout.fragment_profile_about, container, false);
         Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
         // RegId=getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", "");
-        System.out.println("REGID--------------------------->"+RegId);
+        System.out.println("REGID--------------------------->" + RegId);
         mContact = (TextView) mAbout.findViewById(R.id.contact_no);
         mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
         mEmail = (EditText) mAbout.findViewById(R.id.email);
@@ -114,7 +114,7 @@ public class About extends Fragment implements RequestNotifier {
         spinner.setVisibility(View.GONE);
         /*Get Designation,Skills,Company From web service*/
         mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.profileAbout(Sharedcontact,Sharedcontact);
+        mApiCall.profileAbout(Sharedcontact, Sharedcontact);
         mApiCall.getSkills();
         mApiCall.getDesignation();
         mApiCall.getCompany();
@@ -319,7 +319,7 @@ public class About extends Fragment implements RequestNotifier {
                     if (newskills.endsWith(","))
                         newskills = newskills.substring(0, newskills.length() - 1);
                     parts = newskills.split(",");
-                    for (int i=0;i<parts.length;i++) {
+                    for (int i = 0; i < parts.length; i++) {
                         try {
 
                             if (!mSkillList.contains(parts[i])) {
@@ -356,7 +356,7 @@ public class About extends Fragment implements RequestNotifier {
                         mSkills.setError("Enter Skills Name");
                         mSkills.requestFocus();
                     } else {
-                        mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1, mUpdatedCity,spinnervalue,RegId);
+                        mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1, mUpdatedCity, spinnervalue, RegId);
                         // submitData();
                     }
                     mrel.setVisibility(View.GONE);
@@ -389,7 +389,7 @@ public class About extends Fragment implements RequestNotifier {
         System.out.println("texttttttttttttttttt Skills" + text.substring(0, text.length() - 1));
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
-         parts = text.split(",");
+        parts = text.split(",");
         System.out.println("size of partssssssssssssssssss skills" + parts.length);
         if (parts.length > 5) {
             mSkills.setError("You can add maximum five skills");
@@ -414,7 +414,7 @@ public class About extends Fragment implements RequestNotifier {
                         websitestr = mProfileAboutResponse.getSuccess().get(0).getWebsite();
                         city = mProfileAboutResponse.getSuccess().get(0).getCity();
                         skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
-                        RegId=mProfileAboutResponse.getSuccess().get(0).getRegId();
+                        RegId = mProfileAboutResponse.getSuccess().get(0).getRegId();
 
                         mContact.setText(contact);
                         mProfession.setText(profession);
@@ -475,8 +475,7 @@ public class About extends Fragment implements RequestNotifier {
                             mSkills.setAdapter(dataAdapter);
                         }
                     }
-                }
-                if (response.body() instanceof CategoryResponse) {
+                } else if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
                     final List<String> module = new ArrayList<String>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
@@ -491,8 +490,10 @@ public class About extends Fragment implements RequestNotifier {
                             ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
                             spinner.setAdapter(dataadapter);
                             for (int i = 0; i < module.size(); i++) {
-                                if (subProfession.equals(module.get(i))) {
-                                    spinner.setSelection(i);
+                                if (subProfession != null) {
+                                    if (subProfession.equals(module.get(i))) {
+                                        spinner.setSelection(i);
+                                    }
                                 }
                             }
                         }
@@ -523,10 +524,9 @@ public class About extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (!str.equals("")) {
-            if (str.equals("Success_update_profile"))
-            {
+            if (str.equals("Success_update_profile")) {
                 CustomToast.customToast(getActivity(), "Profile Updated Successfully");
-                mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+                mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
             }
         }
     }

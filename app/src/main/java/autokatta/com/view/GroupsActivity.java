@@ -1,8 +1,6 @@
 package autokatta.com.view;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -52,17 +50,19 @@ public class GroupsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        finishActivity(1);
+        /*int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), GroupsActivity.class), options.toBundle());
+            *//*ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
+            startActivity(new Intent(getApplicationContext(), GroupsActivity.class), options.toBundle());*//*
             finish();
         } else {
             if (getFragmentManager().getBackStackEntryCount() > 1) {
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
-                if (className == null) {
+                finishActivity(1);
+                *//*if (className == null) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
                         startActivity(new Intent(getApplicationContext(), UserProfile.class), options.toBundle());
@@ -71,9 +71,9 @@ public class GroupsActivity extends AppCompatActivity {
                         finish();
                         startActivity(new Intent(getApplicationContext(), UserProfile.class));
                     }
-                }
+                }*//*
             }
-        }
+        }*/
         /*if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         } else {

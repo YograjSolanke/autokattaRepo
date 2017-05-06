@@ -1,5 +1,6 @@
 package autokatta.com.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -23,12 +24,12 @@ import autokatta.com.view.GroupsActivity;
 
 public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private Context mContext;
+    private Activity mContext;
     private List<String> mListHeaders;
     private HashMap<String, List<ModelGroups>> mSettingList;
     private String GroupType;
 
-    public GroupsExpandableListAdapter(Context mContext, List<String> mListHeaders, HashMap<String, List<ModelGroups>> mSettingList, String grpType) {
+    public GroupsExpandableListAdapter(Activity mContext, List<String> mListHeaders, HashMap<String, List<ModelGroups>> mSettingList, String grpType) {
         this.mContext = mContext;
         this.mListHeaders = mListHeaders;
         this.mSettingList = mSettingList;
@@ -120,6 +121,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                 Log.i("header", mListHeaders.get(groupPosition));
                 Log.i("GroupId", "Profile->" + rowItem.getId());
                 Intent i = new Intent(mContext, GroupsActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 //mContext.getSharedPreferences(mContext.getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
                 //If Call From OtherProfile
                 if (GroupType.equalsIgnoreCase("OtherGroup")) {
@@ -130,7 +132,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                     i.putExtra("className", "SimpleProfile");
                 }
                 i.putExtra("bundle_GroupId", rowItem.getId());
-                mContext.startActivity(i);
+                mContext.startActivityForResult(i, 1);
             }
         });
         return convertView;

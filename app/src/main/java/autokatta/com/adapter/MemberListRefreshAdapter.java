@@ -181,20 +181,22 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             }
         }
 
-        if (!mCallFrom.equals("MyGroups")) {
-            if (holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("member")) {
-                holder.mOption.setText("Leave");
-            } else {
-                holder.mOption.setVisibility(View.INVISIBLE);
+        if (mCallFrom != null) {
+            if (!mCallFrom.equals("MyGroups")) {
+                if (holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("member")) {
+                    holder.mOption.setText("Leave");
+                } else {
+                    holder.mOption.setVisibility(View.INVISIBLE);
+                }
             }
-        }
-        if (mCallFrom.equals("MyGroups")) {
-            if (holder.mName.getText().toString().equals("You")) {
-                holder.mOption.setText("Leave");
-            } else if (!holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("Admin")) {
-                holder.mOption.setVisibility(View.INVISIBLE);
-            } else {
-                holder.mOption.setText("Options");
+            if (mCallFrom.equals("MyGroups")) {
+                if (holder.mName.getText().toString().equals("You")) {
+                    holder.mOption.setText("Leave");
+                } else if (!holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("Admin")) {
+                    holder.mOption.setVisibility(View.INVISIBLE);
+                } else {
+                    holder.mOption.setText("Options");
+                }
             }
         }
         holder.mCall.setOnClickListener(new OnClickListener() {
