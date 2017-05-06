@@ -349,7 +349,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
             case R.id.chat_c:
 
 
-                if (mChat.getLabelText().toString().equalsIgnoreCase("send enquiry")) {
+                if (mChat.getLabelText().equalsIgnoreCase("send enquiry")) {
                     ApiCall mpApicall = new ApiCall(this, this);
                     mpApicall.sendChatMessage(prefcontact, contact, "Please send information About this", "", "",
                             "", mVehicle_Id);

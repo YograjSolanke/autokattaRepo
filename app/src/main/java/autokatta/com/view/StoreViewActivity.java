@@ -1,19 +1,25 @@
 package autokatta.com.view;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +29,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import java.io.File;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -59,12 +67,14 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     TabLayout tabLayout;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
-    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap, mAdd;
+    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap, mAdd, mAutoshare, mShare;
     StoreInfo storeInfo;
     StoreProducts storeProducts;
     StoreServices storeServices;
     StoreVehicles storeVehicles;
     ApiCall mApiCall;
+    String storeName = "", storeImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
+            storeLikeCount, storeFollowCount, strDetailsShare = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +99,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
         viewPager = (ViewPager) findViewById(R.id.other_store_viewpager);
         tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
+        mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
+        mShare = (FloatingActionButton) findViewById(R.id.share);
 
 
         mCall.setOnClickListener(this);
@@ -97,6 +109,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mRate.setOnClickListener(this);
         mGoogleMap.setOnClickListener(this);
         mAdd.setOnClickListener(this);
+        mShare.setOnClickListener(this);
+        mAutoshare.setOnClickListener(this);
 
 
         storeInfo = new StoreInfo();
@@ -356,6 +370,64 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 showAddAlert();
 
                 break;
+
+            case R.id.share:
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                String imageFilePath = "", imagename = "";
+
+
+                if (storeImage.equalsIgnoreCase("") || storeImage.equalsIgnoreCase(null) ||
+                        storeImage.equalsIgnoreCase("null")) {
+                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                } else {
+                    imagename = "http://autokatta.com/mobile/store_profiles/" + storeImage;
+                }
+                Log.e("TAG", "img : " + imagename);
+
+                DownloadManager.Request request = new DownloadManager.Request(
+                        Uri.parse(imagename));
+                request.allowScanningByMediaScanner();
+                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                Log.e("ShareImagePath :", filename);
+                Log.e("TAG", "img : " + imagename);
+
+                DownloadManager manager = (DownloadManager) getApplication()
+                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                Log.e("TAG", "img URL: " + imagename);
+
+                manager.enqueue(request);
+
+                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                System.out.println("ImageFilePath:" + imageFilePath);
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                        + "\n" + "http://autokatta.com/store/main/" + store_id + "/" + myContact);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                break;
+            case R.id.autokatta_share:
+
+                strDetailsShare = storeName + "=" + storeWebsite + "="
+                        + storeTiming + "=" + storeWorkingDays + "="
+                        + storeType + "=" + storeLocation + "="
+                        + storeImage + "=" + storeRating + "="
+                        + storeLikeCount + "=" + storeFollowCount;
+
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", strDetailsShare).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_store_id", store_id).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_keyword", "store").apply();
+
+                startActivity(new Intent(StoreViewActivity.this, ShareWithinAppActivity.class));
+                finish();
+                break;
         }
 
     }
@@ -488,11 +560,20 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
         if (response != null) {
             if (response.isSuccessful()) {
-                String userName = "", dp = "";
+
                 StoreResponse storeResponse = (StoreResponse) response.body();
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
-                    userName = success.getName();
-                    dp = success.getStoreImage();
+                    storeName = success.getName();
+                    storeImage = success.getStoreImage();
+                    storeWebsite = success.getWebsite();
+                    storeTiming = success.getStoreOpenTime() + " " + success.getStoreCloseTime();
+                    storeLocation = success.getLocation();
+                    storeWorkingDays = success.getWorkingDays();
+                    storeType = success.getStoreType();
+                    storeLikeCount = success.getLikecount();
+                    storeFollowCount = success.getFollowcount();
+
+
                     mOtherContact = success.getContact();
                     storeRating = success.getRating();
                     mLikestr = success.getLikestatus();
@@ -513,19 +594,20 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mLike.setVisibility(View.GONE);
                     mFollow.setVisibility(View.GONE);
                     mRate.setVisibility(View.GONE);
+                    mAdd.setVisibility(View.GONE);
                 }
 
                 storerating.setRating(Float.parseFloat(storeRating));
                 //  mBundle.putString("StoreContact", mOtherContact);
 
 
-                String dp_path = "http://autokatta.com/mobile/store_profiles/" + dp;
+                String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
                 Glide.with(this)
                         .load(dp_path)
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(mOtherPicture);
-                collapsingToolbar.setTitle(userName);
+                collapsingToolbar.setTitle(storeName);
 
                 if (mLikestr.equalsIgnoreCase("no")) {
                     mLike.setLabelText("Like");

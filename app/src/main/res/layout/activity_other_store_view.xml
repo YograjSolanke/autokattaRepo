@@ -144,6 +144,24 @@
             fab:fab_label="Follow"
             fab:fab_size="mini" />
 
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_share"
+            fab:fab_size="mini"
+            fab:fab_label="Share" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/autokatta_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/autoshare"
+            fab:fab_size="mini"
+            fab:fab_label="Share" />
+
+
     </com.github.clans.fab.FloatingActionMenu>
 
 
