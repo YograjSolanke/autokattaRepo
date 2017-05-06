@@ -2390,7 +2390,7 @@ Upload Vehicle
     Get Group Products
      */
 
-    public void getGroupProducts(String groupId) {
+    public void getGroupProducts(String groupId, String myContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2399,15 +2399,15 @@ Upload Vehicle
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<GetGroupContactsResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupContacts(groupId);
-                mGetGroupContactsResponseCall.enqueue(new Callback<GetGroupContactsResponse>() {
+                Call<StoreInventoryResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupProducts(groupId, myContact);
+                mGetGroupContactsResponseCall.enqueue(new Callback<StoreInventoryResponse>() {
                     @Override
-                    public void onResponse(Call<GetGroupContactsResponse> call, Response<GetGroupContactsResponse> response) {
+                    public void onResponse(Call<StoreInventoryResponse> call, Response<StoreInventoryResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<GetGroupContactsResponse> call, Throwable t) {
+                    public void onFailure(Call<StoreInventoryResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -2423,7 +2423,7 @@ Upload Vehicle
     Get Group Services
      */
 
-    public void getGroupService(String groupId) {
+    public void getGroupService(String groupId, String myContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2432,15 +2432,15 @@ Upload Vehicle
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<GetGroupContactsResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupContacts(groupId);
-                mGetGroupContactsResponseCall.enqueue(new Callback<GetGroupContactsResponse>() {
+                Call<StoreInventoryResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupServices(groupId, myContact);
+                mGetGroupContactsResponseCall.enqueue(new Callback<StoreInventoryResponse>() {
                     @Override
-                    public void onResponse(Call<GetGroupContactsResponse> call, Response<GetGroupContactsResponse> response) {
+                    public void onResponse(Call<StoreInventoryResponse> call, Response<StoreInventoryResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<GetGroupContactsResponse> call, Throwable t) {
+                    public void onFailure(Call<StoreInventoryResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

@@ -339,6 +339,14 @@ public interface ServiceApi {
     @GET("getGroupContacts.php")
     Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("group_id") String groupId);
 
+    //Get Group Products...
+    @GET("getGroupProducts.php")
+    Call<StoreInventoryResponse> _autokattaGetGroupProducts(@Query("group_id") String groupId, @Query("mycontact") String myContact);
+
+    //Get Group Services...
+    @GET("getGroupServices.php")
+    Call<StoreInventoryResponse> _autokattaGetGroupServices(@Query("group_id") String groupId, @Query("mycontact") String myContact);
+
     //delete group members...
     @POST("deleteMyGroupMembers.php")
     Call<String> _autokattaDeleteGroupMembers(@Query("group_id") String group_id, @Query("grouptype") String grouptype,
@@ -1215,5 +1223,6 @@ public interface ServiceApi {
     //Post Manual enquiry
     @POST("addEnquiryData.php")
     Call<AddManualEnquiryResponse> _autokattaAddManualEnquiry(@Body AddManualEnquiryRequest addManualEnquiryRequest);
+
 
 }

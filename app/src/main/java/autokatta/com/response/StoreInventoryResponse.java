@@ -172,6 +172,18 @@ public class StoreInventoryResponse {
             @Expose
             private String productTags;
 
+            @SerializedName("storecontact")
+            @Expose
+            private String storecontact;
+
+            public String getStorecontact() {
+                return storecontact;
+            }
+
+            public void setStorecontact(String storecontact) {
+                this.storecontact = storecontact;
+            }
+
             public String getStoreId() {
                 return storeId;
             }
@@ -389,6 +401,18 @@ public class StoreInventoryResponse {
             @SerializedName("servicetags")
             @Expose
             private String servicetags;
+
+            @SerializedName("storecontact")
+            @Expose
+            private String storecontact;
+
+            public String getStorecontact() {
+                return storecontact;
+            }
+
+            public void setStorecontact(String storecontact) {
+                this.storecontact = storecontact;
+            }
 
             public String getServiceName() {
                 return serviceName;

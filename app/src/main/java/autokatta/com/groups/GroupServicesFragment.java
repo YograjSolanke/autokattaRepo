@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.GroupServiceAdpater;
+import autokatta.com.adapter.StoreServiceAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -34,27 +35,35 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     public GroupServicesFragment() {
     }
 
-    View mProduct;
+    View mService;
     String myContact;
+    String mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<StoreInventoryResponse.Success.Service> serviceList;
     LinearLayoutManager mLayoutManager;
-    GroupServiceAdpater adapter;
+    StoreServiceAdapter adapter;
+    TextView titleText;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mProduct = inflater.inflate(R.layout.store_product_fragment, container, false);
+        mService = inflater.inflate(R.layout.store_product_fragment, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mProduct.findViewById(R.id.swipeRefreshLayout);
-        mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
+        titleText = (TextView) mService.findViewById(R.id.titleText);
+        titleText.setText("Services");
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
+        mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        Bundle getBundle = getArguments();
+        mGroupId = getBundle.getString("bundle_GroupId");
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -65,16 +74,16 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getServices(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
-                        getString("group_id", ""));
+                getServices(mGroupId);
             }
         });
-        return mProduct;
+        return mService;
     }
 
     private void getServices(String GroupId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        //apiCall.getGroupService(GroupId);
+        //apiCall.getGroupService("470",myContact);
+        apiCall.getGroupService(GroupId, myContact);
     }
 
     @Override
@@ -91,7 +100,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 System.out.println("Service Response=============" + response);
                 mSwipeRefreshLayout.setRefreshing(false);
                 serviceList = new ArrayList<>();
-
+                String storeContact = null;
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getService().isEmpty()) {
                     for (StoreInventoryResponse.Success.Service success : storeResponse.getSuccess().getService()) {
@@ -112,10 +121,12 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                         success.setSrate1(success.getSrate1());
                         success.setSrate2(success.getSrate2());
                         success.setSrate3(success.getSrate3());
+                        success.setSrate3(success.getStorecontact());
+                        storeContact = success.getStorecontact();
                         serviceList.add(success);
 
                     }
-                    adapter = new GroupServiceAdpater(getActivity(), serviceList, myContact);
+                    adapter = new StoreServiceAdapter(getActivity(), serviceList, myContact, storeContact);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {

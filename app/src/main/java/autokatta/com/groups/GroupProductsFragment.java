@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.GroupProductsAdapter;
+import autokatta.com.adapter.StoreProductAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -37,11 +37,12 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
 
     View mProduct;
     String myContact;
+    String mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<StoreInventoryResponse.Success.Product> productList;
     LinearLayoutManager mLayoutManager;
-    GroupProductsAdapter adapter;
+    StoreProductAdapter adapter;
 
     @Nullable
     @Override
@@ -56,6 +57,8 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        Bundle getBundle = getArguments();
+        mGroupId = getBundle.getString("bundle_GroupId");
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -66,8 +69,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getProducts(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
-                        getString("group_id", ""));
+                getProducts(mGroupId);
             }
         });
         return mProduct;
@@ -75,7 +77,8 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
 
     private void getProducts(String GroupId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        //apiCall.getGroupProducts(GroupId);
+        //apiCall.getGroupProducts("512",myContact);
+        apiCall.getGroupProducts(GroupId, myContact);
     }
 
     @Override
@@ -92,6 +95,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                 System.out.println("Product Response=============" + response);
                 mSwipeRefreshLayout.setRefreshing(false);
                 productList = new ArrayList<>();
+                String storeContact = null;
 
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getProduct().isEmpty()) {
@@ -113,10 +117,11 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                         success.setPrate1(success.getPrate1());
                         success.setPrate2(success.getPrate2());
                         success.setPrate3(success.getPrate3());
+                        storeContact = success.getStorecontact();
                         productList.add(success);
 
                     }
-                    adapter = new GroupProductsAdapter(getActivity(), productList, myContact);
+                    adapter = new StoreProductAdapter(getActivity(), productList, myContact, storeContact);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
