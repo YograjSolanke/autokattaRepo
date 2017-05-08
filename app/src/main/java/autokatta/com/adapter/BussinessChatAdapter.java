@@ -98,6 +98,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
             fragmentTransaction.commit();*/
 
             ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.ok_left_to_right, R.anim.ok_right_to_left)
                     .replace(R.id.bussines_chat_container, obj, "chatactivity")
                     .addToBackStack("chatactivity")
                     .commit();

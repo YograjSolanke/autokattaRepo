@@ -81,14 +81,10 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 EndedSaleMelaResponse endedSaleMelaResponse = (EndedSaleMelaResponse) response.body();
                 if (!endedSaleMelaResponse.getSuccess().isEmpty()) {
-
                     for (EndedSaleMelaResponse.Success ExchangeSuccess : endedSaleMelaResponse.getSuccess()) {
-
                         ExchangeSuccess.setId(ExchangeSuccess.getId());
                         ExchangeSuccess.setName(ExchangeSuccess.getName());
                         ExchangeSuccess.setLocation(ExchangeSuccess.getLocation());
@@ -100,9 +96,7 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
                         ExchangeSuccess.setImage(ExchangeSuccess.getImage());
                         ExchangeSuccess.setDetails(ExchangeSuccess.getDetails());
                         ExchangeSuccess.setContact(ExchangeSuccess.getContact());
-
                         activeExchangeMelaList.add(ExchangeSuccess);
-
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
                     EndedExchangeAdapter adapter = new EndedExchangeAdapter(getActivity(), activeExchangeMelaList);
@@ -111,7 +105,6 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
                     Log.i("size exchange list", String.valueOf(activeExchangeMelaList.size()));
                 } else
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
 

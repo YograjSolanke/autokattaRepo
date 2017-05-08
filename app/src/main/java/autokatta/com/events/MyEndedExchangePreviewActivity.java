@@ -31,8 +31,7 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
-
-    ExchangeMelaParticipantsFragment exchangeMelaParticipantsFragment=new ExchangeMelaParticipantsFragment();
+    ExchangeMelaParticipantsFragment exchangeMelaParticipantsFragment;
     ExchangeMelaAnalyticsFragment exchangeMelaAnalyticsFragment =new ExchangeMelaAnalyticsFragment();
 
     ViewPager mViewPager;
@@ -41,7 +40,7 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_ended_exchange_preview);
+        setContentView(R.layout.content_my_ended_exchange_preview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -49,20 +48,6 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
-        mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
-
-
-
-        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mStartdate = (TextView) findViewById(R.id.start_date);
-        mStartTime = (TextView) findViewById(R.id.start_time);
-        mEndTime = (TextView) findViewById(R.id.end_time);
-        mEndDate = (TextView) findViewById(R.id.end_date);
-        mLocation = (TextView) findViewById(R.id.location);
-        txtTimer = (TextView) findViewById(R.id.live_timer);
-        mtitle = (TextView) findViewById(R.id.loan_text);
-
         //get Data from Adapter
         strTitle = getIntent().getExtras().getString("title");
         strStartdate = getIntent().getExtras().getString("startdate");
@@ -73,6 +58,23 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
         strExchangeID = getIntent().getExtras().getString("exchangeid");
 
+        mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
+        mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
+
+        b.putString("exchangeid", strExchangeID);
+        exchangeMelaParticipantsFragment = new ExchangeMelaParticipantsFragment();
+        exchangeMelaParticipantsFragment.setArguments(b);
+        exchangeMelaAnalyticsFragment = new ExchangeMelaAnalyticsFragment();
+        exchangeMelaAnalyticsFragment.setArguments(b);
+
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mStartdate = (TextView) findViewById(R.id.start_date);
+        mStartTime = (TextView) findViewById(R.id.start_time);
+        mEndTime = (TextView) findViewById(R.id.end_time);
+        mEndDate = (TextView) findViewById(R.id.end_date);
+        mLocation = (TextView) findViewById(R.id.location);
+        txtTimer = (TextView) findViewById(R.id.live_timer);
+        mtitle = (TextView) findViewById(R.id.loan_text);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -86,9 +88,6 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
-                b.putString("exchangeid",strExchangeID);
-                exchangeMelaAnalyticsFragment.setArguments(b);
-                exchangeMelaParticipantsFragment.setArguments(b);
                 if (mViewPager != null) {
                     setupViewPager(mViewPager);
                 }
@@ -106,9 +105,8 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId())
-        {
-            case R.id.home:
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 onBackPressed();
                 break;
         }
@@ -118,7 +116,7 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishActivity(1);
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

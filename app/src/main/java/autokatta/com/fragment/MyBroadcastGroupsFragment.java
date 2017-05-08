@@ -87,30 +87,23 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     AlertDialog alert;
     TextView addimagetext;
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyBroadcast = inflater.inflate(R.layout.fragment_mybroadcast_groups, container, false);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyBroadcast.findViewById(R.id.swipeRefreshLayoutBGroup);
-
         mRecyclerView = (RecyclerView) mMyBroadcast.findViewById(R.id.recyclerBGroup);
-
         btnSendMessage = (Button) mMyBroadcast.findViewById(R.id.btnSendMsg);
         imgDeleteGroup = (ImageView) mMyBroadcast.findViewById(R.id.deletegroup);
+
         FloatingActionButton createGroup = (FloatingActionButton) mMyBroadcast.findViewById(R.id.fabCreateBroadcastGroup);
-
-
         btnSendMessage.setOnClickListener(this);
         imgDeleteGroup.setOnClickListener(this);
         createGroup.setOnClickListener(this);
 
         mApiCall = new ApiCall(getActivity(), this);
-
         mRecyclerView.setHasFixedSize(true);
-
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
@@ -139,7 +132,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 finalgrpids = "";
                 incominggrpids.clear();
                 incominggrpids = adapter.checkboxselect();
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Checked grp id====" + incominggrpids);
 
                 for (int i = 0; i < incominggrpids.size(); i++) {
                     if (!incominggrpids.get(i).equals("0")) {
@@ -147,11 +139,9 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                             finalgrpids = incominggrpids.get(i);
                         else
                             finalgrpids = finalgrpids + "," + incominggrpids.get(i);
-
                     }
 
                 }
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
                 if ( finalgrpids.equals("")) {
                     CustomToast.customToast(getActivity(), "Please Select Group to Send Message");
                 } else {
@@ -168,13 +158,13 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 b.putString("groupmembers", "");
                 b.putString("group_id", "");
 
-                /*CreateBroadcastGroupFragment about = new CreateBroadcastGroupFragment();
+                CreateBroadcastGroupFragment about = new CreateBroadcastGroupFragment();
                 about.setArguments(b);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();*/
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.broadcast_groups_container, new MyBroadcastGroupsFragment(), "CreateBroadcastGroupFragment")
+                        .replace(R.id.broadcast_groups_container, about, "CreateBroadcastGroupFragment")
                         .addToBackStack("CreateBroadcastGroupFragment")
                         .commit();
 
@@ -189,7 +179,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         incominggrpids.clear();
 
         incominggrpids = adapter.checkboxselect();
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Checked grp id====" + incominggrpids);
 
         for (int i = 0; i < incominggrpids.size(); i++) {
             if (!incominggrpids.get(i).equals("0")) {
@@ -197,9 +186,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     finalgrpids = incominggrpids.get(i);
                 else
                     finalgrpids = finalgrpids + "," + incominggrpids.get(i);
-
             }
-
         }
 
         if ( finalgrpids.equals("")) {
@@ -209,16 +196,10 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             alert.setTitle("Delete");
             alert.setMessage("Are you sure you want to delete this group?");
             alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
             alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
-
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
-
                     mApiCall.deleteBroadcastgroup("delete", finalgrpids);
-
                     dialog.dismiss();
 
                 }
@@ -238,19 +219,13 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 broadcastGroupsResponseList.clear();
                 mSwipeRefreshLayout.setRefreshing(false);
                 MyBroadcastGroupsResponse myBroadcastGroupsResponse = (MyBroadcastGroupsResponse) response.body();
-
                 if (!myBroadcastGroupsResponse.getSuccess().isEmpty()) {
-
                     for (MyBroadcastGroupsResponse.Success success : myBroadcastGroupsResponse.getSuccess()) {
-
                         success.setGroupId(success.getGroupId());
                         success.setGroupTitle(success.getGroupTitle());
                         success.setGroupOwner(success.getGroupOwner());
@@ -258,18 +233,14 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                         success.setGroupStatus(success.getGroupStatus());
                         success.setGrpMemberCount(success.getGrpMemberCount());
                         success.setGrpCreatedDate(success.getGrpCreatedDate());
-
                         broadcastGroupsResponseList.add(success);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
                     adapter = new MyBroadcastGroupsAdapter(getActivity(), broadcastGroupsResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyItemRangeChanged(0, adapter.getItemCount());
-
-                    Log.i("size broadcast group", String.valueOf(broadcastGroupsResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), this.getString(R.string.no_response));
-
             } else
                 CustomToast.customToast(getActivity(), this.getString(R.string._404));
 
@@ -308,8 +279,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();
                 }
             }
-        }else
-        {
+        } else {
             CustomToast.customToast(getActivity(), "Somthing went Wrong Please try Again");
         }
     }
@@ -317,7 +287,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     @Override
     public void onRefresh() {
         mApiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-
     }
 
     /***********************Adapter for broadcast group*********************************/
@@ -345,7 +314,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
             }
         }
-
 
         public MyBroadcastGroupsAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> broadcastlist) {
             this.mItemList = broadcastlist;
@@ -382,7 +350,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             holder.editgroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     Bundle b = new Bundle();
                     b.putString("calltype", "update");
                     b.putString("groupname", mItemList.get(position).getGroupTitle());
@@ -410,7 +377,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                         holder.group_title.setChecked(true);
                         positionArray.set(position, true);
                         grpidslist.set(position, mItemList.get(position).getGroupId());
-
                     }
 
                     if (positionArray.contains(true)) {
@@ -448,13 +414,9 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     //alert dialog box method to show pop up to send message and image in broadcast group
 
     public void sendmessage(final String groupids) {
-
-
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-
         View convertView = inflater.inflate(R.layout.custom_broadcast_message_layout, null);
-
         final EditText message = (EditText) convertView.findViewById(R.id.statustext);
         Button send = (Button) convertView.findViewById(R.id.btnsend);
         Button cancel = (Button) convertView.findViewById(R.id.btncancel);
@@ -464,7 +426,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         alertDialog.setView(convertView);
         alert = alertDialog.show();
         alertDialog.setTitle("Send Message");
-
 
         message.addTextChangedListener(new TextWatcher() {
             @Override
@@ -495,7 +456,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             public void onClick(View v) {
                 onPickImage(v);
               //  selectImage();
-
             }
         });
 
@@ -503,15 +463,12 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mApiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
                 uploadImage(mediaPath);
                 //sendDataToWeb(message.getText().toString(), groupids);
                 alert.dismiss();
             }
         });
-
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -600,7 +557,6 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                         mediaPath = root + "/androidlift/" + fname;
                         file = new File(myDir, fname);
                         saveFile(bitmapRotate, file);
-
                     }
                 }
             }

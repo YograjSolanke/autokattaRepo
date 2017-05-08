@@ -108,6 +108,7 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
         /*finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
         finishActivity(1);
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(MyEndedLoanMelaPreviewActivity.this, R.anim.left_to_right, R.anim.right_to_left);
             startActivity(new Intent(getApplicationContext(), MyEndedEventTabActivity.class), options.toBundle());

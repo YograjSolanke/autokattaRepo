@@ -449,7 +449,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         model.setBlackListStatus(success.getBlackListStatus());
                         model.setAuctionCategory(success.getAuctioncategory());
 
-                        if (model.getStockLocation().equals(""))
+                        if (success.getStockLocation().equals(""))
                             model.setLocation(success.getLocation());
                         else
                             model.setLocation(success.getStockLocation());

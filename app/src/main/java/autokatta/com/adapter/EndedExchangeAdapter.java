@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,17 +33,12 @@ public class EndedExchangeAdapter extends RecyclerView.Adapter<EndedExchangeAdap
     private Activity mActivity;
     private List<EndedSaleMelaResponse.Success> mMainList = new ArrayList<>();
     private ConnectionDetector mConnectionDetector;
-    private String myContact;
     String allDetails;
 
     public EndedExchangeAdapter(Activity activity, List<EndedSaleMelaResponse.Success> itemlist) {
         this.mActivity = activity;
         this.mMainList = itemlist;
-        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "");
         mConnectionDetector = new ConnectionDetector(mActivity);
-
-
     }
 
 
@@ -94,10 +90,10 @@ public class EndedExchangeAdapter extends RecyclerView.Adapter<EndedExchangeAdap
                     b.putString("location",mMainList.get(position).getLocation());
                     b.putString("enddatetime",mMainList.get(position).getEndDateTime());
                     b.putString("exchangeid",mMainList.get(position).getId());
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i=new Intent(mActivity, MyEndedExchangePreviewActivity.class);
                     i.putExtras(b);
-                    mActivity.startActivity(i);
-
+                    mActivity.startActivityForResult(i, 1, options.toBundle());
                 }
             });
 //Share Within App

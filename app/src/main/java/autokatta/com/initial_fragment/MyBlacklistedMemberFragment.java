@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,18 +87,14 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
                         success.setUserimage(success.getUserimage());
                         blacklistMemberList.add(success);
                     }
-
-                    Log.i("Ssize", String.valueOf(blacklistMemberList.size()));
                     BlacklistMemberAdapter adapter = new BlacklistMemberAdapter(getActivity(), blacklistMemberList);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     swipeRefreshLayout.setRefreshing(false);
                 }
-
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
-
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }

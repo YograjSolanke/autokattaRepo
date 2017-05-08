@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -48,9 +49,10 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
             b.putString("service_id", service_id);
             b.putString("vehicle_id", vehicle_id);
 
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
             Intent intent = new Intent(mActivity, ChatActivity.class);
             intent.putExtras(b);
-            mActivity.startActivity(intent);
+            mActivity.startActivity(intent, options.toBundle());
         }
     }
 

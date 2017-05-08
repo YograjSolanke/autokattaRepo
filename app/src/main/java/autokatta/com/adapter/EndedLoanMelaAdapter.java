@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -91,11 +92,11 @@ public class EndedLoanMelaAdapter extends RecyclerView.Adapter<EndedLoanMelaAdap
                 b.putString("location", mMainList.get(position).getLocation());
                 b.putString("enddatetime", mMainList.get(position).getEndDateTime());
                 b.putString("loanid", mMainList.get(position).getId());
-                //mActivity.finish();
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(mActivity, MyEndedLoanMelaPreviewActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 i.putExtras(b);
-                mActivity.startActivityForResult(i, 1);
+                mActivity.startActivityForResult(i, 1, options.toBundle());
 
             }
         });

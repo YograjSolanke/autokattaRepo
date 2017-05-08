@@ -1,6 +1,7 @@
 package autokatta.com.fragment;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -149,16 +150,16 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
             @Override
             public void onClick(View v) {
-
                 Bundle b = new Bundle();
                 b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).getSender());
                 b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).getSendername());
                 b.putString("product_id", "");
                 b.putString("service_id", "");
                 b.putString("vehicle_id", "");
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(activity, ChatActivity.class);
                 intent.putExtras(b);
-                activity.startActivity(intent);
+                activity.startActivity(intent, options.toBundle());
 
             }
 

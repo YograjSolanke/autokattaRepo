@@ -24,9 +24,13 @@ public class MyBroadcastGroupsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_broadcast_groups);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        this.setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        }
 
         IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
@@ -37,11 +41,7 @@ public class MyBroadcastGroupsActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(R.id.activity_my_broadcast_groups), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
             }
         }, intentFilter);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        }
+
         /*FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.broadcast_groups_container, new MyBroadcastGroupsFragment()).commit();*/
