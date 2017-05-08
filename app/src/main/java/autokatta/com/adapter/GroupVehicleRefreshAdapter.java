@@ -92,8 +92,6 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         this.mActivity = mActivity1;
         this.mItemList = mItemList;
         mApiCall = new ApiCall(mActivity, this);
-
-        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
     }
 
     @Override
@@ -106,6 +104,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
     @Override
     public void onBindViewHolder(final GroupVehicleRefreshAdapter.MyViewHolder holder, final int position) {
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         String register = mItemList.get(position).getRegistrationNumber();
         SpannableString sp = new SpannableString(mActivity.getString(R.string.no_register) + register);
         sp.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.no_register).length(),

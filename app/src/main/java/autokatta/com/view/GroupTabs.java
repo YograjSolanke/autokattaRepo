@@ -59,14 +59,14 @@ public class GroupTabs extends AppCompatActivity {
                     .commit();*/
 
         } else {
-            FragmentManager mFragmentManager = getSupportFragmentManager();
+            /*FragmentManager mFragmentManager = getSupportFragmentManager();
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.group_container, new GroupMyJoined()).commit();
+            mFragmentTransaction.replace(R.id.group_container, new GroupMyJoined()).commit();*/
 
-           /* getSupportFragmentManager().beginTransaction().
+            getSupportFragmentManager().beginTransaction().
                     replace(R.id.group_container, new GroupMyJoined(), "groupMyJoined")
                     .addToBackStack("groupMyJoined")
-                    .commit();*/
+                    .commit();
         }
     }
 

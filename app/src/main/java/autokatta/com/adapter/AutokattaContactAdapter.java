@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -148,21 +149,22 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         });*/
 
        /*Send Message*/
-       holder.btnsendmsg.setOnClickListener(new OnClickListener() {
-           @Override
-           public void onClick(View view) {
+        holder.btnsendmsg.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-               Bundle b = new Bundle();
-               b.putString("sender", contactdata.get(position).getContact());
-               b.putString("sendername", contactdata.get(position).getUsername());
-               b.putString("product_id", "");
-               b.putString("service_id", "");
-               b.putString("vehicle_id", "");
-               Intent intent = new Intent(mActivity, ChatActivity.class);
-               intent.putExtras(b);
-               mActivity.startActivity(intent);
-           }
-       });
+                Bundle b = new Bundle();
+                b.putString("sender", contactdata.get(position).getContact());
+                b.putString("sendername", contactdata.get(position).getUsername());
+                b.putString("product_id", "");
+                b.putString("service_id", "");
+                b.putString("vehicle_id", "");
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(mActivity, ChatActivity.class);
+                intent.putExtras(b);
+                mActivity.startActivity(intent, options.toBundle());
+            }
+        });
 
         /*go to other profile*/
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
@@ -173,15 +175,16 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
                 bundle.putString("contactOtherProfile", contactdata.get(holder.getAdapterPosition()).getContact());
 
                 if (myContact.equalsIgnoreCase(contactdata.get(holder.getAdapterPosition()).getContact())) {
-
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(mActivity, UserProfile.class);
                     i.putExtras(bundle);
-                    mActivity.startActivity(i);
+                    mActivity.startActivity(i, options.toBundle());
 
                 } else {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(mActivity, OtherProfile.class);
                     i.putExtras(bundle);
-                    mActivity.startActivity(i);
+                    mActivity.startActivity(i, options.toBundle());
 
                 }
             }

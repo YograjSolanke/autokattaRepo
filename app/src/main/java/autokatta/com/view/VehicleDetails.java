@@ -1,14 +1,12 @@
 package autokatta.com.view;
 
 import android.Manifest.permission;
-import android.app.ActivityOptions;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -87,15 +85,6 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mAutoshare.setOnClickListener(this);
         mChat.setOnClickListener(this);
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -163,7 +152,6 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     Vehicle Details...
      */
     private void getVehicleData(String mVehicleId) {
-
         mApiCall.getVehicleById(prefcontact, mVehicleId);
     }
 
@@ -196,7 +184,6 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     mSendImage = datum.getImage();
                     mKms = datum.getKmsRunning();
 
-
                     getChatEnquiryStatus(prefcontact, contact, mVehicle_Id);
 
                     if (mLikestr.equalsIgnoreCase("no")) {
@@ -224,39 +211,29 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(mVehiclePicture);*/
 
-
                     String firstWord = "", all = "";
                     if (dp.contains(",")) {
                         /*String arr[] = dp.split(",", 2);
-
                         for (int i=0; i<arr.length; i++){
                             Hash_file_maps.put("Image-"+i,dp_path+arr[0]);
                         }*/
-
                         String[] items = dp.split(",");
                         for (String item : items) {
                             Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
                         }
                         /*
-
                         success.setSingleImage(dp_path+firstWord);
                         Hash_file_maps.put(""dp_path+firstWord);
                         all = dp.replace(",", "/ ");
-
                         //success.setAllImage(all);*/
-
                     } else {
-
                         /*success.setSingleImage(firstWord);
                         success.setAllImage(all);*/
                         Hash_file_maps.put("Image-" + dp, dp_path + dp.replaceAll(" ", ""));
                     }
-
-
                 }
 
                 /* Banner...*/
-
                 for (String name : Hash_file_maps.keySet()) {
                     TextSliderView textSliderView = new TextSliderView(VehicleDetails.this);
                     textSliderView
@@ -316,12 +293,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 mLike.setLabelTextColor(Color.WHITE);
                 mLikestr = "no";
             } else if (str.equals("success_message_saved")) {
-
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
-
             } else if (str.equals("yes")) {
                 mChat.setLabelText("Chat");
-
             } else if (str.equals("no")) {
                 mChat.setLabelText("Send Enquiry");
 
@@ -344,47 +318,33 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     mApiCall.vehicleUnLike(prefcontact, contact, "4", mVehicle_Id);
                     mFab.setClosedOnTouchOutside(true);
                 }
-
                 break;
             case R.id.chat_c:
-
-
                 if (mChat.getLabelText().equalsIgnoreCase("send enquiry")) {
                     ApiCall mpApicall = new ApiCall(this, this);
                     mpApicall.sendChatMessage(prefcontact, contact, "Please send information About this", "", "",
                             "", mVehicle_Id);
                 } else {
-
-
                     Bundle b = new Bundle();
                     b.putString("sender", contact);
                     b.putString("sendername", name);
                     b.putString("product_id", "");
                     b.putString("service_id", "");
                     b.putString("vehicle_id", mVehicle_Id);
-
                     Intent intent = new Intent(VehicleDetails.this, ChatActivity.class);
                     intent.putExtras(b);
                     startActivity(intent);
-
                 }
-
                 break;
-
-
-
-
             case R.id.share:
                 String imageFilePath;
                 Intent intent = new Intent(Intent.ACTION_SEND);
-
                 if (mSendImage.equalsIgnoreCase("") || mSendImage.equalsIgnoreCase(null)) {
                     imgUrl = "http://autokatta.com/mobile/uploads/" + "abc.jpg";
                 } else {
                     imgUrl = "http://autokatta.com/mobile/uploads/" + mSendImage;
                 }
                 Log.e("TAG", "dp : " + imgUrl);
-
                 DownloadManager.Request request = new DownloadManager.Request(
                         Uri.parse(imgUrl));
                 request.allowScanningByMediaScanner();
@@ -392,14 +352,11 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
                 Log.e("ShareImagePath :", filename);
                 Log.e("TAG", "dp : " + imgUrl);
-
                 DownloadManager manager = (DownloadManager) getApplication()
                         .getSystemService(Context.DOWNLOAD_SERVICE);
 
                 Log.e("TAG", "dp URL: " + imgUrl);
-
                 manager.enqueue(request);
-
                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                 System.out.println("ImageFilePath:" + imageFilePath);
 
@@ -429,7 +386,6 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                         putString("Share_vehicle_id", mVehicle_Id).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "vehicle").apply();
-
 
                 Intent i = new Intent(getApplicationContext(), ShareWithinAppActivity.class);
                 startActivity(i);
@@ -472,12 +428,8 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(VehicleDetails.this, R.anim.pull_in_left, R.anim.push_out_right);
-            finish();
-        } else {
-            finish();
-        }
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
     @Override

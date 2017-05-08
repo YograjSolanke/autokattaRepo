@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -165,7 +166,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if ((!connectionDetector.isConnectedToInternet())) {
                     Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
                 } else {
@@ -246,11 +246,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             @Override
             public void onClick(View view) {
                 Bundle bundle=new Bundle();
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(activity, VehicleDetails.class);
                 bundle.putString("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                 i.putExtras(bundle);
-                activity.startActivity(i);
-                activity.finish();
+                activity.startActivity(i, options.toBundle());
             }
         });
         holder.editleads.setOnClickListener(new OnClickListener() {

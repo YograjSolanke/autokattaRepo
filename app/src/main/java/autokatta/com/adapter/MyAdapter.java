@@ -170,6 +170,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                         .putString("grouptype", GroupType).apply();*/
                 mGroupid = mItemList.get(position).getId();
                 Intent intent = new Intent(mActivity, GroupsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 //intent.putExtras();
                 if (GroupType.equals("JoinedGroups")) {
                     intent.putExtra("grouptype", "JoinedGroups");
@@ -178,7 +179,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 }
                 intent.putExtra("className", "MyAdapter");
                 intent.putExtra("bundle_GroupId", mGroupid);
-                mActivity.startActivity(intent);
+                mActivity.startActivityForResult(intent, 1);
             }
         });
         if (GroupType.equals("JoinedGroups")) {

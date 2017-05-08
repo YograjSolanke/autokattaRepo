@@ -38,7 +38,7 @@ public class MyAutokattaContactFragmentTab extends Fragment {
     }
 
     private void setupViewPager(ViewPager mViewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new AutokattaContactFragment(), "My Autokatta Contact");
         tabAdapterName.addFragment(new InviteContactFragment(), "Invite Contact");
         mViewPager.setAdapter(tabAdapterName);

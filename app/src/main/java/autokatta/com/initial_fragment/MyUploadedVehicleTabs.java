@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -50,7 +49,7 @@ public class MyUploadedVehicleTabs extends Fragment {
         viewPager.setAdapter(adapter);
     }
 
-    private void setupTabIcons() {
+    /*private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.tab_custom_demo, null);
         tabOne.setText("Products");
         tabLayout.getTabAt(0).setCustomView(tabOne);
@@ -66,5 +65,5 @@ public class MyUploadedVehicleTabs extends Fragment {
         TextView tabfour = (TextView) LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.tab_custom_demo, null);
         tabfour.setText("New Vehicle");
         tabLayout.getTabAt(3).setCustomView(tabfour);
-    }
+    }*/
 }

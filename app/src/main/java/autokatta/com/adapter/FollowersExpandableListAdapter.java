@@ -1,5 +1,6 @@
 package autokatta.com.adapter;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -116,11 +117,11 @@ public class FollowersExpandableListAdapter extends BaseExpandableListAdapter {
         mView.mHeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mContext, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(mContext,OtherProfile.class);
                 System.out.println("========="+rowItem.getContact());
                 i.putExtra("contactOtherProfile", rowItem.getContact());
-                mContext.startActivity(i);
+                mContext.startActivity(i, options.toBundle());
             }
         });
         //mView.mContact.setText(rowItem.getContact());

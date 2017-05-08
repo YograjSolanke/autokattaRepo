@@ -19,9 +19,8 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-        this.runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {

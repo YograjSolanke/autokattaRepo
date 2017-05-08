@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -52,6 +53,10 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
@@ -243,5 +248,22 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Other Profile\n");
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

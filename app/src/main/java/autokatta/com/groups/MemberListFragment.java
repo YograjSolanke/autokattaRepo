@@ -136,6 +136,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 ContactNoList = new ArrayList<>();
                 ContactNoList.clear();
                 mSuccesses.clear();
+                Cursor people = null;
                 mSwipeRefreshLayout.setRefreshing(false);
 
                 Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
@@ -161,12 +162,13 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         success.setContact(success.getContact().substring(success.getContact().length() - 10));
 
                     Boolean found = false;
-
-                    Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
-                    int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-                    int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
                     try {
+                        if (getActivity() != null) {
+                            people = getActivity().getContentResolver().query(uri, projection, null, null, null);
+                        }
+                        int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                        int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
                         people.moveToFirst();
                         do {
                             String namesfound = people.getString(indexName);
@@ -183,27 +185,20 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                                 //NameList.add(namesfound+"="+getcont+"="+status+"="+image+"="+userName+"="+type+"="+vehicle_cnt);
                                 success.setUsername(namesfound);
                                 ContactNoList.add(success.getContact());
-
-
                                 found = true;
                                 break;
                             }
-
                         } while (people.moveToNext());
 
                         if (!found) {
                             // NameList.add("Unknown="+getcont+"="+status+"="+image+"="+userName+"="+type+"="+vehicle_cnt);
                             success.setUsername("Unknown");
                             ContactNoList.add(success.getContact());
-
-
-                        }
-
+                            }
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                        }
                     mSuccesses.add(success);
-
                 }
                 mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom);
                 mRecyclerView.setAdapter(mMemberListAdapter);

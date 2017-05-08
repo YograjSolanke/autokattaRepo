@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -120,6 +121,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
 
                 Log.i("header", mListHeaders.get(groupPosition));
                 Log.i("GroupId", "Profile->" + rowItem.getId());
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mContext, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(mContext, GroupsActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 //mContext.getSharedPreferences(mContext.getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
@@ -132,7 +134,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                     i.putExtra("className", "SimpleProfile");
                 }
                 i.putExtra("bundle_GroupId", rowItem.getId());
-                mContext.startActivityForResult(i, 1);
+                mContext.startActivityForResult(i, 1, options.toBundle());
             }
         });
         return convertView;

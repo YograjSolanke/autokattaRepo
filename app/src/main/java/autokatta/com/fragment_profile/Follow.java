@@ -34,7 +34,7 @@ public class Follow extends Fragment implements RequestNotifier {
     View mFollow;
 
     public Follow() {
-//Empty Constructor
+        //Empty Constructor
     }
 
     ExpandableListView followersExpandableListView;
@@ -45,7 +45,6 @@ public class Follow extends Fragment implements RequestNotifier {
     FollowersExpandableListAdapter adapter;
     String contact;//="7841023392";
     String mOtherContact;
-
 
     @Nullable
     @Override
