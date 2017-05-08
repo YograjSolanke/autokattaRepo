@@ -40,10 +40,10 @@ import retrofit2.Response;
 public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapter.ProductHolder> implements RequestNotifier {
     Activity activity;
     List<StoreInventoryResponse.Success.Product> mMainList = new ArrayList<>();
-    String myContact, storeContact;
+    private String myContact, storeContact;
     ApiCall apiCall;
-    String pimagename = "";
-    ConnectionDetector connectionDetector;
+    private String pimagename = "";
+    private ConnectionDetector connectionDetector;
 
     public StoreProductAdapter(Activity activity, List<StoreInventoryResponse.Success.Product> productList, String myContact,
                                String storeContact) {
@@ -60,8 +60,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     @Override
     public StoreProductAdapter.ProductHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_product_adapter, parent, false);
-        ProductHolder holder = new ProductHolder(view);
-        return holder;
+        return new ProductHolder(view);
     }
 
     @Override
@@ -231,13 +230,13 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
 
     }
 
-    public class ProductHolder extends RecyclerView.ViewHolder {
+    class ProductHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags;
         ImageView image, deleteproduct;
         Button viewdetails, sviewdetails, vehidetails;
         RatingBar productrating;
 
-        public ProductHolder(View itemView) {
+        ProductHolder(View itemView) {
             super(itemView);
 
 

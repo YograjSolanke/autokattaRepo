@@ -124,14 +124,6 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
             }
         });
 
-//        GPSTracker tracker = new GPSTracker(getApplicationContext());
-//        String latitude = String.valueOf(tracker.getLatitude());
-//        String longitude = String.valueOf(tracker.getLongitude());
-//
-//
-//        System.out.println("GPSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS  latitude="+latitude);
-//        System.out.println("GPSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS  longitude=" + longitude);
-
     }
 
     @Override
@@ -151,7 +143,7 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
 
     private void setupViewPager(ViewPager viewPager) {
 
-        TabAdapterName tabAdapterName = new TabAdapterName(getActivity().getSupportFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new ProductBasedStore(), "Product Based");
         tabAdapterName.addFragment(new ServiceBasedStore(), "Service Based");
 

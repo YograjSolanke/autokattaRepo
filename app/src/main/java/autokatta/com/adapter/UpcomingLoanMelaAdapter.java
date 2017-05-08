@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,8 +37,7 @@ public class UpcomingLoanMelaAdapter extends RecyclerView.Adapter<UpcomingLoanMe
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.active_loan_adapter, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        LoanHolder vh = new LoanHolder(v);
-        return vh;
+        return new LoanHolder(v);
     }
 
     @Override
@@ -62,8 +62,9 @@ public class UpcomingLoanMelaAdapter extends RecyclerView.Adapter<UpcomingLoanMe
 
         TextView title, enddate, endtime, startdate, starttime, location, address, details;
         ImageView image;
+        RelativeLayout relativeLayout;
 
-        public LoanHolder(View itemView) {
+        LoanHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);
@@ -76,6 +77,8 @@ public class UpcomingLoanMelaAdapter extends RecyclerView.Adapter<UpcomingLoanMe
             image = (ImageView) itemView.findViewById(R.id.loanmelaimg);
             details = (TextView) itemView.findViewById(R.id.typeofauction2);
 
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rel);
+            relativeLayout.setVisibility(View.GONE);
 
         }
     }

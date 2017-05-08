@@ -58,7 +58,7 @@ public class MyUpcomingEventTabFragment extends Fragment {
     }
 
     private void setUpPager(ViewPager viewPager) {
-        TabAdapterName tabAdapterName = new TabAdapterName(getActivity().getSupportFragmentManager());
+        TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new MyUpcomingAuctionFragment(), "Auction");
         tabAdapterName.addFragment(new MyUpcomingLoanMelaFragment(), "Loan Mela");
         tabAdapterName.addFragment(new MyUpcomingExchangeMelaFragment(), "Exchange Mela");

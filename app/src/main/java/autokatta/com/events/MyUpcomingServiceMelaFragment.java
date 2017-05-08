@@ -80,7 +80,7 @@ public class MyUpcomingServiceMelaFragment extends Fragment implements SwipeRefr
         if (response != null) {
 
             if (response.isSuccessful()) {
-
+                upcomingExchangeResponseList.clear();
                 MyUpcomingExchangeMelaResponse myUpcomingExchangeMelaResponse = (MyUpcomingExchangeMelaResponse) response.body();
                 if (!myUpcomingExchangeMelaResponse.getSuccess().isEmpty()) {
 
@@ -139,6 +139,6 @@ public class MyUpcomingServiceMelaFragment extends Fragment implements SwipeRefr
 
     @Override
     public void onRefresh() {
-
+        apiCall.MyUpcomingServiceMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
     }
 }

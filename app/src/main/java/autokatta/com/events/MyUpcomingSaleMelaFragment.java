@@ -80,7 +80,7 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
         if (response != null) {
 
             if (response.isSuccessful()) {
-
+                upcomingExchangeResponseList.clear();
                 MyUpcomingExchangeMelaResponse myUpcomingExchangeMelaResponse = (MyUpcomingExchangeMelaResponse) response.body();
                 if (!myUpcomingExchangeMelaResponse.getSuccess().isEmpty()) {
 
@@ -139,7 +139,7 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
 
     @Override
     public void onRefresh() {
-
+        apiCall.MyUpcomingSaleMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
     }
 }
 

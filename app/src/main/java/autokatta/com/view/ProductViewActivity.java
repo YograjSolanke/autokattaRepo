@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
@@ -185,10 +186,14 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             @Override
             public void run() {
 
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setDisplayShowHomeEnabled(true);
+                }
+
                 getCategory();
                 getProductData(product_id, contact);
                 getNoOfEnquiryCount(product_id, contact);
-
 
 
                 producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -593,7 +598,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     EnquiryCountResponse enquiryCountResponse = (EnquiryCountResponse) response.body();
                     if (enquiryCountResponse.getSuccess() != null) {
 
-                        String count = enquiryCountResponse.getSuccess().getEnquiryCount().toString();
+                        String count = enquiryCountResponse.getSuccess().getEnquiryCount();
                         no_of_enquiries.setText("No.Of Enquiries:" + count);
 
                     }
@@ -653,7 +658,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 btnchat.setText("Send Enquiry");
 
             }
-
 
 
         }
@@ -1055,5 +1059,23 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

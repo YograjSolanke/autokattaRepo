@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import autokatta.com.R;
 import autokatta.com.broadcastreceiver.Receiver;
@@ -43,9 +42,41 @@ public class MyBroadcastGroupsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.broadcast_groups_container, new MyBroadcastGroupsFragment()).commit();
+        fragmentTransaction.replace(R.id.broadcast_groups_container, new MyBroadcastGroupsFragment()).commit();*/
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.broadcast_groups_container, new MyBroadcastGroupsFragment(), "myBroadcastGroupsFragment")
+                .addToBackStack("myBroadcastGroupsFragment")
+                .commit();
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 }

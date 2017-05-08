@@ -168,11 +168,15 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 b.putString("groupmembers", "");
                 b.putString("group_id", "");
 
-                CreateBroadcastGroupFragment about = new CreateBroadcastGroupFragment();
+                /*CreateBroadcastGroupFragment about = new CreateBroadcastGroupFragment();
                 about.setArguments(b);
-                FragmentManager fragmentManager = getFragmentManager();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();
+                fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();*/
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.broadcast_groups_container, new MyBroadcastGroupsFragment(), "CreateBroadcastGroupFragment")
+                        .addToBackStack("CreateBroadcastGroupFragment")
+                        .commit();
 
                 break;
         }

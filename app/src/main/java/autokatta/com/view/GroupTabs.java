@@ -51,7 +51,9 @@ public class GroupTabs extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             FragmentManager mFragmentManager = getSupportFragmentManager();
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.group_container, new CreateGroupFragment()).commit();
+            mFragmentTransaction.replace(R.id.group_container, new CreateGroupFragment(), "createGroupFragment")
+                    .addToBackStack("createGroupFragment")
+                    .commit();
 
             /*getSupportFragmentManager().beginTransaction().
                     replace(R.id.group_container, new CreateGroupFragment(), "createGroup")

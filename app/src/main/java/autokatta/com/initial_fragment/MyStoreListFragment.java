@@ -157,9 +157,17 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 bundle.putString("className", "MyStoreListFragment");
                 CreateStoreFragment createStoreFragment = new CreateStoreFragment();
                 createStoreFragment.setArguments(bundle);
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment).addToBackStack("mystorelist").commit();
+                fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
+                        .addToBackStack("createStoreFragment")
+                        .commit();
+
+                /*getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
+                        .addToBackStack("createStoreFragment")
+                        .commit();*/
 
         }
     }

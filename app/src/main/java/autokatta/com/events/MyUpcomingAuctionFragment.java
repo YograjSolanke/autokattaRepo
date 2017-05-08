@@ -80,7 +80,7 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
         if (response != null) {
 
             if (response.isSuccessful()) {
-
+                upcomingAuctionResponseList.clear();
                 MyUpcomingAuctionResponse myUpcomingAuctionResponse = (MyUpcomingAuctionResponse) response.body();
                 if (!myUpcomingAuctionResponse.getSuccess().getAuction().isEmpty()) {
 
@@ -140,6 +140,7 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
-
+        apiCall.MyUpcomingAuction(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
+                getString("loginContact", "7841023392"));
     }
 }

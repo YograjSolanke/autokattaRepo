@@ -53,7 +53,9 @@ public class ShareWithinAppActivity extends AppCompatActivity {
 
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.shareInApp_container, new ShareWithinAppTabFragment()).commit();
+        mFragmentTransaction.replace(R.id.shareInApp_container, new ShareWithinAppTabFragment(), "shareWithinAppTabFragment")
+                .addToBackStack("shareWithinAppTabFragment")
+                .commit();
     }
 
     @Override

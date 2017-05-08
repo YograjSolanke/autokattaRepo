@@ -99,8 +99,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         try {
             this.mActivity = mActivity1;
             this.mStoreList = mItemList;
-            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
-                    getString("loginContact", "");
+
             mConnectionDetector = new ConnectionDetector(mActivity);
         } catch (ClassCastException c) {
             c.printStackTrace();
@@ -113,12 +112,14 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_my_storelist, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        YoHolder vh = new YoHolder(v);
-        return vh;
+        return new YoHolder(v);
     }
 
     @Override
     public void onBindViewHolder(final MyStoreListAdapter.YoHolder holder, final int position) {
+
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
+                getString("loginContact", "");
 
         Log.i("contact", myContact);
         holder.stname.setText(mStoreList.get(position).getName());

@@ -80,6 +80,7 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
         if (response != null) {
 
             if (response.isSuccessful()) {
+                upcomingLoanMelaResponseList.clear();
 
                 MyUpcomingLoanMelaResponse myUpcomingLoanMelaResponse = (MyUpcomingLoanMelaResponse) response.body();
                 if (!myUpcomingLoanMelaResponse.getSuccess().isEmpty()) {
@@ -139,6 +140,6 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
 
     @Override
     public void onRefresh() {
-
+        apiCall.MyUpcomingLoanMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
     }
 }

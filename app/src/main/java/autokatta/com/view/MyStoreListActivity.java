@@ -37,17 +37,20 @@ public class MyStoreListActivity extends AppCompatActivity {
                         bundle.putString("store_id", getIntent().getExtras().getString("store_id"));
                         CreateStoreFragment fragment = new CreateStoreFragment();
                         fragment.setArguments(bundle);
+
                         FragmentManager mFragmentManager = getSupportFragmentManager();
                         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                        mFragmentTransaction.replace(R.id.myStoreListFrame, fragment).commit();
+                        mFragmentTransaction.replace(R.id.myStoreListFrame, fragment, "createStoreFragment")
+                                .addToBackStack("createStoreFragment")
+                                .commit();
 
                     } else {
 
 
                         FragmentManager mFragmentManager = getSupportFragmentManager();
                         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                        mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment(), "myStoreListFragmennt")
-                                .addToBackStack("myStoreListFragmennt")
+                        mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment(), "myStoreListFragment")
+                                .addToBackStack("myStoreListFragment")
                                 .commit();
                     }
 
@@ -72,9 +75,17 @@ public class MyStoreListActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 
 }

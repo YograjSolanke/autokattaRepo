@@ -1,8 +1,6 @@
 package autokatta.com.view;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -26,9 +24,14 @@ public class MyEndedEventTabActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    FragmentManager mFragmentManager = getSupportFragmentManager();
+                    /*FragmentManager mFragmentManager = getSupportFragmentManager();
                     FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentTransaction.replace(R.id.ended_event_frame, new MyEndedTabFragment()).commit();
+                    mFragmentTransaction.replace(R.id.ended_event_frame, new MyEndedTabFragment()).commit();*/
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.ended_event_frame, new MyEndedTabFragment(), "myEndedTabFragment")
+                            .addToBackStack("myEndedTabFragment")
+                            .commit();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -52,6 +55,7 @@ public class MyEndedEventTabActivity extends AppCompatActivity {
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         } else {
             if (getFragmentManager().getBackStackEntryCount() > 1) {
                 getFragmentManager().popBackStack();

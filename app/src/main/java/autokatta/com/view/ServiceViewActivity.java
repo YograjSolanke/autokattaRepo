@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
@@ -59,7 +60,7 @@ import retrofit2.Response;
 
 public class ServiceViewActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener,
         BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
-   
+
     String contact;
     Bundle b = new Bundle();
     String id, action, name, web, rating, receiver_contact, sname, sprice, sdetails, storeowner,
@@ -180,6 +181,11 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             @Override
             public void run() {
                 try {
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                        getSupportActionBar().setDisplayShowHomeEnabled(true);
+                    }
+
                     if (!mConnectionDetector.isConnectedToInternet()) {
                         Toast.makeText(ServiceViewActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     } else {
@@ -1015,5 +1021,23 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

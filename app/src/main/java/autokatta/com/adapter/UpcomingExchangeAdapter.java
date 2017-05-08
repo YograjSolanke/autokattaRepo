@@ -48,7 +48,7 @@ public class UpcomingExchangeAdapter extends RecyclerView.Adapter<UpcomingExchan
     @Override
     public void onBindViewHolder(UpcomingExchangeAdapter.ExchangeHolder holder, int position) {
 
-        holder.Type.setText(eventType);
+        //holder.Type.setText(eventType);
         holder.title.setText(mMainlist.get(position).getName());
         holder.startdate.setText(mMainlist.get(position).getStartDate());
         holder.starttime.setText(mMainlist.get(position).getStartTime());
@@ -82,13 +82,10 @@ public class UpcomingExchangeAdapter extends RecyclerView.Adapter<UpcomingExchan
             endtime = (TextView) itemView.findViewById(R.id.editText);
             image = (ImageView) itemView.findViewById(R.id.loanmelaimg);
             details = (TextView) itemView.findViewById(R.id.typeofauction2);
-            Type = (TextView) itemView.findViewById(R.id.auctiontitle2);
+            //Type = (TextView) itemView.findViewById(R.id.auctiontitle2);
             mPreview = (Button) itemView.findViewById(R.id.button);
             mShare = (Button) itemView.findViewById(R.id.share);
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rel);
-
-            /*mPreview.setVisibility(View.GONE);
-            mShare.setVisibility(View.GONE);*/
             relativeLayout.setVisibility(View.GONE);
 
         }

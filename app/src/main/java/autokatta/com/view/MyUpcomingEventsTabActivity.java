@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import autokatta.com.R;
 import autokatta.com.initial_fragment.MyUpcomingEventTabFragment;
@@ -41,9 +42,37 @@ public class MyUpcomingEventsTabActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.upcomingEventFrame, new MyUpcomingEventTabFragment()).commit();
+        fragmentTransaction.replace(R.id.upcomingEventFrame, new MyUpcomingEventTabFragment(), "myUpcomingEventTabFragment")
+                .addToBackStack("myUpcomingEventTabFragment")
+                .commit();
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        int fragment = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragment == 1) {
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else
+                super.onBackPressed();
+        }
+    }
 
 }

@@ -39,10 +39,10 @@ import retrofit2.Response;
 public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapter.ServiceHolder> implements RequestNotifier {
     Activity activity;
     List<StoreInventoryResponse.Success.Service> mMainList = new ArrayList<>();
-    String myContact, storeContact;
+    private String myContact, storeContact;
     ApiCall apiCall;
-    String pimagename = "";
-    ConnectionDetector connectionDetector;
+    private String pimagename = "";
+    private ConnectionDetector connectionDetector;
 
     public StoreServiceAdapter(Activity activity, List<StoreInventoryResponse.Success.Service> serviceList, String myContact,
                                String storeContact) {
@@ -59,8 +59,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     @Override
     public StoreServiceAdapter.ServiceHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_product_adapter, parent, false);
-        ServiceHolder holder = new ServiceHolder(view);
-        return holder;
+        return new ServiceHolder(view);
     }
 
     @Override
@@ -229,13 +228,13 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
 
     }
 
-    public class ServiceHolder extends RecyclerView.ViewHolder {
+    class ServiceHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags;
         ImageView image, deleteproduct;
         Button viewdetails, sviewdetails, vehidetails;
         RatingBar productrating;
 
-        public ServiceHolder(View itemView) {
+        ServiceHolder(View itemView) {
             super(itemView);
 
 

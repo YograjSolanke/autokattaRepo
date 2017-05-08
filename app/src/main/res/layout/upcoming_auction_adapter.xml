@@ -1,16 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:background="@color/white">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="5dp"
         card_view:cardCornerRadius="2dp"
         card_view:contentPadding="5dp">
@@ -21,241 +21,241 @@
 
             <RelativeLayout
 
+                android:id="@+id/relativelayoutmain"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/relativelayoutmain">
+                android:layout_height="wrap_content">
 
 
                 <RelativeLayout
-                    android:gravity="center_horizontal"
-                    android:background="#C8C9CC"
                     android:id="@+id/rl1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_toLeftOf="@+id/IV2">
+                    android:layout_toLeftOf="@+id/IV2"
+                    android:background="#C8C9CC"
+                    android:gravity="center_horizontal">
 
                     <TextView
                         android:id="@+id/auctiontitle2"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:textStyle="bold"
-
-                        android:textColor="#808080"
-                        android:text="Auction Title :"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+
+                        android:layout_marginTop="5dp"
+                        android:text="Auction Title :"
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
 
                     <TextView
 
-                        android:layout_marginTop="5dp"
-                        android:textColor="#808080"
-                        android:layout_marginLeft="5dp"
-
                         android:id="@+id/typeofauction2"
-                        android:hint="-"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/auctiontitle2"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_toEndOf="@+id/auctiontitle2"
-                        android:enabled="false" />
+                        android:layout_toRightOf="@+id/auctiontitle2"
+                        android:enabled="false"
+                        android:hint="-"
+                        android:textColor="#808080" />
                 </RelativeLayout>
 
 
                 <RelativeLayout
-                    android:layout_below="@+id/rl1"
                     android:id="@+id/rl2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl1">
 
                     <TextView
-                        android:layout_marginLeft="5dp"
-                        android:textColor="#808080"
-                        android:layout_marginTop="5dp"
-                        android:textStyle="bold"
-                        android:text="No.of vehicle :"
                         android:id="@+id/noofvehicle"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="No.of vehicle :"
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:layout_marginTop="5dp"
-                        android:textColor="#808080"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/noofvehicle"
-                        android:hint="0"
                         android:id="@+id/editvehicle"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:enabled="false" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/noofvehicle"
+                        android:enabled="false"
+                        android:hint="0"
+                        android:textColor="#808080" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/rl2"
                     android:id="@+id/rl3"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp">
+                    android:layout_below="@+id/rl2"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone">
 
                     <TextView
-                        android:textStyle="bold"
-                        android:textColor="#808080"
-                        android:text="Currently active"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="Currently active"
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/rl3"
                     android:id="@+id/rl4"
-                    android:layout_toLeftOf="@+id/check"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl3"
+                    android:layout_marginTop="5dp"
+                    android:layout_toLeftOf="@+id/check">
 
                     <TextView
-                        android:layout_marginLeft="5dp"
                         android:id="@+id/start2"
-                        android:textStyle="bold"
-                        android:textColor="#808080"
-                        android:text="Start :"
-                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="Start :"
+                        android:textColor="#808080"
+                        android:textStyle="bold">
 
                     </TextView>
 
                     <TextView
-                        android:textColor="#808080"
-
                         android:id="@+id/datetime1"
-                        android:hint="Date"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@+id/start2"
+                        android:enabled="false"
+                        android:hint="Date"
 
-                        android:enabled="false" />
+                        android:textColor="#808080" />
                     />
 
                     <TextView
+                        android:id="@+id/andtext1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/datetime1"
                         android:text="&amp;"
-                        android:id="@+id/andtext1"
-                        android:textColor="#808080"
-                        android:layout_centerVertical="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="#808080" />
 
                     <TextView
-                        android:textColor="#808080"
-                        android:layout_toRightOf="@+id/andtext1"
-                        android:layout_marginLeft="10dp"
-                        android:hint="Time"
+                        android:id="@+id/editTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/editTime"
                         android:layout_centerVertical="true"
-                        android:enabled="false" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/andtext1"
+                        android:enabled="false"
+                        android:hint="Time"
+                        android:textColor="#808080" />
 
                 </RelativeLayout>
 
 
                 <RelativeLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@+id/rl4"
                     android:id="@+id/rl5"
-                    android:layout_toLeftOf="@+id/check"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl4"
+                    android:layout_marginTop="5dp"
+                    android:layout_toLeftOf="@+id/check">
 
                     <TextView
-                        android:layout_marginLeft="5dp"
                         android:id="@+id/end2"
-                        android:textStyle="bold"
-                        android:textColor="#808080"
-                        android:text="End :"
-                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="End :"
+                        android:textColor="#808080"
+                        android:textStyle="bold">
 
                     </TextView>
 
                     <TextView
-                        android:textColor="#808080"
                         android:id="@+id/datetime2"
-                        android:hint="Date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/end2"
                         android:layout_marginLeft="5dp"
-                        android:enabled="false" />
+                        android:layout_toRightOf="@+id/end2"
+                        android:enabled="false"
+                        android:hint="Date"
+                        android:textColor="#808080" />
                     />
 
                     <TextView
+                        android:id="@+id/andtext2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/datetime2"
                         android:text="&amp;"
-                        android:id="@+id/andtext2"
-                        android:textColor="#808080"
-                        android:layout_centerVertical="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:textColor="#808080" />
 
                     <TextView
 
-                        android:textColor="#808080"
-                        android:layout_toRightOf="@+id/andtext2"
-                        android:layout_marginLeft="10dp"
-                        android:hint="Time"
+                        android:id="@+id/editText"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/editText"
                         android:layout_centerVertical="true"
-                        android:enabled="false" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/andtext2"
+                        android:enabled="false"
+                        android:hint="Time"
+                        android:textColor="#808080" />
 
                 </RelativeLayout>
 
                 <ImageView
-                    android:layout_below="@+id/rl1"
                     android:id="@+id/check"
-                    android:src="@drawable/upcomingstamp"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/rl1"
+
                     android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/upcomingstamp"
                     android:visibility="visible" />
 
                 <LinearLayout
-                    android:weightSum="1"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="5dp"
-                    android:layout_below="@+id/rl5"
                     android:id="@+id/rl6"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl5"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
 
                     <Button
 
-                        android:text="Special Clause"
-                        android:background="@drawable/buttonback"
-                        android:textColor="@color/white"
-                        android:layout_weight="0.50"
+                        android:id="@+id/clauses"
                         android:layout_width="0dp"
-                        android:textSize="16dp"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="5dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/clauses" />
+                        android:layout_weight="0.50"
+                        android:background="@drawable/buttonback"
+                        android:text="Special Clause"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
 
 
                 </LinearLayout>
@@ -264,81 +264,82 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:background="@android:drawable/dialog_holo_light_frame"
+                android:id="@+id/rel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relativelayoutmain">
+                android:layout_below="@+id/relativelayoutmain"
+                android:background="@android:drawable/dialog_holo_light_frame">
 
 
                 <LinearLayout
 
-                    android:orientation="horizontal"
-                    android:background="#80bebebe"
                     android:id="@+id/relatebutton"
-
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="40dp"
+
+                    android:background="#80bebebe"
+                    android:orientation="horizontal">
 
                     <Button
-                        android:layout_weight="1"
+                        android:id="@+id/button"
 
-                        android:textColor="@color/white"
-                        android:background="@drawable/buttonback"
-                        android:textSize="16dp"
-                        android:text="Preview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button"
                         android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true" />
+                        android:layout_centerHorizontal="true"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonback"
+                        android:text="Preview"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
 
                     <Button
-                        android:layout_marginLeft="1dp"
-                        android:textColor="@color/white"
-                        android:background="@drawable/buttonback"
-                        android:layout_weight="1"
-                        android:textSize="16dp"
-                        android:layout_toRightOf="@+id/going"
-                        android:text="Share"
                         android:id="@+id/share"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_toRightOf="@+id/going"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonback"
+                        android:text="Share"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
 
                     <RelativeLayout
                         android:id="@+id/relativeshare"
-                        android:layout_weight="1"
-                        android:background="@drawable/buttonback"
                         android:layout_width="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="1dp"
-                        android:layout_height="40dp">
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonback">
 
                         <ImageButton
-                            android:layout_marginLeft="2dp"
-                            android:textColor="@color/white"
-                            android:src="@drawable/autoshare"
-
-                            android:background="@drawable/buttonback"
-                            android:textAllCaps="false"
-                            android:layout_toRightOf="@+id/going"
-                            android:text="Share"
                             android:id="@+id/share1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginLeft="2dp"
+                            android:layout_toRightOf="@+id/going"
+                            android:background="@drawable/buttonback"
+                            android:src="@drawable/autoshare"
+                            android:text="Share"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white" />
 
                         <TextView
                             android:id="@+id/textshare"
-                            android:text="SHARE"
+                            android:layout_width="50dp"
 
-                            android:textSize="15sp"
-                            android:gravity="center"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
-
-                            android:textColor="@color/white"
-                            android:background="@drawable/buttonback"
-                            android:layout_width="50dp"
                             android:layout_toRightOf="@+id/share1"
-                            android:layout_height="wrap_content" />
+
+                            android:background="@drawable/buttonback"
+                            android:gravity="center"
+                            android:text="SHARE"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
                     </RelativeLayout>
 
                 </LinearLayout>

@@ -28,7 +28,7 @@ import autokatta.com.view.ShareWithinAppActivity;
 public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuctionAdapter.AuctionHolder> {
     Activity activity;
     List<MyUpcomingAuctionResponse.Success.Auction> mMainlist = new ArrayList<>();
-    String allDetails, spcl;
+    private String allDetails, spcl;
 
     public UpcomingAuctionAdapter(Activity activity, List<MyUpcomingAuctionResponse.Success.Auction> itemlist) {
         this.activity = activity;
@@ -39,8 +39,7 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
     @Override
     public UpcomingAuctionAdapter.AuctionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_auction_adapter, parent, false);
-        AuctionHolder holder = new AuctionHolder(v);
-        return holder;
+        return new AuctionHolder(v);
     }
 
     @Override
@@ -194,7 +193,7 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
                 auction_starttime;
         TextView timer;
         Button preview, btnshare, btnshare1, btnclause;
-        RelativeLayout relativeshare;
+        RelativeLayout relativeshare, relativeLayout;
 
         AuctionHolder(View view) {
             super(view);
@@ -210,6 +209,8 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
             //holder.btnshare1=(Button)convertView.findViewById(R.id.share1);
             relativeshare = (RelativeLayout) view.findViewById(R.id.relativeshare);
             btnclause = (Button) view.findViewById(R.id.clauses);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rel);
+            relativeLayout.setVisibility(View.GONE);
 
         }
     }
