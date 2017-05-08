@@ -94,7 +94,6 @@ public class MyEndedServiceMelaAdapter extends RecyclerView.Adapter<MyEndedServi
                 b.putString("location",mMainList.get(position).getLocation());
                 b.putString("enddatetime",mMainList.get(position).getEndDateTime());
                 b.putString("serviceid",mMainList.get(position).getId());
-                mActivity.finish();
                 Intent i=new Intent(mActivity, MyEndedServiceMelaPreviewActivity.class);
 
                 i.putExtras(b);

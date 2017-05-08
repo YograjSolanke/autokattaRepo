@@ -94,7 +94,6 @@ public class EndedExchangeAdapter extends RecyclerView.Adapter<EndedExchangeAdap
                     b.putString("location",mMainList.get(position).getLocation());
                     b.putString("enddatetime",mMainList.get(position).getEndDateTime());
                     b.putString("exchangeid",mMainList.get(position).getId());
-                    mActivity.finish();
                     Intent i=new Intent(mActivity, MyEndedExchangePreviewActivity.class);
                     i.putExtras(b);
                     mActivity.startActivity(i);

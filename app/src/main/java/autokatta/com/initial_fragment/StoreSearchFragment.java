@@ -149,8 +149,9 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
                     searchStoreFragment.setArguments(b);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.searchStoreFrame, searchStoreFragment);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.replace(R.id.searchStoreFrame, searchStoreFragment)
+                            .addToBackStack("searchstorefragment")
+                            .commit();
                 }
                 break;
 

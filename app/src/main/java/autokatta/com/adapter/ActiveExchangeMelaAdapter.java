@@ -72,7 +72,6 @@ public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchan
                 b.putString("location", mMainlist.get(position).getLocation());
                 b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
                 b.putString("exchangeid", mMainlist.get(position).getId());
-                mActivity.finish();
                 Intent i = new Intent(mActivity, ActiveExchangeMelaPreviewActivity.class);
                 i.putExtras(b);
                 mActivity.startActivity(i);
