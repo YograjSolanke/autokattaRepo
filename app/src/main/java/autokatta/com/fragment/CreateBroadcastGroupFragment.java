@@ -50,7 +50,6 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     ArrayList<String> incomingList = new ArrayList<>();
     ArrayList<String> checkedcontact = new ArrayList<>();
 
-
     ListView memberContactslist;
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     BroadcastContactAdapter autokattaContactAdapter;
@@ -114,47 +113,47 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
         memberContactslist.setAdapter(autokattaContactAdapter);
 
 
-            create_broadcast.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        create_broadcast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    System.out.println("Hiii Clicked11111111111111111111111111111111111111111111111111111111111");
+                System.out.println("Hiii Clicked11111111111111111111111111111111111111111111111111111111111");
 
 
             /*get checked Items*/
-                    finalContacts = "";
-                    groupTitle = edittitle.getText().toString();
-                    incomingList = autokattaContactAdapter.checkboxselect();
+                finalContacts = "";
+                groupTitle = edittitle.getText().toString();
+                incomingList = autokattaContactAdapter.checkboxselect();
 
-                    for (int i = 0; i < incomingList.size(); i++) {
-                        if (!incomingList.get(i).equalsIgnoreCase("0")) {
-                            if (finalContacts.equals(""))
-                                finalContacts = incomingList.get(i);
-                            else {
+                for (int i = 0; i < incomingList.size(); i++) {
+                    if (!incomingList.get(i).equalsIgnoreCase("0")) {
+                        if (finalContacts.equals(""))
+                            finalContacts = incomingList.get(i);
+                        else {
 
-                                finalContacts = finalContacts + "," + incomingList.get(i);
+                            finalContacts = finalContacts + "," + incomingList.get(i);
 
-                            }
                         }
                     }
-                        if (groupTitle.equals("")) {
-                            Toast.makeText(getActivity(), "Please enter group Title",
-                                    Toast.LENGTH_LONG).show();
-                            return;
-                        } else {
-                            //Toast.makeText(getActivity(), "Now web service call", Toast.LENGTH_LONG).show();
-                            System.out.println("group id &&&&&ContactList:" + finalContacts + "Groupid" + group_id + "contact" + contact + "calltype" + calltype);
-                            if (calltype.equals("update")) {
-                                mApiCall.updateBroadcastgroup(groupTitle, contact, finalContacts, calltype, group_id);
-
-                                //  createBroadcastGroup(groupTitle,finalContacts,group_id);
-                            } else {
-                                mApiCall.createBroadcastgroup(groupTitle, contact, finalContacts, calltype);
-                            }
-                        }
-
                 }
-            });
+                if (groupTitle.equals("")) {
+                    Toast.makeText(getActivity(), "Please enter group Title",
+                            Toast.LENGTH_LONG).show();
+                    //return;
+                } else {
+                    //Toast.makeText(getActivity(), "Now web service call", Toast.LENGTH_LONG).show();
+                    System.out.println("group id &&&&&ContactList:" + finalContacts + "Groupid" + group_id + "contact" + contact + "calltype" + calltype);
+                    if (calltype.equals("update")) {
+                        mApiCall.updateBroadcastgroup(groupTitle, contact, finalContacts, calltype, group_id);
+
+                        //  createBroadcastGroup(groupTitle,finalContacts,group_id);
+                    } else {
+                        mApiCall.createBroadcastgroup(groupTitle, contact, finalContacts, calltype);
+                    }
+                }
+
+            }
+        });
 
         return root;
     }
@@ -204,7 +203,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
 
     /***********************************************Adapter*******************************************/
 
-    public class BroadcastContactAdapter extends BaseAdapter {
+    private class BroadcastContactAdapter extends BaseAdapter {
 
 
         private ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
@@ -215,8 +214,8 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
         private ArrayList<String> checkedcontact = new ArrayList<>();
 
 
-        public BroadcastContactAdapter(Activity activity, ArrayList<Db_AutokattaContactResponse> contactdata,
-                                       ArrayList<String> checkedcontact) {
+        BroadcastContactAdapter(Activity activity, ArrayList<Db_AutokattaContactResponse> contactdata,
+                                ArrayList<String> checkedcontact) {
             this.activity = activity;
             this.contactdata = contactdata;
             this.checkedcontact = checkedcontact;
@@ -300,7 +299,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                     if (positionArray.contains(true))
                         create_broadcast.setEnabled(true);
                     else {
-                        CustomToast.customToast(getActivity(),"Please select Atleast one Contact");
+                        CustomToast.customToast(getActivity(), "Please select Atleast one Contact");
                         create_broadcast.setEnabled(false);
                     }
                 }

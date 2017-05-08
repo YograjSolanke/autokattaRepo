@@ -291,7 +291,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
     /***********************Adapter for broadcast group*********************************/
 
-    public class MyBroadcastGroupsAdapter extends RecyclerView.Adapter<MyBroadcastGroupsAdapter.MyViewHolder> {
+    class MyBroadcastGroupsAdapter extends RecyclerView.Adapter<MyBroadcastGroupsAdapter.MyViewHolder> {
         //  private LayoutInflater inflater = null;
         FragmentActivity ctx;
         String contact;
@@ -315,7 +315,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             }
         }
 
-        public MyBroadcastGroupsAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> broadcastlist) {
+        MyBroadcastGroupsAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> broadcastlist) {
             this.mItemList = broadcastlist;
             this.activity = activity;
             contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
