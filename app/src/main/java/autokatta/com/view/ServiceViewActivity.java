@@ -109,7 +109,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.service_new_view);
+        setContentView(R.layout.activity_service_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -602,7 +602,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     EnquiryCountResponse enquiryCountResponse = (EnquiryCountResponse) response.body();
                     if (enquiryCountResponse.getSuccess() != null) {
 
-                        String count = enquiryCountResponse.getSuccess().getEnquiryCount().toString();
+                        String count = enquiryCountResponse.getSuccess().getEnquiryCount();
                         no_of_enquiries.setText("No.Of Enquiries:" + count);
 
                     }

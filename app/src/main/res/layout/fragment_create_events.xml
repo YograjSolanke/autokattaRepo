@@ -57,7 +57,7 @@
                     android:layout_height="100dip"
                     android:layout_gravity="center_horizontal"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/lonemelaimage" />
+                    android:src="@mipmap/loan_mela" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".view.ProductViewActivity"
-    tools:showIn="@layout/activity_product_view">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/linear1"
@@ -69,16 +64,16 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/no_of_enquiries"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
             android:text="No.Of Enquiries:"
-            android:textColor="@color/textColor"
-            android:textSize="12sp"
+            android:id="@+id/no_of_enquiries"
             android:textStyle="bold"
+            android:textColor="@color/textColor"
+            android:textSize="10sp"
             android:visibility="gone" />
 
         <Button
@@ -92,7 +87,7 @@
             android:text="Send Enquiry"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:visibility="visible" />
 
         <ImageView
@@ -226,11 +221,11 @@
                         <RatingBar
                             android:id="@+id/productrating"
                             style="?android:attr/ratingBarStyleSmall"
+                            android:stepSize="1.0"
+                            android:theme="@style/RatingBar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:numStars="5"
-                            android:stepSize="1.0"
-                            android:theme="@style/RatingBar" />
+                            android:numStars="5" />
 
                     </LinearLayout>
 
@@ -323,8 +318,8 @@
                                 android:id="@+id/shareimg"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="@android:drawable/ic_menu_share"
-                                android:contentDescription="@string/app_name" />
+                                android:contentDescription="@string/app_name"
+                                android:background="@android:drawable/ic_menu_share" />
 
                             <TextView
                                 android:id="@+id/sharetxt"
@@ -408,9 +403,9 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
-                        android:contentDescription="@string/app_name"
                         android:src="@drawable/check"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:contentDescription="@string/app_name" />
 
                     <ImageView
                         android:id="@+id/editproduct"
@@ -419,9 +414,9 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
-                        android:contentDescription="@string/app_name"
                         android:src="@drawable/edit"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:contentDescription="@string/app_name" />
 
                     <ImageView
                         android:id="@+id/deleteproduct"
@@ -430,9 +425,9 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toStartOf="@+id/editproduct"
-                        android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_delete"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:contentDescription="@string/app_name" />
 
                     <RelativeLayout
                         android:id="@+id/relativetype"
@@ -838,8 +833,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:isIndicator="false"
                                 android:numStars="5"
+                                android:isIndicator="false"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
 
@@ -867,8 +862,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:isIndicator="false"
                                 android:numStars="5"
+                                android:isIndicator="false"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
                         </RelativeLayout>
@@ -895,8 +890,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:isIndicator="false"
                                 android:numStars="5"
+                                android:isIndicator="false"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
 

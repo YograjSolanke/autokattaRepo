@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".view.ServiceViewActivity"
+    tools:showIn="@layout/activity_service_view">
 
     <RelativeLayout
         android:id="@+id/linear1"
@@ -65,16 +70,16 @@
 
 
         <TextView
+            android:id="@+id/no_of_enquiries"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
             android:text="No.Of Enquiries:"
-            android:id="@+id/no_of_enquiries"
-            android:textStyle="bold"
             android:textColor="@color/textColor"
-            android:textSize="10sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
             android:visibility="gone" />
 
         <Button
@@ -88,7 +93,7 @@
             android:text="Send Enquiry"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:visibility="visible" />
 
         <ImageView
@@ -98,6 +103,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
             android:layout_marginTop="10dp"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/call_icon"
             android:visibility="gone" />
 
@@ -156,6 +162,7 @@
                         android:layout_below="@+id/no_of_photos"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
+                        android:contentDescription="@string/app_name"
                         android:visibility="visible" />
 
                     <LinearLayout
@@ -252,7 +259,8 @@
                                 android:id="@+id/likeimg"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="@drawable/likeicon" />
+                                android:background="@drawable/likeicon"
+                                android:contentDescription="@string/app_name" />
 
                             <TextView
                                 android:id="@+id/liketxt"
@@ -283,6 +291,7 @@
                                 android:layout_width="60dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
+                                android:contentDescription="@string/app_name"
                                 android:text="Unlike"
                                 android:textColor="@color/red" />
 
@@ -307,7 +316,8 @@
                                 android:id="@+id/shareimg"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="@android:drawable/ic_menu_share" />
+                                android:background="@android:drawable/ic_menu_share"
+                                android:contentDescription="@string/app_name" />
 
                             <TextView
                                 android:id="@+id/sharetxt"
@@ -338,7 +348,8 @@
                                 android:id="@+id/shareimg1"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:background="@drawable/autoshare" />
+                                android:background="@drawable/autoshare"
+                                android:contentDescription="@string/app_name" />
 
                             <TextView
                                 android:id="@+id/sharetxt1"
@@ -392,6 +403,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
+                        android:contentDescription="@string/app_name"
                         android:src="@drawable/check"
                         android:visibility="gone" />
 
@@ -402,6 +414,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
+                        android:contentDescription="@string/app_name"
                         android:src="@drawable/edit"
                         android:visibility="gone" />
 
@@ -412,6 +425,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toLeftOf="@+id/editservice"
+                        android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_delete"
                         android:visibility="gone" />
 
@@ -816,13 +830,13 @@
 
                             <RatingBar
                                 android:id="@+id/pricebar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:numStars="5"
                                 android:isIndicator="false"
-                                style="?android:attr/ratingBarStyleSmall"
+                                android:numStars="5"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
 
@@ -847,13 +861,13 @@
 
                             <RatingBar
                                 android:id="@+id/qualitybar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:numStars="5"
                                 android:isIndicator="false"
-                                style="?android:attr/ratingBarStyleSmall"
+                                android:numStars="5"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
 
@@ -877,13 +891,13 @@
 
                             <RatingBar
                                 android:id="@+id/tmbar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="24dp"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:numStars="5"
                                 android:isIndicator="false"
-                                style="?android:attr/ratingBarStyleSmall"
+                                android:numStars="5"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
 
@@ -909,13 +923,13 @@
 
                             <RatingBar
                                 android:id="@+id/overallbar"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/allrating"
                                 android:layout_centerHorizontal="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
-                                style="?android:attr/ratingBarStyleSmall"
                                 android:stepSize="1.0"
                                 android:theme="@style/RatingBar" />
 

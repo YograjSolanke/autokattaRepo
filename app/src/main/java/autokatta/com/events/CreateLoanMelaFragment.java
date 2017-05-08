@@ -35,20 +35,16 @@ import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.generic.SetMyDateAndTime;
-import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.LoanMelaCreateResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -68,7 +64,6 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
     String lastWord = "";
     String userSelected;
     TextView textevent;
-    ImageUpload mImageUpload;
     GenericFunctions validObj = new GenericFunctions();
     EditText eventname, startdate, starttime, enddate, endtime, eventaddress, eventdetails;
     AutoCompleteTextView eventlocation;
@@ -86,14 +81,6 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         createLoanView = inflater.inflate(R.layout.fragment_create_events, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        // Change base URL to your upload server URL.
-        mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
-
 
         eventname = (EditText) createLoanView.findViewById(R.id.editauctionname);
         startdate = (EditText) createLoanView.findViewById(R.id.auctionstartdate);
@@ -248,94 +235,6 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
     public void notifyString(String str) {
 
     }
-
-    /*private void selectImage() {
-
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-
-        final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-
-            @Override
-
-            public void onClick(DialogInterface dialog, int item) {
-
-                if (options[item].equals("Take Photo")) {
-
-                    userSelected = "camera";
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                    startActivityForResult(intent, 1);
-
-                } else if (options[item].equals("Choose from Gallery")) {
-
-                    userSelected = "gallery";
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                    startActivityForResult(intent, 2);
-
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-
-            }
-
-        });
-
-        builder.show();
-    }
-
-    //new activity???????????????????????????????????????????///
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            ////image upload from camera
-            if (userSelected == "camera") {
-                Bundle b = data.getExtras();
-
-                bitmap = (Bitmap) b.get("data");
-                picture.setImageBitmap(bitmap);
-                getImageUri(getActivity(), bitmap);
-                System.out.println("rutu----------------" + picturePath);
-
-                lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
-                System.out.println(lastWord);
-            }
-            //Image Upload from gallery
-            else if (userSelected == "gallery") {
-                System.out.println("rutu= userselected in gallery==========:" + userSelected);
-
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                picturePath = cursor.getString(columnIndex);
-                cursor.close();
-
-                GenericFunctions obj = new GenericFunctions();
-                Bitmap rotatedBitmap = obj.decodeFile(picturePath);
-
-                picture.setImageBitmap(rotatedBitmap);
-
-                System.out.println(picturePath);
-                lastWord = picturePath.substring(picturePath.lastIndexOf("/") + 1);
-                System.out.println("lastword=" + lastWord);
-            }
-        }
-    }
-
-    //Code for getting uri from bitmap image only if image is set in ImageView
-    public Uri getImageUri(Context inContext, Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        picturePath = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), bitmap, "Title", null);
-        return Uri.parse(picturePath);
-    }*/
 
     public void onPickImage(View view) {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};

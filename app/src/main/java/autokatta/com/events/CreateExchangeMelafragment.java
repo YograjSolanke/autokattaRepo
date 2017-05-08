@@ -35,20 +35,16 @@ import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.generic.SetMyDateAndTime;
-import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ExchangeMelaCreateResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -65,7 +61,6 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
     ApiCall apiCall;
     String lastWord = "";
     String userSelected;
-    ImageUpload mImageUpload;
     TextView textevent;
     GenericFunctions validObj = new GenericFunctions();
     EditText eventname, startdate, starttime, enddate, endtime, eventaddress, eventdetails;
@@ -84,15 +79,6 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         createExchangeView = inflater.inflate(R.layout.fragment_create_events, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
-
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        // Change base URL to your upload server URL.
-        mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
-
 
         eventname = (EditText) createExchangeView.findViewById(R.id.editauctionname);
         startdate = (EditText) createExchangeView.findViewById(R.id.auctionstartdate);
@@ -118,7 +104,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
 
 
         textevent.setText("Create Exchange Mela Event");
-        picture.setImageResource(R.drawable.exchangeimage);
+        picture.setImageResource(R.mipmap.exchange_event);
 
         return createExchangeView;
     }
