@@ -173,7 +173,7 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishActivity(1);
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

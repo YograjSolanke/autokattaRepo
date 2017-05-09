@@ -102,7 +102,7 @@ public class MyEndedServiceMelaPreviewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-            case R.id.home:
+            case android.R.id.home:
                 onBackPressed();
                 break;
         }
@@ -112,7 +112,7 @@ public class MyEndedServiceMelaPreviewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishActivity(1);
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

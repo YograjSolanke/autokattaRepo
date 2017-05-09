@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -94,10 +95,11 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
                 b.putString("location",mMainList.get(position).getLocation());
                 b.putString("enddatetime",mMainList.get(position).getEndDateTime());
                 b.putString("saleid",mMainList.get(position).getId());
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(mActivity, MyEndedSaleMelaPreviewActivity.class);
 
                 i.putExtras(b);
-                mActivity.startActivity(i);
+                mActivity.startActivityForResult(i, 1, options.toBundle());
 
             }
         });

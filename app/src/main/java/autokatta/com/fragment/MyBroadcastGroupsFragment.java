@@ -95,6 +95,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyBroadcast.findViewById(R.id.swipeRefreshLayoutBGroup);
         mRecyclerView = (RecyclerView) mMyBroadcast.findViewById(R.id.recyclerBGroup);
         btnSendMessage = (Button) mMyBroadcast.findViewById(R.id.btnSendMsg);
+        btnSendMessage.setEnabled(false);
         imgDeleteGroup = (ImageView) mMyBroadcast.findViewById(R.id.deletegroup);
 
         FloatingActionButton createGroup = (FloatingActionButton) mMyBroadcast.findViewById(R.id.fabCreateBroadcastGroup);
@@ -132,7 +133,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 finalgrpids = "";
                 incominggrpids.clear();
                 incominggrpids = adapter.checkboxselect();
-
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Checked grp id====" + incominggrpids);
                 for (int i = 0; i < incominggrpids.size(); i++) {
                     if (!incominggrpids.get(i).equals("0")) {
                         if (finalgrpids.equals(""))
@@ -142,11 +143,9 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     }
 
                 }
-                if ( finalgrpids.equals("")) {
-                    CustomToast.customToast(getActivity(), "Please Select Group to Send Message");
-                } else {
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
                     sendmessage(finalgrpids);
-                }
+
                 break;
             case R.id.deletegroup:
                 deleteGroups();
@@ -271,7 +270,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.broadcast_groups_container, about).commit();
             } else {
-                if (str.equalsIgnoreCase("success")) {
+                if (str.startsWith("success")) {
                     CustomToast.customToast(getActivity(), "BroadCast Message Send Successfully");
                     MyBroadcastGroupsFragment about = new MyBroadcastGroupsFragment();
                     FragmentManager fragmentManager = getFragmentManager();
