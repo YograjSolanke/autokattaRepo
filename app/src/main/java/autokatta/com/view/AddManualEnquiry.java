@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
@@ -14,22 +15,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
+import autokatta.com.adapter.InventoryAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AddManualEnquiryResponse;
+import autokatta.com.response.GetInventoryResponse;
 import retrofit2.Response;
 
 public class AddManualEnquiry extends AppCompatActivity implements RequestNotifier, View.OnTouchListener {
@@ -40,6 +46,12 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     String myContact;
     TextView txtUser;
     RelativeLayout mRelative;
+    List<GetInventoryResponse.Success> mItemList = new ArrayList<>();
+    List<String> arrayList = new ArrayList<>();
+    InventoryAdapter adapter;
+    ListView mListView;
+    String addArray = "";
+    android.support.v4.widget.NestedScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +77,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 edtDate = (EditText) findViewById(R.id.edtDate);
                 edtTime = (EditText) findViewById(R.id.edtTime);
                 txtUser = (TextView) findViewById(R.id.txtUser);
+                mListView = (ListView) findViewById(R.id.vehicle_list);
+                scrollView = (NestedScrollView) findViewById(R.id.scroll_view);
 
                 edtDate.setOnTouchListener(AddManualEnquiry.this);
                 edtTime.setOnTouchListener(AddManualEnquiry.this);
@@ -106,6 +120,21 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         startActivity(intent, options.toBundle());
                     }
                 });
+
+                spnInventory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            String str = spnInventory.getSelectedItem().toString();
+                            getMyInventoryData(str);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
         });
     }
@@ -130,7 +159,12 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                onBackPressed();
+                if (mListView.getVisibility() == View.VISIBLE) {
+                    mListView.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
+                } else {
+                    onBackPressed();
+                }
                 break;
 
             case R.id.ok_manual:
@@ -143,8 +177,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 String custAddress = autoAddress.getText().toString();
                 String custFullAddress = edtAddress.getText().toString();
 
-                if (strPos != 0)
+                if (strPos != 0) {
                     custInventoryType = spnInventory.getSelectedItem().toString();
+                }
                 if (strPos1 != 0)
                     custEnquiryStatus = spnStatus.getSelectedItem().toString();
 
@@ -159,6 +194,20 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             break;
                         } else {
                             flag = false;
+                        }
+                    }
+                }
+
+                if (arrayList != null) {
+                    arrayList = adapter.getInventoryList();
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        if (!arrayList.get(i).equals("0")) {
+                            if (addArray.equals("")) {
+                                addArray = arrayList.get(i);
+                            } else {
+                                addArray = addArray + "," + arrayList.get(i);
+                                Log.i("addArray", "->" + addArray);
+                            }
                         }
                     }
                 }
@@ -190,22 +239,30 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 } else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
                     edtDate.setError("Enter Date");
                     edtDate.requestFocus();
-                } else
+                } else {
                     AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
-                            discussion, nextFollowupDate);
-
+                            discussion, nextFollowupDate, addArray);
+                }
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    Inventory Type...
+     */
+    private void getMyInventoryData(String inventoryType) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getMyInventoryData(myContact, inventoryType);
+    }
+
     private void AddEnquiryData(String custName, String custContact, String custAddress, String custFullAddress,
                                 String custInventoryType, String custEnquiryStatus, String discussion,
-                                String nextFollowupDate) {
+                                String nextFollowupDate, String addArray) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addManualEnquiryData(myContact, custName, custContact, custAddress, custFullAddress, custInventoryType,
-                custEnquiryStatus, discussion, nextFollowupDate);
+                custEnquiryStatus, discussion, nextFollowupDate, addArray);
     }
 
 
@@ -250,16 +307,48 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
 
     @Override
     public void notifySuccess(Response<?> response) {
-        AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
-        if (enquiryResponse.getSuccess() != null) {
-            if (enquiryResponse.getSuccess().getMessage().equalsIgnoreCase("Data successfully Inserted.")) {
-                Snackbar.make(mRelative, enquiryResponse.getSuccess().getMessage(), Snackbar.LENGTH_SHORT).show();
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                startActivity(new Intent(getApplicationContext(), ManualEnquiry.class), options.toBundle());
-                finish();
+        if (response != null) {
+            if (response.isSuccessful()) {
+                if (response.body() instanceof AddManualEnquiryResponse) {
+                    AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
+                    if (enquiryResponse.getSuccess() != null) {
+                        if (enquiryResponse.getSuccess().getMessage().equalsIgnoreCase("Data successfully Inserted.")) {
+                            Snackbar.make(mRelative, enquiryResponse.getSuccess().getMessage(), Snackbar.LENGTH_SHORT).show();
+                            ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                            startActivity(new Intent(getApplicationContext(), ManualEnquiry.class), options.toBundle());
+                            finish();
+                        }
+                    } else {
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+                    }
+                } else if (response.body() instanceof GetInventoryResponse) {
+                    GetInventoryResponse mInventoryResponse = (GetInventoryResponse) response.body();
+                    if (mInventoryResponse.getSuccess() != null) {
+                        scrollView.setVisibility(View.GONE);
+                        mListView.setVisibility(View.VISIBLE);
+                        for (GetInventoryResponse.Success success : mInventoryResponse.getSuccess()) {
+                            if (success.getInventoryType().equals("UsedVehicle")) {
+                                success.setVehicleId(success.getVehicleId());
+                                success.setTitle(success.getTitle());
+                                success.setCategory(success.getCategory());
+                                success.setSubCategory(success.getSubCategory());
+                                success.setModel(success.getModel());
+                                mItemList.add(success);
+                            }
+                        }
+                        adapter = new InventoryAdapter(AddManualEnquiry.this, mItemList, "Used Vehicle");
+                        mListView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            } else {
+                Snackbar.make(mRelative, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
-        } else
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

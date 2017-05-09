@@ -15,10 +15,11 @@ public class AddManualEnquiryRequest {
     private String custEnquiryStatus;
     private String discussion;
     private String nextFollowupDate;
+    private String idsList;
 
     public AddManualEnquiryRequest(String myContact, String custName, String custContact, String custAddress, String custFullAddress,
                                    String custInventoryType, String custEnquiryStatus, String discussion,
-                                   String nextFollowupDate) {
+                                   String nextFollowupDate, String idsList) {
         this.myContact = myContact;
         this.custName = custName;
         this.custContact = custContact;
@@ -28,5 +29,6 @@ public class AddManualEnquiryRequest {
         this.custEnquiryStatus = custEnquiryStatus;
         this.discussion = discussion;
         this.nextFollowupDate = nextFollowupDate;
+        this.idsList = idsList;
     }
 }

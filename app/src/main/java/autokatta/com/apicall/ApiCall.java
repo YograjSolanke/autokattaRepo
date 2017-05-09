@@ -7652,7 +7652,7 @@ get ExchangeMela Participants Data
 
     public void addManualEnquiryData(String myContact, String custName, String custContact, String custAddress,
                                      String custFullAddress, String custInventoryType, String custEnquiryStatus,
-                                     String discussion, String nextFollowupDate) {
+                                     String discussion, String nextFollowupDate, String idsList) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -7662,7 +7662,7 @@ get ExchangeMela Participants Data
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest(myContact, custName, custContact, custAddress,
-                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate);
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList);
 
                 Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(addManualEnquiryRequest);
                 mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
@@ -7673,6 +7673,38 @@ get ExchangeMela Participants Data
 
                     @Override
                     public void onFailure(Call<AddManualEnquiryResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+      get Inventory...
+    */
+
+    public void getMyInventoryData(String myContact, String keyword) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetInventoryResponse> mInventory = serviceApi.getMyInventoryData(myContact, keyword);
+                mInventory.enqueue(new Callback<GetInventoryResponse>() {
+                    @Override
+                    public void onResponse(Call<GetInventoryResponse> call, Response<GetInventoryResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetInventoryResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

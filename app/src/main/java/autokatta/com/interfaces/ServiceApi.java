@@ -1224,5 +1224,7 @@ public interface ServiceApi {
     @POST("addEnquiryData.php")
     Call<AddManualEnquiryResponse> _autokattaAddManualEnquiry(@Body AddManualEnquiryRequest addManualEnquiryRequest);
 
-
+    //Get Inventory Data...
+    @GET("getMyInventoryData.php")
+    Call<GetInventoryResponse> getMyInventoryData(@Query("myContact") String myContact, @Query("keyword") String keyword);
 }
