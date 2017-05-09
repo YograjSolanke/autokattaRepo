@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,13 +73,14 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
 
     @Override
     public void onRefresh() {
-
+        apiCall.getBlackListMembers(sharedPreferences.getString("loginContact", ""));
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                blacklistMemberList.clear();
                 BlacklistMemberResponse blacklistMemberResponse = (BlacklistMemberResponse) response.body();
                 if (!blacklistMemberResponse.getSuccess().isEmpty()) {
                     for (BlacklistMemberResponse.Success success : blacklistMemberResponse.getSuccess()) {
@@ -93,9 +96,11 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
                     swipeRefreshLayout.setRefreshing(false);
                 }
             } else {
+                swipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            swipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
@@ -103,7 +108,16 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "MyBlacklistedMemberFragment");
+            error.printStackTrace();
+        }
     }
 
     @Override

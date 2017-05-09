@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -43,7 +44,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
     RecyclerView recyclerView;
     String myContact;
     RecyclerView.LayoutManager layoutManager;
-    ArrayList<BroadcastReceivedResponse.Success> broadcastMessageArrayList = new ArrayList<>();
+    List<BroadcastReceivedResponse.Success> broadcastMessageArrayList = new ArrayList<>();
     ApiCall apiCall;
     MsgReplyAdapter msgSenderAdapter;
 
@@ -84,6 +85,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                broadcastMessageArrayList.clear();
                 BroadcastReceivedResponse mGetGroupVehiclesResponse = (BroadcastReceivedResponse) response.body();
                 for (BroadcastReceivedResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
                     success.setSender(success.getSender());
@@ -121,7 +123,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
     @Override
     public void notifyString(String str) {
-
+        apiCall.getBroadcastReceivers(myContact, "", "", "");
     }
 
 
@@ -132,14 +134,15 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
     ////////////////////////// Adapter Class /////////////////////////////////////////////
 
-    public class MsgReplyAdapter extends RecyclerView.Adapter<MsgReplyAdapter.MyViewHolder> {
+    class MsgReplyAdapter extends RecyclerView.Adapter<MsgReplyAdapter.MyViewHolder> {
 
-        ArrayList<BroadcastReceivedResponse.Success> broadcastMessageArrayList;
+        List<BroadcastReceivedResponse.Success> broadcastMessageArrayList;
         Activity activity;
 
         //ViewHolder Class
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
             TextView msgFrom, msgFromCnt;
+
             public MyViewHolder(View itemView) {
                 super(itemView);
                 msgFrom = (TextView) itemView.findViewById(R.id.msgFrom);
@@ -171,7 +174,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
         }
 
         //Constructor of Main Adapter
-        public MsgReplyAdapter(Activity activity, ArrayList<BroadcastReceivedResponse.Success>
+        MsgReplyAdapter(Activity activity, List<BroadcastReceivedResponse.Success>
                 broadcastMessageArrayList) {
             this.activity = activity;
             this.broadcastMessageArrayList = broadcastMessageArrayList;

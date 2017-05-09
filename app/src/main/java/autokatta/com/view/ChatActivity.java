@@ -18,6 +18,7 @@ import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +43,6 @@ import java.util.Random;
 import autokatta.com.R;
 import autokatta.com.adapter.ChatAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
@@ -51,13 +51,10 @@ import autokatta.com.response.ChatElementDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by ak-004 on 10/4/17.
@@ -65,10 +62,8 @@ import retrofit2.Retrofit;
 
 public class ChatActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
-
     private ListView listView;
     ImageView uploadImage;
-    ImageUpload mImageUpload;
     TextView addimagetext;
     AlertDialog alert;
     TextView msgFrom;
@@ -83,7 +78,6 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
     //  MultipartEntity entity;
     String lastWord = "";
     String Sendercontact, sendername;
-    private Button buttonRep;
     ChatAdapter adapter;
     Bitmap bitmap;
     String myContact;
@@ -98,16 +92,17 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_fragment);
+        setContentView(R.layout.activity_chat_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-        // Change base URL to your upload server URL.
-        mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
-        buttonRep = (Button) findViewById(R.id.replay);
+
+        Button buttonRep = (Button) findViewById(R.id.replay);
         listView = (ListView) findViewById(R.id.msgview);
         msgFrom = (TextView) findViewById(R.id.msgFrom);
         chatwithtext = (TextView) findViewById(R.id.chatwithtext);
@@ -125,6 +120,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
         relPrice = (RelativeLayout) findViewById(R.id.relative5);
         MainRel = (RelativeLayout) findViewById(R.id.MainRel);
         relativeprofile = (RelativeLayout) findViewById(R.id.relativeprofile);
+
         relativeprofile.setOnClickListener(this);
         buttonRep.setOnClickListener(this);
 
@@ -512,5 +508,23 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

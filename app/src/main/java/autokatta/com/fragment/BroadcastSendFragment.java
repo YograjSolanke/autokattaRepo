@@ -1,6 +1,8 @@
 package autokatta.com.fragment;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,12 +19,14 @@ import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastSendResponse;
+import autokatta.com.view.ChatActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -36,12 +40,13 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
     public BroadcastSendFragment() {
         //Empty Constuctor here
     }
+
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView recyclerView;
     String myContact;
     MsgReplyAdapter msgSenderAdapter;
     RecyclerView.LayoutManager layoutManager;
-    ArrayList<BroadcastSendResponse.Success> broadcastMessageArrayList = new ArrayList<>();
+    List<BroadcastSendResponse.Success> broadcastMessageArrayList = new ArrayList<>();
     ApiCall apiCall;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +83,7 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                broadcastMessageArrayList.clear();
                 mSwipeRefreshLayout.setRefreshing(false);
                 BroadcastSendResponse mGetGroupVehiclesResponse = (BroadcastSendResponse) response.body();
                 for (BroadcastSendResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
@@ -124,18 +130,20 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
 
     @Override
     public void onRefresh() {
-
+        apiCall.getBroadcastSenders(myContact);
     }
 
 
     ////////////////////////// Adapter Class /////////////////////////////////////////////
 
-    public class MsgReplyAdapter extends RecyclerView.Adapter<MsgReplyAdapter.MyViewHolder> {
-        ArrayList<BroadcastSendResponse.Success> broadcastMessageArrayList;
+    class MsgReplyAdapter extends RecyclerView.Adapter<MsgReplyAdapter.MyViewHolder> {
+        List<BroadcastSendResponse.Success> broadcastMessageArrayList;
         Activity activity;
+
         //ViewHolder Class
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
             TextView msgFrom, msgFromCnt;
+
             public MyViewHolder(View itemView) {
                 super(itemView);
                 msgFrom = (TextView) itemView.findViewById(R.id.msgFrom);
@@ -143,24 +151,20 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
                 itemView.setOnClickListener(this);
                 itemView.setOnLongClickListener(this);
             }
+
             @Override
             public void onClick(View v) {
 
-
-//                ChatActivity object = new ChatActivity();
-//                Bundle b = new Bundle();
-//                b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).receiver);
-//                b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).receivername);
-//                b.putString("product_id","");
-//                b.putString("service_id","");
-//                b.putString("vehicle_id","");
-//
-//                object.setArguments(b);
-//                FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, object);
-//                fragmentTransaction.addToBackStack("chatactivity");
-//                fragmentTransaction.commit();
+                Bundle b = new Bundle();
+                b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).getReceiver());
+                b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).getReceivername());
+                b.putString("product_id", "");
+                b.putString("service_id", "");
+                b.putString("vehicle_id", "");
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(activity, ChatActivity.class);
+                intent.putExtras(b);
+                activity.startActivity(intent, options.toBundle());
 
             }
 
@@ -172,7 +176,7 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
         }
 
         //Constructor of Main Adapter
-        public MsgReplyAdapter(Activity activity, ArrayList<BroadcastSendResponse.Success>
+        MsgReplyAdapter(Activity activity, List<BroadcastSendResponse.Success>
                 broadcastMessageArrayList) {
             this.activity = activity;
             this.broadcastMessageArrayList = broadcastMessageArrayList;

@@ -25,13 +25,11 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
 
     private Activity mActivity;
     private List<BroadcastReceivedResponse.Success> mItemList = new ArrayList<>();
-
-    String msender, msendername;
-    String product_id = "", service_id = "", vehicle_id = "";
+    private String msender, msendername;
+    private String product_id = "", service_id = "", vehicle_id = "";
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView msgFrom, msgFromCnt;
-
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -69,8 +67,7 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
     public BussinessMsgSendersAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bussiness_msg_senders, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override

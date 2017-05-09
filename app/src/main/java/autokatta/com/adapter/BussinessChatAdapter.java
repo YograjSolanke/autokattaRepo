@@ -30,12 +30,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  */
 public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdapter.MyViewHolder> {
 
-
-    String vehi_img_url = "http://autokatta.com/mobile/uploads/";
-    String prduct_img_url = "http://autokatta.com/mobile/Product_pics/";
-    String service_img_url = "http://autokatta.com/mobile/Service_pics/";
-    String fullpath = "";
-
+    private String fullpath = "";
     private Activity mActivity;
     private List<Success> mItemList = new ArrayList<>();
 
@@ -72,18 +67,18 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
         public void onClick(View view) {
             Bundle b = new Bundle();
 
-            if (   mKeyword.getText().toString().equals("Product")) {
+            if (mKeyword.getText().toString().equals("Product")) {
                 b.putString("product_id", mItemList.get(getAdapterPosition()).getProductId());
                 b.putString("service_id", "");
                 b.putString("vehicle_id", "");
             }
-            if (   mKeyword.getText().toString().equals("Service")) {
+            if (mKeyword.getText().toString().equals("Service")) {
                 b.putString("product_id", "");
                 b.putString("service_id", mItemList.get(getAdapterPosition()).getId());
                 b.putString("vehicle_id", "");
             }
 
-            if (   mKeyword.getText().toString().equals("Vehicle")) {
+            if (mKeyword.getText().toString().equals("Vehicle")) {
                 b.putString("product_id", "");
                 b.putString("service_id", "");
                 b.putString("vehicle_id", mItemList.get(getAdapterPosition()).getVehicleId());
@@ -91,11 +86,6 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
 
             BussinessMsgSenders obj = new BussinessMsgSenders();
             obj.setArguments(b);
-            /*FragmentManager fragmentManager = mActivity.getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.bussines_chat_container, obj);
-            fragmentTransaction.addToBackStack("chatactivity");
-            fragmentTransaction.commit();*/
 
             ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.ok_left_to_right, R.anim.ok_right_to_left)
@@ -111,11 +101,10 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
         // create a new view
         LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View v = inflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bussiness_chat_adapter, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        BussinessChatAdapter.MyViewHolder vh = new BussinessChatAdapter.MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -133,10 +122,15 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
         holder.mModel.setText(mItemList.get(position).getModel());
         holder.mPrice.setText(mItemList.get(position).getPrice());
 
+        String vehi_img_url = "http://autokatta.com/mobile/uploads/";
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Vehicle"))
             fullpath = vehi_img_url + mItemList.get(position).getImage();
+
+        String prduct_img_url = "http://autokatta.com/mobile/Product_pics/";
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Product"))
             fullpath = prduct_img_url + mItemList.get(position).getImages();
+
+        String service_img_url = "http://autokatta.com/mobile/Service_pics/";
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Service"))
             fullpath = service_img_url + mItemList.get(position).getImages();
 

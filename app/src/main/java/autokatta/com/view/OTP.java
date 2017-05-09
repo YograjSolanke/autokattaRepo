@@ -1,12 +1,11 @@
 package autokatta.com.view;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,17 +19,13 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import retrofit2.Response;
 
-public class OTP extends AppCompatActivity implements RequestNotifier,View.OnClickListener {
+public class OTP extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     TextView OtpText, emailOtpText;
     EditText OtpEdit, otpemail;
     String otpstr2;
-    String  contact, email, call;
+    String contact, email, call;
     Button mSubmit;
-
-    Editor editor;
-    SharedPreferences prefs;
-    public static final String MyProfilePREFERENCES = "profilePrefs";
 
 
     @Override
@@ -38,8 +33,13 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
 
-        prefs = this.getSharedPreferences(MyProfilePREFERENCES, Context.MODE_PRIVATE);
-        editor = prefs.edit();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         OtpEdit = (EditText) findViewById(R.id.edtotp1);
         otpemail = (EditText) findViewById(R.id.otpemail);
@@ -52,47 +52,47 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
 
         Intent i = getIntent();
         contact = i.getStringExtra("contact");
-       call = i.getStringExtra("call");
+        call = i.getStringExtra("call");
 
-        System.out.println("text contact=" + contact + call + email);
 
-            ApiCall mApiCall = new ApiCall(OTP.this, this);
-            mApiCall.getOTP(contact);
+        ApiCall mApiCall = new ApiCall(OTP.this, this);
+        mApiCall.getOTP(contact);
 
     }
 
-        @Override
-        public void notifySuccess (Response < ? > response){
+    @Override
+    public void notifySuccess(Response<?> response) {
 
-        }
-
-        @Override
-        public void notifyError (Throwable error){
-            if (error instanceof SocketTimeoutException) {
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
-            } else if (error instanceof NullPointerException) {
-                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-            } else if (error instanceof ClassCastException) {
-                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-            } else {
-                Log.i("Check Class-", "Forget Password Activity");
-            }
-        }
-
-        @Override
-        public void notifyString (String str){
-            if (str != null) {
-              OtpText.setText(str);
-             otpstr2 = "" + str;
-
-            } else {
-                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-            }
-
-        }
+    }
 
     @Override
-    public void onClick (View v){
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "Otp");
+            error.printStackTrace();
+        }
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            OtpText.setText(str);
+            otpstr2 = "" + str;
+
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit_otp:
                 String otpstr1 = OtpEdit.getText().toString();
@@ -114,16 +114,32 @@ public class OTP extends AppCompatActivity implements RequestNotifier,View.OnCli
         }
     }
 
-        @Override
-        public void onBackPressed ()
-        {
-            if (call.equals("forgot"))
-            {
-                Intent i = new Intent(OTP.this,Forget_Password.class);
-                startActivity(i);
-                OTP.this.finish();
-            }
-
+  /*  @Override
+    public void onBackPressed() {
+        if (call.equals("forgot")) {
+            Intent i = new Intent(OTP.this, Forget_Password.class);
+            startActivity(i);
+            finish();
         }
+
+    }*/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+}
 

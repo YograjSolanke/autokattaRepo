@@ -136,6 +136,8 @@
     <string name="title_activity_my_upcoming_events_tab">MyUpcomingEventsTabActivity</string>
     <string name="title_activity_create_event">create_event</string>
     <string name="title_activity_my_broadcast_groups">MyBroadcastGroupsActivity</string>
+    <string name="title_activity_otp">OTP Activity</string>
+    <string name="title_activity_new_password">New Password Activity</string>
 
     <!--Vehicle details-->
     <string name="vehicle_no">Vehicle Number</string>

@@ -132,7 +132,12 @@
             android:label="@string/title_activity_search_store"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".view.OTP" />
+        <activity
+            android:name=".view.OTP"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/title_activity_otp"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.MySearchActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
@@ -143,11 +148,13 @@
             android:name=".view.Forget_Password"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_forget__password"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.NewPassword"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/title_activity_new_password"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.MyUploadedVehiclesActivity"
