@@ -134,10 +134,12 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (mRecyclerView.getVisibility() == View.VISIBLE) {
-                    onBackPressed();
+                if (mRecyclerView.getVisibility() == View.GONE) {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mPersonRecyclerView.setVisibility(View.GONE);
+                    getManualData();
                 } else {
-
+                    onBackPressed();
                 }
                 break;
 
