@@ -130,14 +130,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 .getString("group_type", "");*/
         if (!mItemList.get(position).getMember().equals("Unknown")) {
             //If no is in mobile contact, number is invisible
-            holder.mContact.setVisibility(View.INVISIBLE);
+            holder.mContact.setVisibility(View.GONE);
             //If type is admin
             if (mItemList.get(position).getMember().equals("Admin")) {
                 //if MyGroups
                 if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
                         .equalsIgnoreCase(myContact)) {
                     holder.mName.setText("You");
-                    holder.mContact.setVisibility(View.INVISIBLE);
+                    holder.mContact.setVisibility(View.GONE);
                     holder.mOption.setVisibility(View.VISIBLE);
                 }
                 //if Other Groups
@@ -145,14 +145,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     if (mItemList.get(position).getContact()
                             .equalsIgnoreCase(myContact)) {
                         holder.mName.setText("You");
-                        holder.mContact.setVisibility(View.INVISIBLE);
+                        holder.mContact.setVisibility(View.GONE);
                     } else
                         holder.mName.setText(mItemList.get(position).getUsername());
                 }
             }
             if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
                 holder.mName.setText("You");
-                holder.mContact.setVisibility(View.INVISIBLE);
+                holder.mContact.setVisibility(View.GONE);
 
             }
         } else if (mItemList.get(position).getUsername().equals("Unknown")) {
@@ -161,14 +161,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
                         .equalsIgnoreCase(myContact)) {
                     holder.mName.setText("You");
-                    holder.mContact.setVisibility(View.INVISIBLE);
+                    holder.mContact.setVisibility(View.GONE);
                     holder.mOption.setVisibility(View.VISIBLE);
                 }
                 //If OtherGroup
                 else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
                     if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
                         holder.mName.setText("You");
-                        holder.mContact.setVisibility(View.INVISIBLE);
+                        holder.mContact.setVisibility(View.GONE);
                     } else
                         holder.mName.setText(mItemList.get(position).getUsername());
                 }
@@ -177,7 +177,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
             if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
                 holder.mName.setText("You");
-                holder.mContact.setVisibility(View.INVISIBLE);
+                holder.mContact.setVisibility(View.GONE);
             }
         }
 
