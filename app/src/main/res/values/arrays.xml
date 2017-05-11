@@ -213,4 +213,17 @@
         <item>Products</item>
         <item>Services</item>
     </string-array>
+
+    <!--vehicle Category for registration-->
+    <string-array name="vehicategory">
+        <item>-Select Vehicle Type-</item>
+        <item>Bus</item>
+        <item>Car</item>
+        <item>Construction Equipment</item>
+        <item>Commercial Vehicle</item>
+        <item>Tractor</item>
+        <item>Two Wheeler</item>
+        <item>Three Wheeler</item>
+    </string-array>
+
 </resources>
