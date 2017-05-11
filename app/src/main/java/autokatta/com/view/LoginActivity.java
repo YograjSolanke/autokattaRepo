@@ -24,7 +24,7 @@ import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.SessionManagement;
-import autokatta.com.register.Registration;
+import autokatta.com.register.RegistrationCompanyBased;
 import autokatta.com.response.LoginResponse;
 import retrofit2.Response;
 
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.register:
-                startActivity(new Intent(LoginActivity.this, Registration.class));
+                startActivity(new Intent(LoginActivity.this, RegistrationCompanyBased.class));
                 finish();
                 break;
 

@@ -725,7 +725,8 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
                 }else
                 {
-                    mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState, autoCompany.getText().toString(), autoDesignation.getText().toString(), Skills, Deals);
+                    mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState, autoCompany.getText().toString(), autoDesignation.getText().toString(), Skills, Deals,
+                            "", "", "");
                 }
 
                 break;

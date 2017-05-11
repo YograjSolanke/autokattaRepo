@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -38,6 +40,9 @@ import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
+import autokatta.com.response.GetVehicleBrandResponse;
+import autokatta.com.response.GetVehicleListResponse;
+import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.getDealsResponse;
 import retrofit2.Response;
 
@@ -79,8 +84,26 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     ArrayList<String> mDesignationList = new ArrayList<>();
     HashMap<String, String> mDesignationList1 = new HashMap<>();
 
+    HashMap<String, String> mCategoryListHash = new HashMap<>();
+    List<String> mCategoryLis = new ArrayList<String>();
+    List<String> parsedDataCategory = new ArrayList<>();
+    String categoryId = "";
+    String categoryName = "";
+
+    HashMap<String, String> mSubCategoryListHash = new HashMap<>();
+    List<String> mSubCategoryList = new ArrayList<String>();
+    List<String> parsedDataSubCategory = new ArrayList<>();
+    String subCategoryId = "";
+    String subCategoryName = "";
+
+    HashMap<String, String> mBrandListHash = new HashMap<>();
+    List<String> mBrandList = new ArrayList<String>();
+    List<String> parsedDataBrand = new ArrayList<>();
+    String brandId = "";
+    String brandName = "";
+
     RelativeLayout relativeKms, relativeDistrict, relativeState;
-    Spinner spinArea, spinKms;
+    Spinner spinArea, spinKms, spinCategory, spinSubCategory, spinManufacturer;
     MultiSelectionSpinner spinDistrict, spinState;
     String strArea = "", strKms = "", strDistrict = "", strState = "";
 
@@ -88,6 +111,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     public static final String MyloginPREFERENCES = "login";
 
     ApiCall mApiCall;
+    RelativeLayout relativeDealingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +130,15 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         autoDeals = (MultiAutoCompleteTextView) findViewById(R.id.autodeals);
         Next = (Button) findViewById(R.id.btnnext);
         Cancel = (Button) findViewById(R.id.btncancel);
+        relativeDealingLayout = (RelativeLayout) findViewById(R.id.relnewvehidealer);
         Next.setOnClickListener(this);
         Cancel.setOnClickListener(this);
 
         spinArea = (Spinner) findViewById(R.id.spinnerArea);
         spinKms = (Spinner) findViewById(R.id.spinnerKms);
+        spinCategory = (Spinner) findViewById(R.id.spinnerCatagory);
+        spinSubCategory = (Spinner) findViewById(R.id.spinnerSubCatagory);
+        spinManufacturer = (Spinner) findViewById(R.id.spinnerManufacture);
 
         spinDistrict = (MultiSelectionSpinner) findViewById(R.id.spinnerDistrict);
         spinState = (MultiSelectionSpinner) findViewById(R.id.spinnerState);
@@ -229,6 +257,8 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
 
             }
         });
+
+
     }
 
     public void checkSkills() {
@@ -255,9 +285,52 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
 //            {
 //                autoDeals.setError("You can add maximum five Deals");
 //            }
+        for (String part : parts) {
+            Log.i("deall", part);
+            if (part.equalsIgnoreCase("New Vehicle")) {
+                relativeDealingLayout.setVisibility(View.VISIBLE);
+                getVehicleList();
+            }
+            /*else
+                relativeDealingLayout.setVisibility(View.GONE);*/
+        }
 
     }
 
+    /*
+        Get Vehicle List...
+         */
+    private void getVehicleList() {
+        mApiCall.getVehicleList();
+    }
+
+    /*
+    Sub Category...
+     */
+    private void getSubCategoryTask(String categoryId) {
+        mApiCall.getVehicleSubtype(categoryId);
+    }
+
+    /*
+    Get Brand
+     */
+    private void getBrand(String categoryId, String subcategoryId) {
+        mApiCall.getBrand(categoryId, subcategoryId);
+    }
+
+    /*
+    Get Model...
+     */
+    private void getModel(String categoryId, String subCategoryId, String brandId) {
+        mApiCall.getModel(categoryId, subCategoryId, brandId);
+    }
+
+    /*
+    Add Brand
+     */
+    private void AddBrand(String keyword, String title, String categoryId, String subCatID) {
+        mApiCall.addBrand(keyword, title, categoryId, subCatID);
+    }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -346,6 +419,182 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                         spinState.setItems(distNameList, "Select State", this);
                     }
                 }
+
+            /*Category data*/
+                else if (response.body() instanceof GetVehicleListResponse) {
+                    mCategoryLis.clear();
+                    mCategoryListHash.clear();
+                    parsedDataCategory.clear();
+
+                    mCategoryLis.add("Select Vehicle Types");
+                    GetVehicleListResponse mGetVehicleListResponse = (GetVehicleListResponse) response.body();
+                    if (!mGetVehicleListResponse.getSuccess().isEmpty()) {
+                        for (GetVehicleListResponse.Success mSuccess : mGetVehicleListResponse.getSuccess()) {
+                            mSuccess.setId(mSuccess.getId());
+                            mSuccess.setName(mSuccess.getName());
+                            mCategoryLis.add(mSuccess.getName());
+                            mCategoryListHash.put(mSuccess.getName(), mSuccess.getId());
+                        }
+
+                        if (getApplicationContext() != null) {
+                            parsedDataCategory.addAll(mCategoryLis);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                                    R.layout.addproductspinner_color, parsedDataCategory);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spinCategory.setAdapter(adapter);
+                            spinSubCategory.setAdapter(null);
+                            spinManufacturer.setAdapter(null);
+                        }
+                        spinCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                if (position != 0) {
+                                    categoryId = mCategoryListHash.get(parsedDataCategory.get(position));
+                                    categoryName = parsedDataCategory.get(position);
+
+                                    System.out.println("cat is::" + categoryId);
+                                    System.out.println("cat name::" + categoryName);
+
+                                    getSubCategoryTask(categoryId);
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+                    }
+                }
+
+        /*Vehicle sub type */
+                else if (response.body() instanceof GetVehicleSubTypeResponse) {
+                    mSubCategoryList.clear();
+                    mSubCategoryListHash.clear();
+                    parsedDataSubCategory.clear();
+
+                    Log.e("GetVehicleTypes", "->");
+                    mSubCategoryList.add("Select Sub Category");
+                    GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
+                    for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
+                        subTypeResponse.setId(subTypeResponse.getId());
+                        subTypeResponse.setName(subTypeResponse.getName());
+                        mSubCategoryList.add(subTypeResponse.getName());
+                        mSubCategoryListHash.put(subTypeResponse.getName(), subTypeResponse.getId());
+                    }
+                    parsedDataSubCategory.addAll(mSubCategoryList);
+                    if (getApplicationContext() != null) {
+                        ArrayAdapter<String> adapter =
+                                new ArrayAdapter<>(getApplicationContext(), R.layout.addproductspinner_color, parsedDataSubCategory);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinSubCategory.setAdapter(adapter);
+                        spinManufacturer.setAdapter(null);
+                    }
+                    spinSubCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                subCategoryId = mSubCategoryListHash.get(parsedDataSubCategory.get(position));
+                                subCategoryName = parsedDataSubCategory.get(position);
+
+                                System.out.println("Sub cat is::" + subCategoryId);
+                                System.out.println("Sub cat name::" + subCategoryName);
+
+                                getBrand(categoryId, subCategoryId);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                }
+
+                /* Vehicle Manufacture/Brand */
+                else if (response.body() instanceof GetVehicleBrandResponse) {
+                    Log.e("GetVehicleBrands", "->");
+                    mBrandList.clear();
+                    mBrandListHash.clear();
+                    parsedDataBrand.clear();
+
+                    mBrandList.add("Select Brands");
+                    GetVehicleBrandResponse getVehicleBrandResponse = (GetVehicleBrandResponse) response.body();
+                    for (GetVehicleBrandResponse.Success brandResponse : getVehicleBrandResponse.getSuccess()) {
+                        brandResponse.setBrandId(brandResponse.getBrandId());
+                        brandResponse.setBrandTitle(brandResponse.getBrandTitle());
+                        mBrandList.add(brandResponse.getBrandTitle());
+                        mBrandListHash.put(brandResponse.getBrandTitle(), brandResponse.getBrandId());
+                    }
+                    mBrandList.add("other");
+                    parsedDataBrand.addAll(mBrandList);
+                    Log.i("ListBrand", "->" + mBrandList);
+                    if (getApplicationContext() != null) {
+                        ArrayAdapter<String> adapter =
+                                new ArrayAdapter<>(getApplicationContext(), R.layout.addproductspinner_color, parsedDataBrand);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinManufacturer.setAdapter(adapter);
+                        //mModelSpinner.setAdapter(null);
+                    }
+                    spinManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                brandId = mBrandListHash.get(parsedDataBrand.get(position));
+                                brandName = parsedDataBrand.get(position);
+
+                                System.out.println("Brand id is::" + brandId);
+                                System.out.println("Brand name::" + brandName);
+                            }
+
+                            if (parsedDataBrand.get(position).equalsIgnoreCase("other")) {
+
+                                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getApplicationContext());
+                                alertDialog.setTitle("Add Brand");
+                                alertDialog.setMessage("Enter brand name");
+
+                                final EditText input = new EditText(getApplicationContext());
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        LinearLayout.LayoutParams.MATCH_PARENT);
+                                input.setLayoutParams(lp);
+                                alertDialog.setView(input);
+                                // alertDialog.setIcon(R.drawable.key);
+
+                                alertDialog.setPositiveButton("Add Brand",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                String edbrand = input.getText().toString();
+
+                                                if (edbrand.equals(""))
+                                                    Toast.makeText(getApplicationContext(), "Please enter brand", Toast.LENGTH_LONG).show();
+                                                else
+                                                    AddBrand("Brand", edbrand, categoryId, subCategoryId);
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                spinManufacturer.setSelection(0);
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                alertDialog.show();
+                            } /*else
+                                getModel(categoryId, subCategoryId, brandId);*/
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                }
             }
         }
     }
@@ -367,71 +616,80 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
 
     @Override
     public void notifyString(String str) {
-        if (!str.equals("null")) {
-            if (str.equals("success")) {
-                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
+        if (str != null) {
+            switch (str) {
+                case "success":
+                    Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
 
-                Skills = autoSkills.getText().toString().trim();
-                Deals = autoDeals.getText().toString().trim();
-                if (strArea.equalsIgnoreCase("Select Area Of Operations"))
-                    strArea = "";
-                if (strKms.equalsIgnoreCase("By Kms"))
-                    strKms = "";
-                if (strDistrict.equalsIgnoreCase("By District"))
-                    strDistrict = "";
-                if (strState.equalsIgnoreCase("By State"))
-                    strState = "";
+                    Skills = autoSkills.getText().toString().trim();
+                    Deals = autoDeals.getText().toString().trim();
+                    if (strArea.equalsIgnoreCase("Select Area Of Operations"))
+                        strArea = "";
+                    if (strKms.equalsIgnoreCase("By Kms"))
+                        strKms = "";
+                    if (strDistrict.equalsIgnoreCase("By District"))
+                        strDistrict = "";
+                    if (strState.equalsIgnoreCase("By State"))
+                        strState = "";
 
-                strDistrict = strDistrict.replaceAll(" ", "");
-                strState = strState.replaceAll(" ", "");
-                Skills = Skills.replaceAll(" ", "");
-                // Deals = Deals.replaceAll(" ","");
+                    strDistrict = strDistrict.replaceAll(" ", "");
+                    strState = strState.replaceAll(" ", "");
+                    Skills = Skills.replaceAll(" ", "");
+                    // Deals = Deals.replaceAll(" ","");
 
-                spinArea.setSelection(0);
-                spinKms.setSelection(0);
-                spinDistrict.setSelection(0);
-                spinState.setSelection(0);
+                    spinArea.setSelection(0);
+                    spinKms.setSelection(0);
+                    spinDistrict.setSelection(0);
+                    spinState.setSelection(0);
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationCompanyBased.this);
-                // set title
-                alertDialogBuilder.setTitle("Intrest Area ");
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage("Create Business Profile ?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                                        int id) {
-                                        Bundle b = new Bundle();
-                                        b.putString("className", "interestbased");
-                                        Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
-                                        intent.putExtras(b);
-                                        startActivity(intent);
-                                        finish();
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationCompanyBased.this);
+                    // set title
+                    alertDialogBuilder.setTitle("Interest Area ");
+                    // set dialog message
+                    alertDialogBuilder
+                            .setMessage("Create Business Profile ?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,
+                                                            int id) {
+                                            Bundle b = new Bundle();
+                                            b.putString("className", "interestbased");
+                                            Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
+                                            intent.putExtras(b);
+                                            startActivity(intent);
+                                            finish();
                                         /*CreateStoreFragment fr = new CreateStoreFragment();
                                         fr.setArguments(b);
                                         finish();*/
-                                        dialog.cancel();
-                                    }
-                                })
-                        .setNegativeButton("No",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                                        int id) {
-                                        dialog.cancel();
-                                        Intent i = new Intent(getApplicationContext(), InvitationCompanyBased.class);
-                                        startActivity(i);
-                                        finish();
-                                    }
-                                });
+                                            dialog.cancel();
+                                        }
+                                    })
+                            .setNegativeButton("No",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,
+                                                            int id) {
+                                            dialog.cancel();
+                                            Intent i = new Intent(getApplicationContext(), InvitationCompanyBased.class);
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                    });
 
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-            } else {
-                Toast.makeText(getApplicationContext(), "Please Check Whether all Fields Are filled ", Toast.LENGTH_LONG).show();
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                    break;
+                case "success_brand_add":
+                    CustomToast.customToast(getApplicationContext(), "Brand added successfully");
+                    getBrand(categoryId, subCategoryId);
+                    Log.i("msg", "Brand added successfully");
+
+                    break;
+                default:
+                    Toast.makeText(getApplicationContext(), "Please Check Whether all Fields Are filled ", Toast.LENGTH_LONG).show();
+                    break;
             }
         } else {
             Toast.makeText(getApplicationContext(), "Somthing went wrong no response", Toast.LENGTH_LONG).show();
@@ -608,51 +866,53 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     mApiCall.addNewCompany(updatecompany);
                     //addNewCompanyName(updatecompany);
                 }
-                    strCompany = autoCompany.getText().toString();
-                    //***************************************************************
-                    String splChrs = "-/@#$%^&_+=()";
-                    boolean found = strCompany.matches("["
-                            + splChrs + "]+");
+                strCompany = autoCompany.getText().toString();
+                //***************************************************************
+                String splChrs = "-/@#$%^&_+=()";
+                boolean found = strCompany.matches("["
+                        + splChrs + "]+");
              /*Designation Name code */
-                    autoDesignation.clearFocus();
-                    updatedesignation = autoDesignation.getText().toString();
-                    try {
-                        if (!mDesignationList.contains(updatedesignation)) {
-                            mApiCall.addNewDesignation(updatedesignation);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                autoDesignation.clearFocus();
+                updatedesignation = autoDesignation.getText().toString();
+                try {
+                    if (!mDesignationList.contains(updatedesignation)) {
+                        mApiCall.addNewDesignation(updatedesignation);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                    strDesignation = autoDesignation.getText().toString();
-                    //***************************************************************
+                strDesignation = autoDesignation.getText().toString();
+                //***************************************************************
 
-                    boolean found1 = strDesignation.matches("["
-                            + splChrs + "]+");
+                boolean found1 = strDesignation.matches("["
+                        + splChrs + "]+");
 
 //                //setting validation for reg fields
-                    if (strCompany.equals("") || strCompany.equals("null") || strCompany.equals(null)) {
-                        autoCompany.setError("Enter Company Name");
-                        autoCompany.requestFocus();
-                    } else if (found) {
+                if (strCompany.equals("") || strCompany.equals("null") || strCompany.equals(null)) {
+                    autoCompany.setError("Enter Company Name");
+                    autoCompany.requestFocus();
+                } else if (found) {
 
-                        autoCompany.setError("Please enter valid company");
-                        autoCompany.requestFocus();
-                    } else if (found1) {
+                    autoCompany.setError("Please enter valid company");
+                    autoCompany.requestFocus();
+                } else if (found1) {
 
-                        autoDesignation.setError("Please enter valid designation");
-                        autoDesignation.requestFocus();
-                    } else if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
-                        autoDesignation.setError("Enter Designation Name");
-                        autoDesignation.requestFocus();
-                    } else if (strSkill.equals("") || strSkill.equals("null") || strSkill.equals(null)) {
-                        autoSkills.setError("Enter Skills Name");
-                        autoSkills.requestFocus();
-                    } else if (strDeal.equals("") || strDeal.equals("null") || strDeal.equals(null)) {
-                        autoDeals.setError("Enter Deals Name");
-                        autoDeals.requestFocus();
-                    } else {
-                    mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState, autoCompany.getText().toString(), autoDesignation.getText().toString(), Skills, Deals);
+                    autoDesignation.setError("Please enter valid designation");
+                    autoDesignation.requestFocus();
+                } else if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
+                    autoDesignation.setError("Enter Designation Name");
+                    autoDesignation.requestFocus();
+                } else if (strSkill.equals("") || strSkill.equals("null") || strSkill.equals(null)) {
+                    autoSkills.setError("Enter Skills Name");
+                    autoSkills.requestFocus();
+                } else if (strDeal.equals("") || strDeal.equals("null") || strDeal.equals(null)) {
+                    autoDeals.setError("Enter Deals Name");
+                    autoDeals.requestFocus();
+                } else {
+                    mApiCall.updateRegistration("276", page, strArea, strKms, strDistrict, strState,
+                            autoCompany.getText().toString(), autoDesignation.getText().toString(), strSkill,
+                            strDeal, categoryName, subCategoryName, brandName);
                 }
 
                 break;
@@ -670,6 +930,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 spinKms.setSelection(0);
                 spinDistrict.setSelection(0);
                 spinState.setSelection(0);
+                spinCategory.setSelection(0);
+                spinSubCategory.setSelection(0);
+                spinManufacturer.setSelection(0);
                 break;
         }
     }

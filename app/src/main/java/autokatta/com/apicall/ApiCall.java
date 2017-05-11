@@ -2532,7 +2532,8 @@ Upload Vehicle
     /*Update Company Based Registration */
 
     public void updateRegistration(String Regid, String page, String area, String bykm, String bydistrict,
-                                   String bystate, String company, String designation, String skills, String deals) {
+                                   String bystate, String company, String designation, String skills, String deals,
+                                   String categoryName, String subCategoryName, String brandName) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -2547,7 +2548,8 @@ Upload Vehicle
                 Log.i("Regid---->", "->" + Regid);
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateCompanyRegistration(Regid, page, area, bykm, bydistrict, bystate, company, designation, skills, deals);
+                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateCompanyRegistration(Regid, page, area, bykm,
+                        bydistrict, bystate, company, designation, skills, deals, categoryName, subCategoryName, brandName);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

@@ -297,10 +297,11 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
                             FragmentManager mFragmentManager;
                             FragmentTransaction mFragmentTransaction;
-
                             mFragmentManager = getActivity().getSupportFragmentManager();
                             mFragmentTransaction = mFragmentManager.beginTransaction();
-                            mFragmentTransaction.replace(R.id.vehicle_upload_container, frag).commit();
+                            mFragmentTransaction.replace(R.id.vehicle_upload_container, frag, "vehiclePrivacy")
+                                    .addToBackStack("vehiclePrivacy")
+                                    .commit();
 
 
                         } else {

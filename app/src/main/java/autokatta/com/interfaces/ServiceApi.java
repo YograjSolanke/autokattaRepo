@@ -372,10 +372,11 @@ public interface ServiceApi {
     //Update Company Based Registration
     @POST("updateRegistrationInfo.php")
     Call<String> _autokattaUpdateCompanyRegistration(@Query("Regid") String Regid, @Query("page") String page, @Query("area") String area,
-                                                     @Query("bykms") String bykms,
-                                                     @Query("bydistrict") String bydistrict
-            , @Query("bystate") String bystate, @Query("company") String company,
-                                                     @Query("designation") String designation, @Query("skills") String skills, @Query("deals") String deals);
+                                                     @Query("bykms") String bykms, @Query("bydistrict") String bydistrict,
+                                                     @Query("bystate") String bystate, @Query("company") String company,
+                                                     @Query("designation") String designation, @Query("skills") String skills,
+                                                     @Query("deals") String deals, @Query("categoryName") String categoryName,
+                                                     @Query("subCategoryName") String subCategoryName, @Query("brandName") String brandName);
 
     //Get States
     @GET("getRegisteredStates.php")
