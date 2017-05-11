@@ -1,6 +1,7 @@
 package autokatta.com.interfaces;
 
 import autokatta.com.request.AddManualEnquiryRequest;
+import autokatta.com.request.UploadUsedVehicleRequest;
 import autokatta.com.response.*;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -1227,4 +1228,8 @@ public interface ServiceApi {
     //Get Inventory Data...
     @GET("getMyInventoryData.php")
     Call<GetInventoryResponse> getMyInventoryData(@Query("myContact") String myContact, @Query("keyword") String keyword);
+
+    //Post Used Vehicle Data
+    @POST("uploadUsedVehicle.php")
+    Call<UploadUsedVehicleResponse> _autokattaUploadUsedVehicle(@Body UploadUsedVehicleRequest usedVehicleRequest);
 }

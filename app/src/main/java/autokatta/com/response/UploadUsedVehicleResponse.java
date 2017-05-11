@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by ak-003 on 28/3/17.
  */
 
-public class UploadVehicleResponse {
+public class UploadUsedVehicleResponse {
     @SerializedName("Success")
     @Expose
     private Success success;

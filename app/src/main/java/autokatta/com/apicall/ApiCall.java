@@ -15,6 +15,7 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.request.AddManualEnquiryRequest;
+import autokatta.com.request.UploadUsedVehicleRequest;
 import autokatta.com.response.*;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -7705,6 +7706,68 @@ get ExchangeMela Participants Data
 
                     @Override
                     public void onFailure(Call<GetInventoryResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+         Post Used Vehicle Data.....
+       */
+    public void uploadUsedVehicle(String strTitle, String myContact, String strCategoryName, String strSubcategoryName,
+                                  String strModelName, String strBrandName, String strVersionName, String strRto,
+                                  String strLocation, String strRegmonth, String strRegyear, String strMakemonth,
+                                  String strMakeyear, String strColor, String strRegno, String strRc, String strInsurance,
+                                  String strInsuranceIdv, String strTaxvalid, String strTaxDate, String strFitnessvalid,
+                                  String strPermitvalid, String strPermit, String strFitnessvalid1, String strFuel,
+                                  String strSeatcap, String strPermitDate, String strFinancestatus, String strKms, String strHrs,
+                                  String strOwner, String strBodyMfg, String strSeatMfg, String strHypo, String strEngine,
+                                  String strChasis, String s, String strImages, String strDrive, String strTrans,
+                                  String strBodytype, String s1, String s2, String strApp, String strTyreContext,
+                                  String strBustype, String strAir, String strInvoice, String strImplement, String strGroupprivacy,
+                                  String strHp, String strJib, String strBoon, String strBrakename, String strPumpname,
+                                  String strInsuDate, String strEmission, String strFinancestatus1, String strExhangestatus,
+                                  String strStearing, String strCategoryId, String strSubcategoryId, String strBrandId,
+                                  String strModelId, String strVersionId) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                UploadUsedVehicleRequest usedVehicleRequest = new UploadUsedVehicleRequest(strTitle, myContact, strCategoryName, strSubcategoryName,
+                        strModelName, strBrandName, strVersionName, strRto,
+                        strLocation, strRegmonth, strRegyear, strMakemonth,
+                        strMakeyear, strColor, strRegno, strRc, strInsurance,
+                        strInsuranceIdv, strTaxvalid, strTaxDate, strFitnessvalid,
+                        strPermitvalid, strPermit, strFitnessvalid1, strFuel,
+                        strSeatcap, strPermitDate, strFinancestatus, strKms, strHrs,
+                        strOwner, strBodyMfg, strSeatMfg, strHypo, strEngine,
+                        strChasis, s, strImages, strDrive, strTrans,
+                        strBodytype, s1, s2, strApp, strTyreContext,
+                        strBustype, strAir, strInvoice, strImplement, strGroupprivacy,
+                        strHp, strJib, strBoon, strBrakename, strPumpname,
+                        strInsuDate, strEmission, strFinancestatus1, strExhangestatus,
+                        strStearing, strCategoryId, strSubcategoryId, strBrandId,
+                        strModelId, strVersionId);
+
+                Call<UploadUsedVehicleResponse> mServiceMelaResponse = serviceApi._autokattaUploadUsedVehicle(usedVehicleRequest);
+                mServiceMelaResponse.enqueue(new Callback<UploadUsedVehicleResponse>() {
+                    @Override
+                    public void onResponse(Call<UploadUsedVehicleResponse> call, Response<UploadUsedVehicleResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<UploadUsedVehicleResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

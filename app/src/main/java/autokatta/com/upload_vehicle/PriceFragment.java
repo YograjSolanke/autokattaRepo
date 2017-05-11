@@ -25,7 +25,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.PriceSuggestionResponse;
-import autokatta.com.response.UploadVehicleResponse;
+import autokatta.com.response.UploadUsedVehicleResponse;
 import autokatta.com.view.VehicleDetails;
 import retrofit2.Response;
 
@@ -56,8 +56,10 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
             strTaxvalid = "", strPermitvalid = "", strFitnessvalid = "", strInsuranceIdv = "", strInsuDate = "", strTaxDate = "",
             strFitnessDate = "", strPermitDate = "", strChasis = "", strEngine = "", strDrive = "", strTrans = "", strBustype = "", strAir = "",
             strApp = "", strImplementStr = "", strSeatcap = "", strTyreContext = "", strFuel = "", strHp = "", strJib = "", strBoon = "",
-            strImages = "", strColor = "", strBodytype = "", strImplement = "", strMfgYr = "";
-    ;
+            strImages = "", strColor = "", strBodytype = "", strImplement = "", strMfgYr = "", strBrandName = "",
+            strModelName = "", strVersionName = "";
+
+    String myContact;
 
 
     @Nullable
@@ -74,6 +76,8 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
         apiCall = new ApiCall(getActivity(), this);
         btnUpload.setOnClickListener(this);
+
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392");
 
         strCategoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", "1");
         strCategoryName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
@@ -137,8 +141,11 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         strBodytype = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_bodyType", null);
         strImplement = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_implement", null);
 
+        strBrandName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_brandName", "");
         strBrandId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_brandId", "33");
+        strModelName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_modelName", "");
         strModelId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_modelId", "11");
+        strVersionName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_versionName", "");
         strVersionId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_versionId", "20");
         strMfgYr = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_mfgYear", "20");
         getActivity().runOnUiThread(new Runnable() {
@@ -183,19 +190,22 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     }
 
     private void uploadVehicle() {
-        //apiCall.uploadMyVehicle();
-        /*Bundle b = new Bundle();
-        b.putString("vehicle_id", "1649");
-        VehiclePrivacy frag = new VehiclePrivacy();
-        frag.setArguments(b);
-
-        FragmentManager mFragmentManager;
-        FragmentTransaction mFragmentTransaction;
-
-        mFragmentManager = getActivity().getSupportFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.vehicle_upload_container, frag).commit();*/
-
+        apiCall.uploadUsedVehicle(strTitle, myContact, strCategoryName, strSubcategoryName, strModelName,
+                strBrandName, strVersionName, strRto, strLocation,
+                strRegmonth, strRegyear, strMakemonth,
+                strMakeyear, strColor, strRegno,
+                strRc, strInsurance, strInsuranceIdv, strTaxvalid,
+                strTaxDate, strFitnessvalid, strPermitvalid,
+                strPermit, strFitnessvalid, strFuel, strSeatcap,
+                strPermitDate, strFinancestatus, strKms, strHrs,
+                strOwner, strBodyMfg, strSeatMfg,
+                strHypo, strEngine, strChasis, edtPrice.getText().toString(), strImages,
+                strDrive, strTrans, strBodytype, "", "",
+                strApp, strTyreContext, strBustype, strAir,
+                strInvoice, strImplement, strGroupprivacy, strHp, strJib,
+                strBoon, strBrakename, strPumpname, strInsuDate, strEmission,
+                strFinancestatus, strExhangestatus, strStearing,
+                strCategoryId, strSubcategoryId, strBrandId, strModelId, strVersionId);
     }
 
     @Override
@@ -274,8 +284,8 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
                     } else
                         CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-                } else if (response.body() instanceof UploadVehicleResponse) {
-                    UploadVehicleResponse vehicleResponse = (UploadVehicleResponse) response.body();
+                } else if (response.body() instanceof UploadUsedVehicleResponse) {
+                    UploadUsedVehicleResponse vehicleResponse = (UploadUsedVehicleResponse) response.body();
                     if (vehicleResponse.getSuccess() != null) {
                         vehicle_id = vehicleResponse.getSuccess().getVehicleID().toString();
                         if (!strGroupids.equals("") || !strStoreids.equals("")) {
