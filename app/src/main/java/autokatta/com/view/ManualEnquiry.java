@@ -14,7 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.ManualEnquiryAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.request.ManualEnquiryRequest;
 import autokatta.com.response.ManualEnquiryResponse;
 import retrofit2.Response;
 
@@ -29,7 +32,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    List<ManualEnquiryResponse.Success> mMyGroupsList = new ArrayList<>();
+    List<ManualEnquiryRequest> mMyGroupsList = new ArrayList<>();
     FrameLayout mFrameLayout;
 
     @Override
@@ -124,17 +127,45 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 mMyGroupsList.clear();
                 ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
                 if (manualEnquiry.getSuccess() != null) {
-                    for (ManualEnquiryResponse.Success success : manualEnquiry.getSuccess()) {
-                        success.setId(success.getId());
-                        success.setMyContact(success.getMyContact());
-                        success.setCustName(success.getCustName());
-                        success.setCustAddress(success.getCustAddress());
-                        success.setCustFullAddress(success.getCustFullAddress());
-                        success.setCustContact(success.getCustContact());
-                        success.setCustInventoryType(success.getCustInventoryType());
-                        success.setDiscussion(success.getDiscussion());
-                        success.setNextFollowupDate(success.getNextFollowupDate());
-                        mMyGroupsList.add(success);
+                    for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
+                        ManualEnquiryRequest request = new ManualEnquiryRequest();
+                        request.setLayoutNo(1);
+                        request.setVehicleName(success.getTitle());
+                        request.setVehicleCategory(success.getCategory());
+                        request.setVehicleSubCategory(success.getSubCategory());
+                        request.setVehicleModel(success.getModel());
+                        request.setVehiclePrice(success.getPrice());
+                        request.setEnquiryCount(success.getEnquiryCount());
+
+                        String[] imageSplit = success.getImage().split(",");
+                        request.setVehicleImage(imageSplit[0].substring(0, imageSplit[0].length()));
+                        mMyGroupsList.add(request);
+                    }
+                    for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
+                        ManualEnquiryRequest request = new ManualEnquiryRequest();
+                        request.setLayoutNo(2);
+                        request.setProductName(success.getProductName());
+                        request.setProductCategory(success.getCategory());
+                        request.setProductType(success.getProductType());
+                        request.setProductPrice(success.getPrice());
+                        request.setEnquiryCount(success.getEnquiryCount());
+
+                        String[] imageSplit = success.getImages().split(",");
+                        request.setProductImage(imageSplit[0].substring(0, imageSplit[0].length()));
+                        mMyGroupsList.add(request);
+                    }
+                    for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
+                        ManualEnquiryRequest request = new ManualEnquiryRequest();
+                        request.setLayoutNo(3);
+                        request.setServiceName(service.getName());
+                        request.setServiceCategory(service.getCategory());
+                        request.setServiceType(service.getType());
+                        request.setServicePrice(service.getPrice());
+                        request.setEnquiryCount(service.getEnquiryCount());
+
+                        String[] imageSplit = service.getImages().split(",");
+                        request.setServiceImage(imageSplit[0].substring(0, imageSplit[0].length()));
+                        mMyGroupsList.add(request);
                     }
                     ManualEnquiryAdapter adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
                     mRecyclerView.setAdapter(adapter);
@@ -168,6 +199,10 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         } else if (error instanceof NullPointerException) {
             Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
+            Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof UnknownHostException) {
+            Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof IOException) {
             Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"

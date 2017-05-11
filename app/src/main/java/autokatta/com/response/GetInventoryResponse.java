@@ -816,5 +816,234 @@ public class GetInventoryResponse {
         public void setInventoryType(String inventoryType) {
             this.inventoryType = inventoryType;
         }
+
+
+        /*
+        Services...
+         */
+        @SerializedName("id")
+        @Expose
+        private String id;
+        @SerializedName("store_id")
+        @Expose
+        private String storeId;
+        @SerializedName("type")
+        @Expose
+        private String type;
+        @SerializedName("name")
+        @Expose
+        private String name;
+        @SerializedName("details")
+        @Expose
+        private String details;
+        @SerializedName("tags")
+        @Expose
+        private String tags;
+        @SerializedName("images")
+        @Expose
+        private String images;
+        @SerializedName("brandtags")
+        @Expose
+        private String brandtags;
+        @SerializedName("created_date")
+        @Expose
+        private String createdDate;
+        @SerializedName("group_id")
+        @Expose
+        private String groupId;
+        @SerializedName("StoreContact")
+        @Expose
+        private String storeContact;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getStoreId() {
+            return storeId;
+        }
+
+        public void setStoreId(String storeId) {
+            this.storeId = storeId;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDetails() {
+            return details;
+        }
+
+        public void setDetails(String details) {
+            this.details = details;
+        }
+
+        public String getTags() {
+            return tags;
+        }
+
+        public void setTags(String tags) {
+            this.tags = tags;
+        }
+
+        public String getImages() {
+            return images;
+        }
+
+        public void setImages(String images) {
+            this.images = images;
+        }
+
+        public String getBrandtags() {
+            return brandtags;
+        }
+
+        public void setBrandtags(String brandtags) {
+            this.brandtags = brandtags;
+        }
+
+        public String getCreatedDate() {
+            return createdDate;
+        }
+
+        public void setCreatedDate(String createdDate) {
+            this.createdDate = createdDate;
+        }
+
+        public String getGroupId() {
+            return groupId;
+        }
+
+        public void setGroupId(String groupId) {
+            this.groupId = groupId;
+        }
+
+        public String getStoreContact() {
+            return storeContact;
+        }
+
+        public void setStoreContact(String storeContact) {
+            this.storeContact = storeContact;
+        }
+
+        /*
+        Products...
+         */
+        @SerializedName("product_id")
+        @Expose
+        private String productId;
+        @SerializedName("product_type")
+        @Expose
+        private String productType;
+        @SerializedName("product_name")
+        @Expose
+        private String productName;
+        @SerializedName("product_details")
+        @Expose
+        private String productDetails;
+        @SerializedName("product_tags")
+        @Expose
+        private String productTags;
+        @SerializedName("modified_date")
+        @Expose
+        private String modifiedDate;
+        @SerializedName("price_rating")
+        @Expose
+        private String priceRating;
+        @SerializedName("quality_rating")
+        @Expose
+        private String qualityRating;
+        @SerializedName("stock_rating")
+        @Expose
+        private String stockRating;
+
+        public String getProductId() {
+            return productId;
+        }
+
+        public void setProductId(String productId) {
+            this.productId = productId;
+        }
+
+        public String getProductType() {
+            return productType;
+        }
+
+        public void setProductType(String productType) {
+            this.productType = productType;
+        }
+
+        public String getProductName() {
+            return productName;
+        }
+
+        public void setProductName(String productName) {
+            this.productName = productName;
+        }
+
+        public String getProductDetails() {
+            return productDetails;
+        }
+
+        public void setProductDetails(String productDetails) {
+            this.productDetails = productDetails;
+        }
+
+        public String getProductTags() {
+            return productTags;
+        }
+
+        public void setProductTags(String productTags) {
+            this.productTags = productTags;
+        }
+
+        public String getModifiedDate() {
+            return modifiedDate;
+        }
+
+        public void setModifiedDate(String modifiedDate) {
+            this.modifiedDate = modifiedDate;
+        }
+
+        public String getPriceRating() {
+            return priceRating;
+        }
+
+        public void setPriceRating(String priceRating) {
+            this.priceRating = priceRating;
+        }
+
+        public String getQualityRating() {
+            return qualityRating;
+        }
+
+        public void setQualityRating(String qualityRating) {
+            this.qualityRating = qualityRating;
+        }
+
+        public String getStockRating() {
+            return stockRating;
+        }
+
+        public void setStockRating(String stockRating) {
+            this.stockRating = stockRating;
+        }
     }
 }

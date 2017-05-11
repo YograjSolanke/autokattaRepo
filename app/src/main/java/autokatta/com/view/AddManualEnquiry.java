@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     List<String> arrayList = new ArrayList<>();
     InventoryAdapter adapter;
     ListView mListView;
-    String addArray = "";
+    String addArray = "", mInventoryType;
     android.support.v4.widget.NestedScrollView scrollView;
 
     @Override
@@ -324,6 +325,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 } else if (response.body() instanceof GetInventoryResponse) {
                     GetInventoryResponse mInventoryResponse = (GetInventoryResponse) response.body();
                     if (mInventoryResponse.getSuccess() != null) {
+                        mItemList.clear();
                         scrollView.setVisibility(View.GONE);
                         mListView.setVisibility(View.VISIBLE);
                         for (GetInventoryResponse.Success success : mInventoryResponse.getSuccess()) {
@@ -333,10 +335,30 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 success.setCategory(success.getCategory());
                                 success.setSubCategory(success.getSubCategory());
                                 success.setModel(success.getModel());
+                                mInventoryType = success.getInventoryType();
+                                Log.i("used", "->" + mInventoryType);
+                                mItemList.add(success);
+                            } else if (success.getInventoryType().equals("New Vehicle")) {
+                            } else if (success.getInventoryType().equals("Products")) {
+                                success.setId(success.getId());
+                                success.setProductName(success.getProductName());
+                                success.setProductType(success.getProductType());
+                                success.setCategory(success.getCategory());
+                                mInventoryType = success.getInventoryType();
+                                Log.i("product", "->" + mInventoryType);
+                                mItemList.add(success);
+                            } else if (success.getInventoryType().equals("Services")) {
+                                success.setId(success.getId());
+                                success.setName(success.getName());
+                                success.setType(success.getType());
+                                success.setCategory(success.getCategory());
+                                mInventoryType = success.getInventoryType();
+                                Log.i("service", "->" + mInventoryType);
                                 mItemList.add(success);
                             }
                         }
-                        adapter = new InventoryAdapter(AddManualEnquiry.this, mItemList, "Used Vehicle");
+                        Log.i("Inventory", "->" + mInventoryType);
+                        adapter = new InventoryAdapter(AddManualEnquiry.this, mItemList, mInventoryType);
                         mListView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else {
@@ -359,6 +381,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
             Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
             Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            Snackbar.make(mRelative, getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
                     , "Add Manual Enquiry");
