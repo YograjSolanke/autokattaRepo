@@ -21,18 +21,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.GetPersonDataAdapter;
 import autokatta.com.adapter.ManualEnquiryAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.request.ManualEnquiryRequest;
+import autokatta.com.response.GetPersonDataResponse;
 import autokatta.com.response.ManualEnquiryResponse;
 import retrofit2.Response;
 
-public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, ItemClickListener {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerView mRecyclerView;
+    RecyclerView mRecyclerView, mPersonRecyclerView;
     List<ManualEnquiryRequest> mMyGroupsList = new ArrayList<>();
+    List<GetPersonDataResponse.Success> mList = new ArrayList<>();
     FrameLayout mFrameLayout;
 
     @Override
@@ -48,18 +52,39 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             public void run() {
                 getManualData();
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.manual_swipeRefreshLayout);
+                //mPersonSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
+
                 mRecyclerView = (RecyclerView) findViewById(R.id.manual_recycler_view);
+                mPersonRecyclerView = (RecyclerView) findViewById(R.id.person_recycler_view);
+
                 mFrameLayout = (FrameLayout) findViewById(R.id.manual_enquiry);
                 mRecyclerView.setHasFixedSize(true);
+                mPersonRecyclerView.setHasFixedSize(true);
+
                 LinearLayoutManager mLinearLayout = new LinearLayoutManager(getApplicationContext());
                 mLinearLayout.setReverseLayout(true);
                 mLinearLayout.setStackFromEnd(true);
+
+                LinearLayoutManager mLinearLayout1 = new LinearLayoutManager(getApplicationContext());
+                mLinearLayout.setReverseLayout(true);
+                mLinearLayout.setStackFromEnd(true);
+
                 mRecyclerView.setLayoutManager(mLinearLayout);
+                mPersonRecyclerView.setLayoutManager(mLinearLayout1);
+
                 mSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
+                //mPersonSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
+
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
                         android.R.color.holo_red_light);
+
+                /*mPersonSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);*/
+
                 mSwipeRefreshLayout.post(new Runnable() {
                     @Override
                     public void run() {
@@ -67,8 +92,23 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         getManualData();
                     }
                 });
+                /*mPersonSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPersonSwipeRefreshLayout.setRefreshing(true);
+                        //getPersonData();
+                    }
+                });*/
             }
         });
+    }
+
+    /*
+    Get Person Data...
+     */
+    private void getPersonData(String id, String keyword) {
+        ApiCall mApiCall = new ApiCall(ManualEnquiry.this, this);
+        mApiCall.getPersonData(id, keyword);
     }
 
     /*
@@ -94,7 +134,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                if (mRecyclerView.getVisibility() == View.VISIBLE) {
+                    onBackPressed();
+                } else {
+
+                }
                 break;
 
             case R.id.add_manual:
@@ -125,62 +169,90 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mMyGroupsList.clear();
-                ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
-                if (manualEnquiry.getSuccess() != null) {
-                    for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
-                        ManualEnquiryRequest request = new ManualEnquiryRequest();
-                        request.setLayoutNo(1);
-                        request.setVehicleName(success.getTitle());
-                        request.setVehicleCategory(success.getCategory());
-                        request.setVehicleSubCategory(success.getSubCategory());
-                        request.setVehicleModel(success.getModel());
-                        request.setVehiclePrice(success.getPrice());
-                        request.setEnquiryCount(success.getEnquiryCount());
+                if (response.body() instanceof ManualEnquiryResponse) {
+                    ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
+                    if (manualEnquiry.getSuccess() != null) {
+                        for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
+                            ManualEnquiryRequest request = new ManualEnquiryRequest();
+                            request.setLayoutNo(1);
+                            request.setVehicleId(success.getVehicleId());
+                            request.setVehicleName(success.getTitle());
+                            request.setVehicleCategory(success.getCategory());
+                            request.setVehicleSubCategory(success.getSubCategory());
+                            request.setVehicleModel(success.getModel());
+                            request.setVehiclePrice(success.getPrice());
+                            request.setEnquiryCount(success.getEnquiryCount());
+                            request.setVehicleInventory(success.getCustInventoryType());
 
-                        String[] imageSplit = success.getImage().split(",");
-                        request.setVehicleImage(imageSplit[0].substring(0, imageSplit[0].length()));
-                        mMyGroupsList.add(request);
-                    }
-                    for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
-                        ManualEnquiryRequest request = new ManualEnquiryRequest();
-                        request.setLayoutNo(2);
-                        request.setProductName(success.getProductName());
-                        request.setProductCategory(success.getCategory());
-                        request.setProductType(success.getProductType());
-                        request.setProductPrice(success.getPrice());
-                        request.setEnquiryCount(success.getEnquiryCount());
+                            String[] imageSplit = success.getImage().split(",");
+                            request.setVehicleImage(imageSplit[0].substring(0, imageSplit[0].length()));
+                            mMyGroupsList.add(request);
+                        }
+                        for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
+                            ManualEnquiryRequest request = new ManualEnquiryRequest();
+                            request.setLayoutNo(2);
+                            request.setVehicleId(success.getProductId());
+                            request.setProductName(success.getProductName());
+                            request.setProductCategory(success.getCategory());
+                            request.setProductType(success.getProductType());
+                            request.setProductPrice(success.getPrice());
+                            request.setEnquiryCount(success.getEnquiryCount());
+                            request.setVehicleInventory(success.getCustInventoryType());
 
-                        String[] imageSplit = success.getImages().split(",");
-                        request.setProductImage(imageSplit[0].substring(0, imageSplit[0].length()));
-                        mMyGroupsList.add(request);
-                    }
-                    for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
-                        ManualEnquiryRequest request = new ManualEnquiryRequest();
-                        request.setLayoutNo(3);
-                        request.setServiceName(service.getName());
-                        request.setServiceCategory(service.getCategory());
-                        request.setServiceType(service.getType());
-                        request.setServicePrice(service.getPrice());
-                        request.setEnquiryCount(service.getEnquiryCount());
+                            String[] imageSplit = success.getImages().split(",");
+                            request.setProductImage(imageSplit[0].substring(0, imageSplit[0].length()));
+                            mMyGroupsList.add(request);
+                        }
+                        for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
+                            ManualEnquiryRequest request = new ManualEnquiryRequest();
+                            request.setLayoutNo(3);
+                            request.setVehicleId(service.getId());
+                            request.setServiceName(service.getName());
+                            request.setServiceCategory(service.getCategory());
+                            request.setServiceType(service.getType());
+                            request.setServicePrice(service.getPrice());
+                            request.setEnquiryCount(service.getEnquiryCount());
+                            request.setVehicleInventory(service.getCustInventoryType());
 
-                        String[] imageSplit = service.getImages().split(",");
-                        request.setServiceImage(imageSplit[0].substring(0, imageSplit[0].length()));
-                        mMyGroupsList.add(request);
+                            String[] imageSplit = service.getImages().split(",");
+                            request.setServiceImage(imageSplit[0].substring(0, imageSplit[0].length()));
+                            mMyGroupsList.add(request);
+                        }
+                        ManualEnquiryAdapter adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
+                        mRecyclerView.setAdapter(adapter);
+                        adapter.setClickListener(this);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        Snackbar.make(mFrameLayout, manualEnquiry.getError(), Snackbar.LENGTH_SHORT)
+                                .setAction("RETRY", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        getManualData();
+                                    }
+                                })
+                                .setActionTextColor(getResources().getColor(R.color.text_color))
+                                .setDuration(4000).show();
                     }
-                    ManualEnquiryAdapter adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                } else {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    Snackbar.make(mFrameLayout, manualEnquiry.getError(), Snackbar.LENGTH_SHORT)
-                            .setAction("RETRY", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    getManualData();
-                                }
-                            })
-                            .setActionTextColor(getResources().getColor(R.color.text_color))
-                            .setDuration(4000).show();
+                } else if (response.body() instanceof GetPersonDataResponse) {
+                    GetPersonDataResponse mPersonDataResponse = (GetPersonDataResponse) response.body();
+                    if (mPersonDataResponse.getSuccess() != null) {
+                        mRecyclerView.setVisibility(View.GONE);
+                        mPersonRecyclerView.setVisibility(View.VISIBLE);
+                        for (GetPersonDataResponse.Success success : mPersonDataResponse.getSuccess()) {
+                            success.setUsername(success.getUsername());
+                            success.setContactNo(success.getContactNo());
+                            success.setCity(success.getCity());
+                            //success.setd(success.getUsername());
+                            success.setNextFollowupDate(success.getNextFollowupDate());
+                            mList.add(success);
+                        }
+                        GetPersonDataAdapter adapter = new GetPersonDataAdapter(ManualEnquiry.this, mList);
+                        mPersonRecyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Snackbar.make(mFrameLayout, mPersonDataResponse.getError(), Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -213,6 +285,14 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        ManualEnquiryRequest request = mMyGroupsList.get(position);
+        getPersonData(request.getVehicleId(), request.getVehicleInventory());
+        Log.i("dsfasd", "->" + request.getVehicleInventory());
+        Log.i("dsfaascssd", "->" + request.getVehicleId());
     }
     /*public static boolean isValidPhone(String phone){
         String expression = "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$";

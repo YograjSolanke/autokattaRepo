@@ -8,12 +8,14 @@ public class ManualEnquiryRequest {
     public int layoutNo;
     public String enquiryCount;
 
+    public String vehicleId;
     public String vehicleName;
     public String vehicleCategory;
     public String vehicleSubCategory;
     public String vehicleModel;
     public String vehiclePrice;
     public String vehicleImage;
+    public String vehicleInventory;
 
     public String productName;
     public String productCategory;
@@ -41,6 +43,14 @@ public class ManualEnquiryRequest {
 
     public void setEnquiryCount(String enquiryCount) {
         this.enquiryCount = enquiryCount;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public String getVehicleName() {
@@ -169,5 +179,13 @@ public class ManualEnquiryRequest {
 
     public void setServiceImage(String serviceImage) {
         this.serviceImage = serviceImage;
+    }
+
+    public String getVehicleInventory() {
+        return vehicleInventory;
+    }
+
+    public void setVehicleInventory(String vehicleInventory) {
+        this.vehicleInventory = vehicleInventory;
     }
 }

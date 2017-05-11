@@ -1221,6 +1221,10 @@ public interface ServiceApi {
     @GET("addEnquiryData.php")
     Call<ManualEnquiryResponse> getManualEnquiry(@Query("myContact") String myContact);
 
+    //Get Manual enquiry
+    @GET("getEnquiredPersonsData.php")
+    Call<GetPersonDataResponse> getPersonData(@Query("idsList") String id, @Query("keyword") String keyword);
+
     //Post Manual enquiry
     @POST("addEnquiryData.php")
     Call<AddManualEnquiryResponse> _autokattaAddManualEnquiry(@Body AddManualEnquiryRequest addManualEnquiryRequest);

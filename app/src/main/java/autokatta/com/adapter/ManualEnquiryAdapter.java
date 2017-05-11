@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.request.ManualEnquiryRequest;
 
 /**
@@ -25,6 +27,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     Activity mActivity;
     List<ManualEnquiryRequest> mItemList = new ArrayList<>();
+    private ItemClickListener clickListener;
 
     public ManualEnquiryAdapter(Activity mActivity, List<ManualEnquiryRequest> mItemList) {
         this.mActivity = mActivity;
@@ -34,12 +37,14 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
     /*
    Used Vehicle Details...
     */
-    private static class UsedVehicleDetails extends RecyclerView.ViewHolder {
+    private class UsedVehicleDetails extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mVehiclePic;
         TextView mVehicleName, mVehicleCategory, mVehicleSubCategory, mVehicleModel, mVehiclePrice, mVehicleCount;
+        RelativeLayout mUsedRelative;
 
         private UsedVehicleDetails(View profileView) {
             super(profileView);
+            mUsedRelative = (RelativeLayout) profileView.findViewById(R.id.used_relative);
             mVehiclePic = (ImageView) profileView.findViewById(R.id.vehicle_icon);
             mVehicleName = (TextView) profileView.findViewById(R.id.vehicle_title);
             mVehicleCategory = (TextView) profileView.findViewById(R.id.category_str);
@@ -47,13 +52,19 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mVehicleSubCategory = (TextView) profileView.findViewById(R.id.sub_category_str);
             mVehicleModel = (TextView) profileView.findViewById(R.id.model_str);
             mVehiclePrice = (TextView) profileView.findViewById(R.id.price_str);
+            profileView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
         }
     }
 
     /*
    Product Details...
     */
-    private static class ProductDetails extends RecyclerView.ViewHolder {
+    private class ProductDetails extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mProductPic;
         TextView mProductName, mProductCategory, mProductType, mProductPrice, mProductCount;
 
@@ -65,13 +76,19 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mProductCategory = (TextView) profileView.findViewById(R.id.product_category_str);
             mProductType = (TextView) profileView.findViewById(R.id.product_type_str);
             mProductPrice = (TextView) profileView.findViewById(R.id.product_price_str);
+            profileView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
         }
     }
 
     /*
    Service Details...
     */
-    private static class ServiceDetails extends RecyclerView.ViewHolder {
+    private class ServiceDetails extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mServicePic;
         TextView mServiceName, mServiceCategory, mServiceType, mServicePrice, mServiceCount;
 
@@ -83,7 +100,17 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mServiceCategory = (TextView) profileView.findViewById(R.id.category_str);
             mServiceType = (TextView) profileView.findViewById(R.id.type_str);
             mServicePrice = (TextView) profileView.findViewById(R.id.price_str);
+            profileView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
+        }
+    }
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
     }
 
     @Override
@@ -113,7 +140,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         switch (holder.getItemViewType()) {
             case 1:
                 UsedVehicleDetails vehicleDetails = (UsedVehicleDetails) holder;
@@ -185,4 +212,5 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
     public int getItemCount() {
         return mItemList.size();
     }
+
 }
