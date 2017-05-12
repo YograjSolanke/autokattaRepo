@@ -938,7 +938,7 @@ public interface ServiceApi {
 
     //Likes in Vehicle details
     @POST("newlikes.php")
-    Call<String> _autokattaVehicleLike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
+    Call<String> _autokattaVehicleLike(@Query("receiver_contact") String othercontact, @Query("sender_contact") String mycontact,
                                        @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
 
     //Calling in Vehicle details
