@@ -464,10 +464,10 @@
         <activity android:name=".firebase.FirebaseActivity">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_1"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".events.ActiveExchangeMelaPreviewActivity"
             android:label="@string/title_activity_active_exchange_mela_preview"

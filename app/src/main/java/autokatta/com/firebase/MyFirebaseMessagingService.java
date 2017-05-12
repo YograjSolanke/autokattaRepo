@@ -46,25 +46,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = null;
         PendingIntent likeIntent = null;
         String body = "";
-        String number = "";
         if (data != null) {
             for (Map.Entry<String, String> entry : data) {
-                Intent like = new Intent(this, AutokattaMainActivity.class);
+                Intent like = new Intent(this, FirebaseActivity.class);
+                Intent call = new Intent(Intent.ACTION_DIAL);
                 String key = entry.getKey();
                 String value = entry.getValue();
                 Log.d("Autokatta-Back", "key, " + key + " value " + value);
                 if (key.equals("body")) {
                     body = value;
                 }
+
                 if (key.equals("contact")) {
-                    number = value;
-                    Log.i("No", "------>" + number);
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit()
+                            .putString("firebaseContact", entry.getValue()).apply();
                 }
+
                 like.putExtra("key", entry.getKey());
                 like.putExtra("value", entry.getValue());
-                like.putExtra("number", number);
+
                 if (key.equals("contact")) {
-                    Intent call = new Intent(Intent.ACTION_DIAL);
                     call.setData(Uri.parse("tel:" + value));
                     callIntent = PendingIntent.getActivity(this, 0, call,
                             PendingIntent.FLAG_UPDATE_CURRENT);
@@ -73,8 +74,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     like.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     likeIntent = PendingIntent.getActivity(this, 0, like,
                             PendingIntent.FLAG_UPDATE_CURRENT);
-                    like.putExtra("name", value);
-                    like.putExtra("Like", value);
                 }
             }
         } else {
@@ -110,25 +109,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent callIntent = null;
         PendingIntent likeIntent = null;
         String body = "";
-        String number = "";
         if (data != null) {
             for (Map.Entry<String, String> entry : data) {
-                Intent like = new Intent(this, AutokattaMainActivity.class);
+                Intent like = new Intent(this, FirebaseActivity.class);
+                Intent call = new Intent(Intent.ACTION_DIAL);
                 String key = entry.getKey();
                 String value = entry.getValue();
                 Log.d("Autokatta-fore", "key, " + key + " value " + value);
                 if (key.equals("body")) {
                     body = value;
                 }
+
                 if (key.equals("contact")) {
-                    number = value;
-                    Log.i("No", "------>" + number);
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit()
+                            .putString("firebaseContact", entry.getValue()).apply();
                 }
+
                 like.putExtra("key", entry.getKey());
                 like.putExtra("value", entry.getValue());
-                like.putExtra("number", number);
+
                 if (key.equals("contact")) {
-                    Intent call = new Intent(Intent.ACTION_DIAL);
                     call.setData(Uri.parse("tel:" + value));
                     callIntent = PendingIntent.getActivity(this, 0, call,
                             PendingIntent.FLAG_UPDATE_CURRENT);
@@ -137,8 +137,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     like.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     likeIntent = PendingIntent.getActivity(this, 0, like,
                             PendingIntent.FLAG_UPDATE_CURRENT);
-                    like.putExtra("name", value);
-                    like.putExtra("Like", value);
                 }
                 Log.i("KEYYYYYYYYYYY", "->" + entry.getKey());
             }

@@ -43,6 +43,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     Katta mKattaFrag;
     String mAction="other";
     Follow mFollowFrag;
+    String key;
     ApiCall mApiCall = new ApiCall(OtherProfile.this, this);
     //private Handler mUiHandler = new Handler();
 
@@ -96,7 +97,12 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
             public void run() {
                 try {
                     if (getIntent().getExtras() != null) {
-                        mOtherContact = getIntent().getExtras().getString("contactOtherProfile");
+                        key = getIntent().getExtras().getString("like");
+                        if (key.equals("Like")) {
+                            mOtherContact = getIntent().getExtras().getString("firebaseContact");
+                        } else {
+                            mOtherContact = getIntent().getExtras().getString("contactOtherProfile");
+                        }
                     }
                     mBundle.putString("otherContact", mOtherContact);
                     mBundle.putString("action",mAction);
