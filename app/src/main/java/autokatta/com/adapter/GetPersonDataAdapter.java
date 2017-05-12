@@ -31,13 +31,13 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
 
         TextView mPersonName, mContact, mAddress, mFollowUpDate, mDiscussion;
 
-        public PersonData(View itemView) {
+        PersonData(View itemView) {
             super(itemView);
             mPersonName = (TextView) itemView.findViewById(R.id.name);
             mContact = (TextView) itemView.findViewById(R.id.contact);
             mAddress = (TextView) itemView.findViewById(R.id.address);
-            mFollowUpDate = (TextView) itemView.findViewById(R.id.discussion);
-            mDiscussion = (TextView) itemView.findViewById(R.id.follow_up);
+            mFollowUpDate = (TextView) itemView.findViewById(R.id.follow_up);
+            mDiscussion = (TextView) itemView.findViewById(R.id.discussion);
         }
     }
 
@@ -47,8 +47,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_person_data, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        GetPersonDataAdapter.PersonData vh = new GetPersonDataAdapter.PersonData(v);
-        return vh;
+        return new PersonData(v);
     }
 
     @Override

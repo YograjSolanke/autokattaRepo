@@ -337,6 +337,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         if (response != null) {
             if (response.isSuccessful()) {
                 if (response.body() instanceof GetCompaniesResponse) {
+                    mCompanyList.clear();
                     GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();
                     if (!mGetCompanyList.getSuccess().isEmpty()) {
                         for (GetCompaniesResponse.Success companyResponse : mGetCompanyList.getSuccess()) {
@@ -352,6 +353,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     }
 
                 } else if (response.body() instanceof GetDesignationResponse) {
+                    mDesignationList.clear();
                     GetDesignationResponse mGetDesignationList = (GetDesignationResponse) response.body();
                     if (!mGetDesignationList.getSuccess().isEmpty()) {
                         for (GetDesignationResponse.Success designationResponse : mGetDesignationList.getSuccess()) {
@@ -367,6 +369,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     }
 
                 } else if (response.body() instanceof GetSkillsResponse) {
+                    mSkillList.clear();
                     GetSkillsResponse mGetSkillsResponse = (GetSkillsResponse) response.body();
                     if (!mGetSkillsResponse.getSuccess().isEmpty()) {
                         for (GetSkillsResponse.Success skillsResponse : mGetSkillsResponse.getSuccess()) {
@@ -382,6 +385,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     }
 
                 } else if (response.body() instanceof getDealsResponse) {
+                    mDealList.clear();
                     getDealsResponse mGetDealsList = (getDealsResponse) response.body();
                     if (!mGetDealsList.getSuccess().isEmpty()) {
                         for (getDealsResponse.Success dealsResponse : mGetDealsList.getSuccess()) {
@@ -397,6 +401,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     }
 
                 } else if (response.body() instanceof GetDistrictsResponse) {
+                    distNameList.clear();
                     GetDistrictsResponse mGetDistrict = (GetDistrictsResponse) response.body();
                     if (!mGetDistrict.getSuccess().isEmpty()) {
                         for (GetDistrictsResponse.Success DistrictResponse : mGetDistrict.getSuccess()) {
@@ -408,6 +413,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                         spinDistrict.setItems(distNameList, "Select District", this);
                     }
                 } else if (response.body() instanceof GetStatesResponse) {
+                    stateLst.clear();
                     GetStatesResponse mGetState = (GetStatesResponse) response.body();
                     if (!mGetState.getSuccess().isEmpty()) {
                         for (GetStatesResponse.Success StateResponse : mGetState.getSuccess()) {
