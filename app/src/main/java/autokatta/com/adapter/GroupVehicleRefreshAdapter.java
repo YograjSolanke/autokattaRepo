@@ -60,7 +60,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         TextView mRegistrationNo, mTitle, mPrice, mModel, mBrand, mUpdatedBy, mLocation, mRtoCity, mYearOfMfg, mKmsHrs;
         ImageView mShareAutokatta, mShareOther, mLike, mCall, mUnlike;
         ImageView mCardImage;
-        RelativeLayout mRlike,mRunlike;
+        RelativeLayout mRlike, mRunlike;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -78,12 +78,12 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
             mShareAutokatta = (ImageView) itemView.findViewById(R.id.share_autokatta);
             mShareOther = (ImageView) itemView.findViewById(R.id.share_other);
-          //  mLike = (ImageView) itemView.findViewById(R.id.like);
-          //  mUnlike = (ImageView) itemView.findViewById(R.id.unlike);
+            //  mLike = (ImageView) itemView.findViewById(R.id.like);
+            //  mUnlike = (ImageView) itemView.findViewById(R.id.unlike);
             mCall = (ImageView) itemView.findViewById(R.id.call);
             mCardImage = (ImageView) itemView.findViewById(R.id.card_image);
-            mRlike= (RelativeLayout) itemView.findViewById(R.id.rellike);
-            mRunlike= (RelativeLayout) itemView.findViewById(R.id.relunlike);
+            mRlike = (RelativeLayout) itemView.findViewById(R.id.rellike);
+            mRunlike = (RelativeLayout) itemView.findViewById(R.id.relunlike);
 
         }
     }
@@ -390,8 +390,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
                 if (mItemList.get(position).getContact().equals(myContact)) {
                     Snackbar.make(holder.mCardView, "You Can't Like Your Own Vehicle ", Snackbar.LENGTH_LONG).show();
-                }else
-                {
+                } else {
                     holder.mRlike.setVisibility(View.GONE);
                     holder.mRunlike.setVisibility(View.VISIBLE);
                     mItemList.get(position).setVehiclelikestatus("yes");
@@ -419,14 +418,14 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     Like
      */
     private void sendLike(String Rcontact, String vehicleId) {
-        mApiCall.vehicleLike(Rcontact, myContact, "4", vehicleId);
+        mApiCall.vehicleLike(myContact, Rcontact, "4", vehicleId);
     }
 
     /*
     Unlike...
      */
     private void sendUnlike(String Rcontact, String vehicleId) {
-        mApiCall.vehicleUnLike(Rcontact, myContact, "4", vehicleId);
+        mApiCall.vehicleUnLike(myContact, Rcontact, "4", vehicleId);
     }
 
 

@@ -938,7 +938,7 @@ public interface ServiceApi {
 
     //Likes in Vehicle details
     @POST("newlikes.php")
-    Call<String> _autokattaVehicleLike(@Query("receiver_contact") String othercontact, @Query("sender_contact") String mycontact,
+    Call<String> _autokattaVehicleLike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                        @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
 
     //Calling in Vehicle details
@@ -948,7 +948,7 @@ public interface ServiceApi {
 
     //UnLikes in Vehicle details
     @POST("newUnlikes.php")
-    Call<String> _autokattaVehicleUnLike(@Query("sender_contact") String otherContact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaVehicleUnLike(@Query("sender_contact") String mycontact, @Query("receiver_contact") String othercontact,
                                          @Query("layout") String layout, @Query("vehicle_id") String vehicleid);
 
     //get tags
@@ -1009,18 +1009,18 @@ public interface ServiceApi {
 
     //UnLikes in Otherstore
     @POST("newUnlikes.php")
-    Call<String> _autokattaUnlikeStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaUnlikeStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String othercontact,
                                        @Query("layout") String layout, @Query("store_id") String store_id);
 
 
     //Follow Otherstore
     @POST("newfollow.php")
-    Call<String> _autokattaFollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaFollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String othercontact,
                                        @Query("layout") String layout, @Query("store_id") String store_id);
 
     //Un Follow Otherstore
     @POST("newUnfollow.php")
-    Call<String> _autokattaUnfollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String mycontact,
+    Call<String> _autokattaUnfollowStore(@Query("sender_contact") String myContact, @Query("receiver_contact") String othercontact,
                                          @Query("layout") String layout, @Query("store_id") String store_id);
 
 

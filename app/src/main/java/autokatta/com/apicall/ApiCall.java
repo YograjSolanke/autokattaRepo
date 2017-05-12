@@ -5608,7 +5608,7 @@ Get saved search Seller list
        Like
      */
 
-    public void Like(String othercontact, String myContact, String layout) {
+    public void Like(String myContact, String othercontact, String layout) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5625,7 +5625,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaLike(othercontact, myContact, layout);
+                Call<String> mUnfollowResponse = serviceApi._autokattaLike(myContact, othercontact, layout);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5648,7 +5648,7 @@ Get saved search Seller list
       UnLike
      */
 
-    public void UnLike(String othercontact, String myContact, String layout) {
+    public void UnLike(String myContact, String othercontact, String layout) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5665,7 +5665,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(othercontact, myContact, layout);
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(myContact, othercontact, layout);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5979,7 +5979,7 @@ Get saved search Seller list
      Vehicle Like
      */
 
-    public void vehicleLike(String otherContact, String myContac, String layout, String vehicleid) {
+    public void vehicleLike(String myContac, String otherContact, String layout, String vehicleid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5996,7 +5996,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaVehicleLike(otherContact, myContac, layout, vehicleid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaVehicleLike(myContac, otherContact, layout, vehicleid);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6058,7 +6058,7 @@ Get saved search Seller list
      Vehicle UnLike
      */
 
-    public void vehicleUnLike(String otherContact, String myContac, String layout, String vehicleid) {
+    public void vehicleUnLike(String myContac, String otherContact, String layout, String vehicleid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6075,7 +6075,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaVehicleUnLike(otherContact, myContac, layout, vehicleid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaVehicleUnLike(myContac, otherContact, layout, vehicleid);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6162,7 +6162,7 @@ Get saved search Seller list
      Product Like
      */
 
-    public void _autokattaProductView(String otherContact, String myContac, String layout, String productId) {
+    public void _autokattaProductView(String myContac, String otherContact, String layout, String productId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6177,7 +6177,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> like = serviceApi._autokattaProductView(otherContact, myContac, layout, productId);
+                Call<String> like = serviceApi._autokattaProductView(myContac, otherContact, layout, productId);
                 like.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6202,7 +6202,7 @@ Get saved search Seller list
      Service Like
      */
 
-    public void _autokattaServiceView(String otherContact, String myContac, String layout, String serviceId) {
+    public void _autokattaServiceView(String myContac, String otherContact, String layout, String serviceId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6217,7 +6217,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> like = serviceApi._autokattaServiceView(otherContact, myContac, layout, serviceId);
+                Call<String> like = serviceApi._autokattaServiceView(myContac, otherContact, layout, serviceId);
                 like.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6240,7 +6240,7 @@ Get saved search Seller list
     /*
     Product Unlike
      */
-    public void _autokattaProductViewUnlike(String otherContact, String myContac, String layout, String productID) {
+    public void _autokattaProductViewUnlike(String myContac, String otherContact, String layout, String productID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -6256,7 +6256,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaProductViewUnlike(otherContact, myContac, layout, productID);
+                Call<String> mUnfollowResponse = serviceApi._autokattaProductViewUnlike(myContac, otherContact, layout, productID);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6279,7 +6279,7 @@ Get saved search Seller list
     /*
    Service Unlike
     */
-    public void _autokattaServiceViewUnlike(String otherContact, String myContac, String layout, String ServiceId) {
+    public void _autokattaServiceViewUnlike(String myContac, String otherContact, String layout, String ServiceId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -6295,7 +6295,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaServiceViewUnlike(otherContact, myContac, layout, ServiceId);
+                Call<String> mUnfollowResponse = serviceApi._autokattaServiceViewUnlike(myContac, otherContact, layout, ServiceId);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
