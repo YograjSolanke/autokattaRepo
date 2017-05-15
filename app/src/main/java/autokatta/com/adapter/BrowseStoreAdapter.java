@@ -76,10 +76,11 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         final BrowseStoreResponse.Success success = mMainlist.get(holder.getAdapterPosition());
         mApiCall = new ApiCall(activity, this);
 
-        holder.storename.setText(success.getStoreName());
-        holder.storelocation.setText(success.getLocation());
-        holder.storewebsite.setText(success.getWebsite());
-
+        holder.storename.setText("Name:" + success.getStoreName());
+        holder.storelocation.setText("Location:" + success.getLocation());
+        holder.storewebsite.setText("Website:" + success.getWebsite());
+        holder.storetype.setText("Type:" + success.getStoreType());
+        holder.storeservices.setText("Services:" + success.getCategory());
         holder.storeworkingdays.setText("working days:" + success.getWorkingDays());
         holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
@@ -387,9 +388,9 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     static class StoreHolder extends RecyclerView.ViewHolder {
 
 
-        TextView storename, storelocation, storewebsite, storetiming, storeworkingdays;
-        ImageView store_image, leftarrow, rihgtarrow, call_image;
-        TextView btnshare, btnlike, btnfollow, btnunlike, btnunfollow;
+        TextView storename, storelocation, storewebsite, storetiming, storeworkingdays, storetype, storeservices;
+        ImageView store_image, call_image;
+        TextView btnlike, btnfollow;
         RatingBar storerating;
         RelativeLayout linearlike, linearunlike, linearfollow, linearunfollow;
         LinearLayout linearshare, linearshare1;
@@ -403,6 +404,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             storelocation = (TextView) itemView.findViewById(R.id.storelocation);
             storewebsite = (TextView) itemView.findViewById(R.id.storewebsite);
             storetiming = (TextView) itemView.findViewById(R.id.storetiming);
+            storetype = (TextView) itemView.findViewById(R.id.storetype);
+            storeservices = (TextView) itemView.findViewById(R.id.storeservices);
             storeworkingdays = (TextView) itemView.findViewById(R.id.storeworkingdays);
 
             store_image = (ImageView) itemView.findViewById(R.id.storeprofileimage);

@@ -606,7 +606,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mLike.setVisibility(View.GONE);
                     mFollow.setVisibility(View.GONE);
                     mRate.setVisibility(View.GONE);
-                    mAdd.setVisibility(View.GONE);
+                    mAdd.setVisibility(View.VISIBLE);
                 }
 
                 storerating.setRating(Float.parseFloat(storeRating));
