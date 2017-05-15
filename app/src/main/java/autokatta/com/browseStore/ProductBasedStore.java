@@ -143,10 +143,13 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
                 System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! before hashset" + categoryList);
                 categoryHashSet = new HashSet<>(categoryList);
                 System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  after hashset" + categoryHashSet);
+                filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
+
+
                 mSwipeRefreshLayout.setRefreshing(false);
-                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+//                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses);
+//                mRecyclerView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));

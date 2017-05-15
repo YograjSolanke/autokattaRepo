@@ -81,14 +81,14 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""));
-            }
-        });
+//        mSwipeRefreshLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mSwipeRefreshLayout.setRefreshing(true);
+//                getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+//                        .getString("loginContact", ""));
+//            }
+//        });
 
         return mProductBased;
     }
@@ -97,6 +97,23 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
         ApiCall apiCall = new ApiCall(getActivity(), this);
         apiCall.getBrowseStores(contact, "Service");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", ""));
+                }
+            });
+
+        }
     }
 
     @Override
@@ -146,10 +163,13 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                 System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! before hashset" + categoryList);
                 categoryHashSet = new HashSet<>(categoryList);
                 System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  after hashset" + categoryHashSet);
+
+                filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
+
                 mSwipeRefreshLayout.setRefreshing(false);
-                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+//                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses);
+//                mRecyclerView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
