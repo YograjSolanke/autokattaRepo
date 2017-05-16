@@ -1,14 +1,266 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <ImageView
+        android:id="@+id/vehiprofile"
+        android:layout_width="120dip"
+        android:layout_height="120dip"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dip"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/demo" />
+
+    <RelativeLayout
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Under Working"
-        android:textStyle="bold"
-        android:textSize="@dimen/card_title_height"
-        android:gravity="center_vertical|center" />
-</LinearLayout>
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/vehiprofile">
+
+        <TextView
+            android:id="@+id/name_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Name"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dashname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/name_tag"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/editname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/dashname"
+            android:textColor="#808080" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativecategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/vehiprofile">
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Category"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dash3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/category"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/editcategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/dash3"
+            android:textColor="#808080" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relativebrand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativecategory"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/vehiprofile">
+
+        <TextView
+            android:id="@+id/brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Brand"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dash4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/brand"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/editbrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/dash4"
+            android:textColor="#808080" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativemodel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativebrand"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/vehiprofile">
+
+        <TextView
+            android:id="@+id/model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Model"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dash5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/model"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/editmodel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/dash5"
+            android:textColor="#808080" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativemodel"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/vehiprofile">
+
+        <TextView
+            android:id="@+id/version_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Version"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dashversion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/version_tag"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/editversion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/dashversion"
+            android:textColor="#808080" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeprice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/version"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/vehiprofile">
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="Price"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dash2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/price"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/editprice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/dash2"
+            android:textColor="#808080" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relativeprice"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_input_add" />
+
+</RelativeLayout>

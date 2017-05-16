@@ -13,13 +13,11 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,10 +48,9 @@ import static autokatta.com.adapter.GooglePlacesAdapter.resultList;
  */
 
 public class About extends Fragment implements RequestNotifier {
-
     View mAbout;
     String[] MODULE = null;
-    Button mDone;
+    ImageView mDone;
     ImageView mEdit;
     EditText mWebsite, mEmail;
     TextView mContact, mProfession;
@@ -77,11 +74,9 @@ public class About extends Fragment implements RequestNotifier {
     List<String> parsedDataDesignation = new ArrayList<>();
     List<String> parsedDataSkills = new ArrayList<>();
 
-    RelativeLayout radiolayout;
     Spinner spinner;
     RadioGroup usertype;
     RadioButton student, employee, selfemployee;
-    RelativeLayout mrel;
     String Sharedcontact, RegId;
     String spinnervalue = "";
     ApiCall mApiCall;
@@ -92,8 +87,7 @@ public class About extends Fragment implements RequestNotifier {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAbout = inflater.inflate(R.layout.fragment_profile_about, container, false);
         Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-        // RegId=getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", "");
-        System.out.println("REGID--------------------------->" + RegId);
+
         mContact = (TextView) mAbout.findViewById(R.id.contact_no);
         mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
         mEmail = (EditText) mAbout.findViewById(R.id.email);
@@ -102,15 +96,13 @@ public class About extends Fragment implements RequestNotifier {
         mCompany = (AutoCompleteTextView) mAbout.findViewById(R.id.company_name);
         mDesignation = (AutoCompleteTextView) mAbout.findViewById(R.id.designation);
         mSkills = (MultiAutoCompleteTextView) mAbout.findViewById(R.id.skills);
-        mDone = (Button) mAbout.findViewById(R.id.done);
+        mDone = (ImageView) mAbout.findViewById(R.id.done);
         mEdit = (ImageView) mAbout.findViewById(R.id.edit);
         usertype = (RadioGroup) mAbout.findViewById(R.id.usertype);
         student = (RadioButton) mAbout.findViewById(R.id.student);
         employee = (RadioButton) mAbout.findViewById(R.id.employee);
         selfemployee = (RadioButton) mAbout.findViewById(R.id.selfemployee);
-        radiolayout = (RelativeLayout) mAbout.findViewById(R.id.radiolayout);
         spinner = (Spinner) mAbout.findViewById(R.id.spinner);
-        mrel = (RelativeLayout) mAbout.findViewById(R.id.rel);
         spinner.setVisibility(View.GONE);
         /*Get Designation,Skills,Company From web service*/
         mApiCall = new ApiCall(getActivity(), this);
@@ -121,14 +113,12 @@ public class About extends Fragment implements RequestNotifier {
         mApiCall.Categories("");
 
         mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
         mSkills.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
 
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                         (i == KeyEvent.KEYCODE_ENTER)) {
-
                     mSkills.setText(mSkills.getText().toString() + ",");
                     mSkills.setSelection(mSkills.getText().toString().length());
                     checkSkills();
@@ -167,7 +157,7 @@ public class About extends Fragment implements RequestNotifier {
 
             @Override
             public void onClick(View view) {
-                mrel.setVisibility(View.VISIBLE);
+                mDone.setVisibility(View.VISIBLE);
                 if (student.isChecked()) {
                     spinner.setVisibility(View.GONE);
                 } else if (employee.isChecked()) {
@@ -185,9 +175,8 @@ public class About extends Fragment implements RequestNotifier {
                 mDesignation.setEnabled(true);
                 mSkills.setEnabled(true);
 
-                radiolayout.setVisibility(View.VISIBLE);
+                usertype.setVisibility(View.VISIBLE);
                 mDone.setEnabled(true);
-
                 mContact.setOnTouchListener(new OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -212,10 +201,8 @@ public class About extends Fragment implements RequestNotifier {
             public void onClick(View view) {
 
                 boolean webflag = false;
-
-                radiolayout.setVisibility(View.GONE);
+                usertype.setVisibility(View.GONE);
                 spinner.setVisibility(View.GONE);
-
                 mUpdatedProfession = mProfession.getText().toString();
                 mUpdatedCity = mCity.getText().toString();
                 mUpdatedEmail = mEmail.getText().toString();
@@ -228,23 +215,13 @@ public class About extends Fragment implements RequestNotifier {
                     mUpdatedSkills1 = mUpdatedSkills.substring(0, mUpdatedSkills.length() - 1);
 
                 webflag = mUpdatedWebsite.equalsIgnoreCase("");
-
                 Boolean flag = false;
-
                 try {
                     for (int i = 0; i < resultList.size(); i++) {
-
-                        System.out.println("resultlist " + i + "item=" + resultList.get(i).toString());
-
                         if (mUpdatedCity.equalsIgnoreCase(resultList.get(i).toString())) {
-
-                            System.out.println("user selected location===" + mUpdatedCity);
-                            System.out.println(" user selected google location" + resultList.get(i));
                             flag = true;
                             break;
-
                         } else {
-
                             flag = false;
                         }
                     }
@@ -252,14 +229,11 @@ public class About extends Fragment implements RequestNotifier {
                     e.printStackTrace();
                 }
 
-
                 if (!isValidEmail(mUpdatedEmail))
                     mEmail.setError("Invalid Email");
                 else if (!webflag && !isValidUrl(mUpdatedWebsite)) {
                     mWebsite.setError("Invalid Website");
-
-                } else if (flag == false) {
-
+                } else if (mCity.getText().toString().isEmpty()) {
                     mCity.setError("Please Select Address From Dropdown Only");
                 } else {
                     mProfession.setEnabled(false);
@@ -272,16 +246,12 @@ public class About extends Fragment implements RequestNotifier {
                     mSkills.setEnabled(false);
                     mDone.setEnabled(false);
 
-
                     /************************Company Name code *******************************************/
                     mCompany.clearFocus();
                     newcompanyname = mCompany.getText().toString();
-
                     try {
-
                         if (!mCompanyList.contains(newcompanyname)) {
                             mApiCall.addNewCompany(newcompanyname);
-
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -294,14 +264,11 @@ public class About extends Fragment implements RequestNotifier {
                             + splChrs + "]+");
 
                  /*Designation Name code */
-
                     mDesignation.clearFocus();
                     newdesignation = mDesignation.getText().toString();
-
                     try {
                         if (!mDesignationList.contains(newdesignation)) {
                             mApiCall.addNewDesignation(newdesignation);
-
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -309,11 +276,9 @@ public class About extends Fragment implements RequestNotifier {
 
                     strDesignation = mDesignation.getText().toString();
                     //***************************************************************
-
                     boolean found1 = strDesignation.matches("["
                             + splChrs + "]+");
                     /*Skills*/
-
                     mSkills.clearFocus();
                     newskills = mSkills.getText().toString().trim();
                     if (newskills.endsWith(","))
@@ -321,7 +286,6 @@ public class About extends Fragment implements RequestNotifier {
                     parts = newskills.split(",");
                     for (int i = 0; i < parts.length; i++) {
                         try {
-
                             if (!mSkillList.contains(parts[i])) {
                                 mApiCall.addNewSkills(parts[i]);
                                 //addNewCompanyName(updatecompany);
@@ -342,11 +306,9 @@ public class About extends Fragment implements RequestNotifier {
                         mCompany.setError("Enter Company Name");
                         mCompany.requestFocus();
                     } else if (found) {
-
                         mCompany.setError("Please enter valid company");
                         mCompany.requestFocus();
                     } else if (found1) {
-
                         mDesignation.setError("Please enter valid designation");
                         mDesignation.requestFocus();
                     } else if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
@@ -356,10 +318,19 @@ public class About extends Fragment implements RequestNotifier {
                         mSkills.setError("Enter Skills Name");
                         mSkills.requestFocus();
                     } else {
+                       /* Log.i("mUpdatedEmail","->"+mUpdatedEmail);
+                        Log.i("mUpdatedWebsite","->"+mUpdatedWebsite);
+                        Log.i("mUpdatedProfession","->"+mUpdatedProfession);
+                        Log.i("mUpdatedCompany","->"+mUpdatedCompany);
+                        Log.i("mUpdatedDesignation","->"+mUpdatedDesignation);
+                        Log.i("mUpdatedSkills1","->"+mUpdatedSkills1);
+                        Log.i("mUpdatedCity","->"+mUpdatedCity);
+                        Log.i("spinnervalue","->"+spinnervalue);
+                        Log.i("RegId","->"+RegId);*/
                         mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1, mUpdatedCity, spinnervalue, RegId);
                         // submitData();
                     }
-                    mrel.setVisibility(View.GONE);
+                    mDone.setVisibility(View.GONE);
                 }
             }
         });
@@ -368,17 +339,14 @@ public class About extends Fragment implements RequestNotifier {
 
 
     public boolean isValidUrl(String txtWebsite) {
-
         Pattern regex = Pattern.compile("^(WWW|www)\\.+[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|in|IN|COM|ORG|NET|MIL|EDU)$");
         Matcher matcher = regex.matcher(txtWebsite);
         return matcher.matches();
-
     }
 
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
@@ -386,11 +354,9 @@ public class About extends Fragment implements RequestNotifier {
 
     public void checkSkills() {
         String text = mSkills.getText().toString();
-        System.out.println("texttttttttttttttttt Skills" + text.substring(0, text.length() - 1));
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
         parts = text.split(",");
-        System.out.println("size of partssssssssssssssssss skills" + parts.length);
         if (parts.length > 5) {
             mSkills.setError("You can add maximum five skills");
         }
@@ -499,7 +465,6 @@ public class About extends Fragment implements RequestNotifier {
                         }
                     }
                 }
-
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }

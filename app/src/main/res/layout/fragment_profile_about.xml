@@ -1,12 +1,343 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_width="25dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_mode_edit_black_24dp" />
+
+            <ImageView
+                android:id="@+id/done"
+                android:layout_width="25dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_check_black_24dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/worked_at"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <TextView
+                android:id="@+id/worked_at"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="@string/worked_at"
+                android:textColor="#708090"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/usertype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student" />
+
+            <RadioButton
+                android:id="@+id/employee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Employee" />
+
+            <RadioButton
+                android:id="@+id/selfemployee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Self Employee" />
+        </RadioGroup>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="2dp"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <AutoCompleteTextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="@string/worked_at"
+                android:labelFor="@+id/address"
+                android:text="@string/address"
+                android:textColor="#708090"
+                android:textSize="@dimen/text_about"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/company_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <AutoCompleteTextView
+                android:id="@+id/company_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="@string/company_name"
+                android:textColor="#708090"
+                android:textSize="@dimen/text_about"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/designation"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <AutoCompleteTextView
+                android:id="@+id/designation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="@string/designation"
+                android:textColor="#708090"
+                android:textSize="@dimen/text_about"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skills"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/skills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="@string/skills"
+                android:textColor="#708090"
+                android:textSize="@dimen/text_about"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_no"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <TextView
+                android:id="@+id/contact_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="@string/contact_no"
+                android:textColor="#708090"
+                android:textSize="@dimen/text_about"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textColor="#708090"
+                android:textSize="@dimen/text_about"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/website"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <EditText
+                android:id="@+id/website"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="@string/website"
+                android:textColor="#708090"
+                android:textSize="@dimen/text_about"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+    </LinearLayout>
+    <!--<android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin">
@@ -315,15 +646,8 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/edit"
-            android:layout_width="25dp"
-            android:layout_height="24dp"
-            android:layout_gravity="right"
-            android:contentDescription="@string/app_name"
-            android:src="@mipmap/whitepencil"
-           />
 
-    </android.support.v7.widget.CardView>
+
+    </android.support.v7.widget.CardView>-->
 
 </android.support.v4.widget.NestedScrollView>

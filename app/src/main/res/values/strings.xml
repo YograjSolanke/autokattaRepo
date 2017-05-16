@@ -18,6 +18,7 @@
     <string name="manual_enquiry">Manual Enquiry</string>
     <string name="new_dealer">New Dealer</string>
     <string name="manual_add">Add</string>
+    <string name="new_vehicle_done">Done</string>
 
     <!-- Navigation Drawer Items...-->
     <string name="home">Home</string>
