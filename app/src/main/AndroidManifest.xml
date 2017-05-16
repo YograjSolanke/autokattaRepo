@@ -373,13 +373,13 @@
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.AddServiceActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.ProductViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
