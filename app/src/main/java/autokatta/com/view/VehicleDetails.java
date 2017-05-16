@@ -251,7 +251,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 sliderLayout.setCustomAnimation(new DescriptionAnimation());
                 sliderLayout.setDuration(3000);
                 sliderLayout.addOnPageChangeListener(this);
-                collapsingToolbar.setTitle(name);
+                collapsingToolbar.setTitle(Title);
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }

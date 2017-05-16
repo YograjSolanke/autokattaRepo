@@ -85,7 +85,7 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
                 GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
                 for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()) {
                     datum.setVehicleId(datum.getVehicleId());
-                    mTitleStr.setText(datum.getTitle());
+                    mTitleStr.setText(datum.getUsername());
                     mPriceStr.setText(datum.getPrice());
                     mCategoryDetails.setText(datum.getCategory());
                     mSubCatDetails.setText(datum.getSubCategory());
