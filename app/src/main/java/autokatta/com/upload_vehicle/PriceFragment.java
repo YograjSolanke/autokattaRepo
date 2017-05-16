@@ -16,17 +16,25 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.File;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.UploadUsedVehicleResponse;
 import autokatta.com.view.VehicleDetails;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -148,6 +156,8 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         strVersionName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_versionName", "");
         strVersionId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_versionId", "20");
         strMfgYr = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_mfgYear", "20");
+
+        System.out.println("incoming images=" + strImages);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -288,6 +298,9 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                     UploadUsedVehicleResponse vehicleResponse = (UploadUsedVehicleResponse) response.body();
                     if (vehicleResponse.getSuccess() != null) {
                         vehicle_id = vehicleResponse.getSuccess().getVehicleID().toString();
+
+                        uploadImage(strImages);
+
                         if (!strGroupids.equals("") || !strStoreids.equals("")) {
 
                             Bundle b = new Bundle();
@@ -363,6 +376,36 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
+        }
+    }
+
+
+    private void uploadImage(String picturePath) {
+        Log.i("PAth", "->" + picturePath);
+        List<String> imgList = Arrays.asList(picturePath.split(","));
+        int s = imgList.size();
+        for (int i = 0; i < imgList.size(); i++) {
+
+
+            File file = new File(imgList.get(i));
+            // Parsing any Media type file
+            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+            RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+            ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+            Call<String> call = getResponse.uploadVehiclePic(fileToUpload, filename);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    Log.i("image", "->" + response.body());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
         }
     }
 }

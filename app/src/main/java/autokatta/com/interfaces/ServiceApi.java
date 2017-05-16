@@ -1135,6 +1135,10 @@ public interface ServiceApi {
     @POST("upload_service_pics.php")
     Call<String> uploadServicePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
+    @Multipart
+    @POST("savetofile.php")
+    Call<String> uploadVehiclePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
+
 
     //get product data
     @POST("getProductDataById.php")
