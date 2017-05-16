@@ -20,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -50,6 +51,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     Button btnSubmit, btnClear;
     AutoCompleteTextView address;
     TextInputLayout otherIndustryLayout, otherCategoryLayout;
+    ImageView clearDate;
     String namestr, contactstr, emailstr, DOBstr, pincodestr, passwordstr, confirmpassstr, addressstr, genderstr,
             profession, sub_profession, strIndustry;
 
@@ -94,6 +96,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         otherCategoryLayout = (TextInputLayout) findViewById(R.id.otherCategoryLayout);
         rbtmale = (RadioButton) findViewById(R.id.rbtmale);
         rbtfemale = (RadioButton) findViewById(R.id.rbtfemale);
+        clearDate = (ImageView) findViewById(R.id.clearDate);
 
         mLinear = (LinearLayout) findViewById(R.id.linear);
         mNext = (Button) findViewById(R.id.next);
@@ -106,6 +109,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         btnClear = (Button) findViewById(R.id.btnclear);
         btnClear.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        clearDate.setOnClickListener(this);
         mNext.setOnClickListener(this);
         dateOfBirth.setInputType(InputType.TYPE_NULL);
 
@@ -253,6 +257,13 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 password.setError(null);
                 confirmPassword.setError(null);
                 industrySpinner.setVisibility(View.GONE);
+                break;
+
+            case R.id.clearDate:
+
+                dateOfBirth.setText(null);
+                dateOfBirth.clearFocus();
+                clearDate.setVisibility(View.GONE);
                 break;
         }
     }
@@ -449,21 +460,27 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     if ((monthOfYear + 1) < 11) {
                         if ((monthOfYear + 1) == 10) {
                             dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            clearDate.setVisibility(View.VISIBLE);
                         } else if (monthOfYear < 10) {
                             dateOfBirth.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            clearDate.setVisibility(View.VISIBLE);
                         }
                     } else {
                         dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                        clearDate.setVisibility(View.VISIBLE);
                     }
                 } else if (dayOfMonth >= 10) {
                     if ((monthOfYear + 1) < 11) {
                         if ((monthOfYear + 1) == 10) {
                             dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            clearDate.setVisibility(View.VISIBLE);
                         } else if (monthOfYear < 10) {
                             dateOfBirth.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            clearDate.setVisibility(View.VISIBLE);
                         }
                     } else {
                         dateOfBirth.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        clearDate.setVisibility(View.VISIBLE);
                     }
                 }
             }

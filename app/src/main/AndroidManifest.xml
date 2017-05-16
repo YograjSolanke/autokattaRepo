@@ -315,7 +315,7 @@
         <activity
             android:name=".register.Registration"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.SearchVehicleActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"

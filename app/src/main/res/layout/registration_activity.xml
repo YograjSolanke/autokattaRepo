@@ -157,9 +157,25 @@
                 </RadioGroup>
             </RelativeLayout>
 
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:id="@+id/doblayout"
+                android:orientation="horizontal"
                 android:layout_height="@dimen/text_layout_height">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_layout_height">
+
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/ic_cancel"
+                        android:id="@+id/clearDate"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true" />
 
                 <EditText
                     android:id="@+id/editdob"
@@ -167,16 +183,21 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_calendar"
+                    android:drawableRight="@null"
                     android:hint="Date of Birth"
                     android:inputType="date"
                     android:maxLines="1"
+                    android:layout_toLeftOf="@+id/clearDate"
                     android:paddingEnd="@dimen/margin_heading_top"
                     android:paddingStart="@dimen/margin_heading_top"
                     android:textColor="@color/textColor"
                     android:textColorHint="@color/hintColor"
                     android:textSize="15sp" />
 
+                </RelativeLayout>
+
             </android.support.design.widget.TextInputLayout>
+
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
