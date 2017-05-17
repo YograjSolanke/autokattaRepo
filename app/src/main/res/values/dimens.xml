@@ -20,4 +20,5 @@
     <dimen name="text_layout_height">60dp</dimen>
     <dimen name="title_size">20sp</dimen>
     <dimen name="edit_height">90dp</dimen>
+    <dimen name="text_width">80dp</dimen>
 </resources>
