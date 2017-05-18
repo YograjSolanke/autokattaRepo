@@ -24,10 +24,8 @@ import autokatta.com.response.MyBroadcastGroupsResponse;
  */
 
 public class ShareWithBroadcastAdapter extends BaseAdapter {
-
     private Activity activity;
     private List<MyBroadcastGroupsResponse.Success> broadcastlist = new ArrayList<>();
-
     private LayoutInflater mInflater;
     private String sharedata, groupid, contactnumber, number, store_id, vehicle_id, product_id, service_id, profile_contact,
             search_id, status_id, auction_id, loan_id, exchange_id, keyword, grouptab;
@@ -39,7 +37,6 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
 
         this.activity = activity;
         this.broadcastlist = alldata;
-
         this.sharedata = sharedata;
         this.contactnumber = contactnumber;
         this.store_id = store_id;
@@ -53,7 +50,6 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
         this.loan_id = loan_id;
         this.exchange_id = exchange_id;
         this.keyword = keyword;
-
         mInflater = (LayoutInflater) activity.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -81,39 +77,25 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
-
         final ShareWithBroadcastAdapter.ViewHolder holder;
-
-
         if (convertView == null) {
             holder = new ShareWithBroadcastAdapter.ViewHolder();
-
             convertView = mInflater.inflate(R.layout.adapter_share_contact, null);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.number = (TextView) convertView.findViewById(R.id.number);
-
             holder.profile_pic = (ImageView) convertView.findViewById(R.id.profile_image);
-
-
             convertView.setTag(holder);
         } else
             holder = (ShareWithBroadcastAdapter.ViewHolder) convertView.getTag();
 
-
         final MyBroadcastGroupsResponse.Success obj = broadcastlist.get(position);
-
         holder.name.setText(obj.getGroupTitle());
-
         holder.number.setVisibility(View.GONE);
         holder.profile_pic.setVisibility(View.GONE);
-
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Bundle b = new Bundle();
                 b.putString("generic_list_view", sharedata);
                 b.putString("store_id", store_id);
@@ -132,23 +114,15 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
                 b.putString("broadcastgroupid", obj.getGroupId());
                 b.putString("tab", "broadcastgroup");
 
-
                 ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
-
                 frag.setArguments(b);
-
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.shareInApp_container, frag);
                 fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
                 fragmentTransaction.commit();
-
             }
         });
-
-
         return convertView;
     }
-
-
 }

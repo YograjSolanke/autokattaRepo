@@ -3,6 +3,7 @@ package autokatta.com.groups;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,12 +120,17 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ConnectException) {
+            Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof UnknownHostException) {
+            Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
         } else {
             Log.i("Check Class-"
                     , "JoinedGroupsFragment");

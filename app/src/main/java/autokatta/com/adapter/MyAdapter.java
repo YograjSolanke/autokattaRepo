@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -21,7 +22,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     private Context mContext;
     private List<ModelGroups> mItemList = new ArrayList<>();
     private String GroupType, keyword, mGroupid, mGroupName, mGroupImage;
-    //   private String mycontact = "8007855589";
+    private MyViewHolder view;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -97,6 +100,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        view = holder;
         holder.mGroupTitleID.setText(mItemList.get(position).getTitle());
         holder.mEditMemberCount.setText(String.valueOf(mItemList.get(position).getGroupCount()));
         holder.mEditVehicleCount.setText(String.valueOf(mItemList.get(position).getVehicleCount()));
@@ -236,11 +240,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
+            Snackbar.make(view.mCardView, mActivity.getString(R.string._404), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ConnectException) {
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof UnknownHostException) {
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
         } else {
             Log.i("Check Class-", "My Adapter");
             error.printStackTrace();

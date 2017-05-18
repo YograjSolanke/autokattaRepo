@@ -26,10 +26,6 @@ import retrofit2.Response;
  */
 
 public class ShareWithBroadcastFragment extends Fragment implements RequestNotifier {
-
-    public ShareWithBroadcastFragment() {
-    }
-
     String contactnumber, store_id, vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id,
             loan_id, exchange_id;
     String sharedata, keyword;
@@ -37,21 +33,19 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
     ListView grouplist;
     List<MyBroadcastGroupsResponse.Success> broadcastGroupsResponseList = new ArrayList<>();
 
+    public ShareWithBroadcastFragment() {
+        //empty constructor...
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         super.onCreateView(inflater, container, savedInstanceState);
 
         View root = inflater.inflate(R.layout.generic_list_view, container, false);
-
-        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
-
+        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", null);
         grouplist = (ListView) root.findViewById(R.id.generic_list);
-
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.MyBroadcastGroups(contactnumber);
-
         try {
             Bundle b = getArguments();
             sharedata = b.getString("generic_list_view");
@@ -70,8 +64,6 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return root;
     }
 
@@ -79,16 +71,11 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 broadcastGroupsResponseList.clear();
                 MyBroadcastGroupsResponse myBroadcastGroupsResponse = (MyBroadcastGroupsResponse) response.body();
-
                 if (!myBroadcastGroupsResponse.getSuccess().isEmpty()) {
-
                     for (MyBroadcastGroupsResponse.Success success : myBroadcastGroupsResponse.getSuccess()) {
-
                         success.setGroupId(success.getGroupId());
                         success.setGroupTitle(success.getGroupTitle());
                         success.setGroupOwner(success.getGroupOwner());
@@ -96,21 +83,16 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
                         success.setGroupStatus(success.getGroupStatus());
                         success.setGrpMemberCount(success.getGrpMemberCount());
                         success.setGrpCreatedDate(success.getGrpCreatedDate());
-
                         broadcastGroupsResponseList.add(success);
                     }
                     ShareWithBroadcastAdapter adapter = new ShareWithBroadcastAdapter(getActivity(), broadcastGroupsResponseList, sharedata, contactnumber, store_id,
                             vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
                     grouplist.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
-                    Log.i("size broadcast group", String.valueOf(broadcastGroupsResponseList.size()));
                 } else
                     CustomToast.customToast(getActivity(), this.getString(R.string.no_response));
-
             } else
                 CustomToast.customToast(getActivity(), this.getString(R.string._404));
-
         } else
             CustomToast.customToast(getActivity(), this.getString(R.string.no_response));
     }
@@ -128,7 +110,6 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
             Log.i("Check Class-"
                     , "Share With Broadcast");
         }
-
     }
 
     @Override

@@ -99,33 +99,23 @@ public class ShareWithGroupAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
-
         final ViewHolder holder;
-
-
         if (convertView == null) {
             holder = new ViewHolder();
-
             convertView = mInflater.inflate(R.layout.adapter_share_contact, null);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.number = (TextView) convertView.findViewById(R.id.number);
-
             holder.profile_pic = (ImageView) convertView.findViewById(R.id.profile_image);
-
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
 
-
         holder.name.setText(title_array.get(position));
         holder.number.setVisibility(View.GONE);
-
 
         if (image_array.get(position) == null || image_array.get(position).equals("null") || image_array.get(position).equals("")) {
             holder.profile_pic.setBackgroundResource(R.drawable.workers);
         } else {
-
             Glide.with(activity)
                     .load("http://autokatta.com/mobile/group_profile_pics/" + image_array.get(position))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -134,14 +124,12 @@ public class ShareWithGroupAdapter extends BaseAdapter {
                     .into(holder.profile_pic);
         }
 
-
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 groupid = group_id.get(position);
                 groupname = title_array.get(position);
-
                 Bundle b = new Bundle();
                 b.putString("generic_list_view", sharedata);
                 b.putString("store_id", store_id);
@@ -160,7 +148,6 @@ public class ShareWithGroupAdapter extends BaseAdapter {
                 b.putString("groupid", groupid);
                 b.putString("tab", "group");
 
-
                 ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
                 frag.setArguments(b);
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
@@ -170,7 +157,6 @@ public class ShareWithGroupAdapter extends BaseAdapter {
                 fragmentTransaction.commit();
             }
         });
-
         return convertView;
     }
 }

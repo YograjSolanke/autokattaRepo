@@ -64,7 +64,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Vehicle Name"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Engine"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -126,7 +126,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Displacement CC"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -157,7 +157,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Max Power"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -188,7 +188,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Max Torque"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -219,7 +219,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Transmission"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -250,7 +250,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Clutch"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -281,7 +281,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Gear Box"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -312,7 +312,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Fuel Tank"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -343,7 +343,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Turning Radius"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -374,7 +374,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Axle Configuration"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -405,7 +405,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Types"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -436,7 +436,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Wheel Based"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -467,7 +467,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Ground Clearance"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -498,7 +498,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="PayLoad"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -529,7 +529,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Brakes"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -560,7 +560,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Front Axel and Suspension"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 
@@ -591,7 +591,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:background="@android:color/transparent"
                     android:hint="Rear Axel and Suspension"
-                    android:textColor="#708090"
+                    android:textColor="@color/enteredTextColor"
                     android:textSize="@dimen/text_about"
                     android:textStyle="bold" />
 

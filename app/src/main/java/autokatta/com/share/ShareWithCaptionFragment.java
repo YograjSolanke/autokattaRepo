@@ -27,9 +27,6 @@ import retrofit2.Response;
  */
 public class ShareWithCaptionFragment extends Fragment implements RequestNotifier {
 
-    public ShareWithCaptionFragment() {
-    }
-
     EditText editShare;
     TextView txtreceiver;
     ListView sharelist;
@@ -41,13 +38,16 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     Button sharebutton;
     ApiCall mApiCall;
 
+    public ShareWithCaptionFragment() {
+        //Empty Constructor...
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         View root = inflater.inflate(R.layout.fragment_share_caption, container, false);
-
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
-
         sharebutton = (Button) root.findViewById(R.id.sharebutton);
         sharelist = (ListView) root.findViewById(R.id.listshare);
         editShare = (EditText) root.findViewById(R.id.editShare);
@@ -110,14 +110,9 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         else
             txtreceiver.setText(groupname + " " + "Group");
 
-
-        Log.i("Share", "layout" + layoutNumber);
-
         sharebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //editdata = editShare.getText().toString();
                 shareTask(layoutNumber, editShare.getText().toString());
             }
         });
@@ -127,7 +122,6 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
                 vehicle_id, search_id, status_id, profile_contact, auction_id, loan_id, exchange_id);
         sharelist.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
 
         return root;
     }
@@ -169,6 +163,5 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         }
 
     }
-
 
 }

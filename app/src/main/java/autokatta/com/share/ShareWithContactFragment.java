@@ -25,6 +25,7 @@ import autokatta.com.response.Db_AutokattaContactResponse;
 public class ShareWithContactFragment extends Fragment {
 
     public ShareWithContactFragment() {
+        //empty Constructor...
     }
 
     SharedPreferences prefs;
@@ -39,17 +40,12 @@ public class ShareWithContactFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         super.onCreateView(inflater, container, savedInstanceState);
 
         View root = inflater.inflate(R.layout.generic_list_view, container, false);
-
         prefs = getActivity().getSharedPreferences(MyContactPREFERENCES, Context.MODE_PRIVATE);
         contactnumber = prefs.getString("loginContact", "");
-
         contactlist = (ListView) root.findViewById(R.id.generic_list);
-
-
         try {
             Bundle b = getArguments();
             sharedata = b.getString("generic_list_view");
@@ -91,14 +87,11 @@ public class ShareWithContactFragment extends Fragment {
             } while (cursor.moveToNext());
         }
         dbAdpter.CLOSE();
-
-
         ShareWithContactAdapter adapter = new ShareWithContactAdapter(getActivity(), contactdata, sharedata, store_id, contactnumber,
                 vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
         contactlist.setAdapter(adapter);
 
         return root;
     }
-
 
 }

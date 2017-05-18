@@ -5,7 +5,6 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,8 +12,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,14 +27,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.VehicleDetails;
@@ -54,13 +52,14 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     private String imgUrl;
     private String myContact;
     private ApiCall mApiCall;
+    private MyViewHolder view;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
         TextView mRegistrationNo, mTitle, mPrice, mModel, mBrand, mUpdatedBy, mLocation, mRtoCity, mYearOfMfg, mKmsHrs;
-        ImageView mShareAutokatta, mShareOther, mLike, mCall, mUnlike;
+        ImageView mLike, mCall, mUnlike;
         ImageView mCardImage;
-        LinearLayout mRlike, mRunlike;
+        LinearLayout mRlike, mRunlike, mShareOther, mShareAutokatta;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -76,14 +75,14 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             mYearOfMfg = (TextView) itemView.findViewById(R.id.year_of_mfg);
             mKmsHrs = (TextView) itemView.findViewById(R.id.kms_hrs);
 
-            mShareAutokatta = (ImageView) itemView.findViewById(R.id.share_autokatta);
-            mShareOther = (ImageView) itemView.findViewById(R.id.share_other);
-            //  mLike = (ImageView) itemView.findViewById(R.id.like);
-            //  mUnlike = (ImageView) itemView.findViewById(R.id.unlike);
+            mShareAutokatta = (LinearLayout) itemView.findViewById(R.id.share_autokatta_layout);
+            mShareOther = (LinearLayout) itemView.findViewById(R.id.share);
+            mLike = (ImageView) itemView.findViewById(R.id.like);
+            mUnlike = (ImageView) itemView.findViewById(R.id.unlike);
             mCall = (ImageView) itemView.findViewById(R.id.call);
             mCardImage = (ImageView) itemView.findViewById(R.id.card_image);
             mRlike = (LinearLayout) itemView.findViewById(R.id.rellike);
-            //mRunlike = (RelativeLayout) itemView.findViewById(R.id.relunlike);
+            mRunlike = (LinearLayout) itemView.findViewById(R.id.relunlike);
 
         }
     }
@@ -105,61 +104,62 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     @Override
     public void onBindViewHolder(final GroupVehicleRefreshAdapter.MyViewHolder holder, final int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
-        String register = mItemList.get(position).getRegistrationNumber();
+        view = holder;
+        /*String register = mItemList.get(position).getRegistrationNumber();
         SpannableString sp = new SpannableString(mActivity.getString(R.string.no_register) + register);
         sp.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.no_register).length(),
-                mActivity.getString(R.string.no_register).length() + register.length(), 0);
-        holder.mRegistrationNo.setText(sp);
+                mActivity.getString(R.string.no_register).length() + register.length(), 0);*/
+        holder.mRegistrationNo.setText(mItemList.get(position).getRegistrationNumber());
 
         holder.mTitle.setText(mItemList.get(position).getTitle());
 
-        String price = mItemList.get(position).getPrice();
+        /*String price = mItemList.get(position).getPrice();
         SpannableString sp1 = new SpannableString(mActivity.getString(R.string.price) + price);
         sp1.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.price).length(),
-                mActivity.getString(R.string.price).length() + price.length(), 0);
-        holder.mPrice.setText(sp1);
+                mActivity.getString(R.string.price).length() + price.length(), 0);*/
+        holder.mPrice.setText(mItemList.get(position).getPrice());
 
-        String model = mItemList.get(position).getModel();
+        /*String model = mItemList.get(position).getModel();
         SpannableString sp2 = new SpannableString(mActivity.getString(R.string.model) + model);
         sp2.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.model).length(),
-                mActivity.getString(R.string.model).length() + model.length(), 0);
-        holder.mModel.setText(sp2);
+                mActivity.getString(R.string.model).length() + model.length(), 0);*/
+        holder.mModel.setText(mItemList.get(position).getModel());
 
-        String brand = mItemList.get(position).getManufacturer();
+        /*String brand = mItemList.get(position).getManufacturer();
         SpannableString sp3 = new SpannableString(mActivity.getString(R.string.brand_no) + brand);
         sp3.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.brand_no).length(),
-                mActivity.getString(R.string.brand_no).length() + brand.length(), 0);
-        holder.mBrand.setText(sp3);
+                mActivity.getString(R.string.brand_no).length() + brand.length(), 0);*/
+        holder.mBrand.setText(mItemList.get(position).getManufacturer());
 
-        String uploaded_by = mItemList.get(position).getUsername();
+        /*String uploaded_by = mItemList.get(position).getUsername();
         SpannableString sp4 = new SpannableString(mActivity.getString(R.string.updated_by) + uploaded_by);
         sp4.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.updated_by).length(),
-                mActivity.getString(R.string.updated_by).length() + uploaded_by.length(), 0);
-        holder.mUpdatedBy.setText(sp4);
+                mActivity.getString(R.string.updated_by).length() + uploaded_by.length(), 0);*/
+        holder.mUpdatedBy.setText(mItemList.get(position).getUsername());
 
-        String location = mItemList.get(position).getLocationCity();
+        /*String location = mItemList.get(position).getLocationCity();
         SpannableString sp5 = new SpannableString(mActivity.getString(R.string.location) + location);
         sp5.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.location).length(),
-                mActivity.getString(R.string.location).length() + location.length(), 0);
-        holder.mLocation.setText(sp5);
+                mActivity.getString(R.string.location).length() + location.length(), 0);*/
+        holder.mLocation.setText(mItemList.get(position).getLocationCity());
 
-        String rto_city = mItemList.get(position).getRTOCity();
+        /*String rto_city = mItemList.get(position).getRTOCity();
         SpannableString sp6 = new SpannableString(mActivity.getString(R.string.rto_city) + rto_city);
         sp6.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.rto_city).length(),
-                mActivity.getString(R.string.rto_city).length() + rto_city.length(), 0);
-        holder.mRtoCity.setText(sp6);
+                mActivity.getString(R.string.rto_city).length() + rto_city.length(), 0);*/
+        holder.mRtoCity.setText(mItemList.get(position).getRTOCity());
 
-        String year_of_mfg = mItemList.get(position).getYearOfManufacture();
+       /* String year_of_mfg = mItemList.get(position).getYearOfManufacture();
         SpannableString sp7 = new SpannableString(mActivity.getString(R.string.year_of_mfg) + year_of_mfg);
         sp7.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.year_of_mfg).length(),
-                mActivity.getString(R.string.year_of_mfg).length() + year_of_mfg.length(), 0);
-        holder.mYearOfMfg.setText(sp7);
+                mActivity.getString(R.string.year_of_mfg).length() + year_of_mfg.length(), 0);*/
+        holder.mYearOfMfg.setText(mItemList.get(position).getYearOfManufacture());
 
-        String kms_hrs = mItemList.get(position).getKmsRunning();
+        /*String kms_hrs = mItemList.get(position).getKmsRunning();
         SpannableString sp8 = new SpannableString(mActivity.getString(R.string.kms_hrs) + kms_hrs);
         sp8.setSpan(new ForegroundColorSpan(Color.parseColor("#0078c0")), mActivity.getString(R.string.kms_hrs).length(),
-                mActivity.getString(R.string.kms_hrs).length() + kms_hrs.length(), 0);
-        holder.mKmsHrs.setText(sp8);
+                mActivity.getString(R.string.kms_hrs).length() + kms_hrs.length(), 0);*/
+        holder.mKmsHrs.setText(mItemList.get(position).getKmsRunning());
 
         if (mItemList.get(position).getSingleImage().equals("") || mItemList.get(position).getSingleImage().equals(null) ||
                 mItemList.get(position).getSingleImage().equals("null")) {
@@ -177,12 +177,12 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         }
 
         if (mItemList.get(position).getVehiclelikestatus().equalsIgnoreCase("yes")) {
-            holder.mRlike.setVisibility(View.VISIBLE);
-            //holder.mRunlike.setVisibility(View.VISIBLE);
+            holder.mRlike.setVisibility(View.GONE);
+            holder.mRunlike.setVisibility(View.VISIBLE);
         }
         if (mItemList.get(position).getVehiclelikestatus().equalsIgnoreCase("no")) {
             holder.mRlike.setVisibility(View.VISIBLE);
-            //holder.mRunlike.setVisibility(View.GONE);
+            holder.mRunlike.setVisibility(View.GONE);
         }
 
         if (mItemList.get(position).getContact().equals(myContact)) {
@@ -228,13 +228,11 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
                                 mActivity.startActivity(i);
                                 mActivity.finish();
-
                             }
                         })
 
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
                                 allDetails = mItemList.get(position).getTitle() + "=" +
                                         mItemList.get(position).getCategory() + "=" +
                                         "-" + "=" +
@@ -274,7 +272,6 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                 new AlertDialog.Builder(mActivity)
                         .setTitle("Contact")
                         .setMessage("Do you want to share your contact no as vehicle contact?")
-
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 //ChoiceContact = obj.vehicleContact;
@@ -327,7 +324,6 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 String imageFilePath;
                                 Intent intent = new Intent(Intent.ACTION_SEND);
 
-
                                 if (mItemList.get(position).getSingleImage().equalsIgnoreCase("") || mItemList.get(position).getSingleImage().equalsIgnoreCase(null)) {
                                     imgUrl = "http://autokatta.com/mobile/uploads/" + "abc.jpg";
                                 } else {
@@ -349,7 +345,6 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 Log.e("TAG", "img URL: " + imgUrl);
 
                                 manager.enqueue(request);
-
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                                 System.out.println("ImageFilePath:" + imageFilePath);
 
@@ -387,30 +382,26 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         holder.mRlike.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (mItemList.get(position).getContact().equals(myContact)) {
                     Snackbar.make(holder.mCardView, "You Can't Like Your Own Vehicle ", Snackbar.LENGTH_LONG).show();
                 } else {
-                    holder.mRlike.setVisibility(View.VISIBLE);
-                    // holder.mRunlike.setVisibility(View.VISIBLE);
+                    holder.mRlike.setVisibility(View.GONE);
+                    holder.mRunlike.setVisibility(View.VISIBLE);
                     mItemList.get(position).setVehiclelikestatus("yes");
-
                     sendLike(mItemList.get(position).getContact(), mItemList.get(position).getVehicleId());
                 }
             }
         });
 
-        /*holder.mRunlike.setOnClickListener(new OnClickListener() {
+        holder.mRunlike.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.mRlike.setVisibility(View.VISIBLE);
                 holder.mRunlike.setVisibility(View.GONE);
-
                 mItemList.get(position).setVehiclelikestatus("no");
-
                 sendUnlike(mItemList.get(position).getContact(), mItemList.get(position).getVehicleId());
             }
-        });*/
+        });
 
     }
 
@@ -452,27 +443,28 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
+            Snackbar.make(view.mCardView, mActivity.getString(R.string._404), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ConnectException) {
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof UnknownHostException) {
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
         } else {
             Log.i("Check Class-", "GroupVehiclRefresh Adapter");
             error.printStackTrace();
         }
-
     }
 
     @Override
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success_like")) {
-                CustomToast.customToast(mActivity, " Liked Successfully");
-
+                Snackbar.make(view.mCardView, "Liked", Snackbar.LENGTH_LONG).show();
             } else if (str.equals("success_unlike")) {
-                CustomToast.customToast(mActivity, " UnLiked Successfully");
-
+                Log.e("Unlike", "->");
             }
         }
     }

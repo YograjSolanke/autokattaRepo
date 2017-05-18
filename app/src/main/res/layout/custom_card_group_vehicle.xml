@@ -7,33 +7,140 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/card_margin"
-    android:layout_marginLeft="@dimen/card_margin"
-    android:layout_marginRight="@dimen/card_margin"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/card_margin"
+        android:layout_marginStart="@dimen/card_margin">
 
         <LinearLayout
             android:id="@+id/registration_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <TextView
-                android:id="@+id/registration_no"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:layout_gravity="center"
-                android:maxLines="1"
                 android:layout_weight="1.7"
-                android:text="@string/no_register"
-                android:textColor="@color/dark_grey"
-                android:textSize="@dimen/article_subheading"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/registration"
+                        android:layout_width="@dimen/match_width"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/no_register"
+                        android:textColor="@color/button_default"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/registration_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/no_register"
+                        android:textColor="@color/enteredTextColor"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/year"
+                        android:layout_width="@dimen/match_width"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/year_of_mfg"
+                        android:textColor="@color/button_default"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/year_of_mfg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/year_of_mfg"
+                        android:textColor="@color/enteredTextColor"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/kms"
+                        android:layout_width="@dimen/match_width"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/kms_hrs"
+                        android:textColor="@color/button_default"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/kms_hrs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/kms_hrs"
+                        android:textColor="@color/enteredTextColor"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/prices"
+                        android:layout_width="@dimen/match_width"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/Rs"
+                        android:textColor="@color/button_default"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_size" />
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/Rs"
+                        android:textColor="@color/enteredTextColor"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/call"
@@ -47,11 +154,20 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/line_one"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/registration_layout"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
         <ImageView
             android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_image_height"
-            android:layout_below="@+id/registration_layout"
+            android:layout_below="@+id/line_one"
+            android:layout_marginTop="@dimen/text_margin_top"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
             tools:src="@drawable/hdlogo" />
@@ -62,137 +178,166 @@
             android:layout_height="@dimen/card_title_height"
             android:layout_alignBottom="@+id/card_image"
             android:layout_marginStart="@dimen/fab_margin"
+            android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            tools:text="Title" />
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/line_two"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/card_image"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="#cccccc" />
 
         <LinearLayout
             android:id="@+id/linear_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card_title"
+            android:layout_below="@+id/line_two"
+            android:layout_marginTop="@dimen/padding_small"
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/price_model"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/price"
-                    android:layout_width="match_parent"
+                    android:id="@+id/models"
+                    android:layout_width="@dimen/match_width"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/article_subheading"
-                    tools:text="@string/price" />
+                    android:text="@string/model"
+                    android:textColor="@color/button_default"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size" />
 
                 <TextView
                     android:id="@+id/model"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/article_subheading"
-                    tools:text="@string/model" />
+                    android:text="@string/model"
+                    android:textColor="@color/enteredTextColor"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/brand_updated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/brands"
+                    android:layout_width="@dimen/match_width"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/brand_no"
+                    android:textColor="@color/button_default"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size" />
 
                 <TextView
                     android:id="@+id/brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/article_subheading"
-                    tools:text="@string/brand_no" />
+                    android:text="@string/brand_no"
+                    android:textColor="@color/enteredTextColor"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/updated"
+                    android:layout_width="@dimen/match_width"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/updated_by"
+                    android:textColor="@color/button_default"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size" />
 
                 <TextView
                     android:id="@+id/updated_by"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/article_subheading"
-                    tools:text="@string/updated_by" />
+                    android:text="@string/updated_by"
+                    android:textColor="@color/enteredTextColor"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/location_rto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/locations"
+                    android:layout_width="@dimen/match_width"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/location"
+                    android:textColor="@color/button_default"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size" />
 
                 <TextView
                     android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/article_subheading"
-                    tools:text="@string/location" />
+                    android:text="@string/location"
+                    android:textColor="@color/enteredTextColor"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/rto"
+                    android:layout_width="@dimen/match_width"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/rto_city"
+                    android:textColor="@color/button_default"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size" />
 
                 <TextView
                     android:id="@+id/rto_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/article_subheading"
-                    tools:text="@string/rto_city" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/year_of_mfg_kms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/year_of_mfg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/article_subheading"
-                    tools:text="@string/year_of_mfg" />
-
-                <TextView
-                    android:id="@+id/kms_hrs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/article_subheading"
-                    tools:text="@string/kms_hrs" />
+                    android:text="@string/rto_city"
+                    android:textColor="@color/enteredTextColor"
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
@@ -201,6 +346,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/linear_card"
+            android:layout_marginTop="@dimen/margin_small"
             android:background="#cccccc" />
 
         <LinearLayout
@@ -210,39 +356,65 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linear_card"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="3">
 
-            <!--<RelativeLayout
-                android:id="@+id/relative"
-                android:layout_width="@dimen/cards_button_width"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">-->
-
             <LinearLayout
-                    android:id="@+id/rellike"
+                android:id="@+id/rellike"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="visible"
                 android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:layout_gravity="center">
+                android:layout_weight="1">
 
-                    <ImageView
-                        android:id="@+id/likeimg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/like_unlike"
-                        android:contentDescription="@string/app_name" />
+                <ImageView
+                    android:id="@+id/likeimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_thumb_unlike" />
 
-                    <TextView
-                        android:id="@+id/liketxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="Like"
-                        android:layout_gravity="center"
-                        android:textColor="#808080"
-                        android:textSize="17sp" />
+                <TextView
+                    android:id="@+id/liketxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:text="Like"
+                    android:textColor="#808080"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relunlike"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:visibility="gone"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/unlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_thumb_like" />
+
+                <TextView
+                    android:id="@+id/unlikeimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:text="Like"
+                    android:textColor="@color/text_color"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -296,15 +468,33 @@
                    android:layout_gravity="center"
                    android:background="#cccccc" />-->
 
-            <ImageButton
-                android:id="@+id/share_other"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="@dimen/cards_button_width"
+            <LinearLayout
+                android:id="@+id/share"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:tint="@color/button_grey"
-                android:layout_weight="1"
-                app:srcCompat="@android:drawable/ic_menu_share" />
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1">
+
+                <ImageButton
+                    android:id="@+id/share_other"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="@dimen/cards_button_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:tint="@color/button_grey"
+                    app:srcCompat="@android:drawable/ic_menu_share" />
+
+                <TextView
+                    android:id="@+id/share_other_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:text="Share"
+                    android:textColor="#808080"
+                    android:textSize="17sp" />
+            </LinearLayout>
 
             <View
                 android:layout_width="1dp"
@@ -312,15 +502,41 @@
                 android:layout_gravity="center"
                 android:background="#cccccc" />
 
-            <ImageButton
+            <LinearLayout
+                android:id="@+id/share_autokatta_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1">
+
+                <ImageButton
                 android:id="@+id/share_autokatta"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="@dimen/cards_button_width"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 app:srcCompat="@drawable/autoshare" />
 
+                <TextView
+                    android:id="@+id/share_autokatta_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:text="Share"
+                    android:textColor="#808080"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/relalike2"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="#cccccc" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

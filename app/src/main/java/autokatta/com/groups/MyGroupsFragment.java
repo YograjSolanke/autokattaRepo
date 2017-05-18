@@ -3,6 +3,7 @@ package autokatta.com.groups;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,9 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +45,8 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     FloatingActionButton mFab;
     MyAdapter mMyAdapter;
     ApiCall mApiCall;
+    boolean isNetworkAvailable;
+    String networkStatus;
 
     public MyGroupsFragment() {
         //Empty constructor
@@ -52,7 +56,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyGroups = inflater.inflate(R.layout.fragment_my_groups, container, false);
-
         mFab = (FloatingActionButton) mMyGroups.findViewById(R.id.fabCreateGroup);
         mRecyclerView = (RecyclerView) mMyGroups.findViewById(R.id.rv_recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyGroups.findViewById(R.id.swipeRefreshLayout);
@@ -119,12 +122,17 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ConnectException) {
+            Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof UnknownHostException) {
+            Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
         } else {
             Log.i("Check Class-"
                     , "MyGroupsFragment");

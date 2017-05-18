@@ -12,6 +12,7 @@
     <color name="text_color">#0078c0</color>
     <color name="black">#000000</color>
     <color name="textColor">#2C3343</color>
+    <color name="enteredTextColor">#708090</color>
     <color name="hintColor">#848484</color>
     <color name="button_pressed">#C8C9CC</color>
     <color name="button_focused">#FFF</color>

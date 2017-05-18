@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,30 +19,22 @@ import autokatta.com.R;
  * Created by ak-005 on 18/6/16.
  */
 public class ShareWithinAppTabFragment extends Fragment {
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    SharedPreferences prefs;
+    String contactnumber;
+    String sharedata, store_id, storecontact, vehicle_id, task_id, product_id, service_id, profile_contact,
+            search_id, status_id, auction_id, exchange_id, loan_id;
+    String keyword;
 
     public ShareWithinAppTabFragment() {
         //empty constructor
     }
 
-    TabLayout tabLayout;
-    ViewPager viewPager;
-
-    SharedPreferences prefs;
-
-
-    String contactnumber;
-    String sharedata, store_id, storecontact, vehicle_id, task_id, product_id, service_id, profile_contact,
-            search_id, status_id, auction_id, exchange_id, loan_id;
-
-    String keyword;
-
     @Override
     public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
-
         View root = infl.inflate(R.layout.fragment_share_withinapp_tab, container, false);
-
         prefs = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE);
-
         contactnumber = prefs.getString("loginContact", "");
         store_id = prefs.getString("Share_store_id", "");
         sharedata = prefs.getString("Share_sharedata", "");
@@ -57,26 +48,9 @@ public class ShareWithinAppTabFragment extends Fragment {
         loan_id = prefs.getString("Share_loan_id", "");
         exchange_id = prefs.getString("Share_exchange_id", "");
         keyword = prefs.getString("Share_keyword", "");
-        Log.i("KEYWORD", "->" + keyword);
-
-        Log.i("Share", "Contact" + contactnumber);
-        Log.i("Share", "StoreID" + store_id);
-        Log.i("Share", "sharedata" + sharedata);
-        Log.i("Share", "vehicleid" + vehicle_id);
-        Log.i("Share", "productid" + product_id);
-        Log.i("Share", "serviceid" + service_id);
-        Log.i("Share", "searchid" + search_id);
-        Log.i("Share", "statusid" + status_id);
-        Log.i("Share", "auctionid" + auction_id);
-        Log.i("Share", "loanid" + loan_id);
-        Log.i("Share", "exchangeid" + exchange_id);
-        Log.i("Share", "profilecontact" + profile_contact);
-
 
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);
-
-
         viewPager.setAdapter(new ShareWithinAppAdapter(getChildFragmentManager()));
         tabLayout.post(new Runnable() {
             @Override
@@ -85,18 +59,13 @@ public class ShareWithinAppTabFragment extends Fragment {
             }
         });
 
-
         return root;
-
-
     }
 
     private class ShareWithinAppAdapter extends FragmentPagerAdapter {
-
         ShareWithinAppAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
             Bundle b = new Bundle();
@@ -113,32 +82,19 @@ public class ShareWithinAppTabFragment extends Fragment {
             b.putString("exchange_id", exchange_id);
             b.putString("keyword", keyword);
 
-
             switch (position) {
                 case 0:
-
                     ShareWithContactFragment fr = new ShareWithContactFragment();
-
                     fr.setArguments(b);
-
                     return fr;
-
                 case 1:
-
                     ShareWithGroupFragment fr1 = new ShareWithGroupFragment();
-
                     fr1.setArguments(b);
-
                     return fr1;
-
                 case 2:
-
                     ShareWithBroadcastFragment fr2 = new ShareWithBroadcastFragment();
-
                     fr2.setArguments(b);
-
                     return fr2;
-
             }
             return null;
         }
@@ -162,11 +118,8 @@ public class ShareWithinAppTabFragment extends Fragment {
                     return "Group(s)";
                 case 2:
                     return "Broadcast group(s)";
-
             }
             return null;
         }
     }
-
-
 }

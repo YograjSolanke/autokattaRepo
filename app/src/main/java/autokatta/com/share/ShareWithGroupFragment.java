@@ -26,30 +26,23 @@ import retrofit2.Response;
  * Created by ak-005 on 18/6/16.
  */
 public class ShareWithGroupFragment extends Fragment implements RequestNotifier {
-
-    public ShareWithGroupFragment() {
-    }
-
     String contactnumber, storecontact, store_id, vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id,
             exchange_id;
     String sharedata, keyword;
-
-
     ListView grouplist;
+
+    public ShareWithGroupFragment() {
+        //Empty Constructor...
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         super.onCreateView(inflater, container, savedInstanceState);
 
         View root = inflater.inflate(R.layout.generic_list_view, container, false);
-
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
-
         grouplist = (ListView) root.findViewById(R.id.generic_list);
-
         getData(contactnumber);
-
 
         try {
             Bundle b = getArguments();
@@ -68,27 +61,22 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return root;
     }
 
-
     /*
-Get Group Data...
- */
+    Get Group Data...
+    */
     private void getData(String loginContact) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.profileGroup(loginContact);
     }
-
 
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
                 List<String> alldata = new ArrayList<String>();
-
                 ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
                 //My Groups data
                 for (ProfileGroupResponse.MyGroup myGroup : profileGroupResponse.getSuccess().getMyGroups()) {
@@ -102,7 +90,6 @@ Get Group Data...
                     String id = myGroup.getId();
                     String title = myGroup.getTitle();
                     String image = myGroup.getImage();
-
                     if (image.equals(null) || image.equals("null") || image.equals(""))
                         alldata.add(title + "=" + id + "=null");
                     else

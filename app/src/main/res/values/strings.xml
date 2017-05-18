@@ -5,7 +5,7 @@
     <string name="permission">Autokatta allows your permissions to access your data</string>
     <string name="specification_note">Note:-Standard Specification As Per Manufacturer</string>
     <string name="not_mentioned">Not Mentioned</string>
-    <string name="Rs">\u20B9</string>
+    <string name="Rs">\u20B9 :-</string>
     <string name="bid_increment">000000Rs</string>
     <string name="bid_received">Bid not received yet</string>
     <string name="bid_status">You are not highest bidder for this vehicle</string>
@@ -157,7 +157,7 @@
     <string name="next_service_date">Next Service Date</string>
 
     <!--Custom Card Group Vehicle -->
-    <string name="no_register">Registration No :-</string>
+    <string name="no_register">Reg No :-</string>
     <string name="price">Price :-</string>
     <string name="model">Model :-</string>
     <string name="brand_no">Brand :-</string>
