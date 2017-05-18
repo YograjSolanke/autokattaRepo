@@ -10,12 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,12 +40,14 @@ import autokatta.com.response.GetVehicleVersionResponse;
 import retrofit2.Response;
 
 public class NextRegistrationContinue extends AppCompatActivity implements RequestNotifier,
-        View.OnClickListener, View.OnTouchListener {
+        View.OnClickListener {
 
     EditText edtvehicleno, edtfit, edtyear, edttax, edtpermit, edtinsurance, edtpuc, edtlastservice, edtnextservice;
     Spinner mSpinnerVehitype, mSpinnerModel, mSpinnerBrand, mSpinnerVersion, mSpinnerSubType;
 
     LinearLayout relavite3;
+    ImageView purchaseCal, fitnessCal, taxCal, permitCal, insuranceCal, pucCal, lastServiceCal, nextServiceCal;
+    ImageView purchaseCancel, fitnessCancel, taxCancel, permitCancel, insuranceCancel, pucCancel, lastServiceCancel, nextServiceCancel;
     String whichclick = "", subcategoryId, subcategoryName;
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
     HashMap<String, String> mVehicleTypeList1 = new HashMap<>();
@@ -91,7 +93,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         }
 
         edtvehicleno = (EditText) findViewById(R.id.editvehicleno);
-        relavite3 = (LinearLayout) findViewById(R.id.RelativeLayout3);
         edttax = (EditText) findViewById(R.id.edittaxval);
         edtfit = (EditText) findViewById(R.id.editfitval);
         edtpermit = (EditText) findViewById(R.id.editpermitval);
@@ -108,17 +109,56 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         mSpinnerModel = (Spinner) findViewById(R.id.spinner_model);
         mSpinnerVersion = (Spinner) findViewById(R.id.spinner_version);
 
+        edtyear.setInputType(InputType.TYPE_NULL);
+        edttax.setInputType(InputType.TYPE_NULL);
+        edtfit.setInputType(InputType.TYPE_NULL);
+        edtpermit.setInputType(InputType.TYPE_NULL);
+        edtinsurance.setInputType(InputType.TYPE_NULL);
+        edtpuc.setInputType(InputType.TYPE_NULL);
+        edtlastservice.setInputType(InputType.TYPE_NULL);
+        edtnextservice.setInputType(InputType.TYPE_NULL);
+
+
+        purchaseCal = (ImageView) findViewById(R.id.purchaseCal);
+        fitnessCal = (ImageView) findViewById(R.id.fitnessCal);
+        taxCal = (ImageView) findViewById(R.id.taxCal);
+        permitCal = (ImageView) findViewById(R.id.permitCal);
+        insuranceCal = (ImageView) findViewById(R.id.insuranceCal);
+        pucCal = (ImageView) findViewById(R.id.PUCCal);
+        lastServiceCal = (ImageView) findViewById(R.id.lastServiceCal);
+        nextServiceCal = (ImageView) findViewById(R.id.nextServiceCal);
+
+        purchaseCancel = (ImageView) findViewById(R.id.purchaseCan);
+        fitnessCancel = (ImageView) findViewById(R.id.fitnessCan);
+        taxCancel = (ImageView) findViewById(R.id.taxCan);
+        permitCancel = (ImageView) findViewById(R.id.permitCan);
+        insuranceCancel = (ImageView) findViewById(R.id.insuranceCan);
+        pucCancel = (ImageView) findViewById(R.id.PUCCan);
+        lastServiceCancel = (ImageView) findViewById(R.id.lastServiceCan);
+        nextServiceCancel = (ImageView) findViewById(R.id.nextServiceCan);
+
+
+        purchaseCancel.setOnClickListener(this);
+        fitnessCancel.setOnClickListener(this);
+        taxCancel.setOnClickListener(this);
+        permitCancel.setOnClickListener(this);
+        insuranceCancel.setOnClickListener(this);
+        pucCancel.setOnClickListener(this);
+        lastServiceCancel.setOnClickListener(this);
+        nextServiceCancel.setOnClickListener(this);
+
+
         Intent i = getIntent();
         action = i.getStringExtra("action");
 
-        edtyear.setOnTouchListener(this);
-        edttax.setOnTouchListener(this);
-        edtfit.setOnTouchListener(this);
-        edtpermit.setOnTouchListener(this);
-        edtpuc.setOnTouchListener(this);
-        edtlastservice.setOnTouchListener(this);
-        edtnextservice.setOnTouchListener(this);
-        edtinsurance.setOnTouchListener(this);
+        purchaseCal.setOnClickListener(this);
+        taxCal.setOnClickListener(this);
+        fitnessCal.setOnClickListener(this);
+        permitCal.setOnClickListener(this);
+        pucCal.setOnClickListener(this);
+        lastServiceCal.setOnClickListener(this);
+        nextServiceCal.setOnClickListener(this);
+        insuranceCal.setOnClickListener(this);
         btncancle.setOnClickListener(this);
         btnsub.setOnClickListener(this);
 
@@ -365,6 +405,144 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 onBackPressed();
 
                 break;
+
+            case (R.id.purchaseCal):
+                edtyear.setError(null);
+                new SetMyDateAndTime("date", edtyear, NextRegistrationContinue.this);
+                purchaseCancel.setVisibility(View.VISIBLE);
+                purchaseCal.setVisibility(View.GONE);
+
+                break;
+            case (R.id.taxCal):
+
+                edttax.setError(null);
+                new SetMyDateAndTime("date", edttax, NextRegistrationContinue.this);
+                taxCancel.setVisibility(View.VISIBLE);
+                taxCal.setVisibility(View.GONE);
+
+                break;
+            case (R.id.fitnessCal):
+
+                edtfit.setError(null);
+                new SetMyDateAndTime("date", edtfit, NextRegistrationContinue.this);
+                fitnessCancel.setVisibility(View.VISIBLE);
+                fitnessCal.setVisibility(View.GONE);
+
+                break;
+            case (R.id.permitCal):
+
+                edtpermit.setError(null);
+                new SetMyDateAndTime("date", edtpermit, NextRegistrationContinue.this);
+                permitCancel.setVisibility(View.VISIBLE);
+                permitCal.setVisibility(View.GONE);
+
+                break;
+            case (R.id.insuranceCal):
+
+                edtinsurance.setError(null);
+                new SetMyDateAndTime("date", edtinsurance, NextRegistrationContinue.this);
+                insuranceCancel.setVisibility(View.VISIBLE);
+                insuranceCal.setVisibility(View.GONE);
+
+                break;
+            case (R.id.lastServiceCal):
+
+                edtlastservice.setError(null);
+                new SetMyDateAndTime("date", edtlastservice, NextRegistrationContinue.this);
+                lastServiceCancel.setVisibility(View.VISIBLE);
+                lastServiceCal.setVisibility(View.GONE);
+
+                break;
+            case (R.id.PUCCal):
+
+                edtpuc.setError(null);
+                new SetMyDateAndTime("date", edtpuc, NextRegistrationContinue.this);
+                pucCancel.setVisibility(View.VISIBLE);
+                pucCal.setVisibility(View.GONE);
+
+                break;
+            case (R.id.nextServiceCal):
+
+                whichclick = "edtnextservice";
+                edtnextservice.setError(null);
+                new SetMyDateAndTime("date", edtnextservice, NextRegistrationContinue.this);
+                nextServiceCancel.setVisibility(View.VISIBLE);
+                nextServiceCal.setVisibility(View.GONE);
+
+                break;
+
+            case (R.id.purchaseCan):
+
+                edtyear.setError(null);
+                edtyear.setText(null);
+                edtyear.clearFocus();
+                purchaseCancel.setVisibility(View.GONE);
+                purchaseCal.setVisibility(View.VISIBLE);
+
+                break;
+            case (R.id.fitnessCan):
+
+                edtfit.setError(null);
+                edtfit.setText(null);
+                edtfit.clearFocus();
+                fitnessCancel.setVisibility(View.GONE);
+                fitnessCal.setVisibility(View.VISIBLE);
+
+                break;
+            case (R.id.taxCan):
+
+                edttax.setError(null);
+                edttax.setText(null);
+                edttax.clearFocus();
+                taxCancel.setVisibility(View.GONE);
+                taxCal.setVisibility(View.VISIBLE);
+
+                break;
+            case (R.id.permitCan):
+
+                edtpermit.setText(null);
+                edtpermit.setError(null);
+                edtpermit.clearFocus();
+                permitCancel.setVisibility(View.GONE);
+                permitCal.setVisibility(View.VISIBLE);
+
+                break;
+            case (R.id.insuranceCan):
+
+                edtinsurance.setError(null);
+                edtinsurance.setText(null);
+                edtinsurance.clearFocus();
+                insuranceCancel.setVisibility(View.GONE);
+                insuranceCal.setVisibility(View.VISIBLE);
+
+                break;
+            case (R.id.PUCCan):
+
+                edtpuc.setError(null);
+                edtpuc.setText(null);
+                edtpuc.clearFocus();
+                pucCancel.setVisibility(View.GONE);
+                pucCal.setVisibility(View.VISIBLE);
+
+                break;
+            case (R.id.lastServiceCan):
+
+                edtlastservice.setError(null);
+                edtlastservice.setText(null);
+                edtlastservice.clearFocus();
+                lastServiceCancel.setVisibility(View.GONE);
+                lastServiceCal.setVisibility(View.VISIBLE);
+
+                break;
+            case (R.id.nextServiceCan):
+
+                edtnextservice.setError(null);
+                edtnextservice.setText(null);
+                edtnextservice.clearFocus();
+                nextServiceCancel.setVisibility(View.GONE);
+                nextServiceCal.setVisibility(View.VISIBLE);
+
+                break;
         }
     }
 
@@ -413,71 +591,152 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         }
         return flag1;
     }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        int action = motionEvent.getAction();
-        switch (view.getId()) {
-            case (R.id.edityear):
-                if (action == MotionEvent.ACTION_DOWN) {
-                    edtyear.setInputType(InputType.TYPE_NULL);
-                    edtyear.setError(null);
-                    new SetMyDateAndTime("date", edtyear, NextRegistrationContinue.this);
-                }
-                break;
-            case (R.id.edittaxval):
-                if (action == MotionEvent.ACTION_DOWN) {
-                    edttax.setInputType(InputType.TYPE_NULL);
-                    edttax.setError(null);
-                    new SetMyDateAndTime("date", edttax, NextRegistrationContinue.this);
-                }
-                break;
-            case (R.id.editfitval):
-                if (action == MotionEvent.ACTION_DOWN) {
-                    edtfit.setInputType(InputType.TYPE_NULL);
-                    edtfit.setError(null);
-                    new SetMyDateAndTime("date", edtfit, NextRegistrationContinue.this);
-                }
-                break;
-            case (R.id.editpermitval):
-                if (action == MotionEvent.ACTION_DOWN) {
-                    edtpermit.setInputType(InputType.TYPE_NULL);
-                    edtpermit.setError(null);
-                    new SetMyDateAndTime("date", edtpermit, NextRegistrationContinue.this);
-                }
-                break;
-            case (R.id.editinsurance):
-                if (action == MotionEvent.ACTION_DOWN) {
-                    edtinsurance.setInputType(InputType.TYPE_NULL);
-                    edtinsurance.setError(null);
-                    new SetMyDateAndTime("date", edtinsurance, NextRegistrationContinue.this);
-                }
-                break;
-            case (R.id.editlastservice):
-                if (action == MotionEvent.ACTION_DOWN) {
-                    edtlastservice.setInputType(InputType.TYPE_NULL);
-                    edtlastservice.setError(null);
-                    new SetMyDateAndTime("date", edtlastservice, NextRegistrationContinue.this);
-                }
-                break;
-            case (R.id.editpuc):
-                if (action == MotionEvent.ACTION_DOWN) {
-                    edtpuc.setInputType(InputType.TYPE_NULL);
-                    edtpuc.setError(null);
-                    new SetMyDateAndTime("date", edtpuc, NextRegistrationContinue.this);
-                }
-                break;
-            case (R.id.editestnextsrv):
-                if (action == MotionEvent.ACTION_DOWN) {
-                    whichclick = "edtnextservice";
-                    edtnextservice.setInputType(InputType.TYPE_NULL);
-                    edtnextservice.setError(null);
-                    new SetMyDateAndTime("date", edtnextservice, NextRegistrationContinue.this);
-                }
-                break;
-        }
-        return false;
-    }
+//
+//    @Override
+//    public boolean onTouch(View view, MotionEvent motionEvent) {
+//        int action = motionEvent.getAction();
+//        switch (view.getId()) {
+//            case (R.id.purchaseCal):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtyear.setError(null);
+//                    new SetMyDateAndTime("date", edtyear, NextRegistrationContinue.this);
+//                    purchaseCancel.setVisibility(View.VISIBLE);
+//                    purchaseCal.setVisibility(View.GONE);
+//                }
+//                break;
+//            case (R.id.taxCal):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edttax.setError(null);
+//                    new SetMyDateAndTime("date", edttax, NextRegistrationContinue.this);
+//                    taxCancel.setVisibility(View.VISIBLE);
+//                    taxCal.setVisibility(View.GONE);
+//                }
+//                break;
+//            case (R.id.fitnessCal):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtfit.setError(null);
+//                    new SetMyDateAndTime("date", edtfit, NextRegistrationContinue.this);
+//                    fitnessCancel.setVisibility(View.VISIBLE);
+//                    fitnessCal.setVisibility(View.GONE);
+//                }
+//                break;
+//            case (R.id.permitCal):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtpermit.setError(null);
+//                    new SetMyDateAndTime("date", edtpermit, NextRegistrationContinue.this);
+//                    permitCancel.setVisibility(View.VISIBLE);
+//                    permitCal.setVisibility(View.GONE);
+//                }
+//                break;
+//            case (R.id.insuranceCal):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtinsurance.setError(null);
+//                    new SetMyDateAndTime("date", edtinsurance, NextRegistrationContinue.this);
+//                    insuranceCancel.setVisibility(View.VISIBLE);
+//                    insuranceCal.setVisibility(View.GONE);
+//                }
+//                break;
+//            case (R.id.lastServiceCal):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtlastservice.setError(null);
+//                    new SetMyDateAndTime("date", edtlastservice, NextRegistrationContinue.this);
+//                    lastServiceCancel.setVisibility(View.VISIBLE);
+//                    lastServiceCal.setVisibility(View.GONE);
+//                }
+//                break;
+//            case (R.id.PUCCal):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtpuc.setError(null);
+//                    new SetMyDateAndTime("date", edtpuc, NextRegistrationContinue.this);
+//                    pucCancel.setVisibility(View.VISIBLE);
+//                    pucCal.setVisibility(View.GONE);
+//                }
+//                break;
+//            case (R.id.nextServiceCal):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    whichclick = "edtnextservice";
+//                    edtnextservice.setError(null);
+//                    new SetMyDateAndTime("date", edtnextservice, NextRegistrationContinue.this);
+//                    nextServiceCancel.setVisibility(View.VISIBLE);
+//                    nextServiceCal.setVisibility(View.GONE);
+//                }
+//                break;
+//
+//            case (R.id.purchaseCan):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtyear.setError(null);
+//                    edtyear.setText(null);
+//                    edtyear.clearFocus();
+//                    purchaseCancel.setVisibility(View.GONE);
+//                    purchaseCal.setVisibility(View.VISIBLE);
+//                }
+//                break;
+//            case (R.id.fitnessCan):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtfit.setError(null);
+//                    edtfit.setText(null);
+//                    edtfit.clearFocus();
+//                    fitnessCancel.setVisibility(View.GONE);
+//                    fitnessCal.setVisibility(View.VISIBLE);
+//                }
+//                break;
+//            case (R.id.taxCan):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edttax.setError(null);
+//                    edttax.setText(null);
+//                    edttax.clearFocus();
+//                    taxCancel.setVisibility(View.GONE);
+//                    taxCal.setVisibility(View.VISIBLE);
+//                }
+//                break;
+//            case(R.id.permitCan):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtpermit.setText(null);
+//                    edtpermit.setError(null);
+//                    edtpermit.clearFocus();
+//                    permitCancel.setVisibility(View.GONE);
+//                    permitCal.setVisibility(View.VISIBLE);
+//                }
+//                break;
+//            case (R.id.insuranceCan):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtinsurance.setError(null);
+//                    edtinsurance.setText(null);
+//                    edtinsurance.clearFocus();
+//                    insuranceCancel.setVisibility(View.GONE);
+//                    insuranceCal.setVisibility(View.VISIBLE);
+//                }
+//                break;
+//            case (R.id.PUCCan):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtpuc.setError(null);
+//                    edtpuc.setText(null);
+//                    edtpuc.clearFocus();
+//                    pucCancel.setVisibility(View.GONE);
+//                    pucCal.setVisibility(View.VISIBLE);
+//                }
+//                break;
+//            case (R.id.lastServiceCan):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtlastservice.setError(null);
+//                    edtlastservice.setText(null);
+//                    edtlastservice.clearFocus();
+//                    lastServiceCancel.setVisibility(View.GONE);
+//                    lastServiceCal.setVisibility(View.VISIBLE);
+//                }
+//                break;
+//            case (R.id.nextServiceCan):
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    edtnextservice.setError(null);
+//                    edtnextservice.setText(null);
+//                    edtnextservice.clearFocus();
+//                    nextServiceCancel.setVisibility(View.GONE);
+//                    nextServiceCal.setVisibility(View.VISIBLE);
+//                }
+//                break;
+//        }
+//        return false;
+//    }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -846,6 +1105,25 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                         edtpuc.setError(null);
                                         edtlastservice.setError(null);
                                         edtnextservice.setError(null);
+
+
+                                        purchaseCal.setVisibility(View.VISIBLE);
+                                        taxCal.setVisibility(View.VISIBLE);
+                                        fitnessCal.setVisibility(View.VISIBLE);
+                                        permitCal.setVisibility(View.VISIBLE);
+                                        pucCal.setVisibility(View.VISIBLE);
+                                        lastServiceCal.setVisibility(View.VISIBLE);
+                                        nextServiceCal.setVisibility(View.VISIBLE);
+                                        insuranceCal.setVisibility(View.VISIBLE);
+
+                                        purchaseCancel.setVisibility(View.GONE);
+                                        taxCancel.setVisibility(View.GONE);
+                                        fitnessCancel.setVisibility(View.GONE);
+                                        permitCancel.setVisibility(View.GONE);
+                                        pucCancel.setVisibility(View.GONE);
+                                        lastServiceCancel.setVisibility(View.GONE);
+                                        nextServiceCancel.setVisibility(View.GONE);
+                                        insuranceCancel.setVisibility(View.GONE);
                                     }
                                 })
                         .setNegativeButton("No",
