@@ -108,7 +108,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/multiautocategory"
-                            android:hint="Service Category"
+                            android:hint="Service Category(Ex.Auto Design)"
                             android:textColorHint="#848484"
                             android:textColor="#2C3343" />
                     </android.support.design.widget.TextInputLayout>

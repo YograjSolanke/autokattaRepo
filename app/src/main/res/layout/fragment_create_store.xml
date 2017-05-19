@@ -220,7 +220,7 @@
                         android:layout_marginRight="10dip"
                         android:layout_weight="2"
                         android:ems="10"
-                        android:hint="Website"
+                        android:hint="Website(Ex.www.example.com)"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
 
@@ -398,7 +398,7 @@
                         android:id="@+id/multiautotext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Services Offered"
+                        android:hint="Services Offered(Ex.Auto Washing Centre)"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484"
 

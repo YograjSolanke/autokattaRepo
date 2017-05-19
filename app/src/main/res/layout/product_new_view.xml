@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Store:-"
+            android:text="Store Name"
             android:textAlignment="center"
             android:textColor="#2C3343"
             android:textSize="15sp"
@@ -30,42 +30,41 @@
 
         <TextView
             android:id="@+id/txtstorename"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/lstorename"
+            android:text="Store Name"
+            android:layout_toLeftOf="@+id/call"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/lstorename"
-            android:text="Store"
-            android:textAlignment="center"
-            android:textColor="#2C3343"
+            android:textColor="@color/textColor"
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/lstorewebsite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lstorename"
-            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/txtstorename"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Website:-"
+            android:text="Website"
             android:textAlignment="center"
-            android:textColor="#2C3343"
+            android:textColor="@color/textColor"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtstorewebsite"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtstorename"
-            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/lstorewebsite"
             android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/lstorewebsite"
             android:text="website"
-            android:textAlignment="center"
-            android:textColor="#2C3343"
+            android:textColor="@color/textColor"
             android:textSize="15sp" />
 
         <TextView
@@ -439,42 +438,41 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/v3"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:visibility="visible">
 
                         <TextView
                             android:id="@+id/ptype"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Product  Type"
                             android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textColorHint="#000000"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtptype"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash1"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_below="@+id/ptype"
+                            android:layout_marginTop="5dp"
+                            android:hint="product type"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
                     </RelativeLayout>
 
@@ -482,41 +480,40 @@
                         android:id="@+id/relativeproductname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/relativetype">
+                        android:layout_below="@+id/relativetype"
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/lpname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Product Name"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
 
-                        <TextView
-                            android:id="@+id/dash2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash2"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtpname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash2"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_below="@+id/lpname"
+                            android:textColor="@color/textColor"
+                            android:layout_marginTop="5dp"
+                            android:hint="product name"
+                            android:background="@android:color/transparent"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
 
                     </RelativeLayout>
@@ -525,42 +522,41 @@
                         android:id="@+id/relativeproductprice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/relativeproductname">
+                        android:layout_below="@+id/relativeproductname"
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/lpprice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Price"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textColorHint="#000000"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash3"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtpprice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash3"
+                            android:layout_below="@+id/lpprice"
                             android:inputType="number"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_marginTop="5dp"
+                            android:hint="price"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp"
 
                             />
@@ -570,40 +566,39 @@
                         android:id="@+id/relativeproducttags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativeproductprice">
 
                         <TextView
                             android:id="@+id/lptags"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Tags"
-                            android:textAlignment="center"
                             android:textColor="#2C3343"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash4"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <MultiAutoCompleteTextView
                             android:id="@+id/txtptags"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash4"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_below="@+id/lptags"
+                            android:textColor="@color/textColor"
+                            android:layout_marginTop="5dp"
+                            android:background="@android:color/transparent"
+                            android:hint="tags"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
                     </RelativeLayout>
 
@@ -612,40 +607,39 @@
                         android:id="@+id/relativebrandtags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativeproducttags">
 
                         <TextView
                             android:id="@+id/brandtags"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Brand Tags"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash5"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <MultiAutoCompleteTextView
                             android:id="@+id/txtbrandptags"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash5"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_below="@+id/brandtags"
+                            android:textColor="@color/textColor"
+                            android:layout_marginTop="5dp"
+                            android:background="@android:color/transparent"
+                            android:hint="brand tags"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
                     </RelativeLayout>
 
@@ -653,42 +647,40 @@
                         android:id="@+id/relativeproductdetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativebrandtags">
 
                         <TextView
                             android:id="@+id/lpdetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Details"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
 
-                        <TextView
-                            android:id="@+id/dash6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash6"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtpdetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
-                            android:layout_toEndOf="@+id/dash6"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_below="@+id/lpdetails"
+                            android:hint="product details"
+                            android:textColor="@color/textColor"
+                            android:background="@android:color/transparent"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
 
                     </RelativeLayout>
@@ -697,42 +689,39 @@
                         android:id="@+id/linearcategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativeproductdetails"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <TextView
                             android:id="@+id/lpcategory"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Category"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
 
-                        <TextView
-                            android:id="@+id/dash7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="81dp"
-                            android:layout_toEndOf="@+id/lpcategory"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash7"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentTop="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginStart="81dp"-->
+                        <!--android:layout_toEndOf="@+id/lpcategory"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textStyle="bold" />-->
 
                         <Spinner
                             android:id="@+id/spincategory"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash7"
-                            android:textColor="#2C3343"
+                            android:layout_below="@+id/lpcategory"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp">
 
                         </Spinner>
@@ -797,7 +786,7 @@
                         android:id="@+id/relativerateproduct"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/linearseeall"
+                        android:layout_below="@+id/linearcategory"
                         android:visibility="gone">
 
                         <LinearLayout
