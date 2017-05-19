@@ -69,6 +69,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 storeResponseArrayList.clear();
                 MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
                 if (!myStoreResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
                     for (MyStoreResponse.Success Sresponse : myStoreResponse.getSuccess()) {
                         Sresponse.setId(Sresponse.getId());
                         Sresponse.setName(Sresponse.getName());
@@ -190,8 +191,10 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
-            if (isVisibleToUser && hasViewCreated) {
+            if (isVisibleToUser && !hasViewCreated) {
+
                 apiCall.MyStoreList(myContact);
+                hasViewCreated = true;
             }
         }
     }
