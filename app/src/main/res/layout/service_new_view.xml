@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Store:-"
+            android:text="Store Name"
             android:textAlignment="center"
             android:textColor="#2C3343"
             android:textSize="15sp"
@@ -30,42 +30,37 @@
 
         <TextView
             android:id="@+id/txtstorename"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/lstorename"
-            android:text="Store"
-            android:textAlignment="center"
-            android:textColor="#2C3343"
+            android:layout_below="@+id/lstorename"
+            android:text="Store Name"
+            android:layout_toLeftOf="@+id/call"
+            android:textColor="@color/textColor"
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/lstorewebsite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lstorename"
-            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/txtstorename"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Website:-"
-            android:textAlignment="center"
-            android:textColor="#2C3343"
+            android:text="Website"
+            android:textColor="@color/textColor"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtstorewebsite"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtstorename"
-            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/lstorewebsite"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/lstorewebsite"
             android:text="website"
-            android:textAlignment="center"
-            android:textColor="#2C3343"
+            android:textColor="@color/textColor"
             android:textSize="15sp" />
 
 
@@ -75,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
             android:text="No.Of Enquiries:"
             android:textColor="@color/textColor"
@@ -88,6 +84,7 @@
             android:layout_height="30dp"
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
             android:background="@color/background"
             android:text="Send Enquiry"
@@ -442,35 +439,33 @@
                             android:id="@+id/stype"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="Service  Type"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:text="Service Type"
+                            android:textColor="@color/textColor"
                             android:textColorHint="#000000"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtstype"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash1"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_below="@+id/stype"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
+                            android:layout_marginTop="5dp"
+                            android:hint="service type"
+                            android:background="@android:color/transparent"
                             android:textSize="15sp" />
                     </RelativeLayout>
 
@@ -478,40 +473,39 @@
                         android:id="@+id/relativeservicename"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativetype">
 
                         <TextView
                             android:id="@+id/lsname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Service Name"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash2"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtsname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash2"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_below="@+id/lsname"
+                            android:textColor="@color/textColor"
+                            android:hint="service name"
+                            android:background="@android:color/transparent"
+                            android:layout_marginTop="5dp"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
                     </RelativeLayout>
 
@@ -519,42 +513,40 @@
                         android:id="@+id/relativeserviceprice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativeservicename">
 
                         <TextView
                             android:id="@+id/lsprice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Price"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash3"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtsprice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash3"
+                            android:layout_below="@+id/lsprice"
                             android:inputType="number"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:hint="price"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp"
 
                             />
@@ -564,41 +556,40 @@
                         android:id="@+id/relativeservicetags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativeserviceprice">
 
                         <TextView
                             android:id="@+id/lpsags"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Tags"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash4"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <MultiAutoCompleteTextView
                             android:id="@+id/txtstags"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash4"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
-                            android:textSize="15sp" />
+                            android:layout_below="@+id/lpsags"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
+                            android:hint="tags"
+                            android:textSize="15sp"
+                            android:layout_marginTop="5dp"
+                            android:background="@android:color/transparent" />
                     </RelativeLayout>
 
 
@@ -606,40 +597,39 @@
                         android:id="@+id/relativebrandtags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativeservicetags">
 
                         <TextView
                             android:id="@+id/brandtags"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Brand Tags"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash5"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <MultiAutoCompleteTextView
                             android:id="@+id/txtbrandptags"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash5"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:layout_below="@+id/brandtags"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
+                            android:layout_marginTop="5dp"
+                            android:hint="brand tags"
+                            android:background="@android:color/transparent"
                             android:textSize="15sp" />
                     </RelativeLayout>
 
@@ -648,41 +638,39 @@
                         android:id="@+id/relativeservicedetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_below="@+id/relativebrandtags">
 
                         <TextView
                             android:id="@+id/lsdetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Details"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/dash6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash6"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtsdetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
+                            android:layout_below="@+id/lsdetails"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
+                            android:hint="service details"
                             android:layout_marginTop="5dp"
-                            android:layout_toEndOf="@+id/dash6"
-                            android:textColor="#2C3343"
-                            android:textColorHint="#000000"
+                            android:background="@android:color/transparent"
                             android:textSize="15sp" />
 
                     </RelativeLayout>
@@ -698,36 +686,33 @@
                             android:id="@+id/lscategory"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:text="Category"
-                            android:textAlignment="center"
-                            android:textColor="#2C3343"
+                            android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
 
-                        <TextView
-                            android:id="@+id/dash7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="81dp"
-                            android:layout_toEndOf="@+id/lscategory"
-                            android:gravity="center"
-                            android:text="-"
-                            android:textColor="#2C3343"
-                            android:textStyle="bold" />
+                        <!--<TextView-->
+                        <!--android:id="@+id/dash7"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentTop="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginStart="81dp"-->
+                        <!--android:layout_toEndOf="@+id/lscategory"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="-"-->
+                        <!--android:textColor="#2C3343"-->
+                        <!--android:textStyle="bold" />-->
 
                         <Spinner
                             android:id="@+id/spincategory"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/dash7"
-                            android:textColor="#2C3343"
+                            android:layout_below="@+id/lscategory"
+                            android:textColor="@color/textColor"
+                            android:layout_marginTop="5dp"
+                            android:background="@android:color/transparent"
                             android:textSize="15sp">
 
                         </Spinner>
@@ -793,7 +778,8 @@
                         android:id="@+id/relativerateservice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/linearseeall"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/linearcategory"
                         android:visibility="gone">
 
                         <LinearLayout
