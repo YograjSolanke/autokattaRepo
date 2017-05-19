@@ -9,12 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.concurrent.TimeUnit;
+import android.widget.TextView;
 
 import autokatta.com.R;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by ak-001 on 17/3/17.
@@ -25,7 +22,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     View mWallNotify;
-
+    TextView mNoData;
+    boolean _hasLoadedOnce = false;
 
     public WallNotificationFragment(){
         //Empty Constructor...
@@ -35,28 +33,6 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mWallNotify = inflater.inflate(R.layout.fragment_wall_notification, container, false);
-
-        mRecyclerView = (RecyclerView) mWallNotify.findViewById(R.id.wall_recycler_view);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mWallNotify.findViewById(R.id.wall_swipe_refresh_layout);
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        //getData();//Get Api...
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                //getData();
-            }
-        });
-
         return mWallNotify;
     }
 
@@ -94,17 +70,44 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
     }
 
-    /***
-     * Retrofit Logs
-     ***/
-    private OkHttpClient.Builder initLog() {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        // add your other interceptors …
-        // add logging as last interceptor
-        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
-        return httpClient;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                //getData();
+            }
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mNoData = (TextView) mWallNotify.findViewById(R.id.no_category);
+                mRecyclerView = (RecyclerView) mWallNotify.findViewById(R.id.wall_recycler_view);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) mWallNotify.findViewById(R.id.wall_swipe_refresh_layout);
+                mRecyclerView.setHasFixedSize(true);
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                mLayoutManager.setReverseLayout(true);
+                mLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                //getData();//Get Api...
+                mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        //getData();
+                    }
+                });
+            }
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 }

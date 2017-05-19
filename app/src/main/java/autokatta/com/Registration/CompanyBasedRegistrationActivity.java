@@ -464,13 +464,11 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
             } else {
                 Toast.makeText(getApplicationContext(), "Please Check Whether all Fields Are filled ", Toast.LENGTH_LONG).show();
-
             }
         }else {
             Toast.makeText(getApplicationContext(), "Somthing went wrong no response", Toast.LENGTH_LONG).show();
 
         }
-
     }
 
     @Override

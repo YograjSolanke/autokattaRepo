@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -25,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,7 +36,9 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.File;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -43,7 +48,6 @@ import autokatta.com.fragment.StoreProducts;
 import autokatta.com.fragment.StoreServices;
 import autokatta.com.fragment.StoreVehicles;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
 import retrofit2.Response;
 
@@ -56,7 +60,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     FloatingActionMenu menuRed;
     RatingBar storerating;
     String myContact;
-    String overAllRate;
     String precsrate = "";
     String preqwrate = "";
     String prefrrate = "";
@@ -76,7 +79,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     StoreServices storeServices;
     StoreVehicles storeVehicles;
     ApiCall mApiCall;
-    Toolbar toolbar;
+    CoordinatorLayout mLayout;
     String storeName = "", storeImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
             storeLikeCount, storeFollowCount, strDetailsShare = "";
 
@@ -84,29 +87,64 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_store_view);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mApiCall = new ApiCall(StoreViewActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
-        menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
-        mCall = (FloatingActionButton) findViewById(R.id.call_c);
-        mLike = (FloatingActionButton) findViewById(R.id.like_l);
-        mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
-        mRate = (FloatingActionButton) findViewById(R.id.rate);
-        mAdd = (FloatingActionButton) findViewById(R.id.add);
-        mGoogleMap = (FloatingActionButton) findViewById(R.id.gotoMap);
-        storerating = (RatingBar) findViewById(R.id.store_rating);
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
-        viewPager = (ViewPager) findViewById(R.id.other_store_viewpager);
-        tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
-        mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
-        mShare = (FloatingActionButton) findViewById(R.id.share);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mLayout = (CoordinatorLayout) findViewById(R.id.store_coordinate);
+                    menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+                    mCall = (FloatingActionButton) findViewById(R.id.call_c);
+                    mLike = (FloatingActionButton) findViewById(R.id.like_l);
+                    mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
+                    mRate = (FloatingActionButton) findViewById(R.id.rate);
+                    mAdd = (FloatingActionButton) findViewById(R.id.add);
+                    mGoogleMap = (FloatingActionButton) findViewById(R.id.gotoMap);
+                    storerating = (RatingBar) findViewById(R.id.store_rating);
+                    collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+                    mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
+                    viewPager = (ViewPager) findViewById(R.id.other_store_viewpager);
+                    tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
+                    mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
+                    mShare = (FloatingActionButton) findViewById(R.id.share);
 
+                    storeInfo = new StoreInfo();
+                    storeInfo.setArguments(mBundle);
+                    storeProducts = new StoreProducts();
+                    storeProducts.setArguments(mBundle);
+                    storeServices = new StoreServices();
+                    storeServices.setArguments(mBundle);
+                    storeVehicles = new StoreVehicles();
+                    storeVehicles.setArguments(mBundle);
 
+                    mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", "");
+
+                    if (getIntent().getExtras() != null) {
+                        store_id = getIntent().getExtras().getString("store_id");
+                        getOtherStore(mLoginContact, store_id);
+                    }
+
+                    mBundle.putString("store_id", store_id);
+                    if (viewPager != null) {
+                        setupViewPager(viewPager);
+                    }
+                    tabLayout.setupWithViewPager(viewPager);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         mCall.setOnClickListener(this);
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
@@ -115,65 +153,11 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mAdd.setOnClickListener(this);
         mShare.setOnClickListener(this);
         mAutoshare.setOnClickListener(this);
-
-
-        storeInfo = new StoreInfo();
-        storeInfo.setArguments(mBundle);
-        storeProducts = new StoreProducts();
-        storeProducts.setArguments(mBundle);
-        storeServices = new StoreServices();
-        storeServices.setArguments(mBundle);
-        storeVehicles = new StoreVehicles();
-        storeVehicles.setArguments(mBundle);
-
-        /*
-        Get Bundle Data...
-         */
-
-        mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", "");
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-
-                    setSupportActionBar(toolbar);
-
-                    if (getSupportActionBar() != null) {
-                        getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    }
-
-                    if (getIntent().getExtras() != null) {
-                        store_id = getIntent().getExtras().getString("store_id");
-                        getOtherStore(mLoginContact, store_id);
-
-
-                    }
-
-                    mBundle.putString("store_id", store_id);
-                    if (viewPager != null) {
-                        setupViewPager(viewPager);
-                    }
-
-
-                    tabLayout.setupWithViewPager(viewPager);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
     }
 
     public void filterResult() {
-
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(StoreViewActivity.this);
         LayoutInflater inflater = getLayoutInflater();
-
         View convertView = inflater.inflate(R.layout.custom_store_rate_layout, null);
         alertDialog.setView(convertView);
         final AlertDialog alert = alertDialog.show();
@@ -186,7 +170,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         prbar = (RatingBar) convertView.findViewById(R.id.pr_rating);
         tmbar = (RatingBar) convertView.findViewById(R.id.tm_rating);
         overallbar = (RatingBar) convertView.findViewById(R.id.overall_rating);
-
 
         if (!precsrate.equals("0")) {
             csbar.setRating(Float.parseFloat(precsrate));
@@ -206,7 +189,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         if (!preoverall.equals("0")) {
             overallbar.setRating(Float.parseFloat(preoverall));
         }
-
 
         csbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -251,7 +233,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (preoverall.equals("0")) {
                     mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
                             String.valueOf(csrate),
@@ -268,12 +249,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                             String.valueOf(prrate),
                             String.valueOf(tmrate),
                             "store");
-
                 }
-
                 mApiCall.recommendStore(myContact, store_id);
                 alert.dismiss();
-
             }
         });
 
@@ -281,8 +259,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if (preoverall.equals("0")) {
                     mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
                             String.valueOf(csrate),
@@ -299,19 +275,16 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                             String.valueOf(prrate),
                             String.valueOf(tmrate),
                             "store");
-
                 }
                 alert.dismiss();
 
             }
         });
 
-
         convertView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 v.getParent().requestDisallowInterceptTouchEvent(true);
-
                 return false;
             }
         });
@@ -323,7 +296,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         total = r1 + r2 + r3 + r4 + r5;
         count = total / 5;
         overallbar.setRating(count);
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -336,7 +308,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     }
 
     private void getOtherStore(String contact, String store_id) {
-
         mApiCall.getStoreData(contact, store_id);
     }
 
@@ -371,23 +342,17 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 break;
 
             case R.id.gotoMap:
-
                 drawMap(storelattitude, storelongitude);
-
                 menuRed.setClosedOnTouchOutside(true);
                 break;
 
             case R.id.add:
-
                 showAddAlert();
-
                 break;
 
             case R.id.share:
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 String imageFilePath = "", imagename = "";
-
-
                 if (storeImage.equalsIgnoreCase("") || storeImage.equalsIgnoreCase(null) ||
                         storeImage.equalsIgnoreCase("null")) {
                     imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
@@ -395,7 +360,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     imagename = "http://autokatta.com/mobile/store_profiles/" + storeImage;
                 }
                 Log.e("TAG", "img : " + imagename);
-
                 DownloadManager.Request request = new DownloadManager.Request(
                         Uri.parse(imagename));
                 request.allowScanningByMediaScanner();
@@ -406,9 +370,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                 DownloadManager manager = (DownloadManager) getApplication()
                         .getSystemService(Context.DOWNLOAD_SERVICE);
-
                 Log.e("TAG", "img URL: " + imagename);
-
                 manager.enqueue(request);
 
                 imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -445,8 +407,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     }
 
     private void showAddAlert() {
-
-
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(StoreViewActivity.this);
         builderSingle.setIcon(R.drawable.ic_cart_plus);
         builderSingle.setTitle("Select One:-");
@@ -463,7 +423,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             }
         });
 
-
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -473,12 +432,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                 if (strName != null) {
                     if (strName.equals("Add Product")) {
-
                         Intent intent = new Intent(StoreViewActivity.this, AddProductActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();
-
 
                     } else if (strName.equals("Add Service")) {
                         Intent intent = new Intent(StoreViewActivity.this, AddServiceActivity.class);
@@ -487,7 +444,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         finish();
 
                     } else if (strName.equals("Add Vehicle")) {
-
                         if (isDealing.equalsIgnoreCase("false")) {
                             Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
                             startActivity(intent);
@@ -496,7 +452,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                             //Toast.makeText(getApplicationContext(), "new vehicle", Toast.LENGTH_SHORT).show();
                             alertVehicle();
                         }
-
                     }
                 }
 
@@ -508,8 +463,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     }
 
     private void alertVehicle() {
-
-
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(StoreViewActivity.this);
         builderSingle.setIcon(R.drawable.ic_cart_plus);
         builderSingle.setTitle("Select Vehicle Type");
@@ -525,7 +478,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             }
         });
 
-
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -533,14 +485,12 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                 if (strName != null) {
                     if (strName.equals("Used Vehicle")) {
-
                         //Toast.makeText(getApplicationContext(), "used vehicle", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
                         startActivity(intent);
                         finish();
 
                     } else if (strName.equals("New Vehicle")) {
-
                         //Toast.makeText(getApplicationContext(), "new vehicle", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
                         startActivity(intent);
@@ -551,12 +501,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             }
         });
         builderSingle.show();
-
-
     }
 
     private void drawMap(Double storelattitude, Double storelongitude) {
-
         double destinationLatitude = storelattitude;
         double destinationLongitude = storelongitude;
 
@@ -564,15 +511,12 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
         startActivity(intent);
-
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
             if (response.isSuccessful()) {
-
                 StoreResponse storeResponse = (StoreResponse) response.body();
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
                     storeName = success.getName();
@@ -584,7 +528,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     storeType = success.getStoreType();
                     storeLikeCount = success.getLikecount();
                     storeFollowCount = success.getFollowcount();
-
 
                     mOtherContact = success.getContact();
                     storeRating = success.getRating();
@@ -611,7 +554,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                 storerating.setRating(Float.parseFloat(storeRating));
                 //  mBundle.putString("StoreContact", mOtherContact);
-
 
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
                 Glide.with(this)
@@ -640,10 +582,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     menuRed.setClosedOnTouchOutside(true);
                 }
             } else {
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                Snackbar.make(mLayout, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
 
     }
@@ -656,6 +598,38 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
             Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-"
                     , "StoreViewActivity");
@@ -667,31 +641,29 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success_follow")) {
-                CustomToast.customToast(getApplicationContext(), " Following Successfully");
+                Snackbar.make(mLayout, "Following", Snackbar.LENGTH_SHORT).show();
                 mFollow.setLabelText("Following");
                 mFollow.setLabelTextColor(Color.RED);
                 mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
-                CustomToast.customToast(getApplicationContext(), " UnFollowed Successfully");
                 mFollow.setLabelText("Follow");
                 mFollow.setLabelTextColor(Color.WHITE);
                 mFolllowstr = "no";
             } else if (str.equals("success_like")) {
-                CustomToast.customToast(getApplicationContext(), " Liked Successfully");
+                Snackbar.make(mLayout, "Liked", Snackbar.LENGTH_SHORT).show();
                 mLike.setLabelText("Liked");
                 mLike.setLabelTextColor(Color.RED);
                 mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
-                CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
                 mLike.setLabelText("Like");
                 mLike.setLabelTextColor(Color.WHITE);
                 mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
-                CustomToast.customToast(getApplicationContext(), "Rating Submitted");
+                Snackbar.make(mLayout, "Rating Submitted", Snackbar.LENGTH_SHORT).show();
             } else if (str.equals("success_rating_updated")) {
-                CustomToast.customToast(getApplicationContext(), "Rating updated");
+                Snackbar.make(mLayout, "SRating updated", Snackbar.LENGTH_SHORT).show();
             } else if (str.equals("success_recommended")) {
-                CustomToast.customToast(getApplicationContext(), "Store Recommended");
+                Snackbar.make(mLayout, "Store Recommended", Snackbar.LENGTH_SHORT).show();
             }
         }
     }

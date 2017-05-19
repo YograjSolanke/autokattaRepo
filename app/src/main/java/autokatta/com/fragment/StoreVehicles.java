@@ -1,7 +1,10 @@
 package autokatta.com.fragment;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,7 +29,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.StoreVehicleAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.StoreInventoryResponse;
 import retrofit2.Response;
 
@@ -36,64 +40,56 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
-    public StoreVehicles() {
-
-    }
-
     View mVehicle;
     String Sharedcontact, storeContact, store_id;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    TextView titleText;
+    TextView titleText, mNoData;
     List<StoreInventoryResponse.Success.Vehicle> vehicleList;
     LinearLayoutManager mLayoutManager;
-    //
     StoreVehicleAdapter adapter;
+    boolean hasMoreView = false;
+    ConnectionDetector mTestConnection;
+
+    public StoreVehicles() {
+        //empty constructor...
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mVehicle = inflater.inflate(R.layout.store_product_fragment, container, false);
-        Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mVehicle.findViewById(R.id.swipeRefreshLayout);
-        mRecyclerView = (RecyclerView) mVehicle.findViewById(R.id.recycler_view);
-        titleText = (TextView) mVehicle.findViewById(R.id.titleText);
-        titleText.setText("Vehicles");
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-
-        Bundle bundle = getArguments();
-        store_id = bundle.getString("store_id");
-
-        //getData();//Get Api...
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                getStoreVehicles(store_id, Sharedcontact);
-            }
-        });
         return mVehicle;
     }
 
     private void getStoreVehicles(String store_id, String sharedcontact) {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.getStoreInventory(store_id, sharedcontact);
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall apiCall = new ApiCall(getActivity(), this);
+            apiCall.getStoreInventory(store_id, sharedcontact);
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mNoData.setVisibility(View.GONE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        }
     }
 
     @Override
     public void onRefresh() {
-
+        vehicleList.clear();
+        getStoreVehicles(store_id, Sharedcontact);
     }
 
 
@@ -102,16 +98,12 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         if (response != null) {
             if (response.isSuccessful()) {
-
-                System.out.println("Product Response=============" + response);
                 mSwipeRefreshLayout.setRefreshing(false);
                 vehicleList = new ArrayList<>();
-
+                mNoData.setVisibility(View.GONE);
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getVehicle().isEmpty()) {
                     for (StoreInventoryResponse.Success.Vehicle success : storeResponse.getSuccess().getVehicle()) {
-
-
                         success.setVehicleId(success.getVehicleId());
                         success.setTitle(success.getTitle());
                         success.setPrice(success.getPrice());
@@ -133,34 +125,65 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                         }
                         success.setVehicleDate(d);
                         vehicleList.add(success);
-
                     }
                     adapter = new StoreVehicleAdapter(getActivity(), vehicleList, Sharedcontact, storeContact);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    CustomToast.customToast(getActivity(), "No Vehicles Found");
-
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-"
                     , "StoreServices");
@@ -171,5 +194,54 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasMoreView) {
+                getStoreVehicles(store_id, Sharedcontact);
+                hasMoreView = true;
+            }
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mTestConnection = new ConnectionDetector(getActivity());
+                Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+                mSwipeRefreshLayout = (SwipeRefreshLayout) mVehicle.findViewById(R.id.swipeRefreshLayout);
+                mRecyclerView = (RecyclerView) mVehicle.findViewById(R.id.recycler_view);
+                titleText = (TextView) mVehicle.findViewById(R.id.titleText);
+                mNoData = (TextView) mVehicle.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
+                titleText.setText("Vehicles");
+                mRecyclerView.setHasFixedSize(true);
+                mLayoutManager = new LinearLayoutManager(getActivity());
+                mLayoutManager.setReverseLayout(true);
+                mLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                Bundle bundle = getArguments();
+                store_id = bundle.getString("store_id");
+                //getData();//Get Api...
+                mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        getStoreVehicles(store_id, Sharedcontact);
+                    }
+                });
+            }
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 }

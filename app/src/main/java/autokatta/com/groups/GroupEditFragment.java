@@ -23,14 +23,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.Random;
 
 import autokatta.com.R;
@@ -38,7 +39,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
-import autokatta.com.other.CustomToast;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -89,24 +89,17 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         bundle_id = bundle.getString("bundle_GroupId");
         String bundle_name = bundle.getString("bundle_name");
         bundle_image = bundle.getString("bundle_image");
-
         bundle_image = bundle_image.replaceAll(" ", "%20");
-
         group_name.setText(bundle_name);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
         // Change base URL to your upload server URL.
         mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
-
         try {
-
             if (bundle_image.equals("") || bundle_image.equalsIgnoreCase(null) || bundle_image.equalsIgnoreCase("null")) {
-
                 mGroup_image.setBackgroundResource(R.drawable.profile);
-
             }
             if (!bundle_image.equals("") || !bundle_image.equalsIgnoreCase(null) || !bundle_image.equalsIgnoreCase("null")) {
                 try {
@@ -117,7 +110,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                             .into(mGroup_image);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(getActivity(), "Error uploading image", Toast.LENGTH_LONG).show();
+                    Snackbar.make(getView(), "Error uploading image", Snackbar.LENGTH_LONG).show();
                 }
             }
         } catch (Exception e) {
@@ -130,16 +123,14 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 onPickImage(view);
             }
         });
-
         BtnUpdateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 group_name_update = group_name.getText().toString();
                 if (group_name_update.equals("")) {
                     Snackbar.make(v, "Please provide group name", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    if (lastWord != "")
+                    if (lastWord.equals(""))
                         mApiCall.editGroup(group_name_update, bundle_id, lastWord);
                     else
                         mApiCall.editGroup(group_name_update, bundle_id, bundle_image);
@@ -148,7 +139,6 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         });
         return view;
     }
-
 
     public void onPickImage(View view) {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
@@ -262,7 +252,6 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         retVal = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-
         return retVal;
     }
 
@@ -300,7 +289,6 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
 
         if (cursor.moveToFirst()) {
             int orientation = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.ORIENTATION));
-            System.out.println("orientation===" + orientation);
             cursor.close();
             return orientation;
         } else {
@@ -316,11 +304,15 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ConnectException) {
+            Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof UnknownHostException) {
+            Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
         } else {
             Log.i("Check Class-", "Group Edit Fragment");
             error.printStackTrace();
@@ -329,15 +321,13 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyString(String str) {
-        Log.i("SStttrrrr", "str" + str);
-        if (str != "") {
-            CustomToast.customToast(getActivity(), "Group Updated Successfully");
+        if (str.equals("")) {
+            Snackbar.make(getView(), "Group Updated", Snackbar.LENGTH_LONG).show();
             uploadImage(mediaPath);
             MyGroupsFragment frag = new MyGroupsFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction mTransaction = fragmentManager.beginTransaction();
             mTransaction.replace(R.id.group_container, frag).commit();
-
         } else if (str.equals("successsuccess1group_profile_pics/" + str)) {
             try {
                 Glide.with(getActivity())
@@ -347,11 +337,8 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                         .into(mGroup_image);
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), "Error uploading image", Toast.LENGTH_LONG).show();
+                Snackbar.make(getView(), "Error uploading image", Snackbar.LENGTH_LONG).show();
             }
         }
     }
-
-
-
 }

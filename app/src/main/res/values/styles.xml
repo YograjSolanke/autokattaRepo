@@ -40,4 +40,16 @@
         <item name="android:textSize">@dimen/title_size</item>
         <item name="android:typeface">serif</item>
     </style>
+
+    <style name="subheading_text">
+        <item name="android:textSize">@dimen/subheading_text</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="body_text_style">
+        <item name="android:textSize">@dimen/body_text</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:typeface">serif</item>
+    </style>
 </resources>

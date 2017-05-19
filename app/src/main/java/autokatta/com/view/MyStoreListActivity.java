@@ -17,20 +17,16 @@ public class MyStoreListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_store_list);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    setSupportActionBar(toolbar);
-
-                    if (getSupportActionBar() != null) {
-                        getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    }
-
                     if (getIntent().getExtras() != null) {
                         Bundle bundle = new Bundle();
                         bundle.putString("className", getIntent().getExtras().getString("className"));
@@ -45,8 +41,6 @@ public class MyStoreListActivity extends AppCompatActivity {
                                 .commit();
 
                     } else {
-
-
                         FragmentManager mFragmentManager = getSupportFragmentManager();
                         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
                         mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment(), "myStoreListFragment")

@@ -55,18 +55,13 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
     LinearLayout mLinearScrollSecond[];
     ApiCall mApiCall;
 
-    @SuppressLint("NewApi")
-
-
     @Override
     public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
-
         View view = infl.inflate(R.layout.example, container, false);
-
         mLinearListView = (LinearLayout) view.findViewById(R.id.linear_ListView);
         mApiCall = new ApiCall(getActivity(), this);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "7841023392");
+                getString("loginContact", null);
 
         mApiCall.getUploadedVehicleBuyerlist(myContact);
         //mApiCall.getUploadedVehicleBuyerlist("2020202020");

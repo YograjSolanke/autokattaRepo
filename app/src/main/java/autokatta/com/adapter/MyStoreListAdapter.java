@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -117,11 +116,8 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
 
     @Override
     public void onBindViewHolder(final MyStoreListAdapter.YoHolder holder, final int position) {
-
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
-
-        Log.i("contact", myContact);
         holder.stname.setText(mStoreList.get(position).getName());
         holder.stlocation.setText(mStoreList.get(position).getLocation());
         holder.stwebsite.setText(mStoreList.get(position).getWebsite());
@@ -136,29 +132,22 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.storedelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Log.i("click", "delete");
                 int size = mStoreList.size();
                 if (size == 1)
-                    Toast.makeText(mActivity, "You can not delete this store...!!!", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view, "You can not delete this store", Snackbar.LENGTH_SHORT).show();
                 else {
-
                     if (!mConnectionDetector.isConnectedToInternet())
-                        Toast.makeText(mActivity, "Please Try Later", Toast.LENGTH_SHORT).show();
-
+                        Snackbar.make(view, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
                     else {
                         new AlertDialog.Builder(mActivity)
                                 .setTitle("Delete?")
                                 .setMessage("Are You Sure You Want To Delete This Store?")
-
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-
                                         deleteStore(mStoreList.get(position).getId());
                                         mStoreList.remove(position);
                                         notifyItemRemoved(position);
                                         notifyItemRangeChanged(position, mStoreList.size());
-
                                     }
                                 })
 
@@ -169,11 +158,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                                 })
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
-
-
                     }
-
-
                 }
             }
         });
@@ -300,7 +285,6 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     }
 
     private void deleteStore(String storeId) {
-
         ApiCall apiCall = new ApiCall(mActivity, this);
         apiCall.DeleteStore(storeId, "delete");
     }

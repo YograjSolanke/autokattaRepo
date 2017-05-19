@@ -28,4 +28,6 @@
     <color name="approved">#DAF7A6</color>
     <color name="watched_item">#ffffff</color>
     <color name="your_bid">#ffffb3</color>
+    <color name="primary_text">#DE000000</color>
+    <color name="mid_gray">#757575</color>
 </resources>
