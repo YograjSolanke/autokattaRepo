@@ -12,13 +12,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -47,7 +47,6 @@ import autokatta.com.fragment_profile.Modules;
 import autokatta.com.fragment_profile.MyVehicles;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.ProfileAboutResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -73,7 +72,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
     File file;
     String dp;
     String RegID;
-    private SearchView mSearchView;
+    CoordinatorLayout mUserParent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +98,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
             Get Profile Data
              */
             getProfileData();
+            mUserParent = (CoordinatorLayout) findViewById(R.id.main_content);
             collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
             mProfilePicture = (ImageView) findViewById(R.id.user_image);
             mProfilePicture.setEnabled(false);
@@ -113,10 +113,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
             e.printStackTrace();
         }
 
-
         /*EDIT USER NAME AND PROFILE PIC*/
-
-
         mfab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,7 +129,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
             @Override
             public void onClick(View v) {
-
                 onPickImage(v);
             }
         });
@@ -153,7 +149,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         });
         mfab_done.setVisibility(View.GONE);
         mfab_edit.setVisibility(View.VISIBLE);
-
     }
 
     /*@Override
@@ -226,10 +221,10 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
                 }
             } else {
-                //       Snackbar.make(findViewById(R.id.user_profile), getString(R.string._404), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mUserParent, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mUserParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -241,9 +236,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (!str.equals("")) {
-            System.out.println("Imagggggggggggggggggggeeeeeeeeeeeeee" + str);
             if (str.equals("Success_update_profile")) {
-                CustomToast.customToast(getApplicationContext(), "Profile Updated Successfully");
+                Snackbar.make(mUserParent, "Profile Updated", Snackbar.LENGTH_SHORT).show();
                 getProfileData();
                 mProfilePicture.setEnabled(false);
                 collapsingToolbar.setEnabled(false);
