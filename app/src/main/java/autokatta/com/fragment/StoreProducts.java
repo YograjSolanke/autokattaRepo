@@ -122,7 +122,7 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
                     adapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.GONE);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);

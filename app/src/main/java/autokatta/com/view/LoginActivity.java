@@ -2,7 +2,10 @@ package autokatta.com.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,14 +18,15 @@ import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.other.SessionManagement;
 import autokatta.com.register.Registration;
 import autokatta.com.response.LoginResponse;
@@ -33,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText mUserName, mPassword;
     TextView mForgetPassword;
     SessionManagement session;
+    CoordinatorLayout mLogin;
     String userName;
     String password;
     KProgressHUD hud;
@@ -49,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
         } else {
             mUserName = (EditText) findViewById(R.id.username);
+            mLogin = (CoordinatorLayout) findViewById(R.id.login_layout);
             mPassword = (EditText) findViewById(R.id.password);
             mForgetPassword = (TextView) findViewById(R.id.forget_password);
             Button mLogin = (Button) findViewById(R.id.login);
@@ -108,8 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String myContact = mUserName.getText().toString();
                 if (!mLoginResponse.getSuccess().isEmpty()) {
                     String id = mLoginResponse.getSuccess().get(0).getRegID();
-                    Log.i("id", "->" + id);
-                    CustomToast.customToast(getApplicationContext(), "Login Successful");
+                    Snackbar.make(mLogin, "Success", Snackbar.LENGTH_SHORT).show();
                     if (getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", null) == null) {
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", id).apply();
                     }
@@ -121,31 +126,60 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     finish();
                     startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
                 } else {
-                    CustomToast.customToast(getApplicationContext(), mLoginResponse.getError().get(0));
+                    Snackbar.make(mLogin, mLoginResponse.getError().get(0), Snackbar.LENGTH_SHORT).show();
                 }
             } else {
                 hud.dismiss();
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                Snackbar.make(mLogin, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             hud.dismiss();
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mLogin, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        hud.dismiss();
         if (error instanceof SocketTimeoutException) {
-            hud.dismiss();
-            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            Snackbar.make(mLogin, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            hud.dismiss();
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mLogin, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            hud.dismiss();
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mLogin, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mLogin, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mLogin, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
-            hud.dismiss();
             Log.i("Check Class-", "Login Activity");
         }
     }

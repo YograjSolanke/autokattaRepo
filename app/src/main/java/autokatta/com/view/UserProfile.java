@@ -212,7 +212,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
             if (response.isSuccessful()) {
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
-
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
                     mUserName = mProfileAboutResponse.getSuccess().get(0).getUsername();
                     RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();

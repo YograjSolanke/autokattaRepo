@@ -3,7 +3,6 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.telephony.gsm.SmsManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,23 +29,15 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  */
 
 public class CompanyBasedInvitationAdapter extends BaseAdapter {
-
-    private LayoutInflater mInflater;
     private Activity mContext;
     private List<GetContactByCompanyResponse.Success> mList;
     private List<GetContactByCompanyResponse.Success> mListCopy;
-
-
     private ItemFilter mFilter = new ItemFilter();
 
-
     public CompanyBasedInvitationAdapter(Activity mContext, List<GetContactByCompanyResponse.Success> mList) {
-
         this.mContext = mContext;
         this.mList = mList;
         this.mListCopy = mList;//for search filter
-        // mInflater= (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     private class ContactListHolder {
@@ -72,13 +63,12 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
         } else {
             contactListHolder = (ContactListHolder) convertView.getTag();
         }
-        Log.i("aaaaaaaaaaaaaaaaa", "->" + mList);
+
         GetContactByCompanyResponse.Success success = mList.get(position);
         contactListHolder.mName.setText(success.getUsername());
         contactListHolder.mContact.setText(success.getContact());
 
         final ContactListHolder ContactListHolder = contactListHolder;
-
         contactListHolder.mbtnInvite.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,19 +99,12 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
     private class ItemFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-
             String filterString = constraint.toString().toLowerCase();
-
             FilterResults results = new FilterResults();
-
             final List<GetContactByCompanyResponse.Success> list = mListCopy;
-
             int count = list.size();
-
             final ArrayList<GetContactByCompanyResponse.Success> nlist = new ArrayList<>(count);
-
             GetContactByCompanyResponse.Success filterableString;
-
             for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);
                 if (filterString.equals("")) {
@@ -146,12 +129,9 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
     }
 
     private void sendSMSMessage(String con, String msg) {
-        Log.i("Send SMS", "");
-
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
-            Toast.makeText(mContext, "SMS sent.", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(mContext, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             e.printStackTrace();

@@ -4,8 +4,10 @@ import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
@@ -17,11 +19,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +35,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
@@ -45,10 +50,12 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     EditText edtvehicleno, edtfit, edtyear, edttax, edtpermit, edtinsurance, edtpuc, edtlastservice, edtnextservice;
     Spinner mSpinnerVehitype, mSpinnerModel, mSpinnerBrand, mSpinnerVersion, mSpinnerSubType;
 
-    LinearLayout relavite3;
-    ImageView purchaseCal, fitnessCal, taxCal, permitCal, insuranceCal, pucCal, lastServiceCal, nextServiceCal;
-    ImageView purchaseCancel, fitnessCancel, taxCancel, permitCancel, insuranceCancel, pucCancel, lastServiceCancel, nextServiceCancel;
+    ImageView purchaseCal, fitnessCal, taxCal, permitCal, insuranceCal, pucCal, lastServiceCal, nextServiceCal,
+            purchaseCancel, fitnessCancel, taxCancel, permitCancel, insuranceCancel, pucCancel, lastServiceCancel,
+            nextServiceCancel;
+
     String whichclick = "", subcategoryId, subcategoryName;
+
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
     HashMap<String, String> mVehicleTypeList1 = new HashMap<>();
     List<String> parsedData1 = new ArrayList<>();
@@ -69,7 +76,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     List<String> versionData = new ArrayList<>();
     HashMap<String, String> mVersionList1 = new HashMap<>();
 
-    Bundle bundle = new Bundle();
     String vehicle_idD, brandId, brandName, modelId, modelName, versionId, versionName;
     ApiCall mApicall;
 
@@ -82,6 +88,9 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
             insurance = "", puc = "", lastservice = "", nextservice = "", subcattext = "", brandtext = "", modeltext = "",
             versiontext = "", yeartext = "", contact;
 
+    RelativeLayout mNextRegistration;
+    ConnectionDetector mTestConnection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,51 +101,127 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        edtvehicleno = (EditText) findViewById(R.id.editvehicleno);
-        edttax = (EditText) findViewById(R.id.edittaxval);
-        edtfit = (EditText) findViewById(R.id.editfitval);
-        edtpermit = (EditText) findViewById(R.id.editpermitval);
-        edtinsurance = (EditText) findViewById(R.id.editinsurance);
-        edtpuc = (EditText) findViewById(R.id.editpuc);
-        edtlastservice = (EditText) findViewById(R.id.editlastservice);
-        edtnextservice = (EditText) findViewById(R.id.editestnextsrv);
-        edtyear = (EditText) findViewById(R.id.edityear);
-        btnsub = (Button) findViewById(R.id.btnSub);
-        btncancle = (Button) findViewById(R.id.btnCancle);
-        mSpinnerVehitype = (Spinner) findViewById(R.id.spinner_vehi_type);
-        mSpinnerSubType = (Spinner) findViewById(R.id.spinner_sub_Type);
-        mSpinnerBrand = (Spinner) findViewById(R.id.spinner_brand);
-        mSpinnerModel = (Spinner) findViewById(R.id.spinner_model);
-        mSpinnerVersion = (Spinner) findViewById(R.id.spinner_version);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mTestConnection = new ConnectionDetector(NextRegistrationContinue.this);
+                    edtvehicleno = (EditText) findViewById(R.id.editvehicleno);
+                    edttax = (EditText) findViewById(R.id.edittaxval);
+                    edtfit = (EditText) findViewById(R.id.editfitval);
+                    edtpermit = (EditText) findViewById(R.id.editpermitval);
+                    edtinsurance = (EditText) findViewById(R.id.editinsurance);
+                    edtpuc = (EditText) findViewById(R.id.editpuc);
+                    edtlastservice = (EditText) findViewById(R.id.editlastservice);
+                    edtnextservice = (EditText) findViewById(R.id.editestnextsrv);
+                    edtyear = (EditText) findViewById(R.id.edityear);
+                    btnsub = (Button) findViewById(R.id.btnSub);
+                    btncancle = (Button) findViewById(R.id.btnCancle);
+                    mSpinnerVehitype = (Spinner) findViewById(R.id.spinner_vehi_type);
+                    mSpinnerSubType = (Spinner) findViewById(R.id.spinner_sub_Type);
+                    mSpinnerBrand = (Spinner) findViewById(R.id.spinner_brand);
+                    mSpinnerModel = (Spinner) findViewById(R.id.spinner_model);
+                    mSpinnerVersion = (Spinner) findViewById(R.id.spinner_version);
+                    mNextRegistration = (RelativeLayout) findViewById(R.id.next_registration);
 
-        edtyear.setInputType(InputType.TYPE_NULL);
-        edttax.setInputType(InputType.TYPE_NULL);
-        edtfit.setInputType(InputType.TYPE_NULL);
-        edtpermit.setInputType(InputType.TYPE_NULL);
-        edtinsurance.setInputType(InputType.TYPE_NULL);
-        edtpuc.setInputType(InputType.TYPE_NULL);
-        edtlastservice.setInputType(InputType.TYPE_NULL);
-        edtnextservice.setInputType(InputType.TYPE_NULL);
+                    edtyear.setInputType(InputType.TYPE_NULL);
+                    edttax.setInputType(InputType.TYPE_NULL);
+                    edtfit.setInputType(InputType.TYPE_NULL);
+                    edtpermit.setInputType(InputType.TYPE_NULL);
+                    edtinsurance.setInputType(InputType.TYPE_NULL);
+                    edtpuc.setInputType(InputType.TYPE_NULL);
+                    edtlastservice.setInputType(InputType.TYPE_NULL);
+                    edtnextservice.setInputType(InputType.TYPE_NULL);
 
+                    purchaseCal = (ImageView) findViewById(R.id.purchaseCal);
+                    fitnessCal = (ImageView) findViewById(R.id.fitnessCal);
+                    taxCal = (ImageView) findViewById(R.id.taxCal);
+                    permitCal = (ImageView) findViewById(R.id.permitCal);
+                    insuranceCal = (ImageView) findViewById(R.id.insuranceCal);
+                    pucCal = (ImageView) findViewById(R.id.PUCCal);
+                    lastServiceCal = (ImageView) findViewById(R.id.lastServiceCal);
+                    nextServiceCal = (ImageView) findViewById(R.id.nextServiceCal);
 
-        purchaseCal = (ImageView) findViewById(R.id.purchaseCal);
-        fitnessCal = (ImageView) findViewById(R.id.fitnessCal);
-        taxCal = (ImageView) findViewById(R.id.taxCal);
-        permitCal = (ImageView) findViewById(R.id.permitCal);
-        insuranceCal = (ImageView) findViewById(R.id.insuranceCal);
-        pucCal = (ImageView) findViewById(R.id.PUCCal);
-        lastServiceCal = (ImageView) findViewById(R.id.lastServiceCal);
-        nextServiceCal = (ImageView) findViewById(R.id.nextServiceCal);
+                    purchaseCancel = (ImageView) findViewById(R.id.purchaseCan);
+                    fitnessCancel = (ImageView) findViewById(R.id.fitnessCan);
+                    taxCancel = (ImageView) findViewById(R.id.taxCan);
+                    permitCancel = (ImageView) findViewById(R.id.permitCan);
+                    insuranceCancel = (ImageView) findViewById(R.id.insuranceCan);
+                    pucCancel = (ImageView) findViewById(R.id.PUCCan);
+                    lastServiceCancel = (ImageView) findViewById(R.id.lastServiceCan);
+                    nextServiceCancel = (ImageView) findViewById(R.id.nextServiceCan);
 
-        purchaseCancel = (ImageView) findViewById(R.id.purchaseCan);
-        fitnessCancel = (ImageView) findViewById(R.id.fitnessCan);
-        taxCancel = (ImageView) findViewById(R.id.taxCan);
-        permitCancel = (ImageView) findViewById(R.id.permitCan);
-        insuranceCancel = (ImageView) findViewById(R.id.insuranceCan);
-        pucCancel = (ImageView) findViewById(R.id.PUCCan);
-        lastServiceCancel = (ImageView) findViewById(R.id.lastServiceCan);
-        nextServiceCancel = (ImageView) findViewById(R.id.nextServiceCan);
+                    Intent i = getIntent();
+                    action = i.getStringExtra("action");
 
+                    if (action.equalsIgnoreCase("MyVehicles")) {
+                        vehiType = i.getStringExtra("vehicletype");
+                        vehiYear = i.getStringExtra("vehicleyear");
+                        vehiBrand = i.getStringExtra("vehiclebrand");
+                        vehiModel = i.getStringExtra("vehiclemodel");
+                        vehiVersion = i.getStringExtra("vehicleversion");
+                        vehiSubcat = i.getStringExtra("vehiclesubcategory");
+
+                        ids = i.getStringExtra("idss");
+                        vehino = i.getStringExtra("vehicleno");
+                        vehitaxValidity = i.getStringExtra("taxvalidity");
+                        vehifitnessValidity = i.getStringExtra("fitnessvalidity");
+                        vehipermitValidity = i.getStringExtra("permitvalidity");
+                        vehiinsurance = i.getStringExtra("insurance");
+                        vehipuc = i.getStringExtra("puc");
+                        vehilastServicedate = i.getStringExtra("lastservice");
+                        vehinextservicedate = i.getStringExtra("nextservice");
+                        btnsub.setText("Update");
+                    }
+
+                    if (action.equalsIgnoreCase("MyVehicles")) {
+                        if (vehitaxValidity.equals("0000-00-00")) {
+                            vehitaxValidity = "";
+                        }
+                        if (vehipermitValidity.equals("0000-00-00")) {
+                            vehipermitValidity = "";
+                        }
+                        if (vehifitnessValidity.equals("0000-00-00")) {
+                            vehifitnessValidity = "";
+                        }
+                        if (vehiinsurance.equals("0000-00-00")) {
+                            vehiinsurance = "";
+                        }
+                        if (vehipuc.equals("0000-00-00")) {
+                            vehipuc = "";
+                        }
+                        if (vehilastServicedate.equals("0000-00-00")) {
+                            vehilastServicedate = "";
+                        }
+                        if (vehinextservicedate.equals("0000-00-00")) {
+                            vehinextservicedate = "";
+                        }
+                        if (vehiYear.equals("0000-00-00")) {
+                            vehiYear = "";
+                        }
+
+                        edttax.setText(vehitaxValidity);
+                        edtpermit.setText(vehipermitValidity);
+                        edtfit.setText(vehifitnessValidity);
+                        edtinsurance.setText(vehiinsurance);
+                        edtpuc.setText(vehipuc);
+                        edtlastservice.setText(vehilastServicedate);
+                        edtnextservice.setText(vehinextservicedate);
+                        edtyear.setText(vehiYear);
+
+                        //Setting Spinner Values
+                        edtvehicleno.setText(vehino);
+                        mSpinnerVehitype.setSelection(getIndex(mSpinnerVehitype, vehiType));
+                        mSpinnerSubType.setSelection(getIndex(mSpinnerSubType, vehiSubcat));
+                        mSpinnerBrand.setSelection(getIndex(mSpinnerBrand, vehiBrand));
+                        mSpinnerModel.setSelection(getIndex(mSpinnerModel, vehiModel));
+                        mSpinnerVersion.setSelection(getIndex(mSpinnerVersion, vehiVersion));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         purchaseCancel.setOnClickListener(this);
         fitnessCancel.setOnClickListener(this);
@@ -146,11 +231,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         pucCancel.setOnClickListener(this);
         lastServiceCancel.setOnClickListener(this);
         nextServiceCancel.setOnClickListener(this);
-
-
-        Intent i = getIntent();
-        action = i.getStringExtra("action");
-
         purchaseCal.setOnClickListener(this);
         taxCal.setOnClickListener(this);
         fitnessCal.setOnClickListener(this);
@@ -164,76 +244,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
 
         mApicall = new ApiCall(this, this);
         mApicall.getVehicleList();
-
-        try {
-            if (action.equalsIgnoreCase("MyVehicles")) {
-                vehiType = i.getStringExtra("vehicletype");
-                vehiYear = i.getStringExtra("vehicleyear");
-                vehiBrand = i.getStringExtra("vehiclebrand");
-                vehiModel = i.getStringExtra("vehiclemodel");
-                vehiVersion = i.getStringExtra("vehicleversion");
-                vehiSubcat = i.getStringExtra("vehiclesubcategory");
-
-                ids = i.getStringExtra("idss");
-                vehino = i.getStringExtra("vehicleno");
-                vehitaxValidity = i.getStringExtra("taxvalidity");
-                vehifitnessValidity = i.getStringExtra("fitnessvalidity");
-                vehipermitValidity = i.getStringExtra("permitvalidity");
-                vehiinsurance = i.getStringExtra("insurance");
-                vehipuc = i.getStringExtra("puc");
-                vehilastServicedate = i.getStringExtra("lastservice");
-                vehinextservicedate = i.getStringExtra("nextservice");
-                btnsub.setText("Update");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (action.equalsIgnoreCase("MyVehicles")) {
-            if (vehitaxValidity.equals("0000-00-00")) {
-                vehitaxValidity = "";
-            }
-            if (vehipermitValidity.equals("0000-00-00")) {
-                vehipermitValidity = "";
-            }
-            if (vehifitnessValidity.equals("0000-00-00")) {
-                vehifitnessValidity = "";
-            }
-            if (vehiinsurance.equals("0000-00-00")) {
-                vehiinsurance = "";
-            }
-            if (vehipuc.equals("0000-00-00")) {
-                vehipuc = "";
-            }
-            if (vehilastServicedate.equals("0000-00-00")) {
-                vehilastServicedate = "";
-            }
-            if (vehinextservicedate.equals("0000-00-00")) {
-                vehinextservicedate = "";
-            }
-            if (vehiYear.equals("0000-00-00")) {
-                vehiYear = "";
-            }
-
-
-            edttax.setText(vehitaxValidity);
-            edtpermit.setText(vehipermitValidity);
-            edtfit.setText(vehifitnessValidity);
-            edtinsurance.setText(vehiinsurance);
-            edtpuc.setText(vehipuc);
-            edtlastservice.setText(vehilastServicedate);
-            edtnextservice.setText(vehinextservicedate);
-            edtyear.setText(vehiYear);
-
-            //Setting Spinner Values
-            edtvehicleno.setText(vehino);
-            System.out.println("--------------------------------------" + mSpinnerVehitype.toString());
-            mSpinnerVehitype.setSelection(getIndex(mSpinnerVehitype, vehiType));
-            mSpinnerSubType.setSelection(getIndex(mSpinnerSubType, vehiSubcat));
-            mSpinnerBrand.setSelection(getIndex(mSpinnerBrand, vehiBrand));
-            mSpinnerModel.setSelection(getIndex(mSpinnerModel, vehiModel));
-            mSpinnerVersion.setSelection(getIndex(mSpinnerVersion, vehiVersion));
-        }
     }
 
     @Override
@@ -245,30 +255,33 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 if (mSpinnerVehitype.getSelectedItem() != null && mSpinnerVehitype != null) {
                     vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Vehicle Type", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mNextRegistration, "Select Vehicle Type", Snackbar.LENGTH_SHORT).show();
                 }
+
                 if (mSpinnerBrand.getSelectedItem() != null && mSpinnerBrand != null) {
                     brandtext = mSpinnerBrand.getSelectedItem().toString();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Brand", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mNextRegistration, "Select Brand", Snackbar.LENGTH_SHORT).show();
                 }
+
                 if (mSpinnerModel.getSelectedItem() != null && mSpinnerModel != null) {
                     modeltext = mSpinnerModel.getSelectedItem().toString();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select Model", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mNextRegistration, "Select Model", Snackbar.LENGTH_SHORT).show();
                 }
+
                 if (mSpinnerVersion.getSelectedItem() != null && mSpinnerVersion != null) {
                     versiontext = mSpinnerVersion.getSelectedItem().toString();
-
                 } else {
-
-                    Toast.makeText(getApplicationContext(), "Select Version", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mNextRegistration, "Select Version", Snackbar.LENGTH_SHORT).show();
                 }
+
                 if (mSpinnerSubType.getSelectedItem() != null && mSpinnerSubType != null) {
                     subcattext = mSpinnerSubType.getSelectedItem().toString();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Select SubType", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mNextRegistration, "Select SubType", Snackbar.LENGTH_SHORT).show();
                 }
+
                 yeartext = edtyear.getText().toString();
                 taxvaltext = edttax.getText().toString();
                 permitvaltext = edtpermit.getText().toString();
@@ -278,9 +291,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 lastservice = edtlastservice.getText().toString();
                 nextservice = edtnextservice.getText().toString();
 
-
                 if (!yeartext.equals("")) {
-                    flag=1;
+                    flag = 1;
                 } else {
                     flag = 0;
                     edtyear.setError("Please provide purchase date");
@@ -299,7 +311,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         flag = 0;
                     }
                 }
-
 
                 if (!permitvaltext.equals("")) {
                     if (!isValidDate(permitvaltext, yeartext)) {
@@ -322,7 +333,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                 }
 
-
                 if (!lastservice.equals("")) {
                     if (!isValidDate(lastservice, yeartext)) {
                         edtlastservice.setError("Invalid date");
@@ -330,14 +340,12 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                 }
 
-
                 if (!nextservice.equals("")) {
                     if (!isValidDate(nextservice, yeartext)) {
                         edtnextservice.setError("Invalid date");
                         flag = 0;
                     }
                 }
-
 
                 if (!nextservice.equalsIgnoreCase("") && !lastservice.equalsIgnoreCase("")) {
                     if (!isValidDate(nextservice, lastservice)) {
@@ -358,8 +366,25 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         && mSpinnerVersion.getSelectedItem() != null && mSpinnerVersion != null &&
                         mSpinnerSubType.getSelectedItem() != null && mSpinnerSubType != null) {
                     /*Response is Success*/
-                    mApicall.addOwn(contact, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
-                            taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
+                    if (mTestConnection.isConnectedToInternet()) {
+                        mApicall.addOwn(contact, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
+                                taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
+                    } else {
+                        Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                                .setAction("Go Online", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                                    }
+                                });
+                        // Changing message text color
+                        snackbar.setActionTextColor(Color.RED);
+                        // Changing action button text color
+                        View sbView = snackbar.getView();
+                        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                        textView.setTextColor(Color.YELLOW);
+                        snackbar.show();
+                    }
                     //addOwn();
 
                 } else if (flag == 1 && action.equalsIgnoreCase("MyVehicles") && mSpinnerVehitype.getSelectedItem() != null && mSpinnerVehitype != null
@@ -368,15 +393,31 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         && mSpinnerVersion.getSelectedItem() != null && mSpinnerVersion != null
                         && mSpinnerSubType.getSelectedItem() != null && mSpinnerSubType != null) {
                     /*Response is success*/
-                    mApicall.uploadVehicle(ids, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
-                            taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
-                    CustomToast.customToast(getApplicationContext(), "Vehicle Uploaded Successfully!!!");
+                    if (mTestConnection.isConnectedToInternet()) {
+                        mApicall.uploadVehicle(ids, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
+                                taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
+                    } else {
+                        Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                                .setAction("Go Online", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                                    }
+                                });
+                        // Changing message text color
+                        snackbar.setActionTextColor(Color.RED);
+                        // Changing action button text color
+                        View sbView = snackbar.getView();
+                        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                        textView.setTextColor(Color.YELLOW);
+                        snackbar.show();
+                    }
+                    Snackbar.make(mNextRegistration, "Vehicle Uploaded", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    CustomToast.customToast(getApplicationContext(), "Error please provide all details Correct!!!");
+                    Snackbar.make(mNextRegistration, "Provide all details", Snackbar.LENGTH_SHORT).show();
                 }
-
-
                 break;
+
             case R.id.btnCancle:
                 edtvehicleno.setText("");
                 edtfit.setText("");
@@ -403,152 +444,133 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 edtlastservice.setError(null);
                 edtnextservice.setError(null);
                 onBackPressed();
-
                 break;
 
-            case (R.id.purchaseCal):
+            case R.id.purchaseCal:
                 edtyear.setError(null);
                 new SetMyDateAndTime("date", edtyear, NextRegistrationContinue.this);
                 purchaseCancel.setVisibility(View.VISIBLE);
                 purchaseCal.setVisibility(View.GONE);
-
                 break;
-            case (R.id.taxCal):
 
+            case R.id.taxCal:
                 edttax.setError(null);
                 new SetMyDateAndTime("date", edttax, NextRegistrationContinue.this);
                 taxCancel.setVisibility(View.VISIBLE);
                 taxCal.setVisibility(View.GONE);
-
                 break;
-            case (R.id.fitnessCal):
 
+            case R.id.fitnessCal:
                 edtfit.setError(null);
                 new SetMyDateAndTime("date", edtfit, NextRegistrationContinue.this);
                 fitnessCancel.setVisibility(View.VISIBLE);
                 fitnessCal.setVisibility(View.GONE);
-
                 break;
-            case (R.id.permitCal):
 
+            case R.id.permitCal:
                 edtpermit.setError(null);
                 new SetMyDateAndTime("date", edtpermit, NextRegistrationContinue.this);
                 permitCancel.setVisibility(View.VISIBLE);
                 permitCal.setVisibility(View.GONE);
-
                 break;
-            case (R.id.insuranceCal):
 
+            case R.id.insuranceCal:
                 edtinsurance.setError(null);
                 new SetMyDateAndTime("date", edtinsurance, NextRegistrationContinue.this);
                 insuranceCancel.setVisibility(View.VISIBLE);
                 insuranceCal.setVisibility(View.GONE);
-
                 break;
-            case (R.id.lastServiceCal):
 
+            case R.id.lastServiceCal:
                 edtlastservice.setError(null);
                 new SetMyDateAndTime("date", edtlastservice, NextRegistrationContinue.this);
                 lastServiceCancel.setVisibility(View.VISIBLE);
                 lastServiceCal.setVisibility(View.GONE);
-
                 break;
-            case (R.id.PUCCal):
 
+            case R.id.PUCCal:
                 edtpuc.setError(null);
                 new SetMyDateAndTime("date", edtpuc, NextRegistrationContinue.this);
                 pucCancel.setVisibility(View.VISIBLE);
                 pucCal.setVisibility(View.GONE);
-
                 break;
-            case (R.id.nextServiceCal):
 
+            case R.id.nextServiceCal:
                 whichclick = "edtnextservice";
                 edtnextservice.setError(null);
                 new SetMyDateAndTime("date", edtnextservice, NextRegistrationContinue.this);
                 nextServiceCancel.setVisibility(View.VISIBLE);
                 nextServiceCal.setVisibility(View.GONE);
-
                 break;
 
-            case (R.id.purchaseCan):
-
+            case R.id.purchaseCan:
                 edtyear.setError(null);
                 edtyear.setText(null);
                 edtyear.clearFocus();
                 purchaseCancel.setVisibility(View.GONE);
                 purchaseCal.setVisibility(View.VISIBLE);
-
                 break;
-            case (R.id.fitnessCan):
 
+            case R.id.fitnessCan:
                 edtfit.setError(null);
                 edtfit.setText(null);
                 edtfit.clearFocus();
                 fitnessCancel.setVisibility(View.GONE);
                 fitnessCal.setVisibility(View.VISIBLE);
-
                 break;
-            case (R.id.taxCan):
 
+            case R.id.taxCan:
                 edttax.setError(null);
                 edttax.setText(null);
                 edttax.clearFocus();
                 taxCancel.setVisibility(View.GONE);
                 taxCal.setVisibility(View.VISIBLE);
-
                 break;
-            case (R.id.permitCan):
 
+            case R.id.permitCan:
                 edtpermit.setText(null);
                 edtpermit.setError(null);
                 edtpermit.clearFocus();
                 permitCancel.setVisibility(View.GONE);
                 permitCal.setVisibility(View.VISIBLE);
-
                 break;
-            case (R.id.insuranceCan):
 
+            case R.id.insuranceCan:
                 edtinsurance.setError(null);
                 edtinsurance.setText(null);
                 edtinsurance.clearFocus();
                 insuranceCancel.setVisibility(View.GONE);
                 insuranceCal.setVisibility(View.VISIBLE);
-
                 break;
-            case (R.id.PUCCan):
 
+            case R.id.PUCCan:
                 edtpuc.setError(null);
                 edtpuc.setText(null);
                 edtpuc.clearFocus();
                 pucCancel.setVisibility(View.GONE);
                 pucCal.setVisibility(View.VISIBLE);
-
                 break;
-            case (R.id.lastServiceCan):
 
+            case R.id.lastServiceCan:
                 edtlastservice.setError(null);
                 edtlastservice.setText(null);
                 edtlastservice.clearFocus();
                 lastServiceCancel.setVisibility(View.GONE);
                 lastServiceCal.setVisibility(View.VISIBLE);
-
                 break;
-            case (R.id.nextServiceCan):
 
+            case R.id.nextServiceCan:
                 edtnextservice.setError(null);
                 edtnextservice.setText(null);
                 edtnextservice.clearFocus();
                 nextServiceCancel.setVisibility(View.GONE);
                 nextServiceCal.setVisibility(View.VISIBLE);
-
                 break;
         }
     }
 
     private int getIndex(Spinner spinner, String myString) {
         int index = 0;
-        System.out.println("Spinner Count:" + spinner.getCount());
         for (int i = 0; i < spinner.getCount(); i++) {
             if (spinner.getItemAtPosition(i).equals(myString)) {
                 index = i;
@@ -591,158 +613,11 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         }
         return flag1;
     }
-//
-//    @Override
-//    public boolean onTouch(View view, MotionEvent motionEvent) {
-//        int action = motionEvent.getAction();
-//        switch (view.getId()) {
-//            case (R.id.purchaseCal):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtyear.setError(null);
-//                    new SetMyDateAndTime("date", edtyear, NextRegistrationContinue.this);
-//                    purchaseCancel.setVisibility(View.VISIBLE);
-//                    purchaseCal.setVisibility(View.GONE);
-//                }
-//                break;
-//            case (R.id.taxCal):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edttax.setError(null);
-//                    new SetMyDateAndTime("date", edttax, NextRegistrationContinue.this);
-//                    taxCancel.setVisibility(View.VISIBLE);
-//                    taxCal.setVisibility(View.GONE);
-//                }
-//                break;
-//            case (R.id.fitnessCal):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtfit.setError(null);
-//                    new SetMyDateAndTime("date", edtfit, NextRegistrationContinue.this);
-//                    fitnessCancel.setVisibility(View.VISIBLE);
-//                    fitnessCal.setVisibility(View.GONE);
-//                }
-//                break;
-//            case (R.id.permitCal):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtpermit.setError(null);
-//                    new SetMyDateAndTime("date", edtpermit, NextRegistrationContinue.this);
-//                    permitCancel.setVisibility(View.VISIBLE);
-//                    permitCal.setVisibility(View.GONE);
-//                }
-//                break;
-//            case (R.id.insuranceCal):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtinsurance.setError(null);
-//                    new SetMyDateAndTime("date", edtinsurance, NextRegistrationContinue.this);
-//                    insuranceCancel.setVisibility(View.VISIBLE);
-//                    insuranceCal.setVisibility(View.GONE);
-//                }
-//                break;
-//            case (R.id.lastServiceCal):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtlastservice.setError(null);
-//                    new SetMyDateAndTime("date", edtlastservice, NextRegistrationContinue.this);
-//                    lastServiceCancel.setVisibility(View.VISIBLE);
-//                    lastServiceCal.setVisibility(View.GONE);
-//                }
-//                break;
-//            case (R.id.PUCCal):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtpuc.setError(null);
-//                    new SetMyDateAndTime("date", edtpuc, NextRegistrationContinue.this);
-//                    pucCancel.setVisibility(View.VISIBLE);
-//                    pucCal.setVisibility(View.GONE);
-//                }
-//                break;
-//            case (R.id.nextServiceCal):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    whichclick = "edtnextservice";
-//                    edtnextservice.setError(null);
-//                    new SetMyDateAndTime("date", edtnextservice, NextRegistrationContinue.this);
-//                    nextServiceCancel.setVisibility(View.VISIBLE);
-//                    nextServiceCal.setVisibility(View.GONE);
-//                }
-//                break;
-//
-//            case (R.id.purchaseCan):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtyear.setError(null);
-//                    edtyear.setText(null);
-//                    edtyear.clearFocus();
-//                    purchaseCancel.setVisibility(View.GONE);
-//                    purchaseCal.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case (R.id.fitnessCan):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtfit.setError(null);
-//                    edtfit.setText(null);
-//                    edtfit.clearFocus();
-//                    fitnessCancel.setVisibility(View.GONE);
-//                    fitnessCal.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case (R.id.taxCan):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edttax.setError(null);
-//                    edttax.setText(null);
-//                    edttax.clearFocus();
-//                    taxCancel.setVisibility(View.GONE);
-//                    taxCal.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case(R.id.permitCan):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtpermit.setText(null);
-//                    edtpermit.setError(null);
-//                    edtpermit.clearFocus();
-//                    permitCancel.setVisibility(View.GONE);
-//                    permitCal.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case (R.id.insuranceCan):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtinsurance.setError(null);
-//                    edtinsurance.setText(null);
-//                    edtinsurance.clearFocus();
-//                    insuranceCancel.setVisibility(View.GONE);
-//                    insuranceCal.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case (R.id.PUCCan):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtpuc.setError(null);
-//                    edtpuc.setText(null);
-//                    edtpuc.clearFocus();
-//                    pucCancel.setVisibility(View.GONE);
-//                    pucCal.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case (R.id.lastServiceCan):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtlastservice.setError(null);
-//                    edtlastservice.setText(null);
-//                    edtlastservice.clearFocus();
-//                    lastServiceCancel.setVisibility(View.GONE);
-//                    lastServiceCal.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case (R.id.nextServiceCan):
-//                if (action == MotionEvent.ACTION_DOWN) {
-//                    edtnextservice.setError(null);
-//                    edtnextservice.setText(null);
-//                    edtnextservice.clearFocus();
-//                    nextServiceCancel.setVisibility(View.GONE);
-//                    nextServiceCal.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//        }
-//        return false;
-//    }
 
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                Log.i("select--->", "vehicle" + response.body());
                 if (response.body() instanceof GetVehicleListResponse) {
                     mVehicleTypeList.clear();
                     mVehicleTypeList1.clear();
@@ -790,7 +665,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         });
                     }
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
-                    Log.e("GetVehicle sub Types", "->");
                     mSubTypeList.clear();
                     mSubTypeList1.clear();
                     parsedData.clear();
@@ -814,9 +688,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                 subcategoryId = mSubTypeList1.get(parsedData.get(position));
                                 subcategoryName = parsedData.get(position);
                                 ((TextView) mSpinnerSubType.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
-                                System.out.println("Sub cat is::" + subcategoryId);
-                                System.out.println("Sub cat vehicle iddd is::" + vehicle_idD);
-                                System.out.println("Sub cat name::" + subcategoryName);
                                 getBrand(vehicle_idD, subcategoryId);
                             }
                         }
@@ -827,7 +698,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         }
                     });
                 } else if (response.body() instanceof GetVehicleBrandResponse) {
-                    Log.e("GetVehicleBrands", "->");
                     mBrandIdList.clear();
                     mBrandList1.clear();
                     brandData.clear();
@@ -841,7 +711,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                     mBrandIdList.add("other");
                     brandData.addAll(mBrandIdList);
-                    Log.i("ListBrand", "->" + mBrandIdList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -874,7 +743,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edbrand = input.getText().toString();
                                                 if (edbrand.equals(""))
-                                                    CustomToast.customToast(getApplicationContext(), "Please enter brand");
+                                                    Snackbar.make(mNextRegistration, "Enter Brand", Snackbar.LENGTH_SHORT).show();
                                                 else
                                                     AddBrand("Brand", edbrand, vehicle_idD, subcategoryId);
                                                 dialog.dismiss();
@@ -940,7 +809,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edmodel = input.getText().toString();
                                                 if (edmodel.equals(""))
-                                                    Toast.makeText(getApplicationContext(), "Please enter model", Toast.LENGTH_LONG).show();
+                                                    Snackbar.make(mNextRegistration, "Enter Model", Snackbar.LENGTH_SHORT).show();
                                                 else
                                                     AddModel("Model", edmodel, vehicle_idD, subcategoryId, brandId);
                                                 dialog.dismiss();
@@ -965,7 +834,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         }
                     });
                 } else if (response.body() instanceof GetVehicleVersionResponse) {
-                    Log.e("GetVehicleVersion", "->");
                     mVersionIdList.clear();
                     mVersionList1.clear();
                     versionData.clear();
@@ -979,7 +847,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                     mVersionIdList.add("other");
                     versionData.addAll(mVersionIdList);
-                    Log.i("ListVersion", "->" + mVersionIdList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, versionData);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -992,11 +859,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                 versionId = mVersionList1.get(versionData.get(position));
                                 versionName = versionData.get(position);
                                 ((TextView) mSpinnerVersion.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
-                                System.out.println("Version id is::" + versionId);
-                                System.out.println("Version name::" + versionName);
                             }
                             if (versionData.get(position).equalsIgnoreCase("other")) {
-
                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(NextRegistrationContinue.this);
                                 alertDialog.setTitle("Add Version");
                                 alertDialog.setMessage("Enter version name");
@@ -1012,7 +876,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edversion = input.getText().toString();
                                                 if (edversion.equals(""))
-                                                    Toast.makeText(getApplicationContext(), "Please enter version", Toast.LENGTH_LONG).show();
+                                                    Snackbar.make(mNextRegistration, "Enter Version", Snackbar.LENGTH_SHORT).show();
                                                 else
                                                     AddVersion("Version", edversion, vehicle_idD, subcategoryId, brandId, modelId);
                                                 dialog.dismiss();
@@ -1044,10 +908,43 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            Snackbar.make(mNextRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mNextRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mNextRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Continue Next Registration");
             error.printStackTrace();
@@ -1067,8 +964,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     finish();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
-                Toast.makeText(getApplicationContext(), "Your Vehicle added Successfully",
-                        Toast.LENGTH_LONG).show();
+                Snackbar.make(mNextRegistration, "Vehicle Added", Snackbar.LENGTH_SHORT).show();
                 android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(NextRegistrationContinue.this);
                 // set title
                 alertDialogBuilder.setTitle("Add Vehicle");
@@ -1142,19 +1038,19 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 // show it
                 alertDialog.show();
             } else if (str.equals("success_brand_add")) {
-                CustomToast.customToast(getApplicationContext(), "Brand added successfully");
+                Snackbar.make(mNextRegistration, "Brand Added", Snackbar.LENGTH_SHORT).show();
                 getBrand(vehicle_idD, subcategoryId);
                 Log.i("msg", "Brand added successfully");
             } else if (str.equals("success_model_add")) {
-                CustomToast.customToast(getApplicationContext(), "Model added successfully");
+                Snackbar.make(mNextRegistration, "Model Added", Snackbar.LENGTH_SHORT).show();
                 getModel(vehicle_idD, subcategoryId, brandId);
             } else if (str.equals("success_version_add")) {
-                CustomToast.customToast(getApplicationContext(), "Version added successfully");
+                Snackbar.make(mNextRegistration, "Version Added", Snackbar.LENGTH_SHORT).show();
                 getVersion(vehicle_idD, subcategoryId, brandId, modelId);
             }
 
         } else
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+            Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
     }
 
     /*

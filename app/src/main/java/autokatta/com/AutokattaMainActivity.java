@@ -200,6 +200,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_left_to_right);
                         if (menuItem.getItemId() == R.id.home) {
                             startActivity(new Intent(AutokattaMainActivity.this, AutokattaMainActivity.class));
                             finish();
@@ -226,28 +227,20 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             startActivity(new Intent(AutokattaMainActivity.this, MySearchActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyUploadedVehiclesActivity.class));
-
                         } else if (menuItem.getItemId() == R.id.create_event) {
                             startActivity(new Intent(AutokattaMainActivity.this, Create_Event.class));
-
                         } else if (menuItem.getItemId() == R.id.active_event) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyActiveEventsTabActivity.class));
-
                         } else if (menuItem.getItemId() == R.id.upcoming_event) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyUpcomingEventsTabActivity.class));
                         } else if (menuItem.getItemId() == R.id.saved_event) {
-
                             startActivity(new Intent(AutokattaMainActivity.this, MySavedAuctionEventActivity.class));
-
                         } else if (menuItem.getItemId() == R.id.ended_event) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyEndedEventTabActivity.class));
-
                         } else if (menuItem.getItemId() == R.id.black_list_contact) {
                             startActivity(new Intent(AutokattaMainActivity.this, BlackListedMemberActivity.class));
-
                         } else if (menuItem.getItemId() == R.id.broadcast_groups) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyBroadcastGroupsActivity.class));
-
                         } else if (menuItem.getItemId() == R.id.my_broadcast_message) {
                             startActivity(new Intent(AutokattaMainActivity.this, BroadcastMessageActivity.class));
                         } else if (menuItem.getItemId() == R.id.business_Chat) {
@@ -256,6 +249,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             startActivity(new Intent(AutokattaMainActivity.this, MapsActivity.class));
                         } else if (menuItem.getItemId() == R.id.sign_out) {
                             session.logoutUser();
+                            finish();
                         }
                         return true;
                     }

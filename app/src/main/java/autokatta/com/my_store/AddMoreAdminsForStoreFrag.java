@@ -2,8 +2,10 @@ package autokatta.com.my_store;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,8 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import autokatta.com.R;
@@ -26,7 +31,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.Db_AutokattaContactResponse;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.view.StoreViewActivity;
@@ -70,18 +74,13 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
         apiCall = new ApiCall(getActivity(), this);
         dbOperation = new DbOperation(getActivity());
 
-
         try {
             Bundle b = getArguments();
-
             store_id = b.getString("store_id");
             callFrom = b.getString("call");
-
-            System.out.println("call from in add products" + callFrom);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         DbOperation dbAdpter = new DbOperation(getActivity());
         dbAdpter.OPEN();
@@ -92,10 +91,8 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             do {
                 Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
                 Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
-
                 obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
                 obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
-
                 contactdata.add(obj);
             } while (cursor.moveToNext());
         }
@@ -110,18 +107,14 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             @Override
             public void onClick(View v) {
                 StoreAdminAdapter.boxdata.clear();
-
-
                 Bundle b = new Bundle();
                 // b.putString("action", "main");
                 b.putString("store_id", store_id);
-
 
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
                     Intent intent = new Intent(getActivity(), StoreViewActivity.class);
                     intent.putExtras(b);
                     getActivity().startActivity(intent);
-
                 } else {
                     Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
                     getActivity().startActivity(i);
@@ -133,53 +126,35 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if (StoreAdminAdapter.boxdata.size() != 0) {
-
                     for (int i = 0; i < StoreAdminAdapter.boxdata.size(); i++) {
                         if (!StoreAdminAdapter.boxdata.get(i).equalsIgnoreCase("0")) {
-
                             if (finaladmins.equals(""))
                                 finaladmins = StoreAdminAdapter.boxdata.get(i);
                             else
                                 finaladmins = finaladmins + "," + StoreAdminAdapter.boxdata.get(i);
                         }
                     }
-
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!! finaladmins" + finaladmins);
-
                 }
-
-
                 addStoreAdmins(store_id, finaladmins);
-
-
             }
         });
 
-
         inputSearch.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("Text [" + s + "]");
-
                 adapter.getFilter().filter(s.toString());
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
-
-
         return root;
     }
 
@@ -195,19 +170,15 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 /*
                         Response to get store admins
                  */
                 if (response.body() instanceof StoreOldAdminResponse) {
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
-
                     if (!adminResponse.getSuccess().isEmpty()) {
-
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
                             alreadyAdmin.add(success.getAdmin());
                         }
-
                     } /*else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));*/
                     if (!(alreadyAdmin.size() == 0))
@@ -217,24 +188,54 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     }
                     list.setAdapter(adapter);
                 }
-
-
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Add more Admins Store Fragment");
             error.printStackTrace();
@@ -244,13 +245,10 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
     @Override
     public void notifyString(String str) {
         if (str != null) {
-
             if (str.startsWith("success")) {
                 Bundle b = new Bundle();
                 //  b.putString("action", "main");
                 b.putString("store_id", store_id);
-
-
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
                     Intent intent = new Intent(getActivity(), StoreViewActivity.class);
                     intent.putExtras(b);
@@ -261,8 +259,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                 }
                 getActivity().finish();
             }
-
         } else
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
     }
 }

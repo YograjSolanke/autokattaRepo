@@ -52,7 +52,6 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
                 .getString("loginContact", ""));
 
         inputSearch.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 adapter.getFilter().filter(s.toString());

@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,9 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +39,6 @@ import autokatta.com.Registration.MultiSelectionSpinner;
 import autokatta.com.Registration.Multispinner;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
@@ -52,14 +56,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     AutoCompleteTextView autoCompany, autoDesignation;
     MultiAutoCompleteTextView autoSkills, autoDeals;
     Button Next, Cancel;
-    String strCompany, strDesignation, updatecompany, updatedesignation, RegiId = "234";
-    String skillpart = "", skillid = "";
-    String dealpart = "", dealid = "";
-    String Skidlist = "", Deidlist = "";
-    boolean skillflag = false;
-    boolean dealflag = false;
-    String Skills = "", Deals = "";
-    String page = "2";
+    String strCompany, strDesignation, updatecompany, updatedesignation, RegiId = "", skillpart = "", skillid = "",
+            dealpart = "", dealid = "", Skidlist = "", Deidlist = "", Skills = "", Deals = "", page = "2";
+    boolean skillflag = false, dealflag = false;
 
     ArrayList<String> mSkillList = new ArrayList<>();
     HashMap<String, String> mSkillList1 = new HashMap<>();
@@ -71,10 +70,10 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     HashMap<String, String> mCompanyList1 = new HashMap<>();
 
     HashMap<String, String> mdistList1 = new HashMap<>();
-    final List<String> distNameList = new ArrayList<String>();
+    final List<String> distNameList = new ArrayList<>();
 
     HashMap<String, String> mStatelist1 = new HashMap<>();
-    List<String> stateLst = new ArrayList<String>();
+    List<String> stateLst = new ArrayList<>();
 
     List<String> parsedDataCompany = new ArrayList<>();
     List<String> parsedDataDesignation = new ArrayList<>();
@@ -85,13 +84,13 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     HashMap<String, String> mDesignationList1 = new HashMap<>();
 
     HashMap<String, String> mCategoryListHash = new HashMap<>();
-    List<String> mCategoryLis = new ArrayList<String>();
+    List<String> mCategoryLis = new ArrayList<>();
     List<String> parsedDataCategory = new ArrayList<>();
     String categoryId = "";
     String categoryName = "";
 
     HashMap<String, String> mSubCategoryListHash = new HashMap<>();
-    List<String> mSubCategoryList = new ArrayList<String>();
+    List<String> mSubCategoryList = new ArrayList<>();
     List<String> parsedDataSubCategory = new ArrayList<>();
     String subCategoryId = "";
     String subCategoryName = "";
@@ -111,7 +110,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     public static final String MyloginPREFERENCES = "login";
 
     ApiCall mApiCall;
-    RelativeLayout relativeDealingLayout;
+    RelativeLayout relativeDealingLayout, mCompanyBased;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,152 +121,127 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
         mApiCall = new ApiCall(this, this);
-        autoCompany = (AutoCompleteTextView) findViewById(R.id.autocompany);
-        autoDesignation = (AutoCompleteTextView) findViewById(R.id.autodesignation);
-        autoSkills = (MultiAutoCompleteTextView) findViewById(R.id.autoskills);
-        autoDeals = (MultiAutoCompleteTextView) findViewById(R.id.autodeals);
-        Next = (Button) findViewById(R.id.btnnext);
-        Cancel = (Button) findViewById(R.id.btncancel);
-        relativeDealingLayout = (RelativeLayout) findViewById(R.id.relnewvehidealer);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                autoCompany = (AutoCompleteTextView) findViewById(R.id.autocompany);
+                autoDesignation = (AutoCompleteTextView) findViewById(R.id.autodesignation);
+                autoSkills = (MultiAutoCompleteTextView) findViewById(R.id.autoskills);
+                autoDeals = (MultiAutoCompleteTextView) findViewById(R.id.autodeals);
+                Next = (Button) findViewById(R.id.btnnext);
+                Cancel = (Button) findViewById(R.id.btncancel);
+                relativeDealingLayout = (RelativeLayout) findViewById(R.id.relnewvehidealer);
+
+                spinArea = (Spinner) findViewById(R.id.spinnerArea);
+                spinKms = (Spinner) findViewById(R.id.spinnerKms);
+                spinCategory = (Spinner) findViewById(R.id.spinnerCatagory);
+                spinSubCategory = (Spinner) findViewById(R.id.spinnerSubCatagory);
+                spinManufacturer = (Spinner) findViewById(R.id.spinnerManufacture);
+
+                spinDistrict = (MultiSelectionSpinner) findViewById(R.id.spinnerDistrict);
+                spinState = (MultiSelectionSpinner) findViewById(R.id.spinnerState);
+
+                relativeKms = (RelativeLayout) findViewById(R.id.relSpinnerKms);
+                relativeDistrict = (RelativeLayout) findViewById(R.id.relSpinnerDistrict);
+                relativeState = (RelativeLayout) findViewById(R.id.relSpinnerState);
+                mCompanyBased = (RelativeLayout) findViewById(R.id.company_based);
+
+                prefs = getApplicationContext().getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);
+                RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", "");
+
+                mApiCall.getCompany();
+                mApiCall.getDeals();
+                mApiCall.getDesignation();
+                mApiCall.getSkills();
+                autoSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+                autoSkills.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                        if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                                (i == KeyEvent.KEYCODE_ENTER)) {
+                            autoSkills.setText(autoSkills.getText().toString() + ",");
+                            autoSkills.setSelection(autoSkills.getText().toString().length());
+                            checkSkills();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+                autoSkills.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        checkSkills();
+                    }
+                });
+
+                //Dealing choice code
+                autoDeals.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                autoDeals.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                        if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                                (i == KeyEvent.KEYCODE_ENTER)) {
+                            autoDeals.setText(autoDeals.getText().toString() + ",");
+                            autoDeals.setSelection(autoDeals.getText().toString().length());
+                            checkDeals();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+                autoDeals.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        checkDeals();
+                    }
+                });
+
+                spinArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        strArea = spinArea.getSelectedItem().toString();
+                        if (strArea.equalsIgnoreCase("By Kms")) {
+                            relativeKms.setVisibility(View.VISIBLE);
+                            relativeDistrict.setVisibility(View.GONE);
+                            relativeState.setVisibility(View.GONE);
+                        } else if (strArea.equalsIgnoreCase("By District")) {
+                            relativeDistrict.setVisibility(View.VISIBLE);
+                            relativeKms.setVisibility(View.GONE);
+                            relativeState.setVisibility(View.GONE);
+                            mApiCall.getDistricts();
+                        } else if (strArea.equalsIgnoreCase("By State")) {
+                            relativeState.setVisibility(View.VISIBLE);
+                            relativeDistrict.setVisibility(View.GONE);
+                            relativeKms.setVisibility(View.GONE);
+                            mApiCall.getStates();
+                        } else {
+                            relativeKms.setVisibility(View.GONE);
+                            relativeDistrict.setVisibility(View.GONE);
+                            relativeState.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+            }
+        });
         Next.setOnClickListener(this);
         Cancel.setOnClickListener(this);
-
-        spinArea = (Spinner) findViewById(R.id.spinnerArea);
-        spinKms = (Spinner) findViewById(R.id.spinnerKms);
-        spinCategory = (Spinner) findViewById(R.id.spinnerCatagory);
-        spinSubCategory = (Spinner) findViewById(R.id.spinnerSubCatagory);
-        spinManufacturer = (Spinner) findViewById(R.id.spinnerManufacture);
-
-        spinDistrict = (MultiSelectionSpinner) findViewById(R.id.spinnerDistrict);
-        spinState = (MultiSelectionSpinner) findViewById(R.id.spinnerState);
-
-        relativeKms = (RelativeLayout) findViewById(R.id.relSpinnerKms);
-        relativeDistrict = (RelativeLayout) findViewById(R.id.relSpinnerDistrict);
-        relativeState = (RelativeLayout) findViewById(R.id.relSpinnerState);
-
-
-        prefs = getApplicationContext().getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);
-
-
-        RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", "");
-        System.out.println("Registration id in company based registeration" + RegiId);
-        mApiCall.getCompany();
-        mApiCall.getDeals();
-        mApiCall.getDesignation();
-        mApiCall.getSkills();
-
-        autoSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
-
-        autoSkills.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
-                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (i == KeyEvent.KEYCODE_ENTER)) {
-
-                    autoSkills.setText(autoSkills.getText().toString() + ",");
-                    autoSkills.setSelection(autoSkills.getText().toString().length());
-                    checkSkills();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        autoSkills.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                checkSkills();
-
-            }
-        });
-
-        //Dealing choice code
-        autoDeals.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
-
-        autoDeals.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
-                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (i == KeyEvent.KEYCODE_ENTER)) {
-
-                    autoDeals.setText(autoDeals.getText().toString() + ",");
-                    autoDeals.setSelection(autoDeals.getText().toString().length());
-                    checkDeals();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        autoDeals.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                checkDeals();
-
-            }
-        });
-
-
-        spinArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                strArea = spinArea.getSelectedItem().toString();
-                System.out.println("Areaaaaaaaaaaaaaaaaaa" + strArea);
-
-                if (strArea.equalsIgnoreCase("By Kms")) {
-                    relativeKms.setVisibility(View.VISIBLE);
-
-                    relativeDistrict.setVisibility(View.GONE);
-                    relativeState.setVisibility(View.GONE);
-                } else if (strArea.equalsIgnoreCase("By District")) {
-
-                    relativeDistrict.setVisibility(View.VISIBLE);
-
-                    relativeKms.setVisibility(View.GONE);
-                    relativeState.setVisibility(View.GONE);
-
-                    mApiCall.getDistricts();
-                    // getdistricts();
-
-                } else if (strArea.equalsIgnoreCase("By State")) {
-                    relativeState.setVisibility(View.VISIBLE);
-
-                    relativeDistrict.setVisibility(View.GONE);
-                    relativeKms.setVisibility(View.GONE);
-                    mApiCall.getStates();
-                    // getStates();
-
-                } else {
-                    relativeKms.setVisibility(View.GONE);
-                    relativeDistrict.setVisibility(View.GONE);
-                    relativeState.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
     }
 
     public void checkSkills() {
         String text = autoSkills.getText().toString();
-        System.out.println("texttttttttttttttttt Skills" + text.substring(0, text.length() - 1));
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
         String[] parts = text.split(",");
-        System.out.println("size of partssssssssssssssssss skills" + parts.length);
         if (parts.length > 5) {
             autoSkills.setError("You can add maximum five skills");
         }
@@ -276,25 +250,16 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
 
     public void checkDeals() {
         String text = autoDeals.getText().toString();
-        System.out.println("texttttttttttttttttt Deals" + text.substring(0, text.length() - 1));
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
         String[] parts = text.split(",");
-        System.out.println("size of partssssssssssssssssss Deals" + parts.length);
-//            if(parts.length>5)
-//            {
-//                autoDeals.setError("You can add maximum five Deals");
-//            }
+
         for (String part : parts) {
-            Log.i("deall", part);
             if (part.equalsIgnoreCase("New Vehicle")) {
                 relativeDealingLayout.setVisibility(View.VISIBLE);
                 getVehicleList();
             }
-            /*else
-                relativeDealingLayout.setVisibility(View.GONE);*/
         }
-
     }
 
     /*
@@ -457,10 +422,6 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                 if (position != 0) {
                                     categoryId = mCategoryListHash.get(parsedDataCategory.get(position));
                                     categoryName = parsedDataCategory.get(position);
-
-                                    System.out.println("cat is::" + categoryId);
-                                    System.out.println("cat name::" + categoryName);
-
                                     getSubCategoryTask(categoryId);
                                 }
                             }
@@ -473,13 +434,14 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     }
                 }
 
-        /*Vehicle sub type */
+                /*
+                  Vehicle sub type 
+                */
                 else if (response.body() instanceof GetVehicleSubTypeResponse) {
                     mSubCategoryList.clear();
                     mSubCategoryListHash.clear();
                     parsedDataSubCategory.clear();
 
-                    Log.e("GetVehicleTypes", "->");
                     mSubCategoryList.add("Select Sub Category");
                     GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
@@ -502,10 +464,6 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                             if (position != 0) {
                                 subCategoryId = mSubCategoryListHash.get(parsedDataSubCategory.get(position));
                                 subCategoryName = parsedDataSubCategory.get(position);
-
-                                System.out.println("Sub cat is::" + subCategoryId);
-                                System.out.println("Sub cat name::" + subCategoryName);
-
                                 getBrand(categoryId, subCategoryId);
                             }
                         }
@@ -519,7 +477,6 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
 
                 /* Vehicle Manufacture/Brand */
                 else if (response.body() instanceof GetVehicleBrandResponse) {
-                    Log.e("GetVehicleBrands", "->");
                     mBrandList.clear();
                     mBrandListHash.clear();
                     parsedDataBrand.clear();
@@ -534,13 +491,12 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     }
                     mBrandList.add("other");
                     parsedDataBrand.addAll(mBrandList);
-                    Log.i("ListBrand", "->" + mBrandList);
+
                     if (getApplicationContext() != null) {
                         ArrayAdapter<String> adapter =
                                 new ArrayAdapter<>(getApplicationContext(), R.layout.addproductspinner_color, parsedDataBrand);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinManufacturer.setAdapter(adapter);
-                        //mModelSpinner.setAdapter(null);
                     }
                     spinManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -548,13 +504,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                             if (position != 0) {
                                 brandId = mBrandListHash.get(parsedDataBrand.get(position));
                                 brandName = parsedDataBrand.get(position);
-
-                                System.out.println("Brand id is::" + brandId);
-                                System.out.println("Brand name::" + brandName);
                             }
 
                             if (parsedDataBrand.get(position).equalsIgnoreCase("other")) {
-
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getApplicationContext());
                                 alertDialog.setTitle("Add Brand");
                                 alertDialog.setMessage("Enter brand name");
@@ -570,9 +522,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                 alertDialog.setPositiveButton("Add Brand",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String edbrand = input.getText().toString();
-
                                                 if (edbrand.equals(""))
                                                     Toast.makeText(getApplicationContext(), "Please enter brand", Toast.LENGTH_LONG).show();
                                                 else
@@ -590,9 +540,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                         });
 
                                 alertDialog.show();
-                            } /*else
-                                getModel(categoryId, subCategoryId, brandId);*/
-
+                            }
                         }
 
                         @Override
@@ -609,11 +557,43 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            Snackbar.make(mCompanyBased, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mCompanyBased, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mCompanyBased, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mCompanyBased, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mCompanyBased, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Company Based Registration");
             error.printStackTrace();
@@ -625,8 +605,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         if (str != null) {
             switch (str) {
                 case "success":
-                    Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_LONG).show();
-
+                    Snackbar.make(mCompanyBased, "Registered", Snackbar.LENGTH_SHORT).show();
                     Skills = autoSkills.getText().toString().trim();
                     Deals = autoDeals.getText().toString().trim();
                     if (strArea.equalsIgnoreCase("Select Area Of Operations"))
@@ -665,9 +644,6 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                             intent.putExtras(b);
                                             startActivity(intent);
                                             finish();
-                                        /*CreateStoreFragment fr = new CreateStoreFragment();
-                                        fr.setArguments(b);
-                                        finish();*/
                                             dialog.cancel();
                                         }
                                     })
@@ -688,17 +664,17 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     alertDialog.show();
                     break;
                 case "success_brand_add":
-                    CustomToast.customToast(getApplicationContext(), "Brand added successfully");
+                    Snackbar.make(mCompanyBased, "Brand Added", Snackbar.LENGTH_SHORT).show();
                     getBrand(categoryId, subCategoryId);
                     Log.i("msg", "Brand added successfully");
-
                     break;
+
                 default:
-                    Toast.makeText(getApplicationContext(), "Please Check Whether all Fields Are filled ", Toast.LENGTH_LONG).show();
+                    Snackbar.make(mCompanyBased, "Check all fields are filled", Snackbar.LENGTH_SHORT).show();
                     break;
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Somthing went wrong no response", Toast.LENGTH_LONG).show();
+            Snackbar.make(mCompanyBased, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -708,7 +684,6 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
             case R.id.btnnext:
                 try {
                     strArea = spinArea.getSelectedItem().toString();
-                    System.out.println("***************Area Before:" + strArea + "Kms:" + strKms + "District:" + strDistrict + "State:" + strState);
                     if (strArea.equalsIgnoreCase("Select Area Of Operations")) {
                         strArea = "";
                         strKms = "";
@@ -735,9 +710,6 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                System.out.println("***************Area After:" + strArea + "Kms:" + strKms + "District:" + strDistrict + "State:" + strState);
-
-//                    updateRegisteration(strArea, strKms, strDistrict, strState);
 
                 /******************************** Skills code *****************************************************/
 
@@ -749,10 +721,8 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     strSkill = strSkill.substring(0, strSkill.length() - 1);
                 System.out.println("Skill=" + strSkill);
                 strSkill = strSkill.trim();
-                System.out.println("Skill after trim.............................." + strSkill);
 
                 String[] parts = strSkill.split(",");
-
                 for (int l = 0; l < parts.length; l++) {
                     System.out.println(parts[l]);
                     skillpart = parts[l].trim();
@@ -764,13 +734,10 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     if (!mSkillList.contains(skillpart) && !skillpart.equalsIgnoreCase("") && !skillpart.equalsIgnoreCase(" ")) {
                         //add new skill in our database.
                         otherSkills.add(skillpart);
-                        System.out.println("skill going to add=" + skillpart);
                         mApiCall.addNewSkills(skillpart);
-                        // addnewskills(skillpart);
                     }
                 }
 
-                System.out.println("skillnames array before change***************" + mSkillList);
                 //new getSkils().execute();
                 mApiCall.getSkills();
                 // getskills();
@@ -781,25 +748,17 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                             Skidlist = Skidlist + "," + mSkillList1.get(parsedDataSkills.get(j));
                     }
                 }
-                System.out.println("idddddddddd" + Skidlist);
-                System.out.println("skillnames array after change****************" + mSkillList);
                 // System.out.println("id array" + SkillId);
                 if (!autoSkills.getText().toString().equalsIgnoreCase("") && Skidlist.length() > 0) {
                     Skidlist = Skidlist.substring(1);
-                    System.out.println("substring idddddddddd=" + Skidlist);
                 }
                 if (skillflag) {
                     skillid = skillid.substring(1);
-                    System.out.println("response skill iddddddddddddddd=" + skillid);
                     if (!Skidlist.equalsIgnoreCase(""))
                         Skidlist = Skidlist + "," + skillid;
                     else
                         Skidlist = skillid;
-                    System.out.println("final Skidlist iddddddddddddddd=" + Skidlist);
                 }
-
-//                if (autoSkills.getText().toString().equalsIgnoreCase(""))
-//                    autoSkills.setError("Please provide atleast 1 and maximum 5 skills");
 
                 /**********************************************Ends Skill Code ********************************************/
 
@@ -811,10 +770,8 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
 
                 if (strDeal.endsWith(","))
                     strDeal = strDeal.substring(0, strDeal.length() - 1);
-                System.out.println("Deal=" + strDeal);
-                strDeal = strDeal.trim();
-                System.out.println("Deal after trim.............................." + strDeal);
 
+                strDeal = strDeal.trim();
                 String[] partsDeal = strDeal.split(",");
 
                 for (int l = 0; l < partsDeal.length; l++) {
@@ -826,7 +783,6 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     if (!mDealList.contains(dealpart) && !dealpart.equalsIgnoreCase("") && !dealpart.equalsIgnoreCase(" ")) {
                         //add new skill in our database.
                         otherDeals.add(dealpart);
-                        System.out.println("skill going to add=" + dealpart);
                         // addnewDealsVolley(dealpart);
                         mApiCall.addNewDeal(dealpart);
                     }
@@ -842,26 +798,17 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     }
                 }
 
-                System.out.println("idddddddddd" + Deidlist);
-                //  System.out.println("skillnames array after change****************" + dealNames);
-                //System.out.println("id array" + dealIdsList);
                 if (!autoDeals.getText().toString().equalsIgnoreCase("") && Deidlist.length() > 0) {
                     Deidlist = Deidlist.substring(1);
-                    System.out.println("substring idddddddddd=" + Deidlist);
                 }
                 if (dealflag) {
                     dealid = dealid.substring(1);
-                    System.out.println("response skill iddddddddddddddd=" + dealid);
                     if (!Deidlist.equalsIgnoreCase(""))
                         Deidlist = Deidlist + "," + dealid;
                     else
                         Deidlist = dealid;
-                    System.out.println("final idlist iddddddddddddddd=" + Deidlist);
 
                 }
-//                if (autoDeals.getText().toString().equalsIgnoreCase(""))
-//                    autoDeals.setError("Please provide atleast 1 and maximum 5 deals");
-
                 /************************************** End of Dealing with code *****************************************/
 
                 /************************Company Name code *******************************************/
@@ -899,11 +846,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     autoCompany.setError("Enter Company Name");
                     autoCompany.requestFocus();
                 } else if (found) {
-
                     autoCompany.setError("Please enter valid company");
                     autoCompany.requestFocus();
                 } else if (found1) {
-
                     autoDesignation.setError("Please enter valid designation");
                     autoDesignation.requestFocus();
                 } else if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
@@ -916,7 +861,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     autoDeals.setError("Enter Deals Name");
                     autoDeals.requestFocus();
                 } else {
-                    mApiCall.updateRegistration("276", page, strArea, strKms, strDistrict, strState,
+                    mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState,
                             autoCompany.getText().toString(), autoDesignation.getText().toString(), strSkill,
                             strDeal, categoryName, subCategoryName, brandName);
                 }
