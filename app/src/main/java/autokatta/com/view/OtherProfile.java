@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -34,18 +36,18 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-    String mOtherContact, mLoginContact,mFolllowstr,mLikestr;
+    CoordinatorLayout mOtherProfile;
+    String mOtherContact, mLoginContact, mFolllowstr, mLikestr;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     FloatingActionButton mCall, mLike, mFollow;
     Groups mGroupsFrag;
     Event mEventFrag;
     Katta mKattaFrag;
-    String mAction="other";
+    String mAction = "other";
     Follow mFollowFrag;
     String key;
     ApiCall mApiCall = new ApiCall(OtherProfile.this, this);
-    //private Handler mUiHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +77,6 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         mKattaFrag.setArguments(mBundle);
         mFollowFrag = new Follow();
         mFollowFrag.setArguments(mBundle);
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.like);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
         /*
         Get Bundle Data...
          */
@@ -98,16 +90,19 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                 try {
                     if (getIntent().getExtras() != null) {
                         key = getIntent().getExtras().getString("like");
-                        if (key.equals("Like")) {
-                            mOtherContact = getIntent().getExtras().getString("firebaseContact");
+                        if (key != null) {
+                            if (key.equals("Like")) {
+                                mOtherContact = getIntent().getExtras().getString("firebaseContact");
+                            }
                         } else {
                             mOtherContact = getIntent().getExtras().getString("contactOtherProfile");
                         }
                     }
                     mBundle.putString("otherContact", mOtherContact);
-                    mBundle.putString("action",mAction);
+                    mBundle.putString("action", mAction);
                     getOtherProfile(mOtherContact);
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+                    mOtherProfile = (CoordinatorLayout) findViewById(R.id.other_profile);
                     mOtherPicture = (ImageView) findViewById(R.id.other_profile_image);
                     ViewPager viewPager = (ViewPager) findViewById(R.id.other_profile_viewpager);
                     if (viewPager != null) {
@@ -128,7 +123,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     GET Other Profile...
      */
     private void getOtherProfile(String contact) {
-        mApiCall.profileAbout(contact,mLoginContact);
+        mApiCall.profileAbout(contact, mLoginContact);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -149,8 +144,8 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                 for (ProfileAboutResponse.Success success : mProfileAboutResponse.getSuccess()) {
                     userName = success.getUsername();
                     dp = success.getProfilePic();
-                    mFolllowstr=success.getFollowstatus();
-                    mLikestr=success.getLikestatus();
+                    mFolllowstr = success.getFollowstatus();
+                    mLikestr = success.getLikestatus();
 
                     if (mLikestr.equalsIgnoreCase("no")) {
                         mLike.setLabelText("Like");
@@ -179,10 +174,10 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                         .into(mOtherPicture);
                 collapsingToolbar.setTitle(userName);
             } else {
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                Snackbar.make(mOtherProfile, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mOtherProfile, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -198,25 +193,26 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                 CustomToast.customToast(getApplicationContext(), " Following Successfully");
                 mFollow.setLabelText("Following");
                 mFollow.setLabelTextColor(Color.RED);
-                mFolllowstr="yes";
+                mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
                 CustomToast.customToast(getApplicationContext(), " UnFollowed Successfully");
                 mFollow.setLabelText("Follow");
                 mFollow.setLabelTextColor(Color.WHITE);
-                mFolllowstr="no";
+                mFolllowstr = "no";
             } else if (str.equals("success_like")) {
                 CustomToast.customToast(getApplicationContext(), " Liked Successfully");
                 mLike.setLabelText("Liked");
                 mLike.setLabelTextColor(Color.RED);
-                mLikestr="yes";
+                mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
                 CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
                 mLike.setLabelText("Like");
                 mLike.setLabelTextColor(Color.WHITE);
-                mLikestr="no";
+                mLikestr = "no";
             }
         }
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -225,20 +221,20 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                 break;
             case R.id.follow_f:
                 if (mFolllowstr.equalsIgnoreCase("no")) {
-                    mApiCall.Follow(mLoginContact,mOtherContact, "1");
+                    mApiCall.Follow(mLoginContact, mOtherContact, "1");
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.UnFollow(mLoginContact,mOtherContact, "1");
+                    mApiCall.UnFollow(mLoginContact, mOtherContact, "1");
                     menuRed.setClosedOnTouchOutside(true);
                 }
                 break;
 
             case R.id.like_l:
                 if (mLikestr.equalsIgnoreCase("no")) {
-                    mApiCall.Like(mLoginContact,mOtherContact, "1");
+                    mApiCall.Like(mLoginContact, mOtherContact, "1");
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.UnLike(mLoginContact,mOtherContact, "1");
+                    mApiCall.UnLike(mLoginContact, mOtherContact, "1");
                     menuRed.setClosedOnTouchOutside(true);
                 }
                 break;
@@ -248,11 +244,11 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     //Calling Functio
     private void call() {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mOtherContact));
-        System.out.println("calling started");
         try {
             startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Other Profile\n");
+            ex.printStackTrace();
         }
     }
 

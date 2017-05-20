@@ -3,14 +3,15 @@ package autokatta.com.register;
 import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,10 +25,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,6 +60,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     String namestr, contactstr, emailstr, DOBstr, pincodestr, passwordstr, confirmpassstr, addressstr, genderstr,
             profession, sub_profession, strIndustry;
 
+    RelativeLayout mRegistration;
     LinearLayout mLinear;
     ScrollView mScrollView;
     Button mNext;
@@ -98,12 +104,12 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         rbtfemale = (RadioButton) findViewById(R.id.rbtfemale);
         clearDate = (ImageView) findViewById(R.id.clearDate);
 
+        mRegistration = (RelativeLayout) findViewById(R.id.registration);
         mLinear = (LinearLayout) findViewById(R.id.linear);
         mNext = (Button) findViewById(R.id.next);
         mScrollView = (ScrollView) findViewById(R.id.scroll_view);
         rg1 = (RadioGroup) findViewById(R.id.radiogp1);
         functions = new GenericFunctions();
-
 
         btnSubmit = (Button) findViewById(R.id.btnsubmit);
         btnClear = (Button) findViewById(R.id.btnclear);
@@ -347,64 +353,84 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                /*
-                        Response to get category
-                 */
                 if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
-                    final List<String> module = new ArrayList<String>();
-
+                    final List<String> module = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
-
                         module.add("Select Category");
                         for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
                             module.add(message.getTitle());
-
                         }
                         module.add("Other");
                         MODULE = new String[module.size()];
                         MODULE = (String[]) module.toArray(MODULE);
-
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, MODULE);
                         moduleSpinner.setAdapter(dataadapter);
                     }
                 } else if (response.body() instanceof IndustryResponse) {
-
                     IndustryResponse moduleResponse = (IndustryResponse) response.body();
-                    final List<String> module = new ArrayList<String>();
-
+                    final List<String> module = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
-
                         module.add("Select Industry");
                         for (IndustryResponse.Success message : moduleResponse.getSuccess()) {
                             module.add(message.getIndusName());
-
                         }
                         module.add("Other");
                         INDUSTRY = new String[module.size()];
                         INDUSTRY = (String[]) module.toArray(INDUSTRY);
-
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, INDUSTRY);
                         industrySpinner.setAdapter(dataadapter);
                     }
-
                 }
             } else {
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                Snackbar.make(mRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            Snackbar.make(mRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             error.printStackTrace();
         }
@@ -413,11 +439,10 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     @Override
     public void notifyString(String str) {
         mSuccess = str;
-        Log.i("Success", "->" + mSuccess);
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
-                CustomToast.customToast(getApplicationContext(), "Already Registered...Please Sign In");
+                Snackbar.make(mRegistration, "Already Registered", Snackbar.LENGTH_SHORT).show();
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -426,20 +451,19 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 mLinear.setVisibility(View.GONE);
             } else {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
-                CustomToast.customToast(getApplicationContext(), "Registered");
+                Snackbar.make(mRegistration, "Registered", Snackbar.LENGTH_SHORT).show();
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }
         } else {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
 
     }
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-
         switch (view.getId()) {
             case R.id.editdob:
                 dateOfBirth.setInputType(InputType.TYPE_NULL);

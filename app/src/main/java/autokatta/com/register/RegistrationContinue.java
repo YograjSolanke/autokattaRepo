@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,10 +24,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +39,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
-import autokatta.com.other.CustomToast;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.view.LoginActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -47,16 +53,14 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
     FloatingActionButton mClicked;
     ImageView mProfilePic;
     EditText mAboutUs, mWebSite;
-    String mediaPath;
+    String mediaPath, abouttext, websitetext, lastWord = "", fname;
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
-    String imagepath = "";
-    String fname;
     File file;
     Button mSubmit;
-    String abouttext, websitetext;
-    String lastWord = "";
     Boolean flag = false;
+    CoordinatorLayout mCoordinate;
+    ConnectionDetector mTestConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,23 +71,25 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        mClicked = (FloatingActionButton) findViewById(R.id.click);
-        mProfilePic = (ImageView) findViewById(R.id.user_image);
-        mAboutUs = (EditText) findViewById(R.id.about_us);
-        mWebSite = (EditText) findViewById(R.id.website);
-        mSubmit = (Button) findViewById(R.id.btnSub);
-
-        mSubmit.setOnClickListener(this);
-        mClicked.setOnClickListener(new View.OnClickListener() {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                onPickImage(v);
+            public void run() {
+                mTestConnection = new ConnectionDetector(RegistrationContinue.this);
+                mClicked = (FloatingActionButton) findViewById(R.id.click);
+                mProfilePic = (ImageView) findViewById(R.id.user_image);
+                mAboutUs = (EditText) findViewById(R.id.about_us);
+                mWebSite = (EditText) findViewById(R.id.website);
+                mSubmit = (Button) findViewById(R.id.btnSub);
+                mCoordinate = (CoordinatorLayout) findViewById(R.id.coordinate);
+                mClicked.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onPickImage(v);
+                    }
+                });
             }
         });
-
-        System.out.println("Reg insss" + getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginregistrationid", ""));
+        mSubmit.setOnClickListener(this);
     }
 
     public void onPickImage(View view) {
@@ -193,37 +199,49 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Bitmap retVal;
-
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         retVal = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-
         return retVal;
     }
 
     private void uploadImage(String picturePath) {
-        Log.i("PAth", "->" + picturePath);
-        //    /storage/emulated/0/DCIM/Camera/20170411_124425.jpg
-        //    /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
         File file = new File(picturePath);
         // Parsing any Media type file
         RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
         RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
 
-        ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
-        Call<String> call = getResponse.uploadFile(fileToUpload, filename);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.i("image", "->" + response.body());
-            }
+        if (mTestConnection.isConnectedToInternet()) {
+            ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+            Call<String> call = getResponse.uploadFile(fileToUpload, filename);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    Log.i("image", "->" + response.body());
+                }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        } else {
+            Snackbar snackbar = Snackbar.make(mCoordinate, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        }
     }
 
     //    In some mobiles image will get rotate so to correting that this code will help us
@@ -235,7 +253,6 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
 
         if (cursor.moveToFirst()) {
             int orientation = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.ORIENTATION));
-            System.out.println("orientation===" + orientation);
             cursor.close();
             return orientation;
         } else {
@@ -249,7 +266,6 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
             case R.id.btnSub:
                 abouttext = mAboutUs.getText().toString();
                 websitetext = mWebSite.getText().toString();
-
                 if (!websitetext.equalsIgnoreCase("")) {
                     if (!(isValidUrl(websitetext))) {
                         mWebSite.setError("Enter valid website");
@@ -259,13 +275,28 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
                 } else {
                     flag = true;
                 }
-
                 if (flag) {
-                    ApiCall mApiCall = new ApiCall(RegistrationContinue.this, this);
-                    mApiCall.updateRegistration(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                            .getString("loginregistrationid", ""), "1", lastWord, abouttext, websitetext);
+                    if (mTestConnection.isConnectedToInternet()) {
+                        ApiCall mApiCall = new ApiCall(RegistrationContinue.this, this);
+                        mApiCall.updateRegistration(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                                .getString("loginregistrationid", ""), "1", lastWord, abouttext, websitetext);
+                    } else {
+                        Snackbar snackbar = Snackbar.make(mCoordinate, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                                .setAction("Go Online", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                                    }
+                                });
+                        // Changing message text color
+                        snackbar.setActionTextColor(Color.RED);
+                        // Changing action button text color
+                        View sbView = snackbar.getView();
+                        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                        textView.setTextColor(Color.YELLOW);
+                        snackbar.show();
+                    }
                 }
-
                 break;
         }
     }
@@ -284,11 +315,43 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            Snackbar.make(mCoordinate, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mCoordinate, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mCoordinate, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mCoordinate, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mCoordinate, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Continue Registration");
         }
@@ -298,14 +361,13 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success")) {
-                Log.i("String----", "->" + str);
                 Intent i = new Intent(getApplication(), NextRegistrationContinue.class);
                 i.putExtra("action", "ContinueRegistration");
                 startActivity(i);
                 finish();
             }
         } else {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            Snackbar.make(mCoordinate, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
