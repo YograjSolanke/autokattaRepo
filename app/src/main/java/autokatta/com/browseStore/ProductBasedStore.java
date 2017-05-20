@@ -2,8 +2,11 @@ package autokatta.com.browseStore;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -22,7 +25,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -55,6 +60,8 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     CheckedCategoryAdapter categoryAdapter;
     ArrayList<String> finalcategory = new ArrayList<>();
     BrowseStoreAdapter adapter;
+    boolean hasViewCreated = false;
+    TextView mNoData;
     public ProductBasedStore() {
         //Empty Constructor
     }
@@ -63,6 +70,105 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mProductBased = inflater.inflate(R.layout.fragment_product_based_store, container, false);
+        return mProductBased;
+    }
+
+    private void getStoreData(String contact) {
+
+        ApiCall apiCall = new ApiCall(getActivity(), this);
+        apiCall.getBrowseStores(contact, "Product");
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+        if (response != null) {
+            if (response.isSuccessful()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+
+                mSuccesses = new ArrayList<>();
+                BrowseStoreResponse browseStoreResponse = (BrowseStoreResponse) response.body();
+                if (!browseStoreResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    for (BrowseStoreResponse.Success success : browseStoreResponse.getSuccess()) {
+                        success.setStoreId(success.getStoreId());
+                        success.setContactNo(success.getContactNo());
+                        success.setStoreName(success.getStoreName());
+                        success.setStoreImage(success.getStoreImage());
+                        success.setLocation(success.getLocation());
+                        success.setCategory(success.getCategory());
+                        success.setWebsite(success.getWebsite());
+                        success.setStoreType(success.getStoreType());
+                        success.setWorkingDays(success.getWorkingDays());
+                        success.setModifiedDate(success.getModifiedDate());
+                        success.setLikestatus(success.getLikestatus());
+                        success.setFollowstatus(success.getFollowstatus());
+                        success.setLikecount(success.getLikecount());
+                        success.setFollowcount(success.getFollowcount());
+                        success.setRating(success.getRating());
+                        success.setVisibility(true);
+                        mSuccesses.add(success);
+
+
+                        if (success.getCategory().trim().contains(",")) {
+                            String arr[] = success.getCategory().trim().split(",");
+                            for (int l = 0; l < arr.length; l++) {
+
+                                String part = arr[l].trim();
+                                if (!part.equals(" ") && !part.equals(""))
+                                    categoryList.add(part);
+                            }
+                        } else {
+
+                            categoryList.add(success.getCategory().trim());
+                        }
+
+                    }
+
+
+                    System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! before hashset" + categoryList);
+                    categoryHashSet = new HashSet<>(categoryList);
+                    System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  after hashset" + categoryHashSet);
+                    filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
+                    mSwipeRefreshLayout.setRefreshing(false);
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
+                }
+//                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses);
+//                mRecyclerView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
+            } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                // mNoData.setVisibility(View.VISIBLE);
+                CustomToast.customToast(getActivity(), getString(R.string._404));
+            }
+        } else {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""));
+                hasViewCreated = true;
+            }
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mProductBased.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
         mRecyclerView = (RecyclerView) mProductBased.findViewById(R.id.BrowseStore_recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mProductBased.findViewById(R.id.swipeRefreshLayoutBrowseStore);
         filterImg = (ImageView) mProductBased.findViewById(R.id.filterimg);
@@ -86,88 +192,49 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
                         .getString("loginContact", ""));
             }
         });
-
-        return mProductBased;
-    }
-
-    private void getStoreData(String contact) {
-
-        ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.getBrowseStores(contact, "Product");
-    }
-
-    @Override
-    public void notifySuccess(Response<?> response) {
-
-        if (response != null) {
-            if (response.isSuccessful()) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                mSuccesses = new ArrayList<>();
-                BrowseStoreResponse browseStoreResponse = (BrowseStoreResponse) response.body();
-                for (BrowseStoreResponse.Success success : browseStoreResponse.getSuccess()) {
-                    success.setStoreId(success.getStoreId());
-                    success.setContactNo(success.getContactNo());
-                    success.setStoreName(success.getStoreName());
-                    success.setStoreImage(success.getStoreImage());
-                    success.setLocation(success.getLocation());
-                    success.setCategory(success.getCategory());
-                    success.setWebsite(success.getWebsite());
-                    success.setStoreType(success.getStoreType());
-                    success.setWorkingDays(success.getWorkingDays());
-                    success.setModifiedDate(success.getModifiedDate());
-                    success.setLikestatus(success.getLikestatus());
-                    success.setFollowstatus(success.getFollowstatus());
-                    success.setLikecount(success.getLikecount());
-                    success.setFollowcount(success.getFollowcount());
-                    success.setRating(success.getRating());
-                    success.setVisibility(true);
-                    mSuccesses.add(success);
-
-
-                    if (success.getCategory().trim().contains(",")) {
-                        String arr[] = success.getCategory().trim().split(",");
-                        for (int l = 0; l < arr.length; l++) {
-
-                            String part = arr[l].trim();
-                            if (!part.equals(" ") && !part.equals(""))
-                                categoryList.add(part);
-                        }
-                    } else {
-
-                        categoryList.add(success.getCategory().trim());
-                    }
-
-                }
-
-
-                System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! before hashset" + categoryList);
-                categoryHashSet = new HashSet<>(categoryList);
-                System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  after hashset" + categoryHashSet);
-                filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
-
-
-                mSwipeRefreshLayout.setRefreshing(false);
-//                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses);
-//                mRecyclerView.setAdapter(adapter);
-//                adapter.notifyDataSetChanged();
-            } else {
-                mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404));
-            }
-        } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
-        }
-
     }
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "ProductBasedStore Fragment");
         }
