@@ -7,28 +7,24 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
-        style="@style/Widget.CardContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_margin_top">
 
         <ImageView
             android:id="@+id/editStore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_mode_edit_black_24dp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <RelativeLayout
             android:id="@+id/relativetitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/editStore"
-            android:layout_marginTop="5dp"
-            android:padding="5dp"
             android:visibility="visible">
 
             <RelativeLayout

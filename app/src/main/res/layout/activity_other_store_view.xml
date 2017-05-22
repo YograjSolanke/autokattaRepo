@@ -47,7 +47,6 @@
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
             <ImageView
                 android:id="@+id/other_store_image"
                 android:layout_width="match_parent"
@@ -70,7 +69,7 @@
                 android:theme="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_below="@+id/product_favourite"
@@ -94,7 +93,6 @@
         android:paddingRight="10dp"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
-
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/add"
@@ -145,7 +143,6 @@
             fab:fab_label="Follow"
             fab:fab_size="mini" />
 
-
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/share"
             android:layout_width="wrap_content"
@@ -162,8 +159,5 @@
             fab:fab_size="mini"
             fab:fab_label="Share" />
 
-
     </com.github.clans.fab.FloatingActionMenu>
-
-
 </android.support.design.widget.CoordinatorLayout>

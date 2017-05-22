@@ -217,10 +217,10 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                 Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mVehicle.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mVehicle.findViewById(R.id.recycler_view);
-                titleText = (TextView) mVehicle.findViewById(R.id.titleText);
+                //titleText = (TextView) mVehicle.findViewById(R.id.titleText);
                 mNoData = (TextView) mVehicle.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
-                titleText.setText("Vehicles");
+                //titleText.setText("Vehicles");
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(getActivity());
                 mLayoutManager.setReverseLayout(true);

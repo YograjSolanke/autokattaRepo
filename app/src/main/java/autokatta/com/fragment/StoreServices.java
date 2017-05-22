@@ -208,10 +208,10 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
                 Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
-                titleText = (TextView) mService.findViewById(R.id.titleText);
+                //titleText = (TextView) mService.findViewById(R.id.titleText);
                 mNoData = (TextView) mService.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
-                titleText.setText("Services");
+                //titleText.setText("Services");
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(getActivity());
                 mLayoutManager.setReverseLayout(true);

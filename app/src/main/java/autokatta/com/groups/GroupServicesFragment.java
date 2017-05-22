@@ -51,8 +51,8 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
         mService = inflater.inflate(R.layout.store_product_fragment, container, false);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
-        titleText = (TextView) mService.findViewById(R.id.titleText);
-        titleText.setText("Services");
+        //titleText = (TextView) mService.findViewById(R.id.titleText);
+        //titleText.setText("Services");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
