@@ -55,7 +55,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-    String mOtherContact, mLoginContact, store_id, mFolllowstr, mLikestr, storeRating;
+    String mOtherContact, mLoginContact, store_id, storeOtherContact, mFolllowstr, mLikestr, storeRating;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     RatingBar storerating;
@@ -73,7 +73,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     TabLayout tabLayout;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
-    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap, mAdd, mAutoshare, mShare;
+    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap, mAdd, mAutoshare, mShare, mTeamProduct, mTeamServices, mTeamVehicle;
     StoreInfo storeInfo;
     StoreProducts storeProducts;
     StoreServices storeServices;
@@ -109,6 +109,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
                     mRate = (FloatingActionButton) findViewById(R.id.rate);
                     mAdd = (FloatingActionButton) findViewById(R.id.add);
+                    mTeamProduct = (FloatingActionButton) findViewById(R.id.add_product_team);
+                    mTeamServices = (FloatingActionButton) findViewById(R.id.add_services_team);
+                    mTeamVehicle = (FloatingActionButton) findViewById(R.id.add_vehicle_team);
                     mGoogleMap = (FloatingActionButton) findViewById(R.id.gotoMap);
                     storerating = (RatingBar) findViewById(R.id.store_rating);
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -132,6 +135,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                     if (getIntent().getExtras() != null) {
                         store_id = getIntent().getExtras().getString("store_id");
+                        storeOtherContact = getIntent().getExtras().getString("StoreContact");
+                        Log.i("storeOtherContact", "->" + storeOtherContact);
                         getOtherStore(mLoginContact, store_id);
                     }
 
@@ -140,6 +145,38 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         setupViewPager(viewPager);
                     }
                     tabLayout.setupWithViewPager(viewPager);
+                    tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                        @Override
+                        public void onTabSelected(TabLayout.Tab tab) {
+                            if (tab.getPosition() == 1) {
+                                mTeamVehicle.setVisibility(View.GONE);
+                                mTeamServices.setVisibility(View.GONE);
+                                mTeamProduct.setVisibility(View.VISIBLE);
+                            } else if (tab.getPosition() == 2) {
+                                mTeamVehicle.setVisibility(View.GONE);
+                                mTeamServices.setVisibility(View.VISIBLE);
+                                mTeamProduct.setVisibility(View.GONE);
+                            } else if (tab.getPosition() == 3) {
+                                mTeamVehicle.setVisibility(View.VISIBLE);
+                                mTeamServices.setVisibility(View.GONE);
+                                mTeamProduct.setVisibility(View.GONE);
+                            } else {
+                                mTeamVehicle.setVisibility(View.GONE);
+                                mTeamServices.setVisibility(View.GONE);
+                                mTeamProduct.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onTabUnselected(TabLayout.Tab tab) {
+
+                        }
+
+                        @Override
+                        public void onTabReselected(TabLayout.Tab tab) {
+
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -151,6 +188,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mRate.setOnClickListener(this);
         mGoogleMap.setOnClickListener(this);
         mAdd.setOnClickListener(this);
+        mTeamProduct.setOnClickListener(this);
+        mTeamServices.setOnClickListener(this);
+        mTeamVehicle.setOnClickListener(this);
         mShare.setOnClickListener(this);
         mAutoshare.setOnClickListener(this);
     }
@@ -530,6 +570,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     storeFollowCount = success.getFollowcount();
 
                     mOtherContact = success.getContact();
+                    Log.i("dsafdsafdas", "->" + mOtherContact);
                     storeRating = success.getRating();
                     mLikestr = success.getLikestatus();
                     mFolllowstr = success.getFollowstatus();
@@ -550,6 +591,11 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mFollow.setVisibility(View.GONE);
                     mRate.setVisibility(View.GONE);
                     mAdd.setVisibility(View.VISIBLE);
+                }
+                if (storeOtherContact.equals(mOtherContact)) {
+                    mTeamVehicle.setVisibility(View.GONE);
+                    mTeamServices.setVisibility(View.GONE);
+                    mTeamProduct.setVisibility(View.GONE);
                 }
 
                 storerating.setRating(Float.parseFloat(storeRating));

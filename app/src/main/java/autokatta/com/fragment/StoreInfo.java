@@ -20,6 +20,7 @@ import java.net.UnknownHostException;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.enquiries.AllEnquiryTabActivity;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.StoreResponse;
@@ -35,7 +36,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class StoreInfo extends Fragment implements RequestNotifier, View.OnClickListener {
     View mAbout;
     String myContact, Store_id, StoreContact;
-    ImageView editStore;
+    ImageView editStore, addEnquiry;
     boolean hasView;
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen,
             storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData;
@@ -87,6 +88,11 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent, options.toBundle());
                 getActivity().finish();
+                break;
+
+            case R.id.enquiry:
+                ActivityOptions option = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                startActivity(new Intent(getActivity(), AllEnquiryTabActivity.class), option.toBundle());
                 break;
         }
     }
@@ -206,6 +212,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 storeAddress = (TextView) mAbout.findViewById(R.id.editaddress);
                 storeType = (TextView) mAbout.findViewById(R.id.storetype);
                 editStore = (ImageView) mAbout.findViewById(R.id.editStore);
+                addEnquiry = (ImageView) mAbout.findViewById(R.id.enquiry);
                 storeDescription = (TextView) mAbout.findViewById(R.id.editstoredescription);
                 storeWorkDays = (TextView) mAbout.findViewById(R.id.editworkingdays);
                 storeServiceOffered = (TextView) mAbout.findViewById(R.id.autoservices);
@@ -216,5 +223,6 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
             }
         });
         editStore.setOnClickListener(this);
+        addEnquiry.setOnClickListener(this);
     }
 }

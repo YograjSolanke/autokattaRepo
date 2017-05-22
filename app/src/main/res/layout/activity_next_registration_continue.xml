@@ -11,6 +11,7 @@
         android:id="@+id/hint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/layout_top"
         android:gravity="center">
 
         <TextView
@@ -18,10 +19,11 @@
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
-            android:background="@drawable/circle_red"
+            android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="1"
+            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -31,10 +33,11 @@
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
             android:layout_toEndOf="@+id/textView1"
-            android:background="@drawable/circle_red"
+            android:background="@mipmap/ic_circle_red"
             android:gravity="center"
             android:padding="2sp"
             android:text="2"
+            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -44,10 +47,11 @@
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
             android:layout_toEndOf="@+id/textView2"
-            android:background="@drawable/circle_red"
+            android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="3"
+            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -57,10 +61,11 @@
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
             android:layout_toEndOf="@+id/textView3"
-            android:background="@drawable/circle_red"
+            android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="4"
+            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -70,10 +75,11 @@
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
             android:layout_toEndOf="@+id/textView4"
-            android:background="@drawable/circle_red"
+            android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="5"
+            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -83,10 +89,11 @@
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
             android:layout_toEndOf="@+id/textView5"
-            android:background="@drawable/circle_red"
+            android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="6"
+            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -96,10 +103,11 @@
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
             android:layout_toEndOf="@+id/textView6"
-            android:background="@drawable/circle_red"
+            android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="7"
+            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -109,10 +117,11 @@
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
             android:layout_toEndOf="@+id/textView7"
-            android:background="@drawable/circle_red"
+            android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="8"
+            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </RelativeLayout>

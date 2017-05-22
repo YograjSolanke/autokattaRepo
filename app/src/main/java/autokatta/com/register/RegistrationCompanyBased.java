@@ -96,7 +96,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     String subCategoryName = "";
 
     HashMap<String, String> mBrandListHash = new HashMap<>();
-    List<String> mBrandList = new ArrayList<String>();
+    List<String> mBrandList = new ArrayList<>();
     List<String> parsedDataBrand = new ArrayList<>();
     String brandId = "";
     String brandName = "";

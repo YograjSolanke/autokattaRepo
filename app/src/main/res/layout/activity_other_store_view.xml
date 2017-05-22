@@ -104,6 +104,33 @@
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/add_product_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_account_multiple_plus"
+            fab:fab_label="Add Product Team"
+            android:visibility="gone"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/add_services_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_account_multiple_plus"
+            fab:fab_label="Add Service Team"
+            android:visibility="gone"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/add_vehicle_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_account_multiple_plus"
+            fab:fab_label="Add Vehicle Team"
+            android:visibility="gone"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/gotoMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
