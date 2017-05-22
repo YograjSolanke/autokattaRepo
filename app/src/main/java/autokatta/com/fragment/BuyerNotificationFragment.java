@@ -163,6 +163,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     final TextView mLocationName = (TextView) mLinearView.findViewById(R.id.setlocation);
                     final TextView mPriceName = (TextView) mLinearView.findViewById(R.id.setprice);
                     final TextView mYearName = (TextView) mLinearView.findViewById(R.id.setyear);
+                   final TextView myreg= (TextView) mLinearView.findViewById(R.id.yreg);
                     final TextView mRto_city = (TextView) mLinearView.findViewById(R.id.setrto);
                     final TextView mKms = (TextView) mLinearView.findViewById(R.id.setkms);
                     final TextView mRegno = (TextView) mLinearView.findViewById(R.id.setregno);
@@ -211,7 +212,15 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     mPriceName.setText(mainList.get(i).getPrice());
                     mYearName.setText(mainList.get(i).getYearOfManufacture());
                     mRto_city.setText(mainList.get(i).getRtoCity());
-                    mRegno.setText(mainList.get(i).getRegistrationNumber());
+                    if (mainList.get(i).getRtoCity().equalsIgnoreCase("Unregistered")||mainList.get(i).getRtoCity().equalsIgnoreCase("")||mainList.get(i).getRtoCity().isEmpty())
+                    {
+                        mRegno.setVisibility(View.GONE);
+                        myreg.setVisibility(View.GONE);
+                    }else
+                    {
+                        mRegno.setText(mainList.get(i).getRegistrationNumber());
+
+                    }
                     mKms.setText(mainList.get(i).getKmsRunning());
                     mmatchCount.setText(String.valueOf(mainList.get(i).getFound().size()));
 

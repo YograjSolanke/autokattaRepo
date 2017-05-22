@@ -29,7 +29,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.groups.GroupVehicleList;
+import autokatta.com.groups.MemberDetailTabs;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
@@ -212,7 +212,22 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.mVehicleCount.getText().toString().trim().equals("0")) {
+                /*memeber details tabs*/
+
+                Bundle bundle = new Bundle();
+                bundle.putString("Rcontact", holder.mContact.getText().toString());
+                bundle.putString("grouptype", mCallFrom);
+                bundle.putString("className", "MemberListRefreshAdapter");
+                bundle.putString("bundle_GroupId", mGroupId);
+
+                MemberDetailTabs memberDetailTabs=new MemberDetailTabs();
+                memberDetailTabs.setArguments(bundle);
+                ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.profile_groups_container, memberDetailTabs, "MemberList")
+                        .addToBackStack("MemberList")
+                        .commit();
+
+              /*  if (holder.mVehicleCount.getText().toString().trim().equals("0")) {
                     CustomToast.customToast(mActivity, "No Vehicle Present");
                 } else {
                     Bundle bundle = new Bundle();
@@ -224,20 +239,20 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     groupVehicleList.setArguments(bundle);
 
                     System.out.println("--------------------------->" + mCallFrom);
-                  /*  if (mCallFrom.equalsIgnoreCase("profile")) {
+                  *//*  if (mCallFrom.equalsIgnoreCase("profile")) {
 
                         ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.profile_groups_container, groupVehicleList, "MemberList")
                                 .addToBackStack("MemberList")
                                 .commit();
-                    } else if (mCallFrom.equals("groups")) {*/
+                    } else if (mCallFrom.equals("groups")) {*//*
 
                     ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.profile_groups_container, groupVehicleList, "MemberList")
                             .addToBackStack("MemberList")
                             .commit();
                     //}
-                }
+                }*/
             }
         });
 
