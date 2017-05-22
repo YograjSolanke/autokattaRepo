@@ -123,8 +123,8 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""));
+//                getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+//                        .getString("loginContact", ""));
             }
         });
     }
