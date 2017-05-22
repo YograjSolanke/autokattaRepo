@@ -50,9 +50,6 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
         this.loan_id = loan_id;
         this.exchange_id = exchange_id;
         this.keyword = keyword;
-        mInflater = (LayoutInflater) activity.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     static class ViewHolder {
@@ -77,6 +74,10 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
+        mInflater = (LayoutInflater) activity.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         final ShareWithBroadcastAdapter.ViewHolder holder;
         if (convertView == null) {
             holder = new ShareWithBroadcastAdapter.ViewHolder();

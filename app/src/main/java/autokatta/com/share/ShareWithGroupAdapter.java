@@ -71,10 +71,6 @@ public class ShareWithGroupAdapter extends BaseAdapter {
 
         }
 
-
-        mInflater = (LayoutInflater) activity.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
     static class ViewHolder {
@@ -99,6 +95,9 @@ public class ShareWithGroupAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
+        mInflater = (LayoutInflater) activity.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
