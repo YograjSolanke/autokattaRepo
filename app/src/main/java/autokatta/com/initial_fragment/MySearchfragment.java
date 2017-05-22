@@ -1,8 +1,11 @@
 package autokatta.com.initial_fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +47,9 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
     RecyclerView mRecyclerView;
     SharedPreferences mSharedPreferences;
     ApiCall apiCall;
+    boolean hasViewCreated = false;
+    TextView mNoData;
+    String myContact;
     List<MySearchResponse.Success> mySearchResponseList = new ArrayList<>();
 
 
@@ -49,11 +57,19 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mySearch = inflater.inflate(R.layout.fragment_my_search, container, false);
+        return mySearch;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
 
-        apiCall = new ApiCall(getActivity(), this);
+        mNoData = (TextView) mySearch.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        final String myContact = mSharedPreferences.getString("loginContact", "");
+        myContact = mSharedPreferences.getString("loginContact", "");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mySearch.findViewById(R.id.swipeRefreshLayoutMySearch);
         mRecyclerView = (RecyclerView) mySearch.findViewById(R.id.recyclermySearch);
@@ -74,11 +90,15 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MySearchResult(myContact);
+
+                getMySearch(myContact);
             }
         });
+    }
 
-        return mySearch;
+    private void getMySearch(String myContact) {
+        apiCall = new ApiCall(getActivity(), this);
+        apiCall.MySearchResult(myContact);
     }
 
     @Override
@@ -96,6 +116,8 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
 
                 MySearchResponse mySearchResponse = (MySearchResponse) response.body();
                 if (!mySearchResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    mySearchResponseList.clear();
                     for (MySearchResponse.Success mySearchSuccess : mySearchResponse.getSuccess()) {
 
                         mySearchSuccess.setSearchId(mySearchSuccess.getSearchId());
@@ -130,6 +152,9 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
 
             } else {
@@ -143,16 +168,61 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-"
                     , "MySearchActivity");
             error.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getMySearch(myContact);
+                hasViewCreated = true;
+            }
         }
     }
 

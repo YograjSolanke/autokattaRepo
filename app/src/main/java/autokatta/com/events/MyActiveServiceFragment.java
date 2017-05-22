@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +41,8 @@ public class MyActiveServiceFragment extends Fragment implements SwipeRefreshLay
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
+    boolean hasViewCreated = false;
+    TextView mNoData;
     List<MyActiveServiceMelaResponse.Success> activeServiceMelaResponseList;
 
     public MyActiveServiceFragment() {
@@ -45,12 +53,20 @@ public class MyActiveServiceFragment extends Fragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mActiveLoan = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        return mActiveLoan;
+    }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mActiveLoan.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mActiveLoan.findViewById(R.id.swipeRefreshLayoutMain);
         mRecyclerView = (RecyclerView) mActiveLoan.findViewById(R.id.recyclerMain);
 
         mRecyclerView.setHasFixedSize(true);
-        apiCall = new ApiCall(getActivity(), this);
+
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
@@ -66,11 +82,18 @@ public class MyActiveServiceFragment extends Fragment implements SwipeRefreshLay
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.getServiceMelaDetails(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                getServiceData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+
             }
         });
-        return mActiveLoan;
     }
+
+    private void getServiceData(String loginContact) {
+        apiCall = new ApiCall(getActivity(), this);
+        apiCall.getServiceMelaDetails(loginContact);
+
+    }
+
 
     @Override
     public void onRefresh() {
@@ -86,7 +109,8 @@ public class MyActiveServiceFragment extends Fragment implements SwipeRefreshLay
                 MyActiveServiceMelaResponse myActiveServiceMelaResponse = (MyActiveServiceMelaResponse) response.body();
                 if (!myActiveServiceMelaResponse.getSuccess().isEmpty()) {
                     activeServiceMelaResponseList = new ArrayList<>();
-
+                    mNoData.setVisibility(View.GONE);
+                    activeServiceMelaResponseList.clear();
                     for (MyActiveServiceMelaResponse.Success loanSuccess : myActiveServiceMelaResponse.getSuccess()) {
 
                         loanSuccess.setId(loanSuccess.getId());
@@ -112,7 +136,7 @@ public class MyActiveServiceFragment extends Fragment implements SwipeRefreshLay
                     Log.i("size service list", String.valueOf(activeServiceMelaResponseList.size()));
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    mNoData.setVisibility(View.VISIBLE);
                 }
 
             } else
@@ -124,15 +148,60 @@ public class MyActiveServiceFragment extends Fragment implements SwipeRefreshLay
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "My Active Service Mela Fragment");
             error.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getServiceData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                hasViewCreated = true;
+            }
         }
     }
 
