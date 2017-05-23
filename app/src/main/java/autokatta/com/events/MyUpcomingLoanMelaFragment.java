@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +42,8 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
     RecyclerView mRecyclerView;
     ApiCall apiCall;
     List<MyUpcomingLoanMelaResponse.Success> upcomingLoanMelaResponseList = new ArrayList<>();
-
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
     public MyUpcomingLoanMelaFragment() {
         //empty constructor
@@ -46,11 +53,20 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyUpcomngLoan = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        return mMyUpcomngLoan;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        mNoData = (TextView) mMyUpcomngLoan.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyUpcomngLoan.findViewById(R.id.swipeRefreshLayoutMain);
         mRecyclerView = (RecyclerView) mMyUpcomngLoan.findViewById(R.id.recyclerMain);
-
-        apiCall = new ApiCall(getActivity(), this);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -68,10 +84,15 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyUpcomingLoanMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                getLoanData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+
             }
         });
-        return mMyUpcomngLoan;
+    }
+
+    private void getLoanData(String loginContact) {
+        apiCall = new ApiCall(getActivity(), this);
+        apiCall.MyUpcomingLoanMela(loginContact);
     }
 
     @Override
@@ -80,11 +101,12 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
         if (response != null) {
 
             if (response.isSuccessful()) {
-                upcomingLoanMelaResponseList.clear();
+
 
                 MyUpcomingLoanMelaResponse myUpcomingLoanMelaResponse = (MyUpcomingLoanMelaResponse) response.body();
                 if (!myUpcomingLoanMelaResponse.getSuccess().isEmpty()) {
-
+                    upcomingLoanMelaResponseList.clear();
+                    mNoData.setVisibility(View.GONE);
                     for (MyUpcomingLoanMelaResponse.Success successLoan : myUpcomingLoanMelaResponse.getSuccess()) {
 
                         successLoan.setId(successLoan.getId());
@@ -109,7 +131,8 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
                     Log.i("size loan list up", String.valueOf(upcomingLoanMelaResponseList.size()));
 
                 } else
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    mSwipeRefreshLayout.setRefreshing(false);
+                mNoData.setVisibility(View.VISIBLE);
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
@@ -121,12 +144,45 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "My Upcoming Loan Mela");
             error.printStackTrace();
@@ -136,6 +192,18 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getLoanData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                hasViewCreated = true;
+            }
+        }
     }
 
     @Override

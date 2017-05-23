@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +40,8 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ApiCall apiCall;
+    boolean hasViewCreated = false;
+    TextView mNoData;
     List<MyUpcomingAuctionResponse.Success.Auction> upcomingAuctionResponseList = new ArrayList<>();
     List<MyUpcomingAuctionResponse.Success.Vehicle> upcomingVehicleResponseList;
 
@@ -47,10 +55,20 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mupcomingAuction = inflater.inflate(R.layout.fragment_simple_listview, container, false);
 
+        return mupcomingAuction;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        mNoData = (TextView) mupcomingAuction.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) mupcomingAuction.findViewById(R.id.swipeRefreshLayoutMain);
         mRecyclerView = (RecyclerView) mupcomingAuction.findViewById(R.id.recyclerMain);
-
-        apiCall = new ApiCall(getActivity(), this);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -68,10 +86,16 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyUpcomingAuction(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                getAuctiondata(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+
             }
         });
-        return mupcomingAuction;
+
+    }
+
+    private void getAuctiondata(String loginContact) {
+        apiCall = new ApiCall(getActivity(), this);
+        apiCall.MyUpcomingAuction(loginContact);
     }
 
     @Override
@@ -80,10 +104,11 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
         if (response != null) {
 
             if (response.isSuccessful()) {
-                upcomingAuctionResponseList.clear();
+
                 MyUpcomingAuctionResponse myUpcomingAuctionResponse = (MyUpcomingAuctionResponse) response.body();
                 if (!myUpcomingAuctionResponse.getSuccess().getAuction().isEmpty()) {
-
+                    mNoData.setVisibility(View.GONE);
+                    upcomingAuctionResponseList.clear();
                     for (MyUpcomingAuctionResponse.Success.Auction successAuction : myUpcomingAuctionResponse.getSuccess().getAuction()) {
 
                         upcomingVehicleResponseList = new ArrayList<>();
@@ -109,7 +134,8 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
                     Log.i("size auction list up", String.valueOf(upcomingAuctionResponseList.size()));
 
                 } else
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    mSwipeRefreshLayout.setRefreshing(false);
+                mNoData.setVisibility(View.VISIBLE);
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
@@ -121,15 +147,61 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "My Upcoming Auction fragment");
             error.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getAuctiondata(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                hasViewCreated = true;
+            }
         }
     }
 

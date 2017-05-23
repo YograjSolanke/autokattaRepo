@@ -1,18 +1,26 @@
 package autokatta.com.search;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +31,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.VehicleSearchAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.SearchVehicleResponse;
 import retrofit2.Response;
 
@@ -41,11 +48,24 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
     ImageView filterImg;
     Button advanceSearch;
     Bundle bundle;
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchVehicle = inflater.inflate(R.layout.fragment_search_product, container, false);
+
+        return mSearchVehicle;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mSearchVehicle.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
         searchList = (ListView) mSearchVehicle.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchVehicle.findViewById(R.id.filterimg);
         advanceSearch = (Button) mSearchVehicle.findViewById(R.id.advBtn);
@@ -84,10 +104,23 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                 }
             }
         });
-
-        return mSearchVehicle;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+                bundle = getArguments();
+                if (bundle != null) {
+                    searchString = bundle.getString("searchText1");
+                    System.out.println("Vehicle" + searchString);
+                    getSearchResults(searchString);
+                }
+                hasViewCreated = true;
+            }
+        }
+    }
     /*
     search Results...
      */
@@ -102,6 +135,8 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
             if (response.isSuccessful()) {
                 SearchVehicleResponse vehicleResponse = (SearchVehicleResponse) response.body();
                 if (!vehicleResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    allSearchDataArrayList.clear();
                     for (SearchVehicleResponse.Success success : vehicleResponse.getSuccess()) {
                         try {
                             success.setVehicleId(success.getVehicleId());
@@ -160,17 +195,61 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                     VehicleSearchAdapter adapter = new VehicleSearchAdapter(getActivity(), allSearchDataArrayList);
                     searchList.setAdapter(adapter);
 
-                }
+                } else
+                    mNoData.setVisibility(View.VISIBLE);
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+
+        if (error instanceof SocketTimeoutException) {
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else {
+            Log.i("Check Class-", "SearchVehicle Fragment");
+        }
+
 
     }
 

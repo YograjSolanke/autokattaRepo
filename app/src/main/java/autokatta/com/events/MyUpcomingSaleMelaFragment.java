@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +42,8 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
     RecyclerView mRecyclerView;
     ApiCall apiCall;
     List<MyUpcomingExchangeMelaResponse.Success> upcomingExchangeResponseList = new ArrayList<>();
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
 
     public MyUpcomingSaleMelaFragment() {
@@ -47,10 +55,18 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyUpcomngExchange = inflater.inflate(R.layout.fragment_simple_listview, container, false);
 
+        return mMyUpcomngExchange;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        mNoData = (TextView) mMyUpcomngExchange.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyUpcomngExchange.findViewById(R.id.swipeRefreshLayoutMain);
         mRecyclerView = (RecyclerView) mMyUpcomngExchange.findViewById(R.id.recyclerMain);
-
-        apiCall = new ApiCall(getActivity(), this);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -68,10 +84,17 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyUpcomingSaleMela(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                getSaleData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+
             }
         });
-        return mMyUpcomngExchange;
+
+    }
+
+    private void getSaleData(String loginContact) {
+        apiCall = new ApiCall(getActivity(), this);
+        apiCall.MyUpcomingSaleMela(loginContact);
+
     }
 
     @Override
@@ -83,7 +106,7 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
                 upcomingExchangeResponseList.clear();
                 MyUpcomingExchangeMelaResponse myUpcomingExchangeMelaResponse = (MyUpcomingExchangeMelaResponse) response.body();
                 if (!myUpcomingExchangeMelaResponse.getSuccess().isEmpty()) {
-
+                    mNoData.setVisibility(View.GONE);
                     for (MyUpcomingExchangeMelaResponse.Success successExchange : myUpcomingExchangeMelaResponse.getSuccess()) {
 
                         successExchange.setId(successExchange.getId());
@@ -108,7 +131,8 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
                     Log.i("size sale list up", String.valueOf(upcomingExchangeResponseList.size()));
 
                 } else
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    mSwipeRefreshLayout.setRefreshing(false);
+                mNoData.setVisibility(View.VISIBLE);
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
@@ -120,15 +144,61 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "My Upcoming Sale Mela");
             error.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getSaleData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                hasViewCreated = true;
+            }
         }
     }
 

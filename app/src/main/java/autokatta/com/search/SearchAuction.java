@@ -2,8 +2,11 @@ package autokatta.com.search;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -21,7 +28,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.AllSearchEventCustomAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetSearchAuctionResponse;
 import autokatta.com.response.ModelSearchAuction;
 import retrofit2.Response;
@@ -44,11 +50,25 @@ public class SearchAuction extends Fragment implements RequestNotifier {
     HashSet<String> eventTypeSet;
     ArrayList<String> eventTypeList = new ArrayList<>();
     Bundle bundle;
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchAuction = inflater.inflate(R.layout.fragment_search_product, container, false);
+
+        return mSearchAuction;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mSearchAuction.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
         searchList = (ListView) mSearchAuction.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchAuction.findViewById(R.id.filterimg);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
@@ -56,12 +76,7 @@ public class SearchAuction extends Fragment implements RequestNotifier {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                bundle = getArguments();
-                if (bundle != null) {
-                    searchString = bundle.getString("searchText1");
-                    System.out.println("Auction" + searchString);
-                    getSearchAuction(searchString);
-                }
+
                 filterImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -70,7 +85,6 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 });
             }
         });
-        return mSearchAuction;
     }
 
     private void getSearchAuction(String searchString) {
@@ -82,8 +96,11 @@ public class SearchAuction extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mNoData.setVisibility(View.GONE);
                 ModelSearchAuction modelAuction = new ModelSearchAuction();
                 GetSearchAuctionResponse auctionResponse = (GetSearchAuctionResponse) response.body();
+                allSearchDataArrayList.clear();
+                eventTypeList.clear();
                 //Auction Live
                 if (!auctionResponse.getSuccess().getAuctionLive().isEmpty()) {
                     for (GetSearchAuctionResponse.AuctionLive auctionLive : auctionResponse.getSuccess().getAuctionLive()) {
@@ -270,15 +287,57 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 adapter = new AllSearchEventCustomAdapter(getActivity(), allSearchDataArrayList);
                 searchList.setAdapter(adapter);
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                mNoData.setVisibility(View.VISIBLE);
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else {
+            Log.i("Check Class-", "SearchAuction Fragment");
+        }
+
 
     }
 
@@ -353,5 +412,22 @@ public class SearchAuction extends Fragment implements RequestNotifier {
 
                 .show();
 
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+                bundle = getArguments();
+                if (bundle != null) {
+                    searchString = bundle.getString("searchText1");
+                    System.out.println("Auction" + searchString);
+                    getSearchAuction(searchString);
+                }
+                hasViewCreated = true;
+            }
+        }
     }
 }

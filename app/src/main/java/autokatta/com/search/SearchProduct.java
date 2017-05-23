@@ -3,8 +3,11 @@ package autokatta.com.search;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,7 +34,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.SearchProductAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetSearchProductResponse;
 import retrofit2.Response;
 
@@ -51,6 +56,8 @@ public class SearchProduct extends Fragment implements RequestNotifier {
     HashSet<String> BrandtagsHashSet;
     SearchProductAdapter adapter;
     Bundle bundle;
+    boolean hasViewCreated = false;
+    TextView mNoData;
     CheckedTagsAdapter tagsadapter;
     CheckedCategoryAdapter categoryAdapter;
     CheckedBrandTagsAdapter brandTagsAdapter;
@@ -62,6 +69,15 @@ public class SearchProduct extends Fragment implements RequestNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchProduct = inflater.inflate(R.layout.fragment_search_product, container, false);
+        return mSearchProduct;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mSearchProduct.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
         searchList = (ListView) mSearchProduct.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchProduct.findViewById(R.id.filterimg);
 
@@ -84,9 +100,24 @@ public class SearchProduct extends Fragment implements RequestNotifier {
                         tagsHashSet.toArray(new String[tagsHashSet.size()]), BrandtagsHashSet.toArray(new String[BrandtagsHashSet.size()]));
             }
         });
-        return mSearchProduct;
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+                bundle = getArguments();
+                if (bundle != null) {
+                    searchString = bundle.getString("searchText1");
+                    Log.i("String", "->" + searchString);
+                    getSearchResults(searchString);
+                }
+                hasViewCreated = true;
+            }
+        }
+    }
     private void getSearchResults(String searchString) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.searchProduct(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
@@ -98,102 +129,151 @@ public class SearchProduct extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 GetSearchProductResponse productResponse = (GetSearchProductResponse) response.body();
-                for (GetSearchProductResponse.Success success : productResponse.getSuccess()) {
-                    success.setStoreId(success.getStoreId());
-                    success.setStoreId(success.getProductId());
-                    success.setStoreId(success.getType());
-                    success.setStoreId(success.getProductName());
-                    success.setStoreId(success.getImages());
-                    success.setStoreId(success.getProductType());
-                    success.setStoreId(success.getPrice());
-                    success.setStoreId(success.getCategory());
-                    success.setStoreId(success.getBrandtags());
-                    success.setStoreId(success.getProductDetails());
-                    success.setStoreId(success.getStorecontact());
-                    success.setStoreId(success.getStoreName());
-                    success.setStoreId(success.getStorewebsite());
-                    success.setStoreId(success.getStorerating());
-                    success.setStoreId(success.getProductlikecount());
-                    success.setStoreId(success.getProductlikestatus());
-                    success.setStoreId(success.getPrate());
-                    success.setStoreId(success.getPrate1());
-                    success.setStoreId(success.getPrate2());
-                    success.setStoreId(success.getPrate3());
-                    success.setStoreId(success.getProductrating());
-                    success.setStoreId(success.getProductTags());
-                    success.visibility = true;
+                if (!productResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    mList.clear();
+                    for (GetSearchProductResponse.Success success : productResponse.getSuccess()) {
+                        success.setStoreId(success.getStoreId());
+                        success.setStoreId(success.getProductId());
+                        success.setStoreId(success.getType());
+                        success.setStoreId(success.getProductName());
+                        success.setStoreId(success.getImages());
+                        success.setStoreId(success.getProductType());
+                        success.setStoreId(success.getPrice());
+                        success.setStoreId(success.getCategory());
+                        success.setStoreId(success.getBrandtags());
+                        success.setStoreId(success.getProductDetails());
+                        success.setStoreId(success.getStorecontact());
+                        success.setStoreId(success.getStoreName());
+                        success.setStoreId(success.getStorewebsite());
+                        success.setStoreId(success.getStorerating());
+                        success.setStoreId(success.getProductlikecount());
+                        success.setStoreId(success.getProductlikestatus());
+                        success.setStoreId(success.getPrate());
+                        success.setStoreId(success.getPrate1());
+                        success.setStoreId(success.getPrate2());
+                        success.setStoreId(success.getPrate3());
+                        success.setStoreId(success.getProductrating());
+                        success.setStoreId(success.getProductTags());
+                        success.visibility = true;
 
-                    if (success.getCategory().trim().contains(",")) {
-                        String arr[] = success.getCategory().trim().split(",");
-                        for (int l = 0; l < arr.length; l++) {
-                            String part = arr[l].trim();
-                            if (!part.equals(" ") || !part.equals(""))
-                                categoryList.add(part);
+                        if (success.getCategory().trim().contains(",")) {
+                            String arr[] = success.getCategory().trim().split(",");
+                            for (int l = 0; l < arr.length; l++) {
+                                String part = arr[l].trim();
+                                if (!part.equals(" ") || !part.equals(""))
+                                    categoryList.add(part);
+                            }
+                        } else {
+                            categoryList.add(success.getCategory().trim());
                         }
-                    } else {
-                        categoryList.add(success.getCategory().trim());
-                    }
 
 
-                    //Tags specific code
-                    if (success.getProductTags().trim().contains(",")) {
-                        String arr[] = success.getProductTags().trim().split(",");
-                        for (int l = 0; l < arr.length; l++) {
-                            String part = arr[l].trim();
-                            if (!part.equals(" ") || !part.equals(""))
-                                tagsList.add(part);
+                        //Tags specific code
+                        if (success.getProductTags().trim().contains(",")) {
+                            String arr[] = success.getProductTags().trim().split(",");
+                            for (int l = 0; l < arr.length; l++) {
+                                String part = arr[l].trim();
+                                if (!part.equals(" ") || !part.equals(""))
+                                    tagsList.add(part);
+                            }
+                        } else {
+                            if (!success.getProductTags().trim().equals(" ") && !success.getProductTags().trim().equals(""))
+                                tagsList.add(success.getProductTags().trim());
                         }
-                    } else {
-                        if (!success.getProductTags().trim().equals(" ") && !success.getProductTags().trim().equals(""))
-                            tagsList.add(success.getProductTags().trim());
-                    }
 
-                    // Brand Tags specific code
-                    if (success.getBrandtags().trim().contains(",")) {
-                        String arr[] = success.getBrandtags().trim().split(",");
-                        for (int l = 0; l < arr.length; l++) {
-                            String part = arr[l].trim();
-                            if (!part.equals(" ") || !part.equals(""))
-                                BrandtagsList.add(part);
+                        // Brand Tags specific code
+                        if (success.getBrandtags().trim().contains(",")) {
+                            String arr[] = success.getBrandtags().trim().split(",");
+                            for (int l = 0; l < arr.length; l++) {
+                                String part = arr[l].trim();
+                                if (!part.equals(" ") || !part.equals(""))
+                                    BrandtagsList.add(part);
+                            }
+                        } else {
+                            if (!success.getBrandtags().trim().equals(" ") && !success.getBrandtags().trim().equals(""))
+                                BrandtagsList.add(success.getBrandtags().trim());
                         }
-                    } else {
-                        if (!success.getBrandtags().trim().equals(" ") && !success.getBrandtags().trim().equals(""))
-                            BrandtagsList.add(success.getBrandtags().trim());
-                    }
 
 
-                    String img = success.getImages();
-                    if (img.contains(",")) {
-                        String arr[] = img.split(",", 2);
-                        firstWord = arr[0];
-                        System.out.println(firstWord);
-                        success.setImages(firstWord);
-                        System.out.println("firstword imaggggg=========" + firstWord);
-                        String all = img.replace(",", "/ ");
-                        System.out.println("All images are::" + all);
-                        success.setImages(all);
-                    } else {
-                        System.out.println("otherrr imaggggg=========" + img);
-                        success.setImages(img);
-                        success.setImages(img);
+                        String img = success.getImages();
+                        if (img.contains(",")) {
+                            String arr[] = img.split(",", 2);
+                            firstWord = arr[0];
+                            System.out.println(firstWord);
+                            success.setImages(firstWord);
+                            System.out.println("firstword imaggggg=========" + firstWord);
+                            String all = img.replace(",", "/ ");
+                            System.out.println("All images are::" + all);
+                            success.setImages(all);
+                        } else {
+                            System.out.println("otherrr imaggggg=========" + img);
+                            success.setImages(img);
+                            success.setImages(img);
+                        }
+                        mList.add(success);
                     }
-                    mList.add(success);
+                    categoryHashSet = new HashSet<>(categoryList);
+                    tagsHashSet = new HashSet<>(tagsList);
+                    BrandtagsHashSet = new HashSet<>(BrandtagsList);
+                    adapter = new SearchProductAdapter(getActivity(), mList);
+                    searchList.setAdapter(adapter);
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
                 }
-                categoryHashSet = new HashSet<>(categoryList);
-                tagsHashSet = new HashSet<>(tagsList);
-                BrandtagsHashSet = new HashSet<>(BrandtagsList);
-                adapter = new SearchProductAdapter(getActivity(), mList);
-                searchList.setAdapter(adapter);
+
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else {
+            Log.i("Check Class-", "SearchProduct Fragment");
+        }
+
 
     }
 

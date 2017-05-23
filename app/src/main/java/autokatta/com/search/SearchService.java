@@ -3,8 +3,11 @@ package autokatta.com.search;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -28,7 +34,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.SearchServiceAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetServiceSearchResponse;
 import retrofit2.Response;
 
@@ -51,6 +56,8 @@ public class SearchService extends Fragment implements RequestNotifier {
     HashSet<String> BrandtagsHashSet;
     SearchServiceAdapter adapter;
     Bundle bundle;
+    boolean hasViewCreated = false;
+    TextView mNoData;
     CheckedTagsAdapter tagsadapter;
     CheckedCategoryAdapter categoryAdapter;
     CheckedBrandTagsAdapter brandTagsAdapter;
@@ -62,6 +69,16 @@ public class SearchService extends Fragment implements RequestNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchService = inflater.inflate(R.layout.fragment_search_product, container, false);
+        return mSearchService;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mSearchService.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
         searchList = (ListView) mSearchService.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchService.findViewById(R.id.filterimg);
 
@@ -84,9 +101,7 @@ public class SearchService extends Fragment implements RequestNotifier {
                         tagsHashSet.toArray(new String[tagsHashSet.size()]), BrandtagsHashSet.toArray(new String[BrandtagsHashSet.size()]));
             }
         });
-        return mSearchService;
     }
-
     /*
     Search Results...
      */
@@ -96,106 +111,170 @@ public class SearchService extends Fragment implements RequestNotifier {
                 Context.MODE_PRIVATE).getString("loginContact", ""));
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+                bundle = getArguments();
+                if (bundle != null) {
+                    searchString = bundle.getString("searchText1");
+                    Log.i("Service", "->" + searchString);
+                    getSearchResults(searchString);
+                }
+                hasViewCreated = true;
+            }
+        }
+    }
 
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
                 GetServiceSearchResponse productResponse = (GetServiceSearchResponse) response.body();
-                for (GetServiceSearchResponse.Success success : productResponse.getSuccess()) {
-                    success.setStoreId(success.getStoreId());
-                    success.setStoreId(success.getId());
-                    success.setStoreId(success.getName());
-                    success.setStoreId(success.getImages());
-                    success.setStoreId(success.getType());
-                    success.setStoreId(success.getPrice());
-                    success.setStoreId(success.getCategory());
-                    success.setStoreId(success.getBrandtags());
-                    success.setStoreId(success.getDetails());
-                    success.setStoreId(success.getStorecontact());
-                    success.setStoreId(success.getStoreName());
-                    success.setStoreId(success.getStorewebsite());
-                    success.setStoreId(success.getStorerating());
-                    success.setStoreId(success.getServicelikecount());
-                    success.setStoreId(success.getServicelikestatus());
-                    success.setStoreId(success.getSrate());
-                    success.setStoreId(success.getSrate1());
-                    success.setStoreId(success.getSrate2());
-                    success.setStoreId(success.getSrate3());
-                    success.setStoreId(success.getServicerating());
-                    success.setStoreId(success.getServiceTags());
+                if (!productResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    mList.clear();
+                    for (GetServiceSearchResponse.Success success : productResponse.getSuccess()) {
+                        success.setStoreId(success.getStoreId());
+                        success.setStoreId(success.getId());
+                        success.setStoreId(success.getName());
+                        success.setStoreId(success.getImages());
+                        success.setStoreId(success.getType());
+                        success.setStoreId(success.getPrice());
+                        success.setStoreId(success.getCategory());
+                        success.setStoreId(success.getBrandtags());
+                        success.setStoreId(success.getDetails());
+                        success.setStoreId(success.getStorecontact());
+                        success.setStoreId(success.getStoreName());
+                        success.setStoreId(success.getStorewebsite());
+                        success.setStoreId(success.getStorerating());
+                        success.setStoreId(success.getServicelikecount());
+                        success.setStoreId(success.getServicelikestatus());
+                        success.setStoreId(success.getSrate());
+                        success.setStoreId(success.getSrate1());
+                        success.setStoreId(success.getSrate2());
+                        success.setStoreId(success.getSrate3());
+                        success.setStoreId(success.getServicerating());
+                        success.setStoreId(success.getServiceTags());
 
-                    //category specific code
-                    if (success.getCategory().trim().contains(",")) {
-                        String arr[] = success.getCategory().trim().split(",");
-                        for (int l = 0; l < arr.length; l++) {
-                            String part = arr[l].trim();
-                            if (!part.equals(" ") || !part.equals(""))
-                                categoryList.add(part);
+                        //category specific code
+                        if (success.getCategory().trim().contains(",")) {
+                            String arr[] = success.getCategory().trim().split(",");
+                            for (int l = 0; l < arr.length; l++) {
+                                String part = arr[l].trim();
+                                if (!part.equals(" ") || !part.equals(""))
+                                    categoryList.add(part);
+                            }
+                        } else {
+                            categoryList.add(success.getCategory().trim());
                         }
-                    } else {
-                        categoryList.add(success.getCategory().trim());
-                    }
 
 
-                    //Tags specific code
-                    if (success.getServiceTags().trim().contains(",")) {
-                        String arr[] = success.getServiceTags().trim().split(",");
-                        for (int l = 0; l < arr.length; l++) {
-                            String part = arr[l].trim();
-                            if (!part.equals(" ") || !part.equals(""))
-                                tagsList.add(part);
+                        //Tags specific code
+                        if (success.getServiceTags().trim().contains(",")) {
+                            String arr[] = success.getServiceTags().trim().split(",");
+                            for (int l = 0; l < arr.length; l++) {
+                                String part = arr[l].trim();
+                                if (!part.equals(" ") || !part.equals(""))
+                                    tagsList.add(part);
+                            }
+                        } else {
+                            if (!success.getServiceTags().trim().equals(" ") && !success.getServiceTags().trim().equals(""))
+                                tagsList.add(success.getServiceTags().trim());
                         }
-                    } else {
-                        if (!success.getServiceTags().trim().equals(" ") && !success.getServiceTags().trim().equals(""))
-                            tagsList.add(success.getServiceTags().trim());
-                    }
 
-                    // Brand Tags specific code
-                    if (success.getBrandtags().trim().contains(",")) {
-                        String arr[] = success.getBrandtags().trim().split(",");
-                        for (int l = 0; l < arr.length; l++) {
-                            String part = arr[l].trim();
-                            if (!part.equals(" ") || !part.equals(""))
-                                BrandtagsList.add(part);
+                        // Brand Tags specific code
+                        if (success.getBrandtags().trim().contains(",")) {
+                            String arr[] = success.getBrandtags().trim().split(",");
+                            for (int l = 0; l < arr.length; l++) {
+                                String part = arr[l].trim();
+                                if (!part.equals(" ") || !part.equals(""))
+                                    BrandtagsList.add(part);
+                            }
+                        } else {
+                            if (!success.getBrandtags().trim().equals(" ") && !success.getBrandtags().trim().equals(""))
+                                BrandtagsList.add(success.getBrandtags().trim());
                         }
-                    } else {
-                        if (!success.getBrandtags().trim().equals(" ") && !success.getBrandtags().trim().equals(""))
-                            BrandtagsList.add(success.getBrandtags().trim());
-                    }
 
-                    String img = success.getImages();
-                    if (img.contains(",")) {
-                        String arr[] = img.split(",", 2);
-                        firstWord = arr[0];
-                        System.out.println(firstWord);
-                        success.setImages(firstWord);
-                        System.out.println("firstword imaggggg=========" + firstWord);
-                        String all = img.replace(",", "/ ");
-                        System.out.println("All images are::" + all);
-                        success.setImages(all);
-                    } else {
-                        System.out.println("otherrr imaggggg=========" + img);
-                        success.setImages(img);
-                        success.setImages(img);
+                        String img = success.getImages();
+                        if (img.contains(",")) {
+                            String arr[] = img.split(",", 2);
+                            firstWord = arr[0];
+                            System.out.println(firstWord);
+                            success.setImages(firstWord);
+                            System.out.println("firstword imaggggg=========" + firstWord);
+                            String all = img.replace(",", "/ ");
+                            System.out.println("All images are::" + all);
+                            success.setImages(all);
+                        } else {
+                            System.out.println("otherrr imaggggg=========" + img);
+                            success.setImages(img);
+                            success.setImages(img);
+                        }
+                        mList.add(success);
                     }
-                    mList.add(success);
+                    categoryHashSet = new HashSet<>(categoryList);
+                    tagsHashSet = new HashSet<>(tagsList);
+                    BrandtagsHashSet = new HashSet<>(BrandtagsList);
+                    adapter = new SearchServiceAdapter(getActivity(), mList);
+                    searchList.setAdapter(adapter);
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
                 }
-                categoryHashSet = new HashSet<>(categoryList);
-                tagsHashSet = new HashSet<>(tagsList);
-                BrandtagsHashSet = new HashSet<>(BrandtagsList);
-                adapter = new SearchServiceAdapter(getActivity(), mList);
-                searchList.setAdapter(adapter);
+
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+
+        if (error instanceof SocketTimeoutException) {
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else {
+            Log.i("Check Class-", "SearchService Fragment");
+        }
 
     }
 
