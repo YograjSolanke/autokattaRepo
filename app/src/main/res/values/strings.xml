@@ -61,6 +61,8 @@
     <string name="about">About</string>
     <string name="worked_at">Worked At</string>
     <string name="address">Address</string>
+    <string name="exchange">Exchange</string>
+    <string name="finance">Finance</string>
     <string name="company_name">Company Name</string>
     <string name="designation">Designation</string>
     <string name="skills">Skills</string>
