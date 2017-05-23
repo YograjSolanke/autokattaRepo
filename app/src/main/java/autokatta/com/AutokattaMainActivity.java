@@ -374,7 +374,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     mApiCall.firebaseToken(contact, fcm);
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Again Contact is null", Toast.LENGTH_SHORT).show();
+                Log.e("Contact is", "null");
             }
         } else {
             Log.e("Firebase", "done");
