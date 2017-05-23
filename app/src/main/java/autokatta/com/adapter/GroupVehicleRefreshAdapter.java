@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -366,10 +367,10 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             public void onClick(View v) {
                 Bundle mBundle = new Bundle();
                 mBundle.putString("vehicle_id", mItemList.get(position).getVehicleId());
-
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent mVehicleDetails = new Intent(mActivity, VehicleDetails.class);
                 mVehicleDetails.putExtras(mBundle);
-                mActivity.startActivity(mVehicleDetails);
+                mActivity.startActivity(mVehicleDetails, options.toBundle());
             }
         });
         holder.mCall.setOnClickListener(new OnClickListener() {

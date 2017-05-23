@@ -1,5 +1,7 @@
 package autokatta.com.groups;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -17,9 +19,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,9 +57,6 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
     GroupVehicleRefreshAdapter mGroupVehicleRefreshAdapter;
     LinearLayoutManager mLayoutManager;
     // on scroll
-    private static int current_page = 1;
-    private int ival = 1;
-    private int loadLimit = 10;
     ApiCall mApiCall;
     String mGroupId = "";
     String className = "";
@@ -121,9 +123,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                         String Rcontact = getBundle.getString("Rcontact");
                         getMyVehicles(Rcontact);
                     }
-
                     getRtoCity();
-
 
                 /*
                 Recycler View OnScrollChanged Listener...
@@ -139,7 +139,6 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                 }
             }
         });
-
 
         filterimg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +162,6 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
                 brand = editbrand.getText().toString();
                 model = editmodel.getText().toString();
                 version = editversion.getText().toString();
@@ -264,25 +262,14 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                         String firstWord = "", all = "";
                         if (img.contains(",")) {
                             String arr[] = img.split(",", 2);
-
                             firstWord = arr[0].replaceAll(" ", "");
-
-                            System.out.println("firstword imaggggg=========" + firstWord);
-
                             success.setSingleImage(firstWord);
-
                             all = img.replace(",", "/ ");
-                            System.out.println("All images are::" + all);
                             success.setAllImage(all);
-
                         } else {
-
-                            System.out.println("otherrrr imaggggg=========" + img);
-
                             success.setSingleImage(img);
                             success.setAllImage(all);
                         }
-
                         mSuccesses.add(success);
                     }
                     mGroupVehicleRefreshAdapter = new GroupVehicleRefreshAdapter(getActivity(), mSuccesses);
@@ -329,6 +316,38 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
             Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
             Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-"
                     , "GroupVehicle List");
