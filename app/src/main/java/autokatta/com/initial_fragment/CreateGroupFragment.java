@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,8 +13,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,10 +21,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.Random;
 
 import autokatta.com.R;
@@ -33,7 +35,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.GroupContactFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
-import autokatta.com.other.CustomToast;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -62,6 +63,10 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     Bundle b = new Bundle();
     ApiCall mApiCall;
 
+    public CreateGroupFragment() {
+        //empty fragment...
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -85,7 +90,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                 if (mGroupTitle.getText().toString().equalsIgnoreCase("") || mGroupTitle.getText().toString().startsWith(" ")) {
                     Snackbar.make(view, "Please provide group name and optional group icon", Snackbar.LENGTH_LONG).show();
                 } else {
-
                     mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);
                 }
                 break;
@@ -204,11 +208,9 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Bitmap retVal;
-
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         retVal = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-
         return retVal;
     }
 
@@ -246,7 +248,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
 
         if (cursor.moveToFirst()) {
             int orientation = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.ORIENTATION));
-            System.out.println("orientation===" + orientation);
             cursor.close();
             return orientation;
         } else {
@@ -262,11 +263,43 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Create Group Fragment");
             error.printStackTrace();
@@ -276,7 +309,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            CustomToast.customToast(getActivity(), "Group created Successfully");
+            Snackbar.make(getView(), "Group Created", Snackbar.LENGTH_SHORT).show();
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", str).apply();
             if (!mediaPath.equals("")) {
                 uploadImage(mediaPath);
@@ -286,13 +319,17 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
             fragment2.setArguments(b);   // send values to another fragment
 
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.group_container, fragment2);
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.group_container, fragment2, "groupContactFragment")
+                    .addToBackStack("groupContactFragment")
+                    .commit();
 
         } else {
-            CustomToast.customToast(getActivity(), "Something went wrong Please try again");
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         }
     }
 }

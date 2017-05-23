@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -194,9 +192,8 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabCreateGroup:
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.group_container, new CreateGroupFragment(), "createGroupFragment")
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.group_container, new CreateGroupFragment(), "createGroupFragment")
                         .addToBackStack("createGroupFragment")
                         .commit();
                 break;

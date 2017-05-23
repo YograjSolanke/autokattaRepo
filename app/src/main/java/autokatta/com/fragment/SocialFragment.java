@@ -18,12 +18,12 @@ import autokatta.com.enquiries.AllEnquiryTabFragment;
  */
 
 public class SocialFragment extends Fragment {
+    View mSocialFragment;
 
     public SocialFragment() {
         //Empty Fragment...
     }
 
-    View mSocialFragment;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

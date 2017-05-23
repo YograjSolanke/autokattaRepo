@@ -1,8 +1,8 @@
 package autokatta.com.groups;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -19,8 +19,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,10 +59,13 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     boolean flag = true;
     String allcontacts = "";
 
+    public GroupContactFragment() {
+        //empty constructor...
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mGcontact = inflater.inflate(R.layout.group_contact_list, container, false);
 
         AddContacts = (Button) mGcontact.findViewById(R.id.add_contacts);
@@ -71,14 +77,10 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
         mApiCall = new ApiCall(getActivity(), this);
         args = getArguments();
-
         mApiCall.getRegisteredContacts();
 
         mGroup_id = args.getString("bundle_GroupId", "");
-        System.out.println("Group Id From Create Fragment Bundle In Group Contact Fragment:" + mGroup_id);
-
         call = args.getString("call", "");
-
         AddContacts.setEnabled(false);
 
         AddContacts.setOnClickListener(new OnClickListener() {
@@ -86,11 +88,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
-
                 List<String> GetList = args.getStringArrayList("list");
-                System.out.println("List From Web Service: " + GetList);
-
                 clist = CntctListadapter.checkboxselect();
 
                 for (int i = 0; i < clist.size(); i++) {
@@ -118,27 +116,21 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
                 //Existing Group
                 else if (call.equalsIgnoreCase("existGroup")) {
-
                     //For Group Which Doesn't Have Any Contact No In WebService
                     if (cntlist.size() == 0) {
                         flag = true;
-
                     }
 
                     //If Group Already Contains Selected Contact
                     else {
                         for (int i = 0; i < GetList.size(); i++) {
                             String no = GetList.get(i);
-
                             String[] parts = allcontacts.split(",");
-
                             for (int j = 0; j < parts.length; j++) {
                                 if (parts[j].contains(no)) {
-/*
-                                    Snackbar.make(v,
+                                    Snackbar.make(getView(),
                                             "Sorry..No Is Already added in Group",
-                                            Snackbar.LENGTH_LONG).show();*/
-                                    CustomToast.customToast(getActivity(), "Sorry..No Is Already added in Group");
+                                            Snackbar.LENGTH_SHORT).show();
                                     flag = false;
                                 }
                             }
@@ -152,26 +144,20 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     intent.putExtra("className", "GroupContactFragment");
                     intent.putExtra("bundle_GroupId", mGroup_id);
                     getActivity().startActivity(intent);
-                    getActivity().finish();
-
 
                 } else if (flag) {
                     if (call.equalsIgnoreCase("newGroup")) {
                         allcontacts = allcontacts + "," + mContact;
                     }
-
                     mApiCall.addContactInGroup(mGroup_id, allcontacts);
                     String[] parts = allcontacts.split(",");
 
                     for (int i = 0; i < parts.length; i++) {
-
                         receiver_contact = parts[i];
                         if (!receiver_contact.equalsIgnoreCase(mContact)) {
                             // mApiCall.groupLikeNotification(pass_id, mContact, receiver_contact, "3");
                         }
                     }
-
-                    System.out.println("All contacts ::" + allcontacts);
                 }
             }
 
@@ -180,26 +166,20 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
 
         inputSearch.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("Text [" + s + "]");
-
                 CntctListadapter.getFilter().filter(s.toString());
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
-
-
         return mGcontact;
     }
 
@@ -208,13 +188,11 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             cntlist.clear();
-
             Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
             String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                     ContactsContract.CommonDataKinds.Phone.NUMBER};
 
             Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
-
             int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
             int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
@@ -241,11 +219,8 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                         contactRegistered.setUsername(name);
                         cntlist.add(contactRegistered);
                     }
-
                 } while (people.moveToNext());
-
             }
-
             CntctListadapter = new GroupContactListAdapter(getActivity(), cntlist);
             lv.setAdapter(CntctListadapter);
             CntctListadapter.notifyDataSetChanged();
@@ -256,11 +231,43 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Group Contact Fragment");
             error.printStackTrace();
@@ -277,7 +284,6 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 intent.putExtra("className", "GroupContactFragment");
                 intent.putExtra("bundle_GroupId", mGroup_id);
                 getActivity().startActivity(intent);
-                getActivity().finish();
             } else {
                 CustomToast.customToast(getActivity(), "Error");
             }
