@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +20,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,6 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.MemberDetailTabs;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
@@ -43,13 +45,13 @@ import retrofit2.Response;
  */
 
 public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRefreshAdapter.MyViewHolder> implements RequestNotifier {
-
     private Activity mActivity;
     private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
     private String mCallFrom;
     private String myContact;
     private String mGroupId;
     private ApiCall mApiCall;
+    private MyViewHolder mView;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mContact, mVehicleCount, mAdmin;
@@ -70,21 +72,12 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         }
     }
 
-    public MemberListRefreshAdapter(Activity mActivity, List<GetGroupContactsResponse.Success> mItemList) {
-        this.mActivity = mActivity;
-        this.mItemList = mItemList;
-        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", "");
-    }
-
     public MemberListRefreshAdapter(Activity mActivity1, String GroupId, List<GetGroupContactsResponse.Success> mItemList, String mCallfrom) {
         this.mActivity = mActivity1;
         mGroupId = GroupId;
         this.mItemList = mItemList;
         this.mCallFrom = mCallfrom;
         mApiCall = new ApiCall(mActivity, this);
-        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", "");
     }
 
     @Override
@@ -99,6 +92,9 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
     @Override
     public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, final int position) {
+        mView = holder;
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mName.setText(mItemList.get(position).getUsername());
         holder.mContact.setText(mItemList.get(position).getContact());
         holder.mAdmin.setText(mItemList.get(position).getMember());
@@ -212,8 +208,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*memeber details tabs*/
-
+                /*member details tabs*/
                 Bundle bundle = new Bundle();
                 bundle.putString("Rcontact", holder.mContact.getText().toString());
                 bundle.putString("grouptype", mCallFrom);
@@ -280,7 +275,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
             @Override
             public void onClick(final View v) {
-
                 final CharSequence[] options;
                 String tx = "", action = "";
                 if (holder.mName.getText().toString().equals("You")) {
@@ -295,7 +289,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     tx = "Remove Member";
                     action = "Admin";
                     options = new CharSequence[]{tx, "Make an admin", "Cancel"};
-
                 }
 
 
@@ -309,27 +302,20 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     public void onClick(DialogInterface dialog, int item) {
 
                         if (options[item].equals("Remove Member") || options[item].equals("Leave")) {
-
                             new AlertDialog.Builder(mActivity)
                                     //.setTitle(alertText)
                                     .setMessage("Are you sure ?")
-
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-
                                             rmContact = holder.mContact.getText().toString();
-
-
                                             if (mCallFrom.equals("MyGroups")) {
                                                 if (rmContact.equals(myContact)) {
-
                                                     if (mItemList.size() != 1)
                                                         nextContact = mItemList.get(position + 1).getContact();
                                                     //nextContact = next[1];
                                                     //}
                                                 }
                                             }
-                                            System.out.println("Next Adminnnn" + nextContact);
 
                                             // if(!nextContact.equals("")||!nextContact.equals("null")||!nextContact.equals(null))
                                             //new DeleteMembers().execute();
@@ -349,21 +335,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                                     .show();
 
                         } else if (options[item].equals("Make an admin") || options[item].equals("Remove from Admin")) {
-
                             rmContact = holder.mContact.getText().toString();
-                            System.out.println("************Contact***********" + rmContact);
-
                             makeAdmin(rmContact, finalAction);
-
-
                         } else if (options[item].equals("Cancel")) {
                             dialog.dismiss();
                         }
-
                     }
 
                 });
-
                 builder.show();
             }
 
@@ -395,7 +374,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         try {
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+            ex.printStackTrace();
         }
     }
 
@@ -412,11 +391,43 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
+            Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+            Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+            Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "MemberList Adapter");
             error.printStackTrace();
@@ -426,11 +437,10 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     @Override
     public void notifyString(String str) {
         if (str != null) {
-
             if (str.equals("success_admin")) {
-                Toast.makeText(mActivity, "Successfully done", Toast.LENGTH_LONG).show();
+                Snackbar.make(mView.mRelativeLayout, "Done", Snackbar.LENGTH_SHORT).show();
             } else if (str.startsWith("success")) {
-                Toast.makeText(mActivity, "Successfully done deletion", Toast.LENGTH_LONG).show();
+                Snackbar.make(mView.mRelativeLayout, "done", Snackbar.LENGTH_SHORT).show();
             }
             Intent intent = new Intent(mActivity, GroupsActivity.class);
             intent.putExtra("grouptype", "MyGroup");
@@ -439,7 +449,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             mActivity.startActivity(intent);
             mActivity.finish();
         } else
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+            Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
     }
 
 }

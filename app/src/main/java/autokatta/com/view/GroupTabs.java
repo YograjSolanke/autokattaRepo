@@ -49,29 +49,17 @@ public class GroupTabs extends AppCompatActivity {
             getSupportActionBar().setIcon(R.mipmap.ic_launcher);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
 
         if (getIntent().getExtras() != null) {
             FragmentManager mFragmentManager = getSupportFragmentManager();
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.group_container, new CreateGroupFragment(), "createGroupFragment")
-                    .addToBackStack("createGroupFragment")
                     .commit();
 
-            /*getSupportFragmentManager().beginTransaction().
-                    replace(R.id.group_container, new CreateGroupFragment(), "createGroup")
-                    .addToBackStack("createGroup")
-                    .commit();*/
-
         } else {
-            /*FragmentManager mFragmentManager = getSupportFragmentManager();
-            FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.group_container, new GroupMyJoined()).commit();*/
-
             getSupportFragmentManager().beginTransaction().
                     replace(R.id.group_container, new GroupMyJoined(), "groupMyJoined")
-                    .addToBackStack("groupMyJoined")
                     .commit();
         }
     }
@@ -86,33 +74,11 @@ public class GroupTabs extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupTabs.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
-            finish();
-        } else {
-            finish();
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
-        }
-    }*/
-
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        int fragments = getSupportFragmentManager().getBackStackEntryCount();
-        if (fragments == 1) {
-            finish();
-            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-        } else {
-            if (getFragmentManager().getBackStackEntryCount() > 1) {
-                getFragmentManager().popBackStack();
-            } else {
-                super.onBackPressed();
-            }
-        }
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
 }

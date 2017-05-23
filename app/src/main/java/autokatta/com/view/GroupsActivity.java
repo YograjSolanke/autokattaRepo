@@ -33,7 +33,6 @@ public class GroupsActivity extends AppCompatActivity {
         }
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.profile_groups_container, groupDetailTabs, "GroupActivity")
-                .addToBackStack("GroupActivity")
                 .commit();
     }
 
@@ -49,7 +48,7 @@ public class GroupsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        //super.onBackPressed();
         //finishActivity(1);
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {

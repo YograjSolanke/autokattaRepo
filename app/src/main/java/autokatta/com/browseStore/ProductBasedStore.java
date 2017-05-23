@@ -37,7 +37,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.BrowseStoreAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrowseStoreResponse;
 import retrofit2.Response;
 
@@ -62,6 +61,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     BrowseStoreAdapter adapter;
     boolean hasViewCreated = false;
     TextView mNoData;
+
     public ProductBasedStore() {
         //Empty Constructor
     }
@@ -74,19 +74,17 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     }
 
     private void getStoreData(String contact) {
-
         ApiCall apiCall = new ApiCall(getActivity(), this);
         apiCall.getBrowseStores(contact, "Product");
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
-
                 mSuccesses = new ArrayList<>();
+                mSuccesses.clear();
                 BrowseStoreResponse browseStoreResponse = (BrowseStoreResponse) response.body();
                 if (!browseStoreResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
@@ -109,26 +107,19 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
                         success.setVisibility(true);
                         mSuccesses.add(success);
 
-
                         if (success.getCategory().trim().contains(",")) {
                             String arr[] = success.getCategory().trim().split(",");
                             for (int l = 0; l < arr.length; l++) {
-
                                 String part = arr[l].trim();
                                 if (!part.equals(" ") && !part.equals(""))
                                     categoryList.add(part);
                             }
                         } else {
-
                             categoryList.add(success.getCategory().trim());
                         }
-
                     }
 
-
-                    System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! before hashset" + categoryList);
                     categoryHashSet = new HashSet<>(categoryList);
-                    System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  after hashset" + categoryHashSet);
                     filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
                     mSwipeRefreshLayout.setRefreshing(false);
                 } else {
@@ -141,9 +132,10 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 // mNoData.setVisibility(View.VISIBLE);
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
+            mSwipeRefreshLayout.setRefreshing(false);
             Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
 
@@ -155,7 +147,6 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""));
                 hasViewCreated = true;
@@ -248,7 +239,9 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
 
     @Override
     public void onRefresh() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
+        getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""));
     }
 
     @Override
@@ -256,16 +249,12 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
 
         switch (view.getId()) {
             case (R.id.filterimg):
-
                 filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
                 break;
         }
     }
 
-
     public void filterResult(final String[] incomingCategory) {
-
-
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -278,75 +267,48 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         Button Ok = (Button) convertView.findViewById(R.id.btnok);
         Button cancel = (Button) convertView.findViewById(R.id.btncancel);
 
-
         categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
-
-
         lvcat.setAdapter(categoryAdapter);
 
         Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                System.out.println("Final categories=" + finalcategory);
-
                 mRecyclerView.setAdapter(null);
                 for (int i = 0; i < mSuccesses.size(); i++) {
                     //If Category contains ","
                     if (mSuccesses.get(i).getCategory().trim().contains(",")) {
                         boolean flag = false;
-
                         String arr[] = mSuccesses.get(i).getCategory().trim().split(",");
                         for (int r = 0; r < arr.length; r++) {
-
                             if (finalcategory.contains(arr[r].trim()))
                                 flag = true;
-
                         }
 
                         if (flag)
                             mSuccesses.get(i).setVisibility(true);
-
-                            //Location checking code
                         else {
                             mSuccesses.get(i).setVisibility(false);
-
                         }
-
-                    }
-                    //If Category not contains ","
-                    else {
+                    } else {
                         if (finalcategory.contains(mSuccesses.get(i).getCategory().trim()))
                             mSuccesses.get(i).setVisibility(true);
-
-
-                            //Location checking code
                         else {
-
                             mSuccesses.get(i).setVisibility(false);
                         }
                     }
-                    //allSearchDataArrayList.get(i).visibility = false;
                 }
-
 
                 mSuccesses_new = new ArrayList<>();
                 mSuccesses_new.clear();
-
                 for (int w = 0; w < mSuccesses.size(); w++) {
                     if (mSuccesses.get(w).isVisibility()) {
-
                         mSuccesses_new.add(mSuccesses.get(w));
                     }
-
                 }
-
                 alert.dismiss();
-
                 adapter = new BrowseStoreAdapter(getActivity(), mSuccesses_new);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-
 
             }
         });
@@ -358,20 +320,14 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
             }
         });
 
-
         convertView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 v.getParent().requestDisallowInterceptTouchEvent(true);
-
                 return false;
             }
         });
-
-
-        //   alertDialog.show();
     }
-
 
     static class ViewHolder {
         TextView text;
@@ -379,27 +335,19 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     }
 
     public class CheckedCategoryAdapter extends BaseAdapter {
-
         private LayoutInflater mInflater;
         Activity activity;
-
         ArrayList<String> titles = new ArrayList<>();
 
-
         public CheckedCategoryAdapter(Activity a, String titles[]) {
-//
             this.activity = a;
-
             this.titles = new ArrayList<>(Arrays.asList(titles));
-//
 
             if (finalcategory.size() == 0) {
                 for (int i = 0; i < this.titles.size(); i++) {
-
                     finalcategory.add(this.titles.get(i));
                 }
             }
-
             mInflater = (LayoutInflater) activity.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -418,65 +366,50 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
 
         @Override
         public int getViewTypeCount() {
-
             return getCount();
         }
 
         @Override
         public int getItemViewType(int position) {
-
             return position;
         }
 
         public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
             final View cv = convertView;
-
             if (convertView == null) {
                 holder = new ViewHolder();
-
                 convertView = mInflater.inflate(R.layout.checked_category_adapter, null);
                 holder.text = (TextView) convertView.findViewById(R.id.txtname);
                 holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
-
             }
-
 
             holder.text.setText(titles.get(position));
             if (!finalcategory.get(position).equalsIgnoreCase("0"))
                 holder.checkBox.setChecked(true);
 
-
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                     if (isChecked) {
-
                         finalcategory.set(position, holder.text.getText().toString());
-
                     } else {
-
                         finalcategory.set(position, "0");
                     }
-
                 }
             });
 
             convertView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-
                     v.getParent().requestDisallowInterceptTouchEvent(true);
                     return false;
                 }
             });
-
             return convertView;
         }
-
     }
 }

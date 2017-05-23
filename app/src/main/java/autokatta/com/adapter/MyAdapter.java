@@ -1,9 +1,11 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
@@ -17,7 +19,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -32,7 +33,6 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.GroupEditFragment;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.view.GroupTabs;
 import autokatta.com.view.GroupsActivity;
@@ -172,6 +172,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                         .putString("group_id", mItemList.get(position).getId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
                         .putString("grouptype", GroupType).apply();*/
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 mGroupid = mItemList.get(position).getId();
                 Intent intent = new Intent(mActivity, GroupsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
@@ -183,7 +184,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 }
                 intent.putExtra("className", "MyAdapter");
                 intent.putExtra("bundle_GroupId", mGroupid);
-                mActivity.startActivityForResult(intent, 1);
+                mActivity.startActivityForResult(intent, 1, options.toBundle());
             }
         });
         if (GroupType.equals("JoinedGroups")) {
@@ -246,9 +247,37 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         } else if (error instanceof ClassCastException) {
             Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof ConnectException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else if (error instanceof UnknownHostException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "My Adapter");
             error.printStackTrace();
@@ -259,17 +288,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success")) {
-                CustomToast.customToast(mContext, "Group Deleted Successfuly !!!");
+                Snackbar.make(view.mCardView, "Group deleted", Snackbar.LENGTH_LONG).show();
                 Intent i = new Intent(mActivity, GroupTabs.class);
                 mActivity.startActivity(i);
-
-            } else {
-                CustomToast.customToast(mContext, "Group Not Deleted !!!");
-
             }
         } else {
-            Toast.makeText(mContext, mContext.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
-
+            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         }
     }
 

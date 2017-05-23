@@ -148,18 +148,47 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                         @Override
                         public void onTabSelected(TabLayout.Tab tab) {
+                           /* if (storeOtherContact.equals(mOtherContact)) {
+                                mTeamVehicle.setVisibility(View.GONE);
+                                mTeamServices.setVisibility(View.GONE);
+                                mTeamProduct.setVisibility(View.GONE);
+                            }*/
                             if (tab.getPosition() == 1) {
-                                mTeamVehicle.setVisibility(View.GONE);
-                                mTeamServices.setVisibility(View.GONE);
-                                mTeamProduct.setVisibility(View.VISIBLE);
+                                if (storeOtherContact != null) {
+                                    if (storeOtherContact.equals(mOtherContact)) {
+                                        mTeamVehicle.setVisibility(View.GONE);
+                                        mTeamServices.setVisibility(View.GONE);
+                                        mTeamProduct.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    mTeamVehicle.setVisibility(View.GONE);
+                                    mTeamServices.setVisibility(View.GONE);
+                                    mTeamProduct.setVisibility(View.VISIBLE);
+                                }
                             } else if (tab.getPosition() == 2) {
-                                mTeamVehicle.setVisibility(View.GONE);
-                                mTeamServices.setVisibility(View.VISIBLE);
-                                mTeamProduct.setVisibility(View.GONE);
+                                if (storeOtherContact != null) {
+                                    if (storeOtherContact.equals(mOtherContact)) {
+                                        mTeamVehicle.setVisibility(View.GONE);
+                                        mTeamServices.setVisibility(View.GONE);
+                                        mTeamProduct.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    mTeamVehicle.setVisibility(View.GONE);
+                                    mTeamServices.setVisibility(View.VISIBLE);
+                                    mTeamProduct.setVisibility(View.GONE);
+                                }
                             } else if (tab.getPosition() == 3) {
-                                mTeamVehicle.setVisibility(View.VISIBLE);
-                                mTeamServices.setVisibility(View.GONE);
-                                mTeamProduct.setVisibility(View.GONE);
+                                if (storeOtherContact != null) {
+                                    if (storeOtherContact.equals(mOtherContact)) {
+                                        mTeamVehicle.setVisibility(View.GONE);
+                                        mTeamServices.setVisibility(View.GONE);
+                                        mTeamProduct.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    mTeamVehicle.setVisibility(View.VISIBLE);
+                                    mTeamServices.setVisibility(View.GONE);
+                                    mTeamProduct.setVisibility(View.GONE);
+                                }
                             } else {
                                 mTeamVehicle.setVisibility(View.GONE);
                                 mTeamServices.setVisibility(View.GONE);
@@ -591,11 +620,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mFollow.setVisibility(View.GONE);
                     mRate.setVisibility(View.GONE);
                     mAdd.setVisibility(View.VISIBLE);
-                }
-                if (storeOtherContact.equals(mOtherContact)) {
-                    mTeamVehicle.setVisibility(View.GONE);
-                    mTeamServices.setVisibility(View.GONE);
-                    mTeamProduct.setVisibility(View.GONE);
                 }
 
                 storerating.setRating(Float.parseFloat(storeRating));

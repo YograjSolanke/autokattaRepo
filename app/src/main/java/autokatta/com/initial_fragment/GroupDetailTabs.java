@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +41,7 @@ public class GroupDetailTabs extends Fragment {
             b.putString("grouptype", b1.getString("grouptype"));
             b.putString("className", b1.getString("className"));
             b.putString("bundle_GroupId", b1.getString("bundle_GroupId"));
-            Log.i("GroupId", "GroupTab->" + b1.getString("bundle_GroupId"));
-        }/* else {
-            b.putString("grouptype", "profile");
-        }*/
+        }
 
         memberListFragment = new MemberListFragment();
         memberListFragment.setArguments(b);
@@ -69,7 +65,6 @@ public class GroupDetailTabs extends Fragment {
 
         TabLayout tabLayout = (TabLayout) mGroupDetail.findViewById(R.id.groups_details_tab);
         tabLayout.setupWithViewPager(mViewPager);
-
         return mGroupDetail;
     }
 

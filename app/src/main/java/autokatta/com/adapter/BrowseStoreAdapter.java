@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -50,17 +49,13 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     List<BrowseStoreResponse.Success> mMainlist;
     Activity activity;
     String image = "";
-    String StoreContact, StoreId, allDetails;
-    int likecountint, followcountint;
+    private String StoreContact, StoreId, allDetails;
+    private int likecountint, followcountint;
     ApiCall mApiCall;
 
-
     public BrowseStoreAdapter(Activity activity, List<BrowseStoreResponse.Success> successList) {
-
         this.activity = activity;
         this.mMainlist = successList;
-
-
     }
 
     @Override
@@ -72,7 +67,6 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
     @Override
     public void onBindViewHolder(final BrowseStoreAdapter.StoreHolder holder, final int position) {
-
         final BrowseStoreResponse.Success success = mMainlist.get(holder.getAdapterPosition());
         mApiCall = new ApiCall(activity, this);
 
@@ -86,11 +80,11 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
         holder.storerating.setEnabled(false);
 
-
         if (success.getLikestatus().equalsIgnoreCase("yes")) {
             holder.linearlike.setVisibility(View.INVISIBLE);
             holder.linearunlike.setVisibility(View.VISIBLE);
         }
+
         if (success.getLikestatus().equalsIgnoreCase("no")) {
             holder.linearlike.setVisibility(View.VISIBLE);
             holder.linearunlike.setVisibility(View.INVISIBLE);
@@ -106,9 +100,9 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         }
 
         if (success.getRating().equals("0")) {
+
         } else if (!success.getRating().equals("0")) {
             holder.storerating.setRating(Float.parseFloat(success.getRating()));
-
         }
 
         image = "http://autokatta.com/mobile/store_profiles/" + success.getStoreImage();
@@ -116,8 +110,6 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         if (success.getStoreImage() == null) {
             holder.store_image.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.profile));
         } else {
-
-
             /****************
              Glide code for image uploading
 
@@ -134,20 +126,12 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.btndetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Bundle b = new Bundle();
-
                 b.putString("StoreContact", success.getContactNo());
                 b.putString("store_id", success.getStoreId());
                 Intent intent = new Intent(activity, StoreViewActivity.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);
-
-//                StoreviewFragment fragment = new StoreviewFragment();
-//                fragment.setArguments(b);
-//                FragmentManager mFragmentManagerm = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = mFragmentManagerm.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fragment).addToBackStack("store_view").commit();
             }
         });
 
@@ -155,7 +139,6 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.linearlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 StoreContact = success.getContactNo();
                 if (!StoreContact.equals(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""))) {
@@ -185,8 +168,6 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.linearunlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "clicked on unlike " + position, Toast.LENGTH_LONG).show();
-
                 StoreContact = success.getContactNo();
                 if (!StoreContact.equals(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""))) {
@@ -284,13 +265,10 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 }
             }
         });
-//
-//
+
         holder.linearshare1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//
                 allDetails = success.getStoreName() + "=" +
                         success.getWebsite() + "=" +
                         "-" + "=" +
@@ -319,14 +297,11 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 //
 //
         holder.linearshare.setOnClickListener(new View.OnClickListener() {
-
             Intent intent = new Intent(Intent.ACTION_SEND);
             String imageFilePath;
 
-
             @Override
             public void onClick(View v) {
-
                 if (success.getStoreImage().equalsIgnoreCase("") || success.getStoreImage().equalsIgnoreCase(null) ||
                         success.getStoreImage().equalsIgnoreCase("null")) {
                     image = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
@@ -386,8 +361,6 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     }
 
     static class StoreHolder extends RecyclerView.ViewHolder {
-
-
         TextView storename, storelocation, storewebsite, storetiming, storeworkingdays, storetype, storeservices;
         ImageView store_image, call_image;
         TextView btnlike, btnfollow;

@@ -15,7 +15,8 @@
             android:layout_height="40dip"
             android:id="@+id/filterimg"
             android:padding="5dp"
-            android:src="@drawable/filter" />
+            android:src="@drawable/filter"
+            android:contentDescription="@string/app_name" />
 
     </RelativeLayout>
 

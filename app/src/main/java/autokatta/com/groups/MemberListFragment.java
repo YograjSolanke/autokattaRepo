@@ -1,12 +1,14 @@
-//member list frag
 package autokatta.com.groups;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,8 +19,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +31,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.MemberListRefreshAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
 import retrofit2.Response;
 
@@ -40,13 +44,13 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     SwipeRefreshLayout mSwipeRefreshLayout;
     FloatingActionButton floatCreateGroup;
     List<GetGroupContactsResponse.Success> mSuccesses = new ArrayList<>();
-    List<String> mlist = new ArrayList<>();
     List<String> ContactNoList;
     MemberListRefreshAdapter mMemberListAdapter;
     String call;
     Bundle bundle = new Bundle();
     //String group_id;
     String mCallfrom = "", mGroupId = "";
+    TextView mNoData;
 
     @Nullable
     @Override
@@ -55,6 +59,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         mRecyclerView = (RecyclerView) mMemberList.findViewById(R.id.rv_recycler_view);
         floatCreateGroup = (FloatingActionButton) mMemberList.findViewById(R.id.fab);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMemberList.findViewById(R.id.swipeRefreshLayout);
+        mNoData = (TextView) mMemberList.findViewById(R.id.no_category);
         mRecyclerView.setHasFixedSize(true);
         //group_id = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("group_id", "");
         bundle = getArguments();
@@ -89,18 +94,14 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             }
         });
 
-         /*else
-            mCallfrom = "groups";*/
 //For Other Profile
         if (mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("JoinedGroups")) {
             floatCreateGroup.setVisibility(View.GONE);
         }
 
-
         floatCreateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 GroupContactFragment fragment = new GroupContactFragment();
                 Bundle b = new Bundle();
                 b.putString("bundle_GroupId", mGroupId);
@@ -113,13 +114,10 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 fragmentTransaction.replace(R.id.profile_groups_container, fragment);
                 fragmentTransaction.addToBackStack("groupcontactfragment");
                 fragmentTransaction.commit();
-
             }
         });
-
         return mMemberList;
     }
-
 
     /*
     Get Group Contact...
@@ -138,89 +136,126 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 mSuccesses.clear();
                 Cursor people = null;
                 mSwipeRefreshLayout.setRefreshing(false);
-
+                mNoData.setVisibility(View.GONE);
                 Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
                 String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                         ContactsContract.CommonDataKinds.Phone.NUMBER};
 
                 GetGroupContactsResponse mGetGroupContactsResponse = (GetGroupContactsResponse) response.body();
-                for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
-                    success.setUsername(success.getUsername());
-                    success.setContact(success.getContact());
-                    success.setStatus(success.getStatus());
-                    success.setDp(success.getDp());
-                    success.setMember(success.getMember());
-                    success.setVehiclecount(success.getVehiclecount());
-                    if (success.getStatus().equals("null"))
-                        success.setStatus("No Status");
+                if (!mGetGroupContactsResponse.getSuccess().isEmpty()) {
+                    for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
+                        success.setUsername(success.getUsername());
+                        success.setContact(success.getContact());
+                        success.setStatus(success.getStatus());
+                        success.setDp(success.getDp());
+                        success.setMember(success.getMember());
+                        success.setVehiclecount(success.getVehiclecount());
+                        if (success.getStatus().equals("null"))
+                            success.setStatus("No Status");
 
+                        success.setContact(success.getContact().replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "").
+                                replace("(", "").replace(")", ""));
 
-                    success.setContact(success.getContact().replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "").
-                            replace("(", "").replace(")", ""));
+                        if (success.getContact().length() > 10)
+                            success.setContact(success.getContact().substring(success.getContact().length() - 10));
 
-                    if (success.getContact().length() > 10)
-                        success.setContact(success.getContact().substring(success.getContact().length() - 10));
+                        Boolean found = false;
+                        try {
+                            if (getActivity() != null) {
+                                people = getActivity().getContentResolver().query(uri, projection, null, null, null);
+                            }
+                            int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                            int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-                    Boolean found = false;
-                    try {
-                        if (getActivity() != null) {
-                            people = getActivity().getContentResolver().query(uri, projection, null, null, null);
-                        }
-                        int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-                        int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                            people.moveToFirst();
+                            do {
+                                String namesfound = people.getString(indexName);
+                                String numberfound = people.getString(indexNumber);
 
-                        people.moveToFirst();
-                        do {
-                            String namesfound = people.getString(indexName);
-                            String numberfound = people.getString(indexNumber);
+                                numberfound = numberfound.replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "");
+                                numberfound = numberfound.replace("(", "").replace(")", "");
 
-                            numberfound = numberfound.replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "");
-                            numberfound = numberfound.replace("(", "").replace(")", "");
+                                if (numberfound.length() > 10)
+                                    numberfound = numberfound.substring(numberfound.length() - 10);
 
-                            if (numberfound.length() > 10)
-                                numberfound = numberfound.substring(numberfound.length() - 10);
+                                //Remove All Space From Web Service Contacts And Mobile Contacts And Match Each Other
+                                if (success.getContact().equalsIgnoreCase(numberfound)) {
+                                    //NameList.add(namesfound+"="+getcont+"="+status+"="+image+"="+userName+"="+type+"="+vehicle_cnt);
+                                    success.setUsername(namesfound);
+                                    ContactNoList.add(success.getContact());
+                                    found = true;
+                                    break;
+                                }
+                            } while (people.moveToNext());
 
-                            //Remove All Space From Web Service Contacts And Mobile Contacts And Match Each Other
-                            if (success.getContact().equalsIgnoreCase(numberfound)) {
-                                //NameList.add(namesfound+"="+getcont+"="+status+"="+image+"="+userName+"="+type+"="+vehicle_cnt);
-                                success.setUsername(namesfound);
+                            if (!found) {
+                                // NameList.add("Unknown="+getcont+"="+status+"="+image+"="+userName+"="+type+"="+vehicle_cnt);
+                                success.setUsername("Unknown");
                                 ContactNoList.add(success.getContact());
-                                found = true;
-                                break;
                             }
-                        } while (people.moveToNext());
-
-                        if (!found) {
-                            // NameList.add("Unknown="+getcont+"="+status+"="+image+"="+userName+"="+type+"="+vehicle_cnt);
-                            success.setUsername("Unknown");
-                            ContactNoList.add(success.getContact());
-                            }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    mSuccesses.add(success);
+                        mSuccesses.add(success);
+                    }
+                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom);
+                    mRecyclerView.setAdapter(mMemberListAdapter);
+                    mMemberListAdapter.notifyDataSetChanged();
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.GONE);
                 }
-                mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom);
-                mRecyclerView.setAdapter(mMemberListAdapter);
-                mMemberListAdapter.notifyDataSetChanged();
-
-
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                mSwipeRefreshLayout.setRefreshing(false);
+                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            mSwipeRefreshLayout.setRefreshing(false);
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "MemberList Fragment");
             error.printStackTrace();

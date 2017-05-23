@@ -1,5 +1,3 @@
-
-
 package autokatta.com.browseStore;
 
 import android.app.Activity;
@@ -39,7 +37,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.BrowseStoreAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrowseStoreResponse;
 import retrofit2.Response;
 
@@ -50,7 +47,6 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class ServiceBasedStore extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
-
     View mProductBased;
     RecyclerView mRecyclerView;
     ImageView filterImg;
@@ -73,13 +69,10 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mProductBased = inflater.inflate(R.layout.fragment_product_based_store, container, false);
-
-
         return mProductBased;
     }
 
     private void getStoreData(String contact) {
-
         ApiCall apiCall = new ApiCall(getActivity(), this);
         apiCall.getBrowseStores(contact, "Service");
     }
@@ -89,7 +82,6 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""));
                 hasViewCreated = true;
@@ -101,7 +93,6 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mNoData = (TextView) mProductBased.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
         mRecyclerView = (RecyclerView) mProductBased.findViewById(R.id.BrowseStore_recycler_view);
@@ -123,8 +114,8 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-//                getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-//                        .getString("loginContact", ""));
+                /*getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""));*/
             }
         });
     }
@@ -132,53 +123,45 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mSuccesses = new ArrayList<>();
+                mSuccesses.clear();
                 BrowseStoreResponse browseStoreResponse = (BrowseStoreResponse) response.body();
                 if (!browseStoreResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
-                for (BrowseStoreResponse.Success success : browseStoreResponse.getSuccess()) {
-                    success.setStoreId(success.getStoreId());
-                    success.setContactNo(success.getContactNo());
-                    success.setStoreName(success.getStoreName());
-                    success.setStoreImage(success.getStoreImage());
-                    success.setLocation(success.getLocation());
-                    success.setCategory(success.getCategory());
-                    success.setWebsite(success.getWebsite());
-                    success.setStoreType(success.getStoreType());
-                    success.setWorkingDays(success.getWorkingDays());
-                    success.setModifiedDate(success.getModifiedDate());
-                    success.setLikestatus(success.getLikestatus());
-                    success.setFollowstatus(success.getFollowstatus());
-                    success.setLikecount(success.getLikecount());
-                    success.setFollowcount(success.getFollowcount());
-                    success.setRating(success.getRating());
-                    success.setVisibility(true);
-                    mSuccesses.add(success);
+                    for (BrowseStoreResponse.Success success : browseStoreResponse.getSuccess()) {
+                        success.setStoreId(success.getStoreId());
+                        success.setContactNo(success.getContactNo());
+                        success.setStoreName(success.getStoreName());
+                        success.setStoreImage(success.getStoreImage());
+                        success.setLocation(success.getLocation());
+                        success.setCategory(success.getCategory());
+                        success.setWebsite(success.getWebsite());
+                        success.setStoreType(success.getStoreType());
+                        success.setWorkingDays(success.getWorkingDays());
+                        success.setModifiedDate(success.getModifiedDate());
+                        success.setLikestatus(success.getLikestatus());
+                        success.setFollowstatus(success.getFollowstatus());
+                        success.setLikecount(success.getLikecount());
+                        success.setFollowcount(success.getFollowcount());
+                        success.setRating(success.getRating());
+                        success.setVisibility(true);
+                        mSuccesses.add(success);
 
-
-                    if (success.getCategory().trim().contains(",")) {
-                        String arr[] = success.getCategory().trim().split(",");
-                        for (int l = 0; l < arr.length; l++) {
-
-                            String part = arr[l].trim();
-                            if (!part.equals(" ") && !part.equals(""))
-                                categoryList.add(part);
+                        if (success.getCategory().trim().contains(",")) {
+                            String arr[] = success.getCategory().trim().split(",");
+                            for (int l = 0; l < arr.length; l++) {
+                                String part = arr[l].trim();
+                                if (!part.equals(" ") && !part.equals(""))
+                                    categoryList.add(part);
+                            }
+                        } else {
+                            categoryList.add(success.getCategory().trim());
                         }
-                    } else {
-
-                        categoryList.add(success.getCategory().trim());
                     }
-
-
-                }
-
-                System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! before hashset" + categoryList);
-                categoryHashSet = new HashSet<>(categoryList);
-                System.out.println("List !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  after hashset" + categoryHashSet);
+                    categoryHashSet = new HashSet<>(categoryList);
                     filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
                     mSwipeRefreshLayout.setRefreshing(false);
 //                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses);
@@ -190,12 +173,11 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -252,15 +234,15 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
     @Override
     public void onRefresh() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
+        getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""));
     }
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case (R.id.filterimg):
-
                 filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
                 break;
         }
@@ -268,8 +250,6 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
 
     public void filterResult(final String[] incomingCategory) {
-
-
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
@@ -281,19 +261,12 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
         Button Ok = (Button) convertView.findViewById(R.id.btnok);
         Button cancel = (Button) convertView.findViewById(R.id.btncancel);
-
-
         categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
-
-
         lvcat.setAdapter(categoryAdapter);
 
         Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                System.out.println("Final categories=" + finalcategory);
-
                 mRecyclerView.setAdapter(null);
                 for (int i = 0; i < mSuccesses.size(); i++) {
                     //If Category contains ","
@@ -305,53 +278,37 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
                             if (finalcategory.contains(arr[r].trim()))
                                 flag = true;
-
                         }
 
                         if (flag)
                             mSuccesses.get(i).setVisibility(true);
-
-                            //Location checking code
                         else {
                             mSuccesses.get(i).setVisibility(false);
-
                         }
-
                     }
                     //If Category not contains ","
                     else {
                         if (finalcategory.contains(mSuccesses.get(i).getCategory().trim()))
                             mSuccesses.get(i).setVisibility(true);
-
-
-                            //Location checking code
                         else {
-
                             mSuccesses.get(i).setVisibility(false);
                         }
                     }
-                    //allSearchDataArrayList.get(i).visibility = false;
                 }
-
 
                 mSuccesses_new = new ArrayList<>();
                 mSuccesses_new.clear();
 
                 for (int w = 0; w < mSuccesses.size(); w++) {
                     if (mSuccesses.get(w).isVisibility()) {
-
                         mSuccesses_new.add(mSuccesses.get(w));
                     }
-
                 }
-
                 alert.dismiss();
 
                 adapter = new BrowseStoreAdapter(getActivity(), mSuccesses_new);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-
-
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -362,18 +319,13 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             }
         });
 
-
         convertView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 v.getParent().requestDisallowInterceptTouchEvent(true);
-
                 return false;
             }
         });
-
-
-        //   alertDialog.show();
     }
 
 
@@ -383,23 +335,16 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     }
 
     public class CheckedCategoryAdapter extends BaseAdapter {
-
         private LayoutInflater mInflater;
         Activity activity;
-
         ArrayList<String> titles = new ArrayList<>();
 
-
         public CheckedCategoryAdapter(Activity a, String titles[]) {
-//
             this.activity = a;
-
             this.titles = new ArrayList<>(Arrays.asList(titles));
-//
 
             if (finalcategory.size() == 0) {
                 for (int i = 0; i < this.titles.size(); i++) {
-
                     finalcategory.add(this.titles.get(i));
                 }
             }
@@ -422,13 +367,11 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
         @Override
         public int getViewTypeCount() {
-
             return getCount();
         }
 
         @Override
         public int getItemViewType(int position) {
-
             return position;
         }
 
@@ -438,50 +381,38 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
             if (convertView == null) {
                 holder = new ProductBasedStore.ViewHolder();
-
                 convertView = mInflater.inflate(R.layout.checked_category_adapter, null);
                 holder.text = (TextView) convertView.findViewById(R.id.txtname);
                 holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
                 convertView.setTag(holder);
             } else {
                 holder = (ProductBasedStore.ViewHolder) convertView.getTag();
-
             }
-
 
             holder.text.setText(titles.get(position));
             if (!finalcategory.get(position).equalsIgnoreCase("0"))
                 holder.checkBox.setChecked(true);
 
-
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                     if (isChecked) {
-
                         finalcategory.set(position, holder.text.getText().toString());
-
                     } else {
-
                         finalcategory.set(position, "0");
                     }
-
                 }
             });
 
             convertView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-
                     v.getParent().requestDisallowInterceptTouchEvent(true);
                     return false;
                 }
             });
-
             return convertView;
         }
-
     }
 }
 
