@@ -443,7 +443,10 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 edtpuc.setError(null);
                 edtlastservice.setError(null);
                 edtnextservice.setError(null);
-                onBackPressed();
+//                onBackPressed();
+                Intent i = new Intent(getApplicationContext(), RegistrationCompanyBased.class);
+                startActivity(i);
+                finish();
                 break;
 
             case R.id.purchaseCal:
