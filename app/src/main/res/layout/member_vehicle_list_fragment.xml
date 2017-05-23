@@ -7,8 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:id="@+id/relfilter"
-        android:layout_marginTop="35dp">
+        android:id="@+id/relfilter">
         <ImageView
             android:id="@+id/filterimg"
             android:layout_width="40dip"
