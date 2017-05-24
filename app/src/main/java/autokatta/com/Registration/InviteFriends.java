@@ -2,7 +2,6 @@ package autokatta.com.Registration;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -62,8 +61,9 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
         skip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
-                startActivity(i);
+                startActivity(i, options.toBundle());
                 finish();
             }
         });
@@ -84,6 +84,7 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -130,14 +131,16 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(InviteFriends.this, R.anim.pull_in_left, R.anim.push_out_right);
             startActivity(new Intent(getApplicationContext(), SkillsBasedInvitation.class), options.toBundle());
             finish();
         } else {
             startActivity(new Intent(getApplicationContext(), SkillsBasedInvitation.class));
             finish();
-        }
+        }*/
     }
 
 }

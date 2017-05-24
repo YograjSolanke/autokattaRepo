@@ -54,75 +54,6 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:layout_gravity="bottom|start"
-            android:layout_toEndOf="@+id/textView3"
-            android:background="@drawable/ic_circular_shape_silhouette"
-            android:gravity="center"
-            android:padding="2sp"
-            android:text="4"
-            android:layout_marginEnd="@dimen/layout_top"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:layout_gravity="bottom|start"
-            android:layout_toEndOf="@+id/textView4"
-            android:background="@drawable/ic_circular_shape_silhouette"
-            android:gravity="center"
-            android:padding="2sp"
-            android:text="5"
-            android:layout_marginEnd="@dimen/layout_top"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:layout_gravity="bottom|start"
-            android:layout_toEndOf="@+id/textView5"
-            android:background="@drawable/ic_circular_shape_silhouette"
-            android:gravity="center"
-            android:padding="2sp"
-            android:text="6"
-            android:layout_marginEnd="@dimen/layout_top"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:layout_gravity="bottom|start"
-            android:layout_toEndOf="@+id/textView6"
-            android:background="@drawable/ic_circular_shape_silhouette"
-            android:gravity="center"
-            android:padding="2sp"
-            android:text="7"
-            android:layout_marginEnd="@dimen/layout_top"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:layout_gravity="bottom|start"
-            android:layout_toEndOf="@+id/textView7"
-            android:background="@drawable/ic_circular_shape_silhouette"
-            android:gravity="center"
-            android:padding="2sp"
-            android:text="8"
-            android:layout_marginEnd="@dimen/layout_top"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
     </RelativeLayout>
 
     <ScrollView
@@ -477,7 +408,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/background"
-            android:text="Cancel"
+            android:text="Skip"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -487,7 +418,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="5dp"
             android:background="@color/background"
             android:text="Next"
             android:textColor="@color/white"

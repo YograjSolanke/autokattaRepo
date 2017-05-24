@@ -61,7 +61,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             profession, sub_profession, strIndustry;
 
     RelativeLayout mRegistration;
-    LinearLayout mLinear;
+    LinearLayout mLinear, mButton;
     ScrollView mScrollView;
     Button mNext;
     String mSuccess = "";
@@ -106,6 +106,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
         mRegistration = (RelativeLayout) findViewById(R.id.registration);
         mLinear = (LinearLayout) findViewById(R.id.linear);
+        mButton = (LinearLayout) findViewById(R.id.button);
         mNext = (Button) findViewById(R.id.next);
         mScrollView = (ScrollView) findViewById(R.id.scroll_view);
         rg1 = (RadioGroup) findViewById(R.id.radiogp1);
@@ -449,6 +450,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             } else if (str.equalsIgnoreCase("Fail")) {
                 mScrollView.setVisibility(View.VISIBLE);
                 mLinear.setVisibility(View.GONE);
+                mButton.setVisibility(View.VISIBLE);
             } else {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
                 Snackbar.make(mRegistration, "Registered", Snackbar.LENGTH_SHORT).show();

@@ -25,11 +25,9 @@ public class MyAutokattaContactsActivity extends AppCompatActivity {
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
 
-
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.my_autokattaContact_container, new MyAutokattaContactFragmentTab(), "MyAutokattaContactFragmentTab")
-                .addToBackStack("myAutokattaContactFragmentTab")
                 .commit();
     }
 

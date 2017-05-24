@@ -1,5 +1,6 @@
 package autokatta.com.my_store;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -250,14 +251,15 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                 //  b.putString("action", "main");
                 b.putString("store_id", store_id);
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent intent = new Intent(getActivity(), StoreViewActivity.class);
                     intent.putExtras(b);
-                    getActivity().startActivity(intent);
+                    getActivity().startActivity(intent, options.toBundle());
                 } else {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
-                    getActivity().startActivity(i);
+                    getActivity().startActivity(i, options.toBundle());
                 }
-                getActivity().finish();
             }
         } else
             Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();

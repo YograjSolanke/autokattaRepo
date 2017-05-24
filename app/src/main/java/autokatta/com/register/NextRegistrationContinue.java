@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +35,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleModelResponse;
@@ -443,10 +441,9 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 edtpuc.setError(null);
                 edtlastservice.setError(null);
                 edtnextservice.setError(null);
-//                onBackPressed();
-                Intent i = new Intent(getApplicationContext(), RegistrationCompanyBased.class);
-                startActivity(i);
-                finish();
+
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                startActivity(new Intent(getApplicationContext(), RegistrationCompanyBased.class), options.toBundle());
                 break;
 
             case R.id.purchaseCal:
@@ -910,7 +907,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             Snackbar.make(mNextRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
             Snackbar.make(mNextRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
@@ -959,11 +955,9 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         if (str != null) {
             if (str.equals("success")) {
                 if (action.equals("ContinueRegistration")) {
-                    Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
-                    startActivity(i);
-                    finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
                 } else if (action.equals("MyVehicles")) {
-                    Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
                     finish();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
@@ -1030,9 +1024,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
                                         dialog.cancel();
-                                        Intent i = new Intent(getApplicationContext(), RegistrationCompanyBased.class);
-                                        startActivity(i);
-                                        finish();
+                                        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                        startActivity(new Intent(getApplicationContext(), RegistrationCompanyBased.class), options.toBundle());
                                     }
                                 });
 
@@ -1051,7 +1044,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 Snackbar.make(mNextRegistration, "Version Added", Snackbar.LENGTH_SHORT).show();
                 getVersion(vehicle_idD, subcategoryId, brandId, modelId);
             }
-
         } else
             Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
     }
@@ -1125,13 +1117,15 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(NextRegistrationContinue.this, R.anim.pull_in_left, R.anim.push_out_right);
             startActivity(new Intent(getApplicationContext(), RegistrationContinue.class), options.toBundle());
             finish();
         } else {
             startActivity(new Intent(getApplicationContext(), RegistrationContinue.class));
             finish();
-        }
+        }*/
     }
 }

@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -638,13 +637,13 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog,
                                                             int id) {
+                                            dialog.cancel();
+                                            ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                                             Bundle b = new Bundle();
                                             b.putString("className", "interestbased");
                                             Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
                                             intent.putExtras(b);
-                                            startActivity(intent);
-                                            finish();
-                                            dialog.cancel();
+                                            startActivity(intent, options.toBundle());
                                         }
                                     })
                             .setNegativeButton("No",
@@ -652,9 +651,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                         public void onClick(DialogInterface dialog,
                                                             int id) {
                                             dialog.cancel();
+                                            ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                                             Intent i = new Intent(getApplicationContext(), InvitationCompanyBased.class);
-                                            startActivity(i);
-                                            finish();
+                                            startActivity(i, options.toBundle());
                                         }
                                     });
 
@@ -663,6 +662,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     // show it
                     alertDialog.show();
                     break;
+
                 case "success_brand_add":
                     Snackbar.make(mCompanyBased, "Brand Added", Snackbar.LENGTH_SHORT).show();
                     getBrand(categoryId, subCategoryId);
@@ -884,6 +884,43 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 spinCategory.setSelection(0);
                 spinSubCategory.setSelection(0);
                 spinManufacturer.setSelection(0);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationCompanyBased.this);
+                // set title
+                alertDialogBuilder.setTitle("Interest Area ");
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("Create Business Profile ?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        dialog.cancel();
+                                        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                        Bundle b = new Bundle();
+                                        b.putString("className", "interestbased");
+                                        Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
+                                        intent.putExtras(b);
+                                        startActivity(intent, options.toBundle());
+                                    }
+                                })
+                        .setNegativeButton("No",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+                                        dialog.cancel();
+                                        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                        Intent i = new Intent(getApplicationContext(), InvitationCompanyBased.class);
+                                        startActivity(i, options.toBundle());
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+
                 break;
         }
     }
@@ -906,13 +943,15 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(RegistrationCompanyBased.this, R.anim.pull_in_left, R.anim.push_out_right);
             startActivity(new Intent(getApplicationContext(), NextRegistrationContinue.class), options.toBundle());
             finish();
         } else {
             startActivity(new Intent(getApplicationContext(), NextRegistrationContinue.class));
             finish();
-        }
+        }*/
     }
 }

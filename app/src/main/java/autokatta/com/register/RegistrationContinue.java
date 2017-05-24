@@ -361,10 +361,10 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success")) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplication(), NextRegistrationContinue.class);
                 i.putExtra("action", "ContinueRegistration");
-                startActivity(i);
-                finish();
+                startActivity(i, options.toBundle());
             }
         } else {
             Snackbar.make(mCoordinate, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();

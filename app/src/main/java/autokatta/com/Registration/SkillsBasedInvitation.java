@@ -3,7 +3,6 @@ package autokatta.com.Registration;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +27,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.CompanyBasedInvitationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.register.InvitationCompanyBased;
 import autokatta.com.response.GetContactByCompanyResponse;
 import autokatta.com.response.GetContactByCompanyResponse.Success;
 import retrofit2.Response;
@@ -81,9 +79,9 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), InviteFriends.class);
-                startActivity(i);
-                finish();
+                startActivity(i, options.toBundle());
             }
         });
 
@@ -170,14 +168,16 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(SkillsBasedInvitation.this, R.anim.pull_in_left, R.anim.push_out_right);
             startActivity(new Intent(getApplicationContext(), InvitationCompanyBased.class), options.toBundle());
             finish();
         } else {
             startActivity(new Intent(getApplicationContext(), InvitationCompanyBased.class));
             finish();
-        }
+        }*/
     }
 }
 

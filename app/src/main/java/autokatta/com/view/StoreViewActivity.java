@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -631,7 +632,28 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(mOtherPicture);
-                collapsingToolbar.setTitle(storeName);
+                //collapsingToolbar.setTitle(storeName);
+
+
+                AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+                appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                    boolean isShow = false;
+                    int scrollRange = -1;
+
+                    @Override
+                    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                        if (scrollRange == -1) {
+                            scrollRange = appBarLayout.getTotalScrollRange();
+                        }
+                        if (scrollRange + verticalOffset == 0) {
+                            collapsingToolbar.setTitle(storeName);
+                            isShow = true;
+                        } else if (isShow) {
+                            collapsingToolbar.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                            isShow = false;
+                        }
+                    }
+                });
 
                 if (mLikestr.equalsIgnoreCase("no")) {
                     mLike.setLabelText("Like");

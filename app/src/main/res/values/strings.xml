@@ -89,7 +89,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="search_button">Search</string>
     <string name="demo_min_label">Min</string>
-    <string name="demo_max_label">MAx</string>
+    <string name="demo_max_label">Max</string>
 
     <!-- Manual enquiry-->
     <string name="enquiry_form">Enquiry Form</string>
@@ -114,7 +114,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="title_activity_forget__password">Forget Password</string>
-    <string name="title_activity_continue_registration">ContinueRegistration</string>
+    <string name="title_activity_continue_registration">About US</string>
 
     <!--Error Results-->
     <string name="no_internet">No Internet Connection&#8230;</string>
@@ -143,6 +143,7 @@
     <string name="title_activity_my_broadcast_groups">MyBroadcastGroupsActivity</string>
     <string name="title_activity_otp">OTP Activity</string>
     <string name="title_activity_new_password">New Password Activity</string>
+
 
     <!--Vehicle details-->
     <string name="vehicle_no">Vehicle Number</string>
@@ -201,16 +202,20 @@
     <string name="title_activity_active_service_mela">ActiveServiceMelaActivity</string>
     <string name="title_activity_active_sale_mela">ActiveSaleMelaActivity</string>
     <string name="title_activity_active_sale_mela_preview">ActiveSaleMelaPreviewActivity</string>
-    <string name="title_activity_active_service_mela_preview">ActiveServiceMelaPreviewActivity
-    </string>
+    <string name="title_activity_active_service_mela_preview">ActiveServiceMelaPreviewActivity</string>
     <string name="title_activity_active_loanmela_preview">ActiveLoanmelaPreviewActivity</string>
     <string name="title_activity_my_ended_exchange_preview">MyEndedExchangePreviewActivity</string>
     <string name="title_activity_my_ended_loan_mela">MyEndedLoanMelaActivity</string>
     <string name="title_activity_my_ended_loan_mela_preview">MyEndedLoanMelaPreviewActivity</string>
     <string name="title_activity_my_ended_service_mela">MyEndedServiceMelaActivity</string>
-    <string name="title_activity_my_ended_service_mela_preview">MyEndedServiceMelaPreviewActivity
-    </string>
+    <string name="title_activity_my_ended_service_mela_preview">MyEndedServiceMelaPreviewActivity</string>
     <string name="title_activity_my_ended_sale_mela_preview">MyEndedSaleMelaPreviewActivity</string>
     <string name="title_activity_new_vehicle_catalog">NewVehicleCatalogActivity</string>
     <string name="title_activity_all_enquiry_tab">Enquiry</string>
+
+    <!-- Registration -->
+    <string name="next_registration_continue">Vehicle Details</string>
+    <string name="registration_company_based">Professional Details</string>
+    <string name="company_based_invitation">Company Based Invitation</string>
+    <string name="skill_based_invitation">Skill Based Invitation</string>
 </resources>

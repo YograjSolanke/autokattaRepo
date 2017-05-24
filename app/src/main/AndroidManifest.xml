@@ -250,10 +250,13 @@
 
         <activity
             android:name=".Registration.CompanyBasedInvitation"
+            android:label="@string/company_based_invitation"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
         <activity
             android:name=".Registration.SkillsBasedInvitation"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/skill_based_invitation"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Registration.InviteFriends"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
@@ -315,6 +318,7 @@
         <activity
             android:name=".register.Registration"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/sign_up"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.SearchVehicleActivity"
@@ -325,22 +329,27 @@
         <activity
             android:name=".register.RegistrationContinue"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/title_activity_continue_registration"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".register.NextRegistrationContinue"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/next_registration_continue"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".register.RegistrationCompanyBased"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/registration_company_based"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".register.InvitationCompanyBased"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/company_based_invitation"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".register.CreateStoreContainer"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/create_store"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".auction.MyAuctionVehicleDetails"

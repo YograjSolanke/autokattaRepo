@@ -1,5 +1,6 @@
 package autokatta.com.Registration;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +35,7 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
     private ListView lv;
     EditText inputSearch;
     ApiCall mApiCall;
-    String page="1";
+    String page = "1";
     List<Success> invitationDataArrayList = new ArrayList<>();
     CompanyBasedInvitationAdapter adapter;
     RelativeLayout mRelative;
@@ -43,11 +45,16 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_based_invitation);
-        mApiCall=new ApiCall(this, this);
-        lv = (ListView)findViewById(R.id.l1);
-        inputSearch = (EditText)findViewById(R.id.inputSearch);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        mApiCall = new ApiCall(this, this);
+        lv = (ListView) findViewById(R.id.l1);
+        inputSearch = (EditText) findViewById(R.id.inputSearch);
         mRelative = (RelativeLayout) findViewById(R.id.company_base);
-        Next = (Button)findViewById(R.id.next);
+        Next = (Button) findViewById(R.id.next);
         mApiCall.getContactByCompany(page, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", null));
 
@@ -66,17 +73,16 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
             public void afterTextChanged(Editable s) {
             }
         });
-            Next.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent i =new Intent(getApplicationContext(),SkillsBasedInvitation.class);
-                    startActivity(i);
-                    finish();
-                }
-            });
+        Next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent i = new Intent(getApplicationContext(), SkillsBasedInvitation.class);
+                startActivity(i, options.toBundle());
+            }
+        });
 
-        }
+    }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -89,7 +95,7 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
                 invitationDataArrayList.add(contactbycompany);
             }
             adapter = new CompanyBasedInvitationAdapter(CompanyBasedInvitation.this, invitationDataArrayList);
-            lv.setAdapter( adapter);
+            lv.setAdapter(adapter);
             adapter.notifyDataSetChanged();
         }
     }
@@ -143,5 +149,22 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }
