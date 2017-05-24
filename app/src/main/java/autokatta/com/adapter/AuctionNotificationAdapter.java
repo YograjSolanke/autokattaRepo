@@ -215,7 +215,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             whoseAuction = "otherauction";
         }
 
-        special_clause = mItemList.get(position).getClausesNames();
+        special_clause = mItemList.get(position).getSpecialClauses();
 
         //buttons...
         holder.mSpecialClauses.setOnClickListener(new View.OnClickListener() {

@@ -62,7 +62,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mService = inflater.inflate(R.layout.member_product_fragment, container, false);
-      //  myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+        //  myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
         //titleText = (TextView) mService.findViewById(R.id.titleText);
         //titleText.setText("Services");
@@ -70,11 +70,11 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         return mService;
     }
 
-   /* private void getServices(String GroupId) {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
-        //apiCall.getGroupService("470",myContact);
-        apiCall.getGroupService(GroupId, mBundleContact);
-    }*/
+    /* private void getServices(String GroupId) {
+         ApiCall apiCall = new ApiCall(getActivity(), this);
+         //apiCall.getGroupService("470",myContact);
+         apiCall.getGroupService(GroupId, mBundleContact);
+     }*/
     private void getServices(String GroupId) {
         if (mTestConnection.isConnectedToInternet()) {
             hud = KProgressHUD.create(getActivity())
@@ -108,6 +108,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
 
         getServices(mGroupId);
     }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -220,7 +221,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
             snackbar.show();
         } else {
             Log.i("Check Class-"
-                    , "JoinedGroupsFragment");
+                    , "Member service fragment");
         }
     }
 
@@ -250,7 +251,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
 
                 Bundle getBundle = getArguments();
                 mGroupId = getBundle.getString("bundle_GroupId");
-                mBundleContact=getBundle.getString("Rcontact");
+                mBundleContact = getBundle.getString("Rcontact");
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
