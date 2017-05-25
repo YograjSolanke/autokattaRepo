@@ -33,12 +33,9 @@ import autokatta.com.browseStore.ServiceBasedStore;
  */
 
 public class BrowseStoreFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
     View view;
     TabLayout browseTab;
     ViewPager browseViewPager;
-
-
     GoogleApiClient googleApiClient;
 
     @Nullable
@@ -49,17 +46,11 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         browseViewPager = (ViewPager) view.findViewById(R.id.browse_store_viewpager);
 
         if (browseViewPager != null) {
-            //custom method
             setupViewPager(browseViewPager);
         }
 
-
         browseTab.setupWithViewPager(browseViewPager);
-//        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
-//        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
         buildGoogleApiClient();
-
-
         return view;
     }
 
@@ -142,11 +133,9 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
     }
 
     private void setupViewPager(ViewPager viewPager) {
-
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new ProductBasedStore(), "Product Based");
         tabAdapterName.addFragment(new ServiceBasedStore(), "Service Based");
-
         viewPager.setAdapter(tabAdapterName);
     }
 }

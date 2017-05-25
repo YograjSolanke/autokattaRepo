@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#cccccc">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rel"
@@ -11,21 +10,30 @@
         android:background="@color/white">
 
         <ImageView
-            android:layout_width="40dip"
-            android:layout_height="40dip"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/filterimg"
             android:padding="5dp"
             android:src="@drawable/filter"
             android:contentDescription="@string/app_name" />
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:padding="5dp"
+            android:layout_toEndOf="@+id/filterimg"
+            android:text="Filter"
+            android:textStyle="bold"
+            android:contentDescription="@string/app_name" />
 
+    </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutBrowseStore"
         android:layout_width="match_parent"
         android:layout_below="@+id/rel"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#e6e6e6">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/BrowseStore_recycler_view"
@@ -34,6 +42,5 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <include layout="@layout/error_view" />
-
 
 </RelativeLayout>

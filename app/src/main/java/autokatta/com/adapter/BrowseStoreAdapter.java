@@ -5,7 +5,6 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -18,9 +17,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,8 +31,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.view.ShareWithinAppActivity;
-import autokatta.com.view.StoreViewActivity;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -70,12 +66,12 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         final BrowseStoreResponse.Success success = mMainlist.get(holder.getAdapterPosition());
         mApiCall = new ApiCall(activity, this);
 
-        holder.storename.setText("Name:" + success.getStoreName());
-        holder.storelocation.setText("Location:" + success.getLocation());
-        holder.storewebsite.setText("Website:" + success.getWebsite());
-        holder.storetype.setText("Type:" + success.getStoreType());
-        holder.storeservices.setText("Services:" + success.getCategory());
-        holder.storeworkingdays.setText("working days:" + success.getWorkingDays());
+        holder.storename.setText(success.getStoreName());
+        holder.storelocation.setText(success.getLocation());
+        holder.storewebsite.setText(success.getWebsite());
+        holder.storetype.setText(success.getStoreType());
+        holder.storeservices.setText(success.getCategory());
+        holder.storeworkingdays.setText(success.getWorkingDays());
         holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
         holder.storerating.setEnabled(false);
@@ -92,11 +88,11 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
         if (success.getFollowstatus().equalsIgnoreCase("yes")) {
             holder.linearfollow.setVisibility(View.INVISIBLE);
-            holder.linearunfollow.setVisibility(View.VISIBLE);
+            //   holder.linearunfollow.setVisibility(View.VISIBLE);
         }
         if (success.getFollowstatus().equalsIgnoreCase("no")) {
             holder.linearfollow.setVisibility(View.VISIBLE);
-            holder.linearunfollow.setVisibility(View.INVISIBLE);
+            //  holder.linearunfollow.setVisibility(View.INVISIBLE);
         }
 
         if (success.getRating() == null) {
@@ -116,14 +112,14 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
              *****************/
             Glide.with(activity)
                     .load(image)
-                    .bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
+                    .bitmapTransform(new CropSquareTransformation(activity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     //.placeholder(R.drawable.logo) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.store_image);
         }
 
-        holder.btndetail.setOnClickListener(new View.OnClickListener() {
+       /* holder.btndetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
@@ -133,7 +129,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 intent.putExtras(b);
                 activity.startActivity(intent);
             }
-        });
+        });*/
 
 
         holder.linearlike.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +204,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     mApiCall.otherStoreFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                             .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //sendFollower(StoreId, StoreContact);
-                    holder.linearfollow.setVisibility(View.INVISIBLE);
+                    //holder.linearfollow.setVisibility(View.INVISIBLE);
                     holder.linearunfollow.setVisibility(View.VISIBLE);
 
                     followcountint++;
@@ -223,7 +219,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             }
         });
 //
-        holder.linearunfollow.setOnClickListener(new View.OnClickListener() {
+        /*holder.linearunfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -250,7 +246,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 }
 
             }
-        });
+        });*/
 
 
         holder.call_image.setOnClickListener(new View.OnClickListener() {
@@ -365,8 +361,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         ImageView store_image, call_image;
         TextView btnlike, btnfollow;
         RatingBar storerating;
-        RelativeLayout linearlike, linearunlike, linearfollow, linearunfollow;
-        LinearLayout linearshare, linearshare1;
+        TextView linearlike, linearunlike, linearfollow, linearunfollow;
+        TextView linearshare, linearshare1;
         Button btndetail;
         CardView mCardView;
 
@@ -386,15 +382,15 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
             btnlike = (TextView) itemView.findViewById(R.id.like);
             btnfollow = (TextView) itemView.findViewById(R.id.follow);
-            linearshare = (LinearLayout) itemView.findViewById(R.id.linearshare);
-            linearshare1 = (LinearLayout) itemView.findViewById(R.id.linearshare1);
-            linearlike = (RelativeLayout) itemView.findViewById(R.id.linearlike);
-            linearunlike = (RelativeLayout) itemView.findViewById(R.id.linearunlike);
-            linearfollow = (RelativeLayout) itemView.findViewById(R.id.linearfollow);
-            linearunfollow = (RelativeLayout) itemView.findViewById(R.id.linearunfollow);
+            linearshare = (TextView) itemView.findViewById(R.id.share_clk);
+            linearshare1 = (TextView) itemView.findViewById(R.id.autokatta_share_clk);
+            linearlike = (TextView) itemView.findViewById(R.id.like_clk);
+            linearunlike = (TextView) itemView.findViewById(R.id.unlike_clk);
+            linearfollow = (TextView) itemView.findViewById(R.id.follow_clk);
+            //linearunfollow = (TextView) itemView.findViewById(R.id.linearunfollow);
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
 
-            btndetail = (Button) itemView.findViewById(R.id.details);
+            //btndetail = (Button) itemView.findViewById(R.id.details);
             storerating = (RatingBar) itemView.findViewById(R.id.storerating);
 
 

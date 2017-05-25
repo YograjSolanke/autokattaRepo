@@ -26,7 +26,7 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
                 try {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.myUploadedVehicleFrame, new MyUploadedVehicleTabs(), "MyUploadedVehicleTabs")
-                            .addToBackStack("MyUploadedVehicleTabs")
+                            //.addToBackStack("MyUploadedVehicleTabs")
                             .commit();
                 } catch (Exception e) {
                     e.printStackTrace();

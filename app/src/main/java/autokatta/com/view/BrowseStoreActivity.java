@@ -29,7 +29,7 @@ public class BrowseStoreActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.browseStoreFrame, new BrowseStoreFragment(), "browseStoreFragment")
-                .addToBackStack("browseStoreFragment")
+                //.addToBackStack("browseStoreFragment")
                 .commit();
 
     }
