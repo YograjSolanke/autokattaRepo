@@ -99,7 +99,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             holder.linearunfollow.setVisibility(View.INVISIBLE);
         }
 
-        if (success.getRating().equals("0")) {
+        if (success.getRating() == null) {
 
         } else if (!success.getRating().equals("0")) {
             holder.storerating.setRating(Float.parseFloat(success.getRating()));

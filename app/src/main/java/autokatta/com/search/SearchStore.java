@@ -33,10 +33,10 @@ import java.util.HashSet;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.MyStoreListAdapter;
+import autokatta.com.adapter.BrowseStoreAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.response.MyStoreResponse;
+import autokatta.com.response.BrowseStoreResponse;
 import retrofit2.Response;
 
 /**
@@ -48,11 +48,11 @@ public class SearchStore extends Fragment implements RequestNotifier {
     RecyclerView searchList;
 
     String searchString;
-    private List<MyStoreResponse.Success> allSearchDataArrayList = new ArrayList<>();
-    private List<MyStoreResponse.Success> allSearchDataArrayList_new = new ArrayList<>();
+    private List<BrowseStoreResponse.Success> allSearchDataArrayList = new ArrayList<>();
+    private List<BrowseStoreResponse.Success> allSearchDataArrayList_new = new ArrayList<>();
     HashSet<String> categoryHashSet;
     ImageView filterImg;
-    MyStoreListAdapter adapter;
+    BrowseStoreAdapter adapter;
     boolean hasViewCreated = false;
     TextView mNoData;
     CheckedCategoryAdapter categoryAdapter;
@@ -128,26 +128,25 @@ public class SearchStore extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                MyStoreResponse searchData = (MyStoreResponse) response.body();
+                BrowseStoreResponse searchData = (BrowseStoreResponse) response.body();
                 if (!searchData.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     allSearchDataArrayList.clear();
-                    for (MyStoreResponse.Success success : searchData.getSuccess()) {
-                        success.setId(success.getId());
-                        success.setId(success.getContact());
-                        success.setId(success.getName());
-                        success.setId(success.getLocation());
-                        success.setId(success.getStoreImage());
-                        success.setId(success.getStoreType());
-                        success.setId(success.getWebsite());
-                        success.setId(success.getStoreOpenTime());
-                        success.setId(success.getStoreCloseTime());
-                        success.setId(success.getWorkingDays());
-                        success.setId(success.getCategory());
-                        success.setId(success.getCoverImage());
-                        success.setId(success.getRating());
-                        success.setId(success.getLikecount());
-                        success.setId(success.getFollowcount());
+                    for (BrowseStoreResponse.Success success : searchData.getSuccess()) {
+                        success.setStoreId(success.getStoreId());
+                        success.setContactNo(success.getContactNo());
+                        success.setStoreName(success.getStoreName());
+                        success.setLocation(success.getLocation());
+                        success.setStoreImage(success.getStoreImage());
+                        success.setStoreType(success.getStoreType());
+                        success.setWebsite(success.getWebsite());
+                        success.setWorkingDays(success.getWorkingDays());
+                        success.setCategory(success.getCategory());
+                        success.setRating(success.getRating());
+                        success.setLikecount(success.getLikecount());
+                        success.setLikestatus(success.getLikestatus());
+                        success.setFollowcount(success.getFollowcount());
+                        success.setFollowstatus(success.getFollowstatus());
 
                         if (success.getCategory().trim().contains(",")) {
                             String arr[] = success.getCategory().trim().split(",");
@@ -167,7 +166,7 @@ public class SearchStore extends Fragment implements RequestNotifier {
                     }
                     categoryHashSet = new HashSet<>(categoryList);
                     locationHashSet = new HashSet<>(LocationList);
-                    adapter = new MyStoreListAdapter(getActivity(), allSearchDataArrayList);
+                    adapter = new BrowseStoreAdapter(getActivity(), allSearchDataArrayList);
                     searchList.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
@@ -285,21 +284,21 @@ public class SearchStore extends Fragment implements RequestNotifier {
                         }
 
                         if (flag)
-                            allSearchDataArrayList.get(i).visibility = true;
+                            allSearchDataArrayList.get(i).setVisibility(true);
                         else {
                             if (finallocation.contains(allSearchDataArrayList.get(i).getLocation().trim()))
-                                allSearchDataArrayList.get(i).visibility = true;
+                                allSearchDataArrayList.get(i).setVisibility(true);
                             else
-                                allSearchDataArrayList.get(i).visibility = false;
+                                allSearchDataArrayList.get(i).setVisibility(false);
                         }
                     } else {
                         if (finalcategory.contains(allSearchDataArrayList.get(i).getCategory().trim()))
-                            allSearchDataArrayList.get(i).visibility = true;
+                            allSearchDataArrayList.get(i).setVisibility(true);
                         else {
                             if (finallocation.contains(allSearchDataArrayList.get(i).getLocation().trim()))
-                                allSearchDataArrayList.get(i).visibility = true;
+                                allSearchDataArrayList.get(i).setVisibility(true);
                             else
-                                allSearchDataArrayList.get(i).visibility = false;
+                                allSearchDataArrayList.get(i).setVisibility(false);
                         }
                     }
                 }
@@ -308,13 +307,13 @@ public class SearchStore extends Fragment implements RequestNotifier {
                 allSearchDataArrayList_new.clear();
 
                 for (int w = 0; w < allSearchDataArrayList.size(); w++) {
-                    if (allSearchDataArrayList.get(w).visibility) {
+                    if (allSearchDataArrayList.get(w).isVisibility()) {
                         allSearchDataArrayList_new.add(allSearchDataArrayList.get(w));
                     }
                 }
                 alert.dismiss();
 
-                adapter = new MyStoreListAdapter(getActivity(), allSearchDataArrayList_new);
+                adapter = new BrowseStoreAdapter(getActivity(), allSearchDataArrayList_new);
                 adapter.notifyDataSetChanged();
                 searchList.setAdapter(adapter);
             }

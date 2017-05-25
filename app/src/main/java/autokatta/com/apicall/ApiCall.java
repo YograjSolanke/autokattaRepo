@@ -6406,15 +6406,15 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyStoreResponse> searchService = serviceApi.searchStore(key, contact);
-                searchService.enqueue(new Callback<MyStoreResponse>() {
+                Call<BrowseStoreResponse> searchService = serviceApi.searchStore(key, contact);
+                searchService.enqueue(new Callback<BrowseStoreResponse>() {
                     @Override
-                    public void onResponse(Call<MyStoreResponse> call, Response<MyStoreResponse> response) {
+                    public void onResponse(Call<BrowseStoreResponse> call, Response<BrowseStoreResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<MyStoreResponse> call, Throwable t) {
+                    public void onFailure(Call<BrowseStoreResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

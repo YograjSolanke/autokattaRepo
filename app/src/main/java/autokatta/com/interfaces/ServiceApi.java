@@ -999,7 +999,7 @@ public interface ServiceApi {
 
     //Search Store Data...
     @GET("getStoreSearchData.php")
-    Call<MyStoreResponse> searchStore(@Query("searchKey") String key, @Query("mycontact") String contact);
+    Call<BrowseStoreResponse> searchStore(@Query("searchKey") String key, @Query("mycontact") String contact);
 
 
     //Likes in Otherstore

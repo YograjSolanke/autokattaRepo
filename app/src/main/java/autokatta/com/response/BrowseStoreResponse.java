@@ -23,7 +23,6 @@ public class BrowseStoreResponse {
         this.success = success;
     }
 
-
     public class Success {
 
         @SerializedName("store_id")
@@ -35,42 +34,49 @@ public class BrowseStoreResponse {
         @SerializedName("store_name")
         @Expose
         private String storeName;
-        @SerializedName("store_image")
-        @Expose
-        private String storeImage;
         @SerializedName("location")
         @Expose
         private String location;
-        @SerializedName("category")
+        @SerializedName("store_image")
         @Expose
-        private String category;
-        @SerializedName("website")
-        @Expose
-        private String website;
+        private String storeImage;
         @SerializedName("store_type")
         @Expose
         private String storeType;
+        @SerializedName("website")
+        @Expose
+        private String website;
+        @SerializedName("store_open_time")
+        @Expose
+        private String storeOpenTime;
+        @SerializedName("store_close_time")
+        @Expose
+        private String storeCloseTime;
         @SerializedName("working_days")
         @Expose
         private String workingDays;
-        @SerializedName("modified_date")
+        @SerializedName("category")
         @Expose
-        private String modifiedDate;
-        @SerializedName("likestatus")
+        private String category;
+        @SerializedName("coverImage")
         @Expose
-        private String likestatus;
-        @SerializedName("followstatus")
+        private String coverImage;
+        @SerializedName("rating")
         @Expose
-        private String followstatus;
+        private String rating;
         @SerializedName("likecount")
         @Expose
         private String likecount;
         @SerializedName("followcount")
         @Expose
         private String followcount;
-        @SerializedName("rating")
+        @SerializedName("likestatus")
         @Expose
-        private String rating;
+        private String likestatus;
+        @SerializedName("followstatus")
+        @Expose
+        private String followstatus;
+
 
         public boolean isVisibility() {
             return visibility;
@@ -106,14 +112,6 @@ public class BrowseStoreResponse {
             this.storeName = storeName;
         }
 
-        public String getStoreImage() {
-            return storeImage;
-        }
-
-        public void setStoreImage(String storeImage) {
-            this.storeImage = storeImage;
-        }
-
         public String getLocation() {
             return location;
         }
@@ -122,20 +120,12 @@ public class BrowseStoreResponse {
             this.location = location;
         }
 
-        public String getCategory() {
-            return category;
+        public String getStoreImage() {
+            return storeImage;
         }
 
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public String getWebsite() {
-            return website;
-        }
-
-        public void setWebsite(String website) {
-            this.website = website;
+        public void setStoreImage(String storeImage) {
+            this.storeImage = storeImage;
         }
 
         public String getStoreType() {
@@ -146,6 +136,30 @@ public class BrowseStoreResponse {
             this.storeType = storeType;
         }
 
+        public String getWebsite() {
+            return website;
+        }
+
+        public void setWebsite(String website) {
+            this.website = website;
+        }
+
+        public String getStoreOpenTime() {
+            return storeOpenTime;
+        }
+
+        public void setStoreOpenTime(String storeOpenTime) {
+            this.storeOpenTime = storeOpenTime;
+        }
+
+        public String getStoreCloseTime() {
+            return storeCloseTime;
+        }
+
+        public void setStoreCloseTime(String storeCloseTime) {
+            this.storeCloseTime = storeCloseTime;
+        }
+
         public String getWorkingDays() {
             return workingDays;
         }
@@ -154,28 +168,28 @@ public class BrowseStoreResponse {
             this.workingDays = workingDays;
         }
 
-        public String getModifiedDate() {
-            return modifiedDate;
+        public String getCategory() {
+            return category;
         }
 
-        public void setModifiedDate(String modifiedDate) {
-            this.modifiedDate = modifiedDate;
+        public void setCategory(String category) {
+            this.category = category;
         }
 
-        public String getLikestatus() {
-            return likestatus;
+        public String getCoverImage() {
+            return coverImage;
         }
 
-        public void setLikestatus(String likestatus) {
-            this.likestatus = likestatus;
+        public void setCoverImage(String coverImage) {
+            this.coverImage = coverImage;
         }
 
-        public String getFollowstatus() {
-            return followstatus;
+        public String getRating() {
+            return rating;
         }
 
-        public void setFollowstatus(String followstatus) {
-            this.followstatus = followstatus;
+        public void setRating(String rating) {
+            this.rating = rating;
         }
 
         public String getLikecount() {
@@ -192,14 +206,22 @@ public class BrowseStoreResponse {
 
         public void setFollowcount(String followcount) {
             this.followcount = followcount;
+    }
+
+        public String getLikestatus() {
+            return likestatus;
         }
 
-        public String getRating() {
-            return rating;
+        public void setLikestatus(String likestatus) {
+            this.likestatus = likestatus;
         }
 
-        public void setRating(String rating) {
-            this.rating = rating;
+        public String getFollowstatus() {
+            return followstatus;
+        }
+
+        public void setFollowstatus(String followstatus) {
+            this.followstatus = followstatus;
         }
 
     }
