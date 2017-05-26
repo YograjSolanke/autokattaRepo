@@ -328,7 +328,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction mTransaction = fragmentManager.beginTransaction();
             mTransaction.replace(R.id.group_container, frag).commit();
-        } else if (str.equals("successsuccess1group_profile_pics/" + str)) {
+        } else if (str.equals("ProfileUpdated")) {
             try {
                 Glide.with(getActivity())
                         .load("http://autokatta.com/mobile/group_profile_pics/" + str)
