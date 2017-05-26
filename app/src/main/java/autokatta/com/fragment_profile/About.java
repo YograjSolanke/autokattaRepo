@@ -112,6 +112,15 @@ public class About extends Fragment implements RequestNotifier {
         mApiCall.getCompany();
         mApiCall.Categories("");
 
+        mProfession.setEnabled(false);
+        mContact.setEnabled(false);
+        mWebsite.setEnabled(false);
+        mCity.setEnabled(false);
+        mEmail.setEnabled(false);
+        mCompany.setEnabled(false);
+        mDesignation.setEnabled(false);
+        mSkills.setEnabled(false);
+
         mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         mSkills.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -128,17 +137,16 @@ public class About extends Fragment implements RequestNotifier {
             }
         });
 
-        if (mProfession.getText().toString().equals("Student"))
+      /*  if (mProfession.getText().toString().equals("Student"))
             student.setChecked(true);
         if (mProfession.getText().toString().equals("Employee"))
             employee.setChecked(true);
         if (mProfession.getText().toString().equals("Self Employee"))
             selfemployee.setChecked(true);
-
+*/
         usertype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 if (checkedId == R.id.student) {
                     mProfession.setText("Student");
                     spinner.setVisibility(View.GONE);
@@ -158,6 +166,19 @@ public class About extends Fragment implements RequestNotifier {
             @Override
             public void onClick(View view) {
                 mDone.setVisibility(View.VISIBLE);
+                mEdit.setVisibility(View.GONE);
+               if (profession.equalsIgnoreCase("student"))
+               {
+                   student.setChecked(true);
+               }
+               else if (profession.equalsIgnoreCase("employee")){
+                   employee.setChecked(true);
+
+               }else
+                   if (profession.equalsIgnoreCase("self employee"))
+               {
+                   selfemployee.setChecked(true);
+               }
                 if (student.isChecked()) {
                     spinner.setVisibility(View.GONE);
                 } else if (employee.isChecked()) {
@@ -167,14 +188,13 @@ public class About extends Fragment implements RequestNotifier {
                 }
                 mCity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
                 mProfession.setEnabled(true);
-                mContact.setEnabled(true);
-                mWebsite.setEnabled(true);
                 mCity.setEnabled(true);
+                mContact.setEnabled(true);
                 mEmail.setEnabled(true);
                 mCompany.setEnabled(true);
                 mDesignation.setEnabled(true);
                 mSkills.setEnabled(true);
-
+                mWebsite.setEnabled(true);
                 usertype.setVisibility(View.VISIBLE);
                 mDone.setEnabled(true);
                 mContact.setOnTouchListener(new OnTouchListener() {
@@ -186,7 +206,7 @@ public class About extends Fragment implements RequestNotifier {
                 });
             }
         });
-        mProfession.setEnabled(false);
+/*        mProfession.setEnabled(false);
         mContact.setEnabled(false);
         mWebsite.setEnabled(false);
         mCity.setEnabled(false);
@@ -195,7 +215,7 @@ public class About extends Fragment implements RequestNotifier {
         mDesignation.setEnabled(false);
         mSkills.setEnabled(false);
 
-        mDone.setEnabled(false);
+        mDone.setEnabled(false);*/
         mDone.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,9 +231,13 @@ public class About extends Fragment implements RequestNotifier {
                 mUpdatedCompany = mCompany.getText().toString();
                 mUpdatedDesignation = mDesignation.getText().toString();
                 mUpdatedSkills = mSkills.getText().toString().trim();
-                if (mUpdatedSkills.endsWith(","))
-                    mUpdatedSkills1 = mUpdatedSkills.substring(0, mUpdatedSkills.length() - 1);
 
+                if (mUpdatedSkills.endsWith(",")) {
+                    mUpdatedSkills1 = mUpdatedSkills.substring(0, mUpdatedSkills.length() - 1);
+                }else
+                {
+                    mUpdatedSkills1=mUpdatedSkills;
+                }
                 webflag = mUpdatedWebsite.equalsIgnoreCase("");
                 Boolean flag = false;
                 try {
@@ -236,15 +260,6 @@ public class About extends Fragment implements RequestNotifier {
                 } else if (mCity.getText().toString().isEmpty()) {
                     mCity.setError("Please Select Address From Dropdown Only");
                 } else {
-                    mProfession.setEnabled(false);
-                    mContact.setEnabled(false);
-                    mWebsite.setEnabled(false);
-                    mCity.setEnabled(false);
-                    mEmail.setEnabled(false);
-                    mCompany.setEnabled(false);
-                    mDesignation.setEnabled(false);
-                    mSkills.setEnabled(false);
-                    mDone.setEnabled(false);
 
                     /************************Company Name code *******************************************/
                     mCompany.clearFocus();
@@ -318,7 +333,7 @@ public class About extends Fragment implements RequestNotifier {
                         mSkills.setError("Enter Skills Name");
                         mSkills.requestFocus();
                     } else {
-                       /* Log.i("mUpdatedEmail","->"+mUpdatedEmail);
+                      /*  Log.i("mUpdatedEmail","->"+mUpdatedEmail);
                         Log.i("mUpdatedWebsite","->"+mUpdatedWebsite);
                         Log.i("mUpdatedProfession","->"+mUpdatedProfession);
                         Log.i("mUpdatedCompany","->"+mUpdatedCompany);
@@ -329,8 +344,19 @@ public class About extends Fragment implements RequestNotifier {
                         Log.i("RegId","->"+RegId);*/
                         mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1, mUpdatedCity, spinnervalue, RegId);
                         // submitData();
+                        mDone.setVisibility(View.GONE);
+                        mEdit.setVisibility(View.VISIBLE);
+
+                        mProfession.setEnabled(false);
+                        mContact.setEnabled(false);
+                        mWebsite.setEnabled(false);
+                        mCity.setEnabled(false);
+                        mEmail.setEnabled(false);
+                        mCompany.setEnabled(false);
+                        mDesignation.setEnabled(false);
+                        mSkills.setEnabled(false);
                     }
-                    mDone.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -382,11 +408,13 @@ public class About extends Fragment implements RequestNotifier {
                         skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
                         RegId = mProfileAboutResponse.getSuccess().get(0).getRegId();
 
+
                         mContact.setText(contact);
                         mProfession.setText(profession);
                         mEmail.setText(email);
                         mWebsite.setText(websitestr);
                         mCity.setText(city);
+                        mCity.setEnabled(false);
                         mCompany.setText(company);
                         mDesignation.setText(designation);
                         mSkills.setText(skills);
@@ -492,6 +520,7 @@ public class About extends Fragment implements RequestNotifier {
             if (str.equals("Success_update_profile")) {
                 CustomToast.customToast(getActivity(), "Profile Updated Successfully");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+                mCity.setEnabled(false);
             }
         }
     }

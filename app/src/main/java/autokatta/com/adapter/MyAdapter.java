@@ -34,7 +34,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.GroupEditFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.ModelGroups;
-import autokatta.com.view.GroupTabs;
 import autokatta.com.view.GroupsActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
@@ -145,7 +144,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                                 keyword = "delete";
                                 //new DeleteGroup().execute();
                                 mApiCall.deleteGroup(mGroupid, keyword, mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-//                                grouplist.remove(position);
+                                mItemList.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, mItemList.size());
+//  grouplist.remove(position);
 //                                notifyDataSetChanged();
                             }
                         })
@@ -289,8 +291,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         if (str != null) {
             if (str.equals("success")) {
                 Snackbar.make(view.mCardView, "Group deleted", Snackbar.LENGTH_LONG).show();
-                Intent i = new Intent(mActivity, GroupTabs.class);
-                mActivity.startActivity(i);
+               /* Intent i = new Intent(mActivity, GroupTabs.class);
+                mActivity.startActivity(i);*/
             }
         } else {
             Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();

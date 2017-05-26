@@ -443,7 +443,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
-                Snackbar.make(mRegistration, "Already Registered", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(),"Already Registered Please Login");
+                Snackbar.make(mRegistration, "Already Registered", Snackbar.LENGTH_LONG).show();
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
                 finish();

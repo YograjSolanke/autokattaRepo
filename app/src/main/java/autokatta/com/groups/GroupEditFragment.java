@@ -183,7 +183,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
-                //uploadImage(mediaPath);
+                uploadImage(mediaPath);
 
             } else if (requestCode == 101) {
                 if (resultCode == RESULT_OK) {
@@ -235,7 +235,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             out.close();
             /*if (cd.isConnectingToInternet()) {*/
             lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
-            //uploadImage(mediaPath);
+            uploadImage(mediaPath);
             Log.i("image", "path" + lastWord);
             //      /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
             /*} else {
@@ -321,7 +321,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyString(String str) {
-        if (str.equals("")) {
+        if (str.equals("Success")) {
             Snackbar.make(getView(), "Group Updated", Snackbar.LENGTH_LONG).show();
             uploadImage(mediaPath);
             MyGroupsFragment frag = new MyGroupsFragment();
