@@ -116,6 +116,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mGoogleMap = (FloatingActionButton) findViewById(R.id.gotoMap);
                     storerating = (RatingBar) findViewById(R.id.store_rating);
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+                    collapsingToolbar.setTitle(" ");
                     mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
                     viewPager = (ViewPager) findViewById(R.id.other_store_viewpager);
                     tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
@@ -635,6 +636,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 //collapsingToolbar.setTitle(storeName);
 
 
+                /*
+                App Bar layout on scrolled...
+                 */
                 AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
                 appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                     boolean isShow = false;

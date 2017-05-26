@@ -119,14 +119,11 @@ public class GooglePlacesAdapter extends ArrayAdapter<String> implements Filtera
             // Extract the Place descriptions from the results
             resultList = new ArrayList<String>(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
-                System.out.println(predsJsonArray.getJSONObject(i).getString("description"));
-                System.out.println("============================================================");
                 resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
             }
         } catch (JSONException e) {
             Log.e("Error tag", "Cannot process JSON results", e);
         }
-
         return resultList;
     }
 

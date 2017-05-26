@@ -77,12 +77,16 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
         mViewHolder.mStoreName.setText(mItemList.get(position).getStoreName());
         mViewHolder.mStoreLocation.setText(mItemList.get(position).getLocation());
 
-        Glide.with(mActivity)
-                .load("http://autokatta.com/mobile/store_profiles/" + mItemList.get(position).getStoreLogo())
-                .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
-                .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                .override(110, 100)
-                .into(mViewHolder.imageView);
+        if (mItemList.get(position).getStoreLogo().contains(".jpg") || mItemList.get(position).getStoreLogo().contains(".png")) {
+            Glide.with(mActivity)
+                    .load("http://autokatta.com/mobile/store_profiles/" + mItemList.get(position).getStoreLogo())
+                    .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .override(110, 100)
+                    .into(mViewHolder.imageView);
+        } else {
+            mViewHolder.imageView.setImageResource(R.drawable.hdlogo);
+        }
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +98,6 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
                 Intent intent = new Intent(mActivity, StoreViewActivity.class);
                 intent.putExtras(b);
                 mActivity.startActivity(intent);
-                mActivity.finish();
             }
         });
 

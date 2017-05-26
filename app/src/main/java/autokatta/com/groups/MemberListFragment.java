@@ -31,6 +31,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.MemberListRefreshAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.GetGroupContactsResponse;
 import retrofit2.Response;
 
@@ -51,71 +52,17 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     //String group_id;
     String mCallfrom = "", mGroupId = "";
     TextView mNoData;
+    ConnectionDetector mTestConnection;
+    boolean _hasLoadedOnce = false;
+
+    public MemberListFragment() {
+        //empty constructor...
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMemberList = inflater.inflate(R.layout.fragment_member_list, container, false);
-        mRecyclerView = (RecyclerView) mMemberList.findViewById(R.id.rv_recycler_view);
-        floatCreateGroup = (FloatingActionButton) mMemberList.findViewById(R.id.fab);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mMemberList.findViewById(R.id.swipeRefreshLayout);
-        mNoData = (TextView) mMemberList.findViewById(R.id.no_category);
-        mRecyclerView.setHasFixedSize(true);
-        //group_id = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("group_id", "");
-        bundle = getArguments();
-        if (bundle != null) {
-            // group_id = bundle.getString("id");
-            call = bundle.getString("call");
-            System.out.println("Call in MemberList:" + call);
-        }
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mCallfrom = bundle.getString("grouptype");
-            mGroupId = bundle.getString("bundle_GroupId");
-            Log.i("Other", "->" + mCallfrom);
-            Log.i("GroupId", "MemberList->" + mGroupId);
-        }
-
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        //getData();//Get Api...
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                getGroupContact(mGroupId);
-            }
-        });
-
-//For Other Profile
-        if (mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("JoinedGroups")) {
-            floatCreateGroup.setVisibility(View.GONE);
-        }
-
-        floatCreateGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GroupContactFragment fragment = new GroupContactFragment();
-                Bundle b = new Bundle();
-                b.putString("bundle_GroupId", mGroupId);
-                b.putStringArrayList("list", (ArrayList<String>) ContactNoList);
-                b.putString("call", "existGroup");
-                fragment.setArguments(b);
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.profile_groups_container, fragment);
-                fragmentTransaction.addToBackStack("groupcontactfragment");
-                fragmentTransaction.commit();
-            }
-        });
         return mMemberList;
     }
 
@@ -123,8 +70,25 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     Get Group Contact...
      */
     private void getGroupContact(String group_id) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getGroupContacts(group_id);
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.getGroupContacts(group_id);
+        } else {
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        }
     }
 
     @Override
@@ -270,6 +234,90 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onRefresh() {
         mSuccesses.clear();
+        mSwipeRefreshLayout.setRefreshing(false);
         getGroupContact(mGroupId);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                getGroupContact(mGroupId);
+                _hasLoadedOnce = true;
+            }
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mTestConnection = new ConnectionDetector(getActivity());
+                mRecyclerView = (RecyclerView) mMemberList.findViewById(R.id.rv_recycler_view);
+                floatCreateGroup = (FloatingActionButton) mMemberList.findViewById(R.id.fab);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) mMemberList.findViewById(R.id.swipeRefreshLayout);
+                mNoData = (TextView) mMemberList.findViewById(R.id.no_category);
+                mRecyclerView.setHasFixedSize(true);
+                //group_id = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("group_id", "");
+                bundle = getArguments();
+                if (bundle != null) {
+                    // group_id = bundle.getString("id");
+                    call = bundle.getString("call");
+                    System.out.println("Call in MemberList:" + call);
+                }
+                Bundle bundle = getArguments();
+                if (bundle != null) {
+                    mCallfrom = bundle.getString("grouptype");
+                    mGroupId = bundle.getString("bundle_GroupId");
+                    Log.i("Other", "->" + mCallfrom);
+                    Log.i("GroupId", "MemberList->" + mGroupId);
+                }
+
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                mLayoutManager.setReverseLayout(true);
+                mLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                //getData();//Get Api...
+
+                mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        getGroupContact(mGroupId);
+                    }
+                });
+
+                //For Other Profile
+                if (mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("JoinedGroups")) {
+                    floatCreateGroup.setVisibility(View.GONE);
+                }
+
+                floatCreateGroup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        GroupContactFragment fragment = new GroupContactFragment();
+                        Bundle b = new Bundle();
+                        b.putString("bundle_GroupId", mGroupId);
+                        b.putStringArrayList("list", (ArrayList<String>) ContactNoList);
+                        b.putString("call", "existGroup");
+                        fragment.setArguments(b);
+
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.profile_groups_container, fragment);
+                        fragmentTransaction.addToBackStack("groupcontactfragment");
+                        fragmentTransaction.commit();
+                    }
+                });
+            }
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 }
