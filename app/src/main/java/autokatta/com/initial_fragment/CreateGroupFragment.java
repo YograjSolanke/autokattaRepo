@@ -87,7 +87,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BtnAddMember:
-                if (mGroupTitle.getText().toString().equalsIgnoreCase("") || mGroupTitle.getText().toString().startsWith(" ")) {
+                if (mGroupTitle.getText().toString().equalsIgnoreCase("") /*|| mGroupTitle.getText().toString().startsWith(" ")*/) {
                     Snackbar.make(view, "Please provide group name and optional group icon", Snackbar.LENGTH_LONG).show();
                 } else {
                     mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);

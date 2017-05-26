@@ -509,7 +509,7 @@
                 android:background="@color/background"
                 android:drawableStart="@mipmap/ic_launcher"
                 android:gravity="start|center"
-                android:text="KMS/HRS Detais"
+                android:text="KMS/HRS Details"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />

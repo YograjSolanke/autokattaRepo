@@ -351,10 +351,15 @@ public class About extends Fragment implements RequestNotifier {
                         mContact.setEnabled(false);
                         mWebsite.setEnabled(false);
                         mCity.setEnabled(false);
+                        mCity.setFocusable(false);
                         mEmail.setEnabled(false);
                         mCompany.setEnabled(false);
+                        mCompany.setFocusable(false);
                         mDesignation.setEnabled(false);
+                        mDesignation.setFocusable(false);
                         mSkills.setEnabled(false);
+                        mSkills.setFocusable(false);
+
                     }
 
                 }
@@ -415,6 +420,7 @@ public class About extends Fragment implements RequestNotifier {
                         mWebsite.setText(websitestr);
                         mCity.setText(city);
                         mCity.setEnabled(false);
+                        mCity.setFocusable(false);
                         mCompany.setText(company);
                         mDesignation.setText(designation);
                         mSkills.setText(skills);
@@ -521,6 +527,7 @@ public class About extends Fragment implements RequestNotifier {
                 CustomToast.customToast(getActivity(), "Profile Updated Successfully");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                 mCity.setEnabled(false);
+                mCity.setFocusable(false);
             }
         }
     }

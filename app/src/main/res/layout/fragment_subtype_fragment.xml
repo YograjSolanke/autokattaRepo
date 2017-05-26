@@ -27,7 +27,7 @@
                 android:background="@color/background"
                 android:drawableStart="@mipmap/ic_launcher"
                 android:gravity="start|center"
-                android:text="Location Detais"
+                android:text="Location Details"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />
