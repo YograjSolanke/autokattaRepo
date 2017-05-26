@@ -46,9 +46,13 @@ public class GenericFunctions {
         int currentyear = Integer.parseInt(partc[0]);
         int useryear = Integer.parseInt(partu[0]);
 
+
         if (currentyear - useryear > 8) {
             System.out.println("year checking");
             System.out.println("valid user ");
+
+        } else if (currentyear < useryear) {
+            flag = false;
 
         } else if (currentyear - useryear < 8) {
 

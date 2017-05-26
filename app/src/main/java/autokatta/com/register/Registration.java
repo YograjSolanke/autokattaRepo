@@ -201,6 +201,14 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     email.setError("Enter Valid Email");
                     email.requestFocus();
                     email.setFocusable(true);
+                } else if (DOBstr.isEmpty()) {
+                    dateOfBirth.setError("Enter Date Of Birth");
+                    dateOfBirth.requestFocus();
+                    dateOfBirth.setFocusable(true);
+                } else if (!functions.getbirthdate(DOBstr)) {
+                    dateOfBirth.setError("Minimum 8 Year Age Required");
+                    dateOfBirth.requestFocus();
+                    dateOfBirth.setFocusable(true);
                 } else if (addressstr.isEmpty()) {
                     address.setError("Enter Address");
                     address.setFocusable(true);
@@ -270,6 +278,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
                 dateOfBirth.setText(null);
                 dateOfBirth.clearFocus();
+                dateOfBirth.setError(null);
                 clearDate.setVisibility(View.GONE);
                 break;
         }
@@ -471,6 +480,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             case R.id.editdob:
                 dateOfBirth.setInputType(InputType.TYPE_NULL);
                 datePicker.show();
+                dateOfBirth.setError(null);
                 break;
         }
         return false;

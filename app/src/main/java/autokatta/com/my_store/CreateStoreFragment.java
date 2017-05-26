@@ -112,6 +112,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mCreateStore = inflater.inflate(R.layout.fragment_create_store, container, false);
 
+        getActivity().setTitle("Create Store");
         mTestConnection = new ConnectionDetector(getActivity());
         storename = (EditText) mCreateStore.findViewById(R.id.editstorename);
         storecontact = (EditText) mCreateStore.findViewById(R.id.editstorecontact);
@@ -123,7 +124,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         edtStoreDesc = (EditText) mCreateStore.findViewById(R.id.editstoredescription);
         weekspn = (MultiSelectionSpinner) mCreateStore.findViewById(R.id.multiweekdays);
         storewebsite = (EditText) mCreateStore.findViewById(R.id.editstorewebsite);
-        textstore = (TextView) mCreateStore.findViewById(R.id.textstore);
+        //textstore = (TextView) mCreateStore.findViewById(R.id.textstore);
         rbtstoreproduct = (CheckBox) mCreateStore.findViewById(R.id.rbtproduct);
         rbtstoreservice = (CheckBox) mCreateStore.findViewById(R.id.rbtservice);
         rbtstorevehicle = (CheckBox) mCreateStore.findViewById(R.id.rbtvehicle);
@@ -164,7 +165,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         if (callFrom.equals("StoreViewActivity")) {
             store_id = bundle.getString("store_id");
             create.setText("update");
-            textstore.setText("Update Store");
+            getActivity().setTitle("Update Store");
+            // textstore.setText("Update Store");
             mApiCall.getStoreData(myContact, store_id);
         }
 

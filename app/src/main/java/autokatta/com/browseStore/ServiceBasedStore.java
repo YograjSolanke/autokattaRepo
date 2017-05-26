@@ -142,6 +142,8 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                         success.setStoreType(success.getStoreType());
                         success.setWorkingDays(success.getWorkingDays());
                         success.setLikestatus(success.getLikestatus());
+                        success.setStoreOpenTime(success.getStoreOpenTime());
+                        success.setStoreCloseTime(success.getStoreCloseTime());
                         success.setFollowstatus(success.getFollowstatus());
                         success.setLikecount(success.getLikecount());
                         success.setFollowcount(success.getFollowcount());

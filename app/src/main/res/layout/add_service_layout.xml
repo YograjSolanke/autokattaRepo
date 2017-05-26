@@ -38,8 +38,7 @@
                         android:id="@+id/editservicetype"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
+                        android:textColor="@color/textColor"
                         android:hint="Type of service"
                         android:textColorHint="#848484" />
                 </android.support.design.widget.TextInputLayout>
@@ -63,8 +62,7 @@
                         android:layout_height="wrap_content"
                         android:hint="Service Name"
                         android:textColorHint="#848484"
-                        android:textColor="#2C3343"
-                        android:textAlignment="center" />
+                        android:textColor="@color/textColor" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -85,8 +83,7 @@
                         android:hint="Price"
                         android:textColorHint="#848484"
                         android:inputType="number"
-                        android:textColor="#2C3343"
-                        android:textAlignment="center" />
+                        android:textColor="@color/textColor" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
@@ -110,7 +107,7 @@
                             android:id="@+id/multiautocategory"
                             android:hint="Service Category(Ex.Auto Design)"
                             android:textColorHint="#848484"
-                            android:textColor="#2C3343" />
+                            android:textColor="@color/textColor" />
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
@@ -133,7 +130,7 @@
                         android:id="@+id/multiautotext"
                         android:hint="Add Tags"
                         android:textColorHint="#848484"
-
+                        android:textColor="@color/textColor"
                         />
                 </android.support.design.widget.TextInputLayout>
 
@@ -155,6 +152,7 @@
                         android:id="@+id/multiautobrand"
                         android:hint="Add Brand Tags"
                         android:textColorHint="#848484"
+                        android:textColor="@color/textColor"
 
                         />
                 </android.support.design.widget.TextInputLayout>
@@ -175,10 +173,9 @@
                         android:id="@+id/editservicedetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#2C3343"
+                        android:textColor="@color/textColor"
                         android:hint="Service Details"
-                        android:textColorHint="#848484"
-                        android:textAlignment="center" />
+                        android:textColorHint="#848484" />
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

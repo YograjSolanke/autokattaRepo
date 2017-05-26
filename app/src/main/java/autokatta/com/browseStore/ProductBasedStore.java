@@ -100,6 +100,8 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
                         success.setWorkingDays(success.getWorkingDays());
                         success.setLikestatus(success.getLikestatus());
                         success.setFollowstatus(success.getFollowstatus());
+                        success.setStoreOpenTime(success.getStoreOpenTime());
+                        success.setStoreCloseTime(success.getStoreCloseTime());
                         success.setLikecount(success.getLikecount());
                         success.setFollowcount(success.getFollowcount());
                         success.setRating(success.getRating());

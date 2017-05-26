@@ -38,8 +38,7 @@
                         android:id="@+id/editproducttype"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="#2C3343"
+                        android:textColor="@color/textColor"
                         android:hint="Type of products"
                         android:textColorHint="#848484" />
 
@@ -63,8 +62,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Product Name"
-                        android:textColorHint="#848484"
-                        android:textAlignment="center" />
+                        android:textColor="@color/textColor"
+                        android:textColorHint="#848484" />
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -88,8 +87,7 @@
                         android:hint="Price"
                         android:textColorHint="#848484"
                         android:inputType="number"
-                        android:textColor="#2C3343"
-                        android:textAlignment="center" />
+                        android:textColor="@color/textColor" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -111,7 +109,7 @@
                         android:id="@+id/multiautocategory"
                         android:hint="Product Category(Ex.Auto parts)"
                         android:textColorHint="#848484"
-                        android:textColor="#2C3343"
+                        android:textColor="@color/textColor"
 
                         />
                 </android.support.design.widget.TextInputLayout>
@@ -135,8 +133,7 @@
                         android:id="@+id/multiautotext"
                         android:hint="Add Tags"
                         android:textColorHint="#848484"
-                        android:textColor="#2C3343"
-
+                        android:textColor="@color/textColor"
                         />
                 </android.support.design.widget.TextInputLayout>
 
@@ -158,7 +155,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/multiautobrand"
                         android:hint="Add Brand Tags"
-                        android:textColorHint="#848484" />
+                        android:textColorHint="#848484"
+                        android:textColor="@color/textColor" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
@@ -180,10 +178,9 @@
                         android:id="@+id/editproductdetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#2C3343"
+                        android:textColor="@color/textColor"
                         android:hint="Product Details"
-                        android:textColorHint="#848484"
-                        android:textAlignment="center" />
+                        android:textColorHint="#848484" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
