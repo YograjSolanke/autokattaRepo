@@ -307,7 +307,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <autokatta.com.Registration.Multispinner
+                    <autokatta.com.my_store.MultiSelectionSpinner
                         android:id="@+id/multiweekdays"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -316,7 +316,7 @@
                         android:layout_weight="2"
                         android:textColorHint="#848484">
 
-                    </autokatta.com.Registration.Multispinner>
+                    </autokatta.com.my_store.MultiSelectionSpinner>
 
                 </android.support.design.widget.TextInputLayout>
 

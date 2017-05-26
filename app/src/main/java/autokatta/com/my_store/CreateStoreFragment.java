@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Random;
 
 import autokatta.com.R;
-import autokatta.com.Registration.MultiSelectionSpinner;
 import autokatta.com.Registration.Multispinner;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
@@ -81,7 +80,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
             storetype = "", store_id, preLastWord = "", preCoverLastWord;
-    Multispinner weekspn, brandSpinner;
+    Multispinner brandSpinner;
+    MultiSelectionSpinner weekspn;
     MultiAutoCompleteTextView multiautotext, multiautobrand;
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
     AutoCompleteTextView storelocation;
@@ -121,7 +121,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         multiautotext = (MultiAutoCompleteTextView) mCreateStore.findViewById(R.id.multiautotext);
         storeaddress = (EditText) mCreateStore.findViewById(R.id.editstoreadd);
         edtStoreDesc = (EditText) mCreateStore.findViewById(R.id.editstoredescription);
-        weekspn = (Multispinner) mCreateStore.findViewById(R.id.multiweekdays);
+        weekspn = (MultiSelectionSpinner) mCreateStore.findViewById(R.id.multiweekdays);
         storewebsite = (EditText) mCreateStore.findViewById(R.id.editstorewebsite);
         textstore = (TextView) mCreateStore.findViewById(R.id.textstore);
         rbtstoreproduct = (CheckBox) mCreateStore.findViewById(R.id.rbtproduct);
@@ -227,10 +227,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         return mCreateStore;
     }
 
-    @Override
-    public void onItemsSelected(boolean[] selected) {
 
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -456,7 +454,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                     lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                     Log.i("Media", "path" + lastWord);
-                    //uploadImage(mediaPath);
+                    uploadImage(mediaPath);
 
                 } else if (requestCode == 101) {
                     if (resultCode == RESULT_OK) {
@@ -509,7 +507,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                     coverlastWord = mediaPath1.substring(mediaPath1.lastIndexOf("/") + 1);
                     Log.i("Media", "path" + coverlastWord);
-                    //uploadImage(mediaPath1);
+                    uploadImage(mediaPath1);
 
                 } else if (requestCode == 101) {
                     if (resultCode == RESULT_OK) {
@@ -566,7 +564,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
             else if (result.equalsIgnoreCase("addCover"))
                 coverlastWord = mediaPath1.substring(mediaPath1.lastIndexOf("/") + 1);
-            //uploadImage(mediaPath);
+            uploadImage(mediaPath);
             Log.i("image", "path" + lastWord);
             Log.i("image", "path1" + coverlastWord);
             //      /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
@@ -915,4 +913,9 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
     }
 
+    @Override
+    public void onItemsSelected(boolean[] selected) {
+
+
+    }
 }
