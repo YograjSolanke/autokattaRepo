@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -52,14 +53,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserProfile extends AppCompatActivity implements RequestNotifier {
+public class UserProfile extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     ImageView mProfilePicture;
     Bundle mUserProfileBundle;
     String mUserName;
     CollapsingToolbarLayout collapsingToolbar;
     String mLoginContact;
-    FloatingActionButton mfab_edit, mfab_done;
+    FloatingActionButton mfab_edit, mfab_done, addVehicle, mCreateStore, mCreateGroup;
     Bitmap bitmap;
     String lastWord = "";
     String mediaPath = "";
@@ -78,8 +79,15 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mfab_edit = (FloatingActionButton) findViewById(R.id.fab_edit_prof);
         mfab_done = (FloatingActionButton) findViewById(R.id.fab_edit_done);
+        addVehicle = (FloatingActionButton) findViewById(R.id.add_vehicle);
+        mCreateStore = (FloatingActionButton) findViewById(R.id.create_store);
+        mCreateGroup = (FloatingActionButton) findViewById(R.id.create_group);
         mfab_done.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
+
+        mCreateGroup.setOnClickListener(this);
+        mCreateStore.setOnClickListener(this);
+        addVehicle.setOnClickListener(this);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -106,6 +114,24 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
 
             TabLayout tabLayout = (TabLayout) findViewById(R.id.user_profile_tabs);
             tabLayout.setupWithViewPager(viewPager);
+
+            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    animateFab(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,6 +174,33 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         mfab_edit.setVisibility(View.VISIBLE);
     }
 
+    private void animateFab(int position) {
+        switch (position) {
+            case 1:
+                mCreateGroup.show();
+                addVehicle.hide();
+                mCreateStore.hide();
+                break;
+
+            case 2:
+                mCreateStore.show();
+                addVehicle.hide();
+                mCreateGroup.hide();
+                break;
+
+            case 7:
+                addVehicle.show();
+                mCreateStore.hide();
+                mCreateGroup.hide();
+                break;
+
+            default:
+                addVehicle.hide();
+                mCreateStore.hide();
+                mCreateGroup.hide();
+                break;
+        }
+    }
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -430,4 +483,34 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier {
         }*/
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.create_group:
+                ActivityOptions option1 = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
+                        R.anim.ok_right_to_left);
+                Intent intent = new Intent(getApplicationContext(), GroupTabs.class);
+                intent.putExtra("ClassName", "Groups");
+                startActivity(intent, option1.toBundle());
+                break;
+
+            case R.id.create_store:
+                Bundle bundle = new Bundle();
+                // bundle.putString("store_id", Store_id);
+                bundle.putString("className", "AboutStore");
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
+                        R.anim.ok_right_to_left);
+                Intent intents = new Intent(getApplicationContext(), MyStoreListActivity.class);
+                intents.putExtras(bundle);
+                startActivity(intents, options.toBundle());
+                break;
+
+            case R.id.add_vehicle:
+                ActivityOptions option = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
+                        R.anim.ok_right_to_left);
+                Intent i = new Intent(getApplicationContext(), VehicleUpload.class);
+                startActivity(i, option.toBundle());
+                break;
+        }
+    }
 }

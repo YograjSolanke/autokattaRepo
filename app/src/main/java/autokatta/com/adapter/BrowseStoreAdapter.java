@@ -5,6 +5,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -17,6 +18,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.view.ShareWithinAppActivity;
+import autokatta.com.view.StoreViewActivity;
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import retrofit2.Response;
 
@@ -72,27 +75,29 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.storetype.setText(success.getStoreType());
         holder.storeservices.setText(success.getCategory());
         holder.storeworkingdays.setText(success.getWorkingDays());
+        holder.mRatingCount.setText(success.getRating());
+        holder.storetiming.setText(success.getStoreOpenTime() + " " + activity.getString(R.string.to) + " " + success.getStoreCloseTime());
         holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
         holder.storerating.setEnabled(false);
 
         if (success.getLikestatus().equalsIgnoreCase("yes")) {
-            holder.linearlike.setVisibility(View.INVISIBLE);
+            holder.linearlike.setVisibility(View.GONE);
             holder.linearunlike.setVisibility(View.VISIBLE);
         }
 
         if (success.getLikestatus().equalsIgnoreCase("no")) {
             holder.linearlike.setVisibility(View.VISIBLE);
-            holder.linearunlike.setVisibility(View.INVISIBLE);
+            holder.linearunlike.setVisibility(View.GONE);
         }
 
         if (success.getFollowstatus().equalsIgnoreCase("yes")) {
-            holder.linearfollow.setVisibility(View.INVISIBLE);
-            //   holder.linearunfollow.setVisibility(View.VISIBLE);
+            holder.linearfollow.setVisibility(View.GONE);
+            holder.linearunfollow.setVisibility(View.VISIBLE);
         }
         if (success.getFollowstatus().equalsIgnoreCase("no")) {
             holder.linearfollow.setVisibility(View.VISIBLE);
-            //  holder.linearunfollow.setVisibility(View.INVISIBLE);
+            holder.linearunfollow.setVisibility(View.GONE);
         }
 
         if (success.getRating() == null) {
@@ -103,8 +108,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
         image = "http://autokatta.com/mobile/store_profiles/" + success.getStoreImage();
 
-        if (success.getStoreImage() == null) {
-            holder.store_image.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.profile));
+        if (success.getStoreImage() == null || success.getStoreImage().isEmpty() || success.getStoreImage().equals("null")) {
+            holder.store_image.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.store));
         } else {
             /****************
              Glide code for image uploading
@@ -119,7 +124,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     .into(holder.store_image);
         }
 
-       /* holder.btndetail.setOnClickListener(new View.OnClickListener() {
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
@@ -129,7 +134,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 intent.putExtras(b);
                 activity.startActivity(intent);
             }
-        });*/
+        });
 
 
         holder.linearlike.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +152,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     //sendLike(StoreId, StoreContact);
 
                     holder.linearunlike.setVisibility(View.VISIBLE);
-                    holder.linearlike.setVisibility(View.INVISIBLE);
+                    holder.linearlike.setVisibility(View.GONE);
 
                     likecountint++;
                     success.setLikecount(String.valueOf(likecountint));
@@ -175,7 +180,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                             .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //    sendUnLike(StoreId, StoreContact);
 
-                    holder.linearunlike.setVisibility(View.INVISIBLE);
+                    holder.linearunlike.setVisibility(View.GONE);
                     holder.linearlike.setVisibility(View.VISIBLE);
                     likecountint--;
                     success.setLikecount(String.valueOf(likecountint));
@@ -204,7 +209,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     mApiCall.otherStoreFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                             .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //sendFollower(StoreId, StoreContact);
-                    //holder.linearfollow.setVisibility(View.INVISIBLE);
+                    holder.linearfollow.setVisibility(View.GONE);
                     holder.linearunfollow.setVisibility(View.VISIBLE);
 
                     followcountint++;
@@ -219,7 +224,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             }
         });
 //
-        /*holder.linearunfollow.setOnClickListener(new View.OnClickListener() {
+        holder.linearunfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -234,7 +239,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                             .getString("loginContact", ""), StoreContact, "2", StoreId);
                     //sendFollower(StoreId, StoreContact);
                     holder.linearfollow.setVisibility(View.VISIBLE);
-                    holder.linearunfollow.setVisibility(View.INVISIBLE);
+                    holder.linearunfollow.setVisibility(View.GONE);
 
                     followcountint--;
                     success.setFollowcount(String.valueOf(followcountint));
@@ -246,7 +251,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 }
 
             }
-        });*/
+        });
 
 
         holder.call_image.setOnClickListener(new View.OnClickListener() {
@@ -361,8 +366,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         ImageView store_image, call_image;
         TextView btnlike, btnfollow;
         RatingBar storerating;
-        TextView linearlike, linearunlike, linearfollow, linearunfollow;
-        TextView linearshare, linearshare1;
+        LinearLayout linearlike, linearunlike, linearfollow, linearunfollow;
+        TextView linearshare, linearshare1, mRatingCount, mStoreTime;
         Button btndetail;
         CardView mCardView;
 
@@ -376,6 +381,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             storetype = (TextView) itemView.findViewById(R.id.storetype);
             storeservices = (TextView) itemView.findViewById(R.id.storeservices);
             storeworkingdays = (TextView) itemView.findViewById(R.id.storeworkingdays);
+            mRatingCount = (TextView) itemView.findViewById(R.id.rating_count);
 
             store_image = (ImageView) itemView.findViewById(R.id.storeprofileimage);
             call_image = (ImageView) itemView.findViewById(R.id.call_image);
@@ -384,10 +390,10 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             btnfollow = (TextView) itemView.findViewById(R.id.follow);
             linearshare = (TextView) itemView.findViewById(R.id.share_clk);
             linearshare1 = (TextView) itemView.findViewById(R.id.autokatta_share_clk);
-            linearlike = (TextView) itemView.findViewById(R.id.like_clk);
-            linearunlike = (TextView) itemView.findViewById(R.id.unlike_clk);
-            linearfollow = (TextView) itemView.findViewById(R.id.follow_clk);
-            //linearunfollow = (TextView) itemView.findViewById(R.id.linearunfollow);
+            linearlike = (LinearLayout) itemView.findViewById(R.id.rellike);
+            linearunlike = (LinearLayout) itemView.findViewById(R.id.relunlike);
+            linearfollow = (LinearLayout) itemView.findViewById(R.id.linear_follow);
+            linearunfollow = (LinearLayout) itemView.findViewById(R.id.linear_unfollow);
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
 
             //btndetail = (Button) itemView.findViewById(R.id.details);

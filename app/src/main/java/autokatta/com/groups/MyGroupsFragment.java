@@ -252,6 +252,38 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 .getString("loginContact", ""));
                     }
                 });
+
+                /*
+                On Scrolled Changed Listener...
+                 */
+
+                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        /*if (dy > 0 ||dy<0 && mFab.isShown())
+                            mFab.hide();*/
+                        if (dy > 0) {
+                            // Scroll Down
+                            if (mFab.isShown()) {
+                                mFab.hide();
+                            }
+                        } else if (dy < 0) {
+                            // Scroll Up
+                            if (!mFab.isShown()) {
+                                mFab.show();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                        /*if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                            mFab.show();
+                        }*/
+                        super.onScrollStateChanged(recyclerView, newState);
+                    }
+                });
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);

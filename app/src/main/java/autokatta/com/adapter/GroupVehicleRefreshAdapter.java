@@ -373,6 +373,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                 mActivity.startActivity(mVehicleDetails, options.toBundle());
             }
         });
+
         holder.mCall.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

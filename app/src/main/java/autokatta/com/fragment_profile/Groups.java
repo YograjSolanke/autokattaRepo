@@ -1,10 +1,8 @@
 package autokatta.com.fragment_profile;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
@@ -25,7 +23,6 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.response.ProfileGroupResponse;
-import autokatta.com.view.GroupTabs;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -44,7 +41,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     HashMap<String, List<ModelGroups>> mGroupList;
     List<String> mHeaderList;
     GroupsExpandableListAdapter adapter;
-    FloatingActionButton mCreateGroup;
+    //FloatingActionButton mCreateGroup;
     String contact;
     String GroupType;
 
@@ -58,9 +55,9 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
         mGroups = inflater.inflate(R.layout.fragment_profile_group, container, false);
 
         groupExpandableListView = (ExpandableListView) mGroups.findViewById(R.id.groupexpanablelistview);
-        mCreateGroup = (FloatingActionButton) mGroups.findViewById(R.id.create_group);
+       /* mCreateGroup = (FloatingActionButton) mGroups.findViewById(R.id.create_group);
 
-        mCreateGroup.setOnClickListener(this);
+        mCreateGroup.setOnClickListener(this);*/
 
         ViewCompat.setNestedScrollingEnabled(groupExpandableListView, true);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
@@ -74,7 +71,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
         } else {
             contact = mSharedPreferences.getString("loginContact", "");
             Log.i("User", "->" + contact);
-            mCreateGroup.setVisibility(View.VISIBLE);
+            //mCreateGroup.setVisibility(View.VISIBLE);
             GroupType="MyGroup";
             getGroups();
         }
@@ -154,12 +151,12 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.create_group:
+            /*case R.id.create_group:
                 Intent intent = new Intent(getActivity(), GroupTabs.class);
                 intent.putExtra("ClassName", "Groups");
                 startActivity(intent);
                 getActivity().finish();
-                break;
+                break;*/
         }
     }
 }

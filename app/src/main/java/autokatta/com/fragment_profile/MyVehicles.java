@@ -1,16 +1,13 @@
 package autokatta.com.fragment_profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import java.net.SocketTimeoutException;
@@ -23,7 +20,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetOwnVehiclesResponse;
-import autokatta.com.view.VehicleUpload;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -48,7 +44,7 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
         mMyVehicles = inflater.inflate(R.layout.fragment_profile_myvehicles, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyVehicles.findViewById(R.id.swipeRefreshLayoutMyVehicles);
         mRecyclerView = (RecyclerView) mMyVehicles.findViewById(R.id.recyclermyVehicles);
-        FloatingActionButton addVehicle = (FloatingActionButton) mMyVehicles.findViewById(R.id.add_vehicle);
+        //FloatingActionButton addVehicle = (FloatingActionButton) mMyVehicles.findViewById(R.id.add_vehicle);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -70,14 +66,14 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
             }
         });
 
-        addVehicle.setOnClickListener(new OnClickListener() {
+        /*addVehicle.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(getActivity(), VehicleUpload.class);
                 startActivity(i);
                 getActivity().finish();
             }
-        });
+        });*/
 
         return mMyVehicles;
     }

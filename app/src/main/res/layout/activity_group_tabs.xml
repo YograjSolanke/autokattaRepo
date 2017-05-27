@@ -24,5 +24,4 @@
     <include layout="@layout/content_group_tabs" />
 
 
-
 </android.support.design.widget.CoordinatorLayout>

@@ -14,6 +14,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--simple Text -->
+    <string name="to"> <b>TO</b> </string>
     <!-- Enquires -->
     <string name="test_drive">Test Drive</string>
     <string name="manual_enquiry">Manual Enquiry</string>
