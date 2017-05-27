@@ -33,7 +33,7 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         } else if (type.equalsIgnoreCase("time")) {
-            new TimePickerDialog(context, this, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), true)
+            new TimePickerDialog(context, this, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), false)
                     .show();
 
         }
@@ -58,11 +58,11 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
 
     @Override
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-        String startTime = valid.getTimeFormat(i, i1, myCalendar.get(Calendar.SECOND));
+        // String startTime = valid.getTimeFormat(i, i1, myCalendar.get(Calendar.SECOND));
 
         final String AM_PM, hour, minute;
 
-        /*if (i < 12) {
+        if (i < 12) {
             AM_PM = "AM";
             if (i < 10) {
                 hour = "0" + String.valueOf(i);
@@ -88,8 +88,8 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
                 minute = String.valueOf(i1);
         }
 
-        editText.setText(hour + ":" + minute + ":" + AM_PM);*/
-        editText.setText(startTime);
+        editText.setText(hour + ":" + minute + ":" + AM_PM);
+        //  editText.setText(startTime);
 
     }
 }

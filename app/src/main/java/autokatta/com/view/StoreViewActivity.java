@@ -224,6 +224,18 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mTeamVehicle.setOnClickListener(this);
         mShare.setOnClickListener(this);
         mAutoshare.setOnClickListener(this);
+
+
+    }
+
+    public void hideFloatingButton() {
+        menuRed.hideMenu(true);
+
+    }
+
+    public void showFloatingButton() {
+        menuRed.showMenu(true);
+
     }
 
     public void filterResult() {

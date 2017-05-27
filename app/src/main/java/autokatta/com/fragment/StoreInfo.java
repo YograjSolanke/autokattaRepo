@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.MyStoreListActivity;
+import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -38,6 +40,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     String myContact, Store_id, StoreContact;
     ImageView editStore, addEnquiry;
     boolean hasView;
+    NestedScrollView scrollView;
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen,
             storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData;
     ConnectionDetector mTestConnection;
@@ -215,13 +218,43 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 storeDescription = (TextView) mAbout.findViewById(R.id.editstoredescription);
                 storeWorkDays = (TextView) mAbout.findViewById(R.id.editworkingdays);
                 storeServiceOffered = (TextView) mAbout.findViewById(R.id.autoservices);
+                scrollView = (NestedScrollView) mAbout.findViewById(R.id.mainScroll);
 
                 Bundle b = getArguments();
                 Store_id = b.getString("store_id");
                 getStoredata(myContact, Store_id);
+
+                scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                    @Override
+                    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                        if (scrollY > oldScrollY) {
+                            ((StoreViewActivity) getActivity()).hideFloatingButton();
+                            Log.e("Hide", "->");
+                        }
+                        if (scrollY < oldScrollY) {
+                            ((StoreViewActivity) getActivity()).showFloatingButton();
+                            Log.e("show1", "->");
+                        }
+                        if (scrollY == 0) {
+                            ((StoreViewActivity) getActivity()).showFloatingButton();
+                            Log.e("show2", "->");
+                        }
+                        if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                            ((StoreViewActivity) getActivity()).hideFloatingButton();
+                            Log.e("show3", "->");
+                        }
+
+                    }
+                });
+
+
+
             }
         });
         editStore.setOnClickListener(this);
         addEnquiry.setOnClickListener(this);
+
+
     }
 }
