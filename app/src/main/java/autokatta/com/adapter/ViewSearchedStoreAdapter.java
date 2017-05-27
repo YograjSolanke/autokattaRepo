@@ -5,6 +5,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,21 +26,28 @@ import java.io.File;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.SearchStoreResponse;
 import autokatta.com.view.ShareWithinAppActivity;
+import autokatta.com.view.StoreViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-004 on 7/4/17.
  */
 
-public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedStoreAdapter.StoreHolder> {
+public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedStoreAdapter.StoreHolder> implements RequestNotifier {
 
     List<SearchStoreResponse.Success> mMainList;
     Activity activity;
     String StoreContact, StoreId;
     int likecountint, followcountint;
     String imagename = "", allDetails;
+    ApiCall mApiCall;
 
     public ViewSearchedStoreAdapter(Activity activity, List<SearchStoreResponse.Success> successList) {
 
@@ -57,6 +65,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     @Override
     public void onBindViewHolder(final ViewSearchedStoreAdapter.StoreHolder holder, final int position) {
 
+        mApiCall = new ApiCall(activity, this);
         final SearchStoreResponse.Success object = mMainList.get(position);
         final String image;
 
@@ -124,16 +133,12 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             @Override
             public void onClick(View v) {
 
-//                Bundle b=new Bundle();
-//                b.putString("action", "wall");
-//                //b.putString("contact", storecontact_list.get(position).toString());
-//                b.putString("store_id", storeid_list.get(position));
-//
-//                StoreviewFragment fragment= new StoreviewFragment();
-//                fragment.setArguments(b);
-//                FragmentManager mFragmentManagerm  = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = mFragmentManagerm.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fragment).addToBackStack("store_view").commit();
+                Bundle b = new Bundle();
+                b.putString("StoreContact", object.getContact());
+                b.putString("store_id", object.getStoreId());
+                Intent intent = new Intent(activity, StoreViewActivity.class);
+                intent.putExtras(b);
+                activity.startActivity(intent);
             }
         });
 
@@ -146,7 +151,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = holder.callText.getText().toString();
                 StoreId = object.getStoreId();
 
-                // sendLike(StoreId, StoreContact);
+                mApiCall.otherStoreLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""), object.getContact(), "2", StoreId);
 
                 holder.linearunlike.setVisibility(View.VISIBLE);
                 holder.linearlike.setVisibility(View.GONE);
@@ -168,7 +174,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = holder.callText.getText().toString();
                 StoreId = object.getStoreId();
 
-                // sendUnLike(StoreId, StoreContact);
+                mApiCall.otherStoreUnlike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""), StoreContact, "2", StoreId);
 
                 holder.linearunlike.setVisibility(View.GONE);
                 holder.linearlike.setVisibility(View.VISIBLE);
@@ -191,7 +198,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = holder.callText.getText().toString();
                 StoreId = object.getStoreId();
 
-                //  sendFollower(StoreId, StoreContact);
+                mApiCall.otherStoreFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""), StoreContact, "2", StoreId);
 
                 holder.linearfollow.setVisibility(View.GONE);
                 holder.linearunfollow.setVisibility(View.VISIBLE);
@@ -215,7 +223,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = holder.callText.getText().toString();
                 StoreId = object.getStoreId();
 
-                // sendUnFollower(StoreId, StoreContact);
+                mApiCall.otherStoreUnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""), StoreContact, "2", StoreId);
 
                 holder.linearfollow.setVisibility(View.VISIBLE);
                 holder.linearunfollow.setVisibility(View.GONE);
@@ -333,6 +342,21 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     @Override
     public int getItemCount() {
         return mMainList.size();
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 
     static class StoreHolder extends RecyclerView.ViewHolder {

@@ -73,14 +73,14 @@ import static android.app.Activity.RESULT_OK;
  * Created by ak-003 on 29/3/17.
  */
 
-public class CreateStoreFragment extends Fragment implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier {
+public class CreateStoreFragment extends Fragment implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier, MultiSelectionSpinnerForBrands.MultiSpinnerListener {
 
     TextView textstore, storetypetext;
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
             storetype = "", store_id, preLastWord = "", preCoverLastWord;
-    Multispinner brandSpinner;
+    MultiSelectionSpinnerForBrands brandSpinner;
     MultiSelectionSpinner weekspn;
     MultiAutoCompleteTextView multiautotext, multiautobrand;
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
@@ -136,7 +136,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         mLinearautobrand = (LinearLayout) mCreateStore.findViewById(R.id.linearautobrand);
         mRelativeBrand = (RelativeLayout) mCreateStore.findViewById(R.id.rell);
         mParent = (RelativeLayout) mCreateStore.findViewById(R.id.relativeparent);
-        brandSpinner = (Multispinner) mCreateStore.findViewById(R.id.brandSpinner);
+        brandSpinner = (MultiSelectionSpinnerForBrands) mCreateStore.findViewById(R.id.brandSpinner);
 
         btnaddprofile.setOnClickListener(this);
         btnaddcover.setOnClickListener(this);

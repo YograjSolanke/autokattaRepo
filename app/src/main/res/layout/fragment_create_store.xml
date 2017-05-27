@@ -439,27 +439,21 @@
             <RelativeLayout
                 android:id="@+id/rell"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spinner_height"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/linear12"
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="@dimen/card_margin"
-                android:background="@drawable/spinner_background"
                 android:orientation="horizontal"
                 android:paddingEnd="@dimen/card_margin"
-                android:paddingStart="@dimen/card_margin"
                 android:visibility="visible">
 
-                <autokatta.com.Registration.Multispinner
+                <autokatta.com.my_store.MultiSelectionSpinnerForBrands
                     android:id="@+id/brandSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
                     android:background="@android:color/transparent"
-                    android:gravity="center"
-                    android:spinnerMode="dropdown"
-                    android:textAlignment="center" />
+                    android:spinnerMode="dropdown" />
 
                 <ImageView
                     android:layout_width="wrap_content"
