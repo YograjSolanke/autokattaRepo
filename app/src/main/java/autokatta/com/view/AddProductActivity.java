@@ -620,8 +620,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         mSelectedItems.clear();
         stringgroupids = "";
 
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddProductActivity.this);
-
+        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddProductActivity.this);
         // set the dialog title
         builder.setTitle("Select Groups Where You Want Show this Product")
                 .setCancelable(true)
@@ -646,22 +645,30 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     public void onClick(DialogInterface dialog, int id) {
 
 
-                        for (int i = 0; i < mSelectedItems.size(); i++) {
-                            for (int j = 0; j < stringTitles.length; j++) {
-                                if (mSelectedItems.get(i).equals(stringTitles[j])) {
-                                    if (stringgroupids.equals("")) {
-                                        stringgroupids = groupId.get(j);
-                                    } else {
-                                        stringgroupids = stringgroupids + "," + groupId.get(j);
+                        if (!(mSelectedItems.size() == 0)) {
+                            for (int i = 0; i < mSelectedItems.size(); i++) {
+                                for (int j = 0; j < stringTitles.length; j++) {
+                                    if (mSelectedItems.get(i).equals(stringTitles[j])) {
+                                        if (stringgroupids.equals("")) {
+                                            stringgroupids = groupId.get(j);
+                                        } else {
+                                            stringgroupids = stringgroupids + "," + groupId.get(j);
 
+                                        }
                                     }
                                 }
+
                             }
 
+
+                            System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+                            createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
+                        } else {
+                            CustomToast.customToast(AddProductActivity.this, "Please Select Atleast One Group");
+                            android.app.AlertDialog alert = builder.create();
+                            alert.show();
                         }
 
-                        System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
-                        createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
 
                     }
                 })

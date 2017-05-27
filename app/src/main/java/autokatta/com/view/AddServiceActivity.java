@@ -617,7 +617,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         mSelectedItems.clear();
         stringgroupids = "";
 
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddServiceActivity.this);
+        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddServiceActivity.this);
 
         // set the dialog title
         builder.setTitle("Select Groups Where You Want Show this Service")
@@ -642,23 +642,30 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
+                        if (!(mSelectedItems.size() == 0)) {
+                            for (int i = 0; i < mSelectedItems.size(); i++) {
+                                for (int j = 0; j < stringTitles.length; j++) {
+                                    if (mSelectedItems.get(i).equals(stringTitles[j])) {
+                                        if (stringgroupids.equals("")) {
+                                            stringgroupids = groupId.get(j);
+                                        } else {
+                                            stringgroupids = stringgroupids + "," + groupId.get(j);
 
-                        for (int i = 0; i < mSelectedItems.size(); i++) {
-                            for (int j = 0; j < stringTitles.length; j++) {
-                                if (mSelectedItems.get(i).equals(stringTitles[j])) {
-                                    if (stringgroupids.equals("")) {
-                                        stringgroupids = groupId.get(j);
-                                    } else {
-                                        stringgroupids = stringgroupids + "," + groupId.get(j);
-
+                                        }
                                     }
                                 }
+
                             }
 
+
+                            System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+                            createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
+                        } else {
+                            CustomToast.customToast(AddServiceActivity.this, "Please Select Atleast One Group");
+                            android.app.AlertDialog alert = builder.create();
+                            alert.show();
                         }
 
-                        System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
-                        createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
 
                     }
                 })
