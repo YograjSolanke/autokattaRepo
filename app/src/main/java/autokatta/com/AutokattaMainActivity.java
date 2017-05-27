@@ -248,8 +248,29 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         } else if (menuItem.getItemId() == R.id.locality) {
                             startActivity(new Intent(AutokattaMainActivity.this, MapsActivity.class));
                         } else if (menuItem.getItemId() == R.id.sign_out) {
-                            session.logoutUser();
-                            finish();
+                            AlertDialog.Builder alert = new AlertDialog.Builder(AutokattaMainActivity.this);
+                            alert.setTitle(getString(R.string.alert_title));
+                            alert.setMessage(getString(R.string.sign_out_message));
+                            alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+                            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    session.logoutUser();
+                                    finish();
+                                }
+                            });
+
+                            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+
+                            });
+                            alert.create();
+                            alert.show();
                         }
                         return true;
                     }
