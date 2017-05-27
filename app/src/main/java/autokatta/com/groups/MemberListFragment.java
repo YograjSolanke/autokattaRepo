@@ -316,6 +316,38 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         fragmentTransaction.commit();
                     }
                 });
+
+                /*
+                On Scrolled Changed Listener...
+                 */
+
+                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        /*if (dy > 0 ||dy<0 && mFab.isShown())
+                            mFab.hide();*/
+                        if (dy > 0) {
+                            // Scroll Down
+                            if (floatCreateGroup.isShown()) {
+                                floatCreateGroup.hide();
+                            }
+                        } else if (dy < 0) {
+                            // Scroll Up
+                            if (!floatCreateGroup.isShown()) {
+                                floatCreateGroup.show();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                        /*if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                            mFab.show();
+                        }*/
+                        super.onScrollStateChanged(recyclerView, newState);
+                    }
+                });
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
