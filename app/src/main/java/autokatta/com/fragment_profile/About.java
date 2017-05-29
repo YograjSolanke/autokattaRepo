@@ -167,16 +167,12 @@ public class About extends Fragment implements RequestNotifier {
             public void onClick(View view) {
                 mDone.setVisibility(View.VISIBLE);
                 mEdit.setVisibility(View.GONE);
-               if (profession.equalsIgnoreCase("student"))
-               {
+                if (profession.equalsIgnoreCase("student")) {
                    student.setChecked(true);
                }
                else if (profession.equalsIgnoreCase("employee")){
                    employee.setChecked(true);
-
-               }else
-                   if (profession.equalsIgnoreCase("self employee"))
-               {
+                } else if (profession.equalsIgnoreCase("self employee")) {
                    selfemployee.setChecked(true);
                }
                 if (student.isChecked()) {
@@ -489,10 +485,14 @@ public class About extends Fragment implements RequestNotifier {
                         if (getActivity() != null) {
                             ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
                             spinner.setAdapter(dataadapter);
+                            List<String> name = new ArrayList<>();
+                            name.add(subProfession);
                             for (int i = 0; i < module.size(); i++) {
                                 if (subProfession != null) {
                                     if (subProfession.equals(module.get(i))) {
                                         spinner.setSelection(i);
+                                        ArrayAdapter<String> dataadapter1 = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, name);
+                                        spinner.setAdapter(dataadapter1);
                                     }
                                 }
                             }

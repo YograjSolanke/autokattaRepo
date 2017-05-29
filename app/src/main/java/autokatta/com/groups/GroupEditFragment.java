@@ -100,8 +100,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         try {
             if (bundle_image.equals("") || bundle_image.equalsIgnoreCase(null) || bundle_image.equalsIgnoreCase("null")) {
                 mGroup_image.setBackgroundResource(R.drawable.profile);
-            }
-            if (!bundle_image.equals("") || !bundle_image.equalsIgnoreCase(null) || !bundle_image.equalsIgnoreCase("null")) {
+            } else {
                 try {
                     Glide.with(getActivity())
                             .load("http://autokatta.com/mobile/group_profile_pics/" + bundle_image)
@@ -130,10 +129,12 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 if (group_name_update.equals("")) {
                     Snackbar.make(v, "Please provide group name", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    if (lastWord.equals(""))
+                    if (!lastWord.equals("")) {
                         mApiCall.editGroup(group_name_update, bundle_id, lastWord);
-                    else
+                    } else {
                         mApiCall.editGroup(group_name_update, bundle_id, bundle_image);
+                    }
+
                 }
             }
         });
@@ -183,7 +184,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
-                uploadImage(mediaPath);
+                //uploadImage(mediaPath);
 
             } else if (requestCode == 101) {
                 if (resultCode == RESULT_OK) {
@@ -235,7 +236,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             out.close();
             /*if (cd.isConnectingToInternet()) {*/
             lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
-            uploadImage(mediaPath);
+            //uploadImage(mediaPath);
             Log.i("image", "path" + lastWord);
             //      /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
             /*} else {
@@ -248,7 +249,6 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Bitmap retVal;
-
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         retVal = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
