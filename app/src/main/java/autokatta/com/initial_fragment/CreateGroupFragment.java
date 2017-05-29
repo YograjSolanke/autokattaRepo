@@ -14,6 +14,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,6 +83,25 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         mApiCall = new ApiCall(getActivity(), this);
         mGroupImg.setOnClickListener(this);
         mAddmember.setOnClickListener(this);
+
+        mGroupTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (mGroupTitle.getText().toString().trim().length()>0 && mGroupTitle.getText().toString().trim().startsWith(" ")){
+                    Toast.makeText(getActivity(), " Space ", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         return mCreateGroup;
     }
 
@@ -87,7 +109,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BtnAddMember:
-                if (mGroupTitle.getText().toString().equalsIgnoreCase("") /*|| mGroupTitle.getText().toString().startsWith(" ")*/) {
+                if (mGroupTitle.getText().toString().equalsIgnoreCase("") ||mGroupTitle.getText().toString().startsWith(" ") && mGroupTitle.getText().toString().endsWith(" ")/*|| mGroupTitle.getText().toString().startsWith(" ")*/) {
                     Snackbar.make(view, "Please provide group name and optional group icon", Snackbar.LENGTH_LONG).show();
                 } else {
                     mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);

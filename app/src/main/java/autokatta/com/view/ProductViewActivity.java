@@ -454,7 +454,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 callme.setVisibility(View.GONE);
                                 relativerate.setVisibility(View.GONE);
                                 relativewritereview.setVisibility(View.GONE);
-                                linearlike.setEnabled(false);
+                              //  linearlike.setEnabled(false);
                                 linearreview.setEnabled(false);
                             } else {
                                 callme.setVisibility(View.VISIBLE);
@@ -939,18 +939,26 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 break;
 
             case R.id.linearlike:
-                linearlike.setVisibility(View.GONE);
-                linearunlike.setVisibility(View.VISIBLE);
-                sendLike();
-                lcnt = lcnt + 1;
-                txtlike.setText("Like(" + lcnt + ")");
+                if (storecontact.contains(contact)) {
+                CustomToast.customToast(getApplicationContext(),"You can't Like Your Own Store");
+                }else {
+                    linearlike.setVisibility(View.GONE);
+                    linearunlike.setVisibility(View.VISIBLE);
+                    sendLike();
+                    lcnt = lcnt + 1;
+                    txtlike.setText("Like(" + lcnt + ")");
+                }
                 break;
             case R.id.linearunlike:
-                linearlike.setVisibility(View.VISIBLE);
-                linearunlike.setVisibility(View.GONE);
-                sendUnlike();
-                lcnt = lcnt - 1;
-                txtlike.setText("Like(" + lcnt + ")");
+                if (storecontact.contains(contact)) {
+                    CustomToast.customToast(getApplicationContext(),"You can't UnLike Your Own Store");
+                }else {
+                    linearlike.setVisibility(View.VISIBLE);
+                    linearunlike.setVisibility(View.GONE);
+                    sendUnlike();
+                    lcnt = lcnt - 1;
+                    txtlike.setText("Like(" + lcnt + ")");
+                }
                 break;
             case R.id.btnfeedback:
                 if (prate.equals("0")) {
@@ -975,7 +983,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                 Intent i = new Intent(ProductViewActivity.this, ShareWithinAppActivity.class);
                 startActivity(i);
-                finish();
+               // finish();
                 break;
             case R.id.linearshare:
 

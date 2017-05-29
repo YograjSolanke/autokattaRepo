@@ -32,10 +32,13 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.Db_AutokattaContactResponse;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
+
+import static autokatta.com.database.DbConstants.userName;
 
 /**
  * Created by ak-003 on 29/3/17.
@@ -90,10 +93,10 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             contactdata.clear();
             cursor.moveToFirst();
             do {
-                Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+                Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
                 Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
-                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
-                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
+                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
+                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
                 contactdata.add(obj);
             } while (cursor.moveToNext());
         }
@@ -124,6 +127,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
             }
         });
+
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +141,13 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                         }
                     }
                 }
-                addStoreAdmins(store_id, finaladmins);
+                if (!finaladmins.equals("")) {
+                    addStoreAdmins(store_id, finaladmins);
+                }else
+                {
+                    CustomToast.customToast(getActivity(),"Please Select Atlist Single contact");
+
+                }
             }
         });
 

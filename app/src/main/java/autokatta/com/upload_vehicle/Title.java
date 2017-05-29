@@ -30,6 +30,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.MonthYearPicker;
@@ -195,7 +196,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                     public void onClick(DialogInterface dialog, int which) {
                                         FragmentManager manager = getFragmentManager();
                                         FragmentTransaction mFragmentTransaction = manager.beginTransaction();
-                                        mFragmentTransaction.replace(R.id.vehicle_upload_container, new Upload_Group_Create_Fragment()).commit();
+                                       // mFragmentTransaction.replace(R.id.vehicle_upload_container, new Upload_Group_Create_Fragment()).commit();
+                                        mFragmentTransaction.replace(R.id.vehicle_upload_container, new CreateGroupFragment()).commit();
                                     }
                                 });
                                 alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -299,7 +301,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     /*
                     Staring Spinner
                      */
-                    mStaringList.add("Select Staring Type");
+                    mStaringList.add("Select String Type");
                     mStaringList.add("Power");
                     mStaringList.add("Manual");
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mStaringList);
