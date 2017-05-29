@@ -89,10 +89,10 @@ public class Db_AutokattaContactResponse {
             String StudentName2 = s2.username.toUpperCase();
 
             //ascending order
-            return StudentName1.compareTo(StudentName2);
+            //return StudentName1.compareTo(StudentName2);
 
             //descending order
-            //return StudentName2.compareTo(StudentName1);
+            return StudentName2.compareTo(StudentName1);
         }
     };
 }

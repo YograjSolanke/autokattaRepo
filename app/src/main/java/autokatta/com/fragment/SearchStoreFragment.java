@@ -1,7 +1,10 @@
 package autokatta.com.fragment;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +39,9 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     List<SearchStoreResponse.Success> searchStoreResponseArrayList = new ArrayList<>();
-
+    boolean hasViewCreated = false;
+    TextView mNoData;
+    String myContact, storecontact, location, phrase, radius, brands, finalCategory;
     public SearchStoreFragment() {
         //empty constructor
     }
@@ -42,6 +50,20 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchStore = inflater.inflate(R.layout.fragment_search_store, container, false);
+
+
+        return mSearchStore;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        mNoData = (TextView) mSearchStore.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
 
         mRecyclerView = (RecyclerView) mSearchStore.findViewById(R.id.recyclerSearchStore);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mSearchStore.findViewById(R.id.swipeRefreshLayoutSearchStore);
@@ -61,35 +83,41 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                 android.R.color.holo_red_light);
 
 
+
         Bundle b = getArguments();
-        final String myContact = b.getString("myContact");
-        final String storecontact = b.getString("contact_to_search");
-        final String location = b.getString("location");
+        myContact = b.getString("myContact");
+        storecontact = b.getString("contact_to_search");
+        location = b.getString("location");
         String category = b.getString("category");
 
         if (category.equalsIgnoreCase("Select Category"))
             category = "";
 
-        final String phrase = b.getString("phrase");
-        final String radius = b.getString("radius");
-        final String brands = b.getString("brands");
+        phrase = b.getString("phrase");
+        radius = b.getString("radius");
+        brands = b.getString("brands");
         final int radiuspos = b.getInt("radiuspos");
 
         Log.i("brand", ":" + brands);
-        final ApiCall apiCall = new ApiCall(getActivity(), this);
-        final String finalCategory = category;
+
+        finalCategory = category;
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
 
-                //API Call
-                apiCall.SearchStore(myContact, storecontact, location, finalCategory, phrase, radius, brands);
+                getData(myContact, storecontact, location, finalCategory, phrase, radius, brands);
+
 
             }
         });
 
-        return mSearchStore;
+    }
+
+    private void getData(String myContact, String storecontact, String location, String finalCategory, String phrase, String radius, String brands) {
+        final ApiCall apiCall = new ApiCall(getActivity(), this);
+        //API Call
+        apiCall.SearchStore(myContact, storecontact, location, finalCategory, phrase, radius, brands);
     }
 
     @Override
@@ -105,7 +133,8 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                 SearchStoreResponse searchStoreResponse = (SearchStoreResponse) response.body();
 
                 if (!searchStoreResponse.getSuccess().isEmpty()) {
-
+                    mNoData.setVisibility(View.GONE);
+                    searchStoreResponseArrayList.clear();
                     for (SearchStoreResponse.Success searchSuccess : searchStoreResponse.getSuccess()) {
                         searchSuccess.setStoreId(searchSuccess.getStoreId());
                         searchSuccess.setStoreName(searchSuccess.getStoreName());
@@ -132,8 +161,10 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                     ViewSearchedStoreAdapter adapter = new ViewSearchedStoreAdapter(getActivity(), searchStoreResponseArrayList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                } else
+                } else {
                     mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
+                }
 
             } else {
 
@@ -146,12 +177,45 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Search Store Fragment");
             error.printStackTrace();
@@ -161,5 +225,18 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void notifyString(String str) {
 
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getData(myContact, storecontact, location, finalCategory, phrase, radius, brands);
+                hasViewCreated = true;
+            }
+        }
     }
 }

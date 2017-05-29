@@ -15,12 +15,15 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import autokatta.com.R;
 import autokatta.com.adapter.AutokattaContactAdapter;
 import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 import autokatta.com.response.Db_AutokattaContactResponse;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-003 on 19/3/17.
@@ -31,6 +34,7 @@ public class AutokattaContactFragment extends Fragment {
     View mAutoContact;
     RecyclerView mRecyclerView;
     EditText edtSearchContact;
+    String myContact;
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     AutokattaContactAdapter autokattaContactAdapter;
 
@@ -46,6 +50,8 @@ public class AutokattaContactFragment extends Fragment {
 
         edtSearchContact = (EditText) mAutoContact.findViewById(R.id.inputSearch);
         mRecyclerView = (RecyclerView) mAutoContact.findViewById(R.id.rv_recycler_view);
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "");
 
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -63,16 +69,19 @@ public class AutokattaContactFragment extends Fragment {
                 Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
                 Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
 
-                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
-                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
-                obj.setMystatus(cursor.getString(cursor.getColumnIndex(DbConstants.myStatus)));
-                obj.setFollowstatus(cursor.getString(cursor.getColumnIndex(DbConstants.followStatus)));
-                obj.setUserprofile(cursor.getString(cursor.getColumnIndex(DbConstants.profilePic)));
+                if (!cursor.getString(cursor.getColumnIndex(DbConstants.contact)).equals(myContact)) {
+                    obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+                    obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
+                    obj.setMystatus(cursor.getString(cursor.getColumnIndex(DbConstants.myStatus)));
+                    obj.setFollowstatus(cursor.getString(cursor.getColumnIndex(DbConstants.followStatus)));
+                    obj.setUserprofile(cursor.getString(cursor.getColumnIndex(DbConstants.profilePic)));
+                }
 
                 contactdata.add(obj);
             } while (cursor.moveToNext());
         }
         dbAdpter.CLOSE();
+        Collections.sort(contactdata, Db_AutokattaContactResponse.StuNameComparator);
 
         autokattaContactAdapter = new AutokattaContactAdapter(getActivity(), contactdata);
         mRecyclerView.setAdapter(autokattaContactAdapter);
@@ -81,16 +90,18 @@ public class AutokattaContactFragment extends Fragment {
         edtSearchContact.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                autokattaContactAdapter.getFilter().filter(s.toString());
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                autokattaContactAdapter.getFilter().filter(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
 
             }
         });

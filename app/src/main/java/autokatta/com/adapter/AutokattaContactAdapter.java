@@ -51,10 +51,11 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     private Activity mActivity;
     private List<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     private List<Db_AutokattaContactResponse> contactdata_copy = new ArrayList<>();
-    private ItemFilter mFilter = new ItemFilter();
+    private ItemFilter mFilter;
     private String myContact = "";
     private ApiCall apicall;
     private String Rcontact = "";
+
 
     static class YoHolder extends RecyclerView.ViewHolder {
 
@@ -282,6 +283,9 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
 
     public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new ItemFilter();
+        }
         return mFilter;
     }
 
@@ -296,19 +300,24 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             final List<Db_AutokattaContactResponse> list = contactdata_copy;
 
             int count = list.size();
-            final ArrayList<Db_AutokattaContactResponse> nlist = new ArrayList<Db_AutokattaContactResponse>(count);
 
-            Db_AutokattaContactResponse filterableString;
-
-            for (int i = 0; i < count; i++) {
-                filterableString = list.get(i);
-                if (filterableString.getUsername().toLowerCase().contains(filterString)) {
-                    nlist.add(filterableString);
+            if (filterString != null && filterString.length() > 0) {
+                Db_AutokattaContactResponse filterableString;
+                ArrayList<Db_AutokattaContactResponse> nlist = new ArrayList<Db_AutokattaContactResponse>(count);
+                for (int i = 0; i < count; i++) {
+                    filterableString = list.get(i);
+                    if (filterableString.getUsername().toLowerCase().contains(filterString)) {
+                        nlist.add(filterableString);
+                    }
                 }
-            }
 
-            results.values = nlist;
-            results.count = nlist.size();
+
+                results.values = nlist;
+                results.count = nlist.size();
+            } else {
+                results.values = list;
+                results.count = list.size();
+            }
 
             return results;
         }
@@ -318,6 +327,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         protected void publishResults(CharSequence constraint, FilterResults results) {
             contactdata = (ArrayList<Db_AutokattaContactResponse>) results.values;
             notifyDataSetChanged();
+
         }
 
     }

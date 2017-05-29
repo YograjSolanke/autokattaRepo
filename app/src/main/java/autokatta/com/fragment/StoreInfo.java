@@ -120,6 +120,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                         storeServiceOffered.setText(success.getCategory());
                         if (StoreContact.contains(myContact)) {
                             editStore.setVisibility(View.VISIBLE);
+                            addEnquiry.setVisibility(View.VISIBLE);
                         }
                     }
                 } else {

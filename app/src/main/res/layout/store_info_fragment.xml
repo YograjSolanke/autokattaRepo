@@ -27,7 +27,7 @@
                 android:layout_toEndOf="@+id/enquiry"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_mode_edit_black_24dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/enquiry"
@@ -36,7 +36,7 @@
                 android:layout_marginStart="@dimen/padding_small"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_comment_question_outline"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </RelativeLayout>
 
