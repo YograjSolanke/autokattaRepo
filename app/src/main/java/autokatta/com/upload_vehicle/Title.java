@@ -2,6 +2,7 @@ package autokatta.com.upload_vehicle;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -193,14 +194,17 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        /*FragmentManager manager = getFragmentManager();
-                                        FragmentTransaction mFragmentTransaction = manager.beginTransaction();
-                                       // mFragmentTransaction.replace(R.id.vehicle_upload_container, new Upload_Group_Create_Fragment()).commit();
-                                        mFragmentTransaction.replace(R.id.vehicle_upload_container, new CreateGroupFragment()).commit();*/
+                                        CreateGroupFragment createGroupFragment=new CreateGroupFragment();
+                                        Bundle b=new Bundle();
+                                        b.putString("classname","uploadvehicle");
+                                        createGroupFragment.setArguments(b);
+
                                         getActivity().getSupportFragmentManager().beginTransaction()
-                                                .replace(R.id.vehicle_upload_container, new CreateGroupFragment(), "Title")
+                                                .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
                                                 .addToBackStack("Title")
                                                 .commit();
+
+
                                     }
                                 });
                                 alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -486,6 +490,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 }
                             }
                         }
+                        if (mSelectedItems.size()==0)
+                        {
+                            CustomToast.customToast(getActivity(),"No Group Was Selected");
+                            radioButton1.setChecked(false);
+                            radioButton2.setChecked(true);
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -541,6 +551,15 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 }
                             }
                         }
+                        if (mSelectedItems.size()==0)
+                        {
+                            CustomToast.customToast(getActivity(),"No Store Was Selected");
+                            storeradioyes.setChecked(false);
+                            storeradiono.setChecked(true);
+                            stringstoreids = "";
+                            stringstorename = "";
+
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -591,9 +610,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     }
                     parsedData.addAll(mSubTypeList);
                     if (getActivity() != null) {
-                        ArrayAdapter<String> adapter =
-                                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, parsedData);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, parsedData);
+                        // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSubType.setAdapter(adapter);
                     }
                     mSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -633,9 +651,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     brandData.addAll(mBrandIdList);
                     Log.i("ListBrand", "->" + mBrandIdList);
                     if (getActivity() != null) {
-                        ArrayAdapter<String> adapter =
-                                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, brandData);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, brandData);
+                        // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mBrandSpinner.setAdapter(adapter);
                         mModelSpinner.setAdapter(null);
                     }
@@ -661,6 +678,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
+                                input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
                                 // alertDialog.setIcon(R.drawable.key);
 
@@ -715,9 +733,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     modelData.addAll(mModelIdList);
                     Log.i("ListModel", "->" + mModelIdList);
                     if (getActivity() != null) {
-                        ArrayAdapter<String> adapter =
-                                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, modelData);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, modelData);
+                        //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mModelSpinner.setAdapter(adapter);
                         mVersionSpinner.setAdapter(null);
                     }
@@ -743,6 +760,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
+                                input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
                                 // alertDialog.setIcon(R.drawable.key);
 
@@ -797,9 +815,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     versionData.addAll(mVersionIdList);
                     Log.i("ListVersion", "->" + mVersionIdList);
                     if (getActivity() != null) {
-                        ArrayAdapter<String> adapter =
-                                new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, versionData);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, versionData);
+                        //   adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mVersionSpinner.setAdapter(adapter);
                     }
                     mVersionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -824,6 +841,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
+                                input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
                                 // alertDialog.setIcon(R.drawable.key);
 

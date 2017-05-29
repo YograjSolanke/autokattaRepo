@@ -50,11 +50,14 @@ public class GroupTabs extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+      CreateGroupFragment createGroupFragment= new CreateGroupFragment();
+        Bundle b=new Bundle();
+        b.putString("classname","GroupsTab");
+        createGroupFragment.setArguments(b);
         if (getIntent().getExtras() != null) {
             FragmentManager mFragmentManager = getSupportFragmentManager();
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.group_container, new CreateGroupFragment(), "createGroupFragment")
+            mFragmentTransaction.replace(R.id.group_container, createGroupFragment, "createGroupFragment")
                     .commit();
 
         } else {

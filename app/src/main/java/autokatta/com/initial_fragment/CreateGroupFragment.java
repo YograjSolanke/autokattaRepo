@@ -65,6 +65,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     File file;
     Bundle b = new Bundle();
     ApiCall mApiCall;
+    String classname;
 
     public CreateGroupFragment() {
         //empty fragment...
@@ -336,6 +337,12 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             if (!mediaPath.equals("")) {
                 uploadImage(mediaPath);
             }
+
+            Bundle b1=getArguments();
+            if (b1!=null)
+            {
+                 classname= b1.getString("classname");
+            }
             b.putString("bundle_GroupId", str);
             b.putString("call", "newGroup");
             GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
@@ -345,10 +352,20 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.group_container, fragment2);
             fragmentTransaction.commit();*/
+        if (classname.equalsIgnoreCase("uploadvehicle"))
+        {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.vehicle_upload_container, fragment2, "groupContactFragment")
+                    .addToBackStack("groupContactFragment")
+                    .commit();
+        }else
+        {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.group_container, fragment2, "groupContactFragment")
                     .addToBackStack("groupContactFragment")
                     .commit();
+        }
+
 
         } else {
             Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();

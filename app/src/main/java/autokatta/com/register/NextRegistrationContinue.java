@@ -74,6 +74,13 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     List<String> versionData = new ArrayList<>();
     HashMap<String, String> mVersionList1 = new HashMap<>();
 
+    //Edit Vehicle data to show in spinner
+    List<String> TypeList=new ArrayList<>();
+    List<String> SubTypeList=new ArrayList<>();
+    List<String> BrandList=new ArrayList<>();
+    List<String> ModelList=new ArrayList<>();
+    List<String> VersionList=new ArrayList<>();
+
     String vehicle_idD, brandId, brandName, modelId, modelName, versionId, versionName;
     ApiCall mApicall;
 
@@ -207,13 +214,31 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         edtnextservice.setText(vehinextservicedate);
                         edtyear.setText(vehiYear);
 
-                        //Setting Spinner Values
+                        //Setting Spinner Values getting from edit myvehicle in myprofile
                         edtvehicleno.setText(vehino);
-                        mSpinnerVehitype.setSelection(getIndex(mSpinnerVehitype, vehiType));
+                        TypeList.add(vehiType);
+                        SubTypeList.add(vehiSubcat);
+                        BrandList.add(vehiBrand);
+                        ModelList.add(vehiModel);
+                        VersionList.add(vehiVersion);
+
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, TypeList);
+                        ArrayAdapter<String> adapter1= new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, SubTypeList);
+                        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, BrandList);
+                        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, ModelList);
+                        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, VersionList);
+
+                        mSpinnerVehitype.setAdapter(adapter);
+                        mSpinnerSubType.setAdapter(adapter1);
+                        mSpinnerBrand.setAdapter(adapter2);
+                        mSpinnerModel.setAdapter(adapter3);
+                        mSpinnerVersion.setAdapter(adapter4);
+
+                      /*  mSpinnerVehitype.setSelection(getIndex(mSpinnerVehitype, vehiType));
                         mSpinnerSubType.setSelection(getIndex(mSpinnerSubType, vehiSubcat));
                         mSpinnerBrand.setSelection(getIndex(mSpinnerBrand, vehiBrand));
                         mSpinnerModel.setSelection(getIndex(mSpinnerModel, vehiModel));
-                        mSpinnerVersion.setSelection(getIndex(mSpinnerVersion, vehiVersion));
+                        mSpinnerVersion.setSelection(getIndex(mSpinnerVersion, vehiVersion));*/
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -633,7 +658,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         }
                         parsedData1.addAll(mVehicleTypeList);
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData1);
-                        dataadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                     ///   dataadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSpinnerVehitype.setAdapter(dataadapter);
                         mSpinnerSubType.setAdapter(null);
 
@@ -643,7 +668,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                 if (position != 0) {
                                     vehicle_idD = mVehicleTypeList1.get(parsedData1.get(position));
                                     String Category = mVehicleTypeList.get(position);
-                                    ((TextView) mSpinnerVehitype.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+                                    ((TextView) mSpinnerVehitype.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
                                     getSubCategoryTask();
                                     if (Category.equalsIgnoreCase("2 Wheeler")) {
                                         edttax.setVisibility(View.GONE);
@@ -678,7 +703,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                     parsedData.addAll(mSubTypeList);
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerSubType.setAdapter(adapter);
 
                     mSpinnerSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -687,7 +712,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                             if (position != 0) {
                                 subcategoryId = mSubTypeList1.get(parsedData.get(position));
                                 subcategoryName = parsedData.get(position);
-                                ((TextView) mSpinnerSubType.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+                                ((TextView) mSpinnerSubType.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
                                 getBrand(vehicle_idD, subcategoryId);
                             }
                         }
@@ -711,9 +736,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                     mBrandIdList.add("other");
                     brandData.addAll(mBrandIdList);
-                    ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    ArrayAdapter<String> adapter =new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
+                  //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerBrand.setAdapter(adapter);
                     mSpinnerModel.setAdapter(null);
 
@@ -723,7 +747,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                             if (position != 0) {
                                 brandId = mBrandList1.get(brandData.get(position));
                                 brandName = brandData.get(position);
-                                ((TextView) mSpinnerBrand.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+                                ((TextView) mSpinnerBrand.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
                             }
 
                             if (brandData.get(position).equalsIgnoreCase("other")) {
@@ -736,6 +760,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
+                                input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
                                 // alertDialog.setIcon(R.drawable.key);
                                 alertDialog.setPositiveButton("Add Brand",
@@ -780,9 +805,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                     mModelIdList.add("other");
                     modelData.addAll(mModelIdList);
-                    ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
+                  //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerModel.setAdapter(adapter);
                     mSpinnerVersion.setAdapter(null);
                     mSpinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -791,7 +815,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                             if (position != 0) {
                                 modelId = mModelList1.get(modelData.get(position));
                                 modelName = modelData.get(position);
-                                ((TextView) mSpinnerModel.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+                                ((TextView) mSpinnerModel.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
                             }
 
                             if (modelData.get(position).equalsIgnoreCase("other")) {
@@ -803,6 +827,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
+                                input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
                                 alertDialog.setPositiveButton("Add Model",
                                         new DialogInterface.OnClickListener() {
@@ -847,9 +872,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                     mVersionIdList.add("other");
                     versionData.addAll(mVersionIdList);
-                    ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, versionData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, versionData);
+                  //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerVersion.setAdapter(adapter);
 
                     mSpinnerVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -858,7 +882,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                             if (position != 0) {
                                 versionId = mVersionList1.get(versionData.get(position));
                                 versionName = versionData.get(position);
-                                ((TextView) mSpinnerVersion.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
+                                ((TextView) mSpinnerVersion.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
                             }
                             if (versionData.get(position).equalsIgnoreCase("other")) {
                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(NextRegistrationContinue.this);
@@ -869,6 +893,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
+                                input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
 
                                 alertDialog.setPositiveButton("Add Version",

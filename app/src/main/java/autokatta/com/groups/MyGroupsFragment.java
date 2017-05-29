@@ -192,8 +192,12 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabCreateGroup:
+                CreateGroupFragment createGroupFragment= new CreateGroupFragment();
+                Bundle b=new Bundle();
+                b.putString("classname","MyGroupFragment");
+                createGroupFragment.setArguments(b);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.group_container, new CreateGroupFragment(), "createGroupFragment")
+                        .replace(R.id.group_container,createGroupFragment, "createGroupFragment")
                         .addToBackStack("createGroupFragment")
                         .commit();
                 break;
