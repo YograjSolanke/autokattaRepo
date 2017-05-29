@@ -2,10 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.CardView
+    <!--<android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
@@ -295,6 +294,166 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>-->
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:contentPadding="5dp"
+        card_view:elevation="14dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/actionlinear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/profile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/app_name" />
+
+                <!-- <TextView
+                     android:id="@+id/rating_count"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_below="@+id/profile"
+                     android:background="@color/medium_sea_green"
+                     android:text="4.0"
+                     android:textColor="@color/white"
+                     android:textStyle="bold" />-->
+
+                <RatingBar
+                    android:id="@+id/productrating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/profile"
+                    android:layout_toEndOf="@+id/rating_count"
+                    android:numStars="5"
+                    android:stepSize="1.0"
+                    android:theme="@style/RatingBar" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/item_padding"
+                android:layout_toEndOf="@+id/actionlinear">
+
+                <TextView
+                    android:id="@+id/edittxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:layout_alignParentStart="true"
+                    android:text="Store Name"
+                    android:layout_toStartOf="@+id/deleteproduct"
+                    android:textSize="@dimen/article_subheading"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/deleteproduct"
+                    android:src="@drawable/ic_delete"
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/app_name"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/storetype"
+                    android:layout_width="@dimen/product_text"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edittxt"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:text="Type :" />
+
+                <TextView
+                    android:id="@+id/editproducttype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edittxt"
+                    android:layout_toEndOf="@+id/storetype"
+                    android:textColor="@color/enteredTextColor"
+                    android:fontFamily="sans-serif"
+                    android:text="Store Type" />
+
+                <TextView
+                    android:id="@+id/storelocation"
+                    android:layout_width="@dimen/product_text"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/storetype"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:gravity="start"
+                    android:text="Price :" />
+
+                <TextView
+                    android:id="@+id/priceedit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/storetype"
+                    android:layout_toEndOf="@+id/storelocation"
+                    android:textColor="@color/enteredTextColor"
+                    android:fontFamily="sans-serif"
+                    android:text="Price" />
+
+                <TextView
+                    android:id="@+id/storewebsite"
+                    android:layout_width="@dimen/product_text"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/storelocation"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:gravity="start"
+                    android:text="Tags :" />
+
+                <TextView
+                    android:id="@+id/edittags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/storelocation"
+                    android:layout_toEndOf="@+id/storewebsite"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/enteredTextColor"
+                    android:gravity="start"
+                    android:text="Tags" />
+
+                <TextView
+                    android:id="@+id/storetiming"
+                    android:layout_width="@dimen/product_text"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/storewebsite"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:gravity="start"
+                    android:text="Details :" />
+
+                <TextView
+                    android:id="@+id/editdetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/storewebsite"
+                    android:fontFamily="sans-serif"
+                    android:layout_toEndOf="@+id/storetiming"
+                    android:gravity="start"
+                    android:textColor="@color/enteredTextColor"
+                    android:text="Details" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

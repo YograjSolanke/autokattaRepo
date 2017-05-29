@@ -1,6 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="call_margin">60dp</dimen>
+    <dimen name="product_text">60dp</dimen>
     <dimen name="like_margin">105dp</dimen>
     <dimen name="text_about">16sp</dimen>
     <dimen name="text_layout">20sp</dimen>
