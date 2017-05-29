@@ -111,7 +111,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .override(110, 100)
                     .into(holder.mProfilePic);
-
         }
 
         if (holder.mAdmin.getText().toString().equals("member")) {

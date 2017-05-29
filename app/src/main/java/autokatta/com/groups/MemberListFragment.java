@@ -100,13 +100,13 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 mSuccesses.clear();
                 Cursor people = null;
                 mSwipeRefreshLayout.setRefreshing(false);
-                mNoData.setVisibility(View.GONE);
                 Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
                 String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                         ContactsContract.CommonDataKinds.Phone.NUMBER};
 
                 GetGroupContactsResponse mGetGroupContactsResponse = (GetGroupContactsResponse) response.body();
                 if (!mGetGroupContactsResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
                     for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
                         success.setUsername(success.getUsername());
                         success.setContact(success.getContact());
@@ -167,7 +167,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     mMemberListAdapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.GONE);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);

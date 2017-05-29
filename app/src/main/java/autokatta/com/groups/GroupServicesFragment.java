@@ -46,6 +46,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     StoreServiceAdapter adapter;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
+    TextView NoData;
 
     public GroupServicesFragment() {
         //empty fragments...
@@ -96,6 +97,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 String storeContact = null;
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getService().isEmpty()) {
+                    NoData.setVisibility(View.GONE);
                     for (StoreInventoryResponse.Success.Service success : storeResponse.getSuccess().getService()) {
                         success.setServiceId(success.getServiceId());
                         success.setServiceName(success.getServiceName());
@@ -121,6 +123,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
+                    NoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     Snackbar.make(getView(), "No Service Found", Snackbar.LENGTH_SHORT).show();
                 }
@@ -207,6 +210,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 mTestConnection = new ConnectionDetector(getActivity());
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
+                NoData = (TextView) mService.findViewById(R.id.no_category);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(getActivity());

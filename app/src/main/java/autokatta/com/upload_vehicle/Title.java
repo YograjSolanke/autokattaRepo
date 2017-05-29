@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -194,10 +193,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        FragmentManager manager = getFragmentManager();
+                                        /*FragmentManager manager = getFragmentManager();
                                         FragmentTransaction mFragmentTransaction = manager.beginTransaction();
                                        // mFragmentTransaction.replace(R.id.vehicle_upload_container, new Upload_Group_Create_Fragment()).commit();
-                                        mFragmentTransaction.replace(R.id.vehicle_upload_container, new CreateGroupFragment()).commit();
+                                        mFragmentTransaction.replace(R.id.vehicle_upload_container, new CreateGroupFragment()).commit();*/
+                                        getActivity().getSupportFragmentManager().beginTransaction()
+                                                .replace(R.id.vehicle_upload_container, new CreateGroupFragment(), "Title")
+                                                .addToBackStack("Title")
+                                                .commit();
                                     }
                                 });
                                 alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {

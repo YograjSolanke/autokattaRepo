@@ -51,7 +51,6 @@ public class ShareWithinAppActivity extends AppCompatActivity {
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.shareInApp_container, new ShareWithinAppTabFragment(), "shareWithinAppTabFragment")
-                .addToBackStack("shareWithinAppTabFragment")
                 .commit();
     }
 
@@ -69,6 +68,7 @@ public class ShareWithinAppActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.pull_in_left, R.anim.push_out_right);
             startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());

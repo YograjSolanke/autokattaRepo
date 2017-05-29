@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +53,6 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
     StoreProductAdapter adapter;
     ConnectionDetector mTestConnection;
     KProgressHUD hud;
-    private ImageButton mNoInternetIcon;
     private TextView mPlaceHolder;
     boolean _hasLoadedOnce = false;
 
@@ -63,7 +61,6 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mProduct = inflater.inflate(R.layout.member_product_fragment, container, false);
-
         return mProduct;
     }
 
@@ -103,7 +100,6 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-
         getProducts(mGroupId);
     }
 
@@ -125,15 +121,13 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
         if (response != null) {
             if (response.isSuccessful()) {
                 hud.dismiss();
-                System.out.println("Product Response=============" + response);
                 mSwipeRefreshLayout.setRefreshing(false);
                 productList.clear();
                 String storeContact = null;
-
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getProduct().isEmpty()) {
+                    mPlaceHolder.setVisibility(View.GONE);
                     for (StoreInventoryResponse.Success.Product success : storeResponse.getSuccess().getProduct()) {
-
                         success.setProductId(success.getProductId());
                         success.setName(success.getName());
                         success.setBrandtags(success.getBrandtags());
@@ -152,7 +146,6 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
                         success.setPrate3(success.getPrate3());
                         storeContact = success.getStorecontact();
                         productList.add(success);
-
                     }
                     adapter = new StoreProductAdapter(getActivity(), productList, myContact, storeContact);
                     mRecyclerView.setAdapter(adapter);
@@ -160,8 +153,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
                 } else {
                     hud.dismiss();
                     mSwipeRefreshLayout.setRefreshing(false);
-                    CustomToast.customToast(getActivity(), "No Products Found");
-
+                    mPlaceHolder.setVisibility(View.GONE);
                 }
             } else {
                 hud.dismiss();
@@ -177,6 +169,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void notifyError(Throwable error) {
+        hud.dismiss();
         if (error instanceof SocketTimeoutException) {
             Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
@@ -234,11 +227,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
                 mPlaceHolder = (TextView) mProduct.findViewById(R.id.no_category);
-                mNoInternetIcon = (ImageButton) mProduct.findViewById(R.id.icon_nointernet);
-                mPlaceHolder.setVisibility(View.GONE);
-
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mProduct.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
                 mRecyclerView.setHasFixedSize(true);

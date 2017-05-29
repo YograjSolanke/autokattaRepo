@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.app.ActivityOptions;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -78,7 +79,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     String reviewstring = "";
     ArrayList<String> imageslist = new ArrayList<String>();
 
-
     final ArrayList<String> spnid = new ArrayList<String>();
     final ArrayList<String> tagname = new ArrayList<String>();
 
@@ -112,6 +112,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         setContentView(R.layout.activity_service_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("View Services");
 
         mApiCall = new ApiCall(ServiceViewActivity.this, this);
         contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
@@ -250,8 +251,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 calculate(pricerate, qualityrate, tmrate);
                             }
                         });
-
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -311,11 +310,9 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     public void check() {
         String text = servicetags.getText().toString();
-        System.out.println("texttttttttttttttttt" + text.substring(0, text.length() - 1));
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
         String[] parts = text.split(",");
-        System.out.println("size of partssssssssssssssssss" + parts.length);
         if (parts.length > 5) {
             servicetags.setError("You can add maximum five tags");
         }
@@ -440,9 +437,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 } else if (response.body() instanceof ServiceResponse) {
                     ServiceResponse serviceresponse = (ServiceResponse) response.body();
                     if (!serviceresponse.getSuccess().isEmpty()) {
-
                         for (ServiceResponse.Success success : serviceresponse.getSuccess()) {
-
                             name = success.getStoreName();
                             web = success.getStoreWebsite();
                             rating = success.getStoreRating();
@@ -468,11 +463,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             brandtags_list = success.getBrandtags();
 
                             getChatEnquiryStatus(contact, receiver_contact, service_id);
-
                             textlike.setText("like(" + slikecnt + ")");
-
                             if (storecontact.contains(contact)) {
-
                                 btnchat.setVisibility(View.GONE);
                                 no_of_enquiries.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.VISIBLE);
@@ -483,14 +475,11 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 linearlike.setEnabled(false);
                                 linearreview.setEnabled(false);
 
-
-                            } else //if(action.equalsIgnoreCase("other"))
-                            {
+                            } else {
                                 callme.setVisibility(View.VISIBLE);
                                 relativerate.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.GONE);
                                 deleteservice.setVisibility(View.GONE);
-
 
                                 if (slikestatus.equals("yes")) {
                                     linearlike.setVisibility(View.GONE);
@@ -499,7 +488,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                     linearlike.setVisibility(View.VISIBLE);
                                     linearunlike.setVisibility(View.GONE);
                                 }
-
                             }
 
                             storename.setText(name);
@@ -510,7 +498,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             servicetags.setText(stags);
                             servicetype.setText(stype);
                             multiautobrand.setText(brandtags_list);
-
 
                             storename.setEnabled(false);
                             website.setEnabled(false);
@@ -529,22 +516,14 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 String dp_path = "http://autokatta.com/mobile/Service_pics/";// + dp;
 
                                 if (simages.contains(",")) {
-
                                     String[] items = simages.split(",");
+                                    imageslist.add(items[0].substring(items[0].length()));
                                     for (String item : items) {
                                         Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
                                     }
-
                                 } else {
-
-
                                     Hash_file_maps.put("Image-" + simages, dp_path + simages.replaceAll(" ", ""));
                                 }
-
-
-
-
-                /* Banner...*/
 
                                 for (String name : Hash_file_maps.keySet()) {
                                     TextSliderView textSliderView = new TextSliderView(ServiceViewActivity.this);
@@ -588,26 +567,17 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             if (!srating.equals("null")) {
                                 servicerating.setRating(Float.parseFloat(srating));
                             }
-
                             //like code
                             lcnt = Integer.parseInt(slikecnt);
-
-
                         }
-
-
                     }
-
                 } else if (response.body() instanceof EnquiryCountResponse) {
                     EnquiryCountResponse enquiryCountResponse = (EnquiryCountResponse) response.body();
                     if (enquiryCountResponse.getSuccess() != null) {
-
                         String count = enquiryCountResponse.getSuccess().getEnquiryCount();
                         no_of_enquiries.setText("No.Of Enquiries:" + count);
-
                     }
                 }
-
             } else {
                 CustomToast.customToast(ServiceViewActivity.this, getString(R.string._404));
             }
@@ -624,8 +594,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     @Override
     public void notifyString(String str) {
         if (str != null) {
-
-
             if (str.equals("Service_updated_successfully")) {
                 CustomToast.customToast(ServiceViewActivity.this, "Service Updated");
                 updatetagids();
@@ -644,16 +612,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 startActivity(intent);
 
             } else if (str.equals("success")) {
-
                 CustomToast.customToast(getApplicationContext(), "Service Deleted");
                 Intent intent = new Intent(this, StoreViewActivity.class);
                 intent.putExtra("store_id", store_id);
                 startActivity(intent);
 
             } else if (str.equals("success_message_saved")) {
-
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
-
             } else if (str.equals("yes")) {
                 btnchat.setText("Chat");
 
@@ -661,8 +626,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 btnchat.setText("Send Enquiry");
 
             }
-
-
         }
     }
 
@@ -684,14 +647,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
-
             case R.id.editservice:
-
                 getTags();
                 getBrandTags();
-
                 servicename.setEnabled(true);
                 serviceprice.setEnabled(true);
                 servicedetails.setEnabled(true);
@@ -721,7 +680,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 ArrayList<String> othertag = new ArrayList<String>();
                 if (text.endsWith(","))
                     text = text.substring(0, text.length() - 1);
-                System.out.println("txttttt=" + text);
                 text = text.trim();
 
                 String[] parts = text.split(",");
@@ -732,7 +690,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         images.add(tagpart);
                     if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {
                         othertag.add(tagpart);
-                        System.out.println("tag going to add=" + tagpart);
                         try {
                             addOtherTags();
                         } catch (Exception e) {
@@ -754,16 +711,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
                 if (!servicetags.getText().toString().equalsIgnoreCase("") && idlist.length() > 0) {
                     idlist = idlist.substring(1);
-                    System.out.println("substring idddddddddd=" + idlist);
                 }
                 if (tagflag) {
                     tagid = tagid.substring(1);
-                    System.out.println("response tag iddddddddddddddd=" + tagid);
                     if (!idlist.equalsIgnoreCase(""))
                         idlist = idlist + "," + tagid;
                     else
                         idlist = tagid;
-                    System.out.println("final idlist iddddddddddddddd=" + idlist);
 
                 }
                 ArrayList<String> tempbrands = new ArrayList<String>();
@@ -884,7 +838,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 break;
 
             case R.id.deleteservice:
-
                 if (!mConnectionDetector.isConnectedToInternet()) {
                     Toast.makeText(ServiceViewActivity.this, "Please try later", Toast.LENGTH_SHORT).show();
                 } else {
@@ -924,9 +877,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 break;
 
             case R.id.linearshare1:
-
-                allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + imageslist.get(0);
-
+                allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + imageslist;
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
@@ -934,9 +885,9 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "service").apply();
 
-                Intent i = new Intent(ServiceViewActivity.this, ShareWithinAppActivity.class);
-                startActivity(i);
-                finish();
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
+                        R.anim.ok_right_to_left);
+                startActivity(new Intent(getApplicationContext(), ShareWithinAppActivity.class), options.toBundle());
                 break;
 
             case R.id.linearshare:
@@ -947,7 +898,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         simages.equalsIgnoreCase("null")) {
                     simagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
                 } else {
-                    simagename = "http://autokatta.com/mobile/Service_pics/" + imageslist.get(0);
+                    simagename = "http://autokatta.com/mobile/Service_pics/" + imageslist;
                 }
                 Log.e("TAG", "img : " + simagename);
 
@@ -978,29 +929,21 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 break;
 
             case R.id.btnfeedback:
-
                 if (srate.equals("0")) {
                     sendproductrating();
-                    System.out.println("hiiiii.....send rating called");
                 }
                 if (!srate.equals("0")) {
                     sendupdatedproductrating();
-                    System.out.println("hiiiii.....send updated service rating called");
                 }
                 break;
-
-
         }
-
-
     }
 
 
-    private void updateService(String service_id, String upname, String upprice, String updetails, String uptags, String uptype, String upimgs, String upcat, String finalbrandtags) {
-
+    private void updateService(String service_id, String upname, String upprice, String updetails, String uptags,
+                               String uptype, String upimgs, String upcat, String finalbrandtags) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);
-
     }
 
     @Override

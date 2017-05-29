@@ -65,26 +65,18 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
 
     @Override
     public void onBindViewHolder(final StoreProductAdapter.ProductHolder holder, int position) {
-
         ArrayList<String> images = new ArrayList<String>();
-
         final StoreInventoryResponse.Success.Product product = mMainList.get(position);
-
         holder.pname.setText(product.getName());
-
         holder.pprice.setText(product.getPrice());
-
         holder.pdetails.setText(product.getProductDetails());
-
         holder.ptags.setText(product.getProductTags());
-
         holder.ptype.setText(product.getProductType());
         holder.productrating.setEnabled(false);
 
         if (myContact.equals(storeContact)) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
         }
-
 
         holder.pname.setEnabled(false);
         holder.pprice.setEnabled(false);
@@ -94,43 +86,34 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
 
 
         try {
-
             if (product.getProductImage().equals("") || product.getProductImage().equals("null") ||
                     product.getProductImage().equals("")) {
-
                 holder.image.setBackgroundResource(R.drawable.store);
             } else {
                 String[] parts = product.getProductImage().split(",");
-
                 for (int l = 0; l < parts.length; l++) {
                     images.add(parts[l]);
                     System.out.println(parts[l]);
                 }
                 System.out.println("http://autokatta.com/mobile/Product_pics/" + images.get(0));
-
                 pimagename = "http://autokatta.com/mobile/Product_pics/" + images.get(0);
                 pimagename = pimagename.replaceAll(" ", "%20");
                 try {
-
                     Glide.with(activity)
                             .load(pimagename)
                             .bitmapTransform(new CropCircleTransformation(activity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.logo)
                             .into(holder.image);
-
-
                 } catch (Exception e) {
                     System.out.println("Error in uploading images");
                 }
             }
 
         } catch (Exception e) {
-
             e.printStackTrace();
         }
         if (!product.getProductrating().equals("null")) {
-
             holder.productrating.setRating(Float.parseFloat(product.getProductrating()));
         } else {
 
@@ -140,7 +123,6 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String proId = product.getProductId();
                 Intent intent = new Intent(activity, ProductViewActivity.class);
                 intent.putExtra("product_id", proId);

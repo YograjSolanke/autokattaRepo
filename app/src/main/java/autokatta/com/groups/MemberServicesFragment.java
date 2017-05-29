@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,19 +41,16 @@ import retrofit2.Response;
 public class MemberServicesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
     View mService;
-    String myContact;
     String mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<Service> serviceList = new ArrayList<>();
     LinearLayoutManager mLayoutManager;
     StoreServiceAdapter adapter;
-    TextView titleText;
+    TextView mNoData;
     String mBundleContact;
     ConnectionDetector mTestConnection;
     KProgressHUD hud;
-    private ImageButton mNoInternetIcon;
-    private TextView mPlaceHolder;
     boolean _hasLoadedOnce = false;
 
 
@@ -62,19 +58,9 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mService = inflater.inflate(R.layout.member_product_fragment, container, false);
-        //  myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
-        //titleText = (TextView) mService.findViewById(R.id.titleText);
-        //titleText.setText("Services");
-
         return mService;
     }
 
-    /* private void getServices(String GroupId) {
-         ApiCall apiCall = new ApiCall(getActivity(), this);
-         //apiCall.getGroupService("470",myContact);
-         apiCall.getGroupService(GroupId, mBundleContact);
-     }*/
     private void getServices(String GroupId) {
         if (mTestConnection.isConnectedToInternet()) {
             hud = KProgressHUD.create(getActivity())
@@ -105,7 +91,6 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-
         getServices(mGroupId);
     }
 
@@ -128,14 +113,13 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         if (response != null) {
             if (response.isSuccessful()) {
                 hud.dismiss();
-                System.out.println("Service Response=============" + response);
                 mSwipeRefreshLayout.setRefreshing(false);
                 serviceList.clear();
                 String storeContact = null;
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getService().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
                     for (StoreInventoryResponse.Success.Service success : storeResponse.getSuccess().getService()) {
-
                         success.setServiceId(success.getServiceId());
                         success.setServiceName(success.getServiceName());
                         success.setBrandtags(success.getBrandtags());
@@ -155,7 +139,6 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                         success.setSrate3(success.getStorecontact());
                         storeContact = success.getStorecontact();
                         serviceList.add(success);
-
                     }
                     adapter = new StoreServiceAdapter(getActivity(), serviceList, mBundleContact, storeContact);
                     mRecyclerView.setAdapter(adapter);
@@ -163,8 +146,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                 } else {
                     hud.dismiss();
                     mSwipeRefreshLayout.setRefreshing(false);
-                    CustomToast.customToast(getActivity(), "No Service Found");
-
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 hud.dismiss();
@@ -237,9 +219,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
             @Override
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
-                mPlaceHolder = (TextView) mService.findViewById(R.id.no_category);
-                mNoInternetIcon = (ImageButton) mService.findViewById(R.id.icon_nointernet);
-                mPlaceHolder.setVisibility(View.GONE);
+                mNoData = (TextView) mService.findViewById(R.id.no_category);
 
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
