@@ -16,6 +16,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -98,6 +99,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.storeworkingdays.setText("working days:" + object.getWorkingDays());
         holder.btnlike.setText("Likes(" + object.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + object.getFollowcount() + ")");
+        holder.ratingBar.setRating(Float.parseFloat(object.getRating()));
 
         holder.call_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -369,6 +371,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         LinearLayout linearlike, linearunlike, linearfollow, linearunfollow, linearshare, linearshare1;
 
         RelativeLayout detailrel;
+        RatingBar ratingBar;
 
         public StoreHolder(View itemView) {
             super(itemView);
@@ -378,6 +381,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             storewebsite = (TextView) itemView.findViewById(R.id.storewebsite);
             storetiming = (TextView) itemView.findViewById(R.id.storetiming);
             storeworkingdays = (TextView) itemView.findViewById(R.id.storeworkingdays);
+            ratingBar = (RatingBar) itemView.findViewById(R.id.store_rating);
 
             store_image = (ImageView) itemView.findViewById(R.id.storeprofileimage);
 

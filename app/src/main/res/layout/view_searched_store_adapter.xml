@@ -286,7 +286,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:background="@drawable/autoshare"
+                        android:background="@mipmap/ic_share"
                         android:id="@+id/shareimg"
                         android:layout_width="20dp"
                         android:layout_height="20dp" />

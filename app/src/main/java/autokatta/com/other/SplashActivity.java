@@ -42,6 +42,7 @@ public class SplashActivity extends AppCompatActivity {
                         ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                         ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
                         ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED ||
+                        ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
                         ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                         ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -58,6 +59,7 @@ public class SplashActivity extends AppCompatActivity {
                                             Manifest.permission.SEND_SMS,
                                             Manifest.permission.CAMERA,
                                             Manifest.permission.READ_CONTACTS,
+                                            Manifest.permission.CALL_PHONE,
                                             Manifest.permission.WRITE_CONTACTS},
                                     MY_PERMISSIONS_REQUEST_READ_CONTACTS);
                             dialog.dismiss();

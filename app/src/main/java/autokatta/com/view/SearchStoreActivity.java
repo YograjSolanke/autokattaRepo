@@ -1,8 +1,6 @@
 package autokatta.com.view;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -18,32 +16,30 @@ public class SearchStoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_store);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    setSupportActionBar(toolbar);
-
-                    if (getSupportActionBar() != null) {
-                        getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    }
-
-
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.searchStoreFrame, new StoreSearchFragment(), "storeSearchFragment")
+                            .commit();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.searchStoreFrame, new StoreSearchFragment(), "storeSearchFragment")
+        fragmentTransaction.replace)
                 .addToBackStack("storeSearchFragment")
-                .commit();
+                .commit();*/
 
 
     }
@@ -61,9 +57,20 @@ public class SearchStoreActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        int fragment = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragment == 1) {
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        } else {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                getSupportFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
+        }
+        /*super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
     }
 
 }

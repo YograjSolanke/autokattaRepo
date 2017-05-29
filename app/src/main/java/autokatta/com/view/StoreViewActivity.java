@@ -317,21 +317,44 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             @Override
             public void onClick(View view) {
                 if (preoverall.equals("0")) {
-                    mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
-                            String.valueOf(csrate),
-                            String.valueOf(qwrate),
-                            String.valueOf(frrate),
-                            String.valueOf(prrate),
-                            String.valueOf(tmrate),
-                            "store");
+
+                    if (count == 0.0f) {
+                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                                String.valueOf(precsrate),
+                                String.valueOf(preqwrate),
+                                String.valueOf(prefrrate),
+                                String.valueOf(preprrate),
+                                String.valueOf(pretmrate),
+                                "store");
+
+                    } else {
+                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
+                                String.valueOf(csrate),
+                                String.valueOf(qwrate),
+                                String.valueOf(frrate),
+                                String.valueOf(prrate),
+                                String.valueOf(tmrate),
+                                "store");
+                    }
                 } else {
-                    mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
-                            String.valueOf(csrate),
-                            String.valueOf(qwrate),
-                            String.valueOf(frrate),
-                            String.valueOf(prrate),
-                            String.valueOf(tmrate),
-                            "store");
+                    if (count == 0.0f) {
+                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                                String.valueOf(precsrate),
+                                String.valueOf(preqwrate),
+                                String.valueOf(prefrrate),
+                                String.valueOf(preprrate),
+                                String.valueOf(pretmrate),
+                                "store");
+
+                    } else {
+                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
+                                String.valueOf(csrate),
+                                String.valueOf(qwrate),
+                                String.valueOf(frrate),
+                                String.valueOf(prrate),
+                                String.valueOf(tmrate),
+                                "store");
+                    }
                 }
                 mApiCall.recommendStore(myContact, store_id);
                 alert.dismiss();
@@ -343,21 +366,44 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             @Override
             public void onClick(View v) {
                 if (preoverall.equals("0")) {
-                    mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
-                            String.valueOf(csrate),
-                            String.valueOf(qwrate),
-                            String.valueOf(frrate),
-                            String.valueOf(prrate),
-                            String.valueOf(tmrate),
-                            "store");
+
+                    if (count == 0.0f) {
+                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                                String.valueOf(precsrate),
+                                String.valueOf(preqwrate),
+                                String.valueOf(prefrrate),
+                                String.valueOf(preprrate),
+                                String.valueOf(pretmrate),
+                                "store");
+
+                    } else {
+                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
+                                String.valueOf(csrate),
+                                String.valueOf(qwrate),
+                                String.valueOf(frrate),
+                                String.valueOf(prrate),
+                                String.valueOf(tmrate),
+                                "store");
+                    }
                 } else {
-                    mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
-                            String.valueOf(csrate),
-                            String.valueOf(qwrate),
-                            String.valueOf(frrate),
-                            String.valueOf(prrate),
-                            String.valueOf(tmrate),
-                            "store");
+                    if (count == 0.0f) {
+                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                                String.valueOf(precsrate),
+                                String.valueOf(preqwrate),
+                                String.valueOf(prefrrate),
+                                String.valueOf(preprrate),
+                                String.valueOf(pretmrate),
+                                "store");
+
+                    } else {
+                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
+                                String.valueOf(csrate),
+                                String.valueOf(qwrate),
+                                String.valueOf(frrate),
+                                String.valueOf(prrate),
+                                String.valueOf(tmrate),
+                                "store");
+                    }
                 }
                 alert.dismiss();
 
@@ -768,8 +814,23 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
                 Snackbar.make(mLayout, "Rating Submitted", Snackbar.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("store_id", store_id);
+                bundle.putString("StoreContact", storeOtherContact);
+                finish();
+                Intent intent = new Intent(StoreViewActivity.this, StoreViewActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
             } else if (str.equals("success_rating_updated")) {
                 Snackbar.make(mLayout, "SRating updated", Snackbar.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("store_id", store_id);
+                bundle.putString("StoreContact", storeOtherContact);
+                finish();
+                Intent intent = new Intent(StoreViewActivity.this, StoreViewActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             } else if (str.equals("success_recommended")) {
                 Snackbar.make(mLayout, "Store Recommended", Snackbar.LENGTH_SHORT).show();
             }
