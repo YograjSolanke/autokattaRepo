@@ -41,8 +41,10 @@
                         android:layout_below="@+id/storeprofileimage"
                         android:background="@color/medium_sea_green"
                         android:text="4.0"
+                        android:maxLength="4"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
 
                     <RatingBar
                         android:id="@+id/storerating"
