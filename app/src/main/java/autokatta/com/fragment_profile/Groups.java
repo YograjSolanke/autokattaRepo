@@ -1,8 +1,11 @@
 package autokatta.com.fragment_profile;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
@@ -10,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +26,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.GroupsExpandableListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Response;
@@ -33,7 +39,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Groups extends Fragment implements RequestNotifier, View.OnClickListener {
     View mGroups;
-
     ExpandableListView groupExpandableListView;
     SharedPreferences mSharedPreferences = null;
     List<ModelGroups> list = new ArrayList<>();
@@ -42,8 +47,9 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     List<String> mHeaderList;
     GroupsExpandableListAdapter adapter;
     //FloatingActionButton mCreateGroup;
-    String contact;
-    String GroupType;
+    String contact, GroupType;
+    boolean _hasLoadedOnce = false;
+    ConnectionDetector mTestConnection;
 
     public Groups() {
         //empty constructor...
@@ -53,40 +59,33 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroups = inflater.inflate(R.layout.fragment_profile_group, container, false);
-
-        groupExpandableListView = (ExpandableListView) mGroups.findViewById(R.id.groupexpanablelistview);
-       /* mCreateGroup = (FloatingActionButton) mGroups.findViewById(R.id.create_group);
-
-        mCreateGroup.setOnClickListener(this);*/
-
-        ViewCompat.setNestedScrollingEnabled(groupExpandableListView, true);
-        mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            contact = bundle.getString("otherContact");
-            Log.i("Other", "->" + contact);
-            GroupType="OtherGroup";
-            getGroups();
-        } else {
-            contact = mSharedPreferences.getString("loginContact", "");
-            Log.i("User", "->" + contact);
-            //mCreateGroup.setVisibility(View.VISIBLE);
-            GroupType="MyGroup";
-            getGroups();
-        }
-
         return mGroups;
     }
 
     private void getGroups() {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.profileGroup(contact);
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall apiCall = new ApiCall(getActivity(), this);
+            apiCall.profileGroup(contact);
+        } else {
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        }
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
             if (response.isSuccessful()) {
                 mHeaderList = new ArrayList<>();
@@ -112,7 +111,6 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
                     modelGroups.setGroupCount(joinedGroup.getGroupcount());
                     modelGroups.setVehicleCount(joinedGroup.getVehiclecount());
                     list1.add(modelGroups);
-                    Log.i("list1", "->" + list1.get(0).getTitle());
                 }
                 mGroupList = new HashMap<>();
                 mGroupList.put(mHeaderList.get(0), list);
@@ -123,21 +121,53 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
                 adapter.notifyDataSetChanged();
 
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Groups Fragment");
         }
@@ -158,5 +188,43 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
                 getActivity().finish();
                 break;*/
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            // If we are becoming invisible, then...
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                getGroups();
+                _hasLoadedOnce = true;
+            }
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mTestConnection = new ConnectionDetector(getActivity());
+                groupExpandableListView = (ExpandableListView) mGroups.findViewById(R.id.groupexpanablelistview);
+                ViewCompat.setNestedScrollingEnabled(groupExpandableListView, true);
+                mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
+
+                Bundle bundle = getArguments();
+                if (bundle != null) {
+                    contact = bundle.getString("otherContact");
+                    GroupType = "OtherGroup";
+                    getGroups();
+                } else {
+                    contact = mSharedPreferences.getString("loginContact", "");
+                    GroupType = "MyGroup";
+                    getGroups();
+                }
+            }
+        });
     }
 }

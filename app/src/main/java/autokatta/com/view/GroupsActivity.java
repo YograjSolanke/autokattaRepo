@@ -49,7 +49,7 @@ public class GroupsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finishActivity(1);
+        finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         /*int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {

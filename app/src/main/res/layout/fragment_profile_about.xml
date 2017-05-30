@@ -22,9 +22,9 @@
             <ImageView
                 android:id="@+id/edit"
                 android:layout_width="25dp"
-                android:layout_height="24dp"
+                android:layout_height="25dp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_mode_edit_black_24dp" />
+                android:src="@android:drawable/ic_menu_edit" />
 
             <ImageView
                 android:id="@+id/done"

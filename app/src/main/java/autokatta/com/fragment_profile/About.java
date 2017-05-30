@@ -1,7 +1,10 @@
 package autokatta.com.fragment_profile;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,7 +24,9 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +37,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
@@ -81,286 +85,12 @@ public class About extends Fragment implements RequestNotifier {
     String spinnervalue = "";
     ApiCall mApiCall;
     String[] parts;
+    boolean _hasLoadedOnce = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAbout = inflater.inflate(R.layout.fragment_profile_about, container, false);
-        Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
-        mContact = (TextView) mAbout.findViewById(R.id.contact_no);
-        mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
-        mEmail = (EditText) mAbout.findViewById(R.id.email);
-        mWebsite = (EditText) mAbout.findViewById(R.id.website);
-        mCity = (AutoCompleteTextView) mAbout.findViewById(R.id.address);
-        mCompany = (AutoCompleteTextView) mAbout.findViewById(R.id.company_name);
-        mDesignation = (AutoCompleteTextView) mAbout.findViewById(R.id.designation);
-        mSkills = (MultiAutoCompleteTextView) mAbout.findViewById(R.id.skills);
-        mDone = (ImageView) mAbout.findViewById(R.id.done);
-        mEdit = (ImageView) mAbout.findViewById(R.id.edit);
-        usertype = (RadioGroup) mAbout.findViewById(R.id.usertype);
-        student = (RadioButton) mAbout.findViewById(R.id.student);
-        employee = (RadioButton) mAbout.findViewById(R.id.employee);
-        selfemployee = (RadioButton) mAbout.findViewById(R.id.selfemployee);
-        spinner = (Spinner) mAbout.findViewById(R.id.spinner);
-        spinner.setVisibility(View.GONE);
-        /*Get Designation,Skills,Company From web service*/
-        mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.profileAbout(Sharedcontact, Sharedcontact);
-        mApiCall.getSkills();
-        mApiCall.getDesignation();
-        mApiCall.getCompany();
-        mApiCall.Categories("");
-
-        mProfession.setEnabled(false);
-        mContact.setEnabled(false);
-        mWebsite.setEnabled(false);
-        mCity.setEnabled(false);
-        mEmail.setEnabled(false);
-        mCompany.setEnabled(false);
-        mDesignation.setEnabled(false);
-        mSkills.setEnabled(false);
-
-        mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        mSkills.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
-                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (i == KeyEvent.KEYCODE_ENTER)) {
-                    mSkills.setText(mSkills.getText().toString() + ",");
-                    mSkills.setSelection(mSkills.getText().toString().length());
-                    checkSkills();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-      /*  if (mProfession.getText().toString().equals("Student"))
-            student.setChecked(true);
-        if (mProfession.getText().toString().equals("Employee"))
-            employee.setChecked(true);
-        if (mProfession.getText().toString().equals("Self Employee"))
-            selfemployee.setChecked(true);
-*/
-        usertype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.student) {
-                    mProfession.setText("Student");
-                    spinner.setVisibility(View.GONE);
-                } else if (checkedId == R.id.employee) {
-                    mProfession.setText("Employee");
-                    spinner.setVisibility(View.VISIBLE);
-                    spinner.setSelection(0);
-                } else if (checkedId == R.id.selfemployee) {
-                    mProfession.setText("Self Employee");
-                    spinner.setVisibility(View.VISIBLE);
-                    spinner.setSelection(0);
-                }
-            }
-        });
-        mEdit.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                mDone.setVisibility(View.VISIBLE);
-                mEdit.setVisibility(View.GONE);
-                if (profession.equalsIgnoreCase("student")) {
-                   student.setChecked(true);
-               }
-               else if (profession.equalsIgnoreCase("employee")){
-                   employee.setChecked(true);
-                } else if (profession.equalsIgnoreCase("self employee")) {
-                   selfemployee.setChecked(true);
-               }
-                if (student.isChecked()) {
-                    spinner.setVisibility(View.GONE);
-                } else if (employee.isChecked()) {
-                    spinner.setVisibility(View.VISIBLE);
-                } else if (selfemployee.isChecked()) {
-                    spinner.setVisibility(View.VISIBLE);
-                }
-                mCity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
-                mProfession.setEnabled(true);
-                mCity.setEnabled(true);
-                mContact.setEnabled(true);
-                mEmail.setEnabled(true);
-                mCompany.setEnabled(true);
-                mDesignation.setEnabled(true);
-                mSkills.setEnabled(true);
-                mWebsite.setEnabled(true);
-                usertype.setVisibility(View.VISIBLE);
-                mDone.setEnabled(true);
-                mContact.setOnTouchListener(new OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        CustomToast.customToast(getActivity(), "You Cant Edit Contact");
-                        return false;
-                    }
-                });
-            }
-        });
-/*        mProfession.setEnabled(false);
-        mContact.setEnabled(false);
-        mWebsite.setEnabled(false);
-        mCity.setEnabled(false);
-        mEmail.setEnabled(false);
-        mCompany.setEnabled(false);
-        mDesignation.setEnabled(false);
-        mSkills.setEnabled(false);
-
-        mDone.setEnabled(false);*/
-        mDone.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                boolean webflag = false;
-                usertype.setVisibility(View.GONE);
-                spinner.setVisibility(View.GONE);
-                mUpdatedProfession = mProfession.getText().toString();
-                mUpdatedCity = mCity.getText().toString();
-                mUpdatedEmail = mEmail.getText().toString();
-                mUpdatedWebsite = mWebsite.getText().toString();
-                spinnervalue = spinner.getSelectedItem().toString();
-                mUpdatedCompany = mCompany.getText().toString();
-                mUpdatedDesignation = mDesignation.getText().toString();
-                mUpdatedSkills = mSkills.getText().toString().trim();
-
-                if (mUpdatedSkills.endsWith(",")) {
-                    mUpdatedSkills1 = mUpdatedSkills.substring(0, mUpdatedSkills.length() - 1);
-                }else
-                {
-                    mUpdatedSkills1=mUpdatedSkills;
-                }
-                webflag = mUpdatedWebsite.equalsIgnoreCase("");
-                Boolean flag = false;
-                try {
-                    for (int i = 0; i < resultList.size(); i++) {
-                        if (mUpdatedCity.equalsIgnoreCase(resultList.get(i).toString())) {
-                            flag = true;
-                            break;
-                        } else {
-                            flag = false;
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (!isValidEmail(mUpdatedEmail))
-                    mEmail.setError("Invalid Email");
-                else if (!webflag && !isValidUrl(mUpdatedWebsite)) {
-                    mWebsite.setError("Invalid Website");
-                } else if (mCity.getText().toString().isEmpty()) {
-                    mCity.setError("Please Select Address From Dropdown Only");
-                } else {
-
-                    /************************Company Name code *******************************************/
-                    mCompany.clearFocus();
-                    newcompanyname = mCompany.getText().toString();
-                    try {
-                        if (!mCompanyList.contains(newcompanyname)) {
-                            mApiCall.addNewCompany(newcompanyname);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    strCompany = mCompany.getText().toString();
-                    //***************************************************************
-                    String splChrs = "-/@#$%^&_+=()";
-                    boolean found = strCompany.matches("["
-                            + splChrs + "]+");
-
-                 /*Designation Name code */
-                    mDesignation.clearFocus();
-                    newdesignation = mDesignation.getText().toString();
-                    try {
-                        if (!mDesignationList.contains(newdesignation)) {
-                            mApiCall.addNewDesignation(newdesignation);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    strDesignation = mDesignation.getText().toString();
-                    //***************************************************************
-                    boolean found1 = strDesignation.matches("["
-                            + splChrs + "]+");
-                    /*Skills*/
-                    mSkills.clearFocus();
-                    newskills = mSkills.getText().toString().trim();
-                    if (newskills.endsWith(","))
-                        newskills = newskills.substring(0, newskills.length() - 1);
-                    parts = newskills.split(",");
-                    for (int i = 0; i < parts.length; i++) {
-                        try {
-                            if (!mSkillList.contains(parts[i])) {
-                                mApiCall.addNewSkills(parts[i]);
-                                //addNewCompanyName(updatecompany);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    strskills = mSkills.getText().toString().trim();
-
-                    //***************************************************************
-                    splChrs = "-/@#$%^&_+=()";
-                    boolean found2 = strCompany.matches("["
-                            + splChrs + "]+");
-
-                    //setting validation for reg fields
-                    if (strCompany.equals("") || strCompany.equals("null") || strCompany.equals(null)) {
-                        mCompany.setError("Enter Company Name");
-                        mCompany.requestFocus();
-                    } else if (found) {
-                        mCompany.setError("Please enter valid company");
-                        mCompany.requestFocus();
-                    } else if (found1) {
-                        mDesignation.setError("Please enter valid designation");
-                        mDesignation.requestFocus();
-                    } else if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
-                        mDesignation.setError("Enter Designation Name");
-                        mDesignation.requestFocus();
-                    } else if (strskills.equals("") || strskills.equals("null") || strskills.equals(null)) {
-                        mSkills.setError("Enter Skills Name");
-                        mSkills.requestFocus();
-                    } else {
-                      /*  Log.i("mUpdatedEmail","->"+mUpdatedEmail);
-                        Log.i("mUpdatedWebsite","->"+mUpdatedWebsite);
-                        Log.i("mUpdatedProfession","->"+mUpdatedProfession);
-                        Log.i("mUpdatedCompany","->"+mUpdatedCompany);
-                        Log.i("mUpdatedDesignation","->"+mUpdatedDesignation);
-                        Log.i("mUpdatedSkills1","->"+mUpdatedSkills1);
-                        Log.i("mUpdatedCity","->"+mUpdatedCity);
-                        Log.i("spinnervalue","->"+spinnervalue);
-                        Log.i("RegId","->"+RegId);*/
-                        mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1, mUpdatedCity, spinnervalue, RegId);
-                        // submitData();
-                        mDone.setVisibility(View.GONE);
-                        mEdit.setVisibility(View.VISIBLE);
-
-                        mProfession.setEnabled(false);
-                        mContact.setEnabled(false);
-                        mWebsite.setEnabled(false);
-                        mCity.setEnabled(false);
-                        mCity.setFocusable(false);
-                        mEmail.setEnabled(false);
-                        mCompany.setEnabled(false);
-                        mCompany.setFocusable(false);
-                        mDesignation.setEnabled(false);
-                        mDesignation.setFocusable(false);
-                        mSkills.setEnabled(false);
-                        mSkills.setFocusable(false);
-
-                    }
-
-                }
-            }
-        });
         return mAbout;
     }
 
@@ -500,21 +230,53 @@ public class About extends Fragment implements RequestNotifier {
                     }
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "About Activity");
         }
@@ -524,11 +286,284 @@ public class About extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("Success_update_profile")) {
-                CustomToast.customToast(getActivity(), "Profile Updated Successfully");
+                Snackbar.make(getView(), "Profile Updated", Snackbar.LENGTH_LONG).show();
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                 mCity.setEnabled(false);
                 mCity.setFocusable(false);
             }
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            // If we are becoming invisible, then...
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+                mApiCall.getSkills();
+                mApiCall.getDesignation();
+                mApiCall.getCompany();
+                mApiCall.Categories("");
+                _hasLoadedOnce = true;
+            }
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mApiCall = new ApiCall(getActivity(), this);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference),
+                        MODE_PRIVATE).getString("loginContact", "");
+                mContact = (TextView) mAbout.findViewById(R.id.contact_no);
+                mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
+                mEmail = (EditText) mAbout.findViewById(R.id.email);
+                mWebsite = (EditText) mAbout.findViewById(R.id.website);
+                mCity = (AutoCompleteTextView) mAbout.findViewById(R.id.address);
+                mCompany = (AutoCompleteTextView) mAbout.findViewById(R.id.company_name);
+                mDesignation = (AutoCompleteTextView) mAbout.findViewById(R.id.designation);
+                mSkills = (MultiAutoCompleteTextView) mAbout.findViewById(R.id.skills);
+                mDone = (ImageView) mAbout.findViewById(R.id.done);
+                mEdit = (ImageView) mAbout.findViewById(R.id.edit);
+                usertype = (RadioGroup) mAbout.findViewById(R.id.usertype);
+                student = (RadioButton) mAbout.findViewById(R.id.student);
+                employee = (RadioButton) mAbout.findViewById(R.id.employee);
+                selfemployee = (RadioButton) mAbout.findViewById(R.id.selfemployee);
+                spinner = (Spinner) mAbout.findViewById(R.id.spinner);
+                spinner.setVisibility(View.GONE);
+
+                mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+                mApiCall.getSkills();
+                mApiCall.getDesignation();
+                mApiCall.getCompany();
+                mApiCall.Categories("");
+        /*Get Designation,Skills,Company From web service*/
+
+                mProfession.setEnabled(false);
+                mContact.setEnabled(false);
+                mWebsite.setEnabled(false);
+                mCity.setEnabled(false);
+                mEmail.setEnabled(false);
+                mCompany.setEnabled(false);
+                mDesignation.setEnabled(false);
+                mSkills.setEnabled(false);
+
+                mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                mSkills.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                        if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                                (i == KeyEvent.KEYCODE_ENTER)) {
+                            mSkills.setText(mSkills.getText().toString() + ",");
+                            mSkills.setSelection(mSkills.getText().toString().length());
+                            checkSkills();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+                usertype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        if (checkedId == R.id.student) {
+                            mProfession.setText("Student");
+                            spinner.setVisibility(View.GONE);
+                        } else if (checkedId == R.id.employee) {
+                            mProfession.setText("Employee");
+                            spinner.setVisibility(View.VISIBLE);
+                            spinner.setSelection(0);
+                        } else if (checkedId == R.id.selfemployee) {
+                            mProfession.setText("Self Employee");
+                            spinner.setVisibility(View.VISIBLE);
+                            spinner.setSelection(0);
+                        }
+                    }
+                });
+
+                mEdit.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        mDone.setVisibility(View.VISIBLE);
+                        mEdit.setVisibility(View.GONE);
+                        if (profession.equalsIgnoreCase("student")) {
+                            student.setChecked(true);
+                        } else if (profession.equalsIgnoreCase("employee")) {
+                            employee.setChecked(true);
+                        } else if (profession.equalsIgnoreCase("self employee")) {
+                            selfemployee.setChecked(true);
+                        }
+                        if (student.isChecked()) {
+                            spinner.setVisibility(View.GONE);
+                        } else if (employee.isChecked()) {
+                            spinner.setVisibility(View.VISIBLE);
+                        } else if (selfemployee.isChecked()) {
+                            spinner.setVisibility(View.VISIBLE);
+                        }
+                        mCity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
+                        mProfession.setEnabled(true);
+                        mCity.setEnabled(true);
+                        mContact.setEnabled(true);
+                        mEmail.setEnabled(true);
+                        mCompany.setEnabled(true);
+                        mDesignation.setEnabled(true);
+                        mSkills.setEnabled(true);
+                        mWebsite.setEnabled(true);
+                        usertype.setVisibility(View.VISIBLE);
+                        mDone.setEnabled(true);
+                        mContact.setOnTouchListener(new OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                                Snackbar.make(getView(), "You can't edit contact", Snackbar.LENGTH_LONG).show();
+                                return false;
+                            }
+                        });
+                    }
+                });
+
+                mDone.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        boolean webflag = false;
+                        usertype.setVisibility(View.GONE);
+                        spinner.setVisibility(View.GONE);
+                        mUpdatedProfession = mProfession.getText().toString();
+                        mUpdatedCity = mCity.getText().toString();
+                        mUpdatedEmail = mEmail.getText().toString();
+                        mUpdatedWebsite = mWebsite.getText().toString();
+                        spinnervalue = spinner.getSelectedItem().toString();
+                        mUpdatedCompany = mCompany.getText().toString();
+                        mUpdatedDesignation = mDesignation.getText().toString();
+                        mUpdatedSkills = mSkills.getText().toString().trim();
+
+                        if (mUpdatedSkills.endsWith(",")) {
+                            mUpdatedSkills1 = mUpdatedSkills.substring(0, mUpdatedSkills.length() - 1);
+                        } else {
+                            mUpdatedSkills1 = mUpdatedSkills;
+                        }
+                        webflag = mUpdatedWebsite.equalsIgnoreCase("");
+                        Boolean flag = false;
+                        try {
+                            for (int i = 0; i < resultList.size(); i++) {
+                                if (mUpdatedCity.equalsIgnoreCase(resultList.get(i).toString())) {
+                                    flag = true;
+                                    break;
+                                } else {
+                                    flag = false;
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        if (!isValidEmail(mUpdatedEmail))
+                            mEmail.setError("Invalid Email");
+                        else if (!webflag && !isValidUrl(mUpdatedWebsite)) {
+                            mWebsite.setError("Invalid Website");
+                        } else if (mCity.getText().toString().isEmpty()) {
+                            mCity.setError("Please Select Address From Dropdown Only");
+                        } else {
+
+                            /************************Company Name code *******************************************/
+                            mCompany.clearFocus();
+                            newcompanyname = mCompany.getText().toString();
+                            try {
+                                if (!mCompanyList.contains(newcompanyname)) {
+                                    mApiCall.addNewCompany(newcompanyname);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            strCompany = mCompany.getText().toString();
+                            //***************************************************************
+                            String splChrs = "-/@#$%^&_+=()";
+                            boolean found = strCompany.matches("["
+                                    + splChrs + "]+");
+
+                 /*Designation Name code */
+                            mDesignation.clearFocus();
+                            newdesignation = mDesignation.getText().toString();
+                            try {
+                                if (!mDesignationList.contains(newdesignation)) {
+                                    mApiCall.addNewDesignation(newdesignation);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            strDesignation = mDesignation.getText().toString();
+                            //***************************************************************
+                            boolean found1 = strDesignation.matches("["
+                                    + splChrs + "]+");
+                    /*Skills*/
+                            mSkills.clearFocus();
+                            newskills = mSkills.getText().toString().trim();
+                            if (newskills.endsWith(","))
+                                newskills = newskills.substring(0, newskills.length() - 1);
+                            parts = newskills.split(",");
+                            for (int i = 0; i < parts.length; i++) {
+                                try {
+                                    if (!mSkillList.contains(parts[i])) {
+                                        mApiCall.addNewSkills(parts[i]);
+                                        //addNewCompanyName(updatecompany);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            strskills = mSkills.getText().toString().trim();
+
+                            //***************************************************************
+                            splChrs = "-/@#$%^&_+=()";
+                            boolean found2 = strCompany.matches("["
+                                    + splChrs + "]+");
+
+                            //setting validation for reg fields
+                            if (strCompany.equals("") || strCompany.equals("null") || strCompany.equals(null)) {
+                                mCompany.setError("Enter Company Name");
+                                mCompany.requestFocus();
+                            } else if (found) {
+                                mCompany.setError("Please enter valid company");
+                                mCompany.requestFocus();
+                            } else if (found1) {
+                                mDesignation.setError("Please enter valid designation");
+                                mDesignation.requestFocus();
+                            } else if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
+                                mDesignation.setError("Enter Designation Name");
+                                mDesignation.requestFocus();
+                            } else if (strskills.equals("") || strskills.equals("null") || strskills.equals(null)) {
+                                mSkills.setError("Enter Skills Name");
+                                mSkills.requestFocus();
+                            } else {
+                                mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1, mUpdatedCity, spinnervalue, RegId);
+                                mDone.setVisibility(View.GONE);
+                                mEdit.setVisibility(View.VISIBLE);
+
+                                mProfession.setEnabled(false);
+                                mContact.setEnabled(false);
+                                mWebsite.setEnabled(false);
+                                mCity.setEnabled(false);
+                                mCity.setFocusable(false);
+                                mEmail.setEnabled(false);
+                                mCompany.setEnabled(false);
+                                mCompany.setFocusable(false);
+                                mDesignation.setEnabled(false);
+                                mDesignation.setFocusable(false);
+                                mSkills.setEnabled(false);
+                                mSkills.setFocusable(false);
+                            }
+                        }
+                    }
+                });
+            }
+        });
     }
 }

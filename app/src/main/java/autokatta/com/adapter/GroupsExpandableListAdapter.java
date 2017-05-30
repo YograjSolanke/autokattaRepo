@@ -123,7 +123,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                 Log.i("GroupId", "Profile->" + rowItem.getId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mContext, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(mContext, GroupsActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+                //i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 //mContext.getSharedPreferences(mContext.getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
                 //If Call From OtherProfile
                 if (GroupType.equalsIgnoreCase("OtherGroup")) {
@@ -134,7 +134,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                     i.putExtra("className", "SimpleProfile");
                 }
                 i.putExtra("bundle_GroupId", rowItem.getId());
-                mContext.startActivityForResult(i, 1, options.toBundle());
+                mContext.startActivity(i, options.toBundle());
             }
         });
         return convertView;

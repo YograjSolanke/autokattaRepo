@@ -20,6 +20,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -140,11 +141,33 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         mfab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Edit enable", Snackbar.LENGTH_LONG)
+                /*Snackbar.make(view, "Edit enable", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 mProfilePicture.setEnabled(true);
                 mfab_done.setVisibility(View.VISIBLE);
-                mfab_edit.setVisibility(View.GONE);
+                mfab_edit.setVisibility(View.GONE);*/
+                LayoutInflater layoutInflater = LayoutInflater.from(UserProfile.this);
+                View mViewDialogOtp = layoutInflater.inflate(R.layout.custom_alert_my_profile_edit, null);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(UserProfile.this);
+                builder1.setTitle("EDIT PROFILE");
+                builder1.setIcon(R.drawable.hdlogo);
+                builder1.setView(mViewDialogOtp);
+
+                builder1.setCancelable(false)
+                        .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialogBox = builder1.create();
+                alertDialogBox.show();
 
             }
         });

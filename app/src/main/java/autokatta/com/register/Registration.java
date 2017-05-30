@@ -396,8 +396,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 Snackbar.make(mRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-            Snackbar.make(mRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 

@@ -1,15 +1,22 @@
 package autokatta.com.fragment_profile;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +24,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.ProfileMyStoreAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.GetStoreProfileInfoResponse;
 import retrofit2.Response;
 
@@ -32,8 +39,10 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     ProfileMyStoreAdapter myStoreAdapter;
     //android.support.design.widget.FloatingActionButton mCreateStore;
     //FloatingActionButton mCreateStore;
+    boolean _hasLoadedOnce = false;
+    ConnectionDetector mTestConnection;
 
-    public AboutStore(){
+    public AboutStore() {
         //empty constructor...
     }
 
@@ -41,20 +50,6 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAboutStore = inflater.inflate(R.layout.fragment_store_layout, container, false);
-
-        mListView = (ListView) mAboutStore.findViewById(R.id.store_list);
-        /*mCreateStore = (FloatingActionButton) mAboutStore.findViewById(R.id.create_store);
-
-        mCreateStore.setOnClickListener(this);*/
-
-        ViewCompat.setNestedScrollingEnabled(mListView, true);
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
-                        Context.MODE_PRIVATE).getString("loginContact",""));
-            }
-        });
         return mAboutStore;
     }
 
@@ -62,8 +57,25 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     Get Store Profile Info...
      */
     private void getStoreProfileInfo(String loginContact) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getStoreProfileInfo(loginContact);
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.getStoreProfileInfo(loginContact);
+        } else {
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        }
     }
 
     @Override
@@ -83,16 +95,54 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
                 mListView.setAdapter(myStoreAdapter);
                 myStoreAdapter.notifyDataSetChanged();
             } else {
-                //       Snackbar.make(findViewById(R.id.user_profile), getString(R.string._404), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof NullPointerException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ClassCastException) {
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        }
     }
 
     @Override
@@ -114,5 +164,37 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
                 getActivity().startActivity(intent, options.toBundle());
                 break;*/
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
+                        Context.MODE_PRIVATE).getString("loginContact", ""));
+                _hasLoadedOnce = true;
+            }
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mTestConnection = new ConnectionDetector(getActivity());
+                mListView = (ListView) mAboutStore.findViewById(R.id.store_list);
+                ViewCompat.setNestedScrollingEnabled(mListView, true);
+               /* getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
+                                Context.MODE_PRIVATE).getString("loginContact",""));
+                    }
+                });*/
+            }
+        });
     }
 }
