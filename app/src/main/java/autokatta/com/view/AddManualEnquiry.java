@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.gsm.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -18,10 +19,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -29,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.Registration.InviteFriends;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.adapter.InventoryAdapter;
 import autokatta.com.apicall.ApiCall;
@@ -45,7 +49,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     AutoCompleteTextView autoAddress;
     Spinner spnInventory, spnStatus;
     String myContact;
-    TextView txtUser;
+    TextView txtUser, txtInvite;
+    ImageView imgCheck, imgCross;
     RelativeLayout mRelative;
     List<GetInventoryResponse.Success> mItemList = new ArrayList<>();
     List<String> arrayList = new ArrayList<>();
@@ -80,6 +85,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 txtUser = (TextView) findViewById(R.id.txtUser);
                 mListView = (ListView) findViewById(R.id.vehicle_list);
                 scrollView = (NestedScrollView) findViewById(R.id.scroll_view);
+                imgCheck = (ImageView) findViewById(R.id.imgCheck);
+                imgCross = (ImageView) findViewById(R.id.imgCross);
+                txtInvite = (TextView) findViewById(R.id.txtInvite);
 
                 edtDate.setOnTouchListener(AddManualEnquiry.this);
                 edtTime.setOnTouchListener(AddManualEnquiry.this);
@@ -94,6 +102,10 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         txtUser.setVisibility(View.GONE);
+                        imgCheck.setVisibility(View.GONE);
+                        imgCross.setVisibility(View.GONE);
+                        txtInvite.setVisibility(View.GONE);
+
                         if (s.length() == 10) {
                             if (!myContact.equalsIgnoreCase(s.toString()))
                                 checkUser(s.toString());
@@ -107,6 +119,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     @Override
                     public void afterTextChanged(Editable s) {
                         txtUser.setVisibility(View.GONE);
+                        imgCheck.setVisibility(View.GONE);
+                        imgCross.setVisibility(View.GONE);
+                        txtInvite.setVisibility(View.GONE);
                     }
                 });
 
@@ -121,6 +136,14 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         startActivity(intent, options.toBundle());
                     }
                 });
+
+                txtInvite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //sendSMSMessage(edtContact.getText().toString(),"hhhh");
+                    }
+                });
+
 
                 spnInventory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -144,6 +167,21 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.registrationContactValidation(contact);
     }
+
+    private void sendSMSMessage(String con, String msg) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
+            Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+            Intent i = new Intent(getApplicationContext(), InviteFriends.class);
+            startActivity(i);
+            finish();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -395,6 +433,14 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
                 txtUser.setVisibility(View.VISIBLE);
+                imgCheck.setVisibility(View.VISIBLE);
+                imgCross.setVisibility(View.GONE);
+                txtInvite.setVisibility(View.GONE);
+            } else {
+                imgCross.setVisibility(View.VISIBLE);
+                txtInvite.setVisibility(View.VISIBLE);
+                txtUser.setVisibility(View.GONE);
+                imgCheck.setVisibility(View.GONE);
             }
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));

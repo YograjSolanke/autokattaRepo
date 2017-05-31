@@ -34,15 +34,67 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/product_custname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/product_name"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/product_image"
+            android:text="Customer Name :"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/product_custname_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/product_custname"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/product_custname"
+            android:text="@string/app_name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/product_custcontact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/product_custname"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/product_image"
+            android:text="Customer Contact :"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/product_custcontact_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/product_custcontact"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/product_custcontact"
+            android:text="@string/app_name"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/product_category"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/product_name"
+            android:layout_below="@+id/product_custcontact"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/product_image"
             android:text="Category :"
             android:textSize="14sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/product_category_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/product_category"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/product_category"
+            android:text="@string/app_name"
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -59,21 +111,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/text_about"
             android:layout_below="@+id/imageView"
+            android:layout_marginEnd="@dimen/text_about"
             android:text="0"
             android:textSize="14sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/product_category_str"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/product_category"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/product_category"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/product_type"

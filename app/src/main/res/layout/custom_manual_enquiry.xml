@@ -35,15 +35,67 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/category"
+            android:id="@+id/custname"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/vehicle_title"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/vehicle_icon"
+            android:text="Customer Name :"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/custname_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/custname"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/custname"
+            android:text="@string/app_name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/custcontact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/custname"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/vehicle_icon"
+            android:text="Customer Contact :"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/custcontact_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/custcontact"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/custcontact"
+            android:text="@string/app_name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/custcontact"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/vehicle_icon"
             android:text="Category :"
             android:textSize="14sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/category_str"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/category"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/category"
+            android:text="@string/app_name"
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -60,21 +112,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/text_about"
             android:layout_below="@+id/imageView"
+            android:layout_marginEnd="@dimen/text_about"
             android:text="0"
             android:textSize="14sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/category_str"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/category"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/category"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/sub_category"

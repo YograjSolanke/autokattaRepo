@@ -63,12 +63,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="4.5">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
+                    android:layout_weight="1"
                     android:text="@string/contact_no"
                     android:textStyle="bold" />
 
@@ -76,7 +76,7 @@
                     android:id="@+id/edtContact"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/card_title_height"
-                    android:layout_weight="1.2"
+                    android:layout_weight="1.5"
                     android:background="@android:color/transparent"
                     android:ems="10"
                     android:hint="@string/contact_no"
@@ -87,12 +87,38 @@
                     android:paddingStart="@dimen/card_margin"
                     android:textColor="#708090" />
 
+                <ImageView
+                    android:id="@+id/imgCross"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@android:drawable/ic_delete"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/imgCheck"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/check"
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/txtUser"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
+                    android:layout_weight="1"
                     android:text="@string/go_profile"
+                    android:textColor="@color/zxing_custom_possible_result_points"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtInvite"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Invite"
                     android:textColor="@color/zxing_custom_possible_result_points"
                     android:textStyle="bold"
                     android:visibility="gone" />

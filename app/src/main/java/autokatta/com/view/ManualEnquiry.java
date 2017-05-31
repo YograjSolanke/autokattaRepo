@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -74,6 +76,12 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
                 mRecyclerView.setLayoutManager(mLinearLayout);
                 mPersonRecyclerView.setLayoutManager(mLinearLayout1);
+
+                mPersonRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mPersonRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
+
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
                 mSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
                 //mPersonSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
@@ -270,7 +278,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                                 success.setUsername(success.getUsername());
                             success.setContactNo(success.getContactNo());
                             success.setCity(success.getCity());
-                            //success.setd(success.getUsername());
+                            success.setProfilePic(success.getProfilePic());
                             success.setNextFollowupDate(success.getNextFollowupDate());
                             mList.add(success);
                         }

@@ -5,7 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
     static class PersonData extends RecyclerView.ViewHolder {
 
         TextView mPersonName, mContact, mAddress, mFollowUpDate, mDiscussion;
+        ImageView mProfilePic;
 
         PersonData(View itemView) {
             super(itemView);
@@ -38,6 +43,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             mAddress = (TextView) itemView.findViewById(R.id.address);
             mFollowUpDate = (TextView) itemView.findViewById(R.id.follow_up);
             mDiscussion = (TextView) itemView.findViewById(R.id.discussion);
+            mProfilePic = (ImageView) itemView.findViewById(R.id.user_image);
         }
     }
 
@@ -56,6 +62,18 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         holder.mContact.setText(list.get(position).getContactNo());
         holder.mAddress.setText(list.get(position).getCity());
         holder.mFollowUpDate.setText(list.get(position).getNextFollowupDate());
+
+        if (list.get(position).getProfilePic().equals("") || list.get(position).getProfilePic().equals("null")
+                || list.get(position).getProfilePic().equals(null)) {
+            holder.mProfilePic.setBackgroundResource(R.drawable.hdlogo);
+        } else {
+            String used_pic = "http://autokatta.com/mobile/profile_profile_pics/" + list.get(position).getProfilePic();
+            Glide.with(mActivity)
+                    .load(used_pic)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.mProfilePic);
+        }
     }
 
     @Override
