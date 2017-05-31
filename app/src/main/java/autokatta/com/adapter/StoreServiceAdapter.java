@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -231,8 +232,10 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     class ServiceHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags;
         ImageView image, deleteproduct;
-        Button viewdetails, sviewdetails, vehidetails;
+        Button  sviewdetails, vehidetails;
         RatingBar productrating;
+        CardView viewdetails;
+
 
         ServiceHolder(View itemView) {
             super(itemView);
@@ -243,7 +246,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             pdetails = (TextView) itemView.findViewById(R.id.editdetails);
             ptags = (TextView) itemView.findViewById(R.id.edittags);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
-            viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
+            viewdetails= (CardView) itemView.findViewById(R.id.card_view);
+          //  viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);

@@ -74,7 +74,7 @@
         android:src="@android:drawable/ic_menu_edit"
         app:layout_anchor="@id/appbar"
         app:fabSize="mini"
-        app:layout_anchorGravity="top|right|end" />
+        app:layout_anchorGravity="bottom|right|end" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_edit_done"

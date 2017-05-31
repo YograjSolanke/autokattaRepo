@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -70,7 +72,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     String fname;
     File file;
     String dp;
-    String RegID;
+    String RegID, updatedUsername;
+    ImageView img;
     CoordinatorLayout mUserParent;
 
     @Override
@@ -106,6 +109,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             getProfileData();
             mUserParent = (CoordinatorLayout) findViewById(R.id.main_content);
             collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+            collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             mProfilePicture = (ImageView) findViewById(R.id.user_image);
             mProfilePicture.setEnabled(false);
             ViewPager viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
@@ -140,24 +144,52 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         /*EDIT USER NAME AND PROFILE PIC*/
         mfab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 /*Snackbar.make(view, "Edit enable", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 mProfilePicture.setEnabled(true);
                 mfab_done.setVisibility(View.VISIBLE);
                 mfab_edit.setVisibility(View.GONE);*/
+                String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
                 LayoutInflater layoutInflater = LayoutInflater.from(UserProfile.this);
                 View mViewDialogOtp = layoutInflater.inflate(R.layout.custom_alert_my_profile_edit, null);
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(UserProfile.this);
+                img = (ImageView) mViewDialogOtp.findViewById(R.id.img);
+                final EditText name = (EditText) mViewDialogOtp.findViewById(R.id.editPersonName);
+                name.setText(mUserName);
+                final AlertDialog.Builder builder1 = new AlertDialog.Builder(UserProfile.this);
                 builder1.setTitle("EDIT PROFILE");
                 builder1.setIcon(R.drawable.hdlogo);
                 builder1.setView(mViewDialogOtp);
+
+                if (!dp.equals("")) {
+                    Glide.with(UserProfile.this)
+                            .load(dp_path)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(img);
+                } else {
+                    img.setBackgroundResource(R.drawable.hdlogo);
+                }
+                img.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onPickImage(view);
+                    }
+                });
 
                 builder1.setCancelable(false)
                         .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
+                                updatedUsername = name.getText().toString();
+                                if (updatedUsername.equals("")) {
+                                    Snackbar.make(view, "Please Enter Your Name", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                } else {
+                                    updateProfile();
+                                    uploadImage(mediaPath);
+                                    dialogInterface.cancel();
+                                }
                             }
                         }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
@@ -171,7 +203,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
             }
         });
-        mProfilePicture.setOnClickListener(new View.OnClickListener() {
+       /* mProfilePicture.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -190,11 +222,10 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 mfab_done.setVisibility(View.GONE);
                 mfab_edit.setVisibility(View.VISIBLE);
                 mProfilePicture.setEnabled(false);
-                collapsingToolbar.setEnabled(false);
             }
         });
         mfab_done.setVisibility(View.GONE);
-        mfab_edit.setVisibility(View.VISIBLE);
+        mfab_edit.setVisibility(View.VISIBLE);*/
     }
 
     private void animateFab(int position) {
@@ -253,9 +284,9 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     private void updateProfile() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
         if (lastWord != "") {
-            mApiCall.updateUsername(mUserName, lastWord, RegID);
+            mApiCall.updateUsername(updatedUsername, lastWord, RegID);
         } else
-            mApiCall.updateUsername(mUserName, dp, RegID);
+            mApiCall.updateUsername(updatedUsername, dp, RegID);
     }
 
     /*
@@ -290,6 +321,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(mProfilePicture);
                     collapsingToolbar.setTitle(mUserName);
+                    collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
                 } else {
 
                 }
@@ -310,12 +342,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("Success_update_profile")) {
-                Snackbar.make(mUserParent, "Profile Updated", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mUserParent, "Profile Updated Successfuly", Snackbar.LENGTH_SHORT).show();
                 getProfileData();
                 mProfilePicture.setEnabled(false);
-                collapsingToolbar.setEnabled(false);
+                collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
                 mfab_done.setVisibility(View.GONE);
-                mfab_edit.setVisibility(View.VISIBLE);
             }
 
         }
@@ -371,6 +402,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
                 mProfilePicture.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 cursor.close();
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
@@ -393,6 +425,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                             bitmap.recycle();
                         }
                         mProfilePicture.setImageBitmap(bitmapRotate);
+                        img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
 
 //                            Saving image to mobile internal memory for sometime
                         String root = getApplicationContext().getFilesDir().toString();
