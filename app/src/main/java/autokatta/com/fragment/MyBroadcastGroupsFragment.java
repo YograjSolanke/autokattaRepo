@@ -462,10 +462,17 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mApiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
-                uploadImage(mediaPath);
-                //sendDataToWeb(message.getText().toString(), groupids);
-                alert.dismiss();
+                if ( message.getText().toString().equals("")|| message.getText().toString().startsWith(" ")&& message.getText().toString().endsWith(" "))
+                {
+                    CustomToast.customToast(getActivity(),"Please Enter Message");
+                }else
+                {
+                    mApiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
+                    uploadImage(mediaPath);
+                    //sendDataToWeb(message.getText().toString(), groupids);
+                    alert.dismiss();
+                }
+
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
