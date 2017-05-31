@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
-              xmlns:card_view="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:id="@+id/mCardview"
         card_view:cardCornerRadius="10dp"
         card_view:contentPadding="5dp">
 
@@ -18,22 +18,86 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:padding="5dp"
+                android:id="@+id/profile"
+                android:contentDescription="@string/app_name" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Message From"
+                android:layout_toStartOf="@+id/enquiry"
+                android:layout_toEndOf="@+id/profile"
+                android:paddingLeft="10dp"
                 android:textColor="@color/textColor"
                 android:textStyle="bold"
                 android:id="@+id/msgFrom" />
+
+            <ImageView
+                android:id="@+id/enquiry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="@dimen/padding_small"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_comment_question_outline"
+                android:visibility="visible" />
+
+
+            <ImageView
+                android:id="@+id/forward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/padding_small"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_chevron_right"
+                android:visibility="visible" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Message From Cnt"
                 android:layout_below="@+id/msgFrom"
+                android:layout_toRightOf="@+id/profile"
+                android:paddingLeft="10dp"
+                android:layout_toLeftOf="@+id/forward"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/textColor"
                 android:id="@+id/msgFromCnt" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="last message"
+                android:lines="1"
+                android:layout_toLeftOf="@+id/forward"
+                android:layout_below="@+id/msgFromCnt"
+                android:layout_toRightOf="@+id/profile"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/textColor"
+                android:id="@+id/msgText" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="last message time"
+                android:lines="1"
+                android:layout_below="@+id/msgText"
+                android:layout_toRightOf="@+id/profile"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/textColor"
+                android:id="@+id/msgTime" />
 
 
         </RelativeLayout>
