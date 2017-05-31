@@ -128,6 +128,8 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         //   holder.stshare.setText("share "+sshare);
         holder.stworkdays.setText(mStoreList.get(position).getWorkingDays());
         holder.storerating.setEnabled(false);
+        if (!(mStoreList.get(position).getRating() == null) && !mStoreList.get(position).getRating().equals("null"))
+            holder.storerating.setRating(Float.parseFloat(mStoreList.get(position).getRating()));
 
         holder.storedelete.setOnClickListener(new View.OnClickListener() {
             @Override
