@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relative2"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp">
+                                            android:id="@+id/relative2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,28 +24,37 @@
 
                 <TextView
                     android:id="@+id/title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:text="Owner:"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/title_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
                     android:layout_marginTop="5dp"
-                    android:layout_weight="1.7"
-                    android:text="Title : "
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1.5"
+                    android:text="----- "
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/title"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    />
             </LinearLayout>
+
+            <View
+                android:id="@+id/v1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/title_str"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,26 +63,36 @@
 
                 <TextView
                     android:id="@+id/price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:text="Price : "
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/price_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_weight="1.7"
-                    android:text="Price : "
+                    android:layout_weight="1.5"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/price"
+                    android:layout_alignParentStart="true"
+                    android:text="----- "
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    />
             </LinearLayout>
+
+            <View
+                android:id="@+id/v2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/price_str"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,28 +101,38 @@
 
                 <TextView
                     android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:text="Views :"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/views_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1.7"
-                    android:text="Views :"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/textView18"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    />
             </LinearLayout>
+
+            <View
+                android:id="@+id/v3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/views_str"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -112,217 +141,331 @@
 
                 <TextView
                     android:id="@+id/textView20"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:text="Calls :"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/call_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:layout_alignParentStart="true"
+                    android:text="-----"
                     android:layout_marginStart="10dp"
-                    android:layout_weight="1.7"
-                    android:text="Calls :"
+                    android:layout_toEndOf="@+id/textView20"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    />
             </LinearLayout>
+
+            <View
+                android:id="@+id/v4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
                     android:id="@+id/textView21"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="0.2"
+                    android:layout_weight="0.5"
                     android:text="Enquiries:"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/enquiry_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1.7"
-                    android:text="Enquiry:"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:layout_alignParentStart="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/textView21"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    />
             </LinearLayout>
 
 
-        </LinearLayout>
+            <View
+                android:id="@+id/v5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
 
-        <RelativeLayout
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/addresstext"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_weight="0.5"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Location :"
-                android:textColor="#2C3343" />
+                android:textColor="#2C3343"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/addressdetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/addresstext"
+                android:layout_weight="1.5"
+                android:layout_alignParentStart="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="-----"
-                android:textColor="#2C3343" />
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/addresstext"
+                android:textColor="#2C3343"/>
+        </LinearLayout>
+            <View
+                android:id="@+id/v6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/categorytxt"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/addressdetails"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
+                android:layout_weight="0.5"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:text="Category :"
-                android:textColor="#2C3343" />
+                android:textColor="#2C3343"/>
 
             <TextView
                 android:id="@+id/categorydetails"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/addressdetails"
-                android:layout_marginTop="2dp"
-                android:layout_toRightOf="@+id/categorytxt"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_weight="1.5"
+                android:layout_alignParentStart="true"
                 android:text="-----"
-                android:textColor="#2C3343" />
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/categorytxt"
+                android:textColor="#2C3343"
+                android:textSize="16sp"
+               />
+        </LinearLayout>
+
+            <View
+                android:id="@+id/v7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/subcategorytxt"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/categorydetails"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
                 android:text="SubCategory :"
-                android:textColor="#2C3343" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:textColor="#2C3343"/>
 
             <TextView
                 android:id="@+id/subcategorydetails"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/categorydetails"
-                android:layout_marginTop="2dp"
-                android:layout_toRightOf="@+id/subcategorytxt"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1.5"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="-----"
-                android:textColor="#2C3343" />
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/subcategorytxt"
+                android:textColor="#2C3343"/>
+        </LinearLayout>
+
+            <View
+                android:id="@+id/v8"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/brandtxt"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/subcategorydetails"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
                 android:text="Brand :"
-                android:textColor="#2C3343" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#2C3343"/>
 
             <TextView
                 android:id="@+id/branddetails"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/subcategorydetails"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/brandtxt"
+                android:textSize="16sp"
+                android:layout_weight="1.5"
+                android:layout_alignParentStart="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="-----"
-                android:textColor="#2C3343" />
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/brandtxt"
+                android:textColor="#2C3343"/>
+        </LinearLayout>
+
+            <View
+                android:id="@+id/v9"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/textmodel"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/branddetails"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Model :"
-                android:textColor="#2C3343" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:textColor="#2C3343"/>
 
             <TextView
                 android:id="@+id/modeldetails"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/branddetails"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/textmodel"
+                android:textSize="16sp"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1.5"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="-----"
-                android:textColor="#2C3343" />
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/textmodel"
+                android:textColor="#2C3343"/>
 
+        </LinearLayout>
+
+            <View
+                android:id="@+id/v10"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/textversion"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/modeldetails"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Version :"
-                android:textColor="#2C3343" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:textColor="#2C3343"/>
 
             <TextView
                 android:id="@+id/versiondetails"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/modeldetails"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/textversion"
+                android:textSize="16sp"
+                android:layout_weight="1.5"
+                android:layout_alignParentStart="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="-----"
-                android:textColor="#2C3343" />
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/textversion"
+                android:textColor="#2C3343"/>
+        </LinearLayout>
+
+            <View
+                android:id="@+id/v11"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/myear"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/versiondetails"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
                 android:text="Year of mfg :"
-                android:textColor="#2C3343" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:textColor="#2C3343"/>
 
             <TextView
                 android:id="@+id/yeardetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/versiondetails"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/myear"
                 android:text="-----"
-                android:textColor="#2C3343" />
-        </RelativeLayout>
+                android:textSize="16sp"
+                android:layout_weight="1.5"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/myear"
+                android:textColor="#2C3343"/>
+        </LinearLayout>
+
+            <View
+                android:id="@+id/v12"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+        </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

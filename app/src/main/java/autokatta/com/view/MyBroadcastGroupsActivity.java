@@ -26,6 +26,7 @@ public class MyBroadcastGroupsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_broadcast_groups);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("My BroadCast Groups");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -42,15 +43,28 @@ public class MyBroadcastGroupsActivity extends AppCompatActivity {
             }
         }, intentFilter);
 
+        MyBroadcastGroupsFragment broadcastGroupsFragment = new MyBroadcastGroupsFragment();
         /*FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.broadcast_groups_container, new MyBroadcastGroupsFragment()).commit();*/
+        Bundle b = new Bundle();
+        if (getIntent().getExtras() != null) {
+            b.putString("title", getIntent().getExtras().getString("title"));
+            b.putString("price", getIntent().getExtras().getString("price"));
+            b.putString("category", getIntent().getExtras().getString("category"));
+            b.putString("brand", getIntent().getExtras().getString("brand"));
+            b.putString("model", getIntent().getExtras().getString("model"));
+            b.putString("image", getIntent().getExtras().getString("image"));
+            b.putString("rto_city", getIntent().getExtras().getString("rto_city"));
+            b.putString("manufacture_year", getIntent().getExtras().getString("manufacture_year"));
+            b.putString("kms", getIntent().getExtras().getString("kms"));
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.broadcast_groups_container, new MyBroadcastGroupsFragment(), "myBroadcastGroupsFragment")
-                .addToBackStack("myBroadcastGroupsFragment")
-                .commit();
-
+            broadcastGroupsFragment.setArguments(b);
+        }
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.broadcast_groups_container, broadcastGroupsFragment, "myBroadcastGroupsFragment")
+                    .addToBackStack("myBroadcastGroupsFragment")
+                    .commit();
     }
 
     @Override

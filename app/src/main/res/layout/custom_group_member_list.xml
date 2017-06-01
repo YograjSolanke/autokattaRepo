@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="25dp"
                 android:text="Name"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/contact"
                 android:layout_marginStart="7dp"
-                android:text="No. Of Vehicles: "
+                android:text="Vehicles Count: "
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -67,6 +67,48 @@
                 android:layout_below="@+id/contact"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/vehi_cnt"
+                android:text="-"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/product_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vehi_cnt"
+                android:layout_marginStart="7dp"
+                android:text="Product Count: "
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edtproductcnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vehicle_cnt"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/product_cnt"
+                android:text="-"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/service_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/product_cnt"
+                android:layout_marginStart="7dp"
+                android:text="Service Count: "
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edtservicecnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtproductcnt"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/service_count"
                 android:text="-"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
@@ -105,10 +147,14 @@
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/delete_member"
-            android:layout_margin="5dp"
             android:contentDescription="@string/app_name"
             android:padding="7dp"
-            android:src="@android:drawable/ic_menu_call" />
+            android:src="@android:drawable/ic_menu_call"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
     </RelativeLayout>
 
     <View

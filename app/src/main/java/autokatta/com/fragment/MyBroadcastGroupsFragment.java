@@ -35,6 +35,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
@@ -80,12 +83,16 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
     String fname;
     File file;
     ArrayList<String> incominggrpids = new ArrayList<>();
+    ArrayList<String> vimages = new ArrayList<>();
 
     Bitmap bitmap;
     String lastWord = "";
     ImageView uploadImage;
     AlertDialog alert;
     TextView addimagetext;
+    String vimagename;
+    String mTitle="",mPrice="",mCategory="",mBrand="",mModel="",mImage="",mrto_city="",mManifaturingYr="",mKms="";
+
 
     @Nullable
     @Override
@@ -122,6 +129,30 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 mApiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
             }
         });
+
+        Bundle b =getArguments();
+        if (b!=null) {
+            mTitle=  b.getString("title");
+            mPrice=  b.getString("price");
+            mCategory=  b.getString("category");
+            mBrand=  b.getString("brand");
+            mModel=   b.getString("model");
+            mImage=  b.getString("image");
+            mrto_city= b.getString("rto_city");
+            mManifaturingYr= b.getString("manufacture_year");
+            mKms=b.getString("kms");
+
+
+          /*  Log.i("title","->"+mTitle);
+            Log.i("mPrice","->"+mPrice);
+            Log.i("mCategory","->"+mCategory);
+            Log.i("mBrand","->"+mBrand);
+            Log.i("mModel","->"+mModel);
+            Log.i("mImage","->"+mImage);
+            Log.i("mrto_city","->"+mrto_city);
+            Log.i("mManifaturingYr","->"+mManifaturingYr);
+            Log.i("mKms","->"+mKms);*/
+        }
         return mMyBroadcast;
     }
 
@@ -144,7 +175,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
                 }
                 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!going grp ids====" + finalgrpids);
-                    sendmessage(finalgrpids);
+                sendmessage(finalgrpids);
 
                 break;
             case R.id.deletegroup:
@@ -426,6 +457,67 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         alert = alertDialog.show();
         alertDialog.setTitle("Send Message");
 
+        if (!mTitle.equalsIgnoreCase("")
+                ||!mPrice.equalsIgnoreCase("") ||  !mCategory.equalsIgnoreCase("")
+                ||!mBrand.equalsIgnoreCase("")
+                ||!mModel.equalsIgnoreCase("")
+                ||  !mrto_city.equalsIgnoreCase("")
+              ||  !mManifaturingYr.equalsIgnoreCase("")
+                || !mKms.equalsIgnoreCase("") )
+        {
+            message.setText("Title-" + mTitle + "\n"
+                    + "Price-" + mPrice + "\n"
+                    + "Category-" + mCategory + "\n"
+                    + "Brand-" + mBrand + "\n"
+                    + "Model-" + mModel + "\n"
+                    + "RTO City-" + mrto_city + "\n"
+                    + "Manifacturing Year-" + mManifaturingYr + "\n"
+                    + "Kms-" + mKms + "\n");
+
+
+
+
+            //Images from MyUplodedvehicle set to send message
+
+            try {
+
+
+                if (mImage.equalsIgnoreCase("") || mImage.equalsIgnoreCase(null) || mImage.equalsIgnoreCase("null")) {
+
+                    uploadImage.setBackgroundResource(R.drawable.vehiimg);
+                }
+                if (!mImage.equals("") || !mImage.equalsIgnoreCase(null) || !mImage.equalsIgnoreCase("null")) {
+                    String[] parts = mImage.split(",");
+
+                    for (int l = 0; l < parts.length; l++) {
+                        vimages.add(parts[l]);
+                        System.out.println(parts[l]);
+                    }
+                    System.out.println("http://autokatta.com/mobile/uploads/" + vimages.get(0));
+
+                     vimagename = "http://autokatta.com/mobile/uploads/" + vimages.get(0);
+                    vimagename = vimagename.replaceAll(" ", "%20");
+                    try {
+
+                        Glide.with(getActivity())
+                                .load("http://autokatta.com/mobile/uploads/" + vimages.get(0))
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.logo)
+                                .into(uploadImage);
+
+                        lastWord= vimages.get(0);
+                    } catch (Exception e) {
+                        System.out.println("Error in uploading images");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else
+        {
+            message.setText("");
+        }
+
         message.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -454,9 +546,10 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             @Override
             public void onClick(View v) {
                 onPickImage(v);
-              //  selectImage();
+                //  selectImage();
             }
         });
+
 
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -465,10 +558,17 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 if ( message.getText().toString().equals("")|| message.getText().toString().startsWith(" ")&& message.getText().toString().endsWith(" "))
                 {
                     CustomToast.customToast(getActivity(),"Please Enter Message");
-                }else
-                {
+                }else {
                     mApiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
-                    uploadImage(mediaPath);
+                    if (!mTitle.equalsIgnoreCase("") || !mPrice.equalsIgnoreCase("") || !mCategory.equalsIgnoreCase("")
+                            || !mBrand.equalsIgnoreCase("") || !mModel.equalsIgnoreCase("") || !mrto_city.equalsIgnoreCase("")
+                            || !mManifaturingYr.equalsIgnoreCase("") || !mKms.equalsIgnoreCase("")) {
+                        uploadImage(vimagename);
+                        Log.i("img","imggggggg"+vimagename);
+                    } else{
+                        uploadImage(mediaPath);
+                }
+
                     //sendDataToWeb(message.getText().toString(), groupids);
                     alert.dismiss();
                 }
