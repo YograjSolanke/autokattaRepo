@@ -7,6 +7,7 @@
     android:paddingStart="@dimen/card_margin">
 
     <RelativeLayout
+        android:id="@+id/used_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

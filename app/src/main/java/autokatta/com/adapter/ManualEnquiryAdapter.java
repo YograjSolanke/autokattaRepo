@@ -73,6 +73,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
         ImageView mProductPic;
         TextView mProductName, mProductCategory, mProductType, mProductPrice, mProductCount,
                 mCustomerName, mCustomerContact, mCreateDate, mFollowupdate;
+        RelativeLayout mUsedRelative;
 
         private ProductDetails(View profileView) {
             super(profileView);
@@ -86,6 +87,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mCustomerContact = (TextView) profileView.findViewById(R.id.product_custcontact_str);
             mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
             mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
+            mUsedRelative = (RelativeLayout) profileView.findViewById(R.id.used_relative);
             profileView.setOnClickListener(this);
         }
 
@@ -102,6 +104,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
         ImageView mServicePic;
         TextView mServiceName, mServiceCategory, mServiceType, mServicePrice, mServiceCount,
                 mCustomerName, mCustomerContact, mCreateDate, mFollowupdate;
+        RelativeLayout mUsedRelative;
 
         private ServiceDetails(View profileView) {
             super(profileView);
@@ -115,6 +118,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mCustomerContact = (TextView) profileView.findViewById(R.id.custcontact_str);
             mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
             mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
+            mUsedRelative = (RelativeLayout) profileView.findViewById(R.id.used_relative);
             profileView.setOnClickListener(this);
         }
 
@@ -170,6 +174,13 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 vehicleDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
                 vehicleDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
+                if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Hot"))
+                    vehicleDetails.mUsedRelative.setBackgroundResource(R.color.high_bid);
+                else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Dropped"))
+                    vehicleDetails.mUsedRelative.setBackgroundResource(R.color.above_bid);
+                else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Warm"))
+                    vehicleDetails.mUsedRelative.setBackgroundResource(R.color.approved);
+
                 if (mItemList.get(position).getVehicleImage().equals("") || mItemList.get(position).getVehicleImage().equals("null")
                         || mItemList.get(position).getVehicleImage().equals(null)) {
                     vehicleDetails.mVehiclePic.setBackgroundResource(R.drawable.hdlogo);
@@ -195,6 +206,13 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 productDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
                 productDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
+                if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Hot"))
+                    productDetails.mUsedRelative.setBackgroundResource(R.color.high_bid);
+                else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Dropped"))
+                    productDetails.mUsedRelative.setBackgroundResource(R.color.above_bid);
+                else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Warm"))
+                    productDetails.mUsedRelative.setBackgroundResource(R.color.approved);
+
                 if (mItemList.get(position).getProductImage().equals("") || mItemList.get(position).getProductImage().equals("null")
                         || mItemList.get(position).getProductImage().equals(null)) {
                     productDetails.mProductPic.setBackgroundResource(R.drawable.hdlogo);
@@ -219,6 +237,13 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 serviceDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());
                 serviceDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
                 serviceDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
+
+                if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Hot"))
+                    serviceDetails.mUsedRelative.setBackgroundResource(R.color.high_bid);
+                else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Dropped"))
+                    serviceDetails.mUsedRelative.setBackgroundResource(R.color.above_bid);
+                else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Warm"))
+                    serviceDetails.mUsedRelative.setBackgroundResource(R.color.approved);
 
                 if (mItemList.get(position).getServiceImage().equals("") || mItemList.get(position).getServiceImage().equals("null")
                         || mItemList.get(position).getServiceImage().equals(null)) {

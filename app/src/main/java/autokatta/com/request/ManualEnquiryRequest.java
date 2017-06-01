@@ -33,6 +33,15 @@ public class ManualEnquiryRequest {
     public String customerContact;
     public String createdDate;
     public String followupDate;
+    public String enquiryStatus;
+
+    public String getEnquiryStatus() {
+        return enquiryStatus;
+    }
+
+    public void setEnquiryStatus(String enquiryStatus) {
+        this.enquiryStatus = enquiryStatus;
+    }
 
     public String getCreatedDate() {
         return createdDate;

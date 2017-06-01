@@ -172,7 +172,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-        mMyGroupsList.clear();
+        //mMyGroupsList.clear();
         getManualData();
     }
 
@@ -200,6 +200,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setCustomerContact("contact");
                             request.setCreatedDate(success.getCreatedDate());
                             request.setFollowupDate(success.getNextFollowupDate());
+                            request.setEnquiryStatus(success.getCustEnquiryStatus());
 
                             if (success.getPrice().equals("") || success.getPrice().isEmpty())
                                 request.setVehiclePrice("NA");
@@ -227,6 +228,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setCustomerContact("contact");
                             request.setCreatedDate(success.getCreatedDate());
                             request.setFollowupDate(success.getNextFollowupDate());
+                            request.setEnquiryStatus(success.getCustEnquiryStatus());
 
                             if (success.getPrice().equals("") || success.getPrice().isEmpty())
                                 request.setProductPrice("NA");
@@ -255,6 +257,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setCustomerContact("contact");
                             request.setCreatedDate(service.getCreatedDate());
                             request.setFollowupDate(service.getNextFollowupDate());
+                            request.setEnquiryStatus(service.getCustEnquiryStatus());
 
                             if (service.getPrice().equals("") || service.getPrice().isEmpty())
                                 request.setServicePrice("NA");
@@ -292,6 +295,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                     if (mPersonDataResponse.getSuccess() != null) {
                         mRecyclerView.setVisibility(View.GONE);
                         mPersonRecyclerView.setVisibility(View.VISIBLE);
+                        mList.clear();
                         for (GetPersonDataResponse.Success success : mPersonDataResponse.getSuccess()) {
                             //success.setUsername(success.getUsername());
 

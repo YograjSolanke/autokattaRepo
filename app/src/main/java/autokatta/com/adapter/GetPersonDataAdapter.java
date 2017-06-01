@@ -1,6 +1,8 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +36,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
     static class PersonData extends RecyclerView.ViewHolder {
 
         TextView mPersonName, mContact, mAddress, mFollowUpDate, mDiscussion;
-        ImageView mProfilePic;
+        ImageView mProfilePic, mCallImg;
 
         PersonData(View itemView) {
             super(itemView);
@@ -44,6 +46,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             mFollowUpDate = (TextView) itemView.findViewById(R.id.follow_up);
             mDiscussion = (TextView) itemView.findViewById(R.id.discussion);
             mProfilePic = (ImageView) itemView.findViewById(R.id.user_image);
+            mCallImg = (ImageView) itemView.findViewById(R.id.call_image);
         }
     }
 
@@ -57,7 +60,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
     }
 
     @Override
-    public void onBindViewHolder(PersonData holder, int position) {
+    public void onBindViewHolder(final PersonData holder, int position) {
         holder.mPersonName.setText(list.get(position).getUsername());
         holder.mContact.setText(list.get(position).getContactNo());
         holder.mAddress.setText(list.get(position).getCity());
@@ -74,10 +77,27 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.mProfilePic);
         }
+
+        holder.mCallImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                call(holder.mContact.getText().toString());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    //Calling Functionality
+    private void call(String rcontact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + rcontact));
+        try {
+            mActivity.startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+        }
     }
 }
