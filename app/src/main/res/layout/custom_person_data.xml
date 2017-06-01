@@ -26,6 +26,16 @@
             android:layout_marginTop="10dp"
             android:contentDescription="@string/app_name"
             android:src="@android:drawable/ic_menu_call" />
+
+        <ImageView
+            android:id="@+id/mail_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/call_image"
+            android:contentDescription="@string/app_name"
+            android:src="@android:drawable/sym_action_email" />
     </RelativeLayout>
 
     <LinearLayout

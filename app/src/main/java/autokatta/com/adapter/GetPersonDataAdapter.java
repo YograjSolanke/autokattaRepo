@@ -36,7 +36,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
     static class PersonData extends RecyclerView.ViewHolder {
 
         TextView mPersonName, mContact, mAddress, mFollowUpDate, mDiscussion;
-        ImageView mProfilePic, mCallImg;
+        ImageView mProfilePic, mCallImg, mMailImage;
 
         PersonData(View itemView) {
             super(itemView);
@@ -47,6 +47,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             mDiscussion = (TextView) itemView.findViewById(R.id.discussion);
             mProfilePic = (ImageView) itemView.findViewById(R.id.user_image);
             mCallImg = (ImageView) itemView.findViewById(R.id.call_image);
+            mMailImage = (ImageView) itemView.findViewById(R.id.mail_image);
         }
     }
 
@@ -84,6 +85,13 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
                 call(holder.mContact.getText().toString());
             }
         });
+
+        holder.mMailImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendEmail();
+            }
+        });
     }
 
     @Override
@@ -99,5 +107,27 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Car Details Fragment\n");
         }
+    }
+
+    private void sendEmail() {
+     /*   Log.i("Send email", "");
+        String[] TO = {""};
+        String[] CC = {""};
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+        emailIntent.putExtra(Intent.EXTRA_CC, CC);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+
+        try {
+            mActivity.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            //mActivity.finish();
+            Log.i("Finished sending email", "");
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(mActivity, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }*/
     }
 }
