@@ -34,6 +34,7 @@ public class GroupTabs extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle("My Groups");
         mLayout = (CoordinatorLayout) findViewById(R.id.activity_group_tabs);
         IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
@@ -46,13 +47,12 @@ public class GroupTabs extends AppCompatActivity {
         }, intentFilter);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setIcon(R.mipmap.ic_launcher);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-      CreateGroupFragment createGroupFragment= new CreateGroupFragment();
-        Bundle b=new Bundle();
-        b.putString("classname","GroupsTab");
+        CreateGroupFragment createGroupFragment = new CreateGroupFragment();
+        Bundle b = new Bundle();
+        b.putString("classname", "GroupsTab");
         createGroupFragment.setArguments(b);
         if (getIntent().getExtras() != null) {
             FragmentManager mFragmentManager = getSupportFragmentManager();

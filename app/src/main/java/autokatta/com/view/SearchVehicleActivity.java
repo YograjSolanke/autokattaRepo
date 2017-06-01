@@ -82,15 +82,15 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
     List<String> fuals = new ArrayList<>();
     List<String> colors = new ArrayList<>();
 
-    List<String> mList=new ArrayList<>();
-    List<String> mList1=new ArrayList<>();
-    List<String> mList2=new ArrayList<>();
+    List<String> mList = new ArrayList<>();
+    List<String> mList1 = new ArrayList<>();
+    List<String> mList2 = new ArrayList<>();
     int counter = 0;
     int counter1 = 0;
     String myContact = "";
     ApiCall mApiCall;
 
-    String mClassName,mCategory,mBrand,mModel,mPrice,mYear,mSearch_id;
+    String mClassName, mCategory, mBrand, mModel, mPrice, mYear, mSearch_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +99,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
+        myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         mApiCall = new ApiCall(this, this);
         final TextView financetxt = (TextView) findViewById(R.id.financetxt);
         final TextView messageText = (TextView) findViewById(R.id.messageText);
@@ -207,8 +207,6 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         maxhpcapcityTxt = (TextView) findViewById(R.id.minihpcapacity);
         maxhpcapcity = (TextView) findViewById(R.id.maxhpcapcity);
 
-
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -259,39 +257,35 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
         /*Set Searced Values for Edit Vehicle search*/
         /*to do as all data does not come from web service so all values are not set*/
-if (!getIntent().getExtras().equals(null) & getIntent().getExtras().getString("className").equalsIgnoreCase("MySearchAdapter"))
-{
-        mCategory=getIntent().getExtras().getString("category");
-        mBrand=getIntent().getExtras().getString("brand");
-        mModel=getIntent().getExtras().getString("model");
-        mPrice=getIntent().getExtras().getString("price");
-        mYear=getIntent().getExtras().getString("year");
-        mSearch_id=getIntent().getExtras().getString("search_ic");
-        mClassName=getIntent().getExtras().getString("className");
-Log.i("category",""+mCategory);
-Log.i("category",""+mBrand);
-Log.i("category",""+mModel);
+        if (!getIntent().getExtras().equals(null) & getIntent().getExtras().getString("className").equalsIgnoreCase("MySearchAdapter")) {
+            mCategory = getIntent().getExtras().getString("category");
+            mBrand = getIntent().getExtras().getString("brand");
+            mModel = getIntent().getExtras().getString("model");
+            mPrice = getIntent().getExtras().getString("price");
+            mYear = getIntent().getExtras().getString("year");
+            mSearch_id = getIntent().getExtras().getString("search_ic");
+            mClassName = getIntent().getExtras().getString("className");
 
-    mList.add(mCategory);
-    mList1.add(mBrand);
-    mList2.add(mModel);
+            mList.add(mCategory);
+            mList1.add(mBrand);
+            mList2.add(mModel);
 
-    ArrayAdapter<String> adapter =
-            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, mList);
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    allcategorySpinner.setAdapter(adapter);
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, mList);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            allcategorySpinner.setAdapter(adapter);
 
-    ArrayAdapter<String> adapter1 =
-            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, mList1);
-    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    brandSpinner.setAdapter(adapter1);
+            ArrayAdapter<String> adapter1 =
+                    new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, mList1);
+            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            brandSpinner.setAdapter(adapter1);
 
-      ArrayAdapter<String> adapter2 =
-            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, mList2);
-    adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    modelSpinner.setAdapter(adapter2);
+            ArrayAdapter<String> adapter2 =
+                    new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, mList2);
+            adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            modelSpinner.setAdapter(adapter2);
 
-}
+        }
 
 
         fuals.add("Diesel");

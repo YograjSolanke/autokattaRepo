@@ -312,7 +312,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                         }
                         parsedDataCompany.addAll(mCompanyList);
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
-                                R.layout.addproductspinner_color, parsedDataCompany);
+                                R.layout.registration_spinner, parsedDataCompany);
                         autoCompany.setAdapter(dataAdapter);
                     }
 
@@ -328,7 +328,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                         }
                         parsedDataDesignation.addAll(mDesignationList);
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
-                                R.layout.addproductspinner_color, parsedDataDesignation);
+                                R.layout.registration_spinner, parsedDataDesignation);
                         autoDesignation.setAdapter(dataAdapter);
                     }
 
@@ -344,7 +344,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                         }
                         parsedDataSkills.addAll(mSkillList);
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
-                                R.layout.addproductspinner_color, parsedDataSkills);
+                                R.layout.registration_spinner, parsedDataSkills);
                         autoSkills.setAdapter(dataAdapter);
                     }
 
@@ -360,7 +360,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                         }
                         parsedDataDeals.addAll(mDealList);
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
-                                R.layout.addproductspinner_color, parsedDataDeals);
+                                R.layout.registration_spinner, parsedDataDeals);
                         autoDeals.setAdapter(dataAdapter);
                     }
 
@@ -409,7 +409,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                         if (getApplicationContext() != null) {
                             parsedDataCategory.addAll(mCategoryLis);
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                                    R.layout.addproductspinner_color, parsedDataCategory);
+                                    R.layout.registration_spinner, parsedDataCategory);
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spinCategory.setAdapter(adapter);
                             spinSubCategory.setAdapter(null);
@@ -452,7 +452,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     parsedDataSubCategory.addAll(mSubCategoryList);
                     if (getApplicationContext() != null) {
                         ArrayAdapter<String> adapter =
-                                new ArrayAdapter<>(getApplicationContext(), R.layout.addproductspinner_color, parsedDataSubCategory);
+                                new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedDataSubCategory);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinSubCategory.setAdapter(adapter);
                         spinManufacturer.setAdapter(null);
@@ -945,13 +945,5 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(RegistrationCompanyBased.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), NextRegistrationContinue.class), options.toBundle());
-            finish();
-        } else {
-            startActivity(new Intent(getApplicationContext(), NextRegistrationContinue.class));
-            finish();
-        }*/
     }
 }

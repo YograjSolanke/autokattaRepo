@@ -33,6 +33,7 @@ public class GroupsActivity extends AppCompatActivity {
         }
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.profile_groups_container, groupDetailTabs, "GroupActivity")
+                .addToBackStack("GroupActivity")
                 .commit();
     }
 
@@ -48,12 +49,12 @@ public class GroupsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+       /* super.onBackPressed();
         finish();
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-        /*int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
-            finishActivity(1);
+            finish();
             overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         } else {
             if (getFragmentManager().getBackStackEntryCount() > 1) {
@@ -61,7 +62,7 @@ public class GroupsActivity extends AppCompatActivity {
             } else {
                 super.onBackPressed();
             }
-        }*/
+        }
 
         /*int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
