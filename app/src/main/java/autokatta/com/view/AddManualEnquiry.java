@@ -272,10 +272,10 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 } else if (spnStatus.getSelectedItemPosition() == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please provide status");
                     spnStatus.requestFocus();
-                } else if (discussion.equals("")) {
+                } /*else if (discussion.equals("")) {
                     edtDiscussion.setError("Enter discussion data");
                     edtDiscussion.requestFocus();
-                } else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
+                }*/ else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
                     edtDate.setError("Enter Date");
                     edtDate.requestFocus();
                 } else {

@@ -40,7 +40,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
     private class UsedVehicleDetails extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mVehiclePic;
         TextView mVehicleName, mVehicleCategory, mVehicleSubCategory, mVehicleModel, mVehiclePrice, mVehicleCount,
-                mCustomerName, mCustomerContact;
+                mCustomerName, mCustomerContact, mCreateDate, mFollowupdate;
         RelativeLayout mUsedRelative;
 
         private UsedVehicleDetails(View profileView) {
@@ -55,6 +55,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mVehiclePrice = (TextView) profileView.findViewById(R.id.price_str);
             mCustomerName = (TextView) profileView.findViewById(R.id.custname_str);
             mCustomerContact = (TextView) profileView.findViewById(R.id.custcontact_str);
+            mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
+            mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
             profileView.setOnClickListener(this);
         }
 
@@ -70,7 +72,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
     private class ProductDetails extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mProductPic;
         TextView mProductName, mProductCategory, mProductType, mProductPrice, mProductCount,
-                mCustomerName, mCustomerContact;
+                mCustomerName, mCustomerContact, mCreateDate, mFollowupdate;
 
         private ProductDetails(View profileView) {
             super(profileView);
@@ -82,6 +84,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mProductPrice = (TextView) profileView.findViewById(R.id.product_price_str);
             mCustomerName = (TextView) profileView.findViewById(R.id.product_custname_str);
             mCustomerContact = (TextView) profileView.findViewById(R.id.product_custcontact_str);
+            mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
+            mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
             profileView.setOnClickListener(this);
         }
 
@@ -97,7 +101,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
     private class ServiceDetails extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView mServicePic;
         TextView mServiceName, mServiceCategory, mServiceType, mServicePrice, mServiceCount,
-                mCustomerName, mCustomerContact;
+                mCustomerName, mCustomerContact, mCreateDate, mFollowupdate;
 
         private ServiceDetails(View profileView) {
             super(profileView);
@@ -109,6 +113,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mServicePrice = (TextView) profileView.findViewById(R.id.price_str);
             mCustomerName = (TextView) profileView.findViewById(R.id.custname_str);
             mCustomerContact = (TextView) profileView.findViewById(R.id.custcontact_str);
+            mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
+            mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
             profileView.setOnClickListener(this);
         }
 
@@ -159,8 +165,10 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 vehicleDetails.mVehicleModel.setText(mItemList.get(position).getVehicleModel());
                 vehicleDetails.mVehiclePrice.setText(mItemList.get(position).getVehiclePrice());
                 vehicleDetails.mVehicleCount.setText(mItemList.get(position).getEnquiryCount());
-                vehicleDetails.mCustomerName.setText("Name");
-                vehicleDetails.mCustomerContact.setText("Contact");
+                vehicleDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
+                vehicleDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());
+                vehicleDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
+                vehicleDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
                 if (mItemList.get(position).getVehicleImage().equals("") || mItemList.get(position).getVehicleImage().equals("null")
                         || mItemList.get(position).getVehicleImage().equals(null)) {
@@ -182,8 +190,10 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 productDetails.mProductType.setText(mItemList.get(position).getProductType());
                 productDetails.mProductPrice.setText(mItemList.get(position).getProductPrice());
                 productDetails.mProductCount.setText(mItemList.get(position).getEnquiryCount());
-                productDetails.mCustomerName.setText("Name");
-                productDetails.mCustomerContact.setText("Contact");
+                productDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
+                productDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());
+                productDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
+                productDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
                 if (mItemList.get(position).getProductImage().equals("") || mItemList.get(position).getProductImage().equals("null")
                         || mItemList.get(position).getProductImage().equals(null)) {
@@ -205,8 +215,10 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 serviceDetails.mServiceType.setText(mItemList.get(position).getServiceType());
                 serviceDetails.mServicePrice.setText(mItemList.get(position).getServicePrice());
                 serviceDetails.mServiceCount.setText(mItemList.get(position).getEnquiryCount());
-                serviceDetails.mCustomerName.setText("Name");
-                serviceDetails.mCustomerContact.setText("Contact");
+                serviceDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
+                serviceDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());
+                serviceDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
+                serviceDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
                 if (mItemList.get(position).getServiceImage().equals("") || mItemList.get(position).getServiceImage().equals("null")
                         || mItemList.get(position).getServiceImage().equals(null)) {

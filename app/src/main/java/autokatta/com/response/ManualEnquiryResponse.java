@@ -115,9 +115,7 @@ public class ManualEnquiryResponse {
             @SerializedName("brandtags")
             @Expose
             private String brandtags;
-            @SerializedName("created_date")
-            @Expose
-            private String createdDate;
+
             @SerializedName("modified_date")
             @Expose
             private String modifiedDate;
@@ -169,6 +167,11 @@ public class ManualEnquiryResponse {
             @SerializedName("discussion")
             @Expose
             private String discussion;
+
+            @SerializedName("createdDate")
+            @Expose
+            private String createdDate;
+
             @SerializedName("nextFollowupDate")
             @Expose
             private String nextFollowupDate;
@@ -450,9 +453,7 @@ public class ManualEnquiryResponse {
             @SerializedName("brandtags")
             @Expose
             private String brandtags;
-            @SerializedName("created_date")
-            @Expose
-            private String createdDate;
+
             @SerializedName("group_id")
             @Expose
             private String groupId;
@@ -489,6 +490,11 @@ public class ManualEnquiryResponse {
             @SerializedName("discussion")
             @Expose
             private String discussion;
+
+            @SerializedName("createdDate")
+            @Expose
+            private String createdDate;
+
             @SerializedName("nextFollowupDate")
             @Expose
             private String nextFollowupDate;
@@ -940,6 +946,19 @@ public class ManualEnquiryResponse {
             @SerializedName("discussion")
             @Expose
             private String discussion;
+
+            @SerializedName("createdDate")
+            @Expose
+            private String createdDate;
+
+            public String getCreatedDate() {
+                return createdDate;
+            }
+
+            public void setCreatedDate(String createdDate) {
+                this.createdDate = createdDate;
+            }
+
             @SerializedName("nextFollowupDate")
             @Expose
             private String nextFollowupDate;

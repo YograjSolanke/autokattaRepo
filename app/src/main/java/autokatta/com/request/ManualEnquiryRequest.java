@@ -29,6 +29,43 @@ public class ManualEnquiryRequest {
     public String servicePrice;
     public String serviceImage;
 
+    public String customerName;
+    public String customerContact;
+    public String createdDate;
+    public String followupDate;
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getFollowupDate() {
+        return followupDate;
+    }
+
+    public void setFollowupDate(String followupDate) {
+        this.followupDate = followupDate;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerContact() {
+        return customerContact;
+    }
+
+    public void setCustomerContact(String customerContact) {
+        this.customerContact = customerContact;
+    }
+
     public int getLayoutNo() {
         return layoutNo;
     }

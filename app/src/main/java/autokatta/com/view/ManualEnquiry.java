@@ -185,6 +185,8 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 if (response.body() instanceof ManualEnquiryResponse) {
                     ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
                     if (manualEnquiry.getSuccess() != null) {
+
+                        /*Used Vehicle*/
                         for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             request.setLayoutNo(1);
@@ -193,6 +195,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setVehicleCategory(success.getCategory());
                             request.setVehicleSubCategory(success.getSubCategory());
                             request.setVehicleModel(success.getModel());
+
+                            request.setCustomerName("name");
+                            request.setCustomerContact("contact");
+                            request.setCreatedDate(success.getCreatedDate());
+                            request.setFollowupDate(success.getNextFollowupDate());
 
                             if (success.getPrice().equals("") || success.getPrice().isEmpty())
                                 request.setVehiclePrice("NA");
@@ -206,6 +213,8 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setVehicleImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
                         }
+
+                        /*Products*/
                         for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             request.setLayoutNo(2);
@@ -213,6 +222,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setProductName(success.getProductName());
                             request.setProductCategory(success.getCategory());
                             request.setProductType(success.getProductType());
+
+                            request.setCustomerName("name");
+                            request.setCustomerContact("contact");
+                            request.setCreatedDate(success.getCreatedDate());
+                            request.setFollowupDate(success.getNextFollowupDate());
 
                             if (success.getPrice().equals("") || success.getPrice().isEmpty())
                                 request.setProductPrice("NA");
@@ -227,6 +241,8 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setProductImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
                         }
+
+                        /*Services*/
                         for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             request.setLayoutNo(3);
@@ -234,6 +250,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setServiceName(service.getName());
                             request.setServiceCategory(service.getCategory());
                             request.setServiceType(service.getType());
+
+                            request.setCustomerName("name");
+                            request.setCustomerContact("contact");
+                            request.setCreatedDate(service.getCreatedDate());
+                            request.setFollowupDate(service.getNextFollowupDate());
 
                             if (service.getPrice().equals("") || service.getPrice().isEmpty())
                                 request.setServicePrice("NA");
@@ -264,7 +285,9 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                                 .setActionTextColor(getResources().getColor(R.color.text_color))
                                 .setDuration(4000).show();
                     }
-                } else if (response.body() instanceof GetPersonDataResponse) {
+                }
+                /*Person's information */
+                else if (response.body() instanceof GetPersonDataResponse) {
                     GetPersonDataResponse mPersonDataResponse = (GetPersonDataResponse) response.body();
                     if (mPersonDataResponse.getSuccess() != null) {
                         mRecyclerView.setVisibility(View.GONE);

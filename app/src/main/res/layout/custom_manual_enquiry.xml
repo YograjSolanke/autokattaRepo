@@ -34,68 +34,86 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/custname"
-            android:layout_width="110dp"
+        <RelativeLayout
+            android:id="@+id/relCustName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/vehicle_title"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Customer Name :"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_toEndOf="@+id/vehicle_icon">
 
-        <TextView
-            android:id="@+id/custname_str"
+            <TextView
+                android:id="@+id/custname"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Customer Name :"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/custname_str"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/custname"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/custname"
+                android:text="@string/app_name"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relCustContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/custname"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/custname"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
+            android:layout_below="@+id/relCustName"
+            android:layout_toEndOf="@+id/vehicle_icon">
 
-        <TextView
-            android:id="@+id/custcontact"
+            <TextView
+                android:id="@+id/custcontact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Customer Contact :"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/custcontact_str"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/custcontact"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/custcontact"
+                android:text="@string/app_name"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/custname"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Customer Contact :"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_below="@+id/relCustContact"
+            android:layout_toEndOf="@+id/vehicle_icon">
 
-        <TextView
-            android:id="@+id/custcontact_str"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/custcontact"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/custcontact"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Category :"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/category"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/custcontact"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Category :"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/category_str"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/category"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/category"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/category_str"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/category"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/category"
+                android:text="@string/app_name"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/imageView"
@@ -118,68 +136,140 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/sub_category"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/category"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Sub Category :"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/sub_category_str"
+        <RelativeLayout
+            android:id="@+id/relSubCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/sub_category"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/sub_category"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
+            android:layout_below="@+id/relCategory"
+            android:layout_toEndOf="@+id/vehicle_icon">
 
-        <TextView
-            android:id="@+id/model"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sub_category"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Model :"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/sub_category"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Sub Category :"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/model_str"
+            <TextView
+                android:id="@+id/sub_category_str"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/sub_category"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/sub_category"
+                android:text="@string/app_name"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relModel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/model"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/model"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
+            android:layout_below="@+id/relSubCategory"
+            android:layout_toEndOf="@+id/vehicle_icon">
 
-        <TextView
-            android:id="@+id/price"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/model"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Price :"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/model"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Model :"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/price_str"
+            <TextView
+                android:id="@+id/model_str"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/model"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/model"
+                android:text="@string/app_name"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/price"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/price"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
+            android:layout_below="@+id/relModel"
+            android:layout_toEndOf="@+id/vehicle_icon">
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Price :"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/price_str"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/price"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/price"
+                android:text="@string/app_name"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relFollowdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relPrice"
+            android:layout_toEndOf="@+id/vehicle_icon">
+
+            <TextView
+                android:id="@+id/followupdate"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="FollowUpDate :"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/followupdate_str"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/followupdate"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/followupdate"
+                android:text="@string/app_name"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relCreatedate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relFollowdate"
+            android:layout_toEndOf="@+id/vehicle_icon">
+
+            <TextView
+                android:id="@+id/createdate"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Created Date :"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/createdate_str"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/createdate"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/createdate"
+                android:text="@string/app_name"
+                android:textSize="14sp" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <View
