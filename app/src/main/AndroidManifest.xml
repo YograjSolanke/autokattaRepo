@@ -250,8 +250,8 @@
 
         <activity
             android:name=".Registration.CompanyBasedInvitation"
-            android:label="@string/company_based_invitation"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection" />
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/company_based_invitation" />
         <activity
             android:name=".Registration.SkillsBasedInvitation"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
@@ -515,10 +515,12 @@
             android:name=".view.NewVehicleCatalogActivity"
             android:label="@string/title_activity_new_vehicle_catalog"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".enquiries.AllEnquiryTabActivity"
             android:label="@string/title_activity_all_enquiry_tab" />
+        <activity
+            android:name=".apicall.DeleteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

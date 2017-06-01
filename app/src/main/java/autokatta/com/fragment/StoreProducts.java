@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -138,7 +137,6 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
             Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
             Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();

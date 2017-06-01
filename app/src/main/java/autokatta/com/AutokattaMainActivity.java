@@ -38,6 +38,7 @@ import org.json.JSONObject;
 
 import autokatta.com.adapter.TabAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.apicall.DeleteActivity;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.AuctionNotification;
 import autokatta.com.fragment.FavoriteNotificationFragment;
@@ -46,7 +47,6 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.MapsActivity;
 import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
 import autokatta.com.register.RegistrationContinue;
@@ -246,7 +246,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         } else if (menuItem.getItemId() == R.id.business_Chat) {
                             startActivity(new Intent(AutokattaMainActivity.this, BussinessChatActivity.class));
                         } else if (menuItem.getItemId() == R.id.locality) {
-                            startActivity(new Intent(AutokattaMainActivity.this, MapsActivity.class));
+                            //startActivity(new Intent(AutokattaMainActivity.this, MapsActivity.class));
+                            startActivity(new Intent(AutokattaMainActivity.this, DeleteActivity.class));
                         } else if (menuItem.getItemId() == R.id.sign_out) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(AutokattaMainActivity.this);
                             alert.setTitle(getString(R.string.alert_title));

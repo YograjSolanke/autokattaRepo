@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/mainScroll"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/text_margin_top">
-
 
         <RelativeLayout
             android:id="@+id/buttons"
@@ -74,6 +73,12 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativestorename"
+                android:background="@color/black" />
+
             <RelativeLayout
                 android:id="@+id/relativestoreloc"
                 android:layout_width="match_parent"
@@ -102,6 +107,11 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativestoreloc"
+                android:background="@color/black" />
 
             <RelativeLayout
                 android:id="@+id/relativeaddress"
@@ -131,6 +141,12 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativeaddress"
+                android:background="@color/black" />
+
             <RelativeLayout
                 android:id="@+id/relativestorewebsite"
                 android:layout_width="match_parent"
@@ -159,6 +175,12 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativestorewebsite"
+                android:background="@color/black" />
+
             <RelativeLayout
                 android:id="@+id/relativeopentime"
                 android:layout_width="match_parent"
@@ -175,7 +197,6 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-
                 <TextView
                     android:id="@+id/edittiming"
                     android:layout_width="wrap_content"
@@ -187,7 +208,6 @@
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
-
 
                 <TextView
                     android:id="@+id/txtclosetime"
@@ -221,8 +241,13 @@
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
 
-
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativeopentime"
+                android:background="@color/black" />
 
             <RelativeLayout
                 android:id="@+id/relativeworkdays"
@@ -249,10 +274,15 @@
                     android:layout_marginTop="5dp"
                     android:hint="workind days"
                     android:textColor="@color/textColor"
-                    android:textSize="15sp">
+                    android:textSize="15sp" />
 
-                </TextView>
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativeworkdays"
+                android:background="@color/black" />
 
             <RelativeLayout
                 android:id="@+id/relativeStoretype"
@@ -284,6 +314,12 @@
 
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativeStoretype"
+                android:background="@color/black" />
+
             <RelativeLayout
                 android:id="@+id/relativecategory"
                 android:layout_width="match_parent"
@@ -312,6 +348,12 @@
                     android:textSize="15sp"
                     android:visibility="visible" />
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativecategory"
+                android:background="@color/black" />
 
             <RelativeLayout
                 android:id="@+id/linear12"
@@ -342,6 +384,13 @@
                     android:textSize="15sp" />
 
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/linear12"
+                android:background="@color/black" />
+
         </RelativeLayout>
 
         <include layout="@layout/error_view" />
