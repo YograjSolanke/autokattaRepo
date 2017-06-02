@@ -58,6 +58,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     ListView mListView;
     String addArray = "", mInventoryType;
     android.support.v4.widget.NestedScrollView scrollView;
+    TextView mNoData;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 imgCheck = (ImageView) findViewById(R.id.imgCheck);
                 imgCross = (ImageView) findViewById(R.id.imgCross);
                 txtInvite = (TextView) findViewById(R.id.txtInvite);
+                mNoData = (TextView) findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
 
                 edtDate.setOnTouchListener(AddManualEnquiry.this);
                 edtTime.setOnTouchListener(AddManualEnquiry.this);
@@ -187,8 +191,18 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.add_manual_enquiry, menu);
+        this.menu = menu;
         return true;
     }
+/*
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        if (mNoData.getVisibility()==View.VISIBLE)
+            menu.findItem(R.id.ok_manual).setVisible(false);
+        return true;
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -203,7 +217,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     scrollView.setVisibility(View.VISIBLE);
                 } else {
                     onBackPressed();
+
                 }
+                mNoData.setVisibility(View.GONE);
                 break;
 
             case R.id.ok_manual:
@@ -367,6 +383,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         scrollView.setVisibility(View.GONE);
                         mListView.setVisibility(View.VISIBLE);
                         for (GetInventoryResponse.Success success : mInventoryResponse.getSuccess()) {
+                            mNoData.setVisibility(View.GONE);
                             if (success.getInventoryType().equals("UsedVehicle")) {
                                 success.setVehicleId(success.getVehicleId());
                                 success.setTitle(success.getTitle());
@@ -396,9 +413,18 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             }
                         }
                         Log.i("Inventory", "->" + mInventoryType);
-                        adapter = new InventoryAdapter(AddManualEnquiry.this, mItemList, mInventoryType);
-                        mListView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+
+                        if (mItemList.size() != 0) {
+                            mNoData.setVisibility(View.GONE);
+                            adapter = new InventoryAdapter(AddManualEnquiry.this, mItemList, mInventoryType);
+                            mListView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            menu.findItem(R.id.ok_manual).setVisible(true);
+
+                        } else {
+                            mNoData.setVisibility(View.VISIBLE);
+                            menu.findItem(R.id.ok_manual).setVisible(false);
+                        }
                     } else {
                         Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
                     }
