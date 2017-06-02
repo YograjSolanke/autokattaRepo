@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -146,6 +147,16 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(mActivity, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }*/
+        final Intent emailLauncher = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        emailLauncher.setType("message/rfc822");
+        emailLauncher.putExtra(Intent.EXTRA_EMAIL, "abc@gmail.com,cv@gmail.com");
+        emailLauncher.putExtra(Intent.EXTRA_CC, "cv@gmail.com");
+        emailLauncher.putExtra(Intent.EXTRA_SUBJECT, "check this subject line");
+        emailLauncher.putExtra(Intent.EXTRA_TEXT, "hey check this message body!");
+        try {
+            mActivity.startActivity(emailLauncher);
+        } catch (ActivityNotFoundException e) {
+        }
     }
 
     private void sendSMSMessage(String con, String msg) {
