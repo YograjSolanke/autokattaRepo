@@ -5,88 +5,102 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="autokatta.com.view.ManualEnquiry">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="30dp">
+
     <RelativeLayout
-        android:id="@+id/rel"
-        android:layout_width="155dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/filterimg"
-            android:padding="5dp"
-            android:src="@drawable/filter"
-            android:contentDescription="@string/app_name" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:padding="5dp"
-            android:layout_toEndOf="@+id/filterimg"
-            android:text="Filter By Month"
-            android:textStyle="bold"
-            android:contentDescription="@string/app_name" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/rel1"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_marginLeft="170dp">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/filterimg"
-            android:padding="5dp"
-            android:src="@drawable/filter"
-            android:contentDescription="@string/app_name" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:padding="5dp"
-            android:layout_toEndOf="@+id/filterimg"
-            android:text="Filter By Name"
-            android:textStyle="bold"
-            android:contentDescription="@string/app_name" />
-
-    </RelativeLayout>
-</RelativeLayout>
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/manual_swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:layout_marginTop="@dimen/item_padding"
-        android:visibility="visible">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/manual_recycler_view"
+        <LinearLayout
+            android:id="@+id/below"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:baselineAligned="false"
+            android:weightSum="2">
 
-    <!--<android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/person_swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/item_padding"
-        android:visibility="gone">-->
+            <RelativeLayout
+                android:id="@+id/rel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/person_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        android:visibility="gone" />
-    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+                <ImageView
+                    android:id="@+id/filterimg"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="5dp"
+                    android:src="@drawable/filter" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_toEndOf="@+id/filterimg"
+                    android:contentDescription="@string/app_name"
+                    android:padding="5dp"
+                    android:text="Filter By Month"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/filterimgs"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/app_name"
+                    android:padding="5dp"
+                    android:src="@drawable/filter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_toEndOf="@+id/filterimgs"
+                    android:contentDescription="@string/app_name"
+                    android:padding="5dp"
+                    android:text="Filter By Name"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/manual_swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/below"
+            android:visibility="visible">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/manual_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <!--<android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/person_swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_padding"
+            android:visibility="gone">-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/person_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/below"
+            android:scrollbars="vertical"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
 </FrameLayout>

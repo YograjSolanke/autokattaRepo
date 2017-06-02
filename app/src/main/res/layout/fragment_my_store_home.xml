@@ -1,150 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitXY"
-        android:src="@mipmap/demo" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/card_margin"
-        android:layout_marginStart="@dimen/card_margin"
-        android:layout_marginTop="@dimen/card_margin"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/image"
-            android:layout_width="100dp"
-            android:layout_height="90dp"
+            android:id="@+id/other_store_image"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
             android:contentDescription="@string/app_name"
             android:scaleType="fitXY"
             android:src="@mipmap/demo" />
 
         <RelativeLayout
-            android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/card_margin"
             android:layout_marginStart="@dimen/card_margin"
-            android:layout_toEndOf="@+id/image">
+            android:layout_marginTop="@dimen/card_margin"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/name"
+            <ImageView
+                android:id="@+id/other_store_images"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitXY"
+                android:src="@mipmap/demo" />
+
+            <RelativeLayout
+                android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Store Name"
-                android:textSize="@dimen/article_subheading"
+                android:layout_marginStart="@dimen/card_margin"
+                android:layout_toEndOf="@+id/other_store_images">
+
+                <TextView
+                    android:id="@+id/store_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Store Name"
+                    android:textSize="@dimen/article_subheading"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/store_name"
+                    android:layout_marginTop="5dp"
+                    android:text="www.store.com" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/card_margin"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/call"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@color/background"
+                android:text="Call"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/web"
+            <Button
+                android:id="@+id/enquiry"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_marginTop="5dp"
-                android:text="www.store.com" />
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/card_margin"
+                android:layout_weight="1"
+                android:background="@color/background"
+                android:text="Enquiry"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/card_margin"
-        android:layout_marginStart="@dimen/card_margin"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <Button
-            style="?android:attr/buttonBarButtonStyle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@color/background"
-            android:text="Call"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-        <Button
-            style="?android:attr/buttonBarButtonStyle"
+            <ImageView
+                android:id="@+id/like"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_thumb_like" />
+
+            <ImageView
+                android:id="@+id/unlike"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_thumb_unlike"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/rating"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ratestar1" />
+
+            <ImageView
+                android:id="@+id/follow"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_comment_account" />
+
+            <ImageView
+                android:id="@+id/unfollow"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_comment_check"
+                android:visibility="gone" />
+
+            <!--<LinearLayout
+                android:id="@+id/linear_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/follow_clk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="1dp"
+                    android:drawableStart="@mipmap/ic_comment_account"
+                    android:gravity="center"
+                    android:text="Follow" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_unfollow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/unfollow_clk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="1dp"
+                    android:drawableStart="@mipmap/ic_comment_check"
+                    android:gravity="center"
+                    android:textColor="@color/text_color"
+                    android:text="Follow" />
+            </LinearLayout>-->
+            <ImageView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_map_marker" />
+
+            <ImageView
+                android:id="@+id/add_review"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_attachment" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/location"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/card_margin"
-            android:layout_weight="1"
-            android:background="@color/background"
-            android:text="Enquiry"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Kalewadi main road, thergaon pune" />
+
+        <RatingBar
+            android:id="@+id/store_rating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:theme="@style/RatingBar" />
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:weightSum="4">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_thumb_like" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ratestar1" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/followicon" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_map_marker" />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="Kalewadi main road, thergaon pune" />
-
-    <RatingBar
-        android:id="@+id/store_rating"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:numStars="5"
-        android:stepSize="1.0"
-        android:theme="@style/RatingBar" />
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -168,6 +168,9 @@ public class GetPersonDataResponse {
         @SerializedName("nextFollowupDate")
         @Expose
         private String nextFollowupDate;
+        @SerializedName("isPresent")
+        @Expose
+        private String isPresent;
 
         public String getId() {
             return id;
@@ -521,5 +524,12 @@ public class GetPersonDataResponse {
             this.nextFollowupDate = nextFollowupDate;
         }
 
+        public String getIsPresent() {
+            return isPresent;
+        }
+
+        public void setIsPresent(String isPresent) {
+            this.isPresent = isPresent;
+        }
     }
 }

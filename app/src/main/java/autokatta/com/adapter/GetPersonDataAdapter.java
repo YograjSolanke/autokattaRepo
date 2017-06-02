@@ -2,11 +2,9 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.gsm.SmsManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,42 +20,25 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.Registration.InviteFriends;
-import autokatta.com.apicall.ApiCall;
-import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetPersonDataResponse;
-import retrofit2.Response;
 
 /**
  * Created by ak-001 on 11/5/17.
  */
 
-public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdapter.PersonData> implements RequestNotifier {
-
+public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdapter.PersonData> {
     Activity mActivity;
     List<GetPersonDataResponse.Success> list = new ArrayList<>();
-    private PersonData personDataHolder;
-    private List<String> contactList = new ArrayList<>();
-
 
     public GetPersonDataAdapter(Activity mActivity, List<GetPersonDataResponse.Success> list) {
         this.mActivity = mActivity;
         this.list = list;
-
-        for (int i = 0; i < list.size(); i++) {
-            contactList.add(list.get(i).getContactNo());
-            //checkUser(contactList.get(i));
-            Log.i("List", "-" + contactList.get(i));
-        }
-
-
     }
 
 
     static class PersonData extends RecyclerView.ViewHolder {
-
         TextView mPersonName, mContact, mAddress, mFollowUpDate, mDiscussion, mInvite;
-        ImageView mProfilePic, mCallImg, mMailImage;
+        ImageView mProfilePic, mCallImg, mMailImage, mIsAuto;
 
         PersonData(View itemView) {
             super(itemView);
@@ -69,6 +50,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             mProfilePic = (ImageView) itemView.findViewById(R.id.user_image);
             mCallImg = (ImageView) itemView.findViewById(R.id.call_image);
             mMailImage = (ImageView) itemView.findViewById(R.id.mail_image);
+            mIsAuto = (ImageView) itemView.findViewById(R.id.is_auto);
             mInvite = (TextView) itemView.findViewById(R.id.txtInvite);
         }
     }
@@ -84,19 +66,10 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
 
     @Override
     public void onBindViewHolder(final PersonData holder, int position) {
-        personDataHolder = holder;
         holder.mPersonName.setText(list.get(position).getUsername());
         holder.mContact.setText(list.get(position).getContactNo());
         holder.mAddress.setText(list.get(position).getCity());
         holder.mFollowUpDate.setText(list.get(position).getNextFollowupDate());
-
-
-        for (int i = 0; i < contactList.size(); i++) {
-            checkUser(contactList.get(i));
-
-            Log.i("list", "===" + contactList.get(i));
-        }
-        //checkUser(list.get(position).getContactNo());
 
         if (list.get(position).getProfilePic().equals("") || list.get(position).getProfilePic().equals("null")
                 || list.get(position).getProfilePic().equals(null)) {
@@ -129,6 +102,12 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
                 sendSMSMessage(holder.mContact.getText().toString(), "hhhh");
             }
         });
+
+        if (list.get(position).getIsPresent().equals("yes")) {
+            holder.mIsAuto.setVisibility(View.VISIBLE);
+        } else {
+            holder.mIsAuto.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -180,36 +159,5 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             Toast.makeText(mActivity, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
-    }
-
-    private void checkUser(String contact) {
-        ApiCall mApiCall = new ApiCall(mActivity, this);
-        mApiCall.registrationContactValidation(contact);
-    }
-
-    @Override
-    public void notifySuccess(Response<?> response) {
-
-    }
-
-    @Override
-    public void notifyError(Throwable error) {
-
-    }
-
-    @Override
-    public void notifyString(String str) {
-        if (str != null) {
-            if (str.equalsIgnoreCase("Success")) {
-                //CustomToast.customToast(mActivity,"Autokatta user");
-                personDataHolder.mInvite.setVisibility(View.GONE);
-                personDataHolder.mContact.setTypeface(personDataHolder.mContact.getTypeface(), Typeface.BOLD);
-            } else {
-                //CustomToast.customToast(mActivity,"No Autokatta user");
-                personDataHolder.mInvite.setVisibility(View.VISIBLE);
-
-            }
-        } else
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
     }
 }

@@ -2,16 +2,12 @@ package autokatta.com.apicall;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.view.MenuItem;
 
 import autokatta.com.R;
+import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.fragment.StoreInfo;
 import autokatta.com.fragment.StoreProducts;
 import autokatta.com.fragment.StoreServices;
@@ -32,6 +28,10 @@ public class DeleteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
         // Locate the viewpager in activity_main.xml
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
@@ -48,12 +48,12 @@ public class DeleteActivity extends AppCompatActivity {
         storeVehicles.setArguments(mBundle);
 
         // Set the ViewPagerAdapter into ViewPager
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new MyStoreHome(), "");
-        adapter.addFrag(storeInfo, "About");
-        adapter.addFrag(storeProducts, "Products");
-        adapter.addFrag(storeServices, "Services");
-        adapter.addFrag(storeVehicles, "Vehicles");
+        TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
+        adapter.addFragment(new MyStoreHome(), "");
+        adapter.addFragment(storeInfo, "About");
+        adapter.addFragment(storeProducts, "Products");
+        adapter.addFragment(storeServices, "Services");
+        adapter.addFragment(storeVehicles, "Vehicles");
 
         viewPager.setAdapter(adapter);
 
@@ -62,7 +62,17 @@ public class DeleteActivity extends AppCompatActivity {
         mTabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
     }
 
-    class ViewPagerAdapter extends FragmentStatePagerAdapter {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                onBackPressed();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+   /*class ViewPagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -89,5 +99,5 @@ public class DeleteActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
+    }*/
 }

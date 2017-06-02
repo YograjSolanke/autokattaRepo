@@ -89,10 +89,19 @@
             android:id="@+id/contact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.4"
+            android:layout_weight="1.2"
             android:gravity="start"
             android:text="Contact"
             android:textColor="@color/text_color" />
+
+        <ImageView
+            android:id="@+id/is_auto"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="0.2"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/hdlogo"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout

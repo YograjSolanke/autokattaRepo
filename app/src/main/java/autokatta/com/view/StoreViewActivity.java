@@ -50,6 +50,7 @@ import autokatta.com.fragment.StoreProducts;
 import autokatta.com.fragment.StoreServices;
 import autokatta.com.fragment.StoreVehicles;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.my_store.MyStoreHome;
 import autokatta.com.response.StoreResponse;
 import retrofit2.Response;
 
@@ -76,6 +77,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
     FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap, mAdd, mAutoshare, mShare, mTeamProduct, mTeamServices, mTeamVehicle;
+    MyStoreHome mMyStoreHome;
     StoreInfo storeInfo;
     StoreProducts storeProducts;
     StoreServices storeServices;
@@ -99,6 +101,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         runOnUiThread(new Runnable() {
             @Override
@@ -124,6 +127,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
                     mShare = (FloatingActionButton) findViewById(R.id.share);
 
+                    mMyStoreHome = new MyStoreHome();
+                    mMyStoreHome.setArguments(mBundle);
                     storeInfo = new StoreInfo();
                     storeInfo.setArguments(mBundle);
                     storeProducts = new StoreProducts();
@@ -148,6 +153,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         setupViewPager(viewPager);
                     }
                     tabLayout.setupWithViewPager(viewPager);
+                    tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
                     tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                         @Override
                         public void onTabSelected(TabLayout.Tab tab) {
@@ -430,6 +436,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
+        adapter.addFragment(mMyStoreHome, "");
         adapter.addFragment(storeInfo, "About");
         adapter.addFragment(storeProducts, "Products");
         adapter.addFragment(storeServices, "Services");

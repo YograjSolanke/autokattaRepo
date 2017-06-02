@@ -307,6 +307,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             success.setCity(success.getCity());
                             success.setProfilePic(success.getProfilePic());
                             success.setNextFollowupDate(success.getNextFollowupDate());
+                            success.setIsPresent(success.getIsPresent());
                             mList.add(success);
                         }
                         GetPersonDataAdapter adapter = new GetPersonDataAdapter(ManualEnquiry.this, mList);
