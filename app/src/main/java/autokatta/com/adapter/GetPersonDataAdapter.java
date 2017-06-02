@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.gsm.SmsManager;
@@ -106,6 +107,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         if (list.get(position).getIsPresent().equals("yes")) {
             holder.mIsAuto.setVisibility(View.VISIBLE);
             holder.mInvite.setVisibility(View.GONE);
+            holder.mContact.setTypeface(Typeface.DEFAULT_BOLD);
         } else {
             holder.mIsAuto.setVisibility(View.GONE);
             holder.mInvite.setVisibility(View.VISIBLE);
