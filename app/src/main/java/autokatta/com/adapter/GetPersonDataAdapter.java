@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.Registration.InviteFriends;
 import autokatta.com.response.GetPersonDataResponse;
 
 /**
@@ -105,8 +104,10 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
 
         if (list.get(position).getIsPresent().equals("yes")) {
             holder.mIsAuto.setVisibility(View.VISIBLE);
+            holder.mInvite.setVisibility(View.GONE);
         } else {
             holder.mIsAuto.setVisibility(View.GONE);
+            holder.mInvite.setVisibility(View.VISIBLE);
         }
     }
 
@@ -152,9 +153,6 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
             Toast.makeText(mActivity, "SMS sent.", Toast.LENGTH_LONG).show();
-            Intent i = new Intent(mActivity, InviteFriends.class);
-            mActivity.startActivity(i);
-            mActivity.finish();
         } catch (Exception e) {
             Toast.makeText(mActivity, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
