@@ -86,6 +86,8 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
 
     @Override
     public void notifySuccess(Response<?> response) {
+        list.clear();
+        list1.clear();
         if (response != null) {
             if (response.isSuccessful()) {
                 mHeaderList = new ArrayList<>();

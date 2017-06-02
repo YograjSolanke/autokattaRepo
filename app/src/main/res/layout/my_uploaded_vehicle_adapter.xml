@@ -212,7 +212,7 @@
             <RelativeLayout
                 android:id="@+id/relativetitle"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:background="#C8C9CC">
 
                 <RelativeLayout
@@ -226,8 +226,8 @@
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
+
+                        android:layout_marginTop="5dp"
                         android:text="Title"
                         android:textColor="#000000"
 
@@ -240,6 +240,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/title"
                         android:gravity="center"
+                        android:layout_marginTop="5dp"
                         android:text="-"
                         android:textColor="#808080"
                         android:textStyle="bold"
@@ -248,11 +249,14 @@
 
                     <TextView
                         android:id="@+id/edittitle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginRight="45dp"
+                        android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/dash1"
-                        android:textColor="#808080"/>
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/relativebroadcast"
@@ -269,7 +273,7 @@
                         android:src="@mipmap/broadcast"/>
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="10dp"
+                        android:layout_height="15dp"
                         android:layout_below="@+id/broadcast"
                         android:text="Broadcast"
                         android:textSize="10dp"

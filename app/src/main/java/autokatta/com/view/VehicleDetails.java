@@ -174,7 +174,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     contact = datum.getContact();
                     mLikestr = datum.getStatus();
                     Title = datum.getTitle();
-                    mAddress = (String) datum.getLocationAddress();
+                    mAddress = (String) datum.getLocationCity();
                     mRegistration = datum.getRegistrationNumber();
                     mYear = datum.getYearOfRegistration();
                     mPrice = datum.getPrice();

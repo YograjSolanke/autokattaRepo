@@ -424,9 +424,9 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                             bitmapRotate = bitmap;
                             bitmap.recycle();
                         }
-                        mProfilePicture.setImageBitmap(bitmapRotate);
+                       // mProfilePicture.setImageBitmap(bitmapRotate);
                         img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
-
+                        img.setImageBitmap(bitmapRotate);
 //                            Saving image to mobile internal memory for sometime
                         String root = getApplicationContext().getFilesDir().toString();
                         File myDir = new File(root + "/androidlift");

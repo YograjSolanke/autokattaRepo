@@ -704,8 +704,10 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
             }
         }
 
-        if (!flag)
+        if (!flag) {
             mLocation.setError("Please Select Address From Dropdown Only");
+            mLocation.setFocusable(true);
+        }
         else if (!checkBox1.isChecked() && rtostr.equalsIgnoreCase(""))
             Toast.makeText(getActivity(), "Please provide RTO city", Toast.LENGTH_LONG).show();
         else {
