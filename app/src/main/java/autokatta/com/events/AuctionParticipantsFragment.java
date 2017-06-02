@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +40,8 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
         //empty constructor
     }
 
+    boolean hasViewCreated = false;
+    TextView mNoData;
     View mAuctionParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -44,6 +52,16 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAuctionParticipants = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+
+        return mAuctionParticipants;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mAuctionParticipants.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
 
         mRecyclerView = (RecyclerView) mAuctionParticipants.findViewById(R.id.recyclerMain);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mAuctionParticipants.findViewById(R.id.swipeRefreshLayoutMain);
@@ -81,7 +99,7 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
                 }
             }
         });
-        return mAuctionParticipants;
+
     }
 
     @Override
@@ -103,23 +121,29 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
             if (response.isSuccessful()) {
                 participantList.clear();
                 AuctionParticipantsResponse participantsResponse = (AuctionParticipantsResponse) response.body();
+                if (!participantsResponse.getSuccess().isEmpty()) {
+                    participantList.clear();
+                    mNoData.setVisibility(View.GONE);
+                    for (AuctionParticipantsResponse.Success success : participantsResponse.getSuccess()) {
 
-                for (AuctionParticipantsResponse.Success success : participantsResponse.getSuccess()) {
+                        success.setContact(success.getContact());
+                        success.setProfilePhoto(success.getProfilePhoto());
+                        success.setUsername(success.getUsername());
+                        success.setLocation(success.getLocation());
+                        success.setProfession(success.getProfession());
+                        success.setSubprofession(success.getSubprofession());
+                        success.setBlackliststatus(success.getBlackliststatus());
 
-                    success.setContact(success.getContact());
-                    success.setProfilePhoto(success.getProfilePhoto());
-                    success.setUsername(success.getUsername());
-                    success.setLocation(success.getLocation());
-                    success.setProfession(success.getProfession());
-                    success.setSubprofession(success.getSubprofession());
-                    success.setBlackliststatus(success.getBlackliststatus());
-
-                    participantList.add(success);
+                        participantList.add(success);
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    AuctionParticipantAdapter adapter = new AuctionParticipantAdapter(getActivity(), strAuctionId, participantList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
-                AuctionParticipantAdapter adapter = new AuctionParticipantAdapter(getActivity(), strAuctionId, participantList);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -131,13 +155,57 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+                getAuctionParticipant(strAuctionId);
+                hasViewCreated = true;
+            }
+        }
+    }
+
+    @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Auction Participants Fragment");
             error.printStackTrace();

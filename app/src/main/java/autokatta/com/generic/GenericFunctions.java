@@ -249,20 +249,34 @@ public class GenericFunctions {
 
     public Boolean startTimeEndTimeValidation(String startTime, String endTime) {
 
-        Boolean flag = true;
-        String[] startTime1 = startTime.split(":");
-        String[] endTime1 = endTime.split(":");
+        Boolean flag;
 
-        if (Integer.parseInt(startTime1[0]) > Integer.parseInt(endTime1[0])) {
-            flag = false;
-        } else if (Integer.parseInt(startTime1[0]) < Integer.parseInt(endTime1[0])) {
-            flag = true;
-        } else if (Integer.parseInt(startTime1[0]) == Integer.parseInt(endTime1[0])) {
-            if ((Integer.parseInt(startTime1[1]) > Integer.parseInt(endTime1[1])) || (Integer.parseInt(startTime1[1]) == Integer.parseInt(endTime1[1]))) {
-                flag = false;
-            }
+        SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+        Date starttm = null;
+        Date endtm = null;
+        try {
+            starttm = parseFormat.parse(startTime);
+            endtm = parseFormat.parse(endTime);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
+        // System.out.println(parseFormat.format(date) + " = " + displayFormat.format(date));
+
+        String sttime = displayFormat.format(starttm);
+        String edTime = displayFormat.format(endtm);
+
+        System.out.println("ddddddddddddddddd start time=" + sttime);
+        System.out.println("dddddddddddd end time=" + edTime);
+
+
+        if (sttime.compareTo(edTime) > 0) {
+            flag = false;
+        } else {
+            flag = true;
+        }
         return flag;
     }
 

@@ -99,7 +99,7 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
                     minute = String.valueOf(i1);
             }
 
-            editText.setText(hour + ":" + minute + ":" + AM_PM);
+            editText.setText(hour + ":" + minute + " " + AM_PM);
         }
 
 

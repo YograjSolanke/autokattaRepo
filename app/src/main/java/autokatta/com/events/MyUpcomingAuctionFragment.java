@@ -133,9 +133,10 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
                     adapter.notifyDataSetChanged();
                     Log.i("size auction list up", String.valueOf(upcomingAuctionResponseList.size()));
 
-                } else
+                } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                mNoData.setVisibility(View.VISIBLE);
+                    mNoData.setVisibility(View.VISIBLE);
+                }
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));

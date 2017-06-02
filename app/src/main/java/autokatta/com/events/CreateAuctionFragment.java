@@ -132,6 +132,17 @@ public class CreateAuctionFragment extends Fragment
         apiCall.getAllStates();
 
 
+//        //date comparision
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date now = new Date();
+//        String dateString = sdf.format(now);
+//        SimpleDateFormat tm = new SimpleDateFormat("HH:mm");
+//        String time = tm.format(Calendar.getInstance().getTime());
+//
+//        System.out.println("current date=" + dateString);
+//        System.out.println("current time=" + time);
+
+
         return createAuctionView;
     }
 
@@ -206,7 +217,6 @@ public class CreateAuctionFragment extends Fragment
                     System.out.println("current time=" + time);
 
 
-
                     auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
                     stockLocation = stockLocationSpinner.getSelectedItem().toString().replaceAll(" ", "");
                     Log.i("category", "->" + auctionCategory);
@@ -249,11 +259,11 @@ public class CreateAuctionFragment extends Fragment
 
                     } else if (eddate.equals("")) {
                         enddate.requestFocus();
-//                    enddate.setError("Enter end date");
+                        //                    enddate.setError("Enter end date");
                         Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
                     } else if (edtime.equals("")) {
                         endtime.requestFocus();
-//                    endtime.setError("Enter end time");
+                        //                    endtime.setError("Enter end time");
                         Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
                     } else if (!validObj.startDateValidatioon(stdate)) {
                         startdate.setError("Enter valid Date");
@@ -331,7 +341,7 @@ public class CreateAuctionFragment extends Fragment
                             canclebtn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-//                                    Radiobtn_click=((RadioButton)dialog.findViewById(radiogroup.getCheckedRadioButtonId())).getText().toString();
+                                    //                                    Radiobtn_click=((RadioButton)dialog.findViewById(radiogroup.getCheckedRadioButtonId())).getText().toString();
                                     dialog.dismiss();
                                 }
                             });
@@ -339,8 +349,8 @@ public class CreateAuctionFragment extends Fragment
 
                         }
                     }
-                }
 
+                }
 
 
                 break;
@@ -371,7 +381,7 @@ public class CreateAuctionFragment extends Fragment
                     //whichclick = "enddate";
                     starttime.setInputType(InputType.TYPE_NULL);
                     starttime.setError(null);
-                    new SetMyDateAndTime("timeEvent", starttime, getActivity());
+                    new SetMyDateAndTime("time", starttime, getActivity());
                 }
                 break;
             case (R.id.auctionenddate):
@@ -390,7 +400,7 @@ public class CreateAuctionFragment extends Fragment
                     //whichclick = "enddate";
                     endtime.setInputType(InputType.TYPE_NULL);
                     endtime.setError(null);
-                    new SetMyDateAndTime("timeEvent", endtime, getActivity());
+                    new SetMyDateAndTime("time", endtime, getActivity());
                 }
                 break;
 
@@ -545,7 +555,6 @@ public class CreateAuctionFragment extends Fragment
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
-
 
 
     }

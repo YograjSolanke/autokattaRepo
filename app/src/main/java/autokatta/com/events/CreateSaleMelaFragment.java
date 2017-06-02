@@ -27,6 +27,9 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -147,6 +150,16 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                     }
                 }
 
+                //date comparision
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date now = new Date();
+                String dateString = sdf.format(now);
+                SimpleDateFormat tm = new SimpleDateFormat("hh:mm a");
+                String time = tm.format(Calendar.getInstance().getTime());
+
+                System.out.println("current date=" + dateString);
+                System.out.println("current time=" + time);
+
 
                 if (name.equals("")) {
                     eventname.setError("Enter Sale title");
@@ -159,6 +172,9 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                 } else if (sttime.equals("")) {
                     starttime.setError("Enter start time");
                     //Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                    starttime.requestFocus();
+                } else if (stdate.equals(dateString) && !validObj.startTimeEndTimeValidation(time, sttime)) {
+                    starttime.setError("time is invalid");
                     starttime.requestFocus();
                 } else if (eddate.equals("")) {
                     enddate.setError("Enter end date");

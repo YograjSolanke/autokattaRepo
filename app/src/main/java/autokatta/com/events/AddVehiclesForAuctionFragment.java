@@ -28,7 +28,10 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.net.SocketTimeoutException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import autokatta.com.R;
@@ -362,6 +365,19 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 break;
 
             case R.id.donecheck:
+
+
+                //date comparision
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date now = new Date();
+                String dateString = sdf.format(now);
+                SimpleDateFormat tm = new SimpleDateFormat("hh:mm a");
+                String time = tm.format(Calendar.getInstance().getTime());
+
+                System.out.println("current date=" + dateString);
+                System.out.println("current time=" + time);
+
+
                 auctionTitleUpdate = auctionTitle.getText().toString();
                 startDateUpdate = startDate.getText().toString();
                 startTimeUpdate = startTime.getText().toString();
@@ -377,6 +393,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 } else if (startTimeUpdate.equals("")) {
 //                    starttime.setError("Enter start time");
                     Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                } else if (startDateUpdate.equals(dateString) && !genericFunctions.startTimeEndTimeValidation(time, startTimeUpdate)) {
+
+                    Toast.makeText(getActivity(), "time is invalid", Toast.LENGTH_LONG).show();
+
                 } else if (endDateUpdate.equals("")) {
 //                    enddate.setError("Enter end date");
                     Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
