@@ -48,7 +48,11 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     String myContact;
     boolean hasViewCreated = false;
     ConnectionDetector mTestConnection;
+    LinearLayoutManager mLinearLayoutManager;
     TextView mNoData;
+
+    private static int firstVisibleInListview;
+
 
     public MyStoreListFragment() {
         //empty fragment
@@ -214,10 +218,11 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mMyStoreList.findViewById(R.id.swipeRefreshLayoutMyStoreList);
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mRecyclerView.setHasFixedSize(true);
-                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+                mLinearLayoutManager = new LinearLayoutManager(getActivity());
                 mLinearLayoutManager.setReverseLayout(true);
                 mLinearLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
+                firstVisibleInListview = mLinearLayoutManager.findFirstVisibleItemPosition();
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
@@ -233,5 +238,24 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         });
         fabCreateStore.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0) {
+                    // Scrolling up
+                    fabCreateStore.hide();
+
+                } else {
+                    // Scrolling down
+                    fabCreateStore.show();
+                }
+            }
+        });
+
+
+
     }
 }

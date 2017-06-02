@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
         TextView storename, storetype, location, website, time, workingday;
         RelativeLayout relative, relaprofilelike;
         LinearLayout relalike2, relatebutton;
+        RatingBar storerating;
         ImageView dp, groupimage, storeimage, imgvehicle, imgproduct, imgservice, profileimage, storecallimg, Upimgvehicle;
         TextView profilefollowcnt, profilelikecnt, storefollowcnt, storelikecnt, vehiclelikecnt, Upvehiclelikecnt;
         TextView productname, producttype, productlikecnt;
@@ -71,7 +73,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
         RelativeLayout relGoing, relIgnore;
         TextView username, profilelocation, profileworkat, profilewebsite;
         ImageView callimg, image;
-        ImageView starrating1, starrating2, starrating3, starrating4, starrating5;
         ImageView productrating1, productrating2, productrating3, productrating4, productrating5;
         ImageView servicerating1, servicerating2, servicerating3, servicerating4, servicerating5;
 
@@ -136,11 +137,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                     holder.storefollowcnt = (TextView) convertView.findViewById(R.id.followcnt);
                     holder.storelikecnt = (TextView) convertView.findViewById(R.id.like);
                     holder.storecallimg = (ImageView) convertView.findViewById(R.id.callimg);
-                    holder.starrating1 = (ImageView) convertView.findViewById(R.id.starlike4);
-                    holder.starrating2 = (ImageView) convertView.findViewById(R.id.starlike3);
-                    holder.starrating3 = (ImageView) convertView.findViewById(R.id.starlike2);
-                    holder.starrating4 = (ImageView) convertView.findViewById(R.id.starlike1);
-                    holder.starrating5 = (ImageView) convertView.findViewById(R.id.starlike);
+                    holder.storerating = (RatingBar) convertView.findViewById(R.id.storerating);
                     holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
 
 
@@ -373,38 +370,8 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                 holder.relalike2.setVisibility(View.GONE);
                 holder.storecallimg.setVisibility(View.GONE);
 
-                if (rating.equals("null")) {
-                } else if (!rating.equals("null")) {
-                    // System.out.println("storeratingcount_list.get(position).toString()"+obj.storeratingld.toString()+obj.storeratingld);
-
-                    //  Float floatrate= Float.parseFloat(rating.toString());// Float.valueOf(storeratingcount_list.get(position).toString());
-
-                    if (Float.parseFloat(rating) >= 4.5) {
-                        holder.starrating1.setBackgroundResource(R.drawable.ratestar1);
-                        holder.starrating2.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating3.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating4.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating5.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                    }
-                    if (Float.parseFloat(rating) <= 4.5 && Float.parseFloat(rating) >= 3.5) {
-                        holder.starrating2.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating3.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating4.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating5.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                    }
-                    if (Float.parseFloat(rating) <= 3.5 && Float.parseFloat(rating) >= 2.5) {
-                        holder.starrating3.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating4.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating5.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                    }
-                    if (Float.parseFloat(rating) <= 2.5 && Float.parseFloat(rating) >= 1.5) {
-                        holder.starrating4.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                        holder.starrating5.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                    }
-                    if (Float.parseFloat(rating) <= 1.5 && Float.parseFloat(rating) >= 0.5) {
-                        holder.starrating5.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.ratestar1));
-                    }
-
+                if (rating != null && !rating.equals("null")) {
+                    holder.storerating.setRating(Float.parseFloat(rating));
                 }
 
                 try {

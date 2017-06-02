@@ -265,10 +265,13 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     Intent intent = new Intent(getActivity(), StoreViewActivity.class);
                     intent.putExtras(b);
                     getActivity().startActivity(intent, options.toBundle());
+                    getActivity().finish();
                 } else {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
                     getActivity().startActivity(i, options.toBundle());
+                    getActivity().finish();
+
                 }
             }
         } else

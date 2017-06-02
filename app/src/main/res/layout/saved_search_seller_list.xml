@@ -11,6 +11,14 @@
 
     </include>
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/hi"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutMySearchSellerlst"
         android:layout_width="match_parent"
@@ -24,5 +32,8 @@
 
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include layout="@layout/error_view" />
+
 
 </RelativeLayout>

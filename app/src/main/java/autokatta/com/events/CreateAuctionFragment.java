@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -33,7 +34,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import autokatta.com.R;
@@ -49,6 +53,7 @@ import autokatta.com.response.AllStatesResponse;
 import autokatta.com.response.AuctionCreateResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
+import autokatta.com.view.MySavedAuctionEventActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -79,6 +84,7 @@ public class CreateAuctionFragment extends Fragment
     String Radiobtn_click = "";
     GenericFunctions validObj;
     String ids = "", cluases = "", name, stdate, sttime, eddate, edtime, type, location, auctionCategory, stockLocation;
+    String newSttime, newEdtime;
     private ConnectionDetector mConnectionDetector;
 
     public CreateAuctionFragment() {
@@ -119,7 +125,6 @@ public class CreateAuctionFragment extends Fragment
         create.setOnClickListener(this);
         addmore.setOnClickListener(this);
         clauseList.setOnTouchListener(this);
-
 
         address.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
         apiCall.getSpecialClauses("getClause");
@@ -189,6 +194,19 @@ public class CreateAuctionFragment extends Fragment
                     edtime = endtime.getText().toString();
                     location = address.getText().toString();
 
+
+                    //date comparision
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date now = new Date();
+                    String dateString = sdf.format(now);
+                    SimpleDateFormat tm = new SimpleDateFormat("hh:mm a");
+                    String time = tm.format(Calendar.getInstance().getTime());
+
+                    System.out.println("current date=" + dateString);
+                    System.out.println("current time=" + time);
+
+
+
                     auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
                     stockLocation = stockLocationSpinner.getSelectedItem().toString().replaceAll(" ", "");
                     Log.i("category", "->" + auctionCategory);
@@ -226,6 +244,9 @@ public class CreateAuctionFragment extends Fragment
                         starttime.requestFocus();
 //                    starttime.setError("Enter start time");
                         Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                    } else if (stdate.equals(dateString) && !validObj.startTimeEndTimeValidation(time, sttime)) {
+                        starttime.setError("time is invalid");
+
                     } else if (eddate.equals("")) {
                         enddate.requestFocus();
 //                    enddate.setError("Enter end date");
@@ -301,6 +322,7 @@ public class CreateAuctionFragment extends Fragment
                                 public void onClick(View v) {
                                     Radiobtn_click = ((RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId())).getText().toString();
                                     dialog.dismiss();
+
                                     apiCall.createAuction(name, stdate, sttime, eddate, edtime, type, myContact, location, auctionCategory, ids,
                                             Radiobtn_click, stockLocation);
                                 }
@@ -349,7 +371,7 @@ public class CreateAuctionFragment extends Fragment
                     //whichclick = "enddate";
                     starttime.setInputType(InputType.TYPE_NULL);
                     starttime.setError(null);
-                    new SetMyDateAndTime("time", starttime, getActivity());
+                    new SetMyDateAndTime("timeEvent", starttime, getActivity());
                 }
                 break;
             case (R.id.auctionenddate):
@@ -368,7 +390,7 @@ public class CreateAuctionFragment extends Fragment
                     //whichclick = "enddate";
                     endtime.setInputType(InputType.TYPE_NULL);
                     endtime.setError(null);
-                    new SetMyDateAndTime("time", endtime, getActivity());
+                    new SetMyDateAndTime("timeEvent", endtime, getActivity());
                 }
                 break;
 
@@ -465,6 +487,9 @@ public class CreateAuctionFragment extends Fragment
                                         public void onClick(DialogInterface dialog, int id) {
 
                                             Toast.makeText(getActivity(), "Auction saved in my saved event", Toast.LENGTH_LONG).show();
+
+                                            Intent intent = new Intent(getActivity(), MySavedAuctionEventActivity.class);
+                                            startActivity(intent);
 
                                             dialog.cancel();
                                         }

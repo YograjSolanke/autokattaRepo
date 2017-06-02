@@ -900,6 +900,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 uploadImage(picturePath);
                 uploadImage(coverpicturePath);
 
+
                 bundle = new Bundle();
                 bundle.putString("store_id", store_id);
                 bundle.putString("call", callFrom);
@@ -909,6 +910,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+
             }
         } else
             Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
