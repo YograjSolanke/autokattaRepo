@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
     TabLayout mTabLayout;
     ViewPager mViewPager;
     TextView txtVehicle, txtEndDate, txtEndTime, txtStartTime, txtStartDate, txtParticipant, txtTimer, txtCategory, txtLocation;
-    ;
+
     FloatingActionButton btnSpecialclause;
     ActiveAuctionHighestBidFragment auctionHighestBid;
     ActiveAuctionNoBidFragment auctionNoBid;
@@ -55,6 +56,10 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
         setSupportActionBar(toolbar);
 
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         strAuctionId = getIntent().getExtras().getString("auctionid");
         strAuctionTitle = getIntent().getExtras().getString("auctiontitle");
         strVehicleCount = getIntent().getExtras().getString("vehicle_count");
@@ -225,6 +230,31 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
                 alertDialog.show();
                 break;
 
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 

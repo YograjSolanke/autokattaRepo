@@ -119,7 +119,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mTitle = inflater.inflate(R.layout.fragment_upload_vehicle_title, container, false);
         scrollView1 = (ScrollView) mTitle.findViewById(R.id.scrollView1);
         title = (EditText) mTitle.findViewById(R.id.titleText1);
-        mCategory = (TextView) mTitle.findViewById(R.id.categorytext);
+        mCategory = (TextView) mTitle.findViewById(R.id.categorytext1);
         radioButton1 = (RadioButton) mTitle.findViewById(R.id.radioButton1);
         radioButton2 = (RadioButton) mTitle.findViewById(R.id.radioButton2);
         storeradioyes = (RadioButton) mTitle.findViewById(R.id.storeradio1);
@@ -170,6 +170,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
         category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
         categoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", null);
+
+        mCategory.setText(category);
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
         mSubmit.setOnClickListener(this);

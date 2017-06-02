@@ -286,7 +286,7 @@
                 android:layout_width="40dp"
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/relativetitle"
+                android:layout_below="@+id/Enquiry"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
@@ -299,11 +299,24 @@
                 android:layout_width="60dp"
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/delete"
+                android:layout_below="@+id/quotation"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
                 android:text="Enquiry"
+                android:textColor="@color/white"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/quotation"
+                android:layout_width="90dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/relativetitle"
+                android:layout_marginTop="5dp"
+                android:textSize="11sp"
+                android:background="@color/background"
+                android:text="Get Quotation"
                 android:textColor="@color/white"
                 android:visibility="visible"/>
 
@@ -365,11 +378,12 @@
                     android:id="@+id/leads"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:gravity="center"
                     android:text="No of leads"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"/>
 
                 <TextView
                     android:id="@+id/dash"
