@@ -308,7 +308,34 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="30dp"
+            android:id="@+id/r1"
+            android:background="@color/grey">
+
+            <TextView
+                android:id="@+id/edittxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Store Name"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/article_subheading"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/deleteproduct"
+                android:src="@drawable/ic_delete"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/app_name"
+                android:visibility="visible" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
 
             <RelativeLayout
                 android:id="@+id/actionlinear"
@@ -350,26 +377,7 @@
                 android:layout_marginStart="@dimen/item_padding"
                 android:layout_toEndOf="@+id/actionlinear">
 
-                <TextView
-                    android:id="@+id/edittxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:layout_alignParentStart="true"
-                    android:text="Store Name"
-                    android:layout_toStartOf="@+id/deleteproduct"
-                    android:textSize="@dimen/article_subheading"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/deleteproduct"
-                    android:src="@drawable/ic_delete"
-                    android:layout_alignParentEnd="true"
-                    android:contentDescription="@string/app_name"
-                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/storetype"

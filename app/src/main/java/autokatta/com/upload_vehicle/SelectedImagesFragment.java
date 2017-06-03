@@ -113,15 +113,15 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
 
             case R.id.btnBack:
-
-                b = new Bundle();
+                onBackPressed();
+               /* b = new Bundle();
                 b.putInt("call", 2);
                 SubTypeFragment fragment2 = new SubTypeFragment();
                 fragment2.setArguments(b);
                 fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.vehicle_upload_container, fragment2);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
                 break;
 
             case R.id.btnGo:
