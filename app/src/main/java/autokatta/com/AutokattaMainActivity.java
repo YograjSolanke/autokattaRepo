@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -68,6 +69,7 @@ import autokatta.com.view.MyUpcomingEventsTabActivity;
 import autokatta.com.view.MyUploadedVehiclesActivity;
 import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.SearchVehicleActivity;
+import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.UserProfile;
 import autokatta.com.view.VehicleUpload;
 import retrofit2.Response;
@@ -115,6 +117,56 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         /*final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.mipmap.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);*/
+
+        /*
+        For share contents...
+         */
+        Uri data = getIntent().getData();
+        if (data != null) {
+            Log.i("URI", "->" + data.toString());
+            String[] commaSplit = data.toString().split("/");
+            if (commaSplit[3].equals("store")) {
+                Log.i("store", "->" + commaSplit[3]);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("action", commaSplit[4]);
+                mBundle.putString("store_id", commaSplit[5]);
+                mBundle.putString("StoreContact", commaSplit[6]);
+                Intent store = new Intent(getApplicationContext(), StoreViewActivity.class);
+                store.putExtras(mBundle);
+                startActivity(store);
+            } /*else if (commaSplit[3].equals("profile")) {
+                Log.i("profile", "->" + commaSplit[3]);
+                Other_profile mOtherProfile = new Other_profile();
+                Bundle mBundle = new Bundle();
+                mBundle.putString("uri", data.toString());
+                mBundle.putString("contact", commaSplit[5]);
+                mOtherProfile.setArguments(mBundle);
+                FragmentManager mFragmentManager = getSupportFragmentManager();
+                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.containerView, mOtherProfile).commit();
+            } else if (commaSplit[3].equals("vehicle")) {
+                Log.i("vehicle", "->" + commaSplit[3]);
+                Vehical_Details mVehical_details = new Vehical_Details();
+                Bundle mBundle = new Bundle();
+                mBundle.putString("uri", data.toString());
+                mBundle.putString("Vehical_id", commaSplit[4]);
+                mVehical_details.setArguments(mBundle);
+                FragmentManager mFragmentManager = getSupportFragmentManager();
+                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.containerView, mVehical_details).commit();
+            } else if (commaSplit[3].equals("upvehicle")) {
+                Log.i("up", "->" + commaSplit[3]);
+                Vehical_Details mVehical_details = new Vehical_Details();
+                Bundle mBundle = new Bundle();
+                mBundle.putString("uri", data.toString());
+                mBundle.putString("Vehical_id", commaSplit[4]);
+                mVehical_details.setArguments(mBundle);
+                FragmentManager mFragmentManager = getSupportFragmentManager();
+                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.containerView, mVehical_details).commit();
+            }*/
+        }
+
 
         IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {

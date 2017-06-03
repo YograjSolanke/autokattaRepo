@@ -771,11 +771,11 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         }
                     });
             // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
+            snackbar.setActionTextColor(Color.BLUE);
             // Changing action button text color
             View sbView = snackbar.getView();
             TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
+            textView.setTextColor(Color.WHITE);
             snackbar.show();
         } else if (error instanceof UnknownHostException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
@@ -787,11 +787,11 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         }
                     });
             // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
+            snackbar.setActionTextColor(Color.BLUE);
             // Changing action button text color
             View sbView = snackbar.getView();
             TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
+            textView.setTextColor(Color.WHITE);
             snackbar.show();
         } else {
             Log.i("Check Class-"

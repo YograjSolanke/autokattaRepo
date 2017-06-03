@@ -221,4 +221,39 @@
     <string name="registration_company_based">Professional Details</string>
     <string name="company_based_invitation">Company Based Invitation</string>
     <string name="skill_based_invitation">Skill Based Invitation</string>
+
+    <!-- for interest -->
+    <string name="standard_cloud">Standard cloud using FlexboxLayout with dividerDrawable:</string>
+    <string name="horizontalscrollview_example">HorizontalScrollView with useInsetPadding config:</string>
+    <string-array name="demo_array">
+        <item>Aphex Twin</item>
+        <item>Autechre</item>
+        <item>B12</item>
+        <item>The Black Dog</item>
+        <item>Boards of Canada</item>
+        <item>Brian Eno</item>
+        <item>Broadcast</item>
+        <item>Brothomstates</item>
+        <item>Clark</item>
+        <item>DJ Mink</item>
+        <item>Disjecta</item>
+        <item>Drexciya</item>
+        <item>Freeform</item>
+        <item>Jake Slazenger</item>
+        <item>Leila</item>
+        <item>LFO</item>
+        <item>Luke Vibert</item>
+        <item>Mira Calix</item>
+        <item>Nightmares on Wax</item>
+        <item>Plaid</item>
+        <item>Plone</item>
+        <item>Prefuse 73</item>
+        <item>Sabres of Paradise</item>
+        <item>Seefeel</item>
+        <item>Speedy J</item>
+        <item>Squarepusher</item>
+        <item>Sweet Exorcist</item>
+        <item>Tricky Disco</item>
+    </string-array>
+
 </resources>

@@ -38,6 +38,7 @@ import autokatta.com.Registration.MultiSelectionSpinner;
 import autokatta.com.Registration.Multispinner;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.AddTags;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
@@ -110,6 +111,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
 
     ApiCall mApiCall;
     RelativeLayout relativeDealingLayout, mCompanyBased;
+    Button mInterest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +127,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
             @Override
             public void run() {
 
+                mInterest = (Button) findViewById(R.id.interest_tags);
                 autoCompany = (AutoCompleteTextView) findViewById(R.id.autocompany);
                 autoDesignation = (AutoCompleteTextView) findViewById(R.id.autodesignation);
                 autoSkills = (MultiAutoCompleteTextView) findViewById(R.id.autoskills);
@@ -234,6 +237,13 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         });
         Next.setOnClickListener(this);
         Cancel.setOnClickListener(this);
+
+        mInterest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AddTags.class));
+            }
+        });
     }
 
     public void checkSkills() {

@@ -74,6 +74,12 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasLoadedOnce) {
+                getOtherStore(myContact, store_id);
+                hasLoadedOnce = false;
+            }
+        }
     }
 
     @Override
@@ -168,7 +174,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     Call Intent...
      */
     private void call() {
-        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "7841023392"));
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mOtherContact));
         System.out.println("calling started");
         try {
             startActivity(in);
