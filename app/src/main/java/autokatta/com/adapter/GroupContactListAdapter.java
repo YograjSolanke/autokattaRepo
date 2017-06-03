@@ -146,22 +146,26 @@ public class GroupContactListAdapter extends BaseAdapter {
 
             FilterResults results = new FilterResults();
 
-            final List<Success> list = mListCopy;
+            final List<GetRegisteredContactsResponse.Success> list = mListCopy;
 
             int count = list.size();
-            final ArrayList<Success> nlist = new ArrayList<Success>(count);
 
-            Success filterableString;
-
-            for (int i = 0; i < count; i++) {
-                filterableString = list.get(i);
-                if (filterString.toLowerCase().contains(filterString)) {
-                    nlist.add(filterableString);
+            if (filterString != null && filterString.length() > 0) {
+                GetRegisteredContactsResponse.Success filterableString;
+                final ArrayList<GetRegisteredContactsResponse.Success> nlist = new ArrayList<Success>(count);
+                for (int i = 0; i < count; i++) {
+                    filterableString = list.get(i);
+                    if (filterableString.getUsername().toLowerCase().contains(filterString)) {
+                        nlist.add(filterableString);
+                    }
                 }
-            }
 
-            results.values = nlist;
-            results.count = nlist.size();
+                results.values = nlist;
+                results.count = nlist.size();
+            } else {
+                results.values = list;
+                results.count = list.size();
+            }
 
             return results;
         }
@@ -169,7 +173,7 @@ public class GroupContactListAdapter extends BaseAdapter {
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            mList = (ArrayList<Success>) results.values;
+            mList = (ArrayList<GetRegisteredContactsResponse.Success>) results.values;
             notifyDataSetChanged();
         }
 
