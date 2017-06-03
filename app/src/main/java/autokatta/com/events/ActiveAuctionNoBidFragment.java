@@ -2,7 +2,10 @@ package autokatta.com.events;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -18,7 +21,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +49,21 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     String strAuctionId = "";
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
     @Override
     public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = infl.inflate(R.layout.fragment_simple_listview, container, false);
+        return infl.inflate(R.layout.fragment_simple_listview, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) view.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerMain);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutMain);
@@ -86,7 +101,6 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
                 }
             }
         });
-        return view;
     }
 
     @Override
@@ -100,56 +114,76 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getNoBidVehicle(strAuctionId);
+                hasViewCreated = true;
+            }
+        }
+    }
+
+    @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
                 ArrayList<AuctionAllVehicleData> auctionAllVehicleList = new ArrayList<>();
-                auctionAllVehicleList.clear();
+
                 MyActiveAuctionNoBidResponse noBidResponse = (MyActiveAuctionNoBidResponse) response.body();
 
-                for (MyActiveAuctionNoBidResponse.Success.VehicleList success : noBidResponse.getSuccess().getVehicleList()) {
+                if (!noBidResponse.getSuccess().getVehicleList().isEmpty()) {
+                    auctionAllVehicleList.clear();
+                    mNoData.setVisibility(View.GONE);
+
+                    for (MyActiveAuctionNoBidResponse.Success.VehicleList success : noBidResponse.getSuccess().getVehicleList()) {
 
 
-                    AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
+                        AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
 
-                    auctionAllVehicleData.setVehicleId(success.getVehicleid());
-                    auctionAllVehicleData.setVehicleTitle(success.getTitle());
-                    auctionAllVehicleData.setVehicleCategory(success.getCategory());
-                    auctionAllVehicleData.setVehicleBrand(success.getBrand());
-                    auctionAllVehicleData.setVehicleModel(success.getModel());
-                    auctionAllVehicleData.setVehicleVersion(success.getVersion());
-                    auctionAllVehicleData.setVehicleMfgYear(success.getYear());
-                    auctionAllVehicleData.setVehicleLocation_city(success.getLocation());
-                    auctionAllVehicleData.setVehicleRTOCity(success.getRtoCity());
-                    auctionAllVehicleData.setVehicleColor(success.getColor());
-                    // auctionAllVehicleData.setVehicleImages(success.getImage());
-                    auctionAllVehicleData.setVehicleRegistrationNo(success.getRegNo());
-                    auctionAllVehicleData.setVehicleStartPrice(success.getStartPrice());
-                    auctionAllVehicleData.setVehicleReservedPrice(success.getReservePrice());
+                        auctionAllVehicleData.setVehicleId(success.getVehicleid());
+                        auctionAllVehicleData.setVehicleTitle(success.getTitle());
+                        auctionAllVehicleData.setVehicleCategory(success.getCategory());
+                        auctionAllVehicleData.setVehicleBrand(success.getBrand());
+                        auctionAllVehicleData.setVehicleModel(success.getModel());
+                        auctionAllVehicleData.setVehicleVersion(success.getVersion());
+                        auctionAllVehicleData.setVehicleMfgYear(success.getYear());
+                        auctionAllVehicleData.setVehicleLocation_city(success.getLocation());
+                        auctionAllVehicleData.setVehicleRTOCity(success.getRtoCity());
+                        auctionAllVehicleData.setVehicleColor(success.getColor());
+                        // auctionAllVehicleData.setVehicleImages(success.getImage());
+                        auctionAllVehicleData.setVehicleRegistrationNo(success.getRegNo());
+                        auctionAllVehicleData.setVehicleStartPrice(success.getStartPrice());
+                        auctionAllVehicleData.setVehicleReservedPrice(success.getReservePrice());
 
-                    String img = success.getImage();
-                    if (img.contains(",")) {
-                        String arr[] = img.split(",", 2);
+                        String img = success.getImage();
+                        if (img.contains(",")) {
+                            String arr[] = img.split(",", 2);
 
-                        auctionAllVehicleData.setVehicleSingleImage(arr[0]);
+                            auctionAllVehicleData.setVehicleSingleImage(arr[0]);
 
-                        String all = img.replace(",", "/ ");
-                        auctionAllVehicleData.setVehicleImages(all);
+                            String all = img.replace(",", "/ ");
+                            auctionAllVehicleData.setVehicleImages(all);
 
-                    } else {
-                        auctionAllVehicleData.setVehicleSingleImage(img);
-                        auctionAllVehicleData.setVehicleImages(img);
+                        } else {
+                            auctionAllVehicleData.setVehicleSingleImage(img);
+                            auctionAllVehicleData.setVehicleImages(img);
+                        }
+
+                        auctionAllVehicleList.add(auctionAllVehicleData);
+
+
+                        //analyticsList.add(success);
                     }
-
-                    auctionAllVehicleList.add(auctionAllVehicleData);
-
-
-                    //analyticsList.add(success);
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    ActiveAuctionNoBidAdapter adapter = new ActiveAuctionNoBidAdapter(getActivity(), strAuctionId, auctionAllVehicleList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
-                ActiveAuctionNoBidAdapter adapter = new ActiveAuctionNoBidAdapter(getActivity(), strAuctionId, auctionAllVehicleList);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -169,6 +203,38 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check class", "Active Auction NoBid Fragment");
             error.printStackTrace();
