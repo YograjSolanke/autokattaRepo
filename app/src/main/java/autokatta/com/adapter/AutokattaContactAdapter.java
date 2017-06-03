@@ -104,7 +104,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
 
-        if (!contactdata.get(position).getMystatus().equals("null"))
+        if (contactdata.get(position).getMystatus() != null && !contactdata.get(position).getMystatus().equals("null"))
             holder.mTextStatus.setText(contactdata.get(position).getMystatus());
         else
             holder.mTextStatus.setText("No Status");

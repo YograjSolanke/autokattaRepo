@@ -90,6 +90,10 @@ public class BackgroundService extends Service {
                         namestring = namestring + "," + names.get(i);
                     }
                 }
+
+                System.out.println("numberString=" + numberstring);
+                System.out.println("numberString=" + namestring);
+
             }
             getAutokattaContacts();
         } catch (Exception e) {
