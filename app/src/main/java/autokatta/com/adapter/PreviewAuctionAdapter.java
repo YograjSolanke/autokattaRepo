@@ -76,8 +76,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_preview_live_event_list, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        PreviewAuctionAdapter.MyViewHolder vh = new PreviewAuctionAdapter.MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -94,7 +93,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
                     .override(100, 100)
                     .into(holder.mAuctionVehicleImage);
         } else {
-            holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.hdlogo);
+            holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
         }
 
         holder.mRegistrationNo.setText(mItemList.get(position).getRegNo());
