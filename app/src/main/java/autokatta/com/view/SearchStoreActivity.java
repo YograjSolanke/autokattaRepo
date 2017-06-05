@@ -19,7 +19,7 @@ public class SearchStoreActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         this.runOnUiThread(new Runnable() {
@@ -34,13 +34,6 @@ public class SearchStoreActivity extends AppCompatActivity {
                 }
             }
         });
-
-        /*FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace)
-                .addToBackStack("storeSearchFragment")
-                .commit();*/
-
 
     }
 

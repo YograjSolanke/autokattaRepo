@@ -51,7 +51,6 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     ApiCall mApiCall;
 
     public ViewSearchedStoreAdapter(Activity activity, List<SearchStoreResponse.Success> successList) {
-
         this.activity = activity;
         this.mMainList = successList;
     }
@@ -65,7 +64,6 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
 
     @Override
     public void onBindViewHolder(final ViewSearchedStoreAdapter.StoreHolder holder, final int position) {
-
         mApiCall = new ApiCall(activity, this);
         final SearchStoreResponse.Success object = mMainList.get(position);
         final String image;
@@ -77,7 +75,6 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         if (object.getLikecount().equals("no")) {
             holder.linearunlike.setVisibility(View.GONE);
             holder.linearlike.setVisibility(View.VISIBLE);
-
         }
 
         if (object.getFollowstatus().equals("yes")) {
@@ -134,7 +131,6 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.detailrel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Bundle b = new Bundle();
                 b.putString("StoreContact", object.getContact());
                 b.putString("store_id", object.getStoreId());
@@ -147,12 +143,10 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String likecountstr = object.getLikecount();
                 likecountint = Integer.parseInt(likecountstr);
                 StoreContact = holder.callText.getText().toString();
                 StoreId = object.getStoreId();
-
                 mApiCall.otherStoreLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""), object.getContact(), "2", StoreId);
 
@@ -163,14 +157,12 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 object.setLikecount(String.valueOf(likecountint));
                 holder.btnlike.setText("Likes(" + likecountint + ")");
                 object.setLikestatus("yes");
-
             }
         });
 
         holder.linearunlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String likecountstr = object.getLikecount();
                 likecountint = Integer.parseInt(likecountstr);
                 StoreContact = holder.callText.getText().toString();
@@ -185,7 +177,6 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 object.setLikecount(String.valueOf(likecountint));
                 holder.btnlike.setText("Likes(" + likecountint + ")");
                 object.setLikestatus("no");
-
             }
         });
 
@@ -193,57 +184,44 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String followcountstr = object.getFollowcount();
                 followcountint = Integer.parseInt(followcountstr);
-
                 StoreContact = holder.callText.getText().toString();
                 StoreId = object.getStoreId();
-
                 mApiCall.otherStoreFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""), StoreContact, "2", StoreId);
-
                 holder.linearfollow.setVisibility(View.GONE);
                 holder.linearunfollow.setVisibility(View.VISIBLE);
 
                 followcountint++;
                 object.setFollowcount(String.valueOf(followcountint));
                 holder.btnfollow.setText("Follow(" + followcountint + ")");
-
                 object.setFollowstatus("yes");
-
             }
         });
 
         holder.linearunfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String followcountstr = object.getFollowcount();
                 followcountint = Integer.parseInt(followcountstr);
-
                 StoreContact = holder.callText.getText().toString();
                 StoreId = object.getStoreId();
-
                 mApiCall.otherStoreUnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""), StoreContact, "2", StoreId);
-
                 holder.linearfollow.setVisibility(View.VISIBLE);
                 holder.linearunfollow.setVisibility(View.GONE);
 
                 followcountint--;
                 object.setFollowcount(String.valueOf(followcountint));
                 holder.btnfollow.setText("Follow(" + followcountint + ")");
-
                 object.setFollowstatus("no");
-
             }
         });
 
         holder.linearshare1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 allDetails = object.getStoreName() + "=" +
                         object.getWebsite() + "=" +
                         "-" + "=" +
@@ -263,22 +241,18 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                         putString("Share_keyword", "store").apply();
 
                 activity.startActivity(new Intent(activity, ShareWithinAppActivity.class));
-                activity.finish();
-
+                //activity.finish();
 
             }
         });
 
 
         holder.linearshare.setOnClickListener(new View.OnClickListener() {
-
             Intent intent = new Intent(Intent.ACTION_SEND);
             String imageFilePath;
 
-
             @Override
             public void onClick(View v) {
-
                 if (object.getStoreImage().equalsIgnoreCase("") || object.getStoreImage().equalsIgnoreCase(null) ||
                         object.getStoreImage().equalsIgnoreCase("null")) {
                     imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
@@ -311,29 +285,13 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                 activity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-
             }
         });
-//
-//        vi.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                v.getParent().requestDisallowInterceptTouchEvent(true);
-//
-//                return false;
-//            }
-//        });
-
-
     }
 
     //Calling Functio
     private void call(String contact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
-        System.out.println("calling started=========" + StoreContact);
-
-        System.out.println("calling started");
         try {
             activity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
@@ -362,7 +320,6 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     }
 
     static class StoreHolder extends RecyclerView.ViewHolder {
-
         TextView storename, storelocation, storewebsite, storetiming, storeworkingdays, callText;
         ImageView store_image, call_image;
         TextView btnshare, btnlike, btnfollow, btndetail, btnunlike, btnunfollow;
@@ -382,16 +339,11 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             storetiming = (TextView) itemView.findViewById(R.id.storetiming);
             storeworkingdays = (TextView) itemView.findViewById(R.id.storeworkingdays);
             ratingBar = (RatingBar) itemView.findViewById(R.id.store_rating);
-
             store_image = (ImageView) itemView.findViewById(R.id.storeprofileimage);
-
-
             call_image = (ImageView) itemView.findViewById(R.id.call_image);
-
             btnlike = (TextView) itemView.findViewById(R.id.like);
             btnfollow = (TextView) itemView.findViewById(R.id.follow);
             callText = (TextView) itemView.findViewById(R.id.callText);
-
 
             linearshare = (LinearLayout) itemView.findViewById(R.id.linearshare);
             linearshare1 = (LinearLayout) itemView.findViewById(R.id.linearshare1);
@@ -400,9 +352,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             linearfollow = (LinearLayout) itemView.findViewById(R.id.linearfollow);
             linearunfollow = (LinearLayout) itemView.findViewById(R.id.linearunfollow);
             detailrel = (RelativeLayout) itemView.findViewById(R.id.rel);
-
             btndetail = (TextView) itemView.findViewById(R.id.details);
-
         }
     }
 }

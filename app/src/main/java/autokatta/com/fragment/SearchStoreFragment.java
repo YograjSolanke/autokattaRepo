@@ -42,6 +42,8 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     boolean hasViewCreated = false;
     TextView mNoData;
     String myContact, storecontact, location, phrase, radius, brands, finalCategory;
+    ViewSearchedStoreAdapter adapter;
+
     public SearchStoreFragment() {
         //empty constructor
     }
@@ -50,8 +52,6 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchStore = inflater.inflate(R.layout.fragment_search_store, container, false);
-
-
         return mSearchStore;
     }
 
@@ -60,20 +60,15 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         mNoData = (TextView) mSearchStore.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
-
-
         mRecyclerView = (RecyclerView) mSearchStore.findViewById(R.id.recyclerSearchStore);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mSearchStore.findViewById(R.id.swipeRefreshLayoutSearchStore);
-
         mRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
-
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -81,8 +76,6 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
-
 
         Bundle b = getArguments();
         myContact = b.getString("myContact");
@@ -98,17 +91,12 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
         brands = b.getString("brands");
         final int radiuspos = b.getInt("radiuspos");
 
-        Log.i("brand", ":" + brands);
-
         finalCategory = category;
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-
                 getData(myContact, storecontact, location, finalCategory, phrase, radius, brands);
-
-
             }
         });
 
@@ -127,11 +115,9 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchStoreResponse searchStoreResponse = (SearchStoreResponse) response.body();
-
                 if (!searchStoreResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     searchStoreResponseArrayList.clear();
@@ -154,20 +140,17 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                         searchSuccess.setFollowstatus(searchSuccess.getFollowstatus());
                         searchSuccess.setFollowcount(searchSuccess.getFollowcount());
                         searchSuccess.setRating(searchSuccess.getRating());
-
                         searchStoreResponseArrayList.add(searchSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    ViewSearchedStoreAdapter adapter = new ViewSearchedStoreAdapter(getActivity(), searchStoreResponseArrayList);
+                    adapter = new ViewSearchedStoreAdapter(getActivity(), searchStoreResponseArrayList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
                 }
-
             } else {
-
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
@@ -194,11 +177,11 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                         }
                     });
             // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
+            snackbar.setActionTextColor(Color.BLUE);
             // Changing action button text color
             View sbView = snackbar.getView();
             TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
+            textView.setTextColor(Color.WHITE);
             snackbar.show();
         } else if (error instanceof UnknownHostException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
@@ -210,11 +193,11 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                         }
                     });
             // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
+            snackbar.setActionTextColor(Color.BLUE);
             // Changing action button text color
             View sbView = snackbar.getView();
             TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
+            textView.setTextColor(Color.WHITE);
             snackbar.show();
         } else {
             Log.i("Check Class-", "Search Store Fragment");
@@ -233,10 +216,14 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getData(myContact, storecontact, location, finalCategory, phrase, radius, brands);
                 hasViewCreated = true;
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

@@ -59,12 +59,10 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
     private String[] MODULE = null;
     List<String> radiusList;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.search_store_fragment, container, false);
-
 
         apiCall = new ApiCall(getActivity(), this);
         autoTxtCategory = (MultiAutoCompleteTextView) view.findViewById(R.id.auto_category);
@@ -80,7 +78,7 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
         btnSearch.setOnClickListener(this);
         multiautobrand.setOnTouchListener(this);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        myContact = mSharedPreferences.getString("loginContact", "7841023392");
+        myContact = mSharedPreferences.getString("loginContact", "");
         Log.i("myContact", myContact);
 
         /*
