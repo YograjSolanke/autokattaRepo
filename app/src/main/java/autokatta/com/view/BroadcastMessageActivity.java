@@ -16,6 +16,8 @@ public class BroadcastMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_broadcast_message);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Broadcast Messages");
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

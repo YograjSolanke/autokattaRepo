@@ -16,6 +16,9 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_uploaded_vehicles);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setTitle("My Inventory");
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

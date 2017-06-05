@@ -15,6 +15,7 @@ public class Create_Event extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setTitle("Create Event");
 
         runOnUiThread(new Runnable() {
             @Override

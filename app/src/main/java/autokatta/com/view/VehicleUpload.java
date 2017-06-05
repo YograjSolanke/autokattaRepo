@@ -18,6 +18,7 @@ public class VehicleUpload extends AppCompatActivity {
         setContentView(R.layout.activity_vehicle_upload);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Upload Vehicle");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);

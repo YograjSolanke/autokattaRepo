@@ -18,6 +18,8 @@ public class SearchStoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_store);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Search Store");
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

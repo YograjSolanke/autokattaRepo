@@ -17,6 +17,7 @@ public class MySearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_search);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        setTitle("My Searched Vehicles");
 
         this.runOnUiThread(new Runnable() {
             @Override

@@ -17,6 +17,8 @@ public class MySavedAuctionEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_saved_auction_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("My Saved Auction Events");
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

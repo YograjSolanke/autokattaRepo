@@ -17,6 +17,7 @@ public class BrowseStoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_browse_store);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Browse Store");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

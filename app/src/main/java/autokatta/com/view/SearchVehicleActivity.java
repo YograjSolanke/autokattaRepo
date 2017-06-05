@@ -98,6 +98,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         setContentView(R.layout.activity_search_vehicle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Search Vehicle");
 
         myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         mApiCall = new ApiCall(this, this);

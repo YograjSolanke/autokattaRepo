@@ -19,6 +19,8 @@ public class MyStoreListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_store_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("My Store");
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

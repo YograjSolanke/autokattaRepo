@@ -16,6 +16,8 @@ public class BussinessChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bussiness_chat);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Business Chat");
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

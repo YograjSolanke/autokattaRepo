@@ -20,6 +20,7 @@ public class MyUpcomingEventsTabActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_upcoming_events_tab);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setTitle("My Upcoming Events");
 
 
         this.runOnUiThread(new Runnable() {

@@ -18,6 +18,7 @@ public class BlackListedMemberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_black_listed_member);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Blacklisted Members");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);

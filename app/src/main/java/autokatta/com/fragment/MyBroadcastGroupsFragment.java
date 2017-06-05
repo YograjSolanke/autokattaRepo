@@ -35,9 +35,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
@@ -479,7 +476,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
             //Images from MyUplodedvehicle set to send message
 
-            try {
+           /* try {
 
 
                 if (mImage.equalsIgnoreCase("") || mImage.equalsIgnoreCase(null) || mImage.equalsIgnoreCase("null")) {
@@ -512,7 +509,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            }
+            }*/
         }else
         {
             message.setText("");
@@ -559,15 +556,16 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                 {
                     CustomToast.customToast(getActivity(),"Please Enter Message");
                 }else {
-                    mApiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
-                    if (!mTitle.equalsIgnoreCase("") || !mPrice.equalsIgnoreCase("") || !mCategory.equalsIgnoreCase("")
+                    /*if (!mTitle.equalsIgnoreCase("") || !mPrice.equalsIgnoreCase("") || !mCategory.equalsIgnoreCase("")
                             || !mBrand.equalsIgnoreCase("") || !mModel.equalsIgnoreCase("") || !mrto_city.equalsIgnoreCase("")
                             || !mManifaturingYr.equalsIgnoreCase("") || !mKms.equalsIgnoreCase("")) {
                         uploadImage(vimagename);
                         Log.i("img","imggggggg"+vimagename);
-                    } else{
+                    } else{*/
+                        mApiCall.broadcastGroupMessage(groupids, message.getText().toString(), lastWord);
+
                         uploadImage(mediaPath);
-                }
+             //   }
 
                     //sendDataToWeb(message.getText().toString(), groupids);
                     alert.dismiss();
