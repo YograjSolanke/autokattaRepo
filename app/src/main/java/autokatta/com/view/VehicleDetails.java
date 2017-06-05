@@ -237,7 +237,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 for (String name : Hash_file_maps.keySet()) {
                     TextSliderView textSliderView = new TextSliderView(VehicleDetails.this);
                     textSliderView
-                            .description(name)
+                            /*.description(name)*/
                             .image(Hash_file_maps.get(name))
                             .setScaleType(BaseSliderView.ScaleType.Fit)
                             .setOnSliderClickListener(this);

@@ -528,7 +528,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 for (String name : Hash_file_maps.keySet()) {
                                     TextSliderView textSliderView = new TextSliderView(ServiceViewActivity.this);
                                     textSliderView
-                                            .description(name)
+                                            //.description(name)
                                             .image(Hash_file_maps.get(name))
                                             .setScaleType(BaseSliderView.ScaleType.Fit)
                                             .setOnSliderClickListener(this);
