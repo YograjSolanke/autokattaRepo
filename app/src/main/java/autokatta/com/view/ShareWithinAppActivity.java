@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,13 +42,10 @@ public class ShareWithinAppActivity extends AppCompatActivity {
             getSupportActionBar().setIcon(R.mipmap.ic_launcher);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
 
-
-        FragmentManager mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.shareInApp_container, new ShareWithinAppTabFragment(), "shareWithinAppTabFragment")
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.shareInApp_container, new ShareWithinAppTabFragment(), "shareWithinAppTabFragment")
                 .commit();
     }
 
@@ -66,9 +61,17 @@ public class ShareWithinAppActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
+        }
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.pull_in_left, R.anim.push_out_right);
             startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());

@@ -291,7 +291,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                 Intent i = new Intent(activity, ShareWithinAppActivity.class);
                 activity.startActivity(i);
-                activity.finish();
+                //activity.finish();
 
             }
         });
