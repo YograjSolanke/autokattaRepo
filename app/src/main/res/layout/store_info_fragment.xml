@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/text_margin_top">
+        android:layout_marginTop="@dimen/card_title_height">
 
         <RelativeLayout
             android:id="@+id/buttons"
