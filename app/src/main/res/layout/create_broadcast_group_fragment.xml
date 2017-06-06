@@ -38,26 +38,26 @@
         android:text="Add Members..."
         android:textColor="@color/black" />
 
-    <!-- Editext for Search -->
+    <!--   &lt;!&ndash; Editext for Search &ndash;&gt;
 
-    <EditText
-        android:id="@+id/inputSearch"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/addmembertext"
-        android:layout_margin="5dp"
-        android:background="#80bebebe"
-        android:hint=" Search Contacts.."
-        android:inputType="textVisiblePassword"
-        android:textColor="#2C3343"
-        android:textColorHint="#848484" />
+       <EditText
+           android:id="@+id/inputSearch"
+           android:layout_width="match_parent"
+           android:layout_height="40dp"
+           android:layout_below="@+id/addmembertext"
+           android:layout_margin="5dp"
+           android:background="#80bebebe"
+           android:hint=" Search Contacts.."
+           android:inputType="textVisiblePassword"
+           android:textColor="#2C3343"
+           android:textColorHint="#848484" />-->
 
     <ListView
         android:id="@+id/broadcastgrplist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tbl"
-        android:layout_below="@+id/inputSearch"
+        android:layout_below="@+id/addmembertext"
         android:layout_margin="5dp"
         android:layout_marginTop="10dp">
 
