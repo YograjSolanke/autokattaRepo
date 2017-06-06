@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,8 @@ import android.widget.Toast;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -47,14 +52,15 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     View root;
     Button create_broadcast;
     EditText edittitle;
-    ArrayList<String> incomingList = new ArrayList<>();
-    ArrayList<String> checkedcontact = new ArrayList<>();
+    List<String> incomingList = new ArrayList<>();
+    List<String> checkedcontact = new ArrayList<>();
 
     ListView memberContactslist;
-    ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+    List<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     BroadcastContactAdapter autokattaContactAdapter;
     ApiCall mApiCall;
     String contact;
+    EditText inputSearch;
 
 
     @Override
@@ -68,6 +74,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
         edittitle = (EditText) root.findViewById(R.id.edittitle);
         edittitle.requestFocus();
         contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+        inputSearch = (EditText) root.findViewById(R.id.inputSearch);
 
         try {
             Bundle b = getArguments();
@@ -99,18 +106,23 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
             do {
                 //Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(contact)));
                 Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
-
-                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
-                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
-                contactdata.add(obj);
+                if (!cursor.getString(cursor.getColumnIndex(DbConstants.contact)).equals(contact)) {
+                    obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+                    obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
+                    contactdata.add(obj);
+                }
             } while (cursor.moveToNext());
         } else {
             Log.e("No number", "");
         }
         dbAdpter.CLOSE();
 
+        Collections.sort(contactdata, Db_AutokattaContactResponse.StuNameComparator);
+
         autokattaContactAdapter = new BroadcastContactAdapter(getActivity(), contactdata, checkedcontact);
         memberContactslist.setAdapter(autokattaContactAdapter);
+        autokattaContactAdapter.notifyDataSetChanged();
+
 
 
         create_broadcast.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +164,22 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                     }
                 }
 
+            }
+        });
+
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                autokattaContactAdapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
 
@@ -206,18 +234,21 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     private class BroadcastContactAdapter extends BaseAdapter {
 
 
-        private ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+        private List<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+        private List<Db_AutokattaContactResponse> contactdataCopy = new ArrayList<>();
         Activity activity;
         private LayoutInflater inflater;
-        private ArrayList<Boolean> positionArray;
-        private ArrayList<String> contactlist;
-        private ArrayList<String> checkedcontact = new ArrayList<>();
+        private List<Boolean> positionArray;
+        private List<String> contactlist;
+        private List<String> checkedcontact = new ArrayList<>();
+        private ItemFilter mFilter = new ItemFilter();
 
 
-        BroadcastContactAdapter(Activity activity, ArrayList<Db_AutokattaContactResponse> contactdata,
-                                ArrayList<String> checkedcontact) {
+        BroadcastContactAdapter(Activity activity, List<Db_AutokattaContactResponse> contactdata,
+                                List<String> checkedcontact) {
             this.activity = activity;
             this.contactdata = contactdata;
+            this.contactdataCopy = contactdata;
             this.checkedcontact = checkedcontact;
 
             contactlist = new ArrayList<>(contactdata.size());
@@ -274,10 +305,11 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
             viewHolder.PersonName.setText(contactdata.get(position).getUsername());
             viewHolder.PersonContact.setText(contactdata.get(position).getContact());
 
-            //  viewHolder.checkBox.setFocusable(false);
 
+            viewHolder.checkBox.setFocusable(false);
             viewHolder.checkBox.setChecked(positionArray.get(position));
-            //  holder.checkBox.setText(filteredData.get(position));
+
+            viewHolder.checkBox.setTag(position); // This line is important.
             viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                 @Override
@@ -298,21 +330,75 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
 
                     if (positionArray.contains(true))
                         create_broadcast.setEnabled(true);
-                    else {
-                        CustomToast.customToast(getActivity(), "Please select Atleast one Contact");
+                    else
                         create_broadcast.setEnabled(false);
-                    }
+
                 }
 
             });
 
 
+            //viewHolder.checkBox.setChecked(isChecked(position));
+
+            // viewHolder.text.setText(list.get(position).getName());
+            // viewHolder.checkBox.setChecked(Boolean.parseBoolean(contactlist.get(position)));
+
+
             return view;
         }
 
-        private ArrayList checkboxselect() {
+        private List checkboxselect() {
             // TODO Auto-generated method stub
             return contactlist;
+        }
+
+
+        public Filter getFilter() {
+            if (mFilter == null) {
+                mFilter = new ItemFilter();
+            }
+            return mFilter;
+        }
+
+        private class ItemFilter extends Filter {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                String filterString = constraint.toString().toLowerCase();
+
+                FilterResults results = new FilterResults();
+
+                final List<Db_AutokattaContactResponse> list = contactdataCopy;
+
+                int count = list.size();
+
+                if (filterString != null && filterString.length() > 0) {
+                    Db_AutokattaContactResponse filterableString;
+                    final List<Db_AutokattaContactResponse> nlist = new ArrayList<>(count);
+                    for (int i = 0; i < count; i++) {
+                        filterableString = list.get(i);
+                        if (filterableString.getUsername().toLowerCase().contains(filterString)) {
+                            nlist.add(filterableString);
+                        }
+                    }
+
+                    results.values = nlist;
+                    results.count = nlist.size();
+                } else {
+                    results.values = list;
+                    results.count = list.size();
+                }
+
+                return results;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                contactdata = (ArrayList<Db_AutokattaContactResponse>) results.values;
+                notifyDataSetChanged();
+            }
+
         }
     }
 

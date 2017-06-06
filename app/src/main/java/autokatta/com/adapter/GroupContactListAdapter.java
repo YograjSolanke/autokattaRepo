@@ -135,6 +135,9 @@ public class GroupContactListAdapter extends BaseAdapter {
     }
 
     public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new ItemFilter();
+        }
         return mFilter;
     }
 
