@@ -35,7 +35,7 @@ import autokatta.com.groups.GroupEditFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.view.GroupsActivity;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -201,7 +201,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             String dppath = "http://autokatta.com/mobile/group_profile_pics/" + mItemList.get(position).getImage();
             Glide.with(mActivity)
                     .load(dppath)
-                    .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
+                    .bitmapTransform(new CropSquareTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     //.placeholder(R.drawable.logo) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
