@@ -169,6 +169,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
                 android:background="#80bebebe"
+                android:drawableStart="@mipmap/map"
                 android:gravity="center"
                 android:hint="Address/Location"
                 android:textAlignment="center"
@@ -193,12 +194,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spinner_height"
                 android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="@dimen/card_margin"
                 android:background="@drawable/spinner_background"
                 android:orientation="horizontal"
-                android:paddingStart="@dimen/card_margin"
                 android:paddingEnd="@dimen/card_margin"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="@dimen/card_margin">
+                android:paddingStart="@dimen/card_margin">
 
                 <Spinner
                     android:id="@+id/auctionCategory"
@@ -206,20 +207,20 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
                     android:background="@android:color/transparent"
                     android:entries="@array/Auction_Category"
                     android:gravity="center"
-                    android:textAlignment="center"
-                    android:layout_marginStart="5dp"
-                    android:spinnerMode="dropdown" />
+                    android:spinnerMode="dropdown"
+                    android:textAlignment="center" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:contentDescription="@string/app_name"
                     android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_down" />
 
             </RelativeLayout>
@@ -240,12 +241,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spinner_height"
                 android:layout_marginEnd="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="@dimen/card_margin"
                 android:background="@drawable/spinner_background"
                 android:orientation="horizontal"
-                android:paddingStart="@dimen/card_margin"
                 android:paddingEnd="@dimen/card_margin"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="@dimen/card_margin">
+                android:paddingStart="@dimen/card_margin">
 
                 <autokatta.com.Registration.Multispinner
                     android:id="@+id/stockLocation"
@@ -253,19 +254,19 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
                     android:background="@android:color/transparent"
                     android:gravity="center"
-                    android:textAlignment="center"
-                    android:layout_marginStart="5dp"
-                    android:spinnerMode="dropdown" />
+                    android:spinnerMode="dropdown"
+                    android:textAlignment="center" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:contentDescription="@string/app_name"
                     android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_down" />
 
             </RelativeLayout>

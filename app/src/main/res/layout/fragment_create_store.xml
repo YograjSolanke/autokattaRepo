@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#2C3343"
-        android:visibility="gone"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textstore"
@@ -133,6 +133,7 @@
                         android:layout_marginLeft="10dip"
                         android:layout_marginRight="10dip"
                         android:layout_weight="2"
+                        android:drawableStart="@mipmap/map"
                         android:hint="Location"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />

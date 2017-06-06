@@ -198,6 +198,7 @@
                 android:layout_marginStart="30dip"
                 android:layout_marginTop="10dp"
                 android:background="#80bebebe"
+                android:drawableStart="@mipmap/map"
                 android:gravity="center"
                 android:hint="Event Location"
                 android:textAlignment="center"
@@ -208,18 +209,19 @@
             <EditText
                 android:id="@+id/editaddress"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="60dp"
                 android:layout_below="@+id/editlocation"
                 android:layout_marginEnd="30dp"
                 android:layout_marginStart="30dip"
                 android:layout_marginTop="10dp"
+                android:height="1dp"
                 android:background="#80bebebe"
                 android:gravity="center"
                 android:hint="Event Address"
+                android:maxLength="200"
                 android:textAlignment="center"
                 android:textColor="#2C3343"
                 android:textColorHint="#848484" />
-
 
             <EditText
                 android:id="@+id/editdetails"
