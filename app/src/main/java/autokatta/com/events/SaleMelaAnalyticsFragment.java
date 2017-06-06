@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,19 +37,31 @@ import retrofit2.Response;
 public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
 
-    View mAuctionAnalytics;
+    View mSaleAnalytics;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strAuctionId = "";
+    private String strSaleId = "";
     List<Success> analyticsList = new ArrayList<>();
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mAuctionAnalytics = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        mSaleAnalytics = inflater.inflate(R.layout.fragment_simple_listview, container, false);
 
-        mRecyclerView = (RecyclerView) mAuctionAnalytics.findViewById(R.id.recyclerMain);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mAuctionAnalytics.findViewById(R.id.swipeRefreshLayoutMain);
+        return mSaleAnalytics;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mSaleAnalytics.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
+        mRecyclerView = (RecyclerView) mSaleAnalytics.findViewById(R.id.recyclerMain);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mSaleAnalytics.findViewById(R.id.swipeRefreshLayoutMain);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -59,7 +77,7 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             public void run() {
                 try {
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strSaleId = bundle.getString("saleid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -70,7 +88,7 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
 
-                            getAuctionAnalytics(strAuctionId);
+                            getSaleAnalytics(strSaleId);
                         }
                     });
                 } catch (Exception e) {
@@ -78,7 +96,18 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                 }
             }
         });
-        return mAuctionAnalytics;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getSaleAnalytics(strSaleId);
+                hasViewCreated = true;
+            }
+        }
     }
 
     @Override
@@ -86,9 +115,9 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void getAuctionAnalytics(String strAuctionId) {
+    private void getSaleAnalytics(String strSaleId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        //apiCall.AuctionAnalyticsData(strAuctionId);
+        //apiCall.AuctionAnalyticsData(strSaleId);
         //apiCall.AuctionAnalyticsData("1047");
     }
 
@@ -100,27 +129,32 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                 analyticsList.clear();
                 AuctionAnalyticsResponse analyticsResponse = (AuctionAnalyticsResponse) response.body();
 
-                for (AuctionAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
+                if (!analyticsResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
 
-                    success.setReachedCount(success.getReachedCount());
-                    success.setGoingCount(success.getGoingCount());
-                    success.setIgnoreCount(success.getIgnoreCount());
-                    success.setSharedCount(success.getSharedCount());
+                    for (AuctionAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
 
-                    success.setGoingStudent(success.getGoingStudent());
-                    success.setGoingSelfStudent(success.getGoingSelfStudent());
-                    success.setGoingEmployee(success.getGoingEmployee());
+                        success.setReachedCount(success.getReachedCount());
+                        success.setGoingCount(success.getGoingCount());
+                        success.setIgnoreCount(success.getIgnoreCount());
+                        success.setSharedCount(success.getSharedCount());
+                        success.setGoingStudent(success.getGoingStudent());
+                        success.setGoingSelfStudent(success.getGoingSelfStudent());
+                        success.setGoingEmployee(success.getGoingEmployee());
+                        success.setIgnoreStudent(success.getIgnoreStudent());
+                        success.setIgnoreSelfStudent(success.getIgnoreSelfStudent());
+                        success.setIgnoreEmployee(success.getIgnoreEmployee());
 
-                    success.setIgnoreStudent(success.getIgnoreStudent());
-                    success.setIgnoreSelfStudent(success.getIgnoreSelfStudent());
-                    success.setIgnoreEmployee(success.getIgnoreEmployee());
-
-                    analyticsList.add(success);
+                        analyticsList.add(success);
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    AuctionAnalyticsAdapter adapter = new AuctionAnalyticsAdapter(getActivity(), strSaleId, analyticsList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
-                AuctionAnalyticsAdapter adapter = new AuctionAnalyticsAdapter(getActivity(), strAuctionId, analyticsList);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -139,6 +173,38 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Sale Mela Analytics Fragment");
             error.printStackTrace();

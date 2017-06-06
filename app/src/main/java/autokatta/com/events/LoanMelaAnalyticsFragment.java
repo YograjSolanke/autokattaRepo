@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,19 +37,30 @@ import retrofit2.Response;
 public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
 
-    View mAuctionAnalytics;
+    View mLoanAnalytics;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strAuctionId = "";
+    private String strLoanId = "";
     List<Success> analyticsList = new ArrayList<>();
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mAuctionAnalytics = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        mLoanAnalytics = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        return mLoanAnalytics;
+    }
 
-        mRecyclerView = (RecyclerView) mAuctionAnalytics.findViewById(R.id.recyclerMain);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mAuctionAnalytics.findViewById(R.id.swipeRefreshLayoutMain);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mLoanAnalytics.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
+        mRecyclerView = (RecyclerView) mLoanAnalytics.findViewById(R.id.recyclerMain);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mLoanAnalytics.findViewById(R.id.swipeRefreshLayoutMain);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -59,7 +76,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             public void run() {
                 try {
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strLoanId = bundle.getString("loanid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -70,7 +87,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
 
-                            getAuctionAnalytics(strAuctionId);
+                            getLoanAnalytics(strLoanId);
                         }
                     });
                 } catch (Exception e) {
@@ -78,17 +95,28 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                 }
             }
         });
-        return mAuctionAnalytics;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getLoanAnalytics(strLoanId);
+                hasViewCreated = true;
+            }
+        }
     }
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        getLoanAnalytics(strLoanId);
     }
 
-    private void getAuctionAnalytics(String strAuctionId) {
+    private void getLoanAnalytics(String strLoanId) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-       // apiCall.AuctionAnalyticsData(strAuctionId);
+        // apiCall.AuctionAnalyticsData(strLoanId);
         //apiCall.AuctionAnalyticsData("1047");
     }
 
@@ -99,23 +127,30 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             if (response.isSuccessful()) {
                 analyticsList.clear();
                 AuctionAnalyticsResponse analyticsResponse = (AuctionAnalyticsResponse) response.body();
-                for (AuctionAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
-                    success.setReachedCount(success.getReachedCount());
-                    success.setGoingCount(success.getGoingCount());
-                    success.setIgnoreCount(success.getIgnoreCount());
-                    success.setSharedCount(success.getSharedCount());
-                    success.setGoingStudent(success.getGoingStudent());
-                    success.setGoingSelfStudent(success.getGoingSelfStudent());
-                    success.setGoingEmployee(success.getGoingEmployee());
-                    success.setIgnoreStudent(success.getIgnoreStudent());
-                    success.setIgnoreSelfStudent(success.getIgnoreSelfStudent());
-                    success.setIgnoreEmployee(success.getIgnoreEmployee());
-                    analyticsList.add(success);
+
+                if (!analyticsResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    for (AuctionAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
+                        success.setReachedCount(success.getReachedCount());
+                        success.setGoingCount(success.getGoingCount());
+                        success.setIgnoreCount(success.getIgnoreCount());
+                        success.setSharedCount(success.getSharedCount());
+                        success.setGoingStudent(success.getGoingStudent());
+                        success.setGoingSelfStudent(success.getGoingSelfStudent());
+                        success.setGoingEmployee(success.getGoingEmployee());
+                        success.setIgnoreStudent(success.getIgnoreStudent());
+                        success.setIgnoreSelfStudent(success.getIgnoreSelfStudent());
+                        success.setIgnoreEmployee(success.getIgnoreEmployee());
+                        analyticsList.add(success);
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    AuctionAnalyticsAdapter adapter = new AuctionAnalyticsAdapter(getActivity(), strLoanId, analyticsList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
-                AuctionAnalyticsAdapter adapter = new AuctionAnalyticsAdapter(getActivity(), strAuctionId, analyticsList);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -134,6 +169,38 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Loan Analytics Fragment");
             error.printStackTrace();

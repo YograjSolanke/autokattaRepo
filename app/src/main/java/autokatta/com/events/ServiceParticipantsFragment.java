@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,19 +38,30 @@ import static android.content.Context.MODE_PRIVATE;
 public class ServiceParticipantsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
 
-    View mAuctionParticipants;
+    View mServiceParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     private String strServiceId = "";
     List<ServiceMelaParticipantsResponse.Success> participantList = new ArrayList<>();
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mAuctionParticipants = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        mServiceParticipants = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        return mServiceParticipants;
+    }
 
-        mRecyclerView = (RecyclerView) mAuctionParticipants.findViewById(R.id.recyclerMain);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mAuctionParticipants.findViewById(R.id.swipeRefreshLayoutMain);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mServiceParticipants.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
+        mRecyclerView = (RecyclerView) mServiceParticipants.findViewById(R.id.recyclerMain);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mServiceParticipants.findViewById(R.id.swipeRefreshLayoutMain);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -79,12 +96,23 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
                 }
             }
         });
-        return mAuctionParticipants;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getServiceParticipant(strServiceId);
+                hasViewCreated = true;
+            }
+        }
     }
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        getServiceParticipant(strServiceId);
     }
 
     private void getServiceParticipant(String strServiceId) {
@@ -102,22 +130,28 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
                 participantList.clear();
                 ServiceMelaParticipantsResponse participantsResponse = (ServiceMelaParticipantsResponse) response.body();
 
-                for (ServiceMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
+                if (!participantsResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    for (ServiceMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
 
-                    success.setContact(success.getContact());
-                    success.setProfilePhoto(success.getProfilePhoto());
-                    success.setUsername(success.getUsername());
-                    success.setLocation(success.getLocation());
-                    success.setProfession(success.getProfession());
-                    success.setSubprofession(success.getSubprofession());
-                    success.setBlackliststatus(success.getBlackliststatus());
+                        success.setContact(success.getContact());
+                        success.setProfilePhoto(success.getProfilePhoto());
+                        success.setUsername(success.getUsername());
+                        success.setLocation(success.getLocation());
+                        success.setProfession(success.getProfession());
+                        success.setSubprofession(success.getSubprofession());
+                        success.setBlackliststatus(success.getBlackliststatus());
 
-                    participantList.add(success);
+                        participantList.add(success);
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    ServiceParticipantsAdapter adapter = new ServiceParticipantsAdapter(getActivity(), strServiceId, participantList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
-                ServiceParticipantsAdapter adapter = new ServiceParticipantsAdapter(getActivity(), strServiceId, participantList);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -136,6 +170,38 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
             Log.i("Check Class-", "Service  Participants Fragment");
             error.printStackTrace();

@@ -180,16 +180,8 @@ public class MyEndedAuctionPreviewNextActivity extends AppCompatActivity impleme
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        int fragments = getSupportFragmentManager().getBackStackEntryCount();
-        if (fragments == 1) {
-            finish();
-        } else {
-            if (getFragmentManager().getBackStackEntryCount() > 1) {
-                getFragmentManager().popBackStack();
-            } else {
-                super.onBackPressed();
-            }
-        }
+        super.onBackPressed();
+        finishActivity(1);
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

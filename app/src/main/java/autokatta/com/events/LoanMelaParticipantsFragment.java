@@ -1,7 +1,10 @@
 package autokatta.com.events;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,19 +38,30 @@ import static android.content.Context.MODE_PRIVATE;
 public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
 
-    View mAuctionParticipants;
+    View mLoanParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     private String strLoanId = "";
     List<LoanMelaParticipantsResponse.Success> participantList = new ArrayList<>();
+    boolean hasViewCreated = false;
+    TextView mNoData;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mAuctionParticipants = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        mLoanParticipants = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        return mLoanParticipants;
+    }
 
-        mRecyclerView = (RecyclerView) mAuctionParticipants.findViewById(R.id.recyclerMain);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mAuctionParticipants.findViewById(R.id.swipeRefreshLayoutMain);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mNoData = (TextView) mLoanParticipants.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
+        mRecyclerView = (RecyclerView) mLoanParticipants.findViewById(R.id.recyclerMain);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mLoanParticipants.findViewById(R.id.swipeRefreshLayoutMain);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -79,12 +96,23 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
                 }
             }
         });
-        return mAuctionParticipants;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+
+                getLoanParticipant(strLoanId);
+                hasViewCreated = true;
+            }
+        }
     }
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        getLoanParticipant(strLoanId);
     }
 
     private void getLoanParticipant(String strLoanId) {
@@ -102,20 +130,26 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
                 participantList.clear();
                 LoanMelaParticipantsResponse participantsResponse = (LoanMelaParticipantsResponse) response.body();
 
-                for (LoanMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
-                    success.setContact(success.getContact());
-                    success.setProfilePhoto(success.getProfilePhoto());
-                    success.setUsername(success.getUsername());
-                    success.setLocation(success.getLocation());
-                    success.setProfession(success.getProfession());
-                    success.setSubprofession(success.getSubprofession());
-                    success.setBlackliststatus(success.getBlackliststatus());
-                    participantList.add(success);
+                if (!participantsResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    for (LoanMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
+                        success.setContact(success.getContact());
+                        success.setProfilePhoto(success.getProfilePhoto());
+                        success.setUsername(success.getUsername());
+                        success.setLocation(success.getLocation());
+                        success.setProfession(success.getProfession());
+                        success.setSubprofession(success.getSubprofession());
+                        success.setBlackliststatus(success.getBlackliststatus());
+                        participantList.add(success);
+                    }
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    LoanParticipantAdapter adapter = new LoanParticipantAdapter(getActivity(), strLoanId, participantList);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
-                LoanParticipantAdapter adapter = new LoanParticipantAdapter(getActivity(), strLoanId, participantList);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -134,8 +168,40 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
         } else {
-            Log.i("Check Class-", "Auction Participants Fragment");
+            Log.i("Check Class-", "Loan Participants Fragment");
             error.printStackTrace();
         }
     }
