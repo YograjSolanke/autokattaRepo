@@ -1,11 +1,359 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
-
+    android:background="@color/grey">
     <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:contentPadding="5dp"
+        card_view:elevation="14dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/main_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/actionlinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/storeprofileimage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:contentDescription="@string/app_name" />
+
+                    <TextView
+                        android:id="@+id/rating_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storeprofileimage"
+                        android:background="@color/medium_sea_green"
+                        android:text="4.0"
+                        android:maxLength="4"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
+
+                    <RatingBar
+                        android:id="@+id/store_rating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storeprofileimage"
+                        android:layout_toEndOf="@+id/rating_count"
+                        android:numStars="5"
+                        android:stepSize="1.0"
+                        android:theme="@style/RatingBar" />
+
+                    <TextView
+                        android:id="@+id/like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/store_rating"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center"
+                        android:text="Like" />
+
+                    <TextView
+                        android:id="@+id/follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/like"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="Follow"
+                        android:textColor="#808080" />
+
+                    <TextView
+                        android:id="@+id/unfollow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toStartOf="@+id/like"
+                        android:gravity="center"
+                        android:text="Unfollow"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_padding"
+                    android:layout_toEndOf="@+id/actionlinear">
+
+                    <TextView
+                        android:id="@+id/storename"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/layout_top"
+                        android:fontFamily="sans-serif"
+                        android:layout_toStartOf="@+id/call_image"
+                        android:layout_alignParentStart="true"
+                        android:text="Store Name"
+                        android:textSize="@dimen/article_subheading"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/storetype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storename"
+                        android:fontFamily="sans-serif"
+                        android:text="Store Type"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/storelocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storetype"
+                        android:layout_toStartOf="@+id/call_image"
+                        android:layout_alignParentStart="true"
+                        android:drawableStart="@mipmap/map"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="Location" />
+
+                    <TextView
+                        android:id="@+id/storewebsite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storelocation"
+                        android:drawableStart="@mipmap/web"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="Website" />
+
+                    <TextView
+                        android:id="@+id/storetiming"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storewebsite"
+                        android:drawableStart="@mipmap/ic_timer"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="Timing" />
+
+                    <TextView
+                        android:id="@+id/storeservices"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storetiming"
+                        android:drawableStart="@mipmap/ic_wrench"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="Store Services"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/storeworkingdays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storeservices"
+                        android:drawableStart="@mipmap/ic_calendar_small"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="Working days" />
+
+                    <ImageView
+                        android:id="@+id/call_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/call_icon" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/main_view"
+                android:layout_gravity="center"
+                android:background="#cccccc" />
+
+            <LinearLayout
+                android:id="@+id/action_buttons"
+                android:layout_below="@+id/main_view"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/margin_small"
+                android:gravity="center"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:id="@+id/linearlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/likeimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_thumb_unlike" />
+
+                    <TextView
+                        android:id="@+id/liketxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Like"
+                        android:textColor="#808080"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearunlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/unlike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_thumb_like" />
+
+                    <TextView
+                        android:id="@+id/unlikeimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Like"
+                        android:textColor="@color/text_color"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+                <!--<TextView
+                    android:id="@+id/like_clk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:fontFamily="sans-serif"
+                    android:drawableStart="@mipmap/ic_thumb_unlike"
+                    android:visibility="visible"
+                    android:text="Like" />
+
+                <TextView
+                    android:id="@+id/unlike_clk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@mipmap/ic_thumb_like"
+                    android:gravity="center"
+                    android:text="Like"
+                    android:visibility="gone" />-->
+
+                <LinearLayout
+                    android:id="@+id/linearshare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/share_clk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="1dp"
+                        android:drawableStart="@mipmap/ic_share"
+                        android:gravity="center"
+                        android:text="Share" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearshare1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/autokatta_share_clk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="1dp"
+                        android:drawableStart="@drawable/autoshare"
+                        android:gravity="center"
+                        android:text="Share" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearfollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/follow_clk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="1dp"
+                        android:drawableStart="@drawable/followicon"
+                        android:gravity="center"
+                        android:text="Follow" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearunfollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/unfollow_clk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="1dp"
+                        android:drawableStart="@drawable/followicon"
+                        android:gravity="center"
+                        android:textColor="@color/text_color"
+                        android:text="Following" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+  <!--  <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
@@ -119,16 +467,16 @@
                 android:layout_below="@+id/store_rating">
 
 
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Share"-->
-                <!--android:id="@+id/share"-->
-                <!--android:gravity="center"-->
-                <!--android:textColor="#808080"-->
-                <!--android:layout_centerVertical="true"-->
+                &lt;!&ndash;<TextView&ndash;&gt;
+                &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                &lt;!&ndash;android:text="Share"&ndash;&gt;
+                &lt;!&ndash;android:id="@+id/share"&ndash;&gt;
+                &lt;!&ndash;android:gravity="center"&ndash;&gt;
+                &lt;!&ndash;android:textColor="#808080"&ndash;&gt;
+                &lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;
 
-                <!--android:layout_toRightOf="@+id/like"/>-->
+                &lt;!&ndash;android:layout_toRightOf="@+id/like"/>&ndash;&gt;
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -142,18 +490,18 @@
 
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp" />
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_toLeftOf="@+id/share"-->
-                <!--android:text="Unlike"-->
-                <!--android:textColor="#808080"-->
-                <!--android:id="@+id/unlike"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:gravity="center"-->
-                <!--android:visibility="gone"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginRight="10dp"/>-->
+                &lt;!&ndash;<TextView&ndash;&gt;
+                &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                &lt;!&ndash;android:layout_toLeftOf="@+id/share"&ndash;&gt;
+                &lt;!&ndash;android:text="Unlike"&ndash;&gt;
+                &lt;!&ndash;android:textColor="#808080"&ndash;&gt;
+                &lt;!&ndash;android:id="@+id/unlike"&ndash;&gt;
+                &lt;!&ndash;android:layout_gravity="center_vertical"&ndash;&gt;
+                &lt;!&ndash;android:gravity="center"&ndash;&gt;
+                &lt;!&ndash;android:visibility="gone"&ndash;&gt;
+                &lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;
+                &lt;!&ndash;android:layout_marginRight="10dp"/>&ndash;&gt;
 
                 <TextView
                     android:layout_toRightOf="@+id/like"
@@ -168,18 +516,18 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp" />
 
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_toLeftOf="@+id/like"-->
-                <!--android:text="Unfollow"-->
-                <!--android:textColor="#808080"-->
-                <!--android:id="@+id/unfollow"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:gravity="center"-->
-                <!--android:visibility="gone"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginRight="10dp"/>-->
+                &lt;!&ndash;<TextView&ndash;&gt;
+                &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                &lt;!&ndash;android:layout_toLeftOf="@+id/like"&ndash;&gt;
+                &lt;!&ndash;android:text="Unfollow"&ndash;&gt;
+                &lt;!&ndash;android:textColor="#808080"&ndash;&gt;
+                &lt;!&ndash;android:id="@+id/unfollow"&ndash;&gt;
+                &lt;!&ndash;android:layout_gravity="center_vertical"&ndash;&gt;
+                &lt;!&ndash;android:gravity="center"&ndash;&gt;
+                &lt;!&ndash;android:visibility="gone"&ndash;&gt;
+                &lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;
+                &lt;!&ndash;android:layout_marginRight="10dp"/>&ndash;&gt;
 
 
             </RelativeLayout>
@@ -372,7 +720,7 @@
             </LinearLayout>
 
 
-        </RelativeLayout>
+        </RelativeLayout>-->
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>

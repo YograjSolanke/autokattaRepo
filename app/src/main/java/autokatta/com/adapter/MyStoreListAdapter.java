@@ -58,7 +58,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     // you provide access to all the views for a data item in a view holder
     static class YoHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
-        TextView stname, stlocation, stwebsite, stopen, stclose, stlike, stshare, stfollow, stworkdays;
+        TextView stname, stlocation, stwebsite, storetiming, stlike, stshare, stfollow, stworkdays;
         ImageView img, storedelete;
         RatingBar storerating;
         LinearLayout linearlike, linearunlike, linearshare, linearshare1, linearfollow, linearunfollow;
@@ -70,8 +70,8 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             stname = (TextView) itemView.findViewById(R.id.editstname);
             stlocation = (TextView) itemView.findViewById(R.id.autolocation);
             stwebsite = (TextView) itemView.findViewById(R.id.editwebsite);
-            stopen = (TextView) itemView.findViewById(R.id.edittiming);
-            stclose = (TextView) itemView.findViewById(R.id.edittiming1);
+            storetiming = (TextView) itemView.findViewById(R.id.edittiming);
+          //  stclose = (TextView) itemView.findViewById(R.id.edittiming1);
             stworkdays = (TextView) itemView.findViewById(R.id.editworkingdays);
             img = (ImageView) itemView.findViewById(R.id.profile);
             storerating = (RatingBar) itemView.findViewById(R.id.storerating);
@@ -121,10 +121,10 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.stname.setText(mStoreList.get(position).getName());
         holder.stlocation.setText(mStoreList.get(position).getLocation());
         holder.stwebsite.setText(mStoreList.get(position).getWebsite());
-        holder.stopen.setText(mStoreList.get(position).getStoreOpenTime());
-        holder.stclose.setText(mStoreList.get(position).getStoreCloseTime());
-        holder.stlike.setText("like(" + mStoreList.get(position).getLikecount() + ")");
-        holder.stfollow.setText("follow(" + mStoreList.get(position).getFollowcount() + ")");
+        holder.storetiming.setText(mStoreList.get(position).getStoreOpenTime()+" TO "+(mStoreList.get(position).getStoreCloseTime()));
+       // holder.stclose.setText(mStoreList.get(position).getStoreCloseTime());
+        holder.stlike.setText("Like(" + mStoreList.get(position).getLikecount() + ")");
+        holder.stfollow.setText("Follow(" + mStoreList.get(position).getFollowcount() + ")");
         //   holder.stshare.setText("share "+sshare);
         holder.stworkdays.setText(mStoreList.get(position).getWorkingDays());
         holder.storerating.setEnabled(false);

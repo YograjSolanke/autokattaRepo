@@ -153,7 +153,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
             case (R.id.relativeprofile):
                 Bundle b = new Bundle();
                 b.putString("action", "other");
-                b.putString("contact", Sendercontact);
+                b.putString("contactOtherProfile", Sendercontact);
                 Intent intent = new Intent(ChatActivity.this, OtherProfile.class);
                 intent.putExtras(b);
                 startActivity(intent);

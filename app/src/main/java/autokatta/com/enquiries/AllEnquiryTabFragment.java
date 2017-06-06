@@ -56,17 +56,21 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
                 break;
 
             case R.id.relTD:
-                Toast.makeText(getActivity(), "Test Drive", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Comming Soon", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.relND:
-                Toast.makeText(getActivity(), "New Dealer", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Comming Soon", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.relME:
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 startActivity(new Intent(getActivity(), ManualEnquiry.class), options.toBundle());
                 break;
+            case R.id.rel5:
+                Toast.makeText(getActivity(), "Comming Soon", Toast.LENGTH_SHORT).show();break;
+            case R.id.rel6:
+                Toast.makeText(getActivity(), "Comming Soon", Toast.LENGTH_SHORT).show(); break;
         }
     }
 }

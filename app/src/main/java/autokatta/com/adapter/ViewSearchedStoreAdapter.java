@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +18,6 @@ import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -49,7 +49,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     int likecountint, followcountint;
     String imagename = "", allDetails;
     ApiCall mApiCall;
-
+    String callText;
     public ViewSearchedStoreAdapter(Activity activity, List<SearchStoreResponse.Success> successList) {
         this.activity = activity;
         this.mMainList = successList;
@@ -68,6 +68,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         final SearchStoreResponse.Success object = mMainList.get(position);
         final String image;
 
+        callText=object.getContact();
         if (object.getLikestatus().equals("yes")) {
             holder.linearunlike.setVisibility(View.VISIBLE);
             holder.linearlike.setVisibility(View.GONE);
@@ -91,8 +92,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.storename.setText(object.getStoreName());
         holder.storelocation.setText(object.getLocation());
         holder.storewebsite.setText(object.getWebsite());
-        holder.storetiming.setText(object.getOpenTime() + "to" + object.getCloseTime());
-        holder.callText.setText(object.getContact());
+        holder.storetiming.setText(object.getOpenTime() + " TO " + object.getCloseTime());
+//        holder.callText.setText(object.getContact());
         holder.storeworkingdays.setText("working days:" + object.getWorkingDays());
         holder.btnlike.setText("Likes(" + object.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + object.getFollowcount() + ")");
@@ -145,7 +146,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             public void onClick(View v) {
                 String likecountstr = object.getLikecount();
                 likecountint = Integer.parseInt(likecountstr);
-                StoreContact = holder.callText.getText().toString();
+                StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.otherStoreLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""), object.getContact(), "2", StoreId);
@@ -165,7 +166,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             public void onClick(View v) {
                 String likecountstr = object.getLikecount();
                 likecountint = Integer.parseInt(likecountstr);
-                StoreContact = holder.callText.getText().toString();
+                StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
 
                 mApiCall.otherStoreUnlike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -186,7 +187,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             public void onClick(View v) {
                 String followcountstr = object.getFollowcount();
                 followcountint = Integer.parseInt(followcountstr);
-                StoreContact = holder.callText.getText().toString();
+                StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.otherStoreFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""), StoreContact, "2", StoreId);
@@ -205,7 +206,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             public void onClick(View v) {
                 String followcountstr = object.getFollowcount();
                 followcountint = Integer.parseInt(followcountstr);
-                StoreContact = holder.callText.getText().toString();
+                StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.otherStoreUnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""), StoreContact, "2", StoreId);
@@ -320,14 +321,14 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     }
 
     static class StoreHolder extends RecyclerView.ViewHolder {
-        TextView storename, storelocation, storewebsite, storetiming, storeworkingdays, callText;
+        TextView storename, storelocation, storewebsite, storetiming, storeworkingdays;
         ImageView store_image, call_image;
-        TextView btnshare, btnlike, btnfollow, btndetail, btnunlike, btnunfollow;
+        TextView btnshare, btnlike, btnfollow, btnunlike, btnunfollow;
 
         ImageView starrating1, starrating2, starrating3, starrating4, starrating5;
         LinearLayout linearlike, linearunlike, linearfollow, linearunfollow, linearshare, linearshare1;
-
-        RelativeLayout detailrel;
+        CardView detailrel;
+        //RelativeLayout detailrel;
         RatingBar ratingBar;
 
         public StoreHolder(View itemView) {
@@ -343,7 +344,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             call_image = (ImageView) itemView.findViewById(R.id.call_image);
             btnlike = (TextView) itemView.findViewById(R.id.like);
             btnfollow = (TextView) itemView.findViewById(R.id.follow);
-            callText = (TextView) itemView.findViewById(R.id.callText);
+            detailrel = (CardView) itemView.findViewById(R.id.card_view);
+         //   callText = (TextView) itemView.findViewById(R.id.callText);
 
             linearshare = (LinearLayout) itemView.findViewById(R.id.linearshare);
             linearshare1 = (LinearLayout) itemView.findViewById(R.id.linearshare1);
@@ -351,8 +353,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             linearunlike = (LinearLayout) itemView.findViewById(R.id.linearunlike);
             linearfollow = (LinearLayout) itemView.findViewById(R.id.linearfollow);
             linearunfollow = (LinearLayout) itemView.findViewById(R.id.linearunfollow);
-            detailrel = (RelativeLayout) itemView.findViewById(R.id.rel);
-            btndetail = (TextView) itemView.findViewById(R.id.details);
+         //   detailrel = (RelativeLayout) itemView.findViewById(R.id.rel);
+           // btndetail = (TextView) itemView.findViewById(R.id.details);
         }
     }
 }
