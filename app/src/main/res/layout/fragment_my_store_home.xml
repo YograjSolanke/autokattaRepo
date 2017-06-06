@@ -54,7 +54,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/store_name"
                     android:layout_marginTop="5dp"
-                    android:text="www.store.com" />
+                    android:text="www.store.com"
+                    android:textColor="@color/stateBlue"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/likeCount"
@@ -129,7 +131,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_thumb_like" />
+                android:src="@drawable/ic_thumb_like"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/unlike"
@@ -139,7 +142,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
                 android:src="@mipmap/ic_thumb_unlike"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/rating"
@@ -151,16 +154,17 @@
                 android:src="@drawable/ratestar1" />
 
             <ImageView
-                android:id="@+id/follow"
+                android:id="@+id/unfollow"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_comment_account" />
+                android:src="@mipmap/ic_comment_account"
+                android:visibility="visible" />
 
             <ImageView
-                android:id="@+id/unfollow"
+                android:id="@+id/follow"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_gravity="center"

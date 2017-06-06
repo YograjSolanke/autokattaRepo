@@ -37,6 +37,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.BrowseStoreAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrowseStoreResponse;
 import retrofit2.Response;
 
@@ -61,6 +62,7 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     boolean hasViewCreated = false;
     TextView mNoData;
 
+    int counter = 0;
     public ServiceBasedStore() {
         //Empty Constructor
     }
@@ -235,9 +237,9 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
-        getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""));
+//        mSwipeRefreshLayout.setRefreshing(false);
+//        getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+//                .getString("loginContact", ""));
     }
 
     @Override
@@ -269,6 +271,7 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             @Override
             public void onClick(View v) {
                 mRecyclerView.setAdapter(null);
+                if (counter != 0 && counter <= 5) {
                 for (int i = 0; i < mSuccesses.size(); i++) {
                     //If Category contains ","
                     if (mSuccesses.get(i).getCategory().trim().contains(",")) {
@@ -310,6 +313,19 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                 adapter = new BrowseStoreAdapter(getActivity(), mSuccesses_new);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                } else {
+                    if (counter == 0) {
+                        CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
+//                        AlertDialog alert = alertDialog.create();
+//                        alert.show();
+                    }
+                    if (counter > 5) {
+                        CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
+//                        AlertDialog alert = alertDialog.create();
+//                        alert.show();
+                    }
+
+                }
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -344,12 +360,12 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
 
+            counter = 0;
             if (finalcategory.size() == 0) {
                 for (int i = 0; i < this.titles.size(); i++) {
-                    finalcategory.add(this.titles.get(i));
+                    finalcategory.add("0");
                 }
             }
-
             mInflater = (LayoutInflater) activity.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -398,8 +414,10 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
+                        counter++;
                         finalcategory.set(position, holder.text.getText().toString());
                     } else {
+                        counter--;
                         finalcategory.set(position, "0");
                     }
                 }

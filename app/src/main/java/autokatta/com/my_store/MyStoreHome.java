@@ -73,16 +73,16 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         return mMyStoreHome;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (this.isVisible()) {
-            if (isVisibleToUser && !hasLoadedOnce) {
-                getOtherStore(myContact, store_id);
-                hasLoadedOnce = false;
-            }
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (this.isVisible()) {
+//            if (isVisibleToUser && !hasLoadedOnce) {
+//                getOtherStore(myContact, store_id);
+//                hasLoadedOnce = false;
+//            }
+//        }
+//    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -96,8 +96,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 mLike = (ImageView) mMyStoreHome.findViewById(R.id.like);
                 mUnlike = (ImageView) mMyStoreHome.findViewById(R.id.unlike);
                 mRating = (ImageView) mMyStoreHome.findViewById(R.id.rating);
-                mFollow = (ImageView) mMyStoreHome.findViewById(R.id.follow);
-                mUnFollow = (ImageView) mMyStoreHome.findViewById(R.id.unfollow);
+                mFollow = (ImageView) mMyStoreHome.findViewById(R.id.unfollow);
+                mUnFollow = (ImageView) mMyStoreHome.findViewById(R.id.follow);
                 mMap = (ImageView) mMyStoreHome.findViewById(R.id.map);
                 mAddReview = (ImageView) mMyStoreHome.findViewById(R.id.add_review);
                 otherViewLayout = (RelativeLayout) mMyStoreHome.findViewById(R.id.otherViewRelative);
@@ -131,14 +131,15 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 mLike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mApiCall.otherStoreLike(myContact, mOtherContact, "2", store_id);
+                        mApiCall.otherStoreUnlike(myContact, mOtherContact, "2", store_id);
                     }
                 });
 
                 mUnlike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mApiCall.otherStoreUnlike(myContact, mOtherContact, "2", store_id);
+
+                        mApiCall.otherStoreLike(myContact, mOtherContact, "2", store_id);
                     }
                 });
 
@@ -165,6 +166,16 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             }
         });
         mCall.setOnClickListener(this);
+        mWebSite.setOnClickListener(this);
+    }
+
+    private void goToUrl(String url) {
+        String fullUrl = "http://" + url;
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse(fullUrl));
+        startActivity(intent);
     }
 
     @Override
@@ -172,6 +183,10 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         switch (v.getId()) {
             case R.id.call:
                 call();
+                break;
+            case R.id.web:
+                String website = mWebSite.getText().toString().trim();
+                goToUrl(website);
                 break;
         }
     }
@@ -339,17 +354,19 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 mUnFollow.setVisibility(View.VISIBLE);
                 mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
+                Snackbar.make(getView(), "UnFollowing", Snackbar.LENGTH_SHORT).show();
                 mFollow.setVisibility(View.VISIBLE);
                 mUnFollow.setVisibility(View.GONE);
                 mFolllowstr = "no";
             } else if (str.equals("success_like")) {
                 Snackbar.make(getView(), "Liked", Snackbar.LENGTH_SHORT).show();
-                mLike.setVisibility(View.GONE);
-                mUnlike.setVisibility(View.VISIBLE);
-                mLikestr = "yes";
-            } else if (str.equals("success_unlike")) {
                 mLike.setVisibility(View.VISIBLE);
                 mUnlike.setVisibility(View.GONE);
+                mLikestr = "yes";
+            } else if (str.equals("success_unlike")) {
+                Snackbar.make(getView(), "UnLiked", Snackbar.LENGTH_SHORT).show();
+                mLike.setVisibility(View.GONE);
+                mUnlike.setVisibility(View.VISIBLE);
                 mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
                 Snackbar.make(getView(), "Rating Submitted", Snackbar.LENGTH_SHORT).show();
@@ -395,27 +412,27 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         tmbar = (RatingBar) convertView.findViewById(R.id.tm_rating);
         overallbar = (RatingBar) convertView.findViewById(R.id.overall_rating);
 
-        if (!precsrate.equals("0")) {
+        if (!precsrate.equals("")) {
             csbar.setRating(Float.parseFloat(precsrate));
             csrate = Float.parseFloat(precsrate);
         }
-        if (!preqwrate.equals("0")) {
+        if (!preqwrate.equals("")) {
             qwbar.setRating(Float.parseFloat(preqwrate));
             qwrate = Float.parseFloat(preqwrate);
         }
-        if (!prefrrate.equals("0")) {
+        if (!prefrrate.equals("")) {
             frbar.setRating(Float.parseFloat(prefrrate));
             frrate = Float.parseFloat(prefrrate);
         }
-        if (!preprrate.equals("0")) {
+        if (!preprrate.equals("")) {
             prbar.setRating(Float.parseFloat(preprrate));
             prrate = Float.parseFloat(preprrate);
         }
-        if (!pretmrate.equals("0")) {
+        if (!pretmrate.equals("")) {
             tmbar.setRating(Float.parseFloat(pretmrate));
             tmrate = Float.parseFloat(pretmrate);
         }
-        if (!preoverall.equals("0")) {
+        if (!preoverall.equals("")) {
             overallbar.setRating(Float.parseFloat(preoverall));
         }
 

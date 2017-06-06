@@ -145,7 +145,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         store_id = getIntent().getExtras().getString("store_id");
                         storeOtherContact = getIntent().getExtras().getString("StoreContact");
                         Log.i("storeOtherContact", "->" + storeOtherContact);
-                        getOtherStore(mLoginContact, store_id);
+                        // getOtherStore(mLoginContact, store_id);
                     }
 
                     mBundle.putString("store_id", store_id);
