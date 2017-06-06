@@ -212,7 +212,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 bundle.putString("Rcontact", holder.mContact.getText().toString());
                 bundle.putString("grouptype", mCallFrom);
                 bundle.putString("className", "MemberListRefreshAdapter");
-                bundle.putString("bundle_GroupId", mGroupId);
+                bundle.putString("bundle_GroupId",mGroupId );
+                bundle.putString("bundle_UserName", mItemList.get(position).getUsername());
 
                 MemberDetailTabs memberDetailTabs=new MemberDetailTabs();
                 memberDetailTabs.setArguments(bundle);

@@ -551,7 +551,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
 
                         if (showcheckboc == 0)
-                            checkBox[j].setVisibility(View.VISIBLE);
+                            checkBox[j].setVisibility(View.GONE);
 
 
                         final int finalI = i;

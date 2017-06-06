@@ -134,6 +134,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                     i.putExtra("className", "SimpleProfile");
                 }
                 i.putExtra("bundle_GroupId", rowItem.getId());
+                i.putExtra("bundle_GroupName", rowItem.getTitle());
                 mContext.startActivity(i, options.toBundle());
             }
         });

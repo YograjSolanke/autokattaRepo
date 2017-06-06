@@ -76,6 +76,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mCreateGroup = inflater.inflate(R.layout.create_group_fragment, container, false);
 
+        getActivity().setTitle("Create Group");
         mGroupTitle = (EditText) mCreateGroup.findViewById(R.id.group_title);
         mAddmember = (Button) mCreateGroup.findViewById(R.id.BtnAddMember);
         mGroupImg = (ImageView) mCreateGroup.findViewById(R.id.group_profile_pic);

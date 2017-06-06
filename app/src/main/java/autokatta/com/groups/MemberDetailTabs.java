@@ -34,10 +34,12 @@ public class MemberDetailTabs extends Fragment {
         Bundle b1 = getArguments();
 
         if (b1 != null) {
+            getActivity().setTitle(b1.getString("bundle_UserName"));
             b.putString("Rcontact",b1.getString("Rcontact"));
             b.putString("grouptype", b1.getString("grouptype"));
             b.putString("className", b1.getString("className"));
             b.putString("bundle_GroupId", b1.getString("bundle_GroupId"));
+           // b.putString("bundle_GroupName", b1.getString("bundle_GroupName"));
             Log.i("GroupId", "GroupTab->" + b1.getString("bundle_GroupId"));
         }
 

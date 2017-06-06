@@ -44,7 +44,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GroupContactFragment extends Fragment implements RequestNotifier {
     View mGcontact;
-    String mContact, mGroup_id, call;
+    String mContact, mGroup_id, call,bundle_GroupName;
     ListView lv;
     ApiCall mApiCall;
     String receiver_contact;
@@ -67,7 +67,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGcontact = inflater.inflate(R.layout.group_contact_list, container, false);
-
+        getActivity().setTitle("Add Contacts");
         AddContacts = (Button) mGcontact.findViewById(R.id.add_contacts);
         inputSearch = (EditText) mGcontact.findViewById(R.id.inputSearch);
         lv = (ListView) mGcontact.findViewById(R.id.list_view);
@@ -80,6 +80,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         mApiCall.getRegisteredContacts();
 
         mGroup_id = args.getString("bundle_GroupId", "");
+        bundle_GroupName = args.getString("bundle_GroupName", "");
         call = args.getString("call", "");
         AddContacts.setEnabled(false);
 
@@ -143,6 +144,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     intent.putExtra("grouptype", "MyGroup");
                     intent.putExtra("className", "GroupContactFragment");
                     intent.putExtra("bundle_GroupId", mGroup_id);
+                    intent.putExtra("bundle_GroupName", bundle_GroupName);
                     getActivity().startActivity(intent);
 
                 } else if (flag) {

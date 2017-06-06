@@ -80,6 +80,9 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_group_edit, container, false);
+
+        getActivity().setTitle("Edit Group");
+
         group_name = (EditText) view.findViewById(R.id.group_name);
         mGroup_image = (ImageView) view.findViewById(group_image);
         BtnUpdateGroup = (Button) view.findViewById(R.id.BtnUpdateGroup);

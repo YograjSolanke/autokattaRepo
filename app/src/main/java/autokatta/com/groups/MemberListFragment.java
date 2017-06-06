@@ -50,7 +50,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     String call;
     Bundle bundle = new Bundle();
     //String group_id;
-    String mCallfrom = "", mGroupId = "";
+    String mCallfrom = "", mGroupId = "",bundle_GroupName="";
     TextView mNoData;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
@@ -272,6 +272,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 if (bundle != null) {
                     mCallfrom = bundle.getString("grouptype");
                     mGroupId = bundle.getString("bundle_GroupId");
+                    bundle_GroupName = bundle.getString("bundle_GroupName");
                     Log.i("Other", "->" + mCallfrom);
                     Log.i("GroupId", "MemberList->" + mGroupId);
                 }
@@ -305,6 +306,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         GroupContactFragment fragment = new GroupContactFragment();
                         Bundle b = new Bundle();
                         b.putString("bundle_GroupId", mGroupId);
+                        b.putString("bundle_GroupName", bundle_GroupName);
                         b.putStringArrayList("list", (ArrayList<String>) ContactNoList);
                         b.putString("call", "existGroup");
                         fragment.setArguments(b);

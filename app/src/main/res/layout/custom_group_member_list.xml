@@ -21,6 +21,12 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="7dp"
                 android:contentDescription="@string/app_name" />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/pro_pic"
+                android:layout_marginLeft="58dp"
+                android:src="@drawable/contact1"/>
         </RelativeLayout>
 
         <RelativeLayout
