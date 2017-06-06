@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,8 +43,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class MyStoreHome extends Fragment implements View.OnClickListener, RequestNotifier {
     View mMyStoreHome;
     ImageView mBannerImage, mStoreImage;
-    TextView mStoreName, mWebSite, mLocation;
+    TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount, mCategory;
     Button mCall, mEnquiry;
+    RelativeLayout otherViewLayout;
     RatingBar mRatingBar;
     ImageView mLike, mUnlike, mRating, mFollow, mUnFollow, mMap, mAddReview;
     boolean hasLoadedOnce = false;
@@ -98,6 +100,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 mUnFollow = (ImageView) mMyStoreHome.findViewById(R.id.unfollow);
                 mMap = (ImageView) mMyStoreHome.findViewById(R.id.map);
                 mAddReview = (ImageView) mMyStoreHome.findViewById(R.id.add_review);
+                otherViewLayout = (RelativeLayout) mMyStoreHome.findViewById(R.id.otherViewRelative);
 
                 mBannerImage = (ImageView) mMyStoreHome.findViewById(R.id.other_store_image);
                 mStoreImage = (ImageView) mMyStoreHome.findViewById(R.id.other_store_images);
@@ -105,6 +108,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 mStoreName = (TextView) mMyStoreHome.findViewById(R.id.store_name);
                 mWebSite = (TextView) mMyStoreHome.findViewById(R.id.web);
                 mLocation = (TextView) mMyStoreHome.findViewById(R.id.location);
+                mLikeCount = (TextView) mMyStoreHome.findViewById(R.id.likeCount);
+                mFollowCount = (TextView) mMyStoreHome.findViewById(R.id.followCount);
+                mCategory = (TextView) mMyStoreHome.findViewById(R.id.category);
 
                 mCall = (Button) mMyStoreHome.findViewById(R.id.call);
                 mEnquiry = (Button) mMyStoreHome.findViewById(R.id.enquiry);
@@ -191,6 +197,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
                     storeName = success.getName();
                     storeImage = success.getStoreImage();
+                    storeOtherContact = success.getContact();
                     storeCoverImage = success.getCoverImage();
                     storeWebsite = success.getWebsite();
                     storeTiming = success.getStoreOpenTime() + " " + success.getStoreCloseTime();
@@ -199,6 +206,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     storeType = success.getStoreType();
                     storeLikeCount = success.getLikecount();
                     storeFollowCount = success.getFollowcount();
+                    mCategory.setText(success.getCategory());
 
                     mOtherContact = success.getContact();
                     Log.i("dsafdsafdas", "->" + mOtherContact);
@@ -217,36 +225,40 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     isDealing = success.getIsDealing();
                 }
 
-                if (mOtherContact.equals(myContact)) {
-                    mCall.setVisibility(View.GONE);
-                    mLike.setVisibility(View.GONE);
-                    mUnlike.setVisibility(View.GONE);
-                    mFollow.setVisibility(View.GONE);
-                    mUnFollow.setVisibility(View.GONE);
-                    /*mRate.setVisibility(View.GONE);
-                    mAdd.setVisibility(View.VISIBLE);*/
+                if (mOtherContact.contains(myContact)) {
+                    otherViewLayout.setVisibility(View.GONE);
                 }
 
                 mRatingBar.setRating(Float.parseFloat(storeRating));
                 //  mBundle.putString("StoreContact", mOtherContact);
 
-                String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
-                Glide.with(this)
-                        .load(dp_path)
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(mStoreImage);
+                if (!storeImage.equals("")) {
+                    String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
+                    Glide.with(this)
+                            .load(dp_path)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(mStoreImage);
+                } else {
+                    mStoreImage.setImageResource(R.drawable.store);
+                }
+                if (!storeCoverImage.equals("")) {
+                    String dp_paths = "http://autokatta.com/mobile/store_profiles/" + storeCoverImage;
+                    Glide.with(this)
+                            .load(dp_paths)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(mBannerImage);
+                } else {
 
-                String dp_paths = "http://autokatta.com/mobile/store_profiles/" + storeCoverImage;
-                Glide.with(this)
-                        .load(dp_paths)
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(mBannerImage);
+                }
 
                 mStoreName.setText(storeName);
                 mLocation.setText(storeLocation);
                 mWebSite.setText(storeWebsite);
+                mFollowCount.setText("Followers(" + storeFollowCount + ")");
+                mLikeCount.setText("Likes(" + storeLikeCount + ")");
+
 
                 if (mLikestr.equalsIgnoreCase("no")) {
                     mLike.setVisibility(View.GONE);
@@ -262,6 +274,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     mFollow.setVisibility(View.GONE);
                     mUnFollow.setVisibility(View.VISIBLE);
                 }
+
             } else {
                 Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
@@ -349,7 +362,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 startActivity(intent);
 
             } else if (str.equals("success_rating_updated")) {
-                Snackbar.make(getView(), "SRating updated", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(getView(), "Rating updated", Snackbar.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
@@ -384,18 +397,23 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
         if (!precsrate.equals("0")) {
             csbar.setRating(Float.parseFloat(precsrate));
+            csrate = Float.parseFloat(precsrate);
         }
         if (!preqwrate.equals("0")) {
             qwbar.setRating(Float.parseFloat(preqwrate));
+            qwrate = Float.parseFloat(preqwrate);
         }
         if (!prefrrate.equals("0")) {
             frbar.setRating(Float.parseFloat(prefrrate));
+            frrate = Float.parseFloat(prefrrate);
         }
         if (!preprrate.equals("0")) {
             prbar.setRating(Float.parseFloat(preprrate));
+            prrate = Float.parseFloat(preprrate);
         }
         if (!pretmrate.equals("0")) {
             tmbar.setRating(Float.parseFloat(pretmrate));
+            tmrate = Float.parseFloat(pretmrate);
         }
         if (!preoverall.equals("0")) {
             overallbar.setRating(Float.parseFloat(preoverall));

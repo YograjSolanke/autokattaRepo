@@ -109,10 +109,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 try {
                     mLayout = (CoordinatorLayout) findViewById(R.id.store_coordinate);
                     menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
-                    mCall = (FloatingActionButton) findViewById(R.id.call_c);
-                    mLike = (FloatingActionButton) findViewById(R.id.like_l);
-                    mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
-                    mRate = (FloatingActionButton) findViewById(R.id.rate);
+//                    mCall = (FloatingActionButton) findViewById(R.id.call_c);
+//                    mLike = (FloatingActionButton) findViewById(R.id.like_l);
+//                    mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
+//                    mRate = (FloatingActionButton) findViewById(R.id.rate);
                     mAdd = (FloatingActionButton) findViewById(R.id.add);
                     mTeamProduct = (FloatingActionButton) findViewById(R.id.add_product_team);
                     mTeamServices = (FloatingActionButton) findViewById(R.id.add_services_team);
@@ -220,10 +220,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 }
             }
         });
-        mCall.setOnClickListener(this);
-        mLike.setOnClickListener(this);
-        mFollow.setOnClickListener(this);
-        mRate.setOnClickListener(this);
+//        mCall.setOnClickListener(this);
+//        mLike.setOnClickListener(this);
+//        mFollow.setOnClickListener(this);
+//        mRate.setOnClickListener(this);
         mGoogleMap.setOnClickListener(this);
         mAdd.setOnClickListener(this);
         mTeamProduct.setOnClickListener(this);
@@ -451,32 +451,32 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.call_c:
-                call();
-                break;
-            case R.id.like_l:
-                if (mLikestr.equalsIgnoreCase("no")) {
-                    mApiCall.otherStoreLike(mLoginContact, mOtherContact, "2", store_id);
-                    menuRed.setClosedOnTouchOutside(true);
-                } else {
-                    mApiCall.otherStoreUnlike(mLoginContact, mOtherContact, "2", store_id);
-                    menuRed.setClosedOnTouchOutside(true);
-                }
-
-                break;
-            case R.id.follow_f:
-                if (mFolllowstr.equalsIgnoreCase("no")) {
-                    mApiCall.otherStoreFollow(mLoginContact, mOtherContact, "2", store_id);
-                    menuRed.setClosedOnTouchOutside(true);
-                } else {
-                    mApiCall.otherStoreUnFollow(mLoginContact, mOtherContact, "2", store_id);
-                    menuRed.setClosedOnTouchOutside(true);
-                }
-                break;
-            case R.id.rate:
-                filterResult();
-                menuRed.setClosedOnTouchOutside(true);
-                break;
+//            case R.id.call_c:
+//                call();
+//                break;
+//            case R.id.like_l:
+//                if (mLikestr.equalsIgnoreCase("no")) {
+//                    mApiCall.otherStoreLike(mLoginContact, mOtherContact, "2", store_id);
+//                    menuRed.setClosedOnTouchOutside(true);
+//                } else {
+//                    mApiCall.otherStoreUnlike(mLoginContact, mOtherContact, "2", store_id);
+//                    menuRed.setClosedOnTouchOutside(true);
+//                }
+//
+//                break;
+//            case R.id.follow_f:
+//                if (mFolllowstr.equalsIgnoreCase("no")) {
+//                    mApiCall.otherStoreFollow(mLoginContact, mOtherContact, "2", store_id);
+//                    menuRed.setClosedOnTouchOutside(true);
+//                } else {
+//                    mApiCall.otherStoreUnFollow(mLoginContact, mOtherContact, "2", store_id);
+//                    menuRed.setClosedOnTouchOutside(true);
+//                }
+//                break;
+//            case R.id.rate:
+//                filterResult();
+//                menuRed.setClosedOnTouchOutside(true);
+//                break;
 
             case R.id.gotoMap:
                 drawMap(storelattitude, storelongitude);
@@ -684,10 +684,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 }
 
                 if (mOtherContact.contains(mLoginContact)) {
-                    mCall.setVisibility(View.GONE);
-                    mLike.setVisibility(View.GONE);
-                    mFollow.setVisibility(View.GONE);
-                    mRate.setVisibility(View.GONE);
+//                    mCall.setVisibility(View.GONE);
+//                    mLike.setVisibility(View.GONE);
+//                    mFollow.setVisibility(View.GONE);
+//                    mRate.setVisibility(View.GONE);
                     mAdd.setVisibility(View.VISIBLE);
                 }
 
@@ -725,25 +725,25 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         }
                     }
                 });
-
-                if (mLikestr.equalsIgnoreCase("no")) {
-                    mLike.setLabelText("Like");
-                    mLike.setLabelTextColor(Color.WHITE);
-                    menuRed.setClosedOnTouchOutside(true);
-                } else {
-                    mLike.setLabelText("Liked");
-                    mLike.setLabelTextColor(Color.RED);
-                    menuRed.setClosedOnTouchOutside(true);
-                }
-                if (mFolllowstr.equalsIgnoreCase("no")) {
-                    mFollow.setLabelText("Follow");
-                    mFollow.setLabelTextColor(Color.WHITE);
-                    menuRed.setClosedOnTouchOutside(true);
-                } else {
-                    mFollow.setLabelText("Following");
-                    mFollow.setLabelTextColor(Color.RED);
-                    menuRed.setClosedOnTouchOutside(true);
-                }
+//
+//                if (mLikestr.equalsIgnoreCase("no")) {
+//                    mLike.setLabelText("Like");
+//                    mLike.setLabelTextColor(Color.WHITE);
+//                    menuRed.setClosedOnTouchOutside(true);
+//                } else {
+//                    mLike.setLabelText("Liked");
+//                    mLike.setLabelTextColor(Color.RED);
+//                    menuRed.setClosedOnTouchOutside(true);
+//                }
+//                if (mFolllowstr.equalsIgnoreCase("no")) {
+//                    mFollow.setLabelText("Follow");
+//                    mFollow.setLabelTextColor(Color.WHITE);
+//                    menuRed.setClosedOnTouchOutside(true);
+//                } else {
+//                    mFollow.setLabelText("Following");
+//                    mFollow.setLabelTextColor(Color.RED);
+//                    menuRed.setClosedOnTouchOutside(true);
+//                }
             } else {
                 Snackbar.make(mLayout, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
@@ -803,46 +803,46 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success_follow")) {
-                Snackbar.make(mLayout, "Following", Snackbar.LENGTH_SHORT).show();
-                mFollow.setLabelText("Following");
-                mFollow.setLabelTextColor(Color.RED);
-                mFolllowstr = "yes";
-            } else if (str.equals("success_unfollow")) {
-                mFollow.setLabelText("Follow");
-                mFollow.setLabelTextColor(Color.WHITE);
-                mFolllowstr = "no";
-            } else if (str.equals("success_like")) {
-                Snackbar.make(mLayout, "Liked", Snackbar.LENGTH_SHORT).show();
-                mLike.setLabelText("Liked");
-                mLike.setLabelTextColor(Color.RED);
-                mLikestr = "yes";
-            } else if (str.equals("success_unlike")) {
-                mLike.setLabelText("Like");
-                mLike.setLabelTextColor(Color.WHITE);
-                mLikestr = "no";
-            } else if (str.equals("success_rating_submitted")) {
-                Snackbar.make(mLayout, "Rating Submitted", Snackbar.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putString("store_id", store_id);
-                bundle.putString("StoreContact", storeOtherContact);
-                finish();
-                Intent intent = new Intent(StoreViewActivity.this, StoreViewActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-
-            } else if (str.equals("success_rating_updated")) {
-                Snackbar.make(mLayout, "SRating updated", Snackbar.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putString("store_id", store_id);
-                bundle.putString("StoreContact", storeOtherContact);
-                finish();
-                Intent intent = new Intent(StoreViewActivity.this, StoreViewActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            } else if (str.equals("success_recommended")) {
-                Snackbar.make(mLayout, "Store Recommended", Snackbar.LENGTH_SHORT).show();
-            }
+//            if (str.equals("success_follow")) {
+//                Snackbar.make(mLayout, "Following", Snackbar.LENGTH_SHORT).show();
+//                mFollow.setLabelText("Following");
+//                mFollow.setLabelTextColor(Color.RED);
+//                mFolllowstr = "yes";
+//            } else if (str.equals("success_unfollow")) {
+//                mFollow.setLabelText("Follow");
+//                mFollow.setLabelTextColor(Color.WHITE);
+//                mFolllowstr = "no";
+//            } else if (str.equals("success_like")) {
+//                Snackbar.make(mLayout, "Liked", Snackbar.LENGTH_SHORT).show();
+//                mLike.setLabelText("Liked");
+//                mLike.setLabelTextColor(Color.RED);
+//                mLikestr = "yes";
+//            } else if (str.equals("success_unlike")) {
+//                mLike.setLabelText("Like");
+//                mLike.setLabelTextColor(Color.WHITE);
+//                mLikestr = "no";
+//            } else if (str.equals("success_rating_submitted")) {
+//                Snackbar.make(mLayout, "Rating Submitted", Snackbar.LENGTH_SHORT).show();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("store_id", store_id);
+//                bundle.putString("StoreContact", storeOtherContact);
+//                finish();
+//                Intent intent = new Intent(StoreViewActivity.this, StoreViewActivity.class);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//
+//            } else if (str.equals("success_rating_updated")) {
+//                Snackbar.make(mLayout, "SRating updated", Snackbar.LENGTH_SHORT).show();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("store_id", store_id);
+//                bundle.putString("StoreContact", storeOtherContact);
+//                finish();
+//                Intent intent = new Intent(StoreViewActivity.this, StoreViewActivity.class);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            } else if (str.equals("success_recommended")) {
+//                Snackbar.make(mLayout, "Store Recommended", Snackbar.LENGTH_SHORT).show();
+//            }
         }
     }
 
