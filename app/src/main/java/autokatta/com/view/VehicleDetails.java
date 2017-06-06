@@ -38,7 +38,6 @@ import java.util.HashMap;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment.VehicleDetailsSpecifications;
 import autokatta.com.fragment.VehicleDetailsTwo;
 import autokatta.com.fragment.VehicleDetails_Details;
 import autokatta.com.interfaces.RequestNotifier;
@@ -159,7 +158,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
         adapter.addFragment(new VehicleDetails_Details(), "DETAILS");
         adapter.addFragment(new VehicleDetailsTwo(), "VEHICLE DETAILS");
-        adapter.addFragment(new VehicleDetailsSpecifications(), "SPECIFICATION");
+    //    adapter.addFragment(new VehicleDetailsSpecifications(), "SPECIFICATION");
         viewPager.setAdapter(adapter);
     }
 

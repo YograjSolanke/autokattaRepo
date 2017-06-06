@@ -117,10 +117,10 @@
                 android:id="@+id/business_Chat"
                 android:icon="@mipmap/ic_wechat"
                 android:title="@string/business_chat" />
-            <item
+          <!--  <item
                 android:id="@+id/locality"
                 android:icon="@mipmap/ic_map_marker"
-                android:title="@string/locality" />
+                android:title="@string/locality" />-->
 
         </menu>
     </item>

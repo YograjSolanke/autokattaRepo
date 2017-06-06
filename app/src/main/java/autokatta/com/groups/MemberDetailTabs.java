@@ -41,9 +41,9 @@ public class MemberDetailTabs extends Fragment {
             Log.i("GroupId", "GroupTab->" + b1.getString("bundle_GroupId"));
         }
 
-        memberDetailsMemberFragment =new MemberDetailsMemberFragment();
+     /*   memberDetailsMemberFragment =new MemberDetailsMemberFragment();
         memberDetailsMemberFragment.setArguments(b);
-
+*/
         groupVehicleList = new MemberVehicleListFragment();
         groupVehicleList.setArguments(b);
 
@@ -71,7 +71,7 @@ public class MemberDetailTabs extends Fragment {
     private void setupViewPager(ViewPager mViewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(memberCommunicationFragment, "Communication");
-        tabAdapterName.addFragment(memberDetailsMemberFragment, "Group Members");
+      //  tabAdapterName.addFragment(memberDetailsMemberFragment, "Group Members");
         tabAdapterName.addFragment(groupVehicleList, "Member Vehicles");
         tabAdapterName.addFragment(memberProductFragment, "Member Products");
         tabAdapterName.addFragment(memberServicesFragment, "Member Services");
