@@ -224,7 +224,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
                 Intent i = new Intent(activity, ShareWithinAppActivity.class);
                 activity.startActivity(i);
-                activity.finish();
+                //activity.finish();
             }
         });
 

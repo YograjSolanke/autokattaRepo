@@ -23,7 +23,6 @@ import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
@@ -247,8 +246,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 }
                 sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
                 sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-                sliderLayout.setCustomAnimation(new DescriptionAnimation());
-                sliderLayout.setDuration(3000);
+                sliderLayout.setDuration(4000);
                 sliderLayout.addOnPageChangeListener(this);
                 collapsingToolbar.setTitle(Title);
             } else {

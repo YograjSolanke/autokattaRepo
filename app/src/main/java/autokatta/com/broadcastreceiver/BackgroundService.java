@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import autokatta.com.R;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.ServiceApi;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetAutokattaContactResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -138,7 +137,7 @@ public class BackgroundService extends Service {
                         }
                         operation.CLOSE();
                     } else {
-                        CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                        //CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                     }
                 }
 
