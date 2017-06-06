@@ -235,6 +235,29 @@
                 android:text="--"
                 android:textColor="#808080" />
 
+
+            <TextView
+                android:id="@+id/searchdate"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yreg"
+                android:layout_marginStart="5dip"
+                android:layout_marginTop="2dip"
+                android:text="Search Date :"
+                android:textColor="#808080"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/strSearchDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setregno"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dip"
+                android:layout_toEndOf="@+id/yreg"
+                android:text="--"
+                android:textColor="#808080" />
+
         </RelativeLayout>
 
         <View

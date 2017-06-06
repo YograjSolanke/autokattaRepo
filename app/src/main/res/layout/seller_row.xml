@@ -262,10 +262,32 @@
             android:text="--"
             android:textColor="#808080" />
 
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/yregno"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dip"
+            android:text="Search Date :"
+            android:textColor="#808080"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/strsearchdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/setregno"
+            android:layout_marginEnd="2dp"
+            android:layout_marginTop="2dip"
+            android:layout_toEndOf="@+id/yregno"
+            android:layout_toStartOf="@+id/sellvehicalimgflicker"
+            android:text="--"
+            android:textColor="#808080" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/setregno"
+            android:layout_below="@+id/date"
             android:layout_marginTop="5dp"
             android:background="#2C3343">
 
