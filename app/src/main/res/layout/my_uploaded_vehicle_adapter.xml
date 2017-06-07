@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
@@ -22,20 +22,21 @@
             android:padding="1dp">
 
             <ImageView
+                android:contentDescription="@string/app_name"
                 android:id="@+id/vehiprofile"
                 android:layout_width="70dip"
                 android:layout_height="70dip"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/relativetitle"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dip"/>
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dip" />
 
             <RelativeLayout
                 android:id="@+id/relativeuploadedon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativemodel"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp">
 
 
@@ -47,19 +48,19 @@
                     android:gravity="center"
                     android:text="Uploaded On"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dash6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/uploadedon"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/uploadedon"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -67,10 +68,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/dash6"
-                    android:textColor="#808080"/>
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash6"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
 
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeuploadedon"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp">
 
                 <TextView
@@ -88,15 +88,15 @@
                     android:layout_height="wrap_content"
                     android:text="Year  -"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/year"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/yeartxt"
+                    android:layout_toEndOf="@+id/yeartxt"
                     android:hint="Not Mentioned"
-                    android:textColor="#808080"/>
+                    android:textColor="#808080" />
 
             </RelativeLayout>
 
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/yearrel"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp">
 
                 <TextView
@@ -114,16 +114,15 @@
                     android:layout_height="wrap_content"
                     android:text="Km/hrs  -"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
-
                     android:id="@+id/km_hrs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/kmtxt"
+                    android:layout_toEndOf="@+id/kmtxt"
                     android:hint="Not Mentioned"
-                    android:textColor="#808080"/>
+                    android:textColor="#808080" />
 
             </RelativeLayout>
 
@@ -132,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/kmrel"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp">
 
                 <TextView
@@ -141,16 +140,15 @@
                     android:layout_height="wrap_content"
                     android:text="RTO city  -"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
-
                     android:id="@+id/RTO"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/RTOtxt"
+                    android:layout_toEndOf="@+id/RTOtxt"
                     android:hint="Not Mentioned"
-                    android:textColor="#808080"/>
+                    android:textColor="#808080" />
 
             </RelativeLayout>
 
@@ -159,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/RTOrel"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp">
 
                 <TextView
@@ -168,16 +166,15 @@
                     android:layout_height="wrap_content"
                     android:text="Location  -"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
-
                     android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/locationtxt"
+                    android:layout_toEndOf="@+id/locationtxt"
                     android:hint="Not Mentioned"
-                    android:textColor="#808080"/>
+                    android:textColor="#808080" />
 
             </RelativeLayout>
 
@@ -186,7 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/locationrel"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp">
 
                 <TextView
@@ -195,16 +192,15 @@
                     android:layout_height="wrap_content"
                     android:text="Registration no  - "
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
-
                     android:id="@+id/registrationNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/regtxt"
+                    android:layout_toEndOf="@+id/regtxt"
                     android:hint="Not Mentioned"
-                    android:textColor="#808080"/>
+                    android:textColor="#808080" />
 
             </RelativeLayout>
 
@@ -218,7 +214,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerHorizontal="true">
 
 
@@ -226,59 +222,58 @@
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_marginTop="5dp"
                         android:text="Title"
                         android:textColor="#000000"
-
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/dash1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/title"
-                        android:gravity="center"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@+id/title"
+                        android:gravity="center"
                         android:text="-"
                         android:textColor="#808080"
-                        android:textStyle="bold"
-
-                        />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/edittitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="45dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="45dp"
                         android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@+id/dash1"
+                        android:layout_toEndOf="@+id/dash1"
                         android:textColor="@color/black"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/relativebroadcast"
                     android:layout_width="50dp"
                     android:layout_height="40dp"
-                   android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"
-                    android:visibility="gone"
-                    >
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:visibility="gone">
+
                     <ImageView
+                        android:contentDescription="@string/app_name"
                         android:id="@+id/broadcast"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:src="@mipmap/broadcast"/>
+                        android:layout_marginStart="10dp"
+                        android:src="@mipmap/broadcast" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
                         android:layout_below="@+id/broadcast"
                         android:text="Broadcast"
-                        android:textSize="10dp"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -286,50 +281,50 @@
                 android:id="@+id/delete"
                 android:layout_width="40dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/Enquiry"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
                 android:text="Sold"
                 android:textColor="@color/white"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/Enquiry"
                 android:layout_width="60dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/quotation"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
                 android:text="Enquiry"
                 android:textColor="@color/white"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/quotation"
-                android:layout_width="90dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/relativetitle"
                 android:layout_marginTop="5dp"
-                android:textSize="11sp"
                 android:background="@color/background"
                 android:text="Get Quotation"
                 android:textColor="@color/white"
-                android:visibility="visible"/>
+                android:textSize="12sp"
+                android:visibility="visible" />
 
             <RelativeLayout
                 android:id="@+id/relativeprice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativetitle"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/delete"
-                android:layout_toRightOf="@+id/vehiprofile">
+                android:layout_toStartOf="@+id/delete"
+                android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
                     android:id="@+id/price"
@@ -339,19 +334,19 @@
                     android:gravity="center"
                     android:text="Price"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dash2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/price"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/price"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -359,10 +354,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/dash2"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash2"
                     android:hint="Not Mentioned"
-                    android:textColor="#808080"/>
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -370,33 +365,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeprice"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/delete"
-                android:layout_toRightOf="@+id/vehiprofile">
+                android:layout_toStartOf="@+id/delete"
+                android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
                     android:id="@+id/leads"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:gravity="center"
                     android:text="No of leads"
                     android:textColor="#808080"
-                    android:textStyle="bold"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/leads"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/leads"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -404,10 +399,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-
-                    android:layout_toRightOf="@+id/dash"
-                    android:textColor="#0f0ff0"/>
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash"
+                    android:textColor="#0f0ff0" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -415,9 +409,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeleads"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/vehiprofile">
+                android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
                     android:id="@+id/category"
@@ -427,28 +421,28 @@
                     android:gravity="center"
                     android:text="Category"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dash3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/category"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/category"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/editcategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/dash3"
-                    android:textColor="#808080"/>
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash3"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
 
@@ -457,9 +451,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativecategory"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/vehiprofile">
+                android:layout_toEndOf="@+id/vehiprofile">
 
 
                 <TextView
@@ -470,28 +464,28 @@
                     android:gravity="center"
                     android:text="Brand"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dash4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/brand"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/brand"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/editbrand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/dash4"
-                    android:textColor="#808080"/>
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash4"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -499,9 +493,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativebrand"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/vehiprofile">
+                android:layout_toEndOf="@+id/vehiprofile">
 
 
                 <TextView
@@ -512,19 +506,19 @@
                     android:gravity="center"
                     android:text="Model"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/dash5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/model"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/model"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -532,10 +526,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/dash5"
-                    android:textColor="#808080"/>
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash5"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <LinearLayout
@@ -548,39 +541,34 @@
 
 
                 <Button
+                    style="?android:buttonBarButtonStyle"
                     android:id="@+id/vehibtndetails"
                     android:layout_width="wrap_content"
                     android:layout_height="40dip"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttonback"
                     android:text="View  Details"
                     android:textColor="@color/white"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
 
                 <Button
+                    style="?android:buttonBarButtonStyle"
                     android:id="@+id/btnnotify"
                     android:layout_width="wrap_content"
                     android:layout_height="40dip"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttonback"
                     android:text="Stop Notification"
                     android:textColor="@color/white"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
         </RelativeLayout>
-        <!--  <view
-              android:layout_width="match_parent"
-              android:layout_height="5dp"
-              android:layout_marginTop="335dp"
-              />-->
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>

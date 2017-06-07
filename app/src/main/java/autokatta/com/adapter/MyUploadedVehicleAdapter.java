@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +12,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +36,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.UploadedVehicleBuyerList;
+import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -51,9 +56,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
     Activity activity;
     List<MyUploadedVehiclesResponse.Success> mMainList;
-    ConnectionDetector connectionDetector;
+    private ConnectionDetector connectionDetector;
     ApiCall apiCall;
-    String prefcontact;
+    private String prefcontact;
 
     public MyUploadedVehicleAdapter(Activity activity, List<MyUploadedVehiclesResponse.Success> successList) {
 
@@ -66,8 +71,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     @Override
     public MyUploadedVehicleAdapter.VehicleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_uploaded_vehicle_adapter, parent, false);
-        VehicleHolder holder = new VehicleHolder(view);
-        return holder;
+        return new VehicleHolder(view);
     }
 
     @Override
@@ -309,7 +313,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 Bundle b = new Bundle();
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(activity, MyBroadcastGroupsActivity.class);
-           //     bundle.putString("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                //     bundle.putString("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                 b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
                 b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
                 b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
@@ -321,6 +325,50 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 b.putString("kms", mMainList.get(holder.getAdapterPosition()).getKmsRunning());
                 i.putExtras(b);
                 activity.startActivity(i, options.toBundle());
+            }
+        });
+
+        holder.mQuotation.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Dialog openDialog = new Dialog(activity);
+                openDialog.setContentView(R.layout.get_quotation);
+                openDialog.setTitle("Fill Form For Quotation");
+                final TextView titleText = (TextView) openDialog.findViewById(R.id.txtTitle);
+                final EditText edtResPrice = (EditText) openDialog.findViewById(R.id.edtReservedPrice);
+                final EditText edtDate = (EditText) openDialog.findViewById(R.id.edtDate);
+                Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
+
+                titleText.setText(mMainList.get(holder.getAdapterPosition()).getTitle() + " of Category "
+                        + mMainList.get(holder.getAdapterPosition()).getCategory());
+
+                edtDate.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+
+                        int action = event.getAction();
+                        if (action == MotionEvent.ACTION_DOWN) {
+                            edtDate.setInputType(InputType.TYPE_NULL);
+                            edtDate.setError(null);
+                            new SetMyDateAndTime("date", edtDate, activity);
+                        }
+                        return false;
+                    }
+                });
+                sendQuotation.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+
+                        String strTitle = titleText.getText().toString();
+                        String strPrice = edtResPrice.getText().toString();
+                        String deadlineDate = edtDate.getText().toString();
+
+                        openDialog.dismiss();
+                    }
+                });
+                openDialog.show();
             }
         });
     }
@@ -358,11 +406,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
         ImageView vehicleimage;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr, editkms, editrto, editlocation, editregNo;
-        Button vehidetails, btnnotify, delete, mEnquiry;
+        Button vehidetails, btnnotify, delete, mEnquiry, mQuotation;
         CardView mcardView;
         RelativeLayout mBroadcast;
 
-        public VehicleHolder(View itemView) {
+        VehicleHolder(View itemView) {
             super(itemView);
 
             edittitles = (TextView) itemView.findViewById(R.id.edittitle);
@@ -384,7 +432,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             editlocation = (TextView) itemView.findViewById(R.id.location);
             editregNo = (TextView) itemView.findViewById(R.id.registrationNo);
             mcardView = (CardView) itemView.findViewById(R.id.card_view);
-            mBroadcast= (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
+            mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
+
+            mQuotation = (Button) itemView.findViewById(R.id.quotation);
 
         }
     }
