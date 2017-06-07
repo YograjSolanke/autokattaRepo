@@ -1,18 +1,27 @@
 package autokatta.com.other;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import java.util.Calendar;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.View;
-import android.app.AlertDialog;
 import android.widget.NumberPicker;
 
+import java.util.Calendar;
+
 import autokatta.com.R;
+
+/**
+ * The Class MonthYearPicker.
+ *
+ * @author SuRendra Reddy
+ */
 
 /**
  * Created by ak-001 on 21/3/17.
  */
 
+@SuppressLint("InflateParams")
 public class MonthYearPicker {
 
     private static final int MIN_YEAR = 1970;

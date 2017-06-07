@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
@@ -94,12 +95,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     //Staring
     List<String> mStaringList = new ArrayList<>();
     String category, categoryId, subcategoryId, brandId, modelId, versionId, brandName = "", modelName = "", versionName = "",
-            subcategoryName, brakeId, brakeName, pumpId, pumpName,uploadauctioncat;
+            subcategoryName, brakeId, brakeName, pumpId, pumpName, uploadauctioncat;
 
     /*
     Year Fragment...
      */
     private MonthYearPicker myp;
+    private MonthYearPicker myp1;
     EditText mMakeMonth, mMakeYear;
     EditText mRegisterMonth, mRegisterYear;
     LinearLayout linearPermit;
@@ -108,6 +110,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         kms/hrs fragment
      */
     EditText mHrs, mKms;
+    ImageView mMakePick, mRegisterPick;
 
     public Title() {
         //empty constructor...
@@ -117,7 +120,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mTitle = inflater.inflate(R.layout.fragment_upload_vehicle_title, container, false);
-      getActivity().setTitle("Upload Vehicle");
+        getActivity().setTitle("Upload Vehicle");
         scrollView1 = (ScrollView) mTitle.findViewById(R.id.scrollView1);
         title = (EditText) mTitle.findViewById(R.id.titleText1);
         mCategory = (TextView) mTitle.findViewById(R.id.categorytext1);
@@ -154,11 +157,41 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         Year Fragment...
          */
 
+        mMakePick = (ImageView) mTitle.findViewById(R.id.make_pick);
+        mRegisterPick = (ImageView) mTitle.findViewById(R.id.register_pick);
         mMakeMonth = (EditText) mTitle.findViewById(R.id.make_month);
         mMakeYear = (EditText) mTitle.findViewById(R.id.make_year);
         mRegisterMonth = (EditText) mTitle.findViewById(R.id.register_month);
         mRegisterYear = (EditText) mTitle.findViewById(R.id.register_year);
 
+        mMakePick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myp.show();
+            }
+        });
+        myp = new MonthYearPicker(getActivity());
+        myp.build(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mMakeMonth.setText("       " + myp.getSelectedMonthName() + "          " + myp.getSelectedYear());
+            }
+        }, null);
+
+        mRegisterPick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myp1.show();
+            }
+        });
+
+        myp1 = new MonthYearPicker(getActivity());
+        myp1.build(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mRegisterMonth.setText("       " + myp1.getSelectedMonthName() + "          " + myp1.getSelectedYear());
+            }
+        }, null);
 
         /*
         kms fragment
@@ -173,7 +206,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         categoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", null);
         uploadauctioncat = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_auction_categoryName", null);
 
-        mCategory.setText(category+"->"+uploadauctioncat);
+        mCategory.setText(category + "->" + uploadauctioncat);
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
         mSubmit.setOnClickListener(this);
@@ -198,9 +231,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        CreateGroupFragment createGroupFragment=new CreateGroupFragment();
-                                        Bundle b=new Bundle();
-                                        b.putString("classname","uploadvehicle");
+                                        CreateGroupFragment createGroupFragment = new CreateGroupFragment();
+                                        Bundle b = new Bundle();
+                                        b.putString("classname", "uploadvehicle");
                                         createGroupFragment.setArguments(b);
 
                                         getActivity().getSupportFragmentManager().beginTransaction()
@@ -494,9 +527,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 }
                             }
                         }
-                        if (mSelectedItems.size()==0)
-                        {
-                            CustomToast.customToast(getActivity(),"No Group Was Selected");
+                        if (mSelectedItems.size() == 0) {
+                            CustomToast.customToast(getActivity(), "No Group Was Selected");
                             radioButton1.setChecked(false);
                             radioButton2.setChecked(true);
                         }
@@ -555,9 +587,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 }
                             }
                         }
-                        if (mSelectedItems.size()==0)
-                        {
-                            CustomToast.customToast(getActivity(),"No Store Was Selected");
+                        if (mSelectedItems.size() == 0) {
+                            CustomToast.customToast(getActivity(), "No Store Was Selected");
                             storeradioyes.setChecked(false);
                             storeradiono.setChecked(true);
                             stringstoreids = "";
@@ -1100,10 +1131,15 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         strHrs = "", strKms = "", brandstr = "", modelstr = "", versionstr = "";
 
                 strTitle = title.getText().toString();
-                strMakemonth = mMakeMonth.getText().toString();
+                /*strMakemonth = mMakeMonth.getText().toString();
                 strMakeyear = mMakeYear.getText().toString();
                 strRegisterMonth = mRegisterMonth.getText().toString();
-                strRegisterYear = mRegisterYear.getText().toString();
+                strRegisterYear = mRegisterYear.getText().toString();*/
+                strMakemonth = myp.getSelectedMonthName();
+                strMakeyear = String.valueOf(myp.getSelectedYear());
+                strRegisterMonth = myp1.getSelectedMonthName();
+                strRegisterYear = String.valueOf(myp1.getSelectedYear());
+
                 strHrs = mHrs.getText().toString();
                 strKms = mKms.getText().toString();
 

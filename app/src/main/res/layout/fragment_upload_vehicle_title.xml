@@ -429,6 +429,15 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
+                <ImageView
+                    android:id="@+id/make_pick"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/ic_calendar"
+                    android:contentDescription="@string/app_name" />
+
                 <EditText
                     android:id="@+id/make_month"
                     android:layout_width="match_parent"
@@ -436,8 +445,9 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
-                    android:background="#80bebebe"
-                    android:hint="Month"
+                    android:background="@android:color/transparent"
+                    android:hint="      Month               Year"
+                    android:textStyle="bold"
                     android:inputType="text"
                     android:paddingStart="@dimen/card_margin" />
 
@@ -452,6 +462,7 @@
                     android:background="#80bebebe"
                     android:hint="Year"
                     android:inputType="text"
+                    android:visibility="gone"
                     android:paddingStart="@dimen/card_margin" />
 
             </LinearLayout>
@@ -478,6 +489,15 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
+                <ImageView
+                    android:id="@+id/register_pick"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/ic_calendar"
+                    android:contentDescription="@string/app_name" />
+
                 <EditText
                     android:id="@+id/register_month"
                     android:layout_width="match_parent"
@@ -485,8 +505,9 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
-                    android:background="#80bebebe"
-                    android:hint="Month"
+                    android:background="@android:color/transparent"
+                    android:hint="      Month               Year"
+                    android:textStyle="bold"
                     android:inputType="text"
                     android:paddingLeft="@dimen/card_margin" />
 
@@ -500,6 +521,7 @@
                     android:layout_weight="1"
                     android:background="#80bebebe"
                     android:hint="Year"
+                    android:visibility="gone"
                     android:inputType="text"
                     android:paddingLeft="@dimen/card_margin" />
 

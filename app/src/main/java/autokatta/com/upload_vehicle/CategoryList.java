@@ -11,9 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.GetCategoryListAdapter;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -23,14 +23,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class CategoryList extends Fragment {
     View mCategory;
-    ArrayList mList=new ArrayList();
+    List<String> mList = new ArrayList<>();
     ListView mListView;
-    GetCategoryListAdapter getCategoryListadapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mCategory=inflater.inflate(R.layout.upload_vehicle_categries_list,null);
-        mListView= (ListView) mCategory.findViewById(R.id.upload_category_list);
+        mCategory = inflater.inflate(R.layout.upload_vehicle_categries_list, null);
+        mListView = (ListView) mCategory.findViewById(R.id.upload_category_list);
         mList.clear();
         getActivity().setTitle("Select Auction Category");
         mList.add("Finance/Repo");
@@ -39,22 +39,17 @@ public class CategoryList extends Fragment {
         mList.add("Dealer Stock");
         mList.add("Market Place");
 
-
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, mList);
+        ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mList);
         mListView.setAdapter(adapter);
-/*
-        GetCategoryListAdapter getCategoryListadapter = new GetCategoryListAdapter(getActivity(), mList);
-        mListView.setAdapter(getCategoryListadapter);
-        getCategoryListadapter.notifyDataSetChanged();*/
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = mList.get(position).toString();
-               // String subTypeId = mList.get(position).getId();
+                String s = mList.get(position);
+                // String subTypeId = mList.get(position).getId();
                 if (s != null) {
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_auction_categoryName", s).apply();
-                  //  getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryId", subTypeId).apply();
-                       getActivity().getSupportFragmentManager().beginTransaction()
+                    getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.vehicle_upload_container, new Title(), "Category_list")
                             .addToBackStack("Category_list")
                             .commit();
