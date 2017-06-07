@@ -114,6 +114,17 @@ public class StoreInventoryResponse {
 
         public class Product {
 
+
+            public boolean isVisibility() {
+                return visibility;
+            }
+
+            public void setVisibility(boolean visibility) {
+                this.visibility = visibility;
+            }
+
+            private boolean visibility;
+
             @SerializedName("store_id")
             @Expose
             private String storeId;
@@ -340,6 +351,17 @@ public class StoreInventoryResponse {
 
 
         public class Service {
+
+            public boolean isVisibility() {
+                return visibility;
+            }
+
+            public void setVisibility(boolean visibility) {
+                this.visibility = visibility;
+            }
+
+            private boolean visibility;
+
 
             @SerializedName("service_name")
             @Expose

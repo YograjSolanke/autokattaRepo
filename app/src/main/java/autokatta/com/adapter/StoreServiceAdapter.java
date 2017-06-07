@@ -79,6 +79,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.ptags.setText(service.getServicetags());
 
         holder.ptype.setText(service.getServiceType());
+
+        holder.pCategory.setText(service.getServicecategory());
         holder.productrating.setEnabled(false);
 
         if (myContact.equals(storeContact)) {
@@ -91,6 +93,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.pdetails.setEnabled(false);
         holder.ptags.setEnabled(false);
         holder.ptype.setEnabled(false);
+        holder.pCategory.setEnabled(false);
 
 
         try {
@@ -230,7 +233,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     }
 
     class ServiceHolder extends RecyclerView.ViewHolder {
-        TextView pname, pprice, pdetails, ptype, ptags;
+        TextView pname, pprice, pdetails, ptype, ptags, pCategory;
         ImageView image, deleteproduct;
         Button  sviewdetails, vehidetails;
         RatingBar productrating;
@@ -246,6 +249,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             pdetails = (TextView) itemView.findViewById(R.id.editdetails);
             ptags = (TextView) itemView.findViewById(R.id.edittags);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
+            pCategory = (TextView) itemView.findViewById(R.id.editCategory);
             viewdetails= (CardView) itemView.findViewById(R.id.card_view);
           //  viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
             image = (ImageView) itemView.findViewById(R.id.profile);

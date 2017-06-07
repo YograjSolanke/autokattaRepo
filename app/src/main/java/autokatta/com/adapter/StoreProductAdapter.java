@@ -79,6 +79,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         holder.pdetails.setText(product.getProductDetails());
         holder.ptags.setText(product.getProductTags());
         holder.ptype.setText(product.getProductType());
+        holder.pCategoey.setText(product.getCategory());
         holder.productrating.setEnabled(false);
 
         if (myContact.equals(storeContact)) {
@@ -90,6 +91,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         holder.pdetails.setEnabled(false);
         holder.ptags.setEnabled(false);
         holder.ptype.setEnabled(false);
+        holder.pCategoey.setEnabled(false);
 
         try {
             if (product.getProductImage().equals("") || product.getProductImage().equals("null") ||
@@ -233,7 +235,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     }
 
     class ProductHolder extends RecyclerView.ViewHolder {
-        TextView pname, pprice, pdetails, ptype, ptags;
+        TextView pname, pprice, pdetails, ptype, ptags, pCategoey;
         ImageView image, deleteproduct;
         Button viewdetails, sviewdetails, vehidetails;
         RatingBar productrating;
@@ -245,6 +247,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
             pprice = (TextView) itemView.findViewById(R.id.priceedit);
             pdetails = (TextView) itemView.findViewById(R.id.editdetails);
             ptags = (TextView) itemView.findViewById(R.id.edittags);
+            pCategoey = (TextView) itemView.findViewById(R.id.editCategory);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
             viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
             image = (ImageView) itemView.findViewById(R.id.profile);

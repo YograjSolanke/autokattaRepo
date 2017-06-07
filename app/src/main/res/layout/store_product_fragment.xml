@@ -6,6 +6,32 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/filterimg"
+            android:padding="5dp"
+            android:src="@drawable/filter"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:padding="5dp"
+            android:layout_toEndOf="@+id/filterimg"
+            android:text="Filter"
+            android:textStyle="bold"
+            android:contentDescription="@string/app_name" />
+
+    </RelativeLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_marginTop="@dimen/card_title_height"
         android:id="@+id/swipeRefreshLayout"

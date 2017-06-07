@@ -383,7 +383,6 @@
                     android:id="@+id/storetype"
                     android:layout_width="@dimen/product_text"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/edittxt"
                     android:fontFamily="sans-serif"
                     android:textStyle="bold"
                     android:text="Type :" />
@@ -392,7 +391,6 @@
                     android:id="@+id/editproducttype"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/edittxt"
                     android:layout_toEndOf="@+id/storetype"
                     android:textColor="@color/enteredTextColor"
                     android:fontFamily="sans-serif"
@@ -460,6 +458,28 @@
                     android:gravity="start"
                     android:textColor="@color/enteredTextColor"
                     android:text="Details" />
+
+
+                <TextView
+                    android:id="@+id/storeCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editdetails"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:gravity="start"
+                    android:text="Category:" />
+
+                <TextView
+                    android:id="@+id/editCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/editdetails"
+                    android:fontFamily="sans-serif"
+                    android:layout_toEndOf="@+id/storeCategory"
+                    android:gravity="start"
+                    android:textColor="@color/enteredTextColor"
+                    android:text="Category" />
 
             </RelativeLayout>
         </RelativeLayout>
