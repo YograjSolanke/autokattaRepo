@@ -608,7 +608,6 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                                 rowrvtype.setVisibility(View.GONE);
                                 rowuse.setVisibility(View.GONE);
                                 rowimpl.setVisibility(View.GONE);
-
                                 radioPermitGroup = (RadioGroup) findViewById(R.id.radiopermit);
                                 int selectedId = radioPermitGroup.getCheckedRadioButtonId();
                                 radioPermitButton = (RadioButton) findViewById(selectedId);
@@ -1108,9 +1107,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                         }
 
                         parsedData.addAll(mCategoryId);
-                        ArrayAdapter<String> adapter =
-                                new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
+                       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         allcategorySpinner.setAdapter(adapter);
                         allcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -1118,6 +1116,10 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                                 if (position != 0) {
                                     vehicle_id = mCategoryMap.get(parsedData.get(position));
                                     String Category = parsedData.get(position);
+                                    if (Category.equals("Car"))
+                                        rowPermit.setVisibility(View.VISIBLE);
+                                    else
+                                        rowPermit.setVisibility(View.GONE);
 
                                     System.out.println("cat is::" + vehicle_id);
                                     System.out.println("cat name::" + Category);
@@ -1126,10 +1128,6 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
                                     getSubCategoryTask(vehicle_id);
 
-                                    if (Category.equals("Car"))
-                                        rowPermit.setVisibility(View.VISIBLE);
-                                    else
-                                        rowPermit.setVisibility(View.GONE);
 
 
                                     if (Category.equals("Tractor") || Category.equals("Cranes") || Category.equalsIgnoreCase(" Construction Equipment ")) {

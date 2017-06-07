@@ -44,7 +44,8 @@
             android:layout_toStartOf="@+id/checkauc"
             android:text="Compare"
             android:textColor="#2C3343"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="gone"/>
 
         <CheckBox
             android:id="@+id/checkauc"
@@ -52,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/sellertext"
-            android:visibility="visible" />
+            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout

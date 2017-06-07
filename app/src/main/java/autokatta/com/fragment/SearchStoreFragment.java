@@ -82,13 +82,38 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
         storecontact = b.getString("contact_to_search");
         location = b.getString("location");
         String category = b.getString("category");
+        phrase = b.getString("phrase");
+        radius = b.getString("radius");
+        brands = b.getString("brands");
+
+        if (!storecontact.equalsIgnoreCase(""))
+        {
+            getActivity().setTitle(storecontact);
+        }
+        if (!location.equalsIgnoreCase(""))
+        {
+            getActivity().setTitle(location);
+        }
+        if (!category.equalsIgnoreCase("")&&!category.equalsIgnoreCase("Select Category"))
+        {
+            getActivity().setTitle(category);
+        }
 
         if (category.equalsIgnoreCase("Select Category"))
             category = "";
 
-        phrase = b.getString("phrase");
-        radius = b.getString("radius");
-        brands = b.getString("brands");
+        if (!phrase.equalsIgnoreCase(""))
+        {
+            getActivity().setTitle(phrase);
+        }
+        if (!radius.equalsIgnoreCase("")&&!radius.equalsIgnoreCase("Select radius"))
+        {
+            getActivity().setTitle(radius);
+        }
+        if (!brands.equalsIgnoreCase(""))
+        {
+            getActivity().setTitle(brands);
+        }
         final int radiuspos = b.getInt("radiuspos");
 
         finalCategory = category;
