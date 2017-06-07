@@ -133,7 +133,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="end"
-                    android:background="@drawable/add"
+                    android:background="@mipmap/ic_contacts"
                     android:contentDescription="@string/app_name" />
             </LinearLayout>
 

@@ -81,6 +81,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
             mApiCall.getGroupProducts(GroupId, mBundleContact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            hud.dismiss();
             Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
