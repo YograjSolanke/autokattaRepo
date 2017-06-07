@@ -61,7 +61,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     String myContact;
     String mOtherContact, mLoginContact, store_id, storeOtherContact, mFolllowstr, mLikestr, storeRating;
     String storeName = "", storeImage = "", storeCoverImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
-            storeLikeCount, storeFollowCount, strDetailsShare = "";
+            storeLikeCount, storeFollowCount, strDetailsShare = "", productCount, serviceCount, vehicleCount;
     Double storelattitude;
     Double storelongitude;
     ApiCall mApiCall;

@@ -170,6 +170,26 @@
                         android:gravity="start"
                         android:text="Working days" />
 
+                    <TextView
+                        android:id="@+id/productCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storeworkingdays"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="Products(10)" />
+
+                    <TextView
+                        android:id="@+id/serviceCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storeworkingdays"
+                        android:fontFamily="sans-serif"
+                        android:layout_toEndOf="@+id/productCount"
+                        android:gravity="start"
+                        android:layout_marginLeft="10dp"
+                        android:text="Services(10)" />
+
                     <ImageView
                         android:id="@+id/call_image"
                         android:layout_width="30dp"
