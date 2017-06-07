@@ -94,7 +94,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     //Staring
     List<String> mStaringList = new ArrayList<>();
     String category, categoryId, subcategoryId, brandId, modelId, versionId, brandName = "", modelName = "", versionName = "",
-            subcategoryName, brakeId, brakeName, pumpId, pumpName;
+            subcategoryName, brakeId, brakeName, pumpId, pumpName,uploadauctioncat;
 
     /*
     Year Fragment...
@@ -117,6 +117,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mTitle = inflater.inflate(R.layout.fragment_upload_vehicle_title, container, false);
+      getActivity().setTitle("Upload Vehicle");
         scrollView1 = (ScrollView) mTitle.findViewById(R.id.scrollView1);
         title = (EditText) mTitle.findViewById(R.id.titleText1);
         mCategory = (TextView) mTitle.findViewById(R.id.categorytext1);
@@ -170,8 +171,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
         category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
         categoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", null);
+        uploadauctioncat = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_auction_categoryName", null);
 
-        mCategory.setText(category);
+        mCategory.setText(category+"->"+uploadauctioncat);
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
         mSubmit.setOnClickListener(this);
@@ -310,7 +312,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     /*
                     Staring Spinner
                      */
-                    mStaringList.add("Select String Type");
+                    mStaringList.add("Select Steering Type");
                     mStaringList.add("Power");
                     mStaringList.add("Manual");
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mStaringList);

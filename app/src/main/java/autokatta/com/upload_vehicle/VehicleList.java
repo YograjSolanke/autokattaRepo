@@ -56,7 +56,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
                     FragmentTransaction fragmentTransaction = manager.beginTransaction();
                     fragmentTransaction.replace(R.id.vehicle_upload_container, new Title()).addToBackStack("vehicle_list").commit();*/
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.vehicle_upload_container, new Title(), "vehicle_list")
+                            .replace(R.id.vehicle_upload_container, new CategoryList(), "vehicle_list")
                             .addToBackStack("vehicle_list")
                             .commit();
                 }
