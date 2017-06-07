@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
-import autokatta.com.enquiries.AllEnquiryTabFragment;
-import autokatta.com.fragment.BuyerNotificationFragment;
+import autokatta.com.inventory_catalog.InventoryProductsFragment;
+import autokatta.com.inventory_catalog.InventoryServicesFragment;
 
 /**
  * Created by ak-001 on 25/4/17.
@@ -42,8 +42,8 @@ public class MyUploadedVehicleTabs extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getChildFragmentManager());
-        adapter.addFragment(new BuyerNotificationFragment(), "Products");
-        adapter.addFragment(new AllEnquiryTabFragment(), "Services");
+        adapter.addFragment(new InventoryProductsFragment(), "Products");
+        adapter.addFragment(new InventoryServicesFragment(), "Services");
         adapter.addFragment(new MyUploadedVehiclesFragment(), "Used Vehicle");
         adapter.addFragment(new NewVehicle(), "New Vehicle");
         viewPager.setAdapter(adapter);

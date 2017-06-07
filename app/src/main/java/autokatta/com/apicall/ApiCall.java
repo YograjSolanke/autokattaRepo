@@ -5604,6 +5604,41 @@ Get saved search Seller list
         }
     }
 
+
+    /*
+    Get all products,service and vehicles related to single store
+     */
+
+    public void getMyInventory_Catalog(String mycontact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<StoreInventoryResponse> mGetAuction = mServiceApi.getInventoryCatalog(mycontact);
+                mGetAuction.enqueue(new Callback<StoreInventoryResponse>() {
+                    @Override
+                    public void onResponse(Call<StoreInventoryResponse> call, Response<StoreInventoryResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<StoreInventoryResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
    /*
        Like
      */

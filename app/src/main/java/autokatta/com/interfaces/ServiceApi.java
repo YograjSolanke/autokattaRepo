@@ -886,6 +886,13 @@ public interface ServiceApi {
     @GET("getProductByCategory.php")
     Call<StoreInventoryResponse> getStoreInventory(@Query("store_id") String store_id, @Query("mycontact") String mycontact);
 
+     /*
+    Get all products,service and vehicles related to single store
+     */
+
+    @GET("getMyInventoryCatalogDetails.php")
+    Call<StoreInventoryResponse> getInventoryCatalog(@Query("mycontact") String mycontact);
+
     /*
     Like
      */
