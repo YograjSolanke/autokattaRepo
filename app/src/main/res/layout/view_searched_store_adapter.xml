@@ -348,7 +348,7 @@
                         android:drawableStart="@drawable/followicon"
                         android:gravity="center"
                         android:textColor="@color/text_color"
-                        android:text="Following" />
+                        android:text="Follow" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

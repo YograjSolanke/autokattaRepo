@@ -163,7 +163,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                 mTeamServices.setVisibility(View.GONE);
                                 mTeamProduct.setVisibility(View.GONE);
                             }*/
-                            if (tab.getPosition() == 1) {
+                            if (tab.getPosition() == 2) {
                                 if (storeOtherContact != null) {
                                     if (storeOtherContact.equals(mOtherContact)) {
                                         mTeamVehicle.setVisibility(View.GONE);
@@ -175,7 +175,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                     mTeamServices.setVisibility(View.GONE);
                                     mTeamProduct.setVisibility(View.VISIBLE);
                                 }
-                            } else if (tab.getPosition() == 2) {
+                            } else if (tab.getPosition() == 3) {
                                 if (storeOtherContact != null) {
                                     if (storeOtherContact.equals(mOtherContact)) {
                                         mTeamVehicle.setVisibility(View.GONE);
@@ -187,7 +187,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                     mTeamServices.setVisibility(View.VISIBLE);
                                     mTeamProduct.setVisibility(View.GONE);
                                 }
-                            } else if (tab.getPosition() == 3) {
+                            } else if (tab.getPosition() == 4) {
                                 if (storeOtherContact != null) {
                                     if (storeOtherContact.equals(mOtherContact)) {
                                         mTeamVehicle.setVisibility(View.GONE);
