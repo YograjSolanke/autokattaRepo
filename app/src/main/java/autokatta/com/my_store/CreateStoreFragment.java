@@ -456,7 +456,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                     lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                     Log.i("Media", "path" + lastWord);
-                    uploadImage(mediaPath);
+                    //uploadImage(mediaPath);
 
                 } else if (requestCode == 101) {
                     if (resultCode == RESULT_OK) {
@@ -509,7 +509,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                     coverlastWord = mediaPath1.substring(mediaPath1.lastIndexOf("/") + 1);
                     Log.i("Media", "path" + coverlastWord);
-                    uploadImage(mediaPath1);
+                    //uploadImage(mediaPath1);
 
                 } else if (requestCode == 101) {
                     if (resultCode == RESULT_OK) {
@@ -566,7 +566,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
             else if (result.equalsIgnoreCase("addCover"))
                 coverlastWord = mediaPath1.substring(mediaPath1.lastIndexOf("/") + 1);
-            uploadImage(mediaPath);
+            // uploadImage(mediaPath);
             Log.i("image", "path" + lastWord);
             Log.i("image", "path1" + coverlastWord);
             //      /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
@@ -779,8 +779,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     if (createStoreResponse.getSuccess() != null) {
                         String id = createStoreResponse.getSuccess().getStoreID().toString();
                         Snackbar.make(mParent, "Store created", Snackbar.LENGTH_SHORT).show();
-                        uploadImage(picturePath);
-                        uploadImage(coverpicturePath);
+                        uploadImage(mediaPath);
+                        uploadImage(mediaPath1);
 
                         bundle = new Bundle();
                         bundle.putString("store_id", id);
@@ -897,8 +897,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 Snackbar.make(mParent, "No  Brand Tags Added", Snackbar.LENGTH_SHORT).show();
             } else if (str.equals("store_updated")) {
                 Snackbar.make(mParent, "Store updated", Snackbar.LENGTH_SHORT).show();
-                uploadImage(picturePath);
-                uploadImage(coverpicturePath);
+                uploadImage(mediaPath);
+                uploadImage(mediaPath1);
 
 
                 bundle = new Bundle();

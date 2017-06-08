@@ -109,7 +109,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         image = "http://autokatta.com/mobile/store_profiles/" + success.getStoreImage();
 
         if (success.getStoreImage() == null || success.getStoreImage().isEmpty() || success.getStoreImage().equals("null")) {
-            holder.store_image.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.store));
+            holder.store_image.setBackgroundResource(R.mipmap.ic_launcher);
         } else {
             /****************
              Glide code for image uploading
@@ -119,7 +119,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     .load(image)
                     .bitmapTransform(new CropSquareTransformation(activity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                    //.placeholder(R.drawable.logo) //To show image before loading an original image.
+                    .placeholder(R.drawable.logo) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.store_image);
         }

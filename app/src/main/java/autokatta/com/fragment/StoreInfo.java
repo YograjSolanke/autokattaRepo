@@ -61,7 +61,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreData(myContact, store_id);
         } else {
-            mNoData.setVisibility(View.GONE);
+
             Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
@@ -106,7 +106,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
             if (response.isSuccessful()) {
                 StoreResponse storeResponse = (StoreResponse) response.body();
                 if (!storeResponse.getSuccess().isEmpty()) {
-                    mNoData.setVisibility(View.GONE);
+
                     for (StoreResponse.Success success : storeResponse.getSuccess()) {
                         storeName.setText(success.getName());
                         StoreContact = success.getContact();
@@ -125,7 +125,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                         }
                     }
                 } else {
-                    mNoData.setVisibility(View.VISIBLE);
+
                 }
             } else {
                 Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
@@ -207,7 +207,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-                mNoData = (TextView) mAbout.findViewById(R.id.no_category);
+
                 storeName = (TextView) mAbout.findViewById(R.id.editstname);
                 storeLocation = (TextView) mAbout.findViewById(R.id.autolocation);
                 storeWebsite = (TextView) mAbout.findViewById(R.id.editwebsite);

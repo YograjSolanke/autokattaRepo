@@ -253,6 +253,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                             .load(dp_path)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.logo)
                             .into(mStoreImage);
                 } else {
                     mStoreImage.setImageResource(R.drawable.store);
@@ -263,6 +264,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                             .load(dp_paths)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.logo)
                             .into(mBannerImage);
                 } else {
 

@@ -111,8 +111,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
 
         image = "http://autokatta.com/mobile/store_profiles/" + object.getStoreImage();
 
-        if (object.getStoreImage() == null) {
-            holder.store_image.setBackgroundResource(R.drawable.profile);
+        if (object.getStoreImage() == null || object.getStoreImage().equals("") || object.getStoreImage().equals("null")) {
+            holder.store_image.setBackgroundResource(R.mipmap.ic_launcher);
         } else {
 
             /****************
@@ -123,7 +123,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                     .load(image)
                     .bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                    //.placeholder(R.drawable.logo) //To show image before loading an original image.
+                    .placeholder(R.drawable.logo) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.store_image);
         }

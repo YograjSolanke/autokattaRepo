@@ -282,6 +282,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                     .load(dppath)
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .placeholder(R.drawable.logo)
                     .into(holder.img);
         }
     }

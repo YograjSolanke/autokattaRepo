@@ -12,39 +12,35 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/card_title_height">
 
-        <RelativeLayout
-            android:id="@+id/buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true">
+
 
             <ImageView
                 android:id="@+id/editStore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/enquiry"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:contentDescription="@string/app_name"
                 android:layout_marginRight="10dp"
+                android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_mode_edit_black_24dp"
                 android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/enquiry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:contentDescription="@string/app_name"
                 android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/editStore"
                 android:src="@drawable/ic_comment_question_outline"
                 android:visibility="visible" />
 
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/relativetitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/buttons"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_below="@+id/editStore">
 
             <RelativeLayout
                 android:id="@+id/relativestorename"
@@ -393,6 +389,6 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/error_view" />
+
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
