@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -43,6 +44,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
     View mVehicle;
     String Sharedcontact, storeContact, store_id;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    RelativeLayout filterToHide;
     RecyclerView mRecyclerView;
     TextView titleText, mNoData;
     List<StoreInventoryResponse.Success.Vehicle> vehicleList;
@@ -217,6 +219,8 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                 Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mVehicle.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mVehicle.findViewById(R.id.recycler_view);
+                filterToHide = (RelativeLayout) mVehicle.findViewById(R.id.rel);
+                filterToHide.setVisibility(View.GONE);
                 //titleText = (TextView) mVehicle.findViewById(R.id.titleText);
                 mNoData = (TextView) mVehicle.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);

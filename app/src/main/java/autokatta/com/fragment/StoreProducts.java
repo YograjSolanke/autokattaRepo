@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -42,6 +43,7 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
     RecyclerView mRecyclerView;
     List<StoreInventoryResponse.Success.Product> productList;
     LinearLayoutManager mLayoutManager;
+    RelativeLayout filterToHide;
     StoreProductAdapter adapter;
     boolean hasView = false;
     ConnectionDetector mTestConnection;
@@ -208,6 +210,8 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
                 mNoData = (TextView) mProduct.findViewById(R.id.no_category);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mProduct.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
+                filterToHide = (RelativeLayout) mProduct.findViewById(R.id.rel);
+                filterToHide.setVisibility(View.GONE);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(getActivity());
                 mLayoutManager.setReverseLayout(true);

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -40,6 +41,7 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
     String Sharedcontact, storeContact, store_id;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
+    RelativeLayout filterToHide;
     TextView titleText, mNoData;
     List<StoreInventoryResponse.Success.Service> serviceList;
     LinearLayoutManager mLayoutManager;
@@ -209,6 +211,8 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
                 //titleText = (TextView) mService.findViewById(R.id.titleText);
+                filterToHide = (RelativeLayout) mService.findViewById(R.id.rel);
+                filterToHide.setVisibility(View.GONE);
                 mNoData = (TextView) mService.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
                 //titleText.setText("Services");
