@@ -388,7 +388,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
         public CheckedCategoryAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
-            counter = 0;
+
             if (finalcategory.size() == 0) {
                 for (int i = 0; i < this.titles.size(); i++) {
                     finalcategory.add("0");

@@ -14,7 +14,7 @@
             android:id="@+id/cattext"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Categories"
+            android:text="Select Categories To Filter Results"
             android:textStyle="bold" />
 
         <ListView

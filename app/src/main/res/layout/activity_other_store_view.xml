@@ -167,6 +167,7 @@
         android:paddingBottom="40dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        fab:menu_colorNormal="#DA4339"
         app:layout_anchor="@id/other_store_tabs"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">

@@ -264,6 +264,7 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
         Button Ok = (Button) convertView.findViewById(R.id.btnok);
         Button cancel = (Button) convertView.findViewById(R.id.btncancel);
+        cancel.setVisibility(View.GONE);
         categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
         lvcat.setAdapter(categoryAdapter);
 
@@ -360,7 +361,7 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
 
-            counter = 0;
+
             if (finalcategory.size() == 0) {
                 for (int i = 0; i < this.titles.size(); i++) {
                     finalcategory.add("0");

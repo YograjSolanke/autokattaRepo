@@ -273,6 +273,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         categoryAdapter = new CheckedCategoryAdapter(getActivity(), incomingCategory);
         lvcat.setAdapter(categoryAdapter);
 
+
         Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -360,7 +361,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         public CheckedCategoryAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
-            counter = 0;
+
             if (finalcategory.size() == 0) {
                 for (int i = 0; i < this.titles.size(); i++) {
                     finalcategory.add("0");

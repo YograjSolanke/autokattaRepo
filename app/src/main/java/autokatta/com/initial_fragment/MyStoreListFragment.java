@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -246,11 +247,11 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
 
                 if (dy > 0) {
                     // Scrolling up
-                    fabCreateStore.hide();
+                    fabCreateStore.hide(true);
 
                 } else {
                     // Scrolling down
-                    fabCreateStore.show();
+                    fabCreateStore.show(true);
                 }
             }
         });
