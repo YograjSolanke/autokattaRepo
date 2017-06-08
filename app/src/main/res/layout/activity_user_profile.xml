@@ -71,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
+        android:background="@color/red"
         android:src="@android:drawable/ic_menu_edit"
         app:layout_anchor="@id/appbar"
         app:fabSize="mini"
@@ -83,6 +84,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:src="@mipmap/ic_check"
+        android:background="@color/red"
         android:visibility="gone"
         app:layout_anchor="@id/appbar"
         app:fabSize="mini"
@@ -95,6 +97,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:src="@mipmap/ic_plus"
+        android:background="@color/red"
         android:visibility="gone" />
 
     <android.support.design.widget.FloatingActionButton
@@ -104,6 +107,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:src="@mipmap/ic_plus"
+        android:background="@color/red"
         android:visibility="gone" />
 
     <android.support.design.widget.FloatingActionButton
@@ -112,6 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
+        android:background="@color/red"
         android:src="@mipmap/ic_plus"
         android:visibility="gone" />
 

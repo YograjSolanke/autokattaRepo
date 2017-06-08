@@ -23,6 +23,7 @@
         android:layout_gravity="end|bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:background="@color/red"
         android:layout_margin="@dimen/fab_margin"
         android:src="@mipmap/ic_plus" />
 

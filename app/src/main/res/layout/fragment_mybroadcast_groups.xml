@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_above="@+id/button"
+        android:background="@color/red"
         android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/fab_margin"
         android:src="@mipmap/ic_account_multiple_plus"/>

@@ -24,6 +24,7 @@
         android:layout_alignEnd="@id/swipeRefreshLayoutMyStoreList"
         android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
+        android:background="@color/red"
         app:srcCompat="@mipmap/ic_plus" />
 
     <include layout="@layout/error_view" />

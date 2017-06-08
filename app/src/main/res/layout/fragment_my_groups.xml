@@ -26,6 +26,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
+        android:background="@color/red"
         android:layout_margin="@dimen/fab_margin"
         android:visibility="visible"
         app:srcCompat="@mipmap/ic_plus" />
