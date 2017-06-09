@@ -13,8 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            android:src="@mipmap/demo" />
+            android:scaleType="fitXY" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,8 +28,7 @@
                 android:layout_width="100dp"
                 android:layout_height="90dp"
                 android:contentDescription="@string/app_name"
-                android:scaleType="fitXY"
-                android:src="@mipmap/demo" />
+                android:scaleType="fitXY" />
 
             <RelativeLayout
                 android:id="@+id/text"

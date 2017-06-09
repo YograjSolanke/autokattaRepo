@@ -21,7 +21,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_mode_edit_black_24dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/enquiry"
@@ -31,7 +31,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/editStore"
                 android:src="@drawable/ic_comment_question_outline"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
 
         <RelativeLayout

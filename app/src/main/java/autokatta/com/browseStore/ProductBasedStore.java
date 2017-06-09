@@ -189,6 +189,18 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity a;
+
+        if (context instanceof Activity) {
+            a = (Activity) context;
+        }
+    }
+
+
+    @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {

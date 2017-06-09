@@ -69,6 +69,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     Double storelongitude;
     ApiCall mApiCall;
     KProgressHUD hud;
+    private int likecountint, followcountint;
 
     @Nullable
     @Override
@@ -136,6 +137,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     @Override
                     public void onClick(View v) {
                         mApiCall.otherStoreUnlike(myContact, mOtherContact, "2", store_id);
+                        likecountint = Integer.parseInt(storeLikeCount);
+                        likecountint--;
+                        mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
                     }
                 });
 
@@ -144,6 +148,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
 
                         mApiCall.otherStoreLike(myContact, mOtherContact, "2", store_id);
+                        likecountint = Integer.parseInt(storeLikeCount);
+                        likecountint++;
+                        mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
                     }
                 });
 
@@ -151,6 +158,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     @Override
                     public void onClick(View v) {
                         mApiCall.otherStoreFollow(myContact, mOtherContact, "2", store_id);
+                        followcountint = Integer.parseInt(storeFollowCount);
+                        followcountint++;
+                        mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
                     }
                 });
 
@@ -158,6 +168,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     @Override
                     public void onClick(View v) {
                         mApiCall.otherStoreUnFollow(myContact, mOtherContact, "2", store_id);
+                        followcountint = Integer.parseInt(storeFollowCount);
+                        followcountint--;
+                        mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
                     }
                 });
 
