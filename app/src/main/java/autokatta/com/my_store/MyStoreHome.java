@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MyStoreHome extends Fragment implements View.OnClickListener, RequestNotifier {
     View mMyStoreHome;
+    LinearLayout mLinear;
     ImageView mBannerImage, mStoreImage;
     TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount, mCategory;
     Button mCall, mEnquiry;
@@ -98,6 +100,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             public void run() {
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", "");
+                mLinear = (LinearLayout) mMyStoreHome.findViewById(R.id.my_home);
                 mLike = (ImageView) mMyStoreHome.findViewById(R.id.like);
                 mUnlike = (ImageView) mMyStoreHome.findViewById(R.id.unlike);
                 mRating = (ImageView) mMyStoreHome.findViewById(R.id.rating);
@@ -227,6 +230,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             if (response.isSuccessful()) {
                 hud.dismiss();
                 StoreResponse storeResponse = (StoreResponse) response.body();
+                mLinear.setVisibility(View.VISIBLE);
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
                     storeName = success.getName();
                     storeImage = success.getStoreImage();
@@ -311,7 +315,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 }
 
             } else {
-
+                hud.dismiss();
                 Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
