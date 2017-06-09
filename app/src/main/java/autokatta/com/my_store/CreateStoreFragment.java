@@ -1,14 +1,20 @@
 package autokatta.com.my_store;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -34,8 +40,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -97,11 +107,12 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     LinearLayout mLinearautobrand;
     RelativeLayout mRelativeBrand, mParent;
 
-    String mediaPath, mediaPath1;
+    String mediaPath = "", mediaPath1 = "";
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
     List<String> weekdays = new ArrayList<>();
     ConnectionDetector mTestConnection;
+    KProgressHUD hud;
 
     public CreateStoreFragment() {
         //empty constructor
@@ -167,6 +178,12 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
             create.setText("update");
             getActivity().setTitle("Update Store");
             // textstore.setText("Update Store");
+
+            hud = KProgressHUD.create(getActivity())
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please wait")
+                    .setMaxProgress(100)
+                    .show();
             mApiCall.getStoreData(myContact, store_id);
         }
 
@@ -340,8 +357,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     flagtime = false;
                 }
 
-                if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
-                    storename.setError("Enter Name");
+                if (name.equals("") || name.startsWith(" ") || name.endsWith(" ")) {
+                    storename.setError("Enter Valid Name");
                     storename.setFocusable(true);
                     storename.requestFocus();
                 } else if (!name.matches("[a-zA-Z ]*")) {
@@ -456,6 +473,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                     lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                     Log.i("Media", "path" + lastWord);
+                    mediaPath = compressImage(mediaPath);
                     //uploadImage(mediaPath);
 
                 } else if (requestCode == 101) {
@@ -509,6 +527,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                     coverlastWord = mediaPath1.substring(mediaPath1.lastIndexOf("/") + 1);
                     Log.i("Media", "path" + coverlastWord);
+                    mediaPath1 = compressImage(mediaPath1);
                     //uploadImage(mediaPath1);
 
                 } else if (requestCode == 101) {
@@ -766,8 +785,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             brandtagIdList.add(message.getId());
                             brandTagsList.add(message.getTag());
                         }
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTagsList);
-                        multiautobrand.setAdapter(dataadapter);
+                        if (getActivity() != null) {
+                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTagsList);
+                            multiautobrand.setAdapter(dataadapter);
+                        }
                     } else
                         Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
                 }
@@ -779,7 +800,9 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     if (createStoreResponse.getSuccess() != null) {
                         String id = createStoreResponse.getSuccess().getStoreID().toString();
                         Snackbar.make(mParent, "Store created", Snackbar.LENGTH_SHORT).show();
+                        if (!lastWord.equals(""))
                         uploadImage(mediaPath);
+                        if (!coverlastWord.equals(""))
                         uploadImage(mediaPath1);
 
                         bundle = new Bundle();
@@ -798,6 +821,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 if (response.body() instanceof StoreResponse) {
                     StoreResponse storeResponse = (StoreResponse) response.body();
                     if (!storeResponse.getSuccess().isEmpty()) {
+                        hud.dismiss();
                         for (StoreResponse.Success success : storeResponse.getSuccess()) {
                             storename.setText(success.getName());
                             storelocation.setText(success.getLocation());
@@ -833,19 +857,23 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                                 rbtstorevehicle.setChecked(true);
                             }
                         }
-                    } else
+                    } else {
+                        hud.dismiss();
                         Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             } else {
                 Snackbar.make(mParent, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
+            hud.dismiss();
             Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        hud.dismiss();
         if (error instanceof SocketTimeoutException) {
             Snackbar.make(mParent, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
@@ -891,14 +919,28 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity a;
+
+        if (context instanceof Activity) {
+            a = (Activity) context;
+        }
+    }
+
+
+    @Override
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("brand_tag_added")) {
                 Snackbar.make(mParent, "No  Brand Tags Added", Snackbar.LENGTH_SHORT).show();
             } else if (str.equals("store_updated")) {
                 Snackbar.make(mParent, "Store updated", Snackbar.LENGTH_SHORT).show();
-                uploadImage(mediaPath);
-                uploadImage(mediaPath1);
+                if (!lastWord.equals(preLastWord) && !lastWord.equals(""))
+                    uploadImage(mediaPath);
+                if (!coverlastWord.equals(preCoverLastWord) && !coverlastWord.equals(""))
+                    uploadImage(mediaPath1);
 
 
                 bundle = new Bundle();
@@ -921,5 +963,166 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void onItemsSelected(boolean[] selected) {
 
 
+    }
+
+
+    public String compressImage(String imageUri) {
+
+        String filePath = getRealPathFromURI(imageUri);
+        Bitmap scaledBitmap = null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+
+//      by setting this field as true, the actual bitmap pixels are not loaded in the memory. Just the bounds are loaded. If
+//      you try the use the bitmap here, you will get null.
+        options.inJustDecodeBounds = true;
+        Bitmap bmp = BitmapFactory.decodeFile(filePath, options);
+
+        int actualHeight = options.outHeight;
+        int actualWidth = options.outWidth;
+
+//      max Height and width values of the compressed image is taken as 816x612
+
+        float maxHeight = 816.0f;
+        float maxWidth = 612.0f;
+        float imgRatio = actualWidth / actualHeight;
+        float maxRatio = maxWidth / maxHeight;
+
+//      width and height values are set maintaining the aspect ratio of the image
+
+        if (actualHeight > maxHeight || actualWidth > maxWidth) {
+            if (imgRatio < maxRatio) {
+                imgRatio = maxHeight / actualHeight;
+                actualWidth = (int) (imgRatio * actualWidth);
+                actualHeight = (int) maxHeight;
+            } else if (imgRatio > maxRatio) {
+                imgRatio = maxWidth / actualWidth;
+                actualHeight = (int) (imgRatio * actualHeight);
+                actualWidth = (int) maxWidth;
+            } else {
+                actualHeight = (int) maxHeight;
+                actualWidth = (int) maxWidth;
+
+            }
+        }
+
+//      setting inSampleSize value allows to load a scaled down version of the original image
+
+        options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight);
+
+//      inJustDecodeBounds set to false to load the actual bitmap
+        options.inJustDecodeBounds = false;
+
+//      this options allow android to claim the bitmap memory if it runs low on memory
+        options.inPurgeable = true;
+        options.inInputShareable = true;
+        options.inTempStorage = new byte[16 * 1024];
+
+        try {
+//          load the bitmap from its path
+            bmp = BitmapFactory.decodeFile(filePath, options);
+        } catch (OutOfMemoryError exception) {
+            exception.printStackTrace();
+
+        }
+        try {
+            scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
+        } catch (OutOfMemoryError exception) {
+            exception.printStackTrace();
+        }
+
+        float ratioX = actualWidth / (float) options.outWidth;
+        float ratioY = actualHeight / (float) options.outHeight;
+        float middleX = actualWidth / 2.0f;
+        float middleY = actualHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+//      check the rotation of the image and display it properly
+        ExifInterface exif;
+        try {
+            exif = new ExifInterface(filePath);
+
+            int orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, 0);
+            Log.d("EXIF", "Exif: " + orientation);
+            Matrix matrix = new Matrix();
+            if (orientation == 6) {
+                matrix.postRotate(90);
+                Log.d("EXIF", "Exif: " + orientation);
+            } else if (orientation == 3) {
+                matrix.postRotate(180);
+                Log.d("EXIF", "Exif: " + orientation);
+            } else if (orientation == 8) {
+                matrix.postRotate(270);
+                Log.d("EXIF", "Exif: " + orientation);
+            }
+            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+                    scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,
+                    true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FileOutputStream out = null;
+        String filename = getFilename();
+        try {
+            out = new FileOutputStream(filename);
+
+//          write the compressed bitmap at the destination specified by filename.
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return filename;
+
+    }
+
+    public String getFilename() {
+        File file = new File(Environment.getExternalStorageDirectory().getPath(), "MyFolder/Images");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String uriSting = (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg");
+        return uriSting;
+
+    }
+
+    private String getRealPathFromURI(String contentURI) {
+        Uri contentUri = Uri.parse(contentURI);
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, null, null, null, null);
+        if (cursor == null) {
+            return contentUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            return cursor.getString(index);
+        }
+    }
+
+    public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        final float totalPixels = width * height;
+        final float totalReqPixelsCap = reqWidth * reqHeight * 2;
+        while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+            inSampleSize++;
+        }
+
+        return inSampleSize;
     }
 }

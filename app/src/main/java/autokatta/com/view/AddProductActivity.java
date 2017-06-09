@@ -260,13 +260,13 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                 if (name.equals("") && price.equals("") && details.equals("") && type.equals("")) {
 
                     Toast.makeText(AddProductActivity.this, "Please Enter All details", Toast.LENGTH_SHORT).show();
-                } else if (type.equals("")) {
+                } else if (type.equals("") || type.startsWith(" ") || type.endsWith(" ")) {
                     producttype.setError("Enter Product Type");
-                } else if (name.equals("")) {
-                    productname.setError("Enter Product Name");
-                } else if (price.equals("")) {
-                    productprice.setError("Enter Product Price");
-                } else if (details.equals("")) {
+                } else if (name.equals("") || name.startsWith(" ") || name.endsWith(" ")) {
+                    productname.setError("Enter Valid Product Name");
+                } else if (price.equals("") || price.startsWith(" ") || price.endsWith(" ")) {
+                    productprice.setError("Enter Valid Product Price");
+                } else if (details.equals("") || details.startsWith(" ")) {
                     productdetails.setError("Enter Product details");
                 } else if (category.equalsIgnoreCase("")) {
                     Toast.makeText(AddProductActivity.this, "Please Select Product Category", Toast.LENGTH_SHORT).show();

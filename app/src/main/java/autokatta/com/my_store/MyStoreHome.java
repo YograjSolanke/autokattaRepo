@@ -1,5 +1,7 @@
 package autokatta.com.my_store;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -65,6 +68,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     Double storelattitude;
     Double storelongitude;
     ApiCall mApiCall;
+    KProgressHUD hud;
 
     @Nullable
     @Override
@@ -208,6 +212,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                hud.dismiss();
                 StoreResponse storeResponse = (StoreResponse) response.body();
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
                     storeName = success.getName();
@@ -256,7 +261,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                             .placeholder(R.drawable.logo)
                             .into(mStoreImage);
                 } else {
-                    mStoreImage.setImageResource(R.drawable.store);
+                    mStoreImage.setImageResource(R.drawable.logo);
                 }
                 if (!storeCoverImage.equals("")) {
                     String dp_paths = "http://autokatta.com/mobile/store_profiles/" + storeCoverImage;
@@ -267,7 +272,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                             .placeholder(R.drawable.logo)
                             .into(mBannerImage);
                 } else {
-
+                    mBannerImage.setImageResource(R.drawable.logo);
                 }
 
                 mStoreName.setText(storeName);
@@ -293,15 +298,29 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 }
 
             } else {
+
                 Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
+            hud.dismiss();
             Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity a;
+
+        if (context instanceof Activity) {
+            a = (Activity) context;
+        }
+    }
+
+    @Override
     public void notifyError(Throwable error) {
+        hud.dismiss();
         if (error instanceof SocketTimeoutException) {
             Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
@@ -593,6 +612,12 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     }
 
     private void getOtherStore(String contact, String store_id) {
+
+        hud = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
         mApiCall.getStoreData(contact, store_id);
     }
 

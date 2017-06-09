@@ -274,13 +274,13 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                 if (name.equals("") && price.equals("") && details.equals("") && type.equals("")) {
 
                     Toast.makeText(AddServiceActivity.this, "Please Enter All details", Toast.LENGTH_SHORT).show();
-                } else if (type.equals("")) {
+                } else if (type.equals("") || type.startsWith(" ") || type.endsWith(" ")) {
                     servicetype.setError("Enter Service Type");
-                } else if (name.equals("")) {
+                } else if (name.equals("") || name.startsWith(" ") || name.endsWith(" ")) {
                     servicename.setError("Enter Service Name");
-                } else if (price.equals("")) {
+                } else if (price.equals("") || price.startsWith(" ") || price.endsWith(" ")) {
                     serviceprice.setError("Enter Service Price");
-                } else if (details.equals("")) {
+                } else if (details.equals("") || details.startsWith(" ")) {
                     servicedetails.setError("Enter Service details");
                 } else if (category.equalsIgnoreCase("")) {
                     Toast.makeText(AddServiceActivity.this, "Please Select Service Category", Toast.LENGTH_SHORT).show();
@@ -289,7 +289,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     if (stringTitles.length == 0) {
 
                         new AlertDialog.Builder(AddServiceActivity.this)
-                                .setTitle("No groups to dispaly")
+                                .setTitle("No groups to display")
                                 .setMessage("Do you want to create group?")
 
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
