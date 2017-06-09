@@ -1,5 +1,7 @@
 package autokatta.com.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -234,5 +236,16 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity a;
+
+        if (context instanceof Activity) {
+            a = (Activity) context;
+        }
     }
 }

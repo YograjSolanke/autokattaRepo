@@ -221,8 +221,10 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
                         MODULE = new String[module.size()];
                         MODULE = (String[]) module.toArray(MODULE);
 
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, MODULE);
-                        autoTxtCategory.setAdapter(dataadapter);
+                        if (getActivity() != null) {
+                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, MODULE);
+                            autoTxtCategory.setAdapter(dataadapter);
+                        }
                     }
                 }
 

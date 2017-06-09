@@ -82,11 +82,20 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
         storecontact = b.getString("contact_to_search");
         location = b.getString("location");
         String category = b.getString("category");
+
+       /* Log.i("ssss",category);
+        if (category.endsWith(","))
+            category = category.substring(0,category.length()-1);
+        category = category.trim();*/
+
+        category = category.replaceAll(", $", "");
+        Log.i("ssss", category);
+
         phrase = b.getString("phrase");
         radius = b.getString("radius");
         brands = b.getString("brands");
 
-        if (!storecontact.equalsIgnoreCase(""))
+       /* if (!storecontact.equalsIgnoreCase(""))
         {
             getActivity().setTitle(storecontact);
         }
@@ -113,7 +122,7 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
         if (!brands.equalsIgnoreCase(""))
         {
             getActivity().setTitle(brands);
-        }
+        }*/
         final int radiuspos = b.getInt("radiuspos");
 
         finalCategory = category;
