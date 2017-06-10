@@ -143,6 +143,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         likecountint = Integer.parseInt(storeLikeCount);
                         likecountint--;
                         mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
+                        storeLikeCount = String.valueOf(likecountint);
                     }
                 });
 
@@ -154,6 +155,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         likecountint = Integer.parseInt(storeLikeCount);
                         likecountint++;
                         mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
+                        storeLikeCount = String.valueOf(likecountint);
                     }
                 });
 
@@ -164,6 +166,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         followcountint = Integer.parseInt(storeFollowCount);
                         followcountint++;
                         mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
+                        storeFollowCount = String.valueOf(followcountint);
                     }
                 });
 
@@ -174,6 +177,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         followcountint = Integer.parseInt(storeFollowCount);
                         followcountint--;
                         mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
+                        storeFollowCount = String.valueOf(followcountint);
                     }
                 });
 

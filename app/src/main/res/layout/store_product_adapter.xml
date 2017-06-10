@@ -330,7 +330,7 @@
                 android:src="@drawable/ic_delete"
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/app_name"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"

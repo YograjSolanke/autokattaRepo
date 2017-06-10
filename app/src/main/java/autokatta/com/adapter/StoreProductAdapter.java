@@ -70,7 +70,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     }
 
     @Override
-    public void onBindViewHolder(final StoreProductAdapter.ProductHolder holder, int position) {
+    public void onBindViewHolder(final StoreProductAdapter.ProductHolder holder, final int position) {
         mView = holder;
         ArrayList<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Product product = mMainList.get(position);
@@ -82,7 +82,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         holder.pCategoey.setText(product.getCategory());
         holder.productrating.setEnabled(false);
 
-        if (myContact.equals(storeContact)) {
+        if (myContact.equals(product.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
         }
 
@@ -151,7 +151,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     apiCall.deleteProduct(product_id, "delete");
-                                    mMainList.remove(holder.getAdapterPosition());
+                                    mMainList.remove(position);
                                     notifyDataSetChanged();
                                 }
                             })

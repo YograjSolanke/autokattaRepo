@@ -64,7 +64,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     }
 
     @Override
-    public void onBindViewHolder(final StoreServiceAdapter.ServiceHolder holder, int position) {
+    public void onBindViewHolder(final StoreServiceAdapter.ServiceHolder holder, final int position) {
 
         ArrayList<String> images = new ArrayList<String>();
 
@@ -83,7 +83,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.pCategory.setText(service.getServicecategory());
         holder.productrating.setEnabled(false);
 
-        if (myContact.equals(storeContact)) {
+        if (myContact.equals(service.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
         }
 
@@ -170,7 +170,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     apiCall.deleteService(serviceId, "delete");
-                                    mMainList.remove(holder.getAdapterPosition());
+                                    mMainList.remove(position);
                                     notifyDataSetChanged();
 
                                 }
