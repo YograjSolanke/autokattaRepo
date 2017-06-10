@@ -1,6 +1,7 @@
 package autokatta.com.events;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -216,7 +218,12 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
+                lp.setMarginStart(30);
                 input.setLayoutParams(lp);
+                input.setPadding(40, 40, 40, 40);
+                input.setGravity(Gravity.CENTER_VERTICAL);
+                input.setTextColor(Color.parseColor("#C39BD3"));
+                input.setTextSize(20);
                 alertDialog.setView(input);
 
 
