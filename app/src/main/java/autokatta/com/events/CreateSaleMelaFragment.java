@@ -161,7 +161,7 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                 System.out.println("current time=" + time);
 
 
-                if (name.equals("")) {
+                if (name.equals("")||name.startsWith(" ")&&name.endsWith(" ")) {
                     eventname.setError("Enter Sale title");
                     eventname.requestFocus();
 

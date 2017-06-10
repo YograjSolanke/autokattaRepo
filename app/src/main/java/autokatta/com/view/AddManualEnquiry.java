@@ -267,13 +267,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     }
                 }
 
-                if (custName.equalsIgnoreCase("")) {
+                if (custName.equalsIgnoreCase("")||custName.startsWith(" ")&&custName.startsWith(" ")) {
                     edtName.setError("Please provide customer name");
                     edtName.requestFocus();
-                } else if (custContact.isEmpty()) {
+                } else if (custContact.isEmpty()||custContact.startsWith(" ")&&custContact.startsWith(" ")) {
                     edtContact.setError("Please provide customer contact");
                     edtContact.requestFocus();
-                } else if (custAddress.equals("")) {
+                } else if (custAddress.equals("")||custAddress.startsWith(" ")&&custAddress.startsWith(" ")) {
                     autoAddress.setError("Enter Address");
                     autoAddress.requestFocus();
                 } else if (!flag) {

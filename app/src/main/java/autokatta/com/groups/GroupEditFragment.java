@@ -129,7 +129,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             @Override
             public void onClick(View v) {
                 group_name_update = group_name.getText().toString();
-                if (group_name_update.equals("")) {
+                if (group_name_update.equals("")||group_name_update.startsWith(" ")&&group_name_update.endsWith(" ")) {
                     Snackbar.make(v, "Please provide group name", Snackbar.LENGTH_SHORT).show();
                 } else {
                     if (!lastWord.equals("")) {

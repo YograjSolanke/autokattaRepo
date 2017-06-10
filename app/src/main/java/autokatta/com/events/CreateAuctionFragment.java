@@ -169,7 +169,7 @@ public class CreateAuctionFragment extends Fragment
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 recieve = input.getText().toString();
-                                if (recieve.equals(""))
+                                if (recieve.equals("")||recieve.startsWith(" ")&&recieve.endsWith(" "))
                                     Toast.makeText(getActivity(), "Please enter clause", Toast.LENGTH_LONG).show();
                                 else {
                                     //new AddClauseTask().execute();
@@ -241,7 +241,7 @@ public class CreateAuctionFragment extends Fragment
 
                     type = ((RadioButton) createAuctionView.findViewById(rgauctiontype.getCheckedRadioButtonId())).getText().toString();
 
-                    if (name.equals("")) {
+                    if (name.equals("")||name.startsWith(" ")&&name.endsWith(" ")) {
                         auctioname.setError("Enter auction title");
                         auctioname.requestFocus();
                         Toast.makeText(getActivity(), "Enter auction title", Toast.LENGTH_LONG).show();

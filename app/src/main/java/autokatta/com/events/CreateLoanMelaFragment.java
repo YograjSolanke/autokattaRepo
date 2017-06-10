@@ -160,7 +160,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
                 System.out.println("current time=" + time);
 
 
-                if (name.equals("")) {
+                if (name.equals("")||name.startsWith(" ")&&name.endsWith(" ")) {
                     eventname.setError("Enter loan title");
                     eventname.requestFocus();
                 } else if (stdate.equals("")) {

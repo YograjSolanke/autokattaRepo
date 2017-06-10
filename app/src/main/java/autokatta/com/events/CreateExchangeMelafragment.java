@@ -161,7 +161,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                 System.out.println("current time=" + time);
 
 
-                if (name.equals("")) {
+                if (name.equals("")||name.startsWith(" ")&&name.endsWith(" ")) {
                     eventname.setError("Enter Exchange title");
                     eventname.requestFocus();
                 } else if (stdate.equals("")) {

@@ -136,7 +136,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                         }
                     }
                 }
-                if (groupTitle.equals("")) {
+                if (groupTitle.equals("")||groupTitle.startsWith(" ")&&groupTitle.endsWith(" ")) {
                     Toast.makeText(getActivity(), "Please enter group Title",
                             Toast.LENGTH_LONG).show();
                     //return;
