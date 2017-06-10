@@ -81,8 +81,11 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
 
     @Override
     public void onBindViewHolder(final PreviewAuctionAdapter.MyViewHolder holder, final int position) {
-        if (mItemList.get(position).getImage() != null || mItemList.get(position).getImage().equals("")
-                || mItemList.get(position).getImage().isEmpty()) {
+        if (mItemList.get(position).getImage() == null || mItemList.get(position).getImage().equals("")
+                || mItemList.get(position).getImage().isEmpty()||mItemList.get(position).getImage().equals(null)){
+        holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
+
+        } else {
             String images[] = mItemList.get(position).getImage().split(",");
             Glide.with(mActivity)
                     .load("http://autokatta.com/mobile/uploads/" + images[0].replaceAll(" ", "%20"))
@@ -92,8 +95,6 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .override(100, 100)
                     .into(holder.mAuctionVehicleImage);
-        } else {
-            holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
         }
 
         holder.mRegistrationNo.setText(mItemList.get(position).getRegNo());

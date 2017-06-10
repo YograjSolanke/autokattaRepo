@@ -84,7 +84,7 @@
                 android:layout_below="@+id/mainrelContact"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                tools:src="@mipmap/demo" />
+                tools:src="@drawable/vehiimg" />
 
             <TextView
                 android:id="@+id/vehicle_name"
