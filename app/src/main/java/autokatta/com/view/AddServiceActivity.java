@@ -276,16 +276,16 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     Toast.makeText(AddServiceActivity.this, "Please Enter All details", Toast.LENGTH_SHORT).show();
                 } else if (type.equals("") || type.startsWith(" ") && type.endsWith(" ")) {
                     servicetype.setError("Enter Service Type");
-                    servicetype.setFocusable(true);
+                    servicetype.requestFocus();
                 } else if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
                     servicename.setError("Enter Service Name");
-                    servicename.setFocusable(true);
+                    servicename.requestFocus();
                 } else if (price.equals("") || price.startsWith(" ") && price.endsWith(" ")) {
                     serviceprice.setError("Enter Service Price");
-                    serviceprice.setFocusable(true);
+                    serviceprice.requestFocus();
                 } else if (details.equals("") || details.startsWith(" ")) {
                     servicedetails.setError("Enter Service details");
-                    servicedetails.setFocusable(true);
+                    servicedetails.requestFocus();
                 } else if (category.equalsIgnoreCase("")) {
                     Toast.makeText(AddServiceActivity.this, "Please Select Service Category", Toast.LENGTH_SHORT).show();
                 } else {

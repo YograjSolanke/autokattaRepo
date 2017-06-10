@@ -359,37 +359,29 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
                 if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
                     storename.setError("Enter Valid Name");
-                    storename.setFocusable(true);
                     storename.requestFocus();
                 } else if (!name.matches("[a-zA-Z ]*")) {
                     storename.setError("Enter Valid Name");
-                    storename.setFocusable(true);
                     storename.requestFocus();
                 } else if (location.equals("")) {
                     storelocation.setError("Enter location");
-                    storelocation.setFocusable(true);
                     storelocation.requestFocus();
                 } else if (!flag) {
                     storelocation.setError("Please Select Address From Dropdown Only");
-                    storelocation.setFocusable(true);
                     storelocation.requestFocus();
                 } else if (address.equals("")) {
                     storeaddress.setError("Enter address");
-                    storeaddress.setFocusable(true);
                     storeaddress.requestFocus();
                 }
                 //Validation for website is not valid
                 else if (!website.equals("") && !(genericFunctions.isValidUrl(website))) {
                     storewebsite.setError("Enter valid website");
-                    storewebsite.setFocusable(true);
                     storewebsite.requestFocus();
                 } else if (stropen.equals("")) {
                     opentime.setError("Enter Open Time");
-                    opentime.setFocusable(true);
                     opentime.requestFocus();
                 } else if (strclose.equals("")) {
                     closetime.setError("Enter Close Time");
-                    closetime.setFocusable(true);
                     closetime.requestFocus();
                 } else if (opentime.getText().toString().contains("PM") && closetime.getText().toString().contains("AM")) {
                     Snackbar.make(mParent, "Enter Valid Time", Snackbar.LENGTH_SHORT).show();
