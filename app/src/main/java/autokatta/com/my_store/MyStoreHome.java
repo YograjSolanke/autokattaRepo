@@ -1,6 +1,7 @@
 package autokatta.com.my_store;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -71,6 +72,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     ApiCall mApiCall;
     KProgressHUD hud;
     private int likecountint, followcountint;
+    private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -99,6 +101,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             public void run() {
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", "");
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage("Loading...");
+
                 mLinear = (LinearLayout) mMyStoreHome.findViewById(R.id.my_home);
                 mLike = (ImageView) mMyStoreHome.findViewById(R.id.like);
                 mUnlike = (ImageView) mMyStoreHome.findViewById(R.id.unlike);
@@ -229,9 +234,11 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
-                hud.dismiss();
                 StoreResponse storeResponse = (StoreResponse) response.body();
                 mLinear.setVisibility(View.VISIBLE);
                 for (StoreResponse.Success success : storeResponse.getSuccess()) {
@@ -263,6 +270,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     storelattitude = success.getLatitude();
                     storelongitude = success.getLongitude();
                     isDealing = success.getIsDealing();
+
+                    getActivity().setTitle(storeName);
                 }
 
                 if (mOtherContact.contains(myContact)) {
@@ -340,7 +349,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
     @Override
     public void notifyError(Throwable error) {
-        hud.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             Snackbar.make(mLinear, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
@@ -632,12 +643,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     }
 
     private void getOtherStore(String contact, String store_id) {
-
-        hud = KProgressHUD.create(getActivity())
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait")
-                .setMaxProgress(100)
-                .show();
+        dialog.show();
         mApiCall.getStoreData(contact, store_id);
     }
 

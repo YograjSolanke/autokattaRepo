@@ -94,6 +94,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getIntent().setAction("Already created");
         mApiCall = new ApiCall(StoreViewActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
@@ -681,8 +682,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     storelattitude = success.getLatitude();
                     storelongitude = success.getLongitude();
                     isDealing = success.getIsDealing();
-
-                    setTitle(storeName);
                 }
 
                 if (mOtherContact.equals(mLoginContact)) {
@@ -876,4 +875,21 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
+
+    /*@Override
+    protected void onResume() {
+        String action = getIntent().getAction();
+        // Prevent endless loop by adding a unique action, don't restart if action is present
+        if(action == null || !action.equals("Already created")) {
+            Log.v("Example", "Force restart");
+            Intent intent = new Intent(this, StoreViewActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        // Remove the unique action so the next time onResume is called it will restart
+        else {
+            getIntent().setAction(null);
+        }
+        super.onResume();
+    }*/
 }
