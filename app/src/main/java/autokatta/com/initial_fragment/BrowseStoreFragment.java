@@ -1,15 +1,19 @@
 package autokatta.com.initial_fragment;
 
+import android.app.Activity;
 import android.content.IntentSender;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,6 +31,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.browseStore.ProductBasedStore;
 import autokatta.com.browseStore.ServiceBasedStore;
+import autokatta.com.networkreceiver.ConnectionDetector;
 
 /**
  * Created by ak-004 on 4/4/17.
@@ -37,6 +42,7 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
     TabLayout browseTab;
     ViewPager browseViewPager;
     GoogleApiClient googleApiClient;
+    ConnectionDetector mTestConnection;
 
     @Nullable
     @Override
@@ -44,13 +50,19 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         view = inflater.inflate(R.layout.browse_store_fragment, container, false);
         browseTab = (TabLayout) view.findViewById(R.id.browse_store_tab);
         browseViewPager = (ViewPager) view.findViewById(R.id.browse_store_viewpager);
+        mTestConnection = new ConnectionDetector(getActivity());
 
         if (browseViewPager != null) {
             setupViewPager(browseViewPager);
         }
 
         browseTab.setupWithViewPager(browseViewPager);
-        buildGoogleApiClient();
+        if (mTestConnection.isConnectedToInternet()) {
+            buildGoogleApiClient();
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
+
         return view;
     }
 
@@ -137,5 +149,31 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         tabAdapterName.addFragment(new ProductBasedStore(), "Product Based");
         tabAdapterName.addFragment(new ServiceBasedStore(), "Service Based");
         viewPager.setAdapter(tabAdapterName);
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        buildGoogleApiClient();
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }
