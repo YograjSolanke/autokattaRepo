@@ -118,10 +118,10 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
 
                 }
             } else {
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                showMessage(getActivity(), getString(R.string._404_));
             }
         } else {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         }
 
     }

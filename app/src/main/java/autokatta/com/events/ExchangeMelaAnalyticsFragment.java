@@ -1,6 +1,6 @@
 package autokatta.com.events;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +25,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.AuctionAnalyticsAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionAnalyticsResponse;
 import autokatta.com.response.AuctionAnalyticsResponse.Success;
@@ -43,6 +44,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
     List<Success> analyticsList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
+    ConnectionDetector mTestConnection;
 
     @Nullable
     @Override
@@ -74,6 +76,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
             @Override
             public void run() {
                 try {
+                    mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
                     strExchangeId = bundle.getString("exchangeid");
 
@@ -114,10 +117,15 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
     }
 
     private void getExchangeAnalytics(String strExchangeId) {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
+
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall apiCall = new ApiCall(getActivity(), this);
       /*to do new webservice*/
-        //apiCall.AuctionAnalyticsData(strExchangeId);
-        //apiCall.AuctionAnalyticsData("1047");
+            //apiCall.AuctionAnalyticsData(strExchangeId);
+            //apiCall.AuctionAnalyticsData("1047");
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
 
@@ -172,37 +180,9 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Exchange Analytics Fragment");
             error.printStackTrace();
@@ -212,5 +192,31 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
     @Override
     public void notifyString(String str) {
 
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getExchangeAnalytics(strExchangeId);
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }

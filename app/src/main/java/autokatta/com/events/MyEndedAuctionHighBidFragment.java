@@ -1,5 +1,6 @@
 package autokatta.com.events;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,6 +36,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.auction.AdminVehicleDetails;
 import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ApprovedVehicleResponse;
 import autokatta.com.response.MyActiveAuctionHighBidResponse;
@@ -66,6 +68,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
     Bundle bundle;
     boolean hasViewCreated = false;
     TextView mNoData;
+    ConnectionDetector mTestConnection;
 
     @Nullable
     @Override
@@ -93,6 +96,8 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             @Override
             public void run() {
                 try {
+                    mTestConnection = new ConnectionDetector(getActivity());
+
                     mAuctionId = bundle.getString("auctionid");
                     mSpecialClauses = bundle.getString("specialclauses");
 
@@ -109,8 +114,13 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
     }
 
     private void getEndedHighVehicle(String myContact, String strAuctionId) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.ActiveAuctionHighBid(myContact, strAuctionId);
+
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.ActiveAuctionHighBid(myContact, strAuctionId);
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -517,52 +527,21 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             } else
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else
-            CustomToast.customToast(
-
-                    getActivity(), getString(R.string.no_internet));
-
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Ended Auction HighesBid Fragment");
             error.printStackTrace();
@@ -595,18 +574,33 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
 
 
     private void approvedvehicle(String bidPrice, String keyword1, String bidderContact, String vehicleid) {
-        mApiCall.ApproveVehicle(mAuctionId, keyword1, vehicleid, bidderContact, bidPrice);
-        //mApiCall.ApproveVehicle("1047", keyword1, vehicleid, bidderContact, bidPrice);
+
+        if (mTestConnection.isConnectedToInternet()) {
+            mApiCall.ApproveVehicle(mAuctionId, keyword1, vehicleid, bidderContact, bidPrice);
+            //mApiCall.ApproveVehicle("1047", keyword1, vehicleid, bidderContact, bidPrice);
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     private void addvehicleToReauction(String vehicleid) {
-        mApiCall.addToReauction(vehicleid, mAuctionId);
-        //mApiCall.addToReauction(vehicleid, "1047");
+
+        if (mTestConnection.isConnectedToInternet()) {
+            mApiCall.addToReauction(vehicleid, mAuctionId);
+            //mApiCall.addToReauction(vehicleid, "1047");
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     private void addToBlacklist(String rContact) {
-        mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
-        //mApiCall.Add_RemoveBlacklistContact(myContact, "1047", rContact, keyword);
+
+        if (mTestConnection.isConnectedToInternet()) {
+            mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
+            //mApiCall.Add_RemoveBlacklistContact(myContact, "1047", rContact, keyword);
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     private void call(String rContact) {
@@ -633,6 +627,32 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             }
 
         }
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getEndedHighVehicle(myContact, mAuctionId);
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 
 }

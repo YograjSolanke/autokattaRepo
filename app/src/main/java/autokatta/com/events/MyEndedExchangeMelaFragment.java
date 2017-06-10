@@ -1,6 +1,6 @@
 package autokatta.com.events;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +25,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.EndedExchangeAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.EndedSaleMelaResponse;
 import retrofit2.Response;
@@ -45,6 +46,7 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
     boolean hasViewCreated = false;
     TextView mNoData;
     List<EndedSaleMelaResponse.Success> activeExchangeMelaList = new ArrayList<>();
+    ConnectionDetector mTestConnection;
 
     public MyEndedExchangeMelaFragment() {
         //empty constructor
@@ -61,6 +63,7 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mTestConnection = new ConnectionDetector(getActivity());
 
         mNoData = (TextView) mEndedExchange.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
@@ -92,13 +95,18 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
     }
 
     private void getEndedExchangeData(String loginContact) {
-        apiCall = new ApiCall(getActivity(), this);
-        apiCall.getEndedExchangeMela(loginContact);
+
+        if (mTestConnection.isConnectedToInternet()) {
+            apiCall = new ApiCall(getActivity(), this);
+            apiCall.getEndedExchangeMela(loginContact);
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
     public void onRefresh() {
-
+        getEndedExchangeData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
     }
 
     @Override
@@ -143,45 +151,17 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
-            Log.i("Check Class-", "My Active Exchange Mela Fragment");
+            Log.i("Check Class-", "My Ended Exchange Mela Fragment");
             error.printStackTrace();
         }
     }
@@ -202,5 +182,31 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
     @Override
     public void notifyString(String str) {
 
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getEndedExchangeData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }

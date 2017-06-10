@@ -520,7 +520,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         if (!ExcelsheetName.equals("")) {
                             getVehiclesByExcelSheet(ExcelsheetName);
                             dialog.dismiss();
-                            Toast.makeText(getActivity(), "Web Service call to get vehicles", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "Web Service call to get vehicles", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity(), "Please select checkbox", Toast.LENGTH_SHORT).show();
                         }
@@ -713,10 +713,11 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         txtSheets.setText(spanString);
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_list_item_1, auctionTitles);
-                    System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!=" + auctionTitle);
-                    selectAuctionsSpinner.setAdapter(adapter);
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                                android.R.layout.simple_list_item_1, auctionTitles);
+                        selectAuctionsSpinner.setAdapter(adapter);
+                    }
                 }
 
 

@@ -32,6 +32,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.auction.AdminVehicleDetails;
 import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionAllVehicleData;
 import autokatta.com.response.MyActiveAuctionNoBidResponse;
@@ -51,6 +52,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
     String strAuctionId = "";
     boolean hasViewCreated = false;
     TextView mNoData;
+    ConnectionDetector mTestConnection;
 
     @Override
     public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
             @Override
             public void run() {
                 try {
+                    mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
                     strAuctionId = bundle.getString("auctionid");
 
@@ -109,8 +112,13 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
     }
 
     private void getNoBidVehicle(String strAuctionId) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.ActiveAuctionNoBid(strAuctionId);
+
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.ActiveAuctionNoBid(strAuctionId);
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -204,37 +212,9 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Active Auction NoBid Fragment");
             error.printStackTrace();
@@ -245,6 +225,32 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
     @Override
     public void notifyString(String str) {
 
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getNoBidVehicle(strAuctionId);
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 ///////////////////////////////////////////////////////////////////////////////////////
 

@@ -31,14 +31,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.Random;
 
 import autokatta.com.R;
@@ -81,6 +87,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     String RegID, updatedUsername;
     ImageView img;
     CoordinatorLayout mUserParent;
+    KProgressHUD hud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -281,6 +288,13 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
      */
     private void getProfileData() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
+
+        hud = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
+
         mApiCall.profileAbout(mLoginContact, mLoginContact);
     }
 
@@ -315,6 +329,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                hud.dismiss();
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
@@ -332,16 +347,61 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
                 }
             } else {
+                hud.dismiss();
                 Snackbar.make(mUserParent, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
+            hud.dismiss();
             Snackbar.make(mUserParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        hud.dismiss();
+        if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof NullPointerException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ClassCastException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+        } else if (error instanceof ConnectException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mUserParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else if (error instanceof UnknownHostException) {
+            //mNoInternetIcon.setVisibility(View.VISIBLE);
+            Snackbar snackbar = Snackbar.make(mUserParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Go Online", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    });
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+            snackbar.show();
+        } else {
+            Log.i("Check Class-"
+                    , "UserProfile");
+            error.printStackTrace();
+        }
     }
 
     @Override
