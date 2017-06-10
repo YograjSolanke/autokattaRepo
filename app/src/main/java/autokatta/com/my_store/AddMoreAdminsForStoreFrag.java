@@ -260,6 +260,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                 Bundle b = new Bundle();
                 //  b.putString("action", "main");
                 b.putString("store_id", store_id);
+                b.putString("flow_tab_name", "adminMore");
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent intent = new Intent(getActivity(), StoreViewActivity.class);

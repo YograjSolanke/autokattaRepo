@@ -58,7 +58,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-    String mOtherContact, mLoginContact, store_id, storeOtherContact, mFolllowstr, mLikestr, storeRating;
+    String mOtherContact, mLoginContact, store_id, storeOtherContact, mFolllowstr, mLikestr, storeRating, str;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     RatingBar storerating;
@@ -144,15 +144,16 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     if (getIntent().getExtras() != null) {
                         store_id = getIntent().getExtras().getString("store_id");
                         storeOtherContact = getIntent().getExtras().getString("StoreContact");
+                        str = getIntent().getExtras().getString("flow_tab_name");
                         Log.i("storeOtherContact", "->" + storeOtherContact);
                         getOtherStore(mLoginContact, store_id);
                     }
-
 
                     mBundle.putString("store_id", store_id);
                     if (viewPager != null) {
                         setupViewPager(viewPager);
                     }
+
                     tabLayout.setupWithViewPager(viewPager);
                     tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
                     tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -216,6 +217,12 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                         }
                     });
+
+
+                    if (str.equals("adminMore")) {
+                        tabLayout.setScrollPosition(1, 0f, true);
+                        viewPager.setCurrentItem(1);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
