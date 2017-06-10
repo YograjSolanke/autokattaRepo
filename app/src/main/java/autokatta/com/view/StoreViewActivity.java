@@ -101,7 +101,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         runOnUiThread(new Runnable() {
             @Override
@@ -682,6 +681,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     storelattitude = success.getLatitude();
                     storelongitude = success.getLongitude();
                     isDealing = success.getIsDealing();
+
+                    setTitle(storeName);
                 }
 
                 if (mOtherContact.equals(mLoginContact)) {

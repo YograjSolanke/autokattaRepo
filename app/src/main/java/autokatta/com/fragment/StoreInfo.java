@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -43,6 +44,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     ImageView editStore, addEnquiry;
     boolean hasView;
     NestedScrollView scrollView;
+    RelativeLayout mRel;
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen,
             storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData;
     ConnectionDetector mTestConnection;
@@ -63,21 +65,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreData(myContact, store_id);
         } else {
-
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -141,48 +129,15 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
             errorMessage(getActivity(), getString(R.string.no_internet));
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
             errorMessage(getActivity(), getString(R.string.no_internet));
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
         } else {
             Log.i("Check Class-"
                     , "StoreInfo");
@@ -215,6 +170,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 mTestConnection = new ConnectionDetector(getActivity());
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
+                mRel = (RelativeLayout) mAbout.findViewById(R.id.info_home);
                 storeName = (TextView) mAbout.findViewById(R.id.editstname);
                 storeLocation = (TextView) mAbout.findViewById(R.id.autolocation);
                 storeWebsite = (TextView) mAbout.findViewById(R.id.editwebsite);
@@ -253,26 +209,18 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                             ((StoreViewActivity) getActivity()).hideFloatingButton();
                             Log.e("show3", "->");
                         }
-
                     }
                 });
-
-
-
             }
         });
         editStore.setOnClickListener(this);
         addEnquiry.setOnClickListener(this);
-
-
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         Activity a;
-
         if (context instanceof Activity) {
             a = (Activity) context;
         }

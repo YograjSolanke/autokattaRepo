@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -320,11 +319,11 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
             } else {
                 hud.dismiss();
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mLinear, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             hud.dismiss();
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mLinear, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -343,14 +342,14 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void notifyError(Throwable error) {
         hud.dismiss();
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mLinear, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mLinear, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mLinear, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+            Snackbar snackbar = Snackbar.make(mLinear, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -366,7 +365,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             snackbar.show();
         } else if (error instanceof UnknownHostException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+            Snackbar snackbar = Snackbar.make(mLinear, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

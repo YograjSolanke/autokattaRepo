@@ -8,38 +8,36 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
+        android:id="@+id/info_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/editStore"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_mode_edit_black_24dp"
+            android:visibility="gone" />
 
-
-            <ImageView
-                android:id="@+id/editStore"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:contentDescription="@string/app_name"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_mode_edit_black_24dp"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/enquiry"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:contentDescription="@string/app_name"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/editStore"
-                android:src="@drawable/ic_comment_question_outline"
-                android:visibility="gone" />
-
+        <ImageView
+            android:id="@+id/enquiry"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/editStore"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_comment_question_outline"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/relativetitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
-            android:layout_below="@+id/editStore">
+            android:layout_below="@+id/editStore"
+            android:visibility="visible">
 
             <RelativeLayout
                 android:id="@+id/relativestorename"
@@ -387,7 +385,5 @@
                 android:background="@color/black" />
 
         </RelativeLayout>
-
-
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

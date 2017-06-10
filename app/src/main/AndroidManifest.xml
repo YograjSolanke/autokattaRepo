@@ -362,7 +362,6 @@
         <activity
             android:name=".view.StoreViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
-            android:label="@string/title_activity_other_store_view"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
