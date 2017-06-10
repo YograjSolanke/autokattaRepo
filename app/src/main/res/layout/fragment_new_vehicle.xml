@@ -10,7 +10,7 @@
         android:layout_height="150dp"
         android:scaleType="fitXY"
         android:contentDescription="@string/app_name"
-        android:src="@mipmap/demo" />
+        android:src="@drawable/vehiimg" />
 
     <ImageView
         android:id="@+id/edit"

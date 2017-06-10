@@ -160,6 +160,7 @@
                         android:layout_below="@+id/no_of_photos"
                         android:layout_centerHorizontal="true"
                         android:fitsSystemWindows="true"
+                        android:background="@drawable/vehiimg"
                         app:layout_collapseMode="parallax" />
 
                     <!--<ImageView-->
