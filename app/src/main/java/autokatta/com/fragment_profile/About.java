@@ -69,7 +69,7 @@ public class About extends Fragment implements RequestNotifier {
     final HashMap<String, String> mSkillList1 = new HashMap<>();
 
     final ArrayList<String> mCompanyList = new ArrayList<>();
-    final HashMap<String, String> mCompanyList1 = new HashMap<>();
+    final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
 
     final ArrayList<String> mDesignationList = new ArrayList<>();
     final HashMap<String, String> mDesignationList1 = new HashMap<>();
@@ -155,10 +155,10 @@ public class About extends Fragment implements RequestNotifier {
                     GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();
                     if (!mGetCompanyList.getSuccess().isEmpty()) {
                         for (GetCompaniesResponse.Success companyResponse : mGetCompanyList.getSuccess()) {
-                            companyResponse.setCompid(companyResponse.getCompid());
+                            companyResponse.setCompanyID(companyResponse.getCompanyID());
                             companyResponse.setCompanyName(companyResponse.getCompanyName());
                             mCompanyList.add(companyResponse.getCompanyName());
-                            mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompid());
+                            mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompanyID());
                         }
                         if (getActivity() != null) {
                             parsedDataCompany.addAll(mCompanyList);

@@ -14,7 +14,9 @@ public class GetCompaniesResponse {
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
-
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public List<Success> getSuccess() {
         return success;
@@ -24,30 +26,37 @@ public class GetCompaniesResponse {
         this.success = success;
     }
 
-
-public class Success {
-
-    @SerializedName("compid")
-    @Expose
-    private String compid;
-    @SerializedName("companyName")
-    @Expose
-    private String companyName;
-
-    public String getCompid() {
-        return compid;
+    public Object getError() {
+        return error;
     }
 
-    public void setCompid(String compid) {
-        this.compid = compid;
+    public void setError(Object error) {
+        this.error = error;
     }
 
-    public String getCompanyName() {
-        return companyName;
-    }
+    public class Success {
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+        @SerializedName("CompanyID")
+        @Expose
+        private Integer companyID;
+        @SerializedName("CompanyName")
+        @Expose
+        private String companyName;
+
+        public Integer getCompanyID() {
+            return companyID;
+        }
+
+        public void setCompanyID(Integer companyID) {
+            this.companyID = companyID;
+        }
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
     }
-}
 }

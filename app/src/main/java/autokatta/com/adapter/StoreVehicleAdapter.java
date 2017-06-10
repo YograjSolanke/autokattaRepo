@@ -239,10 +239,10 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
     public class VehicleHolder extends RecyclerView.ViewHolder {
 
-        ImageView vehicleimage, delete;
+        ImageView vehicleimage;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
         TextView Year, Location, Rto, Kms, Regno;
-        Button vehidetails;
+        Button vehidetails, delete;
 
         public VehicleHolder(View itemView) {
             super(itemView);
@@ -255,7 +255,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             editleads = (TextView) itemView.findViewById(R.id.editleads);
             edituploadedon = (TextView) itemView.findViewById(R.id.edituploadedon);
             vehicleimage = (ImageView) itemView.findViewById(R.id.vehiprofile);
-            delete = (ImageView) itemView.findViewById(R.id.delete);
+            delete = (Button) itemView.findViewById(R.id.delete);
             vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);
 
 

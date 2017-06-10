@@ -7856,7 +7856,7 @@ get ExchangeMela Participants Data
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         // add your other interceptors …
         // add logging as last interceptor
-        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        httpClient.addInterceptor(logging).readTimeout(60, TimeUnit.SECONDS);
         return httpClient;
     }
 
@@ -7867,7 +7867,7 @@ get ExchangeMela Participants Data
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         // add your other interceptors …
         // add logging as last interceptor
-        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        httpClient.addInterceptor(logging).readTimeout(60, TimeUnit.SECONDS);
         return httpClient;
     }
 

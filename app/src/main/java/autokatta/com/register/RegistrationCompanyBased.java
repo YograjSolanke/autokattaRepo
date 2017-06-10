@@ -67,7 +67,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     HashMap<String, String> mDealList1 = new HashMap<>();
 
     ArrayList<String> mCompanyList = new ArrayList<>();
-    HashMap<String, String> mCompanyList1 = new HashMap<>();
+    HashMap<String, Integer> mCompanyList1 = new HashMap<>();
 
     HashMap<String, String> mdistList1 = new HashMap<>();
     final List<String> distNameList = new ArrayList<>();
@@ -315,10 +315,10 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();
                     if (!mGetCompanyList.getSuccess().isEmpty()) {
                         for (GetCompaniesResponse.Success companyResponse : mGetCompanyList.getSuccess()) {
-                            companyResponse.setCompid(companyResponse.getCompid());
+                            companyResponse.setCompanyID(companyResponse.getCompanyID());
                             companyResponse.setCompanyName(companyResponse.getCompanyName());
                             mCompanyList.add(companyResponse.getCompanyName());
-                            mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompid());
+                            mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompanyID());
                         }
                         parsedDataCompany.addAll(mCompanyList);
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),

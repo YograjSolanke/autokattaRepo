@@ -62,7 +62,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     final HashMap<String, String> mDealList1 = new HashMap<>();
 
     final ArrayList<String> mCompanyList = new ArrayList<>();
-    final HashMap<String, String> mCompanyList1 = new HashMap<>();
+    final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
 
     final HashMap<String,String> mdistList1 = new HashMap();
     final List<String> distNameList = new ArrayList<String>();
@@ -270,11 +270,11 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                     if (!mGetCompanyList.getSuccess().isEmpty()) {
 
                         for (GetCompaniesResponse.Success companyResponse : mGetCompanyList.getSuccess()) {
-                            companyResponse.setCompid(companyResponse.getCompid());
+                            companyResponse.setCompanyID(companyResponse.getCompanyID());
                             companyResponse.setCompanyName(companyResponse.getCompanyName());
 
                             mCompanyList.add(companyResponse.getCompanyName());
-                            mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompid());
+                            mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompanyID());
 
                         }
                         parsedDataCompany.addAll(mCompanyList);
