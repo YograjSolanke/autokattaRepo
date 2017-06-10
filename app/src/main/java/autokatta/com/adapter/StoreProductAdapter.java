@@ -59,8 +59,6 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         this.storeContact = storeContact;
         connectionDetector = new ConnectionDetector(activity);
         apiCall = new ApiCall(activity, this);
-
-
     }
 
     @Override
