@@ -139,11 +139,11 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT).show();
+                showMessage(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         }
     }
 
