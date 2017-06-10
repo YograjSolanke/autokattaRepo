@@ -24,10 +24,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -243,10 +245,52 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
             }
         });
 
+
+        multiautobrand.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (i == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    //  Toast.makeText(HelloFormStuff.this, edittext.getText(), Toast.LENGTH_SHORT).show();
+                    multiautobrand.setText(multiautobrand.getText().toString() + ",");
+                    multiautobrand.setSelection(multiautobrand.getText().toString().length());
+                    check();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        multiautobrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                check();
+//
+            }
+        });
+
         return mCreateStore;
     }
 
+    public boolean check() {
+        String text = multiautobrand.getText().toString();
+        System.out.println("texttttttttttttttttt" + text.substring(0, text.length() - 1));
+        if (text.endsWith(","))
+            text = text.substring(0, text.length() - 1);
+        String[] parts = text.split(",");
+        System.out.println("size of partssssssssssssssssss" + parts.length);
+        if (parts.length > 5) {
+            multiautobrand.setError("You can add maximum five tags only");
+            return true;
+        } else
+            return false;
 
+    }
 
 
     @Override
@@ -275,6 +319,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 stropen = opentime.getText().toString();
                 strclose = closetime.getText().toString();
                 category = multiautotext.getText().toString();
+
                 strBrandSpinner = brandSpinner.getSelectedItem().toString().replaceAll(" ", "");
 
                 List<String> tempbrands = new ArrayList<>();
@@ -304,6 +349,9 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     else
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
                 }
+
+
+                System.out.println("finalBrandTags=" + finalbrandtags);
 
                 if (rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked() && !rbtstorevehicle.isChecked()) {
                     storetype = "product";
@@ -396,6 +444,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     Snackbar.make(mParent, "Provide services offered", Snackbar.LENGTH_SHORT).show();
                 } else if ((rbtstoreproduct.isChecked() || rbtstoreservice.isChecked()) && finalbrandtags.equals("")) {
                     Snackbar.make(mParent, "Provide brand tags", Snackbar.LENGTH_SHORT).show();
+                    multiautobrand.requestFocus();
+
+                } else if (check()) {
+                    multiautobrand.setError("You can add maximum five tags only");
                     multiautobrand.requestFocus();
                 } else if (rbtstorevehicle.isChecked() && (strBrandSpinner.equalsIgnoreCase("-SelectBrands-") || strBrandSpinner.isEmpty())) {
                     Snackbar.make(mParent, "Select brands", Snackbar.LENGTH_SHORT).show();

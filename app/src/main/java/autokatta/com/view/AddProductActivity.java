@@ -150,110 +150,11 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                 type = producttype.getText().toString();
                 category = autoCategory.getText().toString();
 
+
                 category = category.trim();
                 if (category.endsWith(","))
                     category = category.substring(0, category.length() - 1);
                 category = category.trim();
-
-                String text = multiautotext.getText().toString();
-                ArrayList<String> images = new ArrayList<String>();
-                ArrayList<String> othertag = new ArrayList<String>();
-                if (text.endsWith(","))
-                    text = text.substring(0, text.length() - 1);
-                System.out.println("txttttt=" + text);
-                text = text.trim();
-
-
-                String[] parts = text.split(",");
-
-                for (int l = 0; l < parts.length; l++) {
-                    System.out.println(parts[l]);
-                    tagpart = parts[l].trim();
-                    if (!tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" "))
-                        images.add(tagpart);
-                    if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {
-                        othertag.add(tagpart);
-                        System.out.println("tag going to add=" + tagpart);
-                        try {
-                            addOtherTags();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    System.out.println("other categoryyyyyyyyyyyyyyyy=" + othertag);
-
-                }
-                System.out.println("tagname arrat before change***************" + tagname);
-
-                getTags();
-
-                for (int i = 0; i < images.size(); i++) {
-
-                    for (int j = 0; j < tagname.size(); j++) {
-                        if (images.get(i).toString().equalsIgnoreCase(tagname.get(j).toString()))
-                            idlist = idlist + "," + id.get(j).toString();
-                    }
-
-                }
-
-
-                if (!multiautotext.getText().toString().equalsIgnoreCase("") && idlist.length() > 0) {
-                    idlist = idlist.substring(1);
-                    System.out.println("substring idddddddddd=" + idlist);
-
-
-                }
-                if (tagflag) {
-                    tagid = tagid.substring(1);
-                    System.out.println("response tag iddddddddddddddd=" + tagid);
-                    if (!idlist.equalsIgnoreCase(""))
-                        idlist = idlist + "," + tagid;
-                    else
-                        idlist = tagid;
-                    System.out.println("final idlist iddddddddddddddd=" + idlist);
-
-                }
-
-
-                ArrayList<String> tempbrands = new ArrayList<String>();
-
-
-                String textbrand = multiautobrand.getText().toString();
-
-                if (textbrand.endsWith(","))
-                    textbrand = textbrand.substring(0, textbrand.length() - 1);
-
-                textbrand = textbrand.trim();
-
-                if (!textbrand.equals("")) {
-
-                    String[] bparts = textbrand.split(",");
-                    for (int o = 0; o < bparts.length; o++) {
-                        brandtagpart = bparts[o].trim();
-                        if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
-                            tempbrands.add(brandtagpart);
-                        if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
-                            System.out.println("brand tag going to add=" + brandtagpart);
-                            try {
-                                addOtherBrandTags(brandtagpart);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-
-                        }
-
-                    }
-                }
-
-
-                for (int n = 0; n < tempbrands.size(); n++) {
-                    if (finalbrandtags.equals(""))
-                        finalbrandtags = tempbrands.get(n);
-                    else
-                        finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
-
-                }
 
 
                 //fields validation
@@ -274,7 +175,111 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     productdetails.requestFocus();
                 } else if (category.equalsIgnoreCase("")) {
                     Toast.makeText(AddProductActivity.this, "Please Select Product Category", Toast.LENGTH_SHORT).show();
+                } else if (check()) {
+                    multiautotext.setError("You can add maximum five tags only");
+                    multiautotext.requestFocus();
                 } else {
+
+
+                    String text = multiautotext.getText().toString();
+                    ArrayList<String> images = new ArrayList<String>();
+                    ArrayList<String> othertag = new ArrayList<String>();
+                    if (text.endsWith(","))
+                        text = text.substring(0, text.length() - 1);
+                    System.out.println("txttttt=" + text);
+                    text = text.trim();
+
+
+                    String[] parts = text.split(",");
+
+                    for (int l = 0; l < parts.length; l++) {
+                        System.out.println(parts[l]);
+                        tagpart = parts[l].trim();
+                        if (!tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" "))
+                            images.add(tagpart);
+                        if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {
+                            othertag.add(tagpart);
+                            System.out.println("tag going to add=" + tagpart);
+                            try {
+                                addOtherTags();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        System.out.println("other categoryyyyyyyyyyyyyyyy=" + othertag);
+
+                    }
+                    System.out.println("tagname arrat before change***************" + tagname);
+
+                    getTags();
+
+                    for (int i = 0; i < images.size(); i++) {
+
+                        for (int j = 0; j < tagname.size(); j++) {
+                            if (images.get(i).toString().equalsIgnoreCase(tagname.get(j).toString()))
+                                idlist = idlist + "," + id.get(j).toString();
+                        }
+
+                    }
+
+
+                    if (!multiautotext.getText().toString().equalsIgnoreCase("") && idlist.length() > 0) {
+                        idlist = idlist.substring(1);
+                        System.out.println("substring idddddddddd=" + idlist);
+
+
+                    }
+                    if (tagflag) {
+                        tagid = tagid.substring(1);
+                        System.out.println("response tag iddddddddddddddd=" + tagid);
+                        if (!idlist.equalsIgnoreCase(""))
+                            idlist = idlist + "," + tagid;
+                        else
+                            idlist = tagid;
+                        System.out.println("final idlist iddddddddddddddd=" + idlist);
+
+                    }
+
+
+                    ArrayList<String> tempbrands = new ArrayList<String>();
+
+
+                    String textbrand = multiautobrand.getText().toString();
+
+                    if (textbrand.endsWith(","))
+                        textbrand = textbrand.substring(0, textbrand.length() - 1);
+
+                    textbrand = textbrand.trim();
+
+                    if (!textbrand.equals("")) {
+
+                        String[] bparts = textbrand.split(",");
+                        for (int o = 0; o < bparts.length; o++) {
+                            brandtagpart = bparts[o].trim();
+                            if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
+                                tempbrands.add(brandtagpart);
+                            if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
+                                System.out.println("brand tag going to add=" + brandtagpart);
+                                try {
+                                    addOtherBrandTags(brandtagpart);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+
+                        }
+                    }
+
+
+                    for (int n = 0; n < tempbrands.size(); n++) {
+                        if (finalbrandtags.equals(""))
+                            finalbrandtags = tempbrands.get(n);
+                        else
+                            finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
+
+                    }
 
 
                     if (stringTitles.length == 0) {
@@ -522,7 +527,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
     }
 
-    public void check() {
+    public boolean check() {
         String text = multiautotext.getText().toString();
         System.out.println("texttttttttttttttttt" + text.substring(0, text.length() - 1));
         if (text.endsWith(","))
@@ -530,8 +535,11 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         String[] parts = text.split(",");
         System.out.println("size of partssssssssssssssssss" + parts.length);
         if (parts.length > 5) {
-            multiautotext.setError("You can add maximum five tags");
-        }
+            multiautotext.setError("You can add maximum five tags only");
+            return true;
+        } else
+            return false;
+
 
     }
 
