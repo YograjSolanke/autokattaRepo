@@ -34,6 +34,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.MemberDetailTabs;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
@@ -52,6 +53,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private String mGroupId;
     private ApiCall mApiCall;
     private MyViewHolder mView;
+    ConnectionDetector mTestConnection;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mContact, mVehicleCount, mAdmin;
@@ -78,6 +80,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         this.mItemList = mItemList;
         this.mCallFrom = mCallfrom;
         mApiCall = new ApiCall(mActivity, this);
+
     }
 
     @Override
@@ -87,6 +90,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 .inflate(R.layout.custom_group_member_list, parent, false);
         // set the view's size, margins, paddings and layout parameters
         MemberListRefreshAdapter.MyViewHolder vh = new MemberListRefreshAdapter.MyViewHolder(v);
+        mTestConnection = new ConnectionDetector(mActivity);
         return vh;
     }
 
@@ -350,9 +354,16 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     private void DeleteMembers(int position, String nextContact, String rmContact) {
-        mApiCall.DeleteGroupMembers(mGroupId, mCallFrom, rmContact, myContact, nextContact, String.valueOf(mItemList.size()));
-        mItemList.remove(position);
-        notifyDataSetChanged();
+        if (mTestConnection.isConnectedToInternet()) {
+            mApiCall.DeleteGroupMembers(mGroupId, mCallFrom, rmContact, myContact, nextContact, String.valueOf(mItemList.size()));
+            mItemList.remove(position);
+            notifyDataSetChanged();
+        } else {
+            errorMessage(mActivity, mActivity.getString(R.string.no_internet));
+        }
+
+
+
         /*params.put("group_id", groupid);
         params.put("grouptype", grptype);
         params.put("contact", rmContact);
@@ -362,7 +373,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     private void makeAdmin(String contact, String action) {
-        mApiCall.makeGroupAdmin(mGroupId, contact, action);
+        if (mTestConnection.isConnectedToInternet()) {
+            mApiCall.makeGroupAdmin(mGroupId, contact, action);
+        } else {
+            errorMessage(mActivity, mActivity.getString(R.string.no_internet));
+        }
+
+
+
         /*params.put("groupid", groupid);
         params.put("contact", contact);
         params.put("action", action);*/
@@ -391,45 +409,18 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            showMessage(mActivity, mActivity.getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(mActivity, mActivity.getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(mActivity, mActivity.getString(R.string.no_internet));
         } else {
-            Log.i("Check Class-", "MemberList Adapter");
+            Log.i("Check Class-"
+                    , "memberlistfrgmentrefreshadapter");
             error.printStackTrace();
         }
     }
@@ -450,6 +441,32 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             mActivity.finish();
         } else
             Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                       // getGroupContact(mGroupId);
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 
 }

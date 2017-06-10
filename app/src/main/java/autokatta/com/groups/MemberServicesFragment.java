@@ -1,6 +1,6 @@
 package autokatta.com.groups;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,9 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -50,7 +47,6 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     TextView mNoData;
     String mBundleContact;
     ConnectionDetector mTestConnection;
-    KProgressHUD hud;
     boolean _hasLoadedOnce = false;
 
 
@@ -63,30 +59,12 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
 
     private void getServices(String GroupId) {
         if (mTestConnection.isConnectedToInternet()) {
-            hud = KProgressHUD.create(getActivity())
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please wait")
-                    .setMaxProgress(100)
-                    .show();
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getGroupService(GroupId, mBundleContact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
-        }
+            errorMessage(getActivity(), getString(R.string.no_internet));
+       }
     }
 
     @Override
@@ -112,7 +90,6 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                hud.dismiss();
                 mSwipeRefreshLayout.setRefreshing(false);
                 serviceList.clear();
                 String storeContact = null;
@@ -144,17 +121,14 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
-                    hud.dismiss();
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
-                hud.dismiss();
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            hud.dismiss();
             mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
@@ -162,48 +136,21 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void notifyError(Throwable error) {
-        hud.dismiss();
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "Member service fragment");
+                    , "memberservicefragment");
+            error.printStackTrace();
         }
     }
 
@@ -247,5 +194,31 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getServices(mGroupId);
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }

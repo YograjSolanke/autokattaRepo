@@ -1,6 +1,6 @@
 package autokatta.com.groups;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,9 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -52,7 +49,6 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
     LinearLayoutManager mLayoutManager;
     StoreProductAdapter adapter;
     ConnectionDetector mTestConnection;
-    KProgressHUD hud;
     private TextView mPlaceHolder;
     boolean _hasLoadedOnce = false;
 
@@ -72,30 +68,11 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
 
     private void getProducts(String GroupId) {
         if (mTestConnection.isConnectedToInternet()) {
-            hud = KProgressHUD.create(getActivity())
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please wait")
-                    .setMaxProgress(100)
-                    .show();
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getGroupProducts(GroupId, mBundleContact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            hud.dismiss();
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -121,7 +98,6 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                hud.dismiss();
                 mSwipeRefreshLayout.setRefreshing(false);
                 productList.clear();
                 String storeContact = null;
@@ -152,17 +128,14 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
-                    hud.dismiss();
                     mSwipeRefreshLayout.setRefreshing(false);
                     mPlaceHolder.setVisibility(View.GONE);
                 }
             } else {
-                hud.dismiss();
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            hud.dismiss();
             mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
@@ -170,49 +143,22 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void notifyError(Throwable error) {
-        hud.dismiss();
-        if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
-        } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
-        } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
-        } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
-        } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
-        } else {
-            Log.i("Check Class-"
-                    , "memberproduct fragment");
-        }
+        mSwipeRefreshLayout.setRefreshing(false);
+            if (error instanceof SocketTimeoutException) {
+                showMessage(getActivity(), getString(R.string._404_));
+            } else if (error instanceof NullPointerException) {
+                showMessage(getActivity(), getString(R.string.no_response));
+            } else if (error instanceof ClassCastException) {
+                showMessage(getActivity(), getString(R.string.no_response));
+            } else if (error instanceof ConnectException) {
+                errorMessage(getActivity(), getString(R.string.no_internet));
+            } else if (error instanceof UnknownHostException) {
+                errorMessage(getActivity(), getString(R.string.no_internet));
+            } else {
+                Log.i("Check Class-"
+                        , "memberproductfragment");
+                error.printStackTrace();
+            }
     }
 
     @Override
@@ -254,5 +200,31 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getProducts(mGroupId);
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }
