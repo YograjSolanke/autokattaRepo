@@ -1,17 +1,26 @@
 package autokatta.com.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetVehicleByIdResponse;
 import retrofit2.Response;
@@ -27,11 +36,14 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
     TextView tyredetails, bustypedetails, airdetails, invoicedetails, impldetails, registrationdetails, enginedetails, chassicdetails, bodymfgdetails, seatmfgdetails;
     TextView rtotext, insurencetext, ownertext, fueltext, colortext, rctext, insvaltext, taxtext, fitnesstext, permitvaltext, seatingtext, permittext, hypotext, drivetext, transmissiontext, bodytext, boattext, rvtext, applicationtext;
     TextView tyretext, bustypetext, airtext, invoicetext, impltext, registrationtext, enginetext, chassictext, bodymfgtext, seatmfgtext;
+    ConnectionDetector mTestConnection;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mVehicleTwo = inflater.inflate(R.layout.fragment_vehicle_details_two, container, false);
+
+        mTestConnection = new ConnectionDetector(getActivity());
 
         fueldetails = (TextView) mVehicleTwo.findViewById(R.id.fueldetails);
         colordetails = (TextView) mVehicleTwo.findViewById(R.id.colordetails);
@@ -114,8 +126,13 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
     Vehicle Details...
      */
     private void getVehicleData(String contact, String mVehicleId) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getVehicleById(contact, mVehicleId);
+
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.getVehicleById(contact, mVehicleId);
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -427,6 +444,10 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
                         insvaldetails.setVisibility(View.VISIBLE);
                         insurencedetails.setVisibility(View.VISIBLE);
                         permitvaldetails.setVisibility(View.VISIBLE);
+                        getVehicleData(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                        .getString("loginContact", ""),
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                        .getString("vehicle_id", ""));
                         fitnessdetails.setVisibility(View.VISIBLE);
                         taxdetails.setVisibility(View.VISIBLE);
                         rtotext.setVisibility(View.VISIBLE);
@@ -626,11 +647,53 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            showMessage(getActivity(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            showMessage(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            showMessage(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", "VehicleDetails_Details");
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void notifyString(String str) {
 
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getVehicleData(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                        .getString("loginContact", ""),
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                        .getString("vehicle_id", ""));
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }

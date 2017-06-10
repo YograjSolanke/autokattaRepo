@@ -1,14 +1,12 @@
 package autokatta.com.fragment;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +27,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.BussinessChatAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.getBussinessChatResponse;
 import retrofit2.Response;
 
@@ -47,7 +46,7 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
     TextView mNoData;
     List<getBussinessChatResponse.Success> mSuccesses = new ArrayList<>();
     BussinessChatAdapter mBussinessChatAdapter;
-    FragmentActivity ctx;
+    ConnectionDetector mTestConnection;
 
     @Nullable
     @Override
@@ -61,6 +60,8 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mTestConnection = new ConnectionDetector(getActivity());
 
         mNoData = (TextView) mMychat.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
@@ -80,7 +81,7 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-        mSwipeRefreshLayout.setOnRefreshListener((OnRefreshListener) ctx);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -109,8 +110,13 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
 
 
     private void getChatData(String loginContact) {
-        apiCall = new ApiCall(getActivity(), this);
-        apiCall.getBussinessChat(loginContact);
+
+        if (mTestConnection.isConnectedToInternet()) {
+            apiCall = new ApiCall(getActivity(), this);
+            apiCall.getBussinessChat(loginContact);
+        } else {
+            errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -148,10 +154,10 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
                     mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
-                Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
+                showMessage(getActivity(), getString(R.string._404_));
             }
         } else {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
+            showMessage(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -159,43 +165,15 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Bussiness Chat Fragment");
         }
@@ -209,8 +187,32 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
     @Override
     public void onRefresh() {
         getChatData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+    }
 
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
 
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getChatData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 
 }
