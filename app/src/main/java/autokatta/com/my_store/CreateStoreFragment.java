@@ -357,7 +357,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     flagtime = false;
                 }
 
-                if (name.equals("") || name.startsWith(" ") || name.endsWith(" ")) {
+                if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
                     storename.setError("Enter Valid Name");
                     storename.setFocusable(true);
                     storename.requestFocus();
