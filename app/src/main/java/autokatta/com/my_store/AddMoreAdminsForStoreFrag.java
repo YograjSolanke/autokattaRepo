@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -198,10 +197,10 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     list.setAdapter(adapter);
                 }
             } else {
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
