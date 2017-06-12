@@ -57,7 +57,7 @@ public class Follow extends Fragment implements RequestNotifier {
 
         if (context instanceof Activity) {
             if (mActivity != null)
-                mActivity = (Activity) context;
+                mActivity = getActivity();
         }
     }
 
@@ -105,25 +105,37 @@ public class Follow extends Fragment implements RequestNotifier {
                 adapter.notifyDataSetChanged();
 
             } else {
-                showMessage(mActivity, getString(R.string._404_));
+                if (mActivity != null)
+                    showMessage(mActivity, getString(R.string._404_));
             }
         } else {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null)
+                showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            showMessage(mActivity, getString(R.string._404_));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string._404_));
+            }
         } else if (error instanceof NullPointerException) {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            if (mActivity != null) {
+                errorMessage(mActivity, getString(R.string.no_internet));
+            }
         } else if (error instanceof UnknownHostException) {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            if (mActivity != null) {
+                errorMessage(mActivity, getString(R.string.no_internet));
+            }
         } else {
             Log.i("Check Class-", "Follow Fragment");
         }
@@ -146,13 +158,15 @@ public class Follow extends Fragment implements RequestNotifier {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(mOtherContact);
                     } else {
-                        errorMessage(mActivity, getString(R.string.no_internet));
+                        if (mActivity != null)
+                            errorMessage(mActivity, getString(R.string.no_internet));
                     }
                 } else {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(contact);
                     } else {
-                        errorMessage(mActivity, getString(R.string.no_internet));
+                        if (mActivity != null)
+                            errorMessage(mActivity, getString(R.string.no_internet));
                     }
                 }
                 _hasLoadedOnce = true;
@@ -179,13 +193,15 @@ public class Follow extends Fragment implements RequestNotifier {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(mOtherContact);
                     } else {
-                        errorMessage(mActivity, getString(R.string.no_internet));
+                        if (mActivity != null)
+                            errorMessage(mActivity, getString(R.string.no_internet));
                     }
                 } else {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(contact);
                     } else {
-                        errorMessage(mActivity, getString(R.string.no_internet));
+                        if (mActivity != null)
+                            errorMessage(mActivity, getString(R.string.no_internet));
                     }
                 }
             }
@@ -212,13 +228,15 @@ public class Follow extends Fragment implements RequestNotifier {
                             if (mTestConnection.isConnectedToInternet()) {
                                 apiCall.getFollowers(mOtherContact);
                             } else {
-                                errorMessage(mActivity, getString(R.string.no_internet));
+                                if (mActivity != null)
+                                    errorMessage(mActivity, getString(R.string.no_internet));
                             }
                         } else {
                             if (mTestConnection.isConnectedToInternet()) {
                                 apiCall.getFollowers(contact);
                             } else {
-                                errorMessage(mActivity, getString(R.string.no_internet));
+                                if (mActivity != null)
+                                    errorMessage(mActivity, getString(R.string.no_internet));
                             }
                         }
                     }

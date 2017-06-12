@@ -51,7 +51,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
 
         if (context instanceof Activity) {
             if (mActivity != null)
-                mActivity = (Activity) context;
+                mActivity = getActivity();
         }
     }
 
@@ -74,7 +74,8 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreProfileInfo(loginContact);
         } else {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            if (mActivity != null)
+                errorMessage(mActivity, getString(R.string.no_internet));
         }
     }
 
@@ -95,25 +96,37 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
                 mListView.setAdapter(myStoreAdapter);
                 myStoreAdapter.notifyDataSetChanged();
             } else {
-                showMessage(mActivity, getString(R.string._404_));
+                if (mActivity != null)
+                    showMessage(mActivity, getString(R.string._404_));
             }
         } else {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null)
+                showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            showMessage(mActivity, getString(R.string._404_));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string._404_));
+            }
         } else if (error instanceof NullPointerException) {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            if (mActivity != null) {
+                errorMessage(mActivity, getString(R.string.no_internet));
+            }
         } else if (error instanceof UnknownHostException) {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            if (mActivity != null) {
+                errorMessage(mActivity, getString(R.string.no_internet));
+            }
         } else {
             Log.i("Check Class-", "About Store");
             error.printStackTrace();

@@ -243,10 +243,12 @@ public class About extends Fragment implements RequestNotifier {
                     }
                 }
             } else {
-                showMessage(mActivity, getString(R.string._404_));
+                if (mActivity != null)
+                    showMessage(mActivity, getString(R.string._404_));
             }
         } else {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null)
+                showMessage(mActivity, getString(R.string.no_response));
         }
     }
 

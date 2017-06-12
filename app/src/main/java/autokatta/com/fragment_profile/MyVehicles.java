@@ -53,7 +53,7 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
 
         if (context instanceof Activity) {
             if (mActivity != null)
-                mActivity = (Activity) context;
+                mActivity = getActivity();
         }
     }
 
@@ -106,15 +106,18 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
                     adapter.notifyItemRangeChanged(0, adapter.getItemCount());
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    showMessage(mActivity, getString(R.string.no_response));
+                    if (mActivity != null)
+                        showMessage(mActivity, getString(R.string.no_response));
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(mActivity, getString(R.string._404_));
+                if (mActivity != null)
+                    showMessage(mActivity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null)
+                showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
@@ -123,15 +126,25 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(mActivity, getString(R.string._404_));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string._404_));
+            }
         } else if (error instanceof NullPointerException) {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-            showMessage(mActivity, getString(R.string.no_response));
+            if (mActivity != null) {
+                showMessage(mActivity, getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            if (mActivity != null) {
+                errorMessage(mActivity, getString(R.string.no_internet));
+            }
         } else if (error instanceof UnknownHostException) {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            if (mActivity != null) {
+                errorMessage(mActivity, getString(R.string.no_internet));
+            }
         } else {
             Log.i("Check Class-", "My Vehicles");
         }
@@ -147,7 +160,8 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getOwnVehicles(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
         } else {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            if (mActivity != null)
+                errorMessage(mActivity, getString(R.string.no_internet));
         }
     }
 
@@ -180,7 +194,8 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
                         if (mTestConnection.isConnectedToInternet()) {
                             mApiCall.getOwnVehicles(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                         } else {
-                            errorMessage(mActivity, getString(R.string.no_internet));
+                            if (mActivity != null)
+                                errorMessage(mActivity, getString(R.string.no_internet));
                         }
                     }
                 });
@@ -198,7 +213,8 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
                 if (mTestConnection.isConnectedToInternet()) {
                     mApiCall.getOwnVehicles(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                 } else {
-                    errorMessage(mActivity, getString(R.string.no_internet));
+                    if (mActivity != null)
+                        errorMessage(mActivity, getString(R.string.no_internet));
                 }
                 _hasLoadedOnce = true;
             }
