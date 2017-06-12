@@ -1,10 +1,7 @@
 package autokatta.com.events;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -124,7 +121,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             // apiCall.AuctionAnalyticsData(strLoanId);
             //apiCall.AuctionAnalyticsData("1047");
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+         //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -178,9 +175,9 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+         //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+           // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Loan Analytics Fragment");
             error.printStackTrace();
@@ -192,7 +189,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
 
     }
 
-    public void showMessage(Activity activity, String message) {
+  /*  public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -216,6 +213,6 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 
 }

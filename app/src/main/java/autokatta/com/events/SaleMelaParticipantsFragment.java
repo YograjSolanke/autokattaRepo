@@ -1,10 +1,7 @@
 package autokatta.com.events;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -126,7 +123,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
                     .getString("loginContact", ""), strSaleId);
             // apiCall.AuctionParticipantData("9890950817", "1047");
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+         //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -173,15 +170,15 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+       //     showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+       //     showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+        //    showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+       //     errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+         //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Sale mela Participants Fragment");
             error.printStackTrace();
@@ -192,7 +189,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
     public void notifyString(String str) {
 
     }
-
+/*
     public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
@@ -217,5 +214,5 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

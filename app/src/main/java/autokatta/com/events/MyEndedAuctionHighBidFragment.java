@@ -1,9 +1,7 @@
 package autokatta.com.events;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -119,7 +117,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionHighBid(myContact, strAuctionId);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -533,15 +531,15 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+         //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+       //     showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+        //    showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+         //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+         //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Ended Auction HighesBid Fragment");
             error.printStackTrace();
@@ -579,7 +577,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             mApiCall.ApproveVehicle(mAuctionId, keyword1, vehicleid, bidderContact, bidPrice);
             //mApiCall.ApproveVehicle("1047", keyword1, vehicleid, bidderContact, bidPrice);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -589,7 +587,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             mApiCall.addToReauction(vehicleid, mAuctionId);
             //mApiCall.addToReauction(vehicleid, "1047");
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -599,7 +597,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
             //mApiCall.Add_RemoveBlacklistContact(myContact, "1047", rContact, keyword);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -629,7 +627,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
         }
     }
 
-    public void showMessage(Activity activity, String message) {
+ /*   public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -653,7 +651,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 
 }
 

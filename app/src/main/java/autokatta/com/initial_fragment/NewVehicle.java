@@ -19,12 +19,12 @@ import autokatta.com.view.NewVehicleCatalogActivity;
 
 public class NewVehicle extends Fragment {
     View mNewVehicle;
-    FloatingActionButton button;
+    com.github.clans.fab.FloatingActionButton button;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mNewVehicle = inflater.inflate(R.layout.fragment_new_vehicle, container, false);
-        button = (FloatingActionButton) mNewVehicle.findViewById(R.id.fab);
+        button = (com.github.clans.fab.FloatingActionButton) mNewVehicle.findViewById(R.id.fab);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
