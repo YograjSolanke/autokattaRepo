@@ -112,15 +112,12 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 }
 
                 if (allcontacts.equalsIgnoreCase("")) {
-                    Snackbar.make(v,
-                            "Please add atleast one contact",
-                            Snackbar.LENGTH_SHORT).show();
+                    showMessage(getActivity(), "Please add atleast one contact");
                     flag = false;
 
                 } else if (allcontacts.contains(mContact)) {
-                    Snackbar.make(v,
-                            "Please check the number",
-                            Snackbar.LENGTH_SHORT).show();
+
+                    showMessage(getActivity(), "Please check the number");
                     flag = false;
                 }
 
@@ -138,9 +135,8 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             String[] parts = allcontacts.split(",");
                             for (int j = 0; j < parts.length; j++) {
                                 if (parts[j].contains(no)) {
-                                    Snackbar.make(getView(),
-                                            "Sorry..No Is Already added in Group",
-                                            Snackbar.LENGTH_SHORT).show();
+                                    showMessage(getActivity(),  "Sorry..No Is Already added in Group");
+
                                     flag = false;
                                 }
                             }

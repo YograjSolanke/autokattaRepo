@@ -110,15 +110,15 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    Snackbar.make(getView(), "No product found", Snackbar.LENGTH_SHORT).show();
+                    showMessage(getActivity(), "No product found");
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                showMessage(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         }
     }
 

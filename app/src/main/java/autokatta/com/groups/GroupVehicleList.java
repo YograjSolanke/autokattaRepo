@@ -193,11 +193,11 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                showMessage(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -363,7 +363,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                         if (brand.equals("") && model.equals("") && version.equals("") && city.equals("") && RTOcity.equals("")
                                 && price.equals("") && reg_year.equals("") && mgf_year.equals("") && kmsrunning.equals("")
                                 && no_of_owner.equals("")) {
-                            Snackbar.make(v, "Enter value to search", Snackbar.LENGTH_SHORT).show();
+                            showMessage(getActivity(),"Enter value to search");
                         } else {
                             getGroupVehicles();
                         }

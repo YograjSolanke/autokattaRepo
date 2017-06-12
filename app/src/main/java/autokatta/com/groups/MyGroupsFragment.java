@@ -101,11 +101,12 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
+                showMessage(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            showMessage(getActivity(), getString(R.string.no_response));
+
         }
     }
 
