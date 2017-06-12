@@ -126,10 +126,13 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
             final List<String> list = contactdata_copy;
 
             int count = list.size();
-            final ArrayList<String> nlist = new ArrayList<String>(count);
 
-            String filterableString;
+            if (filterString != null && filterString.length() > 0) {
 
+
+                final ArrayList<String> nlist = new ArrayList<String>(count);
+
+                String filterableString;
             for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);
                 if (filterableString.toLowerCase().contains(filterString)) {
@@ -139,6 +142,10 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
 
             results.values = nlist;
             results.count = nlist.size();
+            } else {
+                results.values = list;
+                results.count = list.size();
+            }
 
             return results;
         }

@@ -124,7 +124,7 @@ public class InviteContactFragment extends Fragment {
         /*products = new String[finalContacts.size()];
         products = finalContacts.toArray(products);*/
 
-        Collections.sort(finalContacts);
+        Collections.sort(finalContacts, Collections.<String>reverseOrder());
         inviteContactAdapter = new InviteContactAdapter(getActivity(), finalContacts);
         mRecyclerView.setAdapter(inviteContactAdapter);
         inviteContactAdapter.notifyDataSetChanged();
@@ -133,12 +133,12 @@ public class InviteContactFragment extends Fragment {
         edtSearchContact.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                inviteContactAdapter.getFilter().filter(s.toString());
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                inviteContactAdapter.getFilter().filter(s.toString());
             }
 
             @Override
