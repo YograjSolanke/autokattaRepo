@@ -53,6 +53,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
     StoreVehicleAdapter adapter;
     boolean hasMoreView = false;
     ConnectionDetector mTestConnection;
+    Activity mActivity;
 
     public StoreVehicles() {
         //empty constructor...
@@ -72,7 +73,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
            /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
@@ -139,11 +140,11 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(getActivity(), getString(R.string._404_));
+                showMessage(mActivity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
@@ -151,16 +152,16 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
 
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
 
         } else {
             Log.i("Check Class-"
@@ -228,11 +229,9 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        Activity a;
-
         if (context instanceof Activity) {
-            a = (Activity) context;
+            if (mActivity != null)
+                mActivity = (Activity) context;
         }
     }
 

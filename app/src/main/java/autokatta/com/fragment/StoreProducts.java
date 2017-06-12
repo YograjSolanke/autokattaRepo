@@ -49,6 +49,7 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
     boolean hasView = false;
     ConnectionDetector mTestConnection;
     TextView mNoData;
+    Activity mActivity;
 
     public StoreProducts() {
         //empty constructor...
@@ -63,12 +64,12 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private void getStoreProducts(String store_id, String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
-            ApiCall apiCall = new ApiCall(getActivity(), this);
+            ApiCall apiCall = new ApiCall(mActivity, this);
             apiCall.getStoreInventory(store_id, sharedcontact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
 
         }
     }
@@ -107,7 +108,7 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
                         success.setPrate3(success.getPrate3());
                         productList.add(success);
                     }
-                    adapter = new StoreProductAdapter(getActivity(), productList, Sharedcontact, storeContact);
+                    adapter = new StoreProductAdapter(mActivity, productList, Sharedcontact, storeContact);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -116,11 +117,11 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(getActivity(), getString(R.string._404_));
+                showMessage(mActivity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
@@ -128,48 +129,15 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            errorMessage(getActivity(), getString(R.string.no_internet));
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            errorMessage(getActivity(), getString(R.string.no_internet));
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "StoreProducts List");
@@ -196,18 +164,18 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().runOnUiThread(new Runnable() {
+        mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mTestConnection = new ConnectionDetector(getActivity());
-                Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
+                mTestConnection = new ConnectionDetector(mActivity);
+                Sharedcontact = mActivity.getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mNoData = (TextView) mProduct.findViewById(R.id.no_category);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mProduct.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
                 filterToHide = (RelativeLayout) mProduct.findViewById(R.id.rel);
                 filterToHide.setVisibility(View.GONE);
                 mRecyclerView.setHasFixedSize(true);
-                mLayoutManager = new LinearLayoutManager(getActivity());
+                mLayoutManager = new LinearLayoutManager(mActivity);
                 mLayoutManager.setReverseLayout(true);
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
@@ -233,11 +201,9 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        Activity a;
-
         if (context instanceof Activity) {
-            a = (Activity) context;
+            if (mActivity != null)
+                mActivity = (Activity) context;
         }
     }
 

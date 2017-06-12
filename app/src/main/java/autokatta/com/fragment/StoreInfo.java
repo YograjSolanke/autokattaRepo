@@ -48,7 +48,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen,
             storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData;
     ConnectionDetector mTestConnection;
-
+    Activity mActivity;
     public StoreInfo() {
         //empty constructor...
     }
@@ -65,7 +65,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreData(myContact, store_id);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
         }
     }
 
@@ -118,10 +118,10 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
 
                 }
             } else {
-                showMessage(getActivity(), getString(R.string._404_));
+                showMessage(mActivity, getString(R.string._404_));
             }
         } else {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(mActivity, getString(R.string.no_response));
         }
 
     }
@@ -129,15 +129,15 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "StoreInfo");
@@ -220,9 +220,9 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Activity a;
         if (context instanceof Activity) {
-            a = (Activity) context;
+            if (mActivity != null)
+                mActivity = (Activity) context;
         }
     }
 

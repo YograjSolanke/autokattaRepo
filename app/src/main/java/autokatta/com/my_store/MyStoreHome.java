@@ -64,6 +64,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     String preoverall = "";
     String isDealing = "";
     String myContact;
+    Activity mActivity;
     String mOtherContact, mLoginContact, store_id, storeOtherContact, mFolllowstr, mLikestr, storeRating;
     String storeName = "", storeImage = "", storeCoverImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
             storeLikeCount, storeFollowCount, strDetailsShare = "", productCount, serviceCount, vehicleCount;
@@ -328,22 +329,20 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
             } else {
                 hud.dismiss();
-                Snackbar.make(mLinear, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, getString(R.string._404_));
             }
         } else {
             hud.dismiss();
-            Snackbar.make(mLinear, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        Activity a;
-
         if (context instanceof Activity) {
-            a = (Activity) context;
+            if (mActivity != null)
+                mActivity = (Activity) context;
         }
     }
 
@@ -353,43 +352,15 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(mLinear, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(mLinear, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(mLinear, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mLinear, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mLinear, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "StoreViewActivity");
@@ -401,27 +372,27 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success_follow")) {
-                Snackbar.make(getView(), "Following", Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, "Following");
                 mFollow.setVisibility(View.GONE);
                 mUnFollow.setVisibility(View.VISIBLE);
                 mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
-                Snackbar.make(getView(), "UnFollowing", Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, "UnFollowing");
                 mFollow.setVisibility(View.VISIBLE);
                 mUnFollow.setVisibility(View.GONE);
                 mFolllowstr = "no";
             } else if (str.equals("success_like")) {
-                Snackbar.make(getView(), "Liked", Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, "Liked");
                 mLike.setVisibility(View.VISIBLE);
                 mUnlike.setVisibility(View.GONE);
                 mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
-                Snackbar.make(getView(), "UnLiked", Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, "Unliked");
                 mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);
                 mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
-                Snackbar.make(getView(), "Rating Submitted", Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, "Rating Submitted");
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
@@ -431,7 +402,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 startActivity(intent);
 
             } else if (str.equals("success_rating_updated")) {
-                Snackbar.make(getView(), "Rating updated", Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, "Rating Updated");
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
@@ -440,7 +411,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else if (str.equals("success_recommended")) {
-                Snackbar.make(getView(), "Store Recommended", Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, "Store recommended");
             }
         }
     }
@@ -655,5 +626,32 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
         startActivity(intent);
+    }
+
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getOtherStore(myContact, store_id);
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }
