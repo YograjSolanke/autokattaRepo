@@ -7853,10 +7853,12 @@ get ExchangeMela Participants Data
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS);
         // add your other interceptors …
         // add logging as last interceptor
-        httpClient.addInterceptor(logging).readTimeout(60, TimeUnit.SECONDS);
+        httpClient.addInterceptor(logging);
         return httpClient;
     }
 
@@ -7864,10 +7866,12 @@ get ExchangeMela Participants Data
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS);
         // add your other interceptors …
         // add logging as last interceptor
-        httpClient.addInterceptor(logging).readTimeout(60, TimeUnit.SECONDS);
+        httpClient.addInterceptor(logging);
         return httpClient;
     }
 

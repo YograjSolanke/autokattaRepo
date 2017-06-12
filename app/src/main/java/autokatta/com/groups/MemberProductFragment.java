@@ -1,6 +1,7 @@
 package autokatta.com.groups;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,7 +52,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
     ConnectionDetector mTestConnection;
     private TextView mPlaceHolder;
     boolean _hasLoadedOnce = false;
-
+    Activity activity;
 
     @Nullable
     @Override
@@ -142,19 +143,39 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            if (activity != null) {
+                activity = getActivity();
+            }
+        }
+    }
+
+    @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
-            if (error instanceof SocketTimeoutException) {
-                showMessage(getActivity(), getString(R.string._404_));
-            } else if (error instanceof NullPointerException) {
-                showMessage(getActivity(), getString(R.string.no_response));
-            } else if (error instanceof ClassCastException) {
-                showMessage(getActivity(), getString(R.string.no_response));
-            } else if (error instanceof ConnectException) {
-                errorMessage(getActivity(), getString(R.string.no_internet));
-            } else if (error instanceof UnknownHostException) {
-                errorMessage(getActivity(), getString(R.string.no_internet));
-            } else {
+        if (error instanceof SocketTimeoutException) {
+            if (activity != null) {
+                showMessage(activity, getString(R.string._404_));
+            }
+        } else if (error instanceof NullPointerException) {
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
+        } else if (error instanceof ClassCastException) {
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
+        } else if (error instanceof ConnectException) {
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
+        } else if (error instanceof UnknownHostException) {
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
+        } else {
                 Log.i("Check Class-"
                         , "memberproductfragment");
                 error.printStackTrace();

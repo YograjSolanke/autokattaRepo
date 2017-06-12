@@ -1,6 +1,7 @@
 package autokatta.com.groups;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,6 +52,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     private ImageButton mNoInternetIcon;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
+    Activity activity;
 
     public MyGroupsFragment() {
         //Empty constructor
@@ -70,9 +72,10 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.Groups(loginContact);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         }
     }
+
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
@@ -101,12 +104,21 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(getActivity(), getString(R.string._404_));
+                showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(activity, getString(R.string.no_response));
+        }
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            if (activity != null) {
+                activity = getActivity();
+            }
         }
     }
 
@@ -114,15 +126,15 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(activity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(activity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(activity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "mygroupfragment");
@@ -139,12 +151,12 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabCreateGroup:
-                CreateGroupFragment createGroupFragment= new CreateGroupFragment();
-                Bundle b=new Bundle();
-                b.putString("classname","MyGroupFragment");
+                CreateGroupFragment createGroupFragment = new CreateGroupFragment();
+                Bundle b = new Bundle();
+                b.putString("classname", "MyGroupFragment");
                 createGroupFragment.setArguments(b);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.group_container,createGroupFragment, "createGroupFragment")
+                        .replace(R.id.group_container, createGroupFragment, "createGroupFragment")
                         .addToBackStack("createGroupFragment")
                         .commit();
                 break;
@@ -178,6 +190,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                mTestConnection = new ConnectionDetector(getActivity());
                 mPlaceHolder = (TextView) mMyGroups.findViewById(R.id.no_category);
                 mNoInternetIcon = (ImageButton) mMyGroups.findViewById(R.id.icon_nointernet);
                 mPlaceHolder.setVisibility(View.GONE);
@@ -198,9 +211,11 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        mTestConnection = new ConnectionDetector(getActivity());
-                        getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                .getString("loginContact", ""));
+                        Activity activity = getActivity();
+                        if (activity != null) {
+                            getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                                    .getString("loginContact", ""));
+                        }
                     }
                 });
 

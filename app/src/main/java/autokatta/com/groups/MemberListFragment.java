@@ -1,6 +1,7 @@
 package autokatta.com.groups;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -54,6 +55,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     TextView mNoData;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
+    Activity activity;
 
     public MemberListFragment() {
         //empty constructor...
@@ -74,7 +76,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getGroupContacts(group_id);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -158,11 +160,21 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(activity, getString(R.string.no_response));
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            if (activity != null) {
+                activity = getActivity();
+            }
         }
     }
 
@@ -170,15 +182,25 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            if (activity != null) {
+                showMessage(activity, getString(R.string._404_));
+            }
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
         } else {
             Log.i("Check Class-"
                     , "memberlistfrgment");

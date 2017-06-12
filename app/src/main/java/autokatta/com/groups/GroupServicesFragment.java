@@ -1,6 +1,7 @@
 package autokatta.com.groups;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -47,6 +48,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
     TextView NoData;
+    Activity activity;
 
     public GroupServicesFragment() {
         //empty fragments...
@@ -64,7 +66,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getGroupService(GroupId, myContact);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -112,15 +114,25 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 } else {
                     NoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    Snackbar.make(getView(), "No Service Found", Snackbar.LENGTH_SHORT).show();
+                    showMessage(activity, "No Service Found");
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                showMessage(activity, "No Service Found");
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(activity, getString(R.string.no_response));
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            if (activity != null) {
+                activity = getActivity();
+            }
         }
     }
 
@@ -128,15 +140,25 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            if (activity != null) {
+                showMessage(activity, getString(R.string._404_));
+            }
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
         } else {
             Log.i("Check Class-"
                     , "groupservicesfragment");

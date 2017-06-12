@@ -188,8 +188,11 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                .getString("loginContact", ""));
+                        Activity activity = getActivity();
+                        if (activity != null) {
+                            getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                                    .getString("loginContact", ""));
+                        }
                     }
                 });
             }

@@ -1,6 +1,7 @@
 package autokatta.com.groups;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,7 +27,6 @@ import autokatta.com.adapter.StoreServiceAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
 import autokatta.com.response.StoreInventoryResponse.Success.Service;
 import retrofit2.Response;
@@ -48,7 +48,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     String mBundleContact;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
-
+    Activity activity;
 
     @Nullable
     @Override
@@ -64,7 +64,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             errorMessage(getActivity(), getString(R.string.no_internet));
-       }
+        }
     }
 
     @Override
@@ -84,7 +84,6 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
             }
         }
     }
-
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -126,11 +125,11 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            showMessage(activity, getString(R.string.no_response));
         }
     }
 
@@ -138,19 +137,27 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(activity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(activity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(activity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "memberservicefragment");
             error.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            activity = getActivity();
         }
     }
 

@@ -50,6 +50,7 @@ public class GroupTabs extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         CreateGroupFragment createGroupFragment = new CreateGroupFragment();
         Bundle b = new Bundle();
         b.putString("classname", "GroupsTab");

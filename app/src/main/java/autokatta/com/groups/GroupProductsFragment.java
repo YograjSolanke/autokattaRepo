@@ -1,6 +1,7 @@
 package autokatta.com.groups;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -47,6 +48,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
     boolean _hasLoadedOnce = false;
     ConnectionDetector mTestConnection;
     TextView mNoData;
+    Activity activity;
 
     public GroupProductsFragment() {
         //empty constructor...
@@ -64,7 +66,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getGroupProducts(GroupId, myContact);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -110,11 +112,11 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    showMessage(getActivity(), "No product found");
+                    showMessage(activity, "No product found");
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(getActivity(), getString(R.string._404_));
+                showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
@@ -123,18 +125,38 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            if (activity != null) {
+                activity = getActivity();
+            }
+        }
+    }
+
+    @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            if (activity != null) {
+                showMessage(activity, getString(R.string._404_));
+            }
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
         } else {
             Log.i("Check Class-"
                     , "groupproductfragent");

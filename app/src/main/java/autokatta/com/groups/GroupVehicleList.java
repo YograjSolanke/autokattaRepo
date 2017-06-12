@@ -1,6 +1,7 @@
 package autokatta.com.groups;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -60,6 +61,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     Bundle getBundle;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
+    Activity activity;
 
     public GroupVehicleList() {
         //empty constructor...
@@ -79,7 +81,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getMyVehicles(rcontact);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -98,7 +100,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -193,11 +195,21 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(getActivity(), getString(R.string._404_));
+                showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(activity, getString(R.string.no_response));
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) {
+            if (activity != null) {
+                activity = getActivity();
+            }
         }
     }
 
@@ -205,15 +217,25 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            if (activity != null) {
+                showMessage(activity, getString(R.string._404_));
+            }
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            if (activity != null) {
+                showMessage(activity, getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            if (activity != null) {
+                errorMessage(activity, getString(R.string.no_internet));
+            }
         } else {
             Log.i("Check Class-"
                     , "groupvehiclelist");
