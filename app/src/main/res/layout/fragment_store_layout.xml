@@ -32,4 +32,6 @@
          android:text="@string/create_store"
          android:textColor="@color/white" />-->
 
+    <include layout="@layout/error_view" />
+
 </RelativeLayout>

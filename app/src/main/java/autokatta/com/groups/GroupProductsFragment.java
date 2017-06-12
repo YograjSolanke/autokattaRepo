@@ -188,6 +188,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mProduct.findViewById(R.id.swipeRefreshLayout);
                 mNoData = (TextView) mProduct.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
                 mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(getActivity());

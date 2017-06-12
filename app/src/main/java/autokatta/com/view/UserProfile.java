@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -36,7 +37,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -88,7 +88,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     String RegID, updatedUsername;
     ImageView img;
     CoordinatorLayout mUserParent;
-    KProgressHUD hud;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +114,9 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
         mUserProfileBundle = new Bundle();
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
 
         try {
 
@@ -290,12 +293,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     private void getProfileData() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
 
-        hud = KProgressHUD.create(this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait")
-                .setMaxProgress(100)
-                .show();
-
+        dialog.show();
         mApiCall.profileAbout(mLoginContact, mLoginContact);
     }
 
@@ -328,9 +326,12 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
-                hud.dismiss();
+                //hud.dismiss();
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
@@ -348,18 +349,21 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
                 }
             } else {
-                hud.dismiss();
+                //hud.dismiss();
                 Snackbar.make(mUserParent, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            hud.dismiss();
+            //hud.dismiss();
             Snackbar.make(mUserParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-        hud.dismiss();
+        //hud.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {

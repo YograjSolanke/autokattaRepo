@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -86,6 +87,7 @@ public class About extends Fragment implements RequestNotifier {
     String[] parts;
     boolean _hasLoadedOnce = false;
     Activity mActivity;
+    LinearLayout mLinear;
 
     @Override
     public void onAttach(Context context) {
@@ -134,6 +136,7 @@ public class About extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 if (response.body() instanceof ProfileAboutResponse) {
+                    mLinear.setVisibility(View.VISIBLE);
                     ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                     if (!mProfileAboutResponse.getSuccess().isEmpty()) {
                         userName = mProfileAboutResponse.getSuccess().get(0).getUsername();
@@ -330,6 +333,9 @@ public class About extends Fragment implements RequestNotifier {
                 spinner = (Spinner) mAbout.findViewById(R.id.spinner);
                 spinner.setVisibility(View.GONE);
 
+                mLinear = (LinearLayout) mAbout.findViewById(R.id.profileAbout);
+
+
                 mApiCall.profileAbout(Sharedcontact, Sharedcontact);
                 mApiCall.getSkills();
                 mApiCall.getDesignation();
@@ -367,14 +373,17 @@ public class About extends Fragment implements RequestNotifier {
                         if (checkedId == R.id.student) {
                             mProfession.setText("Student");
                             spinner.setVisibility(View.GONE);
+
                         } else if (checkedId == R.id.employee) {
                             mProfession.setText("Employee");
                             spinner.setVisibility(View.VISIBLE);
                             spinner.setSelection(0);
+
                         } else if (checkedId == R.id.selfemployee) {
                             mProfession.setText("Self Employee");
                             spinner.setVisibility(View.VISIBLE);
                             spinner.setSelection(0);
+
                         }
                     }
                 });

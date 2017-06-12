@@ -1,6 +1,7 @@
 package autokatta.com.fragment_profile;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -39,6 +41,8 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     //FloatingActionButton mCreateStore;
     boolean _hasLoadedOnce = false;
     ConnectionDetector mTestConnection;
+    TextView mNoData;
+    private ProgressDialog dialog;
 
     Activity mActivity;
 
@@ -69,6 +73,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     private void getStoreProfileInfo(String loginContact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
+            dialog.show();
             mApiCall.getStoreProfileInfo(loginContact);
         } else {
            /* if (mActivity != null)
@@ -78,20 +83,29 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
                 GetStoreProfileInfoResponse mStoreProfileInfoResponse = (GetStoreProfileInfoResponse) response.body();
-                for (GetStoreProfileInfoResponse.Success infoResponse : mStoreProfileInfoResponse.getSuccess()) {
-                    infoResponse.setStoreId(infoResponse.getStoreId());
-                    infoResponse.setStoreName(infoResponse.getStoreName());
-                    infoResponse.setLocation(infoResponse.getLocation());
-                    infoResponse.setStoreLogo(infoResponse.getStoreLogo());
-                    infoResponse.setStoreType(infoResponse.getStoreType());
-                    mSuccesses.add(infoResponse);
+                if (!mStoreProfileInfoResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
+                    for (GetStoreProfileInfoResponse.Success infoResponse : mStoreProfileInfoResponse.getSuccess()) {
+                        infoResponse.setStoreId(infoResponse.getStoreId());
+                        infoResponse.setStoreName(infoResponse.getStoreName());
+                        infoResponse.setLocation(infoResponse.getLocation());
+                        infoResponse.setStoreLogo(infoResponse.getStoreLogo());
+                        infoResponse.setStoreType(infoResponse.getStoreType());
+                        mSuccesses.add(infoResponse);
+                    }
+                    myStoreAdapter = new ProfileMyStoreAdapter(getActivity(), mSuccesses);
+                    mListView.setAdapter(myStoreAdapter);
+                    myStoreAdapter.notifyDataSetChanged();
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
+                    //showMessage(activity, "No product found");
                 }
-                myStoreAdapter = new ProfileMyStoreAdapter(getActivity(), mSuccesses);
-                mListView.setAdapter(myStoreAdapter);
-                myStoreAdapter.notifyDataSetChanged();
             } else {
                 /*if (mActivity != null)
                     showMessage(mActivity, getString(R.string._404_));*/
@@ -104,6 +118,9 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             /*if (mActivity != null) {
                 //showMessage(mActivity, getString(R.string._404_));
@@ -171,14 +188,16 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
                 mListView = (ListView) mAboutStore.findViewById(R.id.store_list);
+                mNoData = (TextView) mAboutStore.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
                 ViewCompat.setNestedScrollingEnabled(mListView, true);
-               /* getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
+
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage("Loading...");
+
+                getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
                                 Context.MODE_PRIVATE).getString("loginContact",""));
-                    }
-                });*/
+
             }
         });
     }
