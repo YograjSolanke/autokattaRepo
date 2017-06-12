@@ -779,13 +779,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
                 }
 
-                if (uptype.equals("")) {
+                if (uptype.equals("")||uptype.startsWith(" ")&&uptype.endsWith(" ")) {
                     producttype.setError("Enter Product Type");
-                } else if (upname.equals("")) {
+                } else if (upname.equals("")||upname.startsWith(" ")&&upname.endsWith(" ")) {
                     productname.setError("Enter Product Name");
-                } else if (upprice.equals("")) {
+                } else if (upprice.equals("")||upprice.startsWith(" ")&&upprice.endsWith(" ")) {
                     productprice.setError("Enter Product Price");
-                } else if (updetails.equals("")) {
+                } else if (updetails.equals("")||updetails.startsWith(" ")&&updetails.endsWith(" ")) {
                     productdetails.setError("Enter Product Details");
                 } else {
                     productname.setEnabled(false);
@@ -898,7 +898,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
             case R.id.linearlike:
                 if (storecontact.contains(contact)) {
-                CustomToast.customToast(getApplicationContext(),"You can't Like Your Own Store");
+                CustomToast.customToast(getApplicationContext(),"You can't Like Your Own Product");
                 }else {
                     linearlike.setVisibility(View.GONE);
                     linearunlike.setVisibility(View.VISIBLE);
@@ -909,7 +909,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 break;
             case R.id.linearunlike:
                 if (storecontact.contains(contact)) {
-                    CustomToast.customToast(getApplicationContext(),"You can't UnLike Your Own Store");
+                    CustomToast.customToast(getApplicationContext(),"You can't UnLike Your Own Product");
                 }else {
                     linearlike.setVisibility(View.VISIBLE);
                     linearunlike.setVisibility(View.GONE);
