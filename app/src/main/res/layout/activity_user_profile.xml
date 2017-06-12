@@ -90,7 +90,7 @@
         app:fabSize="mini"
         app:layout_anchorGravity="top|right|end" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/add_vehicle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
         android:background="@color/red"
         android:visibility="gone" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/create_store"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
         android:background="@color/red"
         android:visibility="gone" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/create_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

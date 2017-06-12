@@ -89,6 +89,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                         Sresponse.setLikecount(Sresponse.getLikecount());
                         Sresponse.setFollowcount(Sresponse.getFollowcount());
                         Sresponse.setStoreType(Sresponse.getStoreType());
+                        getActivity().setTitle("My Store");
                         storeResponseArrayList.add(Sresponse);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);

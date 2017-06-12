@@ -75,7 +75,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     String mUserName;
     CollapsingToolbarLayout collapsingToolbar;
     String mLoginContact;
-    FloatingActionButton mfab_edit, mfab_done, addVehicle, mCreateStore, mCreateGroup;
+    FloatingActionButton  mfab_edit, mfab_done;
+    com.github.clans.fab.FloatingActionButton addVehicle, mCreateStore, mCreateGroup;
     Bitmap bitmap;
     String lastWord = "";
     String mediaPath = "";
@@ -96,9 +97,9 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mfab_edit = (FloatingActionButton) findViewById(R.id.fab_edit_prof);
         mfab_done = (FloatingActionButton) findViewById(R.id.fab_edit_done);
-        addVehicle = (FloatingActionButton) findViewById(R.id.add_vehicle);
-        mCreateStore = (FloatingActionButton) findViewById(R.id.create_store);
-        mCreateGroup = (FloatingActionButton) findViewById(R.id.create_group);
+        addVehicle = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.add_vehicle);
+        mCreateStore = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.create_store);
+        mCreateGroup = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.create_group);
         mfab_done.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
 
@@ -244,27 +245,27 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     private void animateFab(int position) {
         switch (position) {
             case 1:
-                mCreateGroup.show();
-                addVehicle.hide();
-                mCreateStore.hide();
+                mCreateGroup.show(true);
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
                 break;
 
             case 2:
-                mCreateStore.show();
-                addVehicle.hide();
-                mCreateGroup.hide();
+                mCreateStore.show(true);
+                addVehicle.hide(true);
+                mCreateGroup.hide(true);
                 break;
 
             case 7:
-                addVehicle.show();
-                mCreateStore.hide();
-                mCreateGroup.hide();
+                addVehicle.show(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
                 break;
 
             default:
-                addVehicle.hide();
-                mCreateStore.hide();
-                mCreateGroup.hide();
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
                 break;
         }
     }

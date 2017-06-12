@@ -159,6 +159,7 @@
                         android:layout_below="@+id/no_of_photos"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
+                        android:src="@drawable/vehiimg"
                         android:contentDescription="@string/app_name"
                         android:visibility="visible" />
 
