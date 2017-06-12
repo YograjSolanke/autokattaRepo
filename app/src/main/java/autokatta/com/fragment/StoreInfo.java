@@ -118,9 +118,11 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
 
                 }
             } else {
+                if (mActivity != null)
                 showMessage(mActivity, getString(R.string._404_));
             }
         } else {
+            if (mActivity != null)
             showMessage(mActivity, getString(R.string.no_response));
         }
 
@@ -129,14 +131,19 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
+            if (mActivity != null)
             showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            if (mActivity != null)
             showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
+            if (mActivity != null)
             showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (mActivity != null)
             errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (mActivity != null)
             errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
@@ -222,7 +229,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
         super.onAttach(context);
         if (context instanceof Activity) {
             if (mActivity != null)
-                mActivity = (Activity) context;
+                mActivity = getActivity();
         }
     }
 

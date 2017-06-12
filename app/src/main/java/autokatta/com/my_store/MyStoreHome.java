@@ -329,10 +329,12 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
             } else {
                 hud.dismiss();
+                if (mActivity != null)
                 showMessage(mActivity, getString(R.string._404_));
             }
         } else {
             hud.dismiss();
+            if (mActivity != null)
             showMessage(mActivity, getString(R.string.no_response));
         }
     }
@@ -342,7 +344,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         super.onAttach(context);
         if (context instanceof Activity) {
             if (mActivity != null)
-                mActivity = (Activity) context;
+                mActivity = getActivity();
         }
     }
 
@@ -352,14 +354,19 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
+            if (mActivity != null)
             showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            if (mActivity != null)
             showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
+            if (mActivity != null)
             showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (mActivity != null)
             errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (mActivity != null)
             errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
@@ -372,26 +379,31 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success_follow")) {
+                if (mActivity != null)
                 showMessage(mActivity, "Following");
                 mFollow.setVisibility(View.GONE);
                 mUnFollow.setVisibility(View.VISIBLE);
                 mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
+                if (mActivity != null)
                 showMessage(mActivity, "UnFollowing");
                 mFollow.setVisibility(View.VISIBLE);
                 mUnFollow.setVisibility(View.GONE);
                 mFolllowstr = "no";
             } else if (str.equals("success_like")) {
+                if (mActivity != null)
                 showMessage(mActivity, "Liked");
                 mLike.setVisibility(View.VISIBLE);
                 mUnlike.setVisibility(View.GONE);
                 mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
+                if (mActivity != null)
                 showMessage(mActivity, "Unliked");
                 mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);
                 mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
+                if (mActivity != null)
                 showMessage(mActivity, "Rating Submitted");
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
@@ -402,6 +414,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 startActivity(intent);
 
             } else if (str.equals("success_rating_updated")) {
+                if (mActivity != null)
                 showMessage(mActivity, "Rating Updated");
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
@@ -411,6 +424,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else if (str.equals("success_recommended")) {
+                if (mActivity != null)
                 showMessage(mActivity, "Store recommended");
             }
         }
