@@ -2,10 +2,8 @@ package autokatta.com.groups;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -81,7 +78,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getMyVehicles(rcontact);
         } else {
-            errorMessage(activity, getString(R.string.no_internet));
+            //errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -100,7 +97,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
         } else {
-            errorMessage(activity, getString(R.string.no_internet));
+            //errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -195,11 +192,11 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(activity, getString(R.string._404_));
+                //showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(activity, getString(R.string.no_response));
+            //showMessage(activity, getString(R.string.no_response));
         }
     }
 
@@ -218,23 +215,23 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             if (activity != null) {
-                showMessage(activity, getString(R.string._404_));
+                //showMessage(activity, getString(R.string._404_));
             }
         } else if (error instanceof NullPointerException) {
             if (activity != null) {
-                showMessage(activity, getString(R.string.no_response));
+                //showMessage(activity, getString(R.string.no_response));
             }
         } else if (error instanceof ClassCastException) {
             if (activity != null) {
-                showMessage(activity, getString(R.string.no_response));
+                //showMessage(activity, getString(R.string.no_response));
             }
         } else if (error instanceof ConnectException) {
             if (activity != null) {
-                errorMessage(activity, getString(R.string.no_internet));
+                //errorMessage(activity, getString(R.string.no_internet));
             }
         } else if (error instanceof UnknownHostException) {
             if (activity != null) {
-                errorMessage(activity, getString(R.string.no_internet));
+                //errorMessage(activity, getString(R.string.no_internet));
             }
         } else {
             Log.i("Check Class-"
@@ -385,7 +382,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                         if (brand.equals("") && model.equals("") && version.equals("") && city.equals("") && RTOcity.equals("")
                                 && price.equals("") && reg_year.equals("") && mgf_year.equals("") && kmsrunning.equals("")
                                 && no_of_owner.equals("")) {
-                            showMessage(getActivity(),"Enter value to search");
+                            //showMessage(getActivity(),"Enter value to search");
                         } else {
                             getGroupVehicles();
                         }
@@ -398,7 +395,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    public void showMessage(Activity activity, String message) {
+   /* public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -422,5 +419,5 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

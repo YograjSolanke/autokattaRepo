@@ -2,10 +2,8 @@ package autokatta.com.fragment_profile;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
@@ -13,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -74,8 +71,8 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreProfileInfo(loginContact);
         } else {
-            if (mActivity != null)
-                errorMessage(mActivity, getString(R.string.no_internet));
+           /* if (mActivity != null)
+                errorMessage(mActivity, getString(R.string.no_internet));*/
         }
     }
 
@@ -96,37 +93,37 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
                 mListView.setAdapter(myStoreAdapter);
                 myStoreAdapter.notifyDataSetChanged();
             } else {
-                if (mActivity != null)
-                    showMessage(mActivity, getString(R.string._404_));
+                /*if (mActivity != null)
+                    showMessage(mActivity, getString(R.string._404_));*/
             }
         } else {
-            if (mActivity != null)
-                showMessage(mActivity, getString(R.string.no_response));
+            /*if (mActivity != null)
+                showMessage(mActivity, getString(R.string.no_response));*/
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            if (mActivity != null) {
-                showMessage(mActivity, getString(R.string._404_));
-            }
+            /*if (mActivity != null) {
+                //showMessage(mActivity, getString(R.string._404_));
+            }*/
         } else if (error instanceof NullPointerException) {
-            if (mActivity != null) {
-                showMessage(mActivity, getString(R.string.no_response));
-            }
+//            if (mActivity != null) {
+//               // showMessage(mActivity, getString(R.string.no_response));
+//            }
         } else if (error instanceof ClassCastException) {
-            if (mActivity != null) {
+           /* if (mActivity != null) {
                 showMessage(mActivity, getString(R.string.no_response));
-            }
+            }*/
         } else if (error instanceof ConnectException) {
-            if (mActivity != null) {
+           /* if (mActivity != null) {
                 errorMessage(mActivity, getString(R.string.no_internet));
-            }
+            }*/
         } else if (error instanceof UnknownHostException) {
-            if (mActivity != null) {
+           /* if (mActivity != null) {
                 errorMessage(mActivity, getString(R.string.no_internet));
-            }
+            }*/
         } else {
             Log.i("Check Class-", "About Store");
             error.printStackTrace();
@@ -186,7 +183,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
         });
     }
 
-    public void showMessage(Activity activity, String message) {
+   /* public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -211,5 +208,5 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

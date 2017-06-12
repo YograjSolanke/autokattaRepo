@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
@@ -65,7 +63,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreData(myContact, store_id);
         } else {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            //errorMessage(mActivity, getString(R.string.no_internet));
         }
     }
 
@@ -118,12 +116,12 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
 
                 }
             } else {
-                if (mActivity != null)
-                showMessage(mActivity, getString(R.string._404_));
+                /*if (mActivity != null)
+                showMessage(mActivity, getString(R.string._404_));*/
             }
         } else {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string.no_response));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string.no_response));*/
         }
 
     }
@@ -131,20 +129,20 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string._404_));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string._404_));*/
         } else if (error instanceof NullPointerException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string.no_response));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string.no_response));*/
         } else if (error instanceof ClassCastException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string.no_response));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string.no_response));*/
         } else if (error instanceof ConnectException) {
-            if (mActivity != null)
-            errorMessage(mActivity, getString(R.string.no_internet));
+            /*if (mActivity != null)
+            errorMessage(mActivity, getString(R.string.no_internet));*/
         } else if (error instanceof UnknownHostException) {
-            if (mActivity != null)
-            errorMessage(mActivity, getString(R.string.no_internet));
+            /*if (mActivity != null)
+            errorMessage(mActivity, getString(R.string.no_internet));*/
         } else {
             Log.i("Check Class-"
                     , "StoreInfo");
@@ -233,7 +231,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
         }
     }
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -257,5 +255,5 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

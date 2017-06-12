@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -329,13 +327,13 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
             } else {
                 hud.dismiss();
-                if (mActivity != null)
-                showMessage(mActivity, getString(R.string._404_));
+                /*if (mActivity != null)
+                showMessage(mActivity, getString(R.string._404_));*/
             }
         } else {
             hud.dismiss();
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string.no_response));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string.no_response));*/
         }
     }
 
@@ -354,20 +352,20 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string._404_));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string._404_));*/
         } else if (error instanceof NullPointerException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string.no_response));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string.no_response));*/
         } else if (error instanceof ClassCastException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string.no_response));
+           /* if (mActivity != null)
+            showMessage(mActivity, getString(R.string.no_response));*/
         } else if (error instanceof ConnectException) {
-            if (mActivity != null)
-            errorMessage(mActivity, getString(R.string.no_internet));
+            /*if (mActivity != null)
+            errorMessage(mActivity, getString(R.string.no_internet));*/
         } else if (error instanceof UnknownHostException) {
-            if (mActivity != null)
-            errorMessage(mActivity, getString(R.string.no_internet));
+            /*if (mActivity != null)
+            errorMessage(mActivity, getString(R.string.no_internet));*/
         } else {
             Log.i("Check Class-"
                     , "StoreViewActivity");
@@ -379,32 +377,32 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success_follow")) {
-                if (mActivity != null)
-                showMessage(mActivity, "Following");
+                //if (mActivity != null)
+                //showMessage(mActivity, "Following");
                 mFollow.setVisibility(View.GONE);
                 mUnFollow.setVisibility(View.VISIBLE);
                 mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
-                if (mActivity != null)
-                showMessage(mActivity, "UnFollowing");
+                //if (mActivity != null)
+                //showMessage(mActivity, "UnFollowing");
                 mFollow.setVisibility(View.VISIBLE);
                 mUnFollow.setVisibility(View.GONE);
                 mFolllowstr = "no";
             } else if (str.equals("success_like")) {
-                if (mActivity != null)
-                showMessage(mActivity, "Liked");
+                //if (mActivity != null)
+                //showMessage(mActivity, "Liked");
                 mLike.setVisibility(View.VISIBLE);
                 mUnlike.setVisibility(View.GONE);
                 mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
-                if (mActivity != null)
-                showMessage(mActivity, "Unliked");
+                //if (mActivity != null)
+                //showMessage(mActivity, "Unliked");
                 mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);
                 mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
-                if (mActivity != null)
-                showMessage(mActivity, "Rating Submitted");
+                /*if (mActivity != null)
+                showMessage(mActivity, "Rating Submitted");*/
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
@@ -414,8 +412,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 startActivity(intent);
 
             } else if (str.equals("success_rating_updated")) {
-                if (mActivity != null)
-                showMessage(mActivity, "Rating Updated");
+                /*if (mActivity != null)
+                showMessage(mActivity, "Rating Updated");*/
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
@@ -424,8 +422,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else if (str.equals("success_recommended")) {
-                if (mActivity != null)
-                showMessage(mActivity, "Store recommended");
+                //if (mActivity != null)
+                //showMessage(mActivity, "Store recommended");
             }
         }
     }
@@ -643,7 +641,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     }
 
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -667,5 +665,5 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

@@ -1,10 +1,7 @@
 package autokatta.com.fragment;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -196,22 +193,22 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            // showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            //  showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Search Store Fragment");
             error.printStackTrace();
         }
     }
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -235,7 +232,7 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 
     @Override
     public void notifyString(String str) {

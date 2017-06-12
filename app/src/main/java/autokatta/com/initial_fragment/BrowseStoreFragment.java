@@ -1,19 +1,15 @@
 package autokatta.com.initial_fragment;
 
-import android.app.Activity;
 import android.content.IntentSender;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -60,7 +56,7 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         if (mTestConnection.isConnectedToInternet()) {
             buildGoogleApiClient();
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
 
         return view;
@@ -151,7 +147,7 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         viewPager.setAdapter(tabAdapterName);
     }
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -175,5 +171,5 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

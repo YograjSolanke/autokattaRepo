@@ -2,10 +2,8 @@ package autokatta.com.groups;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,7 +61,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
             mApiCall.getGroupService(GroupId, mBundleContact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -125,11 +123,11 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(activity, getString(R.string._404_));
+                // showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(activity, getString(R.string.no_response));
+            // showMessage(activity, getString(R.string.no_response));
         }
     }
 
@@ -137,15 +135,15 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(activity, getString(R.string._404_));
+            // showMessage(activity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(activity, getString(R.string.no_response));
+            //  showMessage(activity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(activity, getString(R.string.no_response));
+            //  showMessage(activity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(activity, getString(R.string.no_internet));
+            //errorMessage(activity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(activity, getString(R.string.no_internet));
+            //  errorMessage(activity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "memberservicefragment");
@@ -203,7 +201,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -227,5 +225,5 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

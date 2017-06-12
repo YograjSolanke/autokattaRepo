@@ -1,10 +1,7 @@
 package autokatta.com.initial_fragment;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -102,11 +99,11 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(getActivity(), getString(R.string._404_));
+                //showMessage(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(getActivity(), getString(R.string.no_response));
+            //showMessage(getActivity(), getString(R.string.no_response));
         }
 
     }
@@ -115,15 +112,15 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            //showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "MyStoreListFragment");
@@ -132,7 +129,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     }
 
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -156,7 +153,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 
     @Override
     public void notifyString(String str) {

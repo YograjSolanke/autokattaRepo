@@ -1,10 +1,7 @@
 package autokatta.com.fragment;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -115,7 +112,7 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
             apiCall = new ApiCall(getActivity(), this);
             apiCall.getBussinessChat(loginContact);
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -154,10 +151,10 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
                     mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
-                showMessage(getActivity(), getString(R.string._404_));
+                //  showMessage(getActivity(), getString(R.string._404_));
             }
         } else {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -165,15 +162,15 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            //showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Bussiness Chat Fragment");
         }
@@ -189,7 +186,7 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
         getChatData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
     }
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -213,6 +210,6 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 
 }

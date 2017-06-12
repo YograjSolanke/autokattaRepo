@@ -1,18 +1,15 @@
 package autokatta.com.groups;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -115,7 +111,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                             .into(mGroup_image);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    showMessage(getActivity(), "Error uploading image");
+                    //showMessage(getActivity(), "Error uploading image");
                 }
             }
         } catch (Exception e) {
@@ -133,7 +129,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             public void onClick(View v) {
                 group_name_update = group_name.getText().toString();
                 if (group_name_update.equals("")||group_name_update.startsWith(" ")&&group_name_update.endsWith(" ")) {
-                    showMessage(getActivity(), "Please provide group name");
+                    //  showMessage(getActivity(), "Please provide group name");
                 } else {
                     if (!lastWord.equals("")) {
                         mApiCall.editGroup(group_name_update, bundle_id, lastWord);
@@ -310,15 +306,15 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            // showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "editgroupfragment");
@@ -329,7 +325,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (str.equals("Success")) {
-            showMessage(getActivity(), "Group Updated");
+            //showMessage(getActivity(), "Group Updated");
             uploadImage(mediaPath);
             MyGroupsFragment frag = new MyGroupsFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -344,13 +340,13 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                         .into(mGroup_image);
             } catch (Exception e) {
                 e.printStackTrace();
-                showMessage(getActivity(), "Error uploading image");
+                //showMessage(getActivity(), "Error uploading image");
             }
         }
     }
 
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -364,8 +360,8 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 .setAction("Retry", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        /*getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                .getString("loginContact", ""));*/
+                        *//*getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                                .getString("loginContact", ""));*//*
                     }
                 });
         // Changing message text color
@@ -375,5 +371,5 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

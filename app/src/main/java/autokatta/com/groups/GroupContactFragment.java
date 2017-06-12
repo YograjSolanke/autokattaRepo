@@ -1,14 +1,11 @@
 package autokatta.com.groups;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -85,7 +81,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getRegisteredContacts();
         } else {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            // errorMessage(getActivity(), getString(R.string.no_internet));
         }
 
         mGroup_id = args.getString("bundle_GroupId", "");
@@ -112,12 +108,12 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 }
 
                 if (allcontacts.equalsIgnoreCase("")) {
-                    showMessage(getActivity(), "Please add atleast one contact");
+                    //  showMessage(getActivity(), "Please add atleast one contact");
                     flag = false;
 
                 } else if (allcontacts.contains(mContact)) {
 
-                    showMessage(getActivity(), "Please check the number");
+                    // showMessage(getActivity(), "Please check the number");
                     flag = false;
                 }
 
@@ -135,7 +131,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             String[] parts = allcontacts.split(",");
                             for (int j = 0; j < parts.length; j++) {
                                 if (parts[j].contains(no)) {
-                                    showMessage(getActivity(),  "Sorry..No Is Already added in Group");
+                                    // showMessage(getActivity(),  "Sorry..No Is Already added in Group");
 
                                     flag = false;
                                 }
@@ -238,15 +234,15 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            //  showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            //  showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "groupcontact");
@@ -271,7 +267,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
     }
 
-    public void showMessage(Activity activity, String message) {
+   /* public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -295,5 +291,5 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

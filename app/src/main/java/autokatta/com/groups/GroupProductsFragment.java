@@ -2,10 +2,8 @@ package autokatta.com.groups;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,7 +64,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getGroupProducts(GroupId, myContact);
         } else {
-            errorMessage(activity, getString(R.string.no_internet));
+            //errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -112,15 +110,15 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    showMessage(activity, "No product found");
+                    //showMessage(activity, "No product found");
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                showMessage(activity, getString(R.string._404_));
+                //showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(getActivity(), getString(R.string.no_response));
+            //showMessage(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -139,23 +137,23 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             if (activity != null) {
-                showMessage(activity, getString(R.string._404_));
+                //showMessage(activity, getString(R.string._404_));
             }
         } else if (error instanceof NullPointerException) {
             if (activity != null) {
-                showMessage(activity, getString(R.string.no_response));
+                // showMessage(activity, getString(R.string.no_response));
             }
         } else if (error instanceof ClassCastException) {
             if (activity != null) {
-                showMessage(activity, getString(R.string.no_response));
+                //showMessage(activity, getString(R.string.no_response));
             }
         } else if (error instanceof ConnectException) {
             if (activity != null) {
-                errorMessage(activity, getString(R.string.no_internet));
+                //errorMessage(activity, getString(R.string.no_internet));
             }
         } else if (error instanceof UnknownHostException) {
             if (activity != null) {
-                errorMessage(activity, getString(R.string.no_internet));
+                // errorMessage(activity, getString(R.string.no_internet));
             }
         } else {
             Log.i("Check Class-"
@@ -215,7 +213,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -239,5 +237,5 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

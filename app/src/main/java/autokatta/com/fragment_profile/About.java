@@ -2,10 +2,8 @@ package autokatta.com.fragment_profile;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -243,12 +241,10 @@ public class About extends Fragment implements RequestNotifier {
                     }
                 }
             } else {
-                if (mActivity != null)
-                    showMessage(mActivity, getString(R.string._404_));
+                //showMessage(mActivity, getString(R.string._404_));
             }
         } else {
-            if (mActivity != null)
-                showMessage(mActivity, getString(R.string.no_response));
+            //showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
@@ -256,23 +252,23 @@ public class About extends Fragment implements RequestNotifier {
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             if (mActivity != null) {
-                showMessage(mActivity, getString(R.string._404_));
+                // showMessage(mActivity, getString(R.string._404_));
             }
         } else if (error instanceof NullPointerException) {
             if (mActivity != null) {
-                showMessage(mActivity, getString(R.string.no_response));
+                // showMessage(mActivity, getString(R.string.no_response));
             }
         } else if (error instanceof ClassCastException) {
             if (mActivity != null) {
-                showMessage(mActivity, getString(R.string.no_response));
+                //showMessage(mActivity, getString(R.string.no_response));
             }
         } else if (error instanceof ConnectException) {
             if (mActivity != null) {
-                errorMessage(mActivity, getString(R.string.no_internet));
+                //errorMessage(mActivity, getString(R.string.no_internet));
             }
         } else if (error instanceof UnknownHostException) {
             if (mActivity != null) {
-                errorMessage(mActivity, getString(R.string.no_internet));
+                // errorMessage(mActivity, getString(R.string.no_internet));
             }
         } else {
             Log.i("Check Class-", "About Activity");
@@ -283,7 +279,7 @@ public class About extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("Success_update_profile")) {
-                showMessage(mActivity, "Profile Updated");
+                //showMessage(mActivity, "Profile Updated");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                 mCity.setEnabled(false);
                 mCity.setFocusable(false);
@@ -417,7 +413,7 @@ public class About extends Fragment implements RequestNotifier {
                         mContact.setOnTouchListener(new OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
-                                showMessage(mActivity, "You can't edit contact");
+                                //showMessage(mActivity, "You can't edit contact");
                                 return false;
                             }
                         });
@@ -564,7 +560,7 @@ public class About extends Fragment implements RequestNotifier {
         });
     }
 
-    public void showMessage(Activity activity, String message) {
+   /* public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -592,5 +588,5 @@ public class About extends Fragment implements RequestNotifier {
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

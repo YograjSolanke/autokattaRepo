@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -287,30 +285,30 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            //  Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            //   Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            // Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+           /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
                         }
                     });
-            // Changing message text color
+            // //Changing message text color
             snackbar.setActionTextColor(Color.RED);
             // Changing action button text color
             View sbView = snackbar.getView();
             TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
             textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            snackbar.show();*/
         } else if (error instanceof UnknownHostException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+           /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -323,7 +321,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             View sbView = snackbar.getView();
             TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
             textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            snackbar.show();*/
         } else {
             Log.i("Check Class-", "Create Group Fragment");
             error.printStackTrace();
@@ -333,7 +331,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            Snackbar.make(getView(), "Group Created", Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(getView(), "Group Created", Snackbar.LENGTH_SHORT).show();
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", str).apply();
             if (!mediaPath.equals("")) {
                 uploadImage(mediaPath);
@@ -369,7 +367,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
 
 
         } else {
-            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         }
     }
 }

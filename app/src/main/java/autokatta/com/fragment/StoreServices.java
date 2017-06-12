@@ -2,10 +2,8 @@ package autokatta.com.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,7 +67,7 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
-            errorMessage(mActivity, getString(R.string.no_internet));
+            //errorMessage(mActivity, getString(R.string.no_internet));
         }
     }
 
@@ -117,13 +115,13 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                if (mActivity != null)
-                showMessage(mActivity, getString(R.string._404_));
+                /*if (mActivity != null)
+                showMessage(mActivity, getString(R.string._404_));*/
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string.no_response));
+           /* if (mActivity != null)
+            showMessage(mActivity, getString(R.string.no_response));*/
         }
     }
 
@@ -131,20 +129,20 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string._404_));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string._404_));*/
         } else if (error instanceof NullPointerException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string._404_));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string._404_));*/
         } else if (error instanceof ClassCastException) {
-            if (mActivity != null)
-            showMessage(mActivity, getString(R.string._404_));
+            /*if (mActivity != null)
+            showMessage(mActivity, getString(R.string._404_));*/
         } else if (error instanceof ConnectException) {
-            if (mActivity != null)
-            errorMessage(mActivity, getString(R.string.no_internet));
+            /*if (mActivity != null)
+            errorMessage(mActivity, getString(R.string.no_internet));*/
         } else if (error instanceof UnknownHostException) {
-            if (mActivity != null)
-            errorMessage(mActivity, getString(R.string.no_internet));
+            /*if (mActivity != null)
+            errorMessage(mActivity, getString(R.string.no_internet));*/
         } else {
             Log.i("Check Class-"
                     , "StoreServices");
@@ -218,7 +216,7 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
         }
     }
 
-    public void showMessage(Activity activity, String message) {
+   /* public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -242,5 +240,5 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }

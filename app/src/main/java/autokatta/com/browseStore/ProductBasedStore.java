@@ -2,10 +2,8 @@ package autokatta.com.browseStore;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -135,11 +133,11 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 // mNoData.setVisibility(View.VISIBLE);
-                showMessage(mActivity, getString(R.string._404_));
+                // showMessage(mActivity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            showMessage(mActivity, getString(R.string.no_response));
+            // showMessage(mActivity, getString(R.string.no_response));
         }
 
     }
@@ -202,15 +200,15 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(mActivity, getString(R.string._404_));
+            // showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(mActivity, getString(R.string.no_response));
+            //  showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(mActivity, getString(R.string.no_response));
+            //  showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            //  errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(mActivity, getString(R.string.no_internet));
+            //  errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "ProductBasedStore Fragment");
         }
@@ -419,7 +417,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     }
 
 
-    public void showMessage(Activity activity, String message) {
+    /*public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
@@ -444,5 +442,5 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
-    }
+    }*/
 }
