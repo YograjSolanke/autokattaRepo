@@ -1,6 +1,7 @@
 package autokatta.com.fragment_profile;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -86,6 +87,17 @@ public class About extends Fragment implements RequestNotifier {
     ApiCall mApiCall;
     String[] parts;
     boolean _hasLoadedOnce = false;
+    Activity mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof Activity) {
+            if (mActivity != null)
+                mActivity = (Activity) context;
+        }
+    }
 
     @Nullable
     @Override
@@ -221,8 +233,10 @@ public class About extends Fragment implements RequestNotifier {
                                 if (subProfession != null) {
                                     if (subProfession.equals(module.get(i))) {
                                         spinner.setSelection(i);
-                                        ArrayAdapter<String> dataadapter1 = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, name);
-                                        spinner.setAdapter(dataadapter1);
+                                        if (getActivity() != null) {
+                                            ArrayAdapter<String> dataadapter1 = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, name);
+                                            spinner.setAdapter(dataadapter1);
+                                        }
                                     }
                                 }
                             }
@@ -230,53 +244,25 @@ public class About extends Fragment implements RequestNotifier {
                     }
                 }
             } else {
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
+                showMessage(mActivity, getString(R.string._404_));
             }
         } else {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "About Activity");
         }
@@ -286,7 +272,7 @@ public class About extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("Success_update_profile")) {
-                Snackbar.make(getView(), "Profile Updated", Snackbar.LENGTH_LONG).show();
+                showMessage(mActivity, "Profile Updated");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                 mCity.setEnabled(false);
                 mCity.setFocusable(false);
@@ -420,7 +406,7 @@ public class About extends Fragment implements RequestNotifier {
                         mContact.setOnTouchListener(new OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
-                                Snackbar.make(getView(), "You can't edit contact", Snackbar.LENGTH_LONG).show();
+                                showMessage(mActivity, "You can't edit contact");
                                 return false;
                             }
                         });
@@ -452,7 +438,7 @@ public class About extends Fragment implements RequestNotifier {
                         Boolean flag = false;
                         try {
                             for (int i = 0; i < resultList.size(); i++) {
-                                if (mUpdatedCity.equalsIgnoreCase(resultList.get(i).toString())) {
+                                if (mUpdatedCity.equalsIgnoreCase(resultList.get(i))) {
                                     flag = true;
                                     break;
                                 } else {
@@ -565,5 +551,35 @@ public class About extends Fragment implements RequestNotifier {
                 });
             }
         });
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+                        mApiCall.getSkills();
+                        mApiCall.getDesignation();
+                        mApiCall.getCompany();
+                        mApiCall.Categories("");
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }

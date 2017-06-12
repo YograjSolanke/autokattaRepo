@@ -1,6 +1,7 @@
 package autokatta.com.fragment_profile;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -47,6 +48,18 @@ public class Follow extends Fragment implements RequestNotifier {
     String contact, mOtherContact;
     boolean _hasLoadedOnce = false;
     ConnectionDetector mTestConnection;
+    ApiCall apiCall;
+    Activity mActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof Activity) {
+            if (mActivity != null)
+                mActivity = (Activity) context;
+        }
+    }
 
     public Follow() {
         //Empty Constructor
@@ -92,25 +105,25 @@ public class Follow extends Fragment implements RequestNotifier {
                 adapter.notifyDataSetChanged();
 
             } else {
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
+                showMessage(mActivity, getString(R.string._404_));
             }
         } else {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_LONG).show();
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            error();
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            error();
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Follow Fragment");
         }
@@ -133,13 +146,13 @@ public class Follow extends Fragment implements RequestNotifier {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(mOtherContact);
                     } else {
-                        error();
+                        errorMessage(mActivity, getString(R.string.no_internet));
                     }
                 } else {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(contact);
                     } else {
-                        error();
+                        errorMessage(mActivity, getString(R.string.no_internet));
                     }
                 }
                 _hasLoadedOnce = true;
@@ -147,26 +160,11 @@ public class Follow extends Fragment implements RequestNotifier {
         }
     }
 
-    private void error() {
-        Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                .setAction("Go Online", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.RED);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.YELLOW);
-        snackbar.show();
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        apiCall = new ApiCall(getActivity(), this);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -174,7 +172,63 @@ public class Follow extends Fragment implements RequestNotifier {
                 followersExpandableListView = (ExpandableListView) mFollow.findViewById(R.id.followexpanablelistview);
                 ViewCompat.setNestedScrollingEnabled(followersExpandableListView, true);
                 contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
+                Bundle bundle = getArguments();
+                if (bundle != null) {
+                    mOtherContact = bundle.getString("otherContact");
+                    if (mTestConnection.isConnectedToInternet()) {
+                        apiCall.getFollowers(mOtherContact);
+                    } else {
+                        errorMessage(mActivity, getString(R.string.no_internet));
+                    }
+                } else {
+                    if (mTestConnection.isConnectedToInternet()) {
+                        apiCall.getFollowers(contact);
+                    } else {
+                        errorMessage(mActivity, getString(R.string.no_internet));
+                    }
+                }
             }
         });
+    }
+
+    public void showMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_LONG);
+        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.RED);
+        snackbar.show();
+    }
+
+    public void errorMessage(Activity activity, String message) {
+        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
+                message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = getArguments();
+                        if (bundle != null) {
+                            mOtherContact = bundle.getString("otherContact");
+                            if (mTestConnection.isConnectedToInternet()) {
+                                apiCall.getFollowers(mOtherContact);
+                            } else {
+                                errorMessage(mActivity, getString(R.string.no_internet));
+                            }
+                        } else {
+                            if (mTestConnection.isConnectedToInternet()) {
+                                apiCall.getFollowers(contact);
+                            } else {
+                                errorMessage(mActivity, getString(R.string.no_internet));
+                            }
+                        }
+                    }
+                });
+        // Changing message text color
+        snackbar.setActionTextColor(Color.BLUE);
+        // Changing action button text color
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 }
