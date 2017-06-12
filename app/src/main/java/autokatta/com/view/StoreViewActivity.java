@@ -703,7 +703,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 //  mBundle.putString("StoreContact", mOtherContact);
 
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
-                Glide.with(this)
+                Glide.with(StoreViewActivity.this)
                         .load(dp_path)
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
