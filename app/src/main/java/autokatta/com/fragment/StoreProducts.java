@@ -64,12 +64,12 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private void getStoreProducts(String store_id, String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
-            ApiCall apiCall = new ApiCall(mActivity, this);
+            ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getStoreInventory(store_id, sharedcontact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
-            errorMessage(mActivity, getString(R.string.no_internet));
+            errorMessage(getActivity(), getString(R.string.no_internet));
 
         }
     }
@@ -108,7 +108,7 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
                         success.setPrate3(success.getPrate3());
                         productList.add(success);
                     }
-                    adapter = new StoreProductAdapter(mActivity, productList, Sharedcontact, storeContact);
+                    adapter = new StoreProductAdapter(getActivity(), productList, Sharedcontact, storeContact);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -164,18 +164,18 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mActivity.runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mTestConnection = new ConnectionDetector(mActivity);
-                Sharedcontact = mActivity.getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
+                mTestConnection = new ConnectionDetector(getActivity());
+                Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mNoData = (TextView) mProduct.findViewById(R.id.no_category);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mProduct.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
                 filterToHide = (RelativeLayout) mProduct.findViewById(R.id.rel);
                 filterToHide.setVisibility(View.GONE);
                 mRecyclerView.setHasFixedSize(true);
-                mLayoutManager = new LinearLayoutManager(mActivity);
+                mLayoutManager = new LinearLayoutManager(getActivity());
                 mLayoutManager.setReverseLayout(true);
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);

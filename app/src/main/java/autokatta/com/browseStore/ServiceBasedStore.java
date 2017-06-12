@@ -60,6 +60,7 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     BrowseStoreAdapter adapter;
     boolean hasViewCreated = false;
     TextView mNoData;
+    Activity mActivity;
 
     int counter = 0;
     public ServiceBasedStore() {
@@ -93,11 +94,9 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        Activity a;
-
         if (context instanceof Activity) {
-            a = (Activity) context;
+            if (mActivity != null)
+                mActivity = (Activity) context;
         }
     }
 
@@ -186,10 +185,10 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                showMessage(mActivity, getString(R.string._404_));
             }
         } else {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            showMessage(mActivity, getString(R.string.no_response));
         }
     }
 
@@ -197,15 +196,15 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            showMessage(getActivity(), getString(R.string._404_));
+            showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(getActivity(), getString(R.string.no_response));
+            showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(getActivity(), getString(R.string.no_internet));
+            errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "ServiceBasedStore Fragment");
         }
