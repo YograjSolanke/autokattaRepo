@@ -91,7 +91,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/loan_mela_image"
                 android:text="Loan Mela"
-                android:textColor="#2C3343" />
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/loan_mela_count"
@@ -150,7 +151,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/exchange_event_image"
                 android:text="Exchange Event"
-                android:textColor="#2C3343" />
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/exchange_event_count"
@@ -209,7 +211,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/service_event_image"
                 android:text="Service Event"
-                android:textColor="#2C3343" />
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/service_event_count"
@@ -268,7 +271,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/sale_event_image"
                 android:text="Sale Event"
-                android:textColor="#2C3343" />
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/sale_event_count"
