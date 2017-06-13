@@ -87,6 +87,7 @@
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/buttonback"
             android:text="Send Enquiry"
             android:textAllCaps="false"
@@ -160,7 +161,7 @@
                         android:layout_below="@+id/no_of_photos"
                         android:layout_centerHorizontal="true"
                         android:fitsSystemWindows="true"
-                        android:background="@drawable/vehiimg"
+                        android:background="@drawable/logo"
                         app:layout_collapseMode="parallax" />
 
                     <!--<ImageView-->
