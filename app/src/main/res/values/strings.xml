@@ -98,7 +98,7 @@
     <!-- Manual enquiry-->
     <string name="enquiry_form">Enquiry Form</string>
     <string name="first_name">First Name</string>
-    <string name="name">Name</string>
+    <string name="name">Name<font color='#FF0000'>\u002A</font></string>
     <string name="last_name">Last Name</string>
     <string name="surname">Surname</string>
     <string name="go_profile">Go Profile</string>
@@ -256,5 +256,8 @@
         <item>Sweet Exorcist</item>
         <item>Tricky Disco</item>
     </string-array>
+    <string name="title_activity_location">LocationActivity</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
+    <string name="title_activity_manual_enquiry_vehicle_list">ManualEnquiryVehicleList</string>
 
 </resources>

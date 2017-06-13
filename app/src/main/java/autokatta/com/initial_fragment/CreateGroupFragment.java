@@ -87,7 +87,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         mGroupTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (mGroupTitle.getText().toString().trim().length()>0 && mGroupTitle.getText().toString().trim().startsWith(" ")){
+                if (mGroupTitle.getText().toString().trim().length() > 0 && mGroupTitle.getText().toString().trim().startsWith(" ")) {
                     Toast.makeText(getActivity(), " Space ", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -109,7 +109,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.BtnAddMember:
-                if (mGroupTitle.getText().toString().equalsIgnoreCase("") ||mGroupTitle.getText().toString().startsWith(" ") && mGroupTitle.getText().toString().endsWith(" ")/*|| mGroupTitle.getText().toString().startsWith(" ")*/) {
+                if (mGroupTitle.getText().toString().equalsIgnoreCase("") || mGroupTitle.getText().toString().startsWith(" ") && mGroupTitle.getText().toString().endsWith(" ")/*|| mGroupTitle.getText().toString().startsWith(" ")*/) {
                     Snackbar.make(view, "Please provide group name and optional group icon", Snackbar.LENGTH_LONG).show();
                 } else {
                     mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);
@@ -331,40 +331,32 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            //Snackbar.make(getView(), "Group Created", Snackbar.LENGTH_SHORT).show();
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", str).apply();
             if (!mediaPath.equals("")) {
                 uploadImage(mediaPath);
             }
 
-            Bundle b1=getArguments();
-            if (b1!=null)
-            {
-                 classname= b1.getString("classname");
+            Bundle b1 = getArguments();
+            if (b1 != null) {
+                classname = b1.getString("classname");
             }
             b.putString("bundle_GroupId", str);
             b.putString("call", "newGroup");
+            mGroupTitle.getText().clear();
             GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
             fragment2.setArguments(b);   // send values to another fragment
 
-            /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.group_container, fragment2);
-            fragmentTransaction.commit();*/
-        if (classname.equalsIgnoreCase("uploadvehicle"))
-        {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.vehicle_upload_container, fragment2, "groupContactFragment")
-                    .addToBackStack("groupContactFragment")
-                    .commit();
-        }else
-        {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.group_container, fragment2, "groupContactFragment")
-                    .addToBackStack("groupContactFragment")
-                    .commit();
-        }
-
+            if (classname.equalsIgnoreCase("uploadvehicle")) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.vehicle_upload_container, fragment2, "groupContactFragment")
+                        .addToBackStack("groupContactFragment")
+                        .commit();
+            } else {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.group_container, fragment2, "groupContactFragment")
+                        .addToBackStack("groupContactFragment")
+                        .commit();
+            }
 
         } else {
             //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();

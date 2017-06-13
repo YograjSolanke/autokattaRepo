@@ -75,7 +75,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     String mUserName;
     CollapsingToolbarLayout collapsingToolbar;
     String mLoginContact;
-    FloatingActionButton  mfab_edit, mfab_done;
+    FloatingActionButton mfab_edit, mfab_done;
     com.github.clans.fab.FloatingActionButton addVehicle, mCreateStore, mCreateGroup;
     Bitmap bitmap;
     String lastWord = "";
@@ -84,6 +84,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     Bitmap bitmapRotate;
     String fname;
     File file;
+    ViewPager viewPager;
     String dp;
     String RegID, updatedUsername;
     ImageView img;
@@ -129,7 +130,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             mProfilePicture = (ImageView) findViewById(R.id.user_image);
             mProfilePicture.setEnabled(false);
-            ViewPager viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
+            viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
             if (viewPager != null) {
                 setupViewPager(viewPager);
             }
@@ -137,10 +138,19 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             TabLayout tabLayout = (TabLayout) findViewById(R.id.user_profile_tabs);
             tabLayout.setupWithViewPager(viewPager);
 
+            int tab_position = tabLayout.getSelectedTabPosition();
+            if (tab_position == 0) {
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
+            }
+
             tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
                     animateFab(tab.getPosition());
+                    Log.i("Position", "->" + tab.getPosition());
                 }
 
                 @Override
@@ -247,6 +257,12 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
     private void animateFab(int position) {
         switch (position) {
+            case 0:
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
+                break;
+
             case 1:
                 mCreateGroup.show(true);
                 addVehicle.hide(true);
@@ -256,6 +272,30 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             case 2:
                 mCreateStore.show(true);
                 addVehicle.hide(true);
+                mCreateGroup.hide(true);
+                break;
+
+            case 3:
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
+                break;
+
+            case 4:
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
+                break;
+
+            case 5:
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
+                break;
+
+            case 6:
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
                 mCreateGroup.hide(true);
                 break;
 
@@ -496,7 +536,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                             bitmapRotate = bitmap;
                             bitmap.recycle();
                         }
-                       // mProfilePicture.setImageBitmap(bitmapRotate);
+                        // mProfilePicture.setImageBitmap(bitmapRotate);
                         img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                         img.setImageBitmap(bitmapRotate);
 //                            Saving image to mobile internal memory for sometime

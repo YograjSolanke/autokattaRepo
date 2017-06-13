@@ -4,14 +4,12 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.gsm.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,14 +18,11 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +34,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.AddManualEnquiryResponse;
 import autokatta.com.response.GetInventoryResponse;
 import retrofit2.Response;
 
@@ -55,7 +49,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     List<GetInventoryResponse.Success> mItemList = new ArrayList<>();
     List<String> arrayList = new ArrayList<>();
     InventoryAdapter adapter;
-    ListView mListView;
+    //ListView mListView;
     String addArray = "", mInventoryType;
     android.support.v4.widget.NestedScrollView scrollView;
     TextView mNoData;
@@ -65,6 +59,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_manual_enquiry);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,7 +80,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 edtDate = (EditText) findViewById(R.id.edtDate);
                 edtTime = (EditText) findViewById(R.id.edtTime);
                 txtUser = (TextView) findViewById(R.id.txtUser);
-                mListView = (ListView) findViewById(R.id.vehicle_list);
+                // mListView = (ListView) findViewById(R.id.vehicle_list);
                 scrollView = (NestedScrollView) findViewById(R.id.scroll_view);
                 imgCheck = (ImageView) findViewById(R.id.imgCheck);
                 imgCross = (ImageView) findViewById(R.id.imgCross);
@@ -154,7 +149,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if (position != 0) {
                             String str = spnInventory.getSelectedItem().toString();
-                            getMyInventoryData(str);
                         }
                     }
 
@@ -212,13 +206,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                if (mListView.getVisibility() == View.VISIBLE) {
+                /*if (mListView.getVisibility() == View.VISIBLE) {
                     mListView.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
-                } else {
+                } else {*/
                     onBackPressed();
 
-                }
+                // }
                 mNoData.setVisibility(View.GONE);
                 break;
 
@@ -252,7 +246,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         }
                     }
                 }
-
+/*
                 if (arrayList != null) {
                     arrayList = adapter.getInventoryList();
                     for (int i = 0; i < arrayList.size(); i++) {
@@ -265,7 +259,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             }
                         }
                     }
-                }
+                }*/
 
                 if (custName.equalsIgnoreCase("")||custName.startsWith(" ")&&custName.startsWith(" ")) {
                     edtName.setError("Please provide customer name");
@@ -295,21 +289,29 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     edtDate.setError("Enter Date");
                     edtDate.requestFocus();
                 } else {
-                    AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
-                            discussion, nextFollowupDate, addArray);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("spinnerValue", spnInventory.getSelectedItem().toString());
+                    bundle.putString("custName", custName);
+                    bundle.putString("custContact", custContact);
+                    bundle.putString("custAddress", custAddress);
+                    bundle.putString("custFullAddress", custFullAddress);
+                    bundle.putString("custInventoryType", custInventoryType);
+                    bundle.putString("custEnquiryStatus", custEnquiryStatus);
+                    bundle.putString("discussion", discussion);
+                    bundle.putString("nextFollowupDate", nextFollowupDate);
+
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent, options.toBundle());
+                    finish();
+                    /*AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
+                            discussion, nextFollowupDate, addArray);*/
                 }
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /*
-    Inventory Type...
-     */
-    private void getMyInventoryData(String inventoryType) {
-        ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.getMyInventoryData(myContact, inventoryType);
     }
 
     private void AddEnquiryData(String custName, String custContact, String custAddress, String custFullAddress,
@@ -362,26 +364,30 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response != null) {
+        /*if (response != null) {
             if (response.isSuccessful()) {
                 if (response.body() instanceof AddManualEnquiryResponse) {
                     AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
                     if (enquiryResponse.getSuccess() != null) {
                         if (enquiryResponse.getSuccess().getMessage().equalsIgnoreCase("Data successfully Inserted.")) {
                             Snackbar.make(mRelative, enquiryResponse.getSuccess().getMessage(), Snackbar.LENGTH_SHORT).show();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("spinnerValue",spnInventory.getSelectedItem().toString());
                             ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                            startActivity(new Intent(getApplicationContext(), ManualEnquiry.class), options.toBundle());
+                            Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
+                            intent.putExtras(bundle);
+                            startActivity(intent, options.toBundle());
                             finish();
                         }
                     } else {
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
-                } else if (response.body() instanceof GetInventoryResponse) {
+                } *//*else if (response.body() instanceof GetInventoryResponse) {
                     GetInventoryResponse mInventoryResponse = (GetInventoryResponse) response.body();
                     if (mInventoryResponse.getSuccess() != null) {
                         mItemList.clear();
                         scrollView.setVisibility(View.GONE);
-                        mListView.setVisibility(View.VISIBLE);
+                       // mListView.setVisibility(View.VISIBLE);
                         for (GetInventoryResponse.Success success : mInventoryResponse.getSuccess()) {
                             mNoData.setVisibility(View.GONE);
                             if (success.getInventoryType().equals("UsedVehicle")) {
@@ -417,7 +423,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         if (mItemList.size() != 0) {
                             mNoData.setVisibility(View.GONE);
                             adapter = new InventoryAdapter(AddManualEnquiry.this, mItemList, mInventoryType);
-                            mListView.setAdapter(adapter);
+                           // mListView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                             menu.findItem(R.id.ok_manual).setVisible(true);
 
@@ -428,18 +434,18 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     } else {
                         Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
                     }
-                }
+                }*//*
             } else {
                 Snackbar.make(mRelative, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     @Override
     public void notifyError(Throwable error) {
-        if (error instanceof SocketTimeoutException) {
+        /*if (error instanceof SocketTimeoutException) {
             Snackbar.make(mRelative, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
             Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
@@ -451,7 +457,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
             Log.i("Check Class-"
                     , "Add Manual Enquiry");
             error.printStackTrace();
-        }
+        }*/
     }
 
     @Override

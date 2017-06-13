@@ -1,7 +1,6 @@
 package autokatta.com.upload_vehicle;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
-import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.adapter.GetVehicleListAdapter;
 import autokatta.com.apicall.ApiCall;
@@ -123,9 +121,9 @@ public class VehicleList extends Fragment implements RequestNotifier {
                 });
                 alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
-                        dialog.cancel();
                         getActivity().finish();
+                        //startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
+                        dialog.cancel();
                     }
                 });
                 alertDialog.show();

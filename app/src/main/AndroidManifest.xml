@@ -76,7 +76,7 @@
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.MyAutokattaContactsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
@@ -554,7 +554,17 @@
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".other.AddTags"></activity>
+        <activity android:name=".other.AddTags" />
+        <activity
+            android:name=".fragment_profile.EditProfile"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:label="@string/title_activity_edit_profile"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".view.ManualEnquiryVehicleList"
+            android:label="@string/title_activity_manual_enquiry_vehicle_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
