@@ -321,6 +321,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                             Intent intent = new Intent(getActivity(), VehicleDetails.class);
                             intent.putExtra("vehicle_id", vehicle_id);
                             getActivity().startActivity(intent);
+                            getActivity().finish();
                         }
                     } else
                         CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));

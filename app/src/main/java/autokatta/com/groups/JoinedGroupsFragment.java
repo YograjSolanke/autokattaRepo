@@ -3,7 +3,6 @@ package autokatta.com.groups;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,7 +43,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
     View mJoinedGroups;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    FloatingActionButton floatCreateGroup;
+    com.github.clans.fab.FloatingActionButton floatCreateGroup;
     List<ModelGroups> mJoinedGroupsList = new ArrayList<>();
     MyAdapter mMyAdapter;
     private TextView mPlaceHolder;
@@ -169,7 +168,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
                 mNoInternetIcon = (ImageButton) mJoinedGroups.findViewById(R.id.icon_nointernet);
                 mPlaceHolder.setVisibility(View.GONE);
                 mRecyclerView = (RecyclerView) mJoinedGroups.findViewById(R.id.rv_recycler_view);
-                floatCreateGroup = (FloatingActionButton) mJoinedGroups.findViewById(fabCreateGroup);
+                floatCreateGroup = (com.github.clans.fab.FloatingActionButton) mJoinedGroups.findViewById(fabCreateGroup);
                 floatCreateGroup.setVisibility(View.GONE);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mJoinedGroups.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView.setHasFixedSize(true);

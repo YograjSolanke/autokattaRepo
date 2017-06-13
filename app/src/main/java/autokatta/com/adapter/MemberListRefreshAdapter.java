@@ -36,6 +36,7 @@ import autokatta.com.groups.MemberDetailTabs;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.GetGroupContactsResponse;
+import autokatta.com.view.GroupTabs;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -403,15 +404,19 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         if (str != null) {
             if (str.equals("success_admin")) {
                 Snackbar.make(mView.mRelativeLayout, "Done", Snackbar.LENGTH_SHORT).show();
+                Intent intent = new Intent(mActivity, GroupsActivity.class);
+                intent.putExtra("grouptype", "MyGroup");
+                intent.putExtra("className", "MemberListRefreshAdapter");
+                intent.putExtra("bundle_GroupId", mGroupId);
+                mActivity.startActivity(intent);
+                mActivity.finish();
             } else if (str.startsWith("success")) {
                 Snackbar.make(mView.mRelativeLayout, "done", Snackbar.LENGTH_SHORT).show();
+                Intent intent = new Intent(mActivity, GroupTabs.class);
+                mActivity.startActivity(intent);
+                mActivity.finish();
             }
-            Intent intent = new Intent(mActivity, GroupsActivity.class);
-            intent.putExtra("grouptype", "MyGroup");
-            intent.putExtra("className", "MemberListRefreshAdapter");
-            intent.putExtra("bundle_GroupId", mGroupId);
-            mActivity.startActivity(intent);
-            mActivity.finish();
+
         } else
             Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
     }

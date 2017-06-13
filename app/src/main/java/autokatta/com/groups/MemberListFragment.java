@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -42,7 +41,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     View mMemberList;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    FloatingActionButton floatCreateGroup;
+    com.github.clans.fab.FloatingActionButton floatCreateGroup;
     List<GetGroupContactsResponse.Success> mSuccesses = new ArrayList<>();
     List<String> ContactNoList;
     MemberListRefreshAdapter mMemberListAdapter;
@@ -237,7 +236,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
                 mRecyclerView = (RecyclerView) mMemberList.findViewById(R.id.rv_recycler_view);
-                floatCreateGroup = (FloatingActionButton) mMemberList.findViewById(R.id.fab);
+                floatCreateGroup = (com.github.clans.fab.FloatingActionButton) mMemberList.findViewById(R.id.fab);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mMemberList.findViewById(R.id.swipeRefreshLayout);
                 mNoData = (TextView) mMemberList.findViewById(R.id.no_category);
                 mRecyclerView.setHasFixedSize(true);
@@ -311,12 +310,12 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         if (dy > 0) {
                             // Scroll Down
                             if (floatCreateGroup.isShown()) {
-                                floatCreateGroup.hide();
+                                floatCreateGroup.hide(true);
                             }
                         } else if (dy < 0) {
                             // Scroll Up
                             if (!floatCreateGroup.isShown()) {
-                                floatCreateGroup.show();
+                                floatCreateGroup.show(true);
                             }
                         }
 
