@@ -222,6 +222,12 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     if (str.equals("adminMore")) {
                         tabLayout.setScrollPosition(1, 0f, true);
                         viewPager.setCurrentItem(1);
+                    } else if (str.equals("FromProduct")) {
+                        tabLayout.setScrollPosition(2, 0f, true);
+                        viewPager.setCurrentItem(2);
+                    } else if (str.equals("FromService")) {
+                        tabLayout.setScrollPosition(3, 0f, true);
+                        viewPager.setCurrentItem(3);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

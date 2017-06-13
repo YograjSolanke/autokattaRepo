@@ -142,7 +142,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     addStoreAdmins(store_id, finaladmins);
                 }else
                 {
-                    CustomToast.customToast(getActivity(),"Please Select Atlist Single contact");
+                    CustomToast.customToast(getActivity(), "Please Select Atleast Single contact");
 
                 }
             }
