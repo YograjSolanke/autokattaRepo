@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetCompaniesResponse;
@@ -88,6 +89,7 @@ public class About extends Fragment implements RequestNotifier {
     boolean _hasLoadedOnce = false;
     Activity mActivity;
     LinearLayout mLinear;
+    GenericFunctions mGenericFunctions;
 
     @Override
     public void onAttach(Context context) {
@@ -110,14 +112,6 @@ public class About extends Fragment implements RequestNotifier {
     public boolean isValidUrl(String txtWebsite) {
         Pattern regex = Pattern.compile("^(WWW|www)\\.+[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|in|IN|COM|ORG|NET|MIL|EDU)$");
         Matcher matcher = regex.matcher(txtWebsite);
-        return matcher.matches();
-    }
-
-    private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
@@ -337,6 +331,8 @@ public class About extends Fragment implements RequestNotifier {
 
                 mLinear = (LinearLayout) mAbout.findViewById(R.id.profileAbout);
 
+                mGenericFunctions = new GenericFunctions();
+
 
                 mApiCall.profileAbout(Sharedcontact, Sharedcontact);
                 mApiCall.getSkills();
@@ -473,7 +469,7 @@ public class About extends Fragment implements RequestNotifier {
                             e.printStackTrace();
                         }
 
-                        if (!isValidEmail(mUpdatedEmail))
+                        if (!mGenericFunctions.isValidEmail(mUpdatedEmail))
                             mEmail.setError("Invalid Email");
                         else if (!webflag && !isValidUrl(mUpdatedWebsite)) {
                             mWebsite.setError("Invalid Website");
