@@ -67,7 +67,7 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
             public void run() {
                 //Set Data
                 mtitle.setText("Ended Loan Mela");
-                mCollapsingToolbar.setTitle(strTitle);
+                mCollapsingToolbar.setTitle("Title: " + strTitle);
                 mStartTime.setText(strStarttime);
                 mStartdate.setText(strStartdate);
                 mEndDate.setText(strEnddate);

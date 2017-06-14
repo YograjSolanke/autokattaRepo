@@ -29,7 +29,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/auctioneventimage"
-                android:text="AUCTION EVENT"
+                android:text="Auction Event"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 

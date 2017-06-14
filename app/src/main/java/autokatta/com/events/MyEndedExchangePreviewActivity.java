@@ -82,7 +82,7 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
 
                 //Set Data
                 mtitle.setText("Ended Exchange Mela");
-                mCollapsingToolbar.setTitle(strTitle);
+                mCollapsingToolbar.setTitle("Title: " + strTitle);
                 mStartTime.setText(strStarttime);
                 mStartdate.setText(strStartdate);
                 mEndDate.setText(strEnddate);

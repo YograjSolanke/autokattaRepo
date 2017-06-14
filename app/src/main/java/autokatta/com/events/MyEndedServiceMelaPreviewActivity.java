@@ -73,7 +73,7 @@ public class MyEndedServiceMelaPreviewActivity extends AppCompatActivity {
 
                 //Set Data
                 mtitle.setText("Ended Service Mela");
-                mCollapsingToolbar.setTitle(strTitle);
+                mCollapsingToolbar.setTitle("Title: " + strTitle);
                 mStartTime.setText(strStarttime);
                 mStartdate.setText(strStartdate);
                 mEndDate.setText(strEnddate);

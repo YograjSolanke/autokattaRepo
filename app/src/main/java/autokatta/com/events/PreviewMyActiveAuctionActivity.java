@@ -116,7 +116,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 try {
-                    mCollapsingToolbar.setTitle(strAuctionTitle);
+                    mCollapsingToolbar.setTitle("Title: " + strAuctionTitle);
                     mCollapsingToolbar.setExpandedTitleColor(Color.parseColor("#00FFFFFF"));
                     txtStartDate.setText(strStartDate);
                     txtStartTime.setText(strStartTime);

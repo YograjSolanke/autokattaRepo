@@ -96,7 +96,7 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
             @Override
             public void run() {
                 try {
-                    mCollapsingToolbar.setTitle(strAuctionTitle);
+                    mCollapsingToolbar.setTitle("Title: " + strAuctionTitle);
                     txtStartDate.setText(strStartDate);
                     txtStartTime.setText(strStartTime);
                     txtEndDate.setText(strEndDate);

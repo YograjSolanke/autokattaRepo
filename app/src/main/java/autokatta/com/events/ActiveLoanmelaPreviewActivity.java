@@ -76,7 +76,7 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
             public void run() {
                 //Set Data
                 toolbar.setTitle("Loan Mela");
-                mCollapsingToolbar.setTitle(strTitle);
+                mCollapsingToolbar.setTitle("Title: " + strTitle);
                 mStartTime.setText(strStarttime);
                 mStartdate.setText(strStartdate);
                 mEndDate.setText(strEnddate);

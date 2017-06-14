@@ -70,7 +70,7 @@ public class MyEndedSaleMelaPreviewActivity extends AppCompatActivity {
 
                 //Set Data
                 mtitle.setText("Ended Sale Mela");
-                mCollapsingToolbar.setTitle(strTitle);
+                mCollapsingToolbar.setTitle("Title: " + strTitle);
                 mStartTime.setText(strStarttime);
                 mStartdate.setText(strStartdate);
                 mEndDate.setText(strEnddate);
