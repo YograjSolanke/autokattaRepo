@@ -65,12 +65,14 @@
     <string name="about">About</string>
     <string name="worked_at">Worked At</string>
     <string name="address">Address</string>
+    <string name="address_manual">Address<font color='#FF0000'>\u002A</font></string>
     <string name="exchange">Exchange</string>
     <string name="finance">Finance</string>
     <string name="company_name">Company Name</string>
     <string name="designation">Designation</string>
     <string name="skills">Skills</string>
     <string name="contact_no">Contact</string>
+    <string name="contact_enquiry">Contact<font color='#FF0000'>\u002A</font></string>
     <string name="email">Email</string>
     <string name="website">WebSite</string>
 
@@ -102,8 +104,9 @@
     <string name="last_name">Last Name</string>
     <string name="surname">Surname</string>
     <string name="go_profile">Go Profile</string>
-    <string name="select">Select</string>
+    <string name="select">Select<font color='#FF0000'>\u002A</font></string>
     <string name="selectStatus">Select Status</string>
+    <string name="completeAddress_manual">Complete Address<font color='#FF0000'>\u002A</font></string>
     <string name="completeAddress">Complete Address</string>
     <string name="discussion">Discussion</string>
     <string name="followdate">Follow-up Date</string>

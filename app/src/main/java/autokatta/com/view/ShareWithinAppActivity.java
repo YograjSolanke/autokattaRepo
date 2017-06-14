@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 public class ShareWithinAppActivity extends AppCompatActivity {
 
     boolean isNetworkAvailable;
+    CoordinatorLayout mShareApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +30,14 @@ public class ShareWithinAppActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mShareApp = (CoordinatorLayout) findViewById(R.id.shareApp);
         IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
                 String networkStatus = isNetworkAvailable ? "Connected" : "Disconnected";
-                Snackbar.make(findViewById(R.id.activity_group_tabs), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(findViewById(R.id.shareApp), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
             }
         }, intentFilter);
 

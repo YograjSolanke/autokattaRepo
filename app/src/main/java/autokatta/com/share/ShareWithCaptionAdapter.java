@@ -2,6 +2,7 @@ package autokatta.com.share;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,222 +100,219 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        final ViewHolder holder;
-
-        if (convertView == null) {
-            holder = new ViewHolder();
-
-
-            switch (keyword) {
-
-                case "profile":
-                    convertView = mInflater.inflate(R.layout.adapter_share_profile_notification, null);
-
-                    holder.username = (TextView) convertView.findViewById(R.id.username);
-                    holder.profilelocation = (TextView) convertView.findViewById(R.id.profilelocation);
-                    holder.profileworkat = (TextView) convertView.findViewById(R.id.profileworkat);
-                    holder.profilewebsite = (TextView) convertView.findViewById(R.id.profilewebsite);
-                    holder.profilefollowcnt = (TextView) convertView.findViewById(R.id.followcnt);
-                    holder.profilelikecnt = (TextView) convertView.findViewById(R.id.like);
-                    holder.profileimage = (ImageView) convertView.findViewById(R.id.imgnotilike);
-                    holder.relaprofilelike = (RelativeLayout) convertView.findViewById(R.id.relaprofilelike);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
+        ViewHolder holder = null;
+        View view = convertView;
+        Log.i("Keyword", "->>>>>>>>>" + keyword);
+        if (view == null) {
+            if (keyword != null) {
+                switch (keyword) {
+                    case "profile":
+                        view = mInflater.inflate(R.layout.adapter_share_profile_notification, null);
+                        holder = new ViewHolder();
+                        holder.username = (TextView) view.findViewById(R.id.username);
+                        holder.profilelocation = (TextView) view.findViewById(R.id.profilelocation);
+                        holder.profileworkat = (TextView) view.findViewById(R.id.profileworkat);
+                        holder.profilewebsite = (TextView) view.findViewById(R.id.profilewebsite);
+                        holder.profilefollowcnt = (TextView) view.findViewById(R.id.followcnt);
+                        holder.profilelikecnt = (TextView) view.findViewById(R.id.like);
+                        holder.profileimage = (ImageView) view.findViewById(R.id.imgnotilike);
+                        holder.relaprofilelike = (RelativeLayout) view.findViewById(R.id.relaprofilelike);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
 
 
-                    break;
+                        break;
 
-                case "store":
-                    convertView = mInflater.inflate(R.layout.adapter_share_store_notification, null);
-
-                    holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
-                    holder.storeimage = (ImageView) convertView.findViewById(R.id.imgnotilike);
-                    holder.storename = (TextView) convertView.findViewById(R.id.storename);
-                    holder.storetype = (TextView) convertView.findViewById(R.id.storetype);
-                    holder.location = (TextView) convertView.findViewById(R.id.location);
-                    holder.website = (TextView) convertView.findViewById(R.id.website);
-                    holder.time = (TextView) convertView.findViewById(R.id.timing);
-                    holder.workingday = (TextView) convertView.findViewById(R.id.workday);
-                    holder.storefollowcnt = (TextView) convertView.findViewById(R.id.followcnt);
-                    holder.storelikecnt = (TextView) convertView.findViewById(R.id.like);
-                    holder.storecallimg = (ImageView) convertView.findViewById(R.id.callimg);
-                    holder.storerating = (RatingBar) convertView.findViewById(R.id.storerating);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-
-
-                    break;
-
-                case "product":
-                    convertView = mInflater.inflate(R.layout.adapter_share_product_notification, null);
-
-                    holder.imgproduct = (ImageView) convertView.findViewById(R.id.imgnotilike);
-                    holder.productname = (TextView) convertView.findViewById(R.id.productname);
-                    holder.producttype = (TextView) convertView.findViewById(R.id.producttype);
-                    holder.productlikecnt = (TextView) convertView.findViewById(R.id.likeprod);
-                    holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-                    holder.productrating1 = (ImageView) convertView.findViewById(R.id.starprod1);
-                    holder.productrating2 = (ImageView) convertView.findViewById(R.id.starprod2);
-                    holder.productrating3 = (ImageView) convertView.findViewById(R.id.starprod3);
-                    holder.productrating4 = (ImageView) convertView.findViewById(R.id.starprod4);
-                    holder.productrating5 = (ImageView) convertView.findViewById(R.id.starprod5);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-                    holder.callimg = (ImageView) convertView.findViewById(R.id.callimg);
+                    case "store":
+                        view = mInflater.inflate(R.layout.adapter_share_store_notification, null);
+                        holder = new ViewHolder();
+                        holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
+                        holder.storeimage = (ImageView) view.findViewById(R.id.imgnotilike);
+                        holder.storename = (TextView) view.findViewById(R.id.storename);
+                        holder.storetype = (TextView) view.findViewById(R.id.storetype);
+                        holder.location = (TextView) view.findViewById(R.id.location);
+                        holder.website = (TextView) view.findViewById(R.id.website);
+                        holder.time = (TextView) view.findViewById(R.id.timing);
+                        holder.workingday = (TextView) view.findViewById(R.id.workday);
+                        holder.storefollowcnt = (TextView) view.findViewById(R.id.followcnt);
+                        holder.storelikecnt = (TextView) view.findViewById(R.id.like);
+                        holder.storecallimg = (ImageView) view.findViewById(R.id.callimg);
+                        holder.storerating = (RatingBar) view.findViewById(R.id.storerating);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
 
 
-                    break;
+                        break;
 
-                case "service":
-
-                    convertView = mInflater.inflate(R.layout.adapter_share_service_notification, null);
-
-                    holder.imgservice = (ImageView) convertView.findViewById(R.id.imgservice);
-                    holder.servicename = (TextView) convertView.findViewById(R.id.servicename);
-                    holder.servicetype = (TextView) convertView.findViewById(R.id.servicetype);
-                    holder.servicefollowcnt = (TextView) convertView.findViewById(R.id.followcnt);
-                    holder.servicelikecnt = (TextView) convertView.findViewById(R.id.likeservice);
-                    holder.servicesharecnt = (TextView) convertView.findViewById(R.id.shareservice);
-                    holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-                    holder.servicerating1 = (ImageView) convertView.findViewById(R.id.starservice1);
-                    holder.servicerating2 = (ImageView) convertView.findViewById(R.id.starservice2);
-                    holder.servicerating3 = (ImageView) convertView.findViewById(R.id.starservice3);
-                    holder.servicerating4 = (ImageView) convertView.findViewById(R.id.starservice4);
-                    holder.servicerating5 = (ImageView) convertView.findViewById(R.id.starservice5);
-
-                    holder.callimg = (ImageView) convertView.findViewById(R.id.callimg);
-                    break;
+                    case "product":
+                        view = mInflater.inflate(R.layout.adapter_share_product_notification, null);
+                        holder = new ViewHolder();
+                        holder.imgproduct = (ImageView) view.findViewById(R.id.imgnotilike);
+                        holder.productname = (TextView) view.findViewById(R.id.productname);
+                        holder.producttype = (TextView) view.findViewById(R.id.producttype);
+                        holder.productlikecnt = (TextView) view.findViewById(R.id.likeprod);
+                        holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
+                        holder.productrating1 = (ImageView) view.findViewById(R.id.starprod1);
+                        holder.productrating2 = (ImageView) view.findViewById(R.id.starprod2);
+                        holder.productrating3 = (ImageView) view.findViewById(R.id.starprod3);
+                        holder.productrating4 = (ImageView) view.findViewById(R.id.starprod4);
+                        holder.productrating5 = (ImageView) view.findViewById(R.id.starprod5);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
+                        holder.callimg = (ImageView) view.findViewById(R.id.callimg);
 
 
-                case "vehicle":
+                        break;
 
-                    convertView = mInflater.inflate(R.layout.adapter_share_vehicle_notification, null);
+                    case "service":
 
-                    holder.imgvehicle = (ImageView) convertView.findViewById(R.id.imgvehicle);
-                    holder.title = (TextView) convertView.findViewById(R.id.title);
-                    holder.vprice = (TextView) convertView.findViewById(R.id.price);
-                    holder.vbrand = (TextView) convertView.findViewById(R.id.brand);
-                    holder.vmodel = (TextView) convertView.findViewById(R.id.model);
-                    holder.vyear = (TextView) convertView.findViewById(R.id.year);
-                    holder.vkms = (TextView) convertView.findViewById(R.id.km_hrs);
-                    holder.vregno = (TextView) convertView.findViewById(R.id.registrationNo);
-                    holder.vrto = (TextView) convertView.findViewById(R.id.RTO);
-                    holder.vlocation = (TextView) convertView.findViewById(R.id.location);
-                    holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-                    holder.vehiclelikecnt = (TextView) convertView.findViewById(R.id.like);
-                    holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-                    holder.callimg = (ImageView) convertView.findViewById(R.id.callimg);
+                        view = mInflater.inflate(R.layout.adapter_share_service_notification, null);
+                        holder = new ViewHolder();
+                        holder.imgservice = (ImageView) view.findViewById(R.id.imgservice);
+                        holder.servicename = (TextView) view.findViewById(R.id.servicename);
+                        holder.servicetype = (TextView) view.findViewById(R.id.servicetype);
+                        holder.servicefollowcnt = (TextView) view.findViewById(R.id.followcnt);
+                        holder.servicelikecnt = (TextView) view.findViewById(R.id.likeservice);
+                        holder.servicesharecnt = (TextView) view.findViewById(R.id.shareservice);
+                        holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
+                        holder.servicerating1 = (ImageView) view.findViewById(R.id.starservice1);
+                        holder.servicerating2 = (ImageView) view.findViewById(R.id.starservice2);
+                        holder.servicerating3 = (ImageView) view.findViewById(R.id.starservice3);
+                        holder.servicerating4 = (ImageView) view.findViewById(R.id.starservice4);
+                        holder.servicerating5 = (ImageView) view.findViewById(R.id.starservice5);
 
-                    break;
-
-
-                case "mysearch":
-                    convertView = mInflater.inflate(R.layout.adapter_share_search_notification, null);
-
-                    holder.category = (TextView) convertView.findViewById(R.id.mysearch_category);
-                    holder.brand = (TextView) convertView.findViewById(R.id.mysearch_brand);
-                    holder.model = (TextView) convertView.findViewById(R.id.mysearch_model);
-                    holder.price = (TextView) convertView.findViewById(R.id.mysearch_price);
-                    holder.year = (TextView) convertView.findViewById(R.id.mysearch_year);
-                    holder.dateofsearch = (TextView) convertView.findViewById(R.id.searchdate);
-                    holder.searchleads = (TextView) convertView.findViewById(R.id.buyerleads);
-                    holder.relaprofilelike = (RelativeLayout) convertView.findViewById(R.id.relaprofilelike);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-
-                    break;
-
-                case "poststatus":
-
-                    convertView = mInflater.inflate(R.layout.adapter_share_post_notification, null);
-
-                    holder.poststatus = (TextView) convertView.findViewById(R.id.statustxt);
-                    holder.relaprofilelike = (RelativeLayout) convertView.findViewById(R.id.relaprofilelike);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-
-                    break;
-
-                case "uploadvehicle":
-
-                    convertView = mInflater.inflate(R.layout.adapter_share_vehicle_notification, null);
-
-                    holder.imgvehicle = (ImageView) convertView.findViewById(R.id.imgvehicle);
-                    holder.title = (TextView) convertView.findViewById(R.id.title);
-                    holder.vprice = (TextView) convertView.findViewById(R.id.price);
-                    holder.vbrand = (TextView) convertView.findViewById(R.id.brand);
-                    holder.vmodel = (TextView) convertView.findViewById(R.id.model);
-                    holder.vyear = (TextView) convertView.findViewById(R.id.year);
-                    holder.vkms = (TextView) convertView.findViewById(R.id.km_hrs);
-                    holder.vregno = (TextView) convertView.findViewById(R.id.registrationNo);
-                    holder.vrto = (TextView) convertView.findViewById(R.id.RTO);
-                    holder.vlocation = (TextView) convertView.findViewById(R.id.location);
-                    holder.relative = (RelativeLayout) convertView.findViewById(R.id.relative);
-                    holder.relalike2 = (LinearLayout) convertView.findViewById(R.id.relalike2);
-                    holder.callimg = (ImageView) convertView.findViewById(R.id.callimg);
-
-                    holder.vehiclelikecnt = (TextView) convertView.findViewById(R.id.like);
-
-                    break;
+                        holder.callimg = (ImageView) view.findViewById(R.id.callimg);
+                        break;
 
 
-                case "auction":
-                    convertView = mInflater.inflate(R.layout.adapter_share_auction_notification, null);
+                    case "vehicle":
 
-                    holder.auctitle = (TextView) convertView.findViewById(R.id.auc_name);
-                    holder.aucnoofvehicles = (TextView) convertView.findViewById(R.id.auc_noofvehicle);
-                    holder.aucenddate = (TextView) convertView.findViewById(R.id.auc_enddate);
-                    holder.aucendtime = (TextView) convertView.findViewById(R.id.auc_endtime);
-                    holder.going = (TextView) convertView.findViewById(R.id.going_cnt);
-                    holder.ignore = (TextView) convertView.findViewById(R.id.ignore_cnt);
-                    holder.auctype = (TextView) convertView.findViewById(R.id.auc_type);
-                    holder.relGoing = (RelativeLayout) convertView.findViewById(R.id.relgoing);
-                    holder.relIgnore = (RelativeLayout) convertView.findViewById(R.id.relignore);
-                    holder.relaprofilelike = (RelativeLayout) convertView.findViewById(R.id.relaprofilelike);
-                    holder.relatebutton = (LinearLayout) convertView.findViewById(R.id.relatebutton);
+                        view = mInflater.inflate(R.layout.adapter_share_vehicle_notification, null);
+                        holder = new ViewHolder();
+                        holder.imgvehicle = (ImageView) view.findViewById(R.id.imgvehicle);
+                        holder.title = (TextView) view.findViewById(R.id.title);
+                        holder.vprice = (TextView) view.findViewById(R.id.price);
+                        holder.vbrand = (TextView) view.findViewById(R.id.brand);
+                        holder.vmodel = (TextView) view.findViewById(R.id.model);
+                        holder.vyear = (TextView) view.findViewById(R.id.year);
+                        holder.vkms = (TextView) view.findViewById(R.id.km_hrs);
+                        holder.vregno = (TextView) view.findViewById(R.id.registrationNo);
+                        holder.vrto = (TextView) view.findViewById(R.id.RTO);
+                        holder.vlocation = (TextView) view.findViewById(R.id.location);
+                        holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
+                        holder.vehiclelikecnt = (TextView) view.findViewById(R.id.like);
+                        holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
+                        holder.callimg = (ImageView) view.findViewById(R.id.callimg);
 
-
-                    break;
-
-                case "loan":
-                    convertView = mInflater.inflate(R.layout.adapter_share_event_notification, null);
-
-                    holder.titleevent = (TextView) convertView.findViewById(R.id.edittitle);
-                    holder.start_date = (TextView) convertView.findViewById(R.id.start_date);
-                    holder.start_time = (TextView) convertView.findViewById(R.id.start_time);
-                    holder.end_date = (TextView) convertView.findViewById(R.id.datetime2);
-                    holder.end_time = (TextView) convertView.findViewById(R.id.editText);
-                    holder.eventlocation = (TextView) convertView.findViewById(R.id.editlocation);
-                    holder.image = (ImageView) convertView.findViewById(R.id.image);
-                    holder.auctioneer = (TextView) convertView.findViewById(R.id.ownertext);
-                    holder.btnshare = (RelativeLayout) convertView.findViewById(R.id.btnrelative);
-
-                    break;
+                        break;
 
 
-                case "exchange":
-                    convertView = mInflater.inflate(R.layout.adapter_share_event_notification, null);
+                    case "mysearch":
+                        view = mInflater.inflate(R.layout.adapter_share_search_notification, null);
+                        holder = new ViewHolder();
+                        holder.category = (TextView) view.findViewById(R.id.mysearch_category);
+                        holder.brand = (TextView) view.findViewById(R.id.mysearch_brand);
+                        holder.model = (TextView) view.findViewById(R.id.mysearch_model);
+                        holder.price = (TextView) view.findViewById(R.id.mysearch_price);
+                        holder.year = (TextView) view.findViewById(R.id.mysearch_year);
+                        holder.dateofsearch = (TextView) view.findViewById(R.id.searchdate);
+                        holder.searchleads = (TextView) view.findViewById(R.id.buyerleads);
+                        holder.relaprofilelike = (RelativeLayout) view.findViewById(R.id.relaprofilelike);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
 
-                    holder.titleevent = (TextView) convertView.findViewById(R.id.edittitle);
-                    holder.start_date = (TextView) convertView.findViewById(R.id.start_date);
-                    holder.start_time = (TextView) convertView.findViewById(R.id.start_time);
-                    holder.end_date = (TextView) convertView.findViewById(R.id.datetime2);
-                    holder.end_time = (TextView) convertView.findViewById(R.id.editText);
-                    holder.eventlocation = (TextView) convertView.findViewById(R.id.editlocation);
-                    holder.image = (ImageView) convertView.findViewById(R.id.image);
-                    holder.auctioneer = (TextView) convertView.findViewById(R.id.ownertext);
-                    holder.btnshare = (RelativeLayout) convertView.findViewById(R.id.btnrelative);
+                        break;
 
-                    break;
+                    case "poststatus":
 
-                default:
-                    break;
+                        view = mInflater.inflate(R.layout.adapter_share_post_notification, null);
+                        holder = new ViewHolder();
+                        holder.poststatus = (TextView) view.findViewById(R.id.statustxt);
+                        holder.relaprofilelike = (RelativeLayout) view.findViewById(R.id.relaprofilelike);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
 
+                        break;
+
+                    case "uploadvehicle":
+
+                        view = mInflater.inflate(R.layout.adapter_share_vehicle_notification, null);
+                        holder = new ViewHolder();
+                        holder.imgvehicle = (ImageView) view.findViewById(R.id.imgvehicle);
+                        holder.title = (TextView) view.findViewById(R.id.title);
+                        holder.vprice = (TextView) view.findViewById(R.id.price);
+                        holder.vbrand = (TextView) view.findViewById(R.id.brand);
+                        holder.vmodel = (TextView) view.findViewById(R.id.model);
+                        holder.vyear = (TextView) view.findViewById(R.id.year);
+                        holder.vkms = (TextView) view.findViewById(R.id.km_hrs);
+                        holder.vregno = (TextView) view.findViewById(R.id.registrationNo);
+                        holder.vrto = (TextView) view.findViewById(R.id.RTO);
+                        holder.vlocation = (TextView) view.findViewById(R.id.location);
+                        holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
+                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
+                        holder.callimg = (ImageView) view.findViewById(R.id.callimg);
+
+                        holder.vehiclelikecnt = (TextView) view.findViewById(R.id.like);
+
+                        break;
+
+
+                    case "auction":
+                        view = mInflater.inflate(R.layout.adapter_share_auction_notification, null);
+                        holder = new ViewHolder();
+                        holder.auctitle = (TextView) view.findViewById(R.id.auc_name);
+                        holder.aucnoofvehicles = (TextView) view.findViewById(R.id.auc_noofvehicle);
+                        holder.aucenddate = (TextView) view.findViewById(R.id.auc_enddate);
+                        holder.aucendtime = (TextView) view.findViewById(R.id.auc_endtime);
+                        holder.going = (TextView) view.findViewById(R.id.going_cnt);
+                        holder.ignore = (TextView) view.findViewById(R.id.ignore_cnt);
+                        holder.auctype = (TextView) view.findViewById(R.id.auc_type);
+                        holder.relGoing = (RelativeLayout) view.findViewById(R.id.relgoing);
+                        holder.relIgnore = (RelativeLayout) view.findViewById(R.id.relignore);
+                        holder.relaprofilelike = (RelativeLayout) view.findViewById(R.id.relaprofilelike);
+                        holder.relatebutton = (LinearLayout) view.findViewById(R.id.relatebutton);
+
+
+                        break;
+
+                    case "loan":
+                        view = mInflater.inflate(R.layout.adapter_share_event_notification, null);
+                        holder = new ViewHolder();
+                        holder.titleevent = (TextView) view.findViewById(R.id.edittitle);
+                        holder.start_date = (TextView) view.findViewById(R.id.start_date);
+                        holder.start_time = (TextView) view.findViewById(R.id.start_time);
+                        holder.end_date = (TextView) view.findViewById(R.id.datetime2);
+                        holder.end_time = (TextView) view.findViewById(R.id.editText);
+                        holder.eventlocation = (TextView) view.findViewById(R.id.editlocation);
+                        holder.image = (ImageView) view.findViewById(R.id.image);
+                        holder.auctioneer = (TextView) view.findViewById(R.id.ownertext);
+                        holder.btnshare = (RelativeLayout) view.findViewById(R.id.btnrelative);
+
+                        break;
+
+
+                    case "exchange":
+                        view = mInflater.inflate(R.layout.adapter_share_event_notification, null);
+                        holder = new ViewHolder();
+                        holder.titleevent = (TextView) view.findViewById(R.id.edittitle);
+                        holder.start_date = (TextView) view.findViewById(R.id.start_date);
+                        holder.start_time = (TextView) view.findViewById(R.id.start_time);
+                        holder.end_date = (TextView) view.findViewById(R.id.datetime2);
+                        holder.end_time = (TextView) view.findViewById(R.id.editText);
+                        holder.eventlocation = (TextView) view.findViewById(R.id.editlocation);
+                        holder.image = (ImageView) view.findViewById(R.id.image);
+                        holder.auctioneer = (TextView) view.findViewById(R.id.ownertext);
+                        holder.btnshare = (RelativeLayout) view.findViewById(R.id.btnrelative);
+
+                        break;
+
+                    default:
+                        break;
+
+                }
             }
-
-            convertView.setTag(holder);
+            view.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
-
+            holder = (ViewHolder) view.getTag();
         }
 
         System.out.println("sharedata============" + sharedata);
@@ -751,6 +749,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
         }
 
-        return convertView;
+        return view;
     }
 }

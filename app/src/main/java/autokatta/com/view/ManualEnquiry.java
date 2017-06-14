@@ -52,6 +52,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        setTitle("Enquiry List");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

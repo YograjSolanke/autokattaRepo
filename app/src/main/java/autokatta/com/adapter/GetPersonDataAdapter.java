@@ -1,7 +1,6 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -149,16 +148,24 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(mActivity, "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }*/
-        final Intent emailLauncher = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        /*final Intent emailLauncher = new Intent(Intent.ACTION_SEND_MULTIPLE);
         emailLauncher.setType("message/rfc822");
         emailLauncher.putExtra(Intent.EXTRA_EMAIL, "abc@gmail.com,cv@gmail.com");
         emailLauncher.putExtra(Intent.EXTRA_CC, "cv@gmail.com");
         emailLauncher.putExtra(Intent.EXTRA_SUBJECT, "check this subject line");
-        emailLauncher.putExtra(Intent.EXTRA_TEXT, "hey check this message body!");
-        try {
+        emailLauncher.putExtra(Intent.EXTRA_TEXT, "hey check this message body!");*/
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", "abc@mail.com", null));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, "abc@gmail.com");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+        mActivity.startActivity(Intent.createChooser(emailIntent, "Send Email..."));
+        /*try {
             mActivity.startActivity(emailLauncher);
         } catch (ActivityNotFoundException e) {
-        }
+            e.printStackTrace();
+        }*/
     }
 
     private void sendSMSMessage(String con, String msg) {
