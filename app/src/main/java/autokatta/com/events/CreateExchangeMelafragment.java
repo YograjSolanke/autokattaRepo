@@ -42,6 +42,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ExchangeMelaCreateResponse;
+import autokatta.com.view.Create_Event;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -223,6 +224,8 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                     uploadImage(mediaPath);
 
                     getActivity().finish();
+
+                    startActivity(new Intent(getActivity(), Create_Event.class));
 
                 }
             } else {

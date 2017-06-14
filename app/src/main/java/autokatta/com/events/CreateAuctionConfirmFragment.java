@@ -28,8 +28,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionAllVehicleData;
-import autokatta.com.view.MyActiveEventsTabActivity;
-import autokatta.com.view.MySavedAuctionEventActivity;
+import autokatta.com.view.Create_Event;
 import retrofit2.Response;
 
 import static autokatta.com.adapter.AuctionConfirmAdapter.isSave;
@@ -269,13 +268,15 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
 
                 sqlite_obj.close();*/
 
-                if (SaveActivate.equals("ACTIVE")) {
+               /* if (SaveActivate.equals("ACTIVE")) {
                     getActivity().finish();
                     startActivity(new Intent(getActivity(), MyActiveEventsTabActivity.class));
                 } else {
                     getActivity().finish();
                     startActivity(new Intent(getActivity(), MySavedAuctionEventActivity.class));
-                }
+                }*/
+
+                startActivity(new Intent(getActivity(), Create_Event.class));
             }
         }
     }

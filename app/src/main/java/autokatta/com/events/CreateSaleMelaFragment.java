@@ -42,7 +42,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.SaleMelaCreateResponse;
-import autokatta.com.view.MyActiveEventsTabActivity;
+import autokatta.com.view.Create_Event;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -231,8 +231,9 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                     /*String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
                     Log.i("date","current"+date);
                     Log.i("date","event"+startDateTime);*/
-                    startActivity(new Intent(getActivity(), MyActiveEventsTabActivity.class));
+                    // startActivity(new Intent(getActivity(), MyActiveEventsTabActivity.class));
                     getActivity().finish();
+                    startActivity(new Intent(getActivity(), Create_Event.class));
 
                 }
             } else {
