@@ -12,7 +12,8 @@
             android:id="@+id/auction_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_margin">
+            android:layout_marginTop="@dimen/card_margin"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/auctioneventimage"
@@ -73,7 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/event_horizontal"
-            android:layout_marginTop="@dimen/card_margin">
+            android:layout_marginTop="@dimen/card_margin"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/loan_mela_image"
@@ -133,7 +135,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/loan_horizontal"
-            android:layout_marginTop="@dimen/card_margin">
+            android:layout_marginTop="@dimen/card_margin"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/exchange_event_image"
@@ -193,7 +196,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/exchange_event_horizontal"
-            android:layout_marginTop="@dimen/card_margin">
+            android:layout_marginTop="@dimen/card_margin"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/service_event_image"
@@ -253,7 +257,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/service_event_horizontal"
-            android:layout_marginTop="@dimen/card_margin">
+            android:layout_marginTop="@dimen/card_margin"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/sale_event_image"
