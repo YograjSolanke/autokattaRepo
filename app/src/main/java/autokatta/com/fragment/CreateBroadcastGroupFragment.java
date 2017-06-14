@@ -187,16 +187,18 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.broadcast_groups_container, broadcastGroup);
-                fragmentTransaction.addToBackStack("rrrrr");
+                fragmentTransaction.addToBackStack("createbroadcastgroup");
                 fragmentTransaction.commit();
+                getActivity().finish();
             } else {
                 CustomToast.customToast(ctx, "Broadcast Group Created Successfully");
                 MyBroadcastGroupsFragment broadcastGroup = new MyBroadcastGroupsFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.broadcast_groups_container, broadcastGroup);
-                fragmentTransaction.addToBackStack("rrrrr");
+                fragmentTransaction.addToBackStack("createbroadcastgroup");
                 fragmentTransaction.commit();
+                getActivity().finish();
             }
         }
     }

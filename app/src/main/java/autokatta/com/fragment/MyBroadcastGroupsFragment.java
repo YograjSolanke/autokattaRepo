@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -102,7 +101,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         btnSendMessage.setEnabled(false);
         imgDeleteGroup = (ImageView) mMyBroadcast.findViewById(R.id.deletegroup);
 
-        FloatingActionButton createGroup = (FloatingActionButton) mMyBroadcast.findViewById(R.id.fabCreateBroadcastGroup);
+        com.github.clans.fab.FloatingActionButton createGroup = (com.github.clans.fab.FloatingActionButton) mMyBroadcast.findViewById(R.id.fabCreateBroadcastGroup);
         btnSendMessage.setOnClickListener(this);
         imgDeleteGroup.setOnClickListener(this);
         createGroup.setOnClickListener(this);

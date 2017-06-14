@@ -48,7 +48,7 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fabCreateBroadcastGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
