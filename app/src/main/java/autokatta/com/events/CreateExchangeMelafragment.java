@@ -222,6 +222,8 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                     CustomToast.customToast(getActivity(), "Exchange Event Created Successfully");
                     uploadImage(mediaPath);
 
+                    getActivity().finish();
+
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));

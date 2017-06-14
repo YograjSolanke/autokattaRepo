@@ -19,4 +19,6 @@ public class DbQuery {
 
     protected static final String getAutokattaContact = "select * from " + DbConstants.tableMyAutokattaContacts;
 
+    protected static final String dropAutokattaContact = "drop table if exists '" + DbConstants.tableMyAutokattaContacts + "'";
+
 }

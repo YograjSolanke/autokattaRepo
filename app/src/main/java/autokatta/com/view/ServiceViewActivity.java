@@ -749,13 +749,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
                 }
                 //field validation
-                if (uptype.equals("")) {
+                if (uptype.equals("")||uptype.startsWith(" ")&&uptype.endsWith(" ")) {
                     servicetype.setError("Enter service Type");
-                } else if (upname.equals("")) {
+                } else if (upname.equals("")||upname.startsWith(" ")&&upname.endsWith(" ")) {
                     servicename.setError("Enter Service Name");
-                } else if (upprice.equals("")) {
+                } else if (upprice.equals("")||upprice.startsWith(" ")&&upprice.endsWith(" ")) {
                     serviceprice.setError("Enter Service Price");
-                } else if (updetails.equals("")) {
+                } else if (updetails.equals("")||updetails.startsWith(" ")&&updetails.endsWith(" ")) {
                     servicedetails.setError("Enter Service Details");
                 } else {
                     servicename.setEnabled(false);

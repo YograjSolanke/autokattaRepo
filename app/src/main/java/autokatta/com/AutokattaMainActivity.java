@@ -1,5 +1,6 @@
 package autokatta.com;
 
+import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -39,6 +40,7 @@ import org.json.JSONObject;
 
 import autokatta.com.adapter.TabAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.AuctionNotification;
 import autokatta.com.fragment.FavoriteNotificationFragment;
@@ -85,6 +87,18 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     //qr code scanner object
     private IntentIntegrator qrScan;
 
+    private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                System.out.println("class" + serviceClass.getName());
+                System.out.println("class1" + service.service.getClassName());
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +117,11 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         fcmRegister();
         //intializing scan object
         qrScan = new IntentIntegrator(this);
+
+        if (!isBackgroundServiceRunning(BackgroundService.class)) {
+            startService(new Intent(AutokattaMainActivity.this, BackgroundService.class));
+        }
+
        /* DbOperation dbAdpter = new DbOperation(getApplicationContext());
         dbAdpter.OPEN();
         Cursor cursor = dbAdpter.getAutokattaContact();
@@ -310,6 +329,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     session.logoutUser();
+                                    getApplicationContext().stopService(new Intent(AutokattaMainActivity.this, BackgroundService.class));
                                     finish();
                                 }
                             });

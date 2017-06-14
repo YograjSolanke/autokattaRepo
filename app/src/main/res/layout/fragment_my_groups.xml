@@ -19,7 +19,7 @@
 
     <include layout="@layout/error_view" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fabCreateGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,6 +28,6 @@
         android:layout_gravity="bottom|end"
         android:background="@color/red"
         android:layout_margin="@dimen/fab_margin"
-        android:visibility="visible"
-        app:srcCompat="@mipmap/ic_plus" />
+        android:src="@mipmap/ic_plus"
+        android:visibility="visible"/>
 </RelativeLayout>

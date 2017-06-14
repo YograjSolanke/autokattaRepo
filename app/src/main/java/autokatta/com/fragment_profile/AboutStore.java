@@ -91,6 +91,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
                 GetStoreProfileInfoResponse mStoreProfileInfoResponse = (GetStoreProfileInfoResponse) response.body();
                 if (!mStoreProfileInfoResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
+                    mSuccesses.clear();
                     for (GetStoreProfileInfoResponse.Success infoResponse : mStoreProfileInfoResponse.getSuccess()) {
                         infoResponse.setStoreId(infoResponse.getStoreId());
                         infoResponse.setStoreName(infoResponse.getStoreName());

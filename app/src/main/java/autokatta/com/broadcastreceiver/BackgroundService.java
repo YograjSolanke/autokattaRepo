@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
@@ -12,6 +13,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
@@ -38,6 +41,7 @@ public class BackgroundService extends Service {
     DbOperation operation;
 
     IBinder mIBinder = new LocalBinder();
+    private Timer timer;
 
     private class LocalBinder extends Binder {
         BackgroundService getService() {
@@ -98,6 +102,38 @@ public class BackgroundService extends Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        final Handler handler = new Handler();
+        timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            getAutokattaContacts();
+                            Log.i("Background", "call webservice");
+                        } catch (Exception e) {
+                            Log.e("background", e.getMessage());
+
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 10000);
+
+    }
+
+    public void onDestroy() {
+//mNM.cancel(R.string.local_service_started);
+        try {
+            timer.cancel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stopSelf();
     }
 
     /*
@@ -119,6 +155,10 @@ public class BackgroundService extends Service {
                 public void onResponse(Call<GetAutokattaContactResponse> call, Response<GetAutokattaContactResponse> response) {
                     if (response.isSuccessful()) {
                         long result = 0;
+                        operation = new DbOperation(getApplicationContext());
+                        operation.OPEN();
+                        operation.deleteAutokattaContacts();
+                        operation.createAutokattaContactTable();
                         GetAutokattaContactResponse mContactResponse = response.body();
                         for (GetAutokattaContactResponse.Success success : mContactResponse.getSuccess()) {
                             success.setUserName(success.getUserName());
@@ -127,8 +167,7 @@ public class BackgroundService extends Service {
                             success.setFollowStatus(success.getFollowStatus());
                             success.setMystatus(success.getMystatus());
 
-                            operation = new DbOperation(getApplicationContext());
-                            operation.OPEN();
+
                             result = operation.addMyAutokattaContact(success.getUserName(), success.getProfilePic(),
                                     String.valueOf(success.getContact()), success.getFollowStatus(), success.getMystatus());
                         }

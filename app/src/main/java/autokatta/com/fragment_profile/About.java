@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetCompaniesResponse;
@@ -88,6 +89,7 @@ public class About extends Fragment implements RequestNotifier {
     boolean _hasLoadedOnce = false;
     Activity mActivity;
     LinearLayout mLinear;
+    GenericFunctions mGenericFunctions;
 
     @Override
     public void onAttach(Context context) {
@@ -102,6 +104,7 @@ public class About extends Fragment implements RequestNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAbout = inflater.inflate(R.layout.fragment_profile_about, container, false);
+
         return mAbout;
     }
 
@@ -109,14 +112,6 @@ public class About extends Fragment implements RequestNotifier {
     public boolean isValidUrl(String txtWebsite) {
         Pattern regex = Pattern.compile("^(WWW|www)\\.+[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|in|IN|COM|ORG|NET|MIL|EDU)$");
         Matcher matcher = regex.matcher(txtWebsite);
-        return matcher.matches();
-    }
-
-    private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
 
@@ -153,12 +148,12 @@ public class About extends Fragment implements RequestNotifier {
 
 
                         mContact.setText(contact);
-                        mProfession.setText(profession);
+                        mProfession.setText(profession+"-"+subProfession);
                         mEmail.setText(email);
                         mWebsite.setText(websitestr);
                         mCity.setText(city);
                         mCity.setEnabled(false);
-                        mCity.setFocusable(false);
+                       // mCity.setFocusable(false);
                         mCompany.setText(company);
                         mDesignation.setText(designation);
                         mSkills.setText(skills);
@@ -227,14 +222,14 @@ public class About extends Fragment implements RequestNotifier {
                         if (getActivity() != null) {
                             ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
                             spinner.setAdapter(dataadapter);
-                            List<String> name = new ArrayList<>();
-                            name.add(subProfession);
+                         /*   List<String> name = new ArrayList<>();
+                            name.add(subProfession);*/
                             for (int i = 0; i < module.size(); i++) {
                                 if (subProfession != null) {
                                     if (subProfession.equals(module.get(i))) {
                                         spinner.setSelection(i);
                                         if (getActivity() != null) {
-                                            ArrayAdapter<String> dataadapter1 = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, name);
+                                            ArrayAdapter<String> dataadapter1 = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
                                             spinner.setAdapter(dataadapter1);
                                         }
                                     }
@@ -284,8 +279,8 @@ public class About extends Fragment implements RequestNotifier {
             if (str.equals("Success_update_profile")) {
                 //showMessage(mActivity, "Profile Updated");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-                mCity.setEnabled(false);
-                mCity.setFocusable(false);
+             /*   mCity.setEnabled(false);
+                mCity.setFocusable(false);*/
             }
         }
     }
@@ -311,6 +306,7 @@ public class About extends Fragment implements RequestNotifier {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mApiCall = new ApiCall(getActivity(), this);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -335,6 +331,8 @@ public class About extends Fragment implements RequestNotifier {
 
                 mLinear = (LinearLayout) mAbout.findViewById(R.id.profileAbout);
 
+                mGenericFunctions = new GenericFunctions();
+
 
                 mApiCall.profileAbout(Sharedcontact, Sharedcontact);
                 mApiCall.getSkills();
@@ -342,6 +340,7 @@ public class About extends Fragment implements RequestNotifier {
                 mApiCall.getCompany();
                 mApiCall.Categories("");
         /*Get Designation,Skills,Company From web service*/
+
 
                 mProfession.setEnabled(false);
                 mContact.setEnabled(false);
@@ -375,12 +374,12 @@ public class About extends Fragment implements RequestNotifier {
                             spinner.setVisibility(View.GONE);
 
                         } else if (checkedId == R.id.employee) {
-                            mProfession.setText("Employee");
+                            mProfession.setText("Employee-"+subProfession);
                             spinner.setVisibility(View.VISIBLE);
                             spinner.setSelection(0);
 
                         } else if (checkedId == R.id.selfemployee) {
-                            mProfession.setText("Self Employee");
+                            mProfession.setText("Self Employee-"+subProfession);
                             spinner.setVisibility(View.VISIBLE);
                             spinner.setSelection(0);
 
@@ -408,9 +407,14 @@ public class About extends Fragment implements RequestNotifier {
                         } else if (selfemployee.isChecked()) {
                             spinner.setVisibility(View.VISIBLE);
                         }
+
+                        mCity.setFocusableInTouchMode(true);
+                        mCity.setFocusable(true);
+
                         mCity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
                         mProfession.setEnabled(true);
                         mCity.setEnabled(true);
+                        // mCity.setSelection(mCity.getText().length());
                         mContact.setEnabled(true);
                         mEmail.setEnabled(true);
                         mCompany.setEnabled(true);
@@ -465,7 +469,7 @@ public class About extends Fragment implements RequestNotifier {
                             e.printStackTrace();
                         }
 
-                        if (!isValidEmail(mUpdatedEmail))
+                        if (!mGenericFunctions.isValidEmail(mUpdatedEmail))
                             mEmail.setError("Invalid Email");
                         else if (!webflag && !isValidUrl(mUpdatedWebsite)) {
                             mWebsite.setError("Invalid Website");
@@ -556,11 +560,11 @@ public class About extends Fragment implements RequestNotifier {
                                 mCity.setFocusable(false);
                                 mEmail.setEnabled(false);
                                 mCompany.setEnabled(false);
-                                mCompany.setFocusable(false);
+                             //   mCompany.setFocusable(false);
                                 mDesignation.setEnabled(false);
-                                mDesignation.setFocusable(false);
+                              //  mDesignation.setFocusable(false);
                                 mSkills.setEnabled(false);
-                                mSkills.setFocusable(false);
+                             //   mSkills.setFocusable(false);
                             }
                         }
                     }

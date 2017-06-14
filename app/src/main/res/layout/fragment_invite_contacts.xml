@@ -22,4 +22,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/inputSearch"
         android:scrollbars="vertical" />
+
 </RelativeLayout>

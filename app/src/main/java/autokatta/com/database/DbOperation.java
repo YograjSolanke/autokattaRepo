@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import autokatta.com.R;
 
@@ -55,11 +54,11 @@ public class DbOperation {
             Cursor cursor = null;
             DbOperation operation = new DbOperation(mContext);
             operation.OPEN();
-            cursor = db.rawQuery(DbQuery.checkPresentNumber + contact + "'", null);
+            /*cursor = db.rawQuery(DbQuery.checkPresentNumber + contact + "'", null);
             Log.i("Query", "->" + DbQuery.checkPresentNumber + contact + "'");
             if (cursor.getCount() > 0) {
                 Log.e("Present", "->");
-            } else {
+            } else {*/
                 ContentValues values = new ContentValues();
                 values.put(DbConstants.userName, name);
                 values.put(DbConstants.contact, contact);
@@ -72,7 +71,7 @@ public class DbOperation {
                     values.put(DbConstants.profilePic, profilePic);
                 }
                 result = db.insert(DbConstants.tableMyAutokattaContacts, null, values);
-            }
+            // }
             operation.CLOSE();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,6 +90,28 @@ public class DbOperation {
             e.printStackTrace();
         }
         return cursor;
+    }
+
+    /*
+   Delete My Autokatta Contact...
+    */
+    public void deleteAutokattaContacts() {
+        /*Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(DbQuery.dropAutokattaContact, null);
+            cur
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cursor;*/
+        db.execSQL(DbQuery.dropAutokattaContact);
+    }
+
+    /*
+   Delete My Autokatta Contact...
+    */
+    public void createAutokattaContactTable() {
+        db.execSQL(DbQuery.create_table_AutokattaContact);
     }
 
     /*

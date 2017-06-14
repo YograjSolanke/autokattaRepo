@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +42,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     List<ModelGroups> mMyGroupsList = new ArrayList<>();
-    FloatingActionButton mFab;
+    com.github.clans.fab.FloatingActionButton mFab;
     MyAdapter mMyAdapter;
     ApiCall mApiCall;
     private TextView mPlaceHolder;
@@ -192,7 +191,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mPlaceHolder = (TextView) mMyGroups.findViewById(R.id.no_category);
                 mNoInternetIcon = (ImageButton) mMyGroups.findViewById(R.id.icon_nointernet);
                 mPlaceHolder.setVisibility(View.GONE);
-                mFab = (FloatingActionButton) mMyGroups.findViewById(R.id.fabCreateGroup);
+                mFab = (com.github.clans.fab.FloatingActionButton) mMyGroups.findViewById(R.id.fabCreateGroup);
                 mRecyclerView = (RecyclerView) mMyGroups.findViewById(R.id.rv_recycler_view);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mMyGroups.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView.setHasFixedSize(true);
@@ -229,12 +228,12 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         if (dy > 0) {
                             // Scroll Down
                             if (mFab.isShown()) {
-                                mFab.hide();
+                                mFab.hide(true);
                             }
                         } else if (dy < 0) {
                             // Scroll Up
                             if (!mFab.isShown()) {
-                                mFab.show();
+                                mFab.show(true);
                             }
                         }
 
