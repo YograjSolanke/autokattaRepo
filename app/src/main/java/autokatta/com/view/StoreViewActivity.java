@@ -170,11 +170,13 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                         mTeamVehicle.setVisibility(View.GONE);
                                         mTeamServices.setVisibility(View.GONE);
                                         mTeamProduct.setVisibility(View.GONE);
+
                                     }
                                 } else {
                                     mTeamVehicle.setVisibility(View.GONE);
                                     mTeamServices.setVisibility(View.GONE);
                                     mTeamProduct.setVisibility(View.VISIBLE);
+
                                 }
                             } else if (tab.getPosition() == 3) {
                                 if (storeOtherContact != null) {
@@ -182,11 +184,15 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                         mTeamVehicle.setVisibility(View.GONE);
                                         mTeamServices.setVisibility(View.GONE);
                                         mTeamProduct.setVisibility(View.GONE);
+                                        mShare.setVisibility(View.GONE);
+                                        mAutoshare.setVisibility(View.GONE);
                                     }
                                 } else {
                                     mTeamVehicle.setVisibility(View.GONE);
                                     mTeamServices.setVisibility(View.VISIBLE);
                                     mTeamProduct.setVisibility(View.GONE);
+                                    mShare.setVisibility(View.GONE);
+                                    mAutoshare.setVisibility(View.GONE);
                                 }
                             } else if (tab.getPosition() == 4) {
                                 if (storeOtherContact != null) {
@@ -194,16 +200,22 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                         mTeamVehicle.setVisibility(View.GONE);
                                         mTeamServices.setVisibility(View.GONE);
                                         mTeamProduct.setVisibility(View.GONE);
+                                        mShare.setVisibility(View.GONE);
+                                        mAutoshare.setVisibility(View.GONE);
                                     }
                                 } else {
                                     mTeamVehicle.setVisibility(View.VISIBLE);
                                     mTeamServices.setVisibility(View.GONE);
                                     mTeamProduct.setVisibility(View.GONE);
+                                    mShare.setVisibility(View.GONE);
+                                    mAutoshare.setVisibility(View.GONE);
                                 }
                             } else {
                                 mTeamVehicle.setVisibility(View.GONE);
                                 mTeamServices.setVisibility(View.GONE);
                                 mTeamProduct.setVisibility(View.GONE);
+                              /*  mShare.setVisibility(View.GONE);
+                                mAutoshare.setVisibility(View.GONE);*/
                             }
                         }
 

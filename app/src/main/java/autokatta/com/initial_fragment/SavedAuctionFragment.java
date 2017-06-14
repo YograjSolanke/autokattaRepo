@@ -80,7 +80,7 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

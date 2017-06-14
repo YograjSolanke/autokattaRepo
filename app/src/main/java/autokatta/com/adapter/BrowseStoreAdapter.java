@@ -270,9 +270,11 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.linearshare1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String timing = success.getStoreOpenTime() + "" + success.getStoreCloseTime();
                 allDetails = success.getStoreName() + "=" +
-                        success.getWebsite() + "=" +
-                        "-" + "=" +
+                        success.getWebsite() + "="
+                        + timing + "=" +
                         success.getWorkingDays() + "=" +
                         "" + "=" +
                         success.getLocation() + "=" +
