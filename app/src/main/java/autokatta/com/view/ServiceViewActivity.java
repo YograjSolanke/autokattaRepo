@@ -749,13 +749,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
                 }
                 //field validation
-                if (uptype.equals("")||uptype.startsWith(" ")&&uptype.endsWith(" ")) {
+                if (uptype.equals("") || uptype.startsWith(" ") && uptype.endsWith(" ")) {
                     servicetype.setError("Enter service Type");
-                } else if (upname.equals("")||upname.startsWith(" ")&&upname.endsWith(" ")) {
+                } else if (upname.equals("") || upname.startsWith(" ") && upname.endsWith(" ")) {
                     servicename.setError("Enter Service Name");
-                } else if (upprice.equals("")||upprice.startsWith(" ")&&upprice.endsWith(" ")) {
+                } else if (upprice.equals("") || upprice.startsWith(" ") && upprice.endsWith(" ")) {
                     serviceprice.setError("Enter Service Price");
-                } else if (updetails.equals("")||updetails.startsWith(" ")&&updetails.endsWith(" ")) {
+                } else if (updetails.equals("") || updetails.startsWith(" ") && updetails.endsWith(" ")) {
                     servicedetails.setError("Enter Service Details");
                 } else {
                     servicename.setEnabled(false);
@@ -861,19 +861,27 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 break;
 
             case R.id.linearlike:
-                linearlike.setVisibility(View.GONE);
-                linearunlike.setVisibility(View.VISIBLE);
-                sendLike();
-                lcnt = lcnt + 1;
-                textlike.setText("Like(" + lcnt + ")");
+                if (storecontact.contains(contact)) {
+                    CustomToast.customToast(getApplicationContext(), "You can't Like Your Own Service");
+                } else {
+                    linearlike.setVisibility(View.GONE);
+                    linearunlike.setVisibility(View.VISIBLE);
+                    sendLike();
+                    lcnt = lcnt + 1;
+                    textlike.setText("Like(" + lcnt + ")");
+                }
                 break;
 
             case R.id.linearunlike:
-                linearlike.setVisibility(View.VISIBLE);
-                linearunlike.setVisibility(View.GONE);
-                sendUnlike();
-                lcnt = lcnt - 1;
-                textlike.setText("Like(" + lcnt + ")");
+                if (storecontact.contains(contact)) {
+                    CustomToast.customToast(getApplicationContext(), "You can't Unlike Your Own Service");
+                } else {
+                    linearlike.setVisibility(View.VISIBLE);
+                    linearunlike.setVisibility(View.GONE);
+                    sendUnlike();
+                    lcnt = lcnt - 1;
+                    textlike.setText("Like(" + lcnt + ")");
+                }
                 break;
 
             case R.id.linearshare1:
