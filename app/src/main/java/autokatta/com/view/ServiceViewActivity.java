@@ -30,7 +30,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
@@ -539,7 +538,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 }
                                 sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
                                 sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-                                sliderLayout.setCustomAnimation(new DescriptionAnimation());
+                                //sliderLayout.setCustomAnimation(new DescriptionAnimation());
                                 sliderLayout.setDuration(3000);
                                 sliderLayout.addOnPageChangeListener(this);
                             }
