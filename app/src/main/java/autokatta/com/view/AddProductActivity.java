@@ -53,7 +53,6 @@ import retrofit2.Response;
 public class AddProductActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
 
-
     String store_id, myContact;
     EditText productname, productprice, productdetails, producttype;
     MultiAutoCompleteTextView multiautotext, autoCategory, multiautobrand;
@@ -75,6 +74,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     int REQUEST_CODE_PICKER = 2000;
     String stringgroupids = "";
     String name, price, details, type, name1, category;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -229,7 +229,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
 
                     }
-                    if (tagflag) {
+                    /*if (tagflag) {
                         tagid = tagid.substring(1);
                         System.out.println("response tag iddddddddddddddd=" + tagid);
                         if (!idlist.equalsIgnoreCase(""))
@@ -238,7 +238,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                             idlist = tagid;
                         System.out.println("final idlist iddddddddddddddd=" + idlist);
 
-                    }
+                    }*/
 
 
                     ArrayList<String> tempbrands = new ArrayList<String>();
@@ -398,6 +398,14 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     CustomToast.customToast(AddProductActivity.this, "Other Tag added successfully");
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
                     tagflag = true;
+
+                    tagid = tagid.substring(1);
+                    if (!idlist.equalsIgnoreCase(""))
+                        idlist = idlist + "," + tagid;
+                    else
+                        idlist = tagid;
+                    System.out.println("final idlist iddddddddddddddd=" + idlist);
+
                 } else if (response.body() instanceof ProductAddedResponse) {
                     CustomToast.customToast(AddProductActivity.this, "Product added successfully");
 

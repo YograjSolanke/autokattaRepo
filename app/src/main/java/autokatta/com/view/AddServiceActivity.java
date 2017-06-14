@@ -245,7 +245,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
 
                     }
-                    if (tagflag) {
+                    /*if (tagflag) {
                         tagid = tagid.substring(1);
                         System.out.println("response tag iddddddddddddddd=" + tagid);
                         if (!idlist.equalsIgnoreCase(""))
@@ -254,7 +254,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                             idlist = tagid;
                         System.out.println("final idlist iddddddddddddddd=" + idlist);
 
-                    }
+                    }*/
 
 
                     ArrayList<String> tempbrands = new ArrayList<String>();
@@ -369,6 +369,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         ApiCall mApiCall = new ApiCall(AddServiceActivity.this, this);
         mApiCall.addService(store_id, service_name, price, service_details, service_tags, service_type, images, category, brandtags, group_id);
     }
+
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
@@ -412,6 +413,14 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     CustomToast.customToast(AddServiceActivity.this, "Other Tag added successfully");
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
                     tagflag = true;
+
+                    tagid = tagid.substring(1);
+                    if (!idlist.equalsIgnoreCase(""))
+                        idlist = idlist + "," + tagid;
+                    else
+                        idlist = tagid;
+                    System.out.println("final idlist iddddddddddddddd=" + idlist);
+
                 } else if (response.body() instanceof ServiceAddedResponse) {
                     CustomToast.customToast(AddServiceActivity.this, "Service added successfully");
                     ServiceAddedResponse productAddedResponse = (ServiceAddedResponse) response.body();
