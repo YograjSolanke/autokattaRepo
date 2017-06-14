@@ -99,6 +99,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        final int safePosition = holder.getAdapterPosition();
         view = holder;
         holder.mGroupTitleID.setText(mItemList.get(position).getTitle());
         holder.mEditMemberCount.setText(String.valueOf(mItemList.get(position).getGroupCount()));
@@ -144,9 +145,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                                 keyword = "delete";
                                 //new DeleteGroup().execute();
                                 mApiCall.deleteGroup(mGroupid, keyword, mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-                                mItemList.remove(position);
-                                notifyItemRemoved(position);
-                                notifyItemRangeChanged(position, mItemList.size());
+                                mItemList.remove(safePosition);
+                                notifyItemRemoved(safePosition);
+                                notifyItemRangeChanged(safePosition, mItemList.size());
 //  grouplist.remove(position);
 //                                notifyDataSetChanged();
                             }

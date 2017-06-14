@@ -165,6 +165,8 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         mMyGroupsList.clear();
         getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", ""));
+        mRecyclerView.getRecycledViewPool().clear();
+        mMyAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -95,6 +95,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
                     }
                     mMyAdapter = new MyAdapter(getActivity(), mJoinedGroupsList, "JoinedGroups");
                     mRecyclerView.setAdapter(mMyAdapter);
+                    mRecyclerView.getRecycledViewPool().clear();
                     mMyAdapter.notifyDataSetChanged();
                 } else {
                     mPlaceHolder.setVisibility(View.VISIBLE);
@@ -141,6 +142,8 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
         mJoinedGroupsList.clear();
         getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", ""));
+        mRecyclerView.getRecycledViewPool().clear();
+        mMyAdapter.notifyDataSetChanged();
     }
 
     @Override
