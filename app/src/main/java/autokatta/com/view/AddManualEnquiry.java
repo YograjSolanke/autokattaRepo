@@ -1,9 +1,13 @@
 package autokatta.com.view;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.gsm.SmsManager;
@@ -18,23 +22,21 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.Registration.InviteFriends;
 import autokatta.com.adapter.GooglePlacesAdapter;
-import autokatta.com.adapter.InventoryAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.GetInventoryResponse;
 import retrofit2.Response;
 
 public class AddManualEnquiry extends AppCompatActivity implements RequestNotifier, View.OnTouchListener {
@@ -43,17 +45,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     AutoCompleteTextView autoAddress;
     Spinner spnInventory, spnStatus;
     String myContact;
-    TextView txtUser, txtInvite;
-    ImageView imgCheck, imgCross;
+    LinearLayout txtUser, txtInvite;
+    ImageView imgContact;
     RelativeLayout mRelative;
-    List<GetInventoryResponse.Success> mItemList = new ArrayList<>();
-    List<String> arrayList = new ArrayList<>();
-    InventoryAdapter adapter;
-    //ListView mListView;
-    String addArray = "", mInventoryType;
     android.support.v4.widget.NestedScrollView scrollView;
     TextView mNoData;
     Menu menu;
+    private final int REQUEST_CODE = 99;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +63,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        setTitle("Add Enquiry");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -79,12 +78,11 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 spnStatus = (Spinner) findViewById(R.id.spnStatus);
                 edtDate = (EditText) findViewById(R.id.edtDate);
                 edtTime = (EditText) findViewById(R.id.edtTime);
-                txtUser = (TextView) findViewById(R.id.txtUser);
+                txtUser = (LinearLayout) findViewById(R.id.txtUser);
                 // mListView = (ListView) findViewById(R.id.vehicle_list);
                 scrollView = (NestedScrollView) findViewById(R.id.scroll_view);
-                imgCheck = (ImageView) findViewById(R.id.imgCheck);
-                imgCross = (ImageView) findViewById(R.id.imgCross);
-                txtInvite = (TextView) findViewById(R.id.txtInvite);
+                imgContact = (ImageView) findViewById(R.id.contact_list);
+                txtInvite = (LinearLayout) findViewById(R.id.txtInvite);
                 mNoData = (TextView) findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
@@ -101,8 +99,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         txtUser.setVisibility(View.GONE);
-                        imgCheck.setVisibility(View.GONE);
-                        imgCross.setVisibility(View.GONE);
                         txtInvite.setVisibility(View.GONE);
 
                         if (s.length() == 10) {
@@ -118,8 +114,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     @Override
                     public void afterTextChanged(Editable s) {
                         txtUser.setVisibility(View.GONE);
-                        imgCheck.setVisibility(View.GONE);
-                        imgCross.setVisibility(View.GONE);
                         txtInvite.setVisibility(View.GONE);
                     }
                 });
@@ -155,6 +149,14 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
 
+                    }
+                });
+
+                imgContact.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                        startActivityForResult(intent, REQUEST_CODE);
                     }
                 });
             }
@@ -210,7 +212,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     mListView.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
                 } else {*/
-                    onBackPressed();
+                onBackPressed();
 
                 // }
                 mNoData.setVisibility(View.GONE);
@@ -261,13 +263,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     }
                 }*/
 
-                if (custName.equalsIgnoreCase("")||custName.startsWith(" ")&&custName.startsWith(" ")) {
+                if (custName.equalsIgnoreCase("") || custName.startsWith(" ") && custName.startsWith(" ")) {
                     edtName.setError("Please provide customer name");
                     edtName.requestFocus();
-                } else if (custContact.isEmpty()||custContact.startsWith(" ")&&custContact.startsWith(" ")) {
+                } else if (custContact.isEmpty() || custContact.startsWith(" ") && custContact.startsWith(" ")) {
                     edtContact.setError("Please provide customer contact");
                     edtContact.requestFocus();
-                } else if (custAddress.equals("")||custAddress.startsWith(" ")&&custAddress.startsWith(" ")) {
+                } else if (custAddress.equals("") || custAddress.startsWith(" ") && custAddress.startsWith(" ")) {
                     autoAddress.setError("Enter Address");
                     autoAddress.requestFocus();
                 } else if (!flag) {
@@ -465,16 +467,47 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
                 txtUser.setVisibility(View.VISIBLE);
-                imgCheck.setVisibility(View.VISIBLE);
-                imgCross.setVisibility(View.GONE);
                 txtInvite.setVisibility(View.GONE);
             } else {
-                imgCross.setVisibility(View.VISIBLE);
                 txtInvite.setVisibility(View.VISIBLE);
                 txtUser.setVisibility(View.GONE);
-                imgCheck.setVisibility(View.GONE);
             }
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+    }
+
+    @Override
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+        switch (reqCode) {
+            case (REQUEST_CODE):
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+                        Uri contactData = data.getData();
+                        Cursor c = getContentResolver().query(contactData, null, null, null, null);
+                        if (c.moveToFirst()) {
+                            String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                            String hasNumber = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                            String num = "";
+                            if (Integer.valueOf(hasNumber) == 1) {
+                                Cursor numbers = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+                                while (numbers.moveToNext()) {
+                                    num = numbers.getString(numbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                    num = num.replaceAll("-", "");
+                                    num = num.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
+
+                                    if (num.length() > 10)
+                                        num = num.substring(num.length() - 10);
+                                    Toast.makeText(AddManualEnquiry.this, "Number=" + num, Toast.LENGTH_LONG).show();
+                                    edtContact.setText(num);
+                                }
+                            }
+                        }
+                        break;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        }
     }
 }

@@ -82,6 +82,9 @@ public class ShareWithinAppTabFragment extends Fragment {
             b.putString("exchange_id", exchange_id);
             b.putString("keyword", keyword);
 
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putString("Share_keyword", "").apply();
+
             switch (position) {
                 case 0:
                     ShareWithContactFragment fr = new ShareWithContactFragment();

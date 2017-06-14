@@ -50,6 +50,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        setTitle("Select Vehicle");
         mListView = (ListView) findViewById(R.id.vehicle_list);
         mSubmit = (Button) findViewById(R.id.submit);
         mSubmit.setOnClickListener(this);
@@ -90,7 +91,6 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 if (response.body() instanceof AddManualEnquiryResponse) {
                     AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
                     if (enquiryResponse.getSuccess() != null) {
