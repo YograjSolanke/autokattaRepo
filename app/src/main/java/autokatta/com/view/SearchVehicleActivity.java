@@ -805,7 +805,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     Toast.makeText(getApplicationContext(), "select subcategory", Toast.LENGTH_LONG).show();
 
                 } else if (brandSpinner.getSelectedItem().toString().equalsIgnoreCase("Select Brands")) {
-                    Toast.makeText(getApplicationContext(), "select brandSpinner", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "select brand", Toast.LENGTH_LONG).show();
 
                 } else if (modelSpinner.getSelectedItem().toString().equalsIgnoreCase("Select model")) {
                     Toast.makeText(getApplicationContext(), "select model", Toast.LENGTH_LONG).show();
