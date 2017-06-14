@@ -88,8 +88,8 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
         if (response != null) {
             if (response.isSuccessful()) {
                 mHeaderList = new ArrayList<>();
-                mHeaderList.add("MyGroups");
-                mHeaderList.add("JoinedGroups");
+                mHeaderList.add("My Groups");
+                mHeaderList.add("Joined Groups");
 
                 ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
                 for (ProfileGroupResponse.MyGroup success : profileGroupResponse.getSuccess().getMyGroups()) {

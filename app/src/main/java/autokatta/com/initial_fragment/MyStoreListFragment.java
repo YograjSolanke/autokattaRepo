@@ -48,6 +48,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     ConnectionDetector mTestConnection;
     LinearLayoutManager mLinearLayoutManager;
     TextView mNoData;
+    MyStoreListAdapter adapter;
 
     private static int firstVisibleInListview;
 
@@ -90,7 +91,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                         storeResponseArrayList.add(Sresponse);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    MyStoreListAdapter adapter = new MyStoreListAdapter(getActivity(), storeResponseArrayList);
+                    adapter = new MyStoreListAdapter(getActivity(), storeResponseArrayList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -187,6 +188,8 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     @Override
     public void onRefresh() {
         apiCall.MyStoreList(myContact);
+        mRecyclerView.getRecycledViewPool().clear();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
