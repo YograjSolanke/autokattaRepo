@@ -39,6 +39,7 @@ import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.view.GroupTabs;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
+import autokatta.com.view.UserProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -233,6 +234,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             @Override
             public void onClick(View v) {
                 if (holder.mContact.getText().toString().equals(myContact)) {
+                 Intent i=new Intent(mActivity, UserProfile.class);
+                    mActivity.startActivity(i);
                     Log.e("You", "->");
                 } else {
                     Bundle bundle = new Bundle();

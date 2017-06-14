@@ -45,6 +45,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:orientation="vertical">
 
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,7 +60,14 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/worked_at"
                 android:textColor="#708090"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/subprofession"
+                android:hint="Sub Profession"/>
+
 
         </LinearLayout>
 

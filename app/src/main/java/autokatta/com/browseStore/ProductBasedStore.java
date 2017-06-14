@@ -222,7 +222,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
 
     @Override
     public void onRefresh() {
-//        mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
 //        getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
 //                .getString("loginContact", ""));
     }

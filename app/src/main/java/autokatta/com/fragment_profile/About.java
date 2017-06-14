@@ -58,7 +58,7 @@ public class About extends Fragment implements RequestNotifier {
     ImageView mDone;
     ImageView mEdit;
     EditText mWebsite, mEmail;
-    TextView mContact, mProfession;
+    TextView mContact, mProfession,msubprofession;
     AutoCompleteTextView mCompany, mDesignation, mCity;
     MultiAutoCompleteTextView mSkills;
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
@@ -148,7 +148,15 @@ public class About extends Fragment implements RequestNotifier {
 
 
                         mContact.setText(contact);
-                        mProfession.setText(profession+"-"+subProfession);
+                        Log.i("Profession-->","   --->"+profession);
+                        Log.i("SUBProfession-->","   --->"+subProfession);
+                        if (!subProfession.equalsIgnoreCase("Select Category")) {
+                            msubprofession.setText("Sub Profession- "+subProfession);
+                        }/*else
+                        {
+                           msubprofession.setText("Sub Profession- "+"NA");
+                        }*/
+                        mProfession.setText(profession);
                         mEmail.setText(email);
                         mWebsite.setText(websitestr);
                         mCity.setText(city);
@@ -314,6 +322,7 @@ public class About extends Fragment implements RequestNotifier {
                         MODE_PRIVATE).getString("loginContact", "");
                 mContact = (TextView) mAbout.findViewById(R.id.contact_no);
                 mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
+                msubprofession= (TextView) mAbout.findViewById(R.id.subprofession);
                 mEmail = (EditText) mAbout.findViewById(R.id.email);
                 mWebsite = (EditText) mAbout.findViewById(R.id.website);
                 mCity = (AutoCompleteTextView) mAbout.findViewById(R.id.address);
@@ -374,12 +383,12 @@ public class About extends Fragment implements RequestNotifier {
                             spinner.setVisibility(View.GONE);
 
                         } else if (checkedId == R.id.employee) {
-                            mProfession.setText("Employee-"+subProfession);
+                            mProfession.setText("Employee");
                             spinner.setVisibility(View.VISIBLE);
                             spinner.setSelection(0);
 
                         } else if (checkedId == R.id.selfemployee) {
-                            mProfession.setText("Self Employee-"+subProfession);
+                            mProfession.setText("Self Employee");
                             spinner.setVisibility(View.VISIBLE);
                             spinner.setSelection(0);
 
@@ -393,11 +402,11 @@ public class About extends Fragment implements RequestNotifier {
                     public void onClick(View view) {
                         mDone.setVisibility(View.VISIBLE);
                         mEdit.setVisibility(View.GONE);
-                        if (profession.equalsIgnoreCase("student")) {
+                        if (profession.startsWith("Student")) {
                             student.setChecked(true);
-                        } else if (profession.equalsIgnoreCase("employee")) {
+                        } else if (profession.startsWith("Employee")) {
                             employee.setChecked(true);
-                        } else if (profession.equalsIgnoreCase("self employee")) {
+                        } else if (profession.startsWith("Self Employee")) {
                             selfemployee.setChecked(true);
                         }
                         if (student.isChecked()) {
