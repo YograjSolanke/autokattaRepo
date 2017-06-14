@@ -135,9 +135,11 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mAuctionEventLinear.setVisibility(View.VISIBLE);
+                                    mAuctionEvent.setBackgroundColor(getResources().getColor(R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mAuctionEventLinear.setVisibility(View.GONE);
+                                    mAuctionEvent.setBackgroundColor(getResources().getColor(R.color.white));
                                 }
                             }
                         }
@@ -152,9 +154,11 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mLoanMelaLinear.setVisibility(View.VISIBLE);
+                                    mLoanMela.setBackgroundColor(getResources().getColor(R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mLoanMelaLinear.setVisibility(View.GONE);
+                                    mLoanMela.setBackgroundColor(getResources().getColor(R.color.white));
                                 }
                             }
                         }
@@ -169,9 +173,11 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mExchangeEventLinear.setVisibility(View.VISIBLE);
+                                    mExchangeEvent.setBackgroundColor(getResources().getColor(R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mExchangeEventLinear.setVisibility(View.GONE);
+                                    mExchangeEvent.setBackgroundColor(getResources().getColor(R.color.white));
                                 }
                             }
                         }
@@ -186,9 +192,11 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mServiceEventLinear.setVisibility(View.VISIBLE);
+                                    mServiceEvent.setBackgroundColor(getResources().getColor(R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mServiceEventLinear.setVisibility(View.GONE);
+                                    mServiceEvent.setBackgroundColor(getResources().getColor(R.color.white));
                                 }
                             }
                         }
@@ -203,9 +211,11 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mSaleEventLinear.setVisibility(View.VISIBLE);
+                                    mSaleEvent.setBackgroundColor(getResources().getColor(R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mSaleEventLinear.setVisibility(View.GONE);
+                                    mSaleEvent.setBackgroundColor(getResources().getColor(R.color.white));
                                 }
                             }
                         }
