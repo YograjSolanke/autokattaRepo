@@ -801,14 +801,14 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                 } else if (Category.equalsIgnoreCase("Select Category")) {
                     Toast.makeText(getApplicationContext(), "select category", Toast.LENGTH_LONG).show();
 
-                } else if (subcategorySpinner.getSelectedItem().toString().equalsIgnoreCase("Select subcategorySpinner")) {
-                    Toast.makeText(getApplicationContext(), "select subcategorySpinner", Toast.LENGTH_LONG).show();
+                } else if (subcategorySpinner.getSelectedItem().toString().equalsIgnoreCase("Select subcategory")) {
+                    Toast.makeText(getApplicationContext(), "select subcategory", Toast.LENGTH_LONG).show();
 
                 } else if (brandSpinner.getSelectedItem().toString().equalsIgnoreCase("Select Brands")) {
                     Toast.makeText(getApplicationContext(), "select brandSpinner", Toast.LENGTH_LONG).show();
 
-                } else if (modelSpinner.getSelectedItem().toString().equalsIgnoreCase("Select modelSpinner")) {
-                    Toast.makeText(getApplicationContext(), "select modelSpinner", Toast.LENGTH_LONG).show();
+                } else if (modelSpinner.getSelectedItem().toString().equalsIgnoreCase("Select model")) {
+                    Toast.makeText(getApplicationContext(), "select model", Toast.LENGTH_LONG).show();
 
                 } else {
                     applySearch();
@@ -1165,7 +1165,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     final List<String> parsedData = new ArrayList<>();
                     final HashMap<String, String> mSubTypeMap = new HashMap<>();
 
-                    mSubTypeList.add("Select subcategorySpinner");
+                    mSubTypeList.add("Select subcategory");
                     GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
                         subTypeResponse.setId(subTypeResponse.getId());
@@ -1261,7 +1261,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     final List<String> modelData = new ArrayList<>();
                     final HashMap<String, String> mModelMap = new HashMap<>();
 
-                    mModelList.add("Select modelSpinner");
+                    mModelList.add("Select model");
                     GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
                     for (GetVehicleModelResponse.Success modelResponse : getVehicleModelResponse.getSuccess()) {
                         modelResponse.setModelId(modelResponse.getModelId());
