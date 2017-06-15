@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -47,6 +49,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     boolean _hasLoadedOnce = false;
     TextView NoData;
     Activity activity;
+    RelativeLayout filterToHide;
 
     public GroupServicesFragment() {
         //empty fragments...
@@ -64,13 +67,12 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getGroupService(GroupId, myContact);
         } else {
-            //errorMessage(activity, getString(R.string.no_internet));
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
         getServices(mGroupId);
     }
 
@@ -112,15 +114,15 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 } else {
                     NoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    // showMessage(activity, "No Service Found");
+                    Toast.makeText(getActivity(), "No services found", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                //showMessage(activity, "No Service Found");
+                Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            //showMessage(activity, getString(R.string.no_response));
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -138,25 +140,15 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            if (activity != null) {
-                // showMessage(activity, getString(R.string._404_));
-            }
+            Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            if (activity != null) {
-                // showMessage(activity, getString(R.string.no_response));
-            }
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            if (activity != null) {
-                //  showMessage(activity, getString(R.string.no_response));
-            }
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
-            if (activity != null) {
-                //  errorMessage(activity, getString(R.string.no_internet));
-            }
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         } else if (error instanceof UnknownHostException) {
-            if (activity != null) {
-                //   errorMessage(activity, getString(R.string.no_internet));
-            }
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
                     , "groupservicesfragment");
@@ -190,6 +182,9 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 mTestConnection = new ConnectionDetector(getActivity());
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
                 NoData = (TextView) mService.findViewById(R.id.no_category);
+                NoData.setVisibility(View.GONE);
+                filterToHide = (RelativeLayout) mService.findViewById(R.id.rel);
+                filterToHide.setVisibility(View.GONE);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(getActivity());

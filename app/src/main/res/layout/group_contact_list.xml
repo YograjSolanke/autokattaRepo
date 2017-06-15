@@ -22,7 +22,8 @@
             android:hint=" Search Contacts.."
             android:inputType="textVisiblePassword"
             android:textColor="#2C3343"
-            android:textColorHint="#848484" />
+            android:textColorHint="#848484"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/add_contacts"
