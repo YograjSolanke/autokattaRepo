@@ -266,7 +266,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
                 b.putString("category", strCategory);
                 b.putString("location", strLocation);
 
-                finish();
+                //finish();
                 Intent intent = new Intent(PreviewMyActiveAuctionActivity.this, PreviewNextMyActiveAuctionActivity.class);
                 intent.putExtras(b);
                 startActivity(intent);
@@ -336,6 +336,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }
     }

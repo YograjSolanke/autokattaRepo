@@ -53,7 +53,6 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyactiveAuction = inflater.inflate(R.layout.fragment_simple_listview, container, false);
-
         return mMyactiveAuction;
     }
 

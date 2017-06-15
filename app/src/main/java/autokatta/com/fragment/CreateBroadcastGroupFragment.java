@@ -117,9 +117,6 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
             @Override
             public void onClick(View v) {
 
-                System.out.println("Hiii Clicked11111111111111111111111111111111111111111111111111111111111");
-
-
             /*get checked Items*/
                 finalContacts = "";
                 groupTitle = edittitle.getText().toString();
@@ -136,7 +133,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                         }
                     }
                 }
-                if (groupTitle.equals("")||groupTitle.startsWith(" ")&&groupTitle.endsWith(" ")) {
+                if (groupTitle.equals("") || groupTitle.startsWith(" ") && groupTitle.endsWith(" ")) {
                     Toast.makeText(getActivity(), "Please enter group Title",
                             Toast.LENGTH_LONG).show();
                     //return;
