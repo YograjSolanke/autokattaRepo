@@ -24,7 +24,8 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="3"
+       >
 
         <Button
             android:id="@+id/btnSendMsg"
@@ -34,7 +35,8 @@
             android:background="@color/background"
             android:text="Send Message"
             android:textAllCaps="false"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/deletegroup"
@@ -44,7 +46,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:src="@android:drawable/ic_menu_delete"
-            android:visibility="gone"/>
+            android:visibility="gone"
+           />
 
     </LinearLayout>
 

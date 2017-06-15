@@ -101,7 +101,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         btnSendMessage.setEnabled(false);
         imgDeleteGroup = (ImageView) mMyBroadcast.findViewById(R.id.deletegroup);
 
-        com.github.clans.fab.FloatingActionButton createGroup = (com.github.clans.fab.FloatingActionButton) mMyBroadcast.findViewById(R.id.fabCreateBroadcastGroup);
+        final com.github.clans.fab.FloatingActionButton createGroup = (com.github.clans.fab.FloatingActionButton) mMyBroadcast.findViewById(R.id.fabCreateBroadcastGroup);
         btnSendMessage.setOnClickListener(this);
         imgDeleteGroup.setOnClickListener(this);
         createGroup.setOnClickListener(this);
@@ -123,6 +123,38 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
                 mApiCall.MyBroadcastGroups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+            }
+        });
+
+            /*
+                On Scrolled Changed Listener...
+                 */
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        /*if (dy > 0 ||dy<0 && mFab.isShown())
+                            mFab.hide();*/
+                if (dy > 0) {
+                    // Scroll Down
+                    if (createGroup.isShown()) {
+                        createGroup.hide(true);
+                    }
+                } else if (dy < 0) {
+                    // Scroll Up
+                    if (!createGroup.isShown()) {
+                        createGroup.show(true);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                        /*if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                            mFab.show();
+                        }*/
+                super.onScrollStateChanged(recyclerView, newState);
             }
         });
 
@@ -408,8 +440,10 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     if (positionArray.contains(true)) {
                         btnSendMessage.setEnabled(true);
                         imgDeleteGroup.setVisibility(View.VISIBLE);
+                        btnSendMessage.setVisibility(View.VISIBLE);
                     } else {
                         btnSendMessage.setEnabled(false);
+                        btnSendMessage.setVisibility(View.GONE);
                         imgDeleteGroup.setVisibility(View.GONE);
                     }
 

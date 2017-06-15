@@ -68,7 +68,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserProfile extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
+public class  UserProfile extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     ImageView mProfilePicture;
     Bundle mUserProfileBundle;
