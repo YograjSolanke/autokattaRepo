@@ -24,11 +24,11 @@ import autokatta.com.events.CreateServiceMelaFragment;
 public class CreateEventFragment extends Fragment implements View.OnClickListener {
 
     View mCreateEventFragment;
+    TextView textAuction, textLoanMela, textExchangeMela, textSaleMela, textServiceMela;
 
     public CreateEventFragment() {
+        //empty fragment
     }
-
-    TextView textAuction, textLoanMela, textExchangeMela, textSaleMela, textServiceMela;
 
     @Nullable
     @Override

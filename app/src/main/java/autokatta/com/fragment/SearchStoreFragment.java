@@ -1,5 +1,6 @@
 package autokatta.com.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     TextView mNoData;
     String myContact, storecontact, location, phrase, radius, brands, finalCategory;
     ViewSearchedStoreAdapter adapter;
+    private ProgressDialog dialog;
 
     public SearchStoreFragment() {
         //empty constructor
@@ -56,7 +58,8 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
         mNoData = (TextView) mSearchStore.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
         mRecyclerView = (RecyclerView) mSearchStore.findViewById(R.id.recyclerSearchStore);
@@ -136,16 +139,21 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     private void getData(String myContact, String storecontact, String location, String finalCategory, String phrase, String radius, String brands) {
         final ApiCall apiCall = new ApiCall(getActivity(), this);
         //API Call
+        dialog.show();
         apiCall.SearchStore(myContact, storecontact, location, finalCategory, phrase, radius, brands);
     }
 
     @Override
     public void onRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
+        getData(myContact, storecontact, location, finalCategory, phrase, radius, brands);
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchStoreResponse searchStoreResponse = (SearchStoreResponse) response.body();
@@ -191,6 +199,9 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             // showMessage(getActivity(), getString(R.string._404_));
@@ -254,5 +265,6 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public void onResume() {
         super.onResume();
+        getData(myContact, storecontact, location, finalCategory, phrase, radius, brands);
     }
 }
