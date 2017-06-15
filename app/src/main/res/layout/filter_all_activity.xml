@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tableRow1"
         android:layout_above="@+id/tablerowfloat">
 
         <LinearLayout
@@ -29,24 +28,24 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/financetxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toLeftOf="@+id/finacialEdit1"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/finacialEdit1"
                         android:text="Finance Required:"
-                        android:textColor="#2C3343"
-                        android:id="@+id/financetxt" />
+                        android:textColor="#2C3343" />
 
                     <Spinner
                         android:id="@+id/finacialEdit1"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:entries="@array/finacial"
                         android:background="#80bebebe"
-                        android:ems="10" />
+                        android:ems="10"
+                        android:entries="@array/finacial" />
                 </RelativeLayout>
             </TableRow>
 
@@ -64,18 +63,18 @@
                         android:id="@+id/messageText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toLeftOf="@+id/allCategory1"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/allCategory1"
                         android:text="Category:"
                         android:textColor="#2C3343"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <Spinner
                         android:id="@+id/allCategory1"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe" />
                 </RelativeLayout>
@@ -95,19 +94,19 @@
                         android:id="@+id/messageText1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/subCategory"
                         android:text="Sub category:"
                         android:textColor="#2C3343"
-                        android:layout_toLeftOf="@+id/subCategory"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <Spinner
                         android:id="@+id/subCategory"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
-                        android:background="#80bebebe"
-                        android:layout_alignParentRight="true" />
+                        android:layout_alignParentEnd="true"
+                        android:background="#80bebebe" />
                 </RelativeLayout>
             </TableRow>
 
@@ -115,8 +114,8 @@
                 android:id="@+id/rowPermit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -126,7 +125,7 @@
                         android:id="@+id/group_title_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:text="Permit/Private "
                         android:textColor="@color/black" />
@@ -136,23 +135,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="36dp"
-                        android:layout_toRightOf="@+id/group_title_id">
+                        android:layout_marginStart="36dp"
+                        android:layout_toEndOf="@+id/group_title_id">
 
                         <RadioButton
                             android:id="@+id/tourist_passing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentTop="true"
                             android:text="Tourist Passing" />
 
                         <RadioButton
                             android:id="@+id/private_passing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@+id/tourist_passing"
                             android:text="Private" />
                     </RadioGroup>
 
@@ -171,21 +166,21 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/brandtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toLeftOf="@+id/BrandEdit1"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/BrandEdit1"
                         android:text="Brand:"
                         android:textColor="#2C3343"
-                        android:textSize="15dp"
-                        android:id="@+id/brandtxt" />
+                        android:textSize="15sp" />
 
                     <Spinner
                         android:id="@+id/BrandEdit1"
                         android:layout_width="200dp"
                         android:layout_height="40dip"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10" />
@@ -203,21 +198,21 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/modeltxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toLeftOf="@+id/ModelEdit1"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/ModelEdit1"
                         android:text="Model:"
                         android:textColor="#2C3343"
-                        android:textSize="15dp"
-                        android:id="@+id/modeltxt" />
+                        android:textSize="15sp" />
 
                     <Spinner
                         android:id="@+id/ModelEdit1"
                         android:layout_width="200dp"
                         android:layout_height="40dip"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10" />
@@ -235,21 +230,21 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/versiontxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/VersionEdit1"
+                        android:layout_toStartOf="@+id/VersionEdit1"
                         android:text="Version:"
                         android:textColor="#2C3343"
-                        android:textSize="15dp"
-                        android:id="@+id/versiontxt" />
+                        android:textSize="15sp" />
 
                     <Spinner
                         android:id="@+id/VersionEdit1"
                         android:layout_width="200dp"
                         android:layout_height="40dip"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:background="#80bebebe"
                         android:ems="10" />
@@ -267,93 +262,87 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:text="Location city:"
                         android:textColor="#2C3343"
-                        android:textSize="15dp"
-                        android:id="@+id/textView" />
+                        android:textSize="15sp" />
 
                     <Button
-                        android:textColor="@color/white"
-                        android:background="@drawable/button_background"
                         android:id="@+id/btncity"
                         android:layout_width="70dip"
                         android:layout_height="40dip"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/textView"
+                        android:layout_marginTop="10dip"
+                        android:background="@drawable/button_background"
                         android:text="+ City"
                         android:textAllCaps="false"
-                        android:textSize="15dip"
-                        android:layout_marginTop="10dip"
-                        android:layout_below="@+id/textView"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
 
                     <AutoCompleteTextView
                         android:id="@+id/cityEdit"
                         android:layout_width="205dip"
                         android:layout_height="40dp"
-                        android:textColor="#2C3343"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@+id/btncity"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:layout_alignTop="@+id/btncity"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:textColor="#2C3343" />
 
                     <AutoCompleteTextView
                         android:id="@+id/cityEdit1"
                         android:layout_width="205dip"
                         android:layout_height="40dp"
-                        android:textColor="#2C3343"
-                        android:background="#80bebebe"
-                        android:layout_marginTop="10dip"
-                        android:ems="10"
-                        android:visibility="gone"
+                        android:layout_alignParentEnd="true"
                         android:layout_below="@+id/cityEdit"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_marginTop="10dip"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:textColor="#2C3343"
+                        android:visibility="gone" />
 
                     <AutoCompleteTextView
                         android:id="@+id/cityEdit2"
                         android:layout_width="205dip"
                         android:layout_height="40dip"
-                        android:textColor="#2C3343"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/cityEdit1"
+                        android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:layout_below="@+id/cityEdit1"
-                        android:visibility="gone"
-                        android:layout_marginTop="10dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:textColor="#2C3343"
+                        android:visibility="gone" />
 
                     <AutoCompleteTextView
                         android:id="@+id/cityEdit3"
                         android:layout_width="205dip"
                         android:layout_height="40dip"
-                        android:textColor="#2C3343"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/cityEdit2"
+                        android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:visibility="gone"
-                        android:layout_marginTop="10dip"
-                        android:layout_below="@+id/cityEdit2"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:textColor="#2C3343"
+                        android:visibility="gone" />
 
 
                     <AutoCompleteTextView
                         android:id="@+id/cityEdit4"
                         android:layout_width="205dip"
                         android:layout_height="40dip"
-                        android:textColor="#2C3343"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/cityEdit3"
+                        android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:layout_marginTop="10dip"
-                        android:visibility="gone"
-                        android:layout_below="@+id/cityEdit3"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:textColor="#2C3343"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
             </TableRow>
@@ -361,15 +350,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/black"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:background="@color/black" />
 
             <TableRow
                 android:id="@+id/rowRTO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -379,7 +368,7 @@
                         android:id="@+id/RTOText"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:text="RTO City:"
                         android:textColor="#2C3343" />
@@ -388,90 +377,85 @@
                         android:id="@+id/checkRTO"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_below="@+id/RTOText"
+                        android:layout_toStartOf="@+id/rtoEdit"
                         android:text="Unregitsered"
                         android:textColor="#2C3343"
-                        android:layout_toLeftOf="@+id/rtoEdit"
-                        android:textSize="10sp" />
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/btnrto"
                         android:layout_width="wrap_content"
                         android:layout_height="40dip"
-                        android:text="+RTOcity"
-                        android:textSize="15dp"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/checkRTO"
                         android:layout_marginTop="20dip"
                         android:background="@drawable/button_background"
-                        android:layout_below="@+id/checkRTO"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
+                        android:text="+RTOcity"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
 
                     <AutoCompleteTextView
                         android:id="@+id/rtoEdit"
                         android:layout_width="205dip"
                         android:layout_height="40dip"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginTop="20dp"
-                        android:ems="10"
                         android:background="#80bebebe"
+                        android:ems="10"
                         android:textColor="#2C3343"></AutoCompleteTextView>
 
                     <AutoCompleteTextView
                         android:id="@+id/rtoEdit1"
                         android:layout_width="205dip"
                         android:layout_height="40dip"
-                        android:textColor="#2C3343"
-                        android:background="#80bebebe"
-                        android:layout_marginTop="10dip"
-                        android:ems="10"
-                        android:visibility="gone"
+                        android:layout_alignParentEnd="true"
                         android:layout_below="@+id/rtoEdit"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_marginTop="10dip"
+                        android:background="#80bebebe"
+                        android:ems="10"
+                        android:textColor="#2C3343"
+                        android:visibility="gone" />
 
                     <AutoCompleteTextView
                         android:id="@+id/rtoEdit2"
                         android:layout_width="205dip"
                         android:layout_height="40dip"
-                        android:textColor="#2C3343"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/rtoEdit1"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:layout_below="@+id/rtoEdit1"
-                        android:visibility="gone"
-                        android:layout_marginTop="10dip"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:textColor="#2C3343"
+                        android:visibility="gone" />
 
                     <AutoCompleteTextView
                         android:id="@+id/rtoEdit3"
                         android:layout_width="205dip"
                         android:layout_height="40dip"
-                        android:textColor="#2C3343"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/rtoEdit2"
+                        android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:visibility="gone"
-                        android:layout_marginTop="10dip"
-                        android:layout_below="@+id/rtoEdit2"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:textColor="#2C3343"
+                        android:visibility="gone" />
 
                     <AutoCompleteTextView
                         android:id="@+id/rtoEdit4"
                         android:layout_width="205dip"
                         android:layout_height="40dip"
-                        android:textColor="#2C3343"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/rtoEdit3"
+                        android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:layout_marginTop="10dip"
-                        android:visibility="gone"
-                        android:layout_below="@+id/rtoEdit3"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:textColor="#2C3343"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -480,8 +464,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/black"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:background="@color/black" />
 
             <!-- Table row for manufacture yr -->
             <TableRow
@@ -498,19 +482,19 @@
                         android:id="@+id/man_year_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:text="Manufacture Year :"
                         android:textColor="#2C3343"
-                        android:textSize="15dp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/ManufactureFromText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dip"
-                        android:layout_toRightOf="@+id/man_year_text"
+                        android:layout_marginStart="20dip"
+                        android:layout_toEndOf="@+id/man_year_text"
                         android:text=""
                         android:textColor="#2C3343" />
 
@@ -518,9 +502,9 @@
                         android:id="@+id/ManufactureToText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="22dp"
+                        android:layout_marginEnd="22dp"
                         android:text=""
                         android:textColor="#2C3343" />
 
@@ -538,7 +522,7 @@
                     android:id="@+id/manYRLinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="1dip"
+                    android:layout_marginEnd="1dip"
                     android:orientation="vertical"></LinearLayout>
 
             </TableRow>
@@ -548,8 +532,8 @@
                 android:id="@+id/rowREGyr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -559,7 +543,7 @@
                         android:id="@+id/reg_year_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:text="Registration Year :"
                         android:textColor="#2C3343" />
@@ -569,8 +553,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/reg_year_text"
-                        android:layout_marginLeft="20dip"
+                        android:layout_marginStart="20dip"
+                        android:layout_toEndOf="@+id/reg_year_text"
                         android:text=""
                         android:textColor="#2C3343" />
 
@@ -578,9 +562,9 @@
                         android:id="@+id/RegistrationToText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginRight="22dp"
+                        android:layout_marginEnd="22dp"
                         android:text=""
                         android:textColor="#2C3343" />
                 </RelativeLayout>
@@ -591,7 +575,6 @@
                 android:id="@+id/rowREGyr1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rowRegyr"
                 android:layout_marginTop="1dip"
                 android:visibility="visible">
 
@@ -599,10 +582,7 @@
                     android:id="@+id/REGYRLinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-
-                </LinearLayout>
+                    android:orientation="vertical"></LinearLayout>
             </TableRow>
 
             <!-- Price -->
@@ -620,7 +600,7 @@
                         android:id="@+id/price_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:text="Price :"
                         android:textColor="#2C3343" />
@@ -630,8 +610,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="95dip"
-                        android:layout_toRightOf="@+id/notifyyear"
+                        android:layout_marginStart="95dip"
                         android:text=""
                         android:textColor="#2C3343" />
 
@@ -639,9 +618,9 @@
                         android:id="@+id/PriceToText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginRight="22dp"
+                        android:layout_marginEnd="22dp"
                         android:text=""
                         android:textColor="#2C3343" />
                 </RelativeLayout>
@@ -652,7 +631,6 @@
                 android:id="@+id/rowprice1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rowPrice"
                 android:layout_marginTop="1dip">
 
                 <LinearLayout
@@ -680,7 +658,7 @@
                         android:id="@+id/kms_hrs_running_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:text="Kms Running:"
                         android:textColor="#2C3343" />
@@ -690,8 +668,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="45dip"
-                        android:layout_toRightOf="@+id/kms_hrs_running_text"
+                        android:layout_marginStart="45dip"
+                        android:layout_toEndOf="@+id/kms_hrs_running_text"
                         android:text=""
                         android:textColor="#2C3343" />
 
@@ -699,9 +677,9 @@
                         android:id="@+id/KmsToText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginRight="22dp"
+                        android:layout_marginEnd="22dp"
                         android:text=""
                         android:textColor="#2C3343" />
                 </RelativeLayout>
@@ -712,7 +690,6 @@
                 android:id="@+id/rowkms1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rowKms"
                 android:layout_marginTop="1dp"
                 android:visibility="visible">
 
@@ -728,8 +705,8 @@
                 android:id="@+id/rowhrs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -739,7 +716,7 @@
                         android:id="@+id/textViewh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:text="Hours Running:"
                         android:textColor="#2C3343" />
@@ -749,8 +726,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="45dip"
-                        android:layout_toRightOf="@+id/textViewh"
+                        android:layout_marginStart="45dip"
+                        android:layout_toEndOf="@+id/textViewh"
                         android:text=""
                         android:textColor="#2C3343" />
 
@@ -758,9 +735,9 @@
                         android:id="@+id/hrsToText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginRight="22dp"
+                        android:layout_marginEnd="22dp"
                         android:text=""
                         android:textColor="#2C3343" />
                 </RelativeLayout>
@@ -771,9 +748,8 @@
                 android:id="@+id/rowhrstb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rowhrs"
-                android:visibility="visible"
-                android:layout_marginTop="1dip">
+                android:layout_marginTop="1dip"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/hrslinear"
@@ -787,8 +763,8 @@
                 android:id="@+id/rowhpcapacity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -798,7 +774,7 @@
                         android:id="@+id/minhpcapacity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:text="Hp or Capacity"
                         android:textColor="#2C3343" />
@@ -808,20 +784,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="45dip"
-                        android:layout_toRightOf="@+id/minhpcapacity"
-                        android:textColor="#2C3343"
-                        android:text="" />
+                        android:layout_marginStart="45dip"
+                        android:layout_toEndOf="@+id/minhpcapacity"
+                        android:text=""
+                        android:textColor="#2C3343" />
 
                     <TextView
                         android:id="@+id/maxhpcapcity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginRight="22dp"
-                        android:textColor="#2C3343"
-                        android:text="" />
+                        android:layout_marginEnd="22dp"
+                        android:text=""
+                        android:textColor="#2C3343" />
                 </RelativeLayout>
 
             </TableRow>
@@ -830,9 +806,8 @@
                 android:id="@+id/rowhpcap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rowhpcapacity"
-                android:visibility="visible"
-                android:layout_marginTop="1dip">
+                android:layout_marginTop="1dip"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/hpcaplinear"
@@ -853,23 +828,23 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/ownertxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@+id/ownerEdit"
                         android:text="Owners"
                         android:textColor="#2C3343"
-                        android:textSize="15dip"
-                        android:layout_toLeftOf="@+id/ownerEdit"
-                        android:id="@+id/ownertxt" />
+                        android:textSize="15sp" />
 
                     <Spinner
                         android:id="@+id/ownerEdit"
                         android:layout_width="200dip"
                         android:layout_height="40dip"
-                        android:entries="@array/owners"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:background="#80bebebe"
-                        android:ems="10" />
+                        android:ems="10"
+                        android:entries="@array/owners" />
 
                 </RelativeLayout>
             </TableRow>
@@ -887,33 +862,33 @@
                     android:gravity="center">
 
                     <Button
-                        android:background="@drawable/button_background"
                         android:id="@+id/BtnMoreOptions"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
+                        android:background="@drawable/button_background"
+                        android:ems="10"
                         android:text="More Options"
-                        android:textSize="15sp"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
-                        android:ems="10" />
+                        android:textSize="15sp" />
 
                 </RelativeLayout>
 
             </TableRow>
 
             <LinearLayout
+                android:id="@+id/moresearchlinear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/moresearchlinear">
+                android:orientation="vertical">
 
                 <!-- Invoice -->
                 <TableRow
                     android:id="@+id/rowInvoice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -922,21 +897,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_toLeftOf="@+id/invoiceEdit"
-                            android:text="Invoice Available :"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/invoiceEdit"
+                            android:text="Invoice Available :"
                             android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/invoiceEdit"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/invoice"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/invoice" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -945,8 +920,8 @@
                     android:id="@+id/rowbustype"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -955,21 +930,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/bustypeEdit"
                             android:text="Bus Type :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/bustypeEdit" />
+                            android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/bustypeEdit"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/bustype"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/bustype" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -978,8 +953,8 @@
                     android:id="@+id/rowaircondition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -988,21 +963,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/aircondEdit"
                             android:text="Air Condition :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/aircondEdit" />
+                            android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/aircondEdit"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
-                            android:entries="@array/air"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/air" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1011,8 +986,8 @@
                     android:id="@+id/rowbody"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1022,21 +997,22 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:text="Body type:"
                             android:textColor="#2C3343"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/bodyEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:hint="body type"
+                            android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1045,8 +1021,8 @@
                     android:id="@+id/rowboattype"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1055,22 +1031,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/boatEdit1"
                             android:text="Boat Type :"
                             android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/boatEdit1"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/boatEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:hint="boat type"
+                            android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1079,8 +1056,8 @@
                     android:id="@+id/rowrvtype"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1089,22 +1066,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/rvEdit1"
                             android:text="RV Type :"
                             android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/rvEdit1"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/rvEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:hint="rv type"
+                            android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1113,8 +1091,8 @@
                     android:id="@+id/rowcolor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1123,16 +1101,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:text="Color :"
                             android:textColor="#2C3343" />
 
-                        <com.autokatta.search_vehicle.Multispinner
+                        <autokatta.com.Registration.Multispinner
                             android:id="@+id/colorEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10" />
@@ -1146,8 +1124,8 @@
                     android:id="@+id/rowrc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1156,21 +1134,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/rcEdit1"
                             android:text="RC Available :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/rcEdit1" />
+                            android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/rcEdit1"
                             android:layout_width="200dp"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/RC_avl"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/RC_avl" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1179,8 +1157,8 @@
                     android:id="@+id/rowinsurance1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1189,21 +1167,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/insEdit1"
                             android:text="Insurance Valid:"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/insEdit1" />
+                            android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/insEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/ins"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/ins" />
                     </RelativeLayout>
                 </TableRow>
                 <!--<TableRow-->
@@ -1218,8 +1196,8 @@
                     android:id="@+id/rowhypo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1228,21 +1206,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/hypoEdit1"
                             android:text="Hypothecation:"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/hypoEdit1" />
+                            android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/hypoEdit1"
                             android:layout_width="200dp"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/hypo"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/hypo" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1251,8 +1229,8 @@
                     android:id="@+id/rowtax"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1261,7 +1239,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:text="Tax Validity :"
                             android:textColor="#2C3343" />
@@ -1270,11 +1248,11 @@
                             android:id="@+id/taxEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/tax"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/tax" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1283,8 +1261,8 @@
                     android:id="@+id/rowfitness"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1293,21 +1271,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/fitnessEdit1"
                             android:text="Fitness Validity :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/fitnessEdit1" />
+                            android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/fitnessEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/fitness"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/fitness" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1316,8 +1294,8 @@
                     android:id="@+id/rowpermit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1326,21 +1304,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/permitEdit1"
                             android:text="Permit Validity :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/permitEdit1" />
+                            android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/permitEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/permit"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/permit" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1349,8 +1327,8 @@
                     android:id="@+id/rowfual"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1359,20 +1337,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/fualEdit1"
                             android:text="Fuel Type :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/fualEdit1" />
+                            android:textColor="#2C3343" />
 
-                        <com.autokatta.search_vehicle.MultiSelectionSpinner
+                        <autokatta.com.Registration.MultiSelectionSpinner
                             android:id="@+id/fualEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
-
                             android:ems="10" />
 
                     </RelativeLayout>
@@ -1383,8 +1360,8 @@
                     android:id="@+id/rowseat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1393,23 +1370,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/seatsEdit1"
                             android:text="Seating Capacity :"
                             android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/seatsEdit1"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/seatsEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
+                            android:ems="10"
                             android:inputType="number"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
+                            android:textColor="#2C3343" />
                     </RelativeLayout>
 
                 </TableRow>
@@ -1419,8 +1396,8 @@
                     android:id="@+id/rowdrive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1429,21 +1406,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/driveEdit1"
                             android:text="Drive Type :"
-                            android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/driveEdit1" />
+                            android:textColor="#2C3343" />
 
                         <Spinner
                             android:id="@+id/driveEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:entries="@array/drive"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:entries="@array/drive" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1452,8 +1429,8 @@
                     android:id="@+id/rowtransmission"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1462,22 +1439,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/transEdit1"
                             android:text="Transmission"
                             android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/transEdit1"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/transEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:hint="transmission"
+                            android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1486,8 +1464,8 @@
                     android:id="@+id/rowuse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1496,22 +1474,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/useEdit1"
                             android:text="Use/Application"
                             android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/useEdit1"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/useEdit1"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
-                            android:textColor="#2C3343"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:hint="application"
+                            android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1520,8 +1499,8 @@
                     android:id="@+id/rowimpl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dip">
+                    android:layout_marginTop="10dip"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1530,22 +1509,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/implEdit"
                             android:text="Implements :"
                             android:textColor="#2C3343"
-                            android:layout_toLeftOf="@+id/implEdit"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/implEdit"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
-                            android:textColor="#2C3343"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
-                            android:ems="10" />
+                            android:ems="10"
+                            android:hint="implements"
+                            android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
 
@@ -1554,8 +1534,8 @@
                     android:id="@+id/rowtyre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -1565,32 +1545,31 @@
                             android:id="@+id/textViewt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:text="Tyre Condition :"
                             android:textColor="#2C3343"
-                            android:textSize="15dp" />
-
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/tyreText1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
-                            android:textColor="#2C3343"
-                            android:layout_marginLeft="20dip"
-                            android:layout_toRightOf="@+id/textViewt"
-                            android:text="" />
+                            android:layout_marginStart="20dip"
+                            android:layout_toEndOf="@+id/textViewt"
+                            android:text=""
+                            android:textColor="#2C3343" />
 
                         <TextView
                             android:id="@+id/tyreText2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
-                            android:textColor="#2C3343"
-                            android:layout_marginRight="22dp"
-                            android:text="" />
+                            android:layout_marginEnd="22dp"
+                            android:text=""
+                            android:textColor="#2C3343" />
 
                     </RelativeLayout>
 
@@ -1600,7 +1579,6 @@
                     android:id="@+id/rowtyrerange"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rowRegyr"
                     android:layout_marginTop="10dip"
                     android:visibility="visible">
 
@@ -1608,7 +1586,7 @@
                         android:id="@+id/tyreLinear"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="1dip"
+                        android:layout_marginEnd="1dip"
                         android:orientation="vertical"></LinearLayout>
 
                 </TableRow>
@@ -1620,39 +1598,41 @@
                 android:id="@+id/rowButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="10dip">
+                android:layout_marginTop="10dip"
+                android:gravity="center">
 
                 <LinearLayout
-                    android:weightSum="1"
-                    android:orientation="horizontal"
                     android:id="@+id/linear"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
                     <Button
-                        android:layout_weight="0.50"
-                        android:textColor="@color/white"
                         android:id="@+id/BtnRefresh"
-                        android:layout_height="40dp"
+                        style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="wrap_content"
-                        android:textAllCaps="false"
-                        android:textSize="15dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.50"
                         android:background="@color/background"
-                        android:text="Refresh" />
+                        android:text="Refresh"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
 
                     <Button
-                        android:layout_marginLeft="1dp"
-                        android:layout_weight="0.50"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false"
-                        android:textSize="15dp"
                         android:id="@+id/BtnApplySearch"
-                        android:layout_height="40dp"
+                        style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="wrap_content"
-                        android:background="@drawable/button_background"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="5dip"
-                        android:text="Apply Search" />
+                        android:layout_marginStart="1dp"
+                        android:layout_weight="0.50"
+                        android:background="@drawable/button_background"
+                        android:text="Apply Search"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
 
                 </LinearLayout>
             </TableRow>
@@ -1665,7 +1645,6 @@
         android:id="@+id/tablerowfloat"
         android:layout_width="match_parent"
         android:layout_height="40dip"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
 
@@ -1676,10 +1655,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        app:backgroundTint="#FF9933"
+        android:layout_alignParentStart="true"
         android:layout_margin="15dp"
+        android:src="@drawable/help"
+        android:visibility="gone"
+        app:backgroundTint="#FF9933"
         app:elevation="6dp"
-        app:fabSize="mini"
-        android:src="@drawable/help" />
+        app:fabSize="mini" />
 </RelativeLayout>
