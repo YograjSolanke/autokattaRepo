@@ -48,11 +48,11 @@ public class BrowseStoreActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
-    @Override
+   /* @Override
     protected void onResume() {
         super.onResume();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.browseStoreFrame, new BrowseStoreFragment(), "browseStoreFragment")
                 .commit();
-    }
+    }*/
 }

@@ -270,7 +270,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     storelongitude = success.getLongitude();
                     isDealing = success.getIsDealing();
 
-                    getActivity().setTitle(storeName);
+                    getActivity().setTitle(storeName + " Store");
                 }
 
                 if (mOtherContact.contains(myContact)) {
