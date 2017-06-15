@@ -1,12 +1,10 @@
 package autokatta.com.auction;
 
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -35,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.adapter.PreviewAuctionAdapter;
 import autokatta.com.apicall.ApiCall;
@@ -44,6 +41,7 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetAuctionEventResponse;
+import autokatta.com.view.ShareWithinAppActivity;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -132,6 +130,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         mGoing.setOnClickListener(this);
         mShare.setOnClickListener(this);
         mCall.setOnClickListener(this);
+        mMail.setOnClickListener(this);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -245,7 +244,6 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         });
 
     }
-
 
 
     /*
@@ -496,37 +494,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
 
             case R.id.btn_share:
 
-                if (contact.equals(auctioncontact)) {
-                    whoseAuction = "myauction";
-                } else
-                    whoseAuction = "otherauction";
-
-                allDetails = action_title + "=" +
-                        no_of_vehicles + "=" +
-                        auction_enddate + "=" +
-                        auction_endtime + "=" +
-                        auctiontype + "=" +
-                        "0" + "=" +
-                        "0" + "=" +
-                        whoseAuction;
-
-
-                Intent intent = new Intent(Intent.ACTION_SEND);
-
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", auction_id).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", keyword).apply();
-
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
-
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivity(intent);
-                finish();
+                shareButton();
                 break;
             case R.id.call_c:
                 Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + auctioncontact));
@@ -535,6 +503,10 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 } catch (android.content.ActivityNotFoundException ex) {
                     System.out.println("No Activity Found For Call in Preview Live events\n");
                 }
+                break;
+
+            case R.id.mail:
+                mail();
                 break;
         }
     }
@@ -549,17 +521,106 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         return super.onOptionsItemSelected(item);
     }
 
+    //mail Functionality
+    private void mail() {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", "abc@mail.com", null));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, "abc@gmail.com");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+        startActivity(Intent.createChooser(emailIntent, "Send Email..."));
+    }
+
+    /*
+    On Share Butoon Clicked....
+     */
+    private void shareButton() {
+        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
+        alert.setTitle("Share");
+        alert.setMessage("with Autokatta or to other?");
+        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                allDetails = action_title + "="
+                        + no_of_vehicles + "="
+                        + auction_enddate + "=" +
+                        auction_endtime + "=" +
+                        auctiontype + "=" +
+                        "0" + "=" + "0" + "=" + "a";
+                String mAuction = "auction";
+
+
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", allDetails).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_auction_id", auction_id).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_keyword", mAuction).apply();
+
+                Intent i = new Intent(PreviewLiveEvents.this, ShareWithinAppActivity.class);
+                startActivity(i);
+                dialog.dismiss();
+            }
+        });
+
+        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (contact.equals(auctioncontact))
+                    whoseAuction = "myauction";
+                else
+                    //whoseAuction = "otherauction";
+                    whoseAuction = auctioneername;
+
+                allDetails = "Auction Title: " + action_title + "\n" +
+                        "No Of Vehicle: " + no_of_vehicles + "\n" +
+                        "Auction End Date: " + auction_enddate + "\n" +
+                        "Auction End Time: " + auction_endtime + "\n" +
+                        "Auction Type: " + auctiontype + "\n" +
+                       /* "0" + "\n"+//.auctionGoingcount+"="+
+                        "0" + "\n"+//auctionIgnorecount*/
+                        "Auctioneer: " + whoseAuction;
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                /*getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", allDetails).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
+                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_keyword", "auction").apply();*/
+
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(intent);
+
+                dialog.dismiss();
+            }
+
+        });
+        alert.create();
+        alert.show();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(PreviewLiveEvents.this, R.anim.pull_in_left, R.anim.push_out_right);
             startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
             finish();
         } else {
             finish();
             startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
-        }
+        }*/
     }
 
 

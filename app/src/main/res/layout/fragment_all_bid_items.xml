@@ -11,4 +11,6 @@
         android:scrollbars="vertical"
         android:clipToPadding="false" />
 
+    <include layout="@layout/error_view" />
+
 </RelativeLayout>

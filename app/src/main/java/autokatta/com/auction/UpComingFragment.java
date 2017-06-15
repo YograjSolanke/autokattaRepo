@@ -1,14 +1,9 @@
 package autokatta.com.auction;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,7 +22,6 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.AuctionNotificationAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
@@ -37,8 +31,6 @@ import autokatta.com.response.ModelLiveFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
 /**
  * Created by ak-001 on 3/4/17.
@@ -61,22 +53,11 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
     RelativeLayout mLoanMela;
     RelativeLayout mExchangeEvent;
     RelativeLayout mServiceEvent, mSaleEvent;
-    boolean isNetworkAvailable;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mUpComing = inflater.inflate(R.layout.fragment_auction_live, container, false);
-
-        IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                isNetworkAvailable = intent.getBooleanExtra(IS_NETWORK_AVAILABLE, false);
-                String networkStatus = isNetworkAvailable ? "Connected" : "Disconnected";
-                Snackbar.make(mUpComing.findViewById(R.id.activity_autokatta_main), "Network Status: " + networkStatus, Snackbar.LENGTH_LONG).show();
-            }
-        }, intentFilter);
 
         mAuctionEvent = (RelativeLayout) mUpComing.findViewById(R.id.auction_event);
         mLoanMela = (RelativeLayout) mUpComing.findViewById(R.id.loan_mela_layout);

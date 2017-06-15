@@ -2,6 +2,7 @@ package autokatta.com.auction;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -13,7 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +27,7 @@ import java.util.HashMap;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 
-public class LiveAuctionEventBiding extends AppCompatActivity {
+public class LiveAuctionEventBiding extends AppCompatActivity implements View.OnClickListener {
 
     CollapsingToolbarLayout collapsingToolbar;
     HighestBid mHighestBid;
@@ -40,6 +44,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
     CountDownTimer cdt;
     Bundle b1;
+    FloatingActionButton fabCal, fabMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +93,11 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
         mLimitForBid = (TextView) findViewById(R.id.limitforbid);
         mHighBidTotal = (TextView) findViewById(R.id.highbidtotal);
         mTotalRemains = (TextView) findViewById(R.id.remaininglimit);
+        fabCal = (FloatingActionButton) findViewById(R.id.call_c);
+        fabMail = (FloatingActionButton) findViewById(R.id.mail);
+
+        fabCal.setOnClickListener(this);
+        fabMail.setOnClickListener(this);
 
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.live_auction_collapsing_toolbar);
         mHighestBid = new HighestBid();
@@ -295,5 +305,37 @@ public class LiveAuctionEventBiding extends AppCompatActivity {
             finish();
             //startActivity(new Intent(getApplicationContext(), PreviewLiveEvents.class));
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.call_c:
+                call(auctioncontact);
+                break;
+            case R.id.mail:
+                mail();
+                break;
+        }
+    }
+
+    //Calling Functionality
+    private void call(String rcontact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + rcontact));
+        try {
+            startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Live Auction Event Bidding\n");
+        }
+    }
+
+    //mail Functionality
+    private void mail() {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", "abc@mail.com", null));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, "abc@gmail.com");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+        startActivity(Intent.createChooser(emailIntent, "Send Email..."));
     }
 }

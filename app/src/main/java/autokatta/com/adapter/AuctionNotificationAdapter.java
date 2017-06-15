@@ -43,6 +43,7 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelLiveFragment;
+import autokatta.com.view.ShareWithinAppActivity;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -282,9 +283,9 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
             @Override
             public void onClick(View v) {
-                bundle.putString("auctioneer", mItemList.get(position).getAuctioneer());
+                bundle.putString("auctioneer", mItemList.get(position).getUsername());
                 bundle.putString("auction_id", mItemList.get(position).getAuctionId());
-                bundle.putString("action_title", mItemList.get(position).getActionTitle());
+                bundle.putString("action_title", mItemList.get(position).getName());
                 bundle.putString("auction_startdate", mItemList.get(position).getStartDate());
                 bundle.putString("auction_starttime", mItemList.get(position).getStartTime());
                 bundle.putString("auction_enddate", mItemList.get(position).getEndDate());
@@ -301,7 +302,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                 bundle.putString("showPrice", mItemList.get(position).getShowPrice());
                 bundle.putString("keyword", mItemList.get(position).getKeyWord());
                 bundle.putString("category", mItemList.get(position).getAuctionCategory());
-                bundle.putString("location", mItemList.get(position).getStockLocation());
+                bundle.putString("location", mItemList.get(position).getLocation());
 
                 if (auctionType.equals("Live")) {
                     Intent intent = new Intent(mActivity, PreviewLiveEvents.class);
@@ -323,41 +324,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         holder.mShare.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (mContact.equals(mItemList.get(position).getContact())) {
-                    whoseAuction = "myauction";
-                } else
-                    whoseAuction = "otherauction";
-
-                allDetails = mItemList.get(position).getActionTitle() + "=" +
-                        mItemList.get(position).getNoOfVehicles() + "=" +
-                        mItemList.get(position).getEndDate() + "=" +
-                        mItemList.get(position).getEndTime() + "=" +
-                        mItemList.get(position).getAuctionType() + "=" +
-                        "0" + "=" +//.auctionGoingcount+"="+
-                        "0" + "=" +//auctionIgnorecount
-                        whoseAuction;
-
-
-                Intent intent = new Intent(Intent.ACTION_SEND);
-
-                System.out.println("Share Image \n");
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "auction").apply();
-
-
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
-
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                mActivity.startActivity(intent);
-
-
+                shareButton(position);
             }
         });
     }
@@ -489,6 +456,84 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    /*
+    On Share Butoon Clicked....
+     */
+    private void shareButton(final int position) {
+        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+        alert.setTitle("Share");
+        alert.setMessage("with Autokatta or to other?");
+        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                allDetails = mItemList.get(position).getName() + "="
+                        + mItemList.get(position).getNoOfVehicles() + "="
+                        + mItemList.get(position).getEndDate() + "=" +
+                        mItemList.get(position).getEndTime() + "=" +
+                        mItemList.get(position).getAuctionType() + "=" +
+                        "0" + "=" + "0" + "=" + "a";
+                String mAuction = "auction";
+
+
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", allDetails).apply();
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_keyword", mAuction).apply();
+
+                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                mActivity.startActivity(i);
+                dialog.dismiss();
+            }
+        });
+
+        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (mContact.equals(mItemList.get(position).getContact()))
+                    whoseAuction = "myauction";
+                else
+                    //whoseAuction = "otherauction";
+                    whoseAuction = mItemList.get(position).getUsername();
+
+                allDetails = "Auction Title: " + mItemList.get(position).getName() + "\n" +
+                        "No Of Vehicle: " + mItemList.get(position).getNoOfVehicles() + "\n" +
+                        "Auction End Date: " + mItemList.get(position).getEndDate() + "\n" +
+                        "Auction End Time: " + mItemList.get(position).getEndTime() + "\n" +
+                        "Auction Type: " + mItemList.get(position).getAuctionType() + "\n" +
+                       /* "0" + "\n"+//.auctionGoingcount+"="+
+                        "0" + "\n"+//auctionIgnorecount*/
+                        "Auctioneer: " + whoseAuction;
+
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                /*mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", allDetails).apply();
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
+                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_keyword", "auction").apply();*/
+
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                mActivity.startActivity(intent);
+
+                dialog.dismiss();
+            }
+
+        });
+        alert.create();
+        alert.show();
     }
 
 
