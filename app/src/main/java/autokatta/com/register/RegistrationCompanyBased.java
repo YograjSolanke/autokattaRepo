@@ -67,7 +67,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     HashMap<String, String> mDealList1 = new HashMap<>();
 
     ArrayList<String> mCompanyList = new ArrayList<>();
-    HashMap<String, Integer> mCompanyList1 = new HashMap<>();
+    HashMap<String, String> mCompanyList1 = new HashMap<>();
 
     HashMap<String, String> mdistList1 = new HashMap<>();
     final List<String> distNameList = new ArrayList<>();

@@ -62,7 +62,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     final HashMap<String, String> mDealList1 = new HashMap<>();
 
     final ArrayList<String> mCompanyList = new ArrayList<>();
-    final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
+    final HashMap<String, String> mCompanyList1 = new HashMap<>();
 
     final HashMap<String,String> mdistList1 = new HashMap();
     final List<String> distNameList = new ArrayList<String>();

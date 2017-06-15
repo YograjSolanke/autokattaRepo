@@ -70,7 +70,7 @@ public class About extends Fragment implements RequestNotifier {
     final HashMap<String, String> mSkillList1 = new HashMap<>();
 
     final ArrayList<String> mCompanyList = new ArrayList<>();
-    final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
+    final HashMap<String, String> mCompanyList1 = new HashMap<>();
 
     final ArrayList<String> mDesignationList = new ArrayList<>();
     final HashMap<String, String> mDesignationList1 = new HashMap<>();
