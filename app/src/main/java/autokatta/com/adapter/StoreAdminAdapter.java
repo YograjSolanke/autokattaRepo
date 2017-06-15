@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.my_store.AddMoreAdminsForStoreFrag;
 import autokatta.com.response.Db_AutokattaContactResponse;
 
 /**
@@ -68,11 +69,9 @@ public class StoreAdminAdapter extends RecyclerView.Adapter<StoreAdminAdapter.It
         boxdata = new ArrayList<>(contactdata.size());
         isSave = new ArrayList<>(contactdata.size());
 
-        System.out.println("WELCOME ON All Profiles ADAPTER PAGE");
-
-        //positionArray = new ArrayList<Boolean>(contactdata.size());
+        positionArray = new ArrayList<Boolean>(contactdata.size());
         for (int i = 0; i < contactdata.size(); i++) {
-            //  positionArray.add(false);
+            positionArray.add(false);
             boxdata.add("0");
             isSave.add(false);
         }
@@ -88,9 +87,10 @@ public class StoreAdminAdapter extends RecyclerView.Adapter<StoreAdminAdapter.It
         this.alreadyAdmin = alreadyAdmin;
         boxdata = new ArrayList<>(contactdata.size());
         isSave = new ArrayList<>(contactdata.size());
-        //positionArray = new ArrayList<Boolean>(contactdata.size());
+        AddMoreAdminsForStoreFrag.ok.setVisibility(View.VISIBLE);
+        positionArray = new ArrayList<Boolean>(contactdata.size());
         for (int i = 0; i < contactdata.size(); i++) {
-            //  positionArray.add(false);
+            positionArray.add(false);
             boxdata.add("0");
             isSave.add(false);
         }
@@ -145,15 +145,20 @@ public class StoreAdminAdapter extends RecyclerView.Adapter<StoreAdminAdapter.It
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
+                    positionArray.set(position, true);
+                    AddMoreAdminsForStoreFrag.ok.setVisibility(View.VISIBLE);
                     holder.rolelayout.setVisibility(View.VISIBLE);
                     boxdata.set(position, holder.text1.getText().toString() + "-" + holder.roleText.getText().toString());
 
                 } else {
-
+                    positionArray.set(position, false);
                     boxdata.set(position, "0");
                     isSave.set(position, false);
                     holder.rolelayout.setVisibility(View.GONE);
                     System.out.println("Boxdata at position=" + position + " " + boxdata.get(position));
+                    if (!positionArray.contains(true)) {
+                        AddMoreAdminsForStoreFrag.ok.setVisibility(View.GONE);
+                    }
                 }
             }
         });
