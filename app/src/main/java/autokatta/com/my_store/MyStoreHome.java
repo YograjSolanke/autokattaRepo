@@ -32,6 +32,7 @@ import java.net.UnknownHostException;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.model.LikeUnlike;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
@@ -72,6 +73,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     KProgressHUD hud;
     private int likecountint, followcountint;
     private ProgressDialog dialog;
+    LikeUnlike likeUnlike = new LikeUnlike();
 
     @Nullable
     @Override
@@ -142,45 +144,55 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 mLike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mLike.setVisibility(View.GONE);
+                        mUnlike.setVisibility(View.VISIBLE);
                         mApiCall.otherStoreUnlike(myContact, mOtherContact, "2", store_id);
-                        likecountint = Integer.parseInt(storeLikeCount);
-                        likecountint--;
+                        likecountint = Integer.parseInt(likeUnlike.getCount());
+                        likecountint = likecountint - 1;
                         mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
                         storeLikeCount = String.valueOf(likecountint);
+                        likeUnlike.setCount(String.valueOf(likecountint));
                     }
                 });
 
                 mUnlike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        mLike.setVisibility(View.VISIBLE);
+                        mUnlike.setVisibility(View.GONE);
                         mApiCall.otherStoreLike(myContact, mOtherContact, "2", store_id);
-                        likecountint = Integer.parseInt(storeLikeCount);
-                        likecountint++;
+                        likecountint = Integer.parseInt(likeUnlike.getCount());
+                        likecountint = likecountint + 1;
                         mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
                         storeLikeCount = String.valueOf(likecountint);
+                        likeUnlike.setCount(String.valueOf(likecountint));
                     }
                 });
 
                 mFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mFollow.setVisibility(View.GONE);
+                        mUnFollow.setVisibility(View.VISIBLE);
                         mApiCall.otherStoreFollow(myContact, mOtherContact, "2", store_id);
-                        followcountint = Integer.parseInt(storeFollowCount);
-                        followcountint++;
+                        followcountint = Integer.parseInt(likeUnlike.getFollowCount());
+                        followcountint = followcountint + 1;
                         mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
                         storeFollowCount = String.valueOf(followcountint);
+                        likeUnlike.setFollowCount(String.valueOf(followcountint));
                     }
                 });
 
                 mUnFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mFollow.setVisibility(View.VISIBLE);
+                        mUnFollow.setVisibility(View.GONE);
                         mApiCall.otherStoreUnFollow(myContact, mOtherContact, "2", store_id);
-                        followcountint = Integer.parseInt(storeFollowCount);
+                        followcountint = Integer.parseInt(likeUnlike.getFollowCount());
                         followcountint--;
                         mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
-                        storeFollowCount = String.valueOf(followcountint);
+                        likeUnlike.setFollowCount(String.valueOf(followcountint));
                     }
                 });
 
@@ -251,7 +263,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     storeWorkingDays = success.getWorkingDays();
                     storeType = success.getStoreType();
                     storeLikeCount = success.getLikecount();
+                    likeUnlike.setCount(success.getLikecount());
                     storeFollowCount = success.getFollowcount();
+                    likeUnlike.setFollowCount(success.getFollowcount());
                     mCategory.setText(success.getCategory());
 
                     mOtherContact = success.getContact();
@@ -379,26 +393,26 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             if (str.equals("success_follow")) {
                 //if (mActivity != null)
                 //showMessage(mActivity, "Following");
-                mFollow.setVisibility(View.GONE);
-                mUnFollow.setVisibility(View.VISIBLE);
+                /*mFollow.setVisibility(View.GONE);
+                mUnFollow.setVisibility(View.VISIBLE);*/
                 mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
                 //if (mActivity != null)
                 //showMessage(mActivity, "UnFollowing");
-                mFollow.setVisibility(View.VISIBLE);
-                mUnFollow.setVisibility(View.GONE);
+                /*mFollow.setVisibility(View.VISIBLE);
+                mUnFollow.setVisibility(View.GONE);*/
                 mFolllowstr = "no";
             } else if (str.equals("success_like")) {
                 //if (mActivity != null)
                 //showMessage(mActivity, "Liked");
-                mLike.setVisibility(View.VISIBLE);
-                mUnlike.setVisibility(View.GONE);
+                /*mLike.setVisibility(View.VISIBLE);
+                mUnlike.setVisibility(View.GONE);*/
                 mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
                 //if (mActivity != null)
                 //showMessage(mActivity, "Unliked");
-                mLike.setVisibility(View.GONE);
-                mUnlike.setVisibility(View.VISIBLE);
+                /*mLike.setVisibility(View.GONE);
+                mUnlike.setVisibility(View.VISIBLE);*/
                 mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
                 /*if (mActivity != null)

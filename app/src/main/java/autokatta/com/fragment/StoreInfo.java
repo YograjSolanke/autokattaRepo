@@ -78,7 +78,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 Intent intent = new Intent(getActivity(), MyStoreListActivity.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent, options.toBundle());
-                getActivity().finish();
+                //getActivity().finish();
                 break;
 
             case R.id.enquiry:
