@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.net.ConnectException;
@@ -44,7 +47,7 @@ import static autokatta.com.database.DbConstants.userName;
 public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifier {
 
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
-    ListView list;
+    RecyclerView mRecyclerView;
     Button ok, cancel;
     StoreAdminAdapter adapter;
 
@@ -66,11 +69,21 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
         super.onCreateView(inflater, container, savedInstanceState);
         final View root = inflater.inflate(R.layout.fragment_add_more_admin, container, false);
 
-        list = (ListView) root.findViewById(R.id.l1);
+        mRecyclerView = (RecyclerView) root.findViewById(R.id.l1);
         btnlayout = (RelativeLayout) root.findViewById(R.id.btnrelative);
         ok = (Button) root.findViewById(R.id.ok);
         cancel = (Button) root.findViewById(R.id.cancel);
         inputSearch = (EditText) root.findViewById(R.id.inputSearch);
+        inputSearch.setVisibility(View.GONE);
+
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mLinearLayoutManager.setReverseLayout(true);
+        mLinearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        //Set animation attribute to each item
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
         apiCall = new ApiCall(getActivity(), this);
         dbOperation = new DbOperation(getActivity());
@@ -92,8 +105,8 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             do {
                 Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
                 Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
-                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
-                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
                 contactdata.add(obj);
             } while (cursor.moveToNext());
         }
@@ -108,19 +121,23 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             @Override
             public void onClick(View v) {
                 StoreAdminAdapter.boxdata.clear();
-                Bundle b = new Bundle();
-                // b.putString("action", "main");
-                b.putString("store_id", store_id);
-
-                if (!callFrom.equalsIgnoreCase("interestbased")) {
-                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
-                    intent.putExtras(b);
-                    getActivity().startActivity(intent);
-                } else {
-                    Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
-                    getActivity().startActivity(i);
-                }
-                getActivity().finish();
+                System.out.println("finalAdmins=====" + finaladmins);
+                finaladmins = "";
+                addStoreAdmins(store_id, finaladmins);
+//                Bundle b = new Bundle();
+//                // b.putString("action", "main");
+//                b.putString("store_id", store_id);
+//
+//
+//                if (!callFrom.equalsIgnoreCase("interestbased")) {
+//                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
+//                    intent.putExtras(b);
+//                    getActivity().startActivity(intent);
+//                } else {
+//                    Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
+//                    getActivity().startActivity(i);
+//                }
+//                getActivity().finish();
 
             }
         });
@@ -128,22 +145,35 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StoreAdminAdapter.boxdata.size() != 0) {
-                    for (int i = 0; i < StoreAdminAdapter.boxdata.size(); i++) {
+                boolean flag = false;
+
+                for (int i = 0; i < StoreAdminAdapter.boxdata.size(); i++) {
                         if (!StoreAdminAdapter.boxdata.get(i).equalsIgnoreCase("0")) {
-                            if (finaladmins.equals(""))
-                                finaladmins = StoreAdminAdapter.boxdata.get(i);
-                            else
-                                finaladmins = finaladmins + "," + StoreAdminAdapter.boxdata.get(i);
+                            if (StoreAdminAdapter.isSave.get(i).equals(false)) {
+                                CustomToast.customToast(getActivity(), "Save Role First");
+                                flag = true;
+                                break;
+                            } else {
+                                flag = false;
+                                if (finaladmins.equals(""))
+                                    finaladmins = StoreAdminAdapter.boxdata.get(i);
+                                else
+                                    finaladmins = finaladmins + "," + StoreAdminAdapter.boxdata.get(i);
+                            }
+
                         }
                     }
-                }
-                if (!finaladmins.equals("")) {
-                    addStoreAdmins(store_id, finaladmins);
-                }else
-                {
-                    CustomToast.customToast(getActivity(), "Please Select Atleast Single contact");
 
+                if (flag == false) {
+
+                    if (!finaladmins.equals("")) {
+
+                        System.out.println("finalAdmins=====" + finaladmins);
+                        addStoreAdmins(store_id, finaladmins);
+                    } else {
+                        CustomToast.customToast(getActivity(), "Please Select Atleast Single contact");
+
+                    }
                 }
             }
         });
@@ -185,16 +215,21 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
                     if (!adminResponse.getSuccess().isEmpty()) {
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
+                            // if(alreadyAdmin.equals(""))
                             alreadyAdmin.add(success.getAdmin());
+//                            else
+//                                alreadyAdmin=alreadyAdmin+","+success.getAdmin();
                         }
+
+                        System.out.println("alreadyadmin=" + alreadyAdmin);
                     } /*else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));*/
-                    if (!(alreadyAdmin.size() == 0))
+                    if (alreadyAdmin.size() != 0)
                         adapter = new StoreAdminAdapter(getActivity(), contactdata, alreadyAdmin);
                     else {
                         adapter = new StoreAdminAdapter(getActivity(), contactdata);
                     }
-                    list.setAdapter(adapter);
+                    mRecyclerView.setAdapter(adapter);
                 }
             } else {
                 //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();

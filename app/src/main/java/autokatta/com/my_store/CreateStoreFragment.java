@@ -857,7 +857,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         addAdmin.setArguments(bundle);
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
+
                     } else
                         Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
                 }
@@ -995,7 +996,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 addAdmin.setArguments(bundle);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).addToBackStack("mystorelist").commit();
+                fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
+
 
             }
         } else

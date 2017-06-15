@@ -133,11 +133,19 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
                 final ArrayList<String> nlist = new ArrayList<String>(count);
 
                 String filterableString;
-            for (int i = 0; i < count; i++) {
+                for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);
-                if (filterableString.toLowerCase().contains(filterString)) {
-                    nlist.add(filterableString);
-                }
+                    if (filterableString.contains(" ")) {
+                        String[] arr = filterableString.split(" ");
+                        String fname = arr[0];
+                        String lname = arr[1];
+
+                        if (fname.toLowerCase().startsWith(filterString) || lname.toLowerCase().startsWith(filterString)) {
+                            nlist.add(filterableString);
+                        }
+                    } else if (filterableString.toLowerCase().startsWith(filterString)) {
+                        nlist.add(filterableString);
+                    }
             }
 
             results.values = nlist;
