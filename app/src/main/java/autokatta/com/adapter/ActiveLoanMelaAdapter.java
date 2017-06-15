@@ -74,7 +74,7 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
                 b.putString("location",mMainlist.get(position).getLocation());
                 b.putString("enddatetime",mMainlist.get(position).getEndDateTime());
                 b.putString("loanid",mMainlist.get(position).getId());
-                mActivity.finish();
+                //mActivity.finish();
                 Intent i=new Intent(mActivity, ActiveLoanmelaPreviewActivity.class);
                 i.putExtras(b);
                 mActivity.startActivity(i);

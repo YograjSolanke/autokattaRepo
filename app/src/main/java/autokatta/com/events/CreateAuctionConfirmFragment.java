@@ -277,6 +277,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
                 }*/
 
                 startActivity(new Intent(getActivity(), Create_Event.class));
+                getActivity().finish();
             }
         }
     }

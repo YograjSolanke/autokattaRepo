@@ -130,7 +130,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
                 b.putString("category", mMainList.get(position).getAuctioncategory());
                 b.putString("location", mMainList.get(position).getStockLocation());
 
-                mActivity.finish();
+                // mActivity.finish();
 
                 Intent intent = new Intent(mActivity, MyEndedAuctionPreviewActivity.class);
                 intent.putExtras(b);

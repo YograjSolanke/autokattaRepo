@@ -14,33 +14,27 @@ public class Create_Event extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        }
         setTitle("Create Event");
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    setSupportActionBar(toolbar);
-
-                    if (getSupportActionBar() != null) {
-                        getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                        //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-                    }
-
-
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.createEventFrame, new CreateEventFragment(), "createEventFragment")
                             .addToBackStack("createEventFragment")
                             .commit();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
     }
 
 
@@ -62,12 +56,12 @@ public class Create_Event extends AppCompatActivity {
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();
-            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         } else {
             if (getFragmentManager().getBackStackEntryCount() > 1) {
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }
     }

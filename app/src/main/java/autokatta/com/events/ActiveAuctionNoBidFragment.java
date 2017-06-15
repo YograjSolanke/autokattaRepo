@@ -301,8 +301,10 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
 
         @Override
         public void onBindViewHolder(final ActiveAuctionNoBidAdapter.MyViewHolder holder, final int position) {
-            if (mItemList.get(position).getVehicleSingleImage() != null || mItemList.get(position).getVehicleSingleImage().equals("")
+            if (mItemList.get(position).getVehicleSingleImage() == null || mItemList.get(position).getVehicleSingleImage().equals("")
                     || mItemList.get(position).getVehicleSingleImage().isEmpty()) {
+                holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
+            } else {
                 String images[] = mItemList.get(position).getVehicleSingleImage().split(",");
                 Glide.with(mActivity)
                         .load("http://autokatta.com/mobile/uploads/" + images[0].replaceAll(" ", "%20"))
@@ -312,8 +314,6 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
                         //.error(R.drawable.blocked) //To show error image if problem in loading.
                         .override(100, 100)
                         .into(holder.mAuctionVehicleImage);
-            } else {
-                holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
             }
 
             holder.mRegistrationNo.setText(mItemList.get(position).getVehicleRegistrationNo());

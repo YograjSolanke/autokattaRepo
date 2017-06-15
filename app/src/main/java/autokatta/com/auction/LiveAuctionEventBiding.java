@@ -1,9 +1,7 @@
 package autokatta.com.auction;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -251,7 +249,9 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(LiveAuctionEventBiding.this, R.anim.pull_in_left, R.anim.push_out_right);
             Bundle bundle = new Bundle();
             bundle.putString("auctioneer", auctioneername);
@@ -304,7 +304,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
             startActivity(intent);
             finish();
             //startActivity(new Intent(getApplicationContext(), PreviewLiveEvents.class));
-        }
+        }*/
     }
 
     @Override
