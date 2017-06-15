@@ -48,7 +48,8 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     RecyclerView mRecyclerView;
-    Button ok, cancel;
+    Button cancel;
+    public static Button ok;
     StoreAdminAdapter adapter;
 
     RelativeLayout btnlayout;
