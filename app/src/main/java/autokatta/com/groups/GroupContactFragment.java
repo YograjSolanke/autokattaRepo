@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -81,6 +82,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getRegisteredContacts();
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             // errorMessage(getActivity(), getString(R.string.no_internet));
         }
 
@@ -108,11 +110,12 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 }
 
                 if (allcontacts.equalsIgnoreCase("")) {
+                    Toast.makeText(getActivity(),"Please add atleast one contact", Toast.LENGTH_SHORT).show();
                     //  showMessage(getActivity(), "Please add atleast one contact");
                     flag = false;
 
                 } else if (allcontacts.contains(mContact)) {
-
+                    Toast.makeText(getActivity(), "Please check the number", Toast.LENGTH_SHORT).show();
                     // showMessage(getActivity(), "Please check the number");
                     flag = false;
                 }
@@ -131,6 +134,8 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             String[] parts = allcontacts.split(",");
                             for (int j = 0; j < parts.length; j++) {
                                 if (parts[j].contains(no)) {
+                                    Toast.makeText(getActivity(), "Sorry..No Is Already added in Group", Toast.LENGTH_SHORT).show();
+
                                     // showMessage(getActivity(),  "Sorry..No Is Already added in Group");
 
                                     flag = false;
@@ -234,14 +239,19 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
             //  showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
             //  showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"

@@ -114,6 +114,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionAboveReservedPrice(myContact, strAuctionId);
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -535,14 +536,19 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
          //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
             //showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             //errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Ended Auction Above Resreved Fragment");
@@ -581,6 +587,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
             mApiCall.ApproveVehicle(mAuctionId, keyword1, vehicleid, bidderContact, bidPrice);
             //mApiCall.ApproveVehicle("1047", keyword1, vehicleid, bidderContact, bidPrice);
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -591,6 +598,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
             mApiCall.addToReauction(vehicleid, mAuctionId);
             //mApiCall.addToReauction(vehicleid, "1047");
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -601,6 +609,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
             mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
             //mApiCall.Add_RemoveBlacklistContact(myContact, "1047", rContact, keyword);
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }

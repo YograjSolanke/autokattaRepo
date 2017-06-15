@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -120,6 +121,7 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
             mApiCall.ActiveAuctionHighBid(myContact, strAuctionId);
 
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -392,8 +394,10 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
            // errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Active Auction HighesBid Fragment");

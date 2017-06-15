@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -121,6 +122,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
             //apiCall.AuctionAnalyticsData(strExchangeId);
             //apiCall.AuctionAnalyticsData("1047");
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
          //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -177,8 +179,10 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Exchange Analytics Fragment");

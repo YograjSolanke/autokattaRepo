@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -96,6 +97,7 @@ public class MyActiveSaleMelaFragment extends Fragment implements SwipeRefreshLa
             apiCall = new ApiCall(getActivity(), this);
             apiCall.getSaleMelaDetails(loginContact);
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -155,14 +157,19 @@ public class MyActiveSaleMelaFragment extends Fragment implements SwipeRefreshLa
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
+            Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
           //  showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
          //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         //    showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
        //     errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "My Active Loan Mela Fragment");

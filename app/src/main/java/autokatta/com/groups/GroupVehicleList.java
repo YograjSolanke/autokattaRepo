@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -78,6 +79,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getMyVehicles(rcontact);
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             //errorMessage(activity, getString(R.string.no_internet));
         }
     }
@@ -97,6 +99,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
         } else {
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             //errorMessage(activity, getString(R.string.no_internet));
         }
     }
@@ -192,10 +195,12 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
                 //showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
             //showMessage(activity, getString(R.string.no_response));
         }
     }
@@ -214,25 +219,21 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            if (activity != null) {
+                Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
                 //showMessage(activity, getString(R.string._404_));
-            }
+
         } else if (error instanceof NullPointerException) {
-            if (activity != null) {
+                Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
                 //showMessage(activity, getString(R.string.no_response));
-            }
         } else if (error instanceof ClassCastException) {
-            if (activity != null) {
+                Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
                 //showMessage(activity, getString(R.string.no_response));
-            }
         } else if (error instanceof ConnectException) {
-            if (activity != null) {
+                Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                 //errorMessage(activity, getString(R.string.no_internet));
-            }
         } else if (error instanceof UnknownHostException) {
-            if (activity != null) {
+                Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                 //errorMessage(activity, getString(R.string.no_internet));
-            }
         } else {
             Log.i("Check Class-"
                     , "groupvehiclelist");
