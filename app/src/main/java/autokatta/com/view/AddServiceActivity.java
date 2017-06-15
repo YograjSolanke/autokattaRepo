@@ -31,7 +31,6 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetTagsResponse;
@@ -384,7 +383,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddServiceActivity.this, R.layout.addproductspinner_color, module);
                         autoCategory.setAdapter(dataadapter);
                     } else
-                        CustomToast.customToast(AddServiceActivity.this, getString(R.string.no_response));
+                        Toast.makeText(AddServiceActivity.this, getString(R.string.no_response), Toast.LENGTH_SHORT).show();
                 } else if (response.body() instanceof BrandsTagResponse) {
                     BrandsTagResponse brandsTagResponse = (BrandsTagResponse) response.body();
                     brandTags.clear();
@@ -408,9 +407,9 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                         multiautotext.setAdapter(dataadapter);
                     }
                 } else if (response.body() instanceof OtherBrandTagAddedResponse) {
-                    CustomToast.customToast(AddServiceActivity.this, "Brand Tag added successfully");
+                    Toast.makeText(AddServiceActivity.this, "Brand Tag added successfully", Toast.LENGTH_SHORT).show();
                 } else if (response.body() instanceof OtherTagAddedResponse) {
-                    CustomToast.customToast(AddServiceActivity.this, "Other Tag added successfully");
+                    Toast.makeText(AddServiceActivity.this, "Other Tag added successfully", Toast.LENGTH_SHORT).show();
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
                     tagflag = true;
 
@@ -422,7 +421,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     System.out.println("final idlist iddddddddddddddd=" + idlist);
 
                 } else if (response.body() instanceof ServiceAddedResponse) {
-                    CustomToast.customToast(AddServiceActivity.this, "Service added successfully");
+                    Toast.makeText(AddServiceActivity.this, "Service added successfully", Toast.LENGTH_SHORT).show();
                     ServiceAddedResponse productAddedResponse = (ServiceAddedResponse) response.body();
                     String service_id = productAddedResponse.getSuccess().getServiceId().toString();
                     sendTags(service_id);
@@ -447,10 +446,10 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     stringIds = groupId.toArray(new String[groupId.size()]);
                 }
             } else {
-                CustomToast.customToast(AddServiceActivity.this, getString(R.string._404));
+                Toast.makeText(AddServiceActivity.this, getString(R.string._404), Toast.LENGTH_SHORT).show();
             }
         } else {
-            CustomToast.customToast(AddServiceActivity.this, getString(R.string.no_response));
+            Toast.makeText(AddServiceActivity.this, getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -466,7 +465,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         if (str != null) {
 
             if (str.equals("success")) {
-                CustomToast.customToast(AddServiceActivity.this, "Tags sent");
+                Toast.makeText(AddServiceActivity.this, "Tags sent", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -683,7 +682,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                             System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
                             createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
                         } else {
-                            CustomToast.customToast(AddServiceActivity.this, "Please Select Atleast One Group");
+                            Toast.makeText(AddServiceActivity.this, "Please Select Atleast One Group", Toast.LENGTH_SHORT).show();
                             android.app.AlertDialog alert = builder.create();
                             alert.show();
                         }

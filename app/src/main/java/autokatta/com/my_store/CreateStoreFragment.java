@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
@@ -17,7 +16,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -432,25 +430,23 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     closetime.setError("Enter Close Time");
                     closetime.requestFocus();
                 } else if (opentime.getText().toString().contains("PM") && closetime.getText().toString().contains("AM")) {
-                    Snackbar.make(mParent, "Enter Valid Time", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Enter Valid Time", Toast.LENGTH_SHORT).show();
                 } else if (flagtime) {
-                    Snackbar.make(mParent, "Close time & open time should not same", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Close time & open time should not same", Toast.LENGTH_SHORT).show();
                 } else if (workdays.equals("-Select Working Days-") || workdays.equals("")) {
                     Toast.makeText(getActivity(), "Please select Working Days", Toast.LENGTH_LONG).show();
-                    Snackbar.make(mParent, "Select Working Days", Snackbar.LENGTH_SHORT).show();
                 } else if (storetype.equalsIgnoreCase("")) {
-                    Snackbar.make(mParent, "Select store type", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Select store type", Toast.LENGTH_LONG).show();
                 } else if (category.equalsIgnoreCase("")) {
-                    Snackbar.make(mParent, "Provide services offered", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Provide services offered", Toast.LENGTH_LONG).show();
                 } else if ((rbtstoreproduct.isChecked() || rbtstoreservice.isChecked()) && finalbrandtags.equals("")) {
-                    Snackbar.make(mParent, "Provide brand tags", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Provide brand tags", Toast.LENGTH_LONG).show();
                     multiautobrand.requestFocus();
-
                 } else if (check()) {
                     multiautobrand.setError("You can add maximum five tags only");
                     multiautobrand.requestFocus();
                 } else if (rbtstorevehicle.isChecked() && (strBrandSpinner.equalsIgnoreCase("-SelectBrands-") || strBrandSpinner.isEmpty())) {
-                    Snackbar.make(mParent, "Select brands", Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Select brands", Toast.LENGTH_LONG).show();
                     brandSpinner.requestFocus();
                 } else {
                     if (create.getText().toString().equalsIgnoreCase("create")) {
@@ -675,20 +671,22 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 }
             });
         } else {
-            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+//            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.RED);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.YELLOW);
+//            snackbar.show();
         }
     }
 
@@ -813,7 +811,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, module);
                         multiautotext.setAdapter(dataadapter);
                     } else
-                        Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
                 }
                 /*
                         Response to get Brand tags
@@ -834,7 +832,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             multiautobrand.setAdapter(dataadapter);
                         }
                     } else
-                        Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
                 }
                  /*
                         Response after creating store
@@ -843,7 +841,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     CreateStoreResponse createStoreResponse = (CreateStoreResponse) response.body();
                     if (createStoreResponse.getSuccess() != null) {
                         String id = createStoreResponse.getSuccess().getStoreID().toString();
-                        Snackbar.make(mParent, "Store created", Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Store created", Toast.LENGTH_SHORT).show();
                         if (!lastWord.equals(""))
                         uploadImage(mediaPath);
                         if (!coverlastWord.equals(""))
@@ -860,7 +858,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
 
                     } else
-                        Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
                 }
 
                 if (response.body() instanceof StoreResponse) {
@@ -904,15 +902,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         }
                     } else {
                         hud.dismiss();
-                        Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
                     }
                 }
             } else {
-                Snackbar.make(mParent, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
             }
         } else {
             hud.dismiss();
-            Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -920,43 +918,45 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void notifyError(Throwable error) {
         hud.dismiss();
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(mParent, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(mParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.RED);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.YELLOW);
+//            snackbar.show();
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.RED);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.YELLOW);
+//            snackbar.show();
         } else {
             Log.i("Check Class-", "Create Store Fragment");
             error.printStackTrace();
@@ -979,9 +979,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("brand_tag_added")) {
-                Snackbar.make(mParent, "No  Brand Tags Added", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "No  Brand Tags Added", Toast.LENGTH_SHORT).show();
+
             } else if (str.equals("store_updated")) {
-                Snackbar.make(mParent, "Store updated", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Store updated", Toast.LENGTH_SHORT).show();
                 if (!lastWord.equals(preLastWord) && !lastWord.equals(""))
                     uploadImage(mediaPath);
                 if (!coverlastWord.equals(preCoverLastWord) && !coverlastWord.equals(""))
@@ -1001,7 +1002,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
             }
         } else
-            Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
 
     }
 

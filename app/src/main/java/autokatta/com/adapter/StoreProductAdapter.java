@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -179,43 +177,45 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(mView.mCardView, activity.getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(activity, R.string._404, Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(mView.mCardView, activity.getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(activity, R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(mView.mCardView, activity.getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(activity, R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
+            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mView.mCardView, activity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            activity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(mView.mCardView, activity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            activity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.RED);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.YELLOW);
+//            snackbar.show();
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mView.mCardView, activity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            activity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(mView.mCardView, activity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            activity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.RED);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.YELLOW);
+//            snackbar.show();
         } else {
             Log.i("Check Class-"
                     , "StoreProductAdaper");
@@ -227,7 +227,8 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success")) {
-                Snackbar.make(mView.mCardView, "Product Deleted", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Product Deleted", Toast.LENGTH_SHORT).show();
+
             }
         }
     }

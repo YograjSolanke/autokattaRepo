@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -138,11 +139,11 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                //showMessage(mActivity, getString(R.string._404_));
+                Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            //showMessage(mActivity, getString(R.string.no_response));
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -150,16 +151,16 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            //showMessage(mActivity, getString(R.string._404_));
+            Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            // showMessage(mActivity, getString(R.string._404_));
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            //showMessage(mActivity, getString(R.string._404_));
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
-            //errorMessage(mActivity, getString(R.string.no_internet));
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
 
         } else if (error instanceof UnknownHostException) {
-            // errorMessage(mActivity, getString(R.string.no_internet));
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
 
         } else {
             Log.i("Check Class-"

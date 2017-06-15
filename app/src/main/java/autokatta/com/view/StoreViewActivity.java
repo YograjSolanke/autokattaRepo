@@ -5,14 +5,12 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -29,7 +27,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -771,10 +768,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 //                    menuRed.setClosedOnTouchOutside(true);
 //                }
             } else {
-                Snackbar.make(mLayout, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
             }
         } else {
-            Snackbar.make(mLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -788,37 +785,39 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         } else if (error instanceof ClassCastException) {
             Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.BLUE);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.BLUE);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.WHITE);
+//            snackbar.show();
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.BLUE);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.BLUE);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.WHITE);
+//            snackbar.show();
         } else {
             Log.i("Check Class-"
                     , "StoreViewActivity");

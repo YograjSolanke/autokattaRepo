@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
@@ -100,11 +101,11 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                //showMessage(getActivity(), getString(R.string._404_));
+                Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            //showMessage(getActivity(), getString(R.string.no_response));
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -113,15 +114,15 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            //showMessage(getActivity(), getString(R.string._404_));
+            Toast.makeText(getActivity(), getString(R.string._404), Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            // showMessage(getActivity(), getString(R.string.no_response));
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            // showMessage(getActivity(), getString(R.string.no_response));
+            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
-            //  errorMessage(getActivity(), getString(R.string.no_internet));
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         } else if (error instanceof UnknownHostException) {
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
                     , "MyStoreListFragment");

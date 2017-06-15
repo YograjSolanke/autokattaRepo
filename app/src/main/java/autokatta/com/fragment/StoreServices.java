@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -115,13 +116,11 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                /*if (mActivity != null)
-                showMessage(mActivity, getString(R.string._404_));*/
+                Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-           /* if (mActivity != null)
-            showMessage(mActivity, getString(R.string.no_response));*/
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -129,20 +128,15 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            /*if (mActivity != null)
-            showMessage(mActivity, getString(R.string._404_));*/
+            Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            /*if (mActivity != null)
-            showMessage(mActivity, getString(R.string._404_));*/
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            /*if (mActivity != null)
-            showMessage(mActivity, getString(R.string._404_));*/
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
-            /*if (mActivity != null)
-            errorMessage(mActivity, getString(R.string.no_internet));*/
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         } else if (error instanceof UnknownHostException) {
-            /*if (mActivity != null)
-            errorMessage(mActivity, getString(R.string.no_internet));*/
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
                     , "StoreServices");

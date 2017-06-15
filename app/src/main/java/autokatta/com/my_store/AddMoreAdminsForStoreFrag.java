@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -233,22 +234,23 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     mRecyclerView.setAdapter(adapter);
                 }
             } else {
-                //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string._404_, Toast.LENGTH_SHORT).show();
             }
         } else {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            // Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            //  Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
+            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
             //mNoInternetIcon.setVisibility(View.VISIBLE);
            /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
@@ -265,6 +267,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             textView.setTextColor(Color.YELLOW);
             snackbar.show();*/
         } else if (error instanceof UnknownHostException) {
+            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
             //mNoInternetIcon.setVisibility(View.VISIBLE);
            /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {

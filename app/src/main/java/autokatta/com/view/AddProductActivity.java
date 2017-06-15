@@ -31,7 +31,6 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetTagsResponse;
@@ -369,7 +368,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(AddProductActivity.this, R.layout.addproductspinner_color, module);
                         autoCategory.setAdapter(dataadapter);
                     } else
-                        CustomToast.customToast(AddProductActivity.this, getString(R.string.no_response));
+                        Toast.makeText(AddProductActivity.this, getString(R.string.no_response), Toast.LENGTH_SHORT).show();
                 } else if (response.body() instanceof BrandsTagResponse) {
                     BrandsTagResponse brandsTagResponse = (BrandsTagResponse) response.body();
                     brandTags.clear();
@@ -393,9 +392,9 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                         multiautotext.setAdapter(dataadapter);
                     }
                 } else if (response.body() instanceof OtherBrandTagAddedResponse) {
-                    CustomToast.customToast(AddProductActivity.this, "Brand Tag added successfully");
+                    Toast.makeText(AddProductActivity.this, "Brand Tag added successfully", Toast.LENGTH_SHORT).show();
                 } else if (response.body() instanceof OtherTagAddedResponse) {
-                    CustomToast.customToast(AddProductActivity.this, "Other Tag added successfully");
+                    Toast.makeText(AddProductActivity.this, "Other Tag added successfully", Toast.LENGTH_SHORT).show();
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
                     tagflag = true;
 
@@ -407,7 +406,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     System.out.println("final idlist iddddddddddddddd=" + idlist);
 
                 } else if (response.body() instanceof ProductAddedResponse) {
-                    CustomToast.customToast(AddProductActivity.this, "Product added successfully");
+                    Toast.makeText(AddProductActivity.this, "Product added successfully", Toast.LENGTH_SHORT).show();
 
                     ProductAddedResponse productAddedResponse = (ProductAddedResponse) response.body();
                     String product_id = productAddedResponse.getSuccess().getProductId().toString();
@@ -432,10 +431,10 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     stringIds = groupId.toArray(new String[groupId.size()]);
                 }
             } else {
-                CustomToast.customToast(AddProductActivity.this, getString(R.string._404));
+                Toast.makeText(AddProductActivity.this, getString(R.string._404), Toast.LENGTH_SHORT).show();
             }
         } else {
-            CustomToast.customToast(AddProductActivity.this, getString(R.string.no_response));
+            Toast.makeText(AddProductActivity.this, getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -529,7 +528,8 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         if (str != null) {
 
             if (str.equals("success")) {
-                CustomToast.customToast(AddProductActivity.this, "Tags sent");
+
+                Toast.makeText(AddProductActivity.this, "Tags sent", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -685,7 +685,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                             System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
                             createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
                         } else {
-                            CustomToast.customToast(AddProductActivity.this, "Please Select Atleast One Group");
+                            Toast.makeText(AddProductActivity.this, "Please Select Atleast One Group", Toast.LENGTH_SHORT).show();
                             android.app.AlertDialog alert = builder.create();
                             alert.show();
                         }
