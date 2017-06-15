@@ -507,15 +507,16 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             servicetype.setEnabled(false);
                             multiautobrand.setEnabled(false);
 
-
-                            if (!simages.equals("")) {
+                            sliderLayout = (SliderLayout) findViewById(R.id.slider);
+                            if (!simages.equals("") && !simages.equals("null") && simages != null) {
                                 //silder code?????????????????????????????????????????????????????????????????
                                 Hash_file_maps = new HashMap<String, String>();
-                                sliderLayout = (SliderLayout) findViewById(R.id.slider);
+
                                 String dp_path = "http://autokatta.com/mobile/Service_pics/";// + dp;
 
                                 if (simages.contains(",")) {
                                     String[] items = simages.split(",");
+                                    photocount.setText(items.length + " photos");
                                     imageslist.add(items[0].substring(items[0].length()));
                                     for (String item : items) {
                                         Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
@@ -541,8 +542,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 //sliderLayout.setCustomAnimation(new DescriptionAnimation());
                                 sliderLayout.setDuration(3000);
                                 sliderLayout.addOnPageChangeListener(this);
+                            } else {
+                                sliderLayout.setBackgroundResource(R.drawable.logo);
+                                photocount.setText("0 Photos");
                             }
-
 
                             //***************************setting previous rating*******************************
                             if (!srate.equals("0")) {

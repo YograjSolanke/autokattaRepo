@@ -94,7 +94,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         try {
             if (product.getProductImage().equals("") || product.getProductImage().equals("null") ||
                     product.getProductImage().equals("")) {
-                holder.image.setBackgroundResource(R.drawable.store);
+                holder.image.setBackgroundResource(R.drawable.logo);
             } else {
                 String[] parts = product.getProductImage().split(",");
                 for (int l = 0; l < parts.length; l++) {

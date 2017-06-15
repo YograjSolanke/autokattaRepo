@@ -492,9 +492,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 productrating.setRating(Float.parseFloat(prating));
                             }
 
-                            if (pimages.equals("")) {
-                                photocount.setText("0 Photos");
-                            }
                             /*else {
                                 String[] parts = pimages.split(",");
                                 photocount.setText(parts.length + " Photos");
@@ -542,14 +539,17 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                         }
 
-                        if (!pimages.equals("")) {
+                        sliderLayout = (SliderLayout) findViewById(R.id.slider);
+                        if (!pimages.equals("") && !pimages.equals("null") && pimages != null) {
                             //silder code?????????????????????????????????????????????????????????????????
                             Hash_file_maps = new HashMap<String, String>();
-                            sliderLayout = (SliderLayout) findViewById(R.id.slider);
+//                            sliderLayout = (SliderLayout) findViewById(R.id.slider);
                             String dp_path = "http://autokatta.com/mobile/Product_pics/";// + dp;
 
                             if (pimages.contains(",")) {
+
                                 String[] items = pimages.split(",");
+                                photocount.setText(items.length + " photos");
                                 imageslist.add(items[0].substring(items[0].length()));
                                 for (String item : items) {
                                     Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
@@ -577,6 +577,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             //sliderLayout.setCustomAnimation(new DescriptionAnimation());
                             sliderLayout.setDuration(3000);
                             sliderLayout.addOnPageChangeListener(this);
+                        } else {
+                            sliderLayout.setBackgroundResource(R.drawable.logo);
+                            photocount.setText("0 Photos");
                         }
                     }
                     //??????????????????????????????????????????????????????????????????????????//

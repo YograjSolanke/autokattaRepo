@@ -101,7 +101,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             if (service.getServiceImages().equals("") || service.getServiceImages().equals("null") ||
                     service.getServiceImages().equals("")) {
 
-                holder.image.setBackgroundResource(R.drawable.store);
+                holder.image.setBackgroundResource(R.drawable.logo);
             } else {
                 String[] parts = service.getServiceImages().split(",");
 
