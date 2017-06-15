@@ -47,7 +47,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     StoreServiceAdapter adapter;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
-    TextView NoData;
+    TextView mNoData;
     Activity activity;
     RelativeLayout filterToHide;
 
@@ -86,7 +86,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 String storeContact = null;
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getService().isEmpty()) {
-                    NoData.setVisibility(View.GONE);
+                    mNoData.setVisibility(View.GONE);
                     for (StoreInventoryResponse.Success.Service success : storeResponse.getSuccess().getService()) {
                         success.setServiceId(success.getServiceId());
                         success.setServiceName(success.getServiceName());
@@ -112,7 +112,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
-                    NoData.setVisibility(View.VISIBLE);
+                    mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(getActivity(), "No services found", Toast.LENGTH_SHORT).show();
                 }
@@ -181,8 +181,8 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 mTestConnection = new ConnectionDetector(getActivity());
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
-                NoData = (TextView) mService.findViewById(R.id.no_category);
-                NoData.setVisibility(View.GONE);
+                mNoData = (TextView) mService.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
                 filterToHide = (RelativeLayout) mService.findViewById(R.id.rel);
                 filterToHide.setVisibility(View.GONE);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
