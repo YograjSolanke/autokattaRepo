@@ -77,7 +77,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
 
     @Override
     public void onRefresh() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 

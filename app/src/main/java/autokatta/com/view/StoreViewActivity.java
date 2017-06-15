@@ -214,8 +214,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                 mTeamVehicle.setVisibility(View.GONE);
                                 mTeamServices.setVisibility(View.GONE);
                                 mTeamProduct.setVisibility(View.GONE);
-                              /*  mShare.setVisibility(View.GONE);
-                                mAutoshare.setVisibility(View.GONE);*/
+                                mShare.setVisibility(View.VISIBLE);
+                                mAutoshare.setVisibility(View.VISIBLE);
                             }
                         }
 

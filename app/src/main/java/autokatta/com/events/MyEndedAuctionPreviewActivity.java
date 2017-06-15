@@ -2,6 +2,7 @@ package autokatta.com.events;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -144,7 +146,14 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
+               /* input.setLayoutParams(lp);
+                alertDialog.setView(input);
+*/              lp.setMarginStart(30);
                 input.setLayoutParams(lp);
+                input.setPadding(40, 40, 40, 40);
+                input.setGravity(Gravity.CENTER_VERTICAL);
+                input.setTextColor(Color.parseColor("#C39BD3"));
+                input.setTextSize(20);
                 alertDialog.setView(input);
 
 
