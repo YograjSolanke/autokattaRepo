@@ -1,5 +1,6 @@
 package autokatta.com.search;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,8 @@ import autokatta.com.R;
 import autokatta.com.adapter.VehicleSearchAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.SearchVehicleResponse;
 import retrofit2.Response;
 
@@ -44,6 +47,8 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
     Bundle bundle;
     boolean hasViewCreated = false;
     TextView mNoData;
+    ConnectionDetector mConnectionDetector;
+    private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -57,12 +62,12 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
         super.onViewCreated(view, savedInstanceState);
 
         mNoData = (TextView) mSearchVehicle.findViewById(R.id.no_category);
-        mNoData.setVisibility(View.GONE);
+        //mNoData.setVisibility(View.GONE);
         searchList = (ListView) mSearchVehicle.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchVehicle.findViewById(R.id.filterimg);
         advanceSearch = (Button) mSearchVehicle.findViewById(R.id.advBtn);
         filterImg.setVisibility(View.GONE);
-        advanceSearch.setVisibility(View.VISIBLE);
+        advanceSearch.setVisibility(View.GONE);
 
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                 .getString("loginContact", "");
@@ -71,28 +76,34 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 try {
+                    dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage("Loading...");
+
+                    mConnectionDetector = new ConnectionDetector(getActivity());
                     bundle = getArguments();
                     if (bundle != null) {
                         searchString = bundle.getString("searchText1");
                         System.out.println("Vehicle" + searchString);
                         getSearchResults(searchString);
                     }
-                    advanceSearch.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            FilterFragment filterActivity = new FilterFragment();
-                            Bundle b=new Bundle();
-                            b.putString("action", "Main");
-                            filterActivity.setArguments(b);
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.search_product, filterActivity, "filteractivity")
-                                    .addToBackStack("filteractivity")
-                                    .commit();
-                        }
-                    });
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        advanceSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilterFragment filterActivity = new FilterFragment();
+                Bundle b = new Bundle();
+                b.putString("action", "Main");
+                filterActivity.setArguments(b);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.search_product, filterActivity, "filteractivity")
+                        .addToBackStack("filteractivity")
+                        .commit();
             }
         });
     }
@@ -116,18 +127,28 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
     search Results...
      */
     private void getSearchResults(String searchString) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getVehicleSearchData(searchString, myContact);
+
+        if (mConnectionDetector.isConnectedToInternet()) {
+            dialog.show();
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.getVehicleSearchData(searchString, myContact);
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchVehicleResponse vehicleResponse = (SearchVehicleResponse) response.body();
                 if (!vehicleResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     allSearchDataArrayList.clear();
+                    advanceSearch.setVisibility(View.VISIBLE);
                     for (SearchVehicleResponse.Success success : vehicleResponse.getSuccess()) {
                         try {
                             success.setVehicleId(success.getVehicleId());
@@ -175,7 +196,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                             String dates = success.getDate();
                             DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                             Date d = f.parse(dates);
-                            success.setDate(d.toString());
+                            success.setDate(success.getDate());
 
                             allSearchDataArrayList.add(success);
 
@@ -186,57 +207,33 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                     VehicleSearchAdapter adapter = new VehicleSearchAdapter(getActivity(), allSearchDataArrayList);
                     searchList.setAdapter(adapter);
 
-                } else
+                } else {
                     mNoData.setVisibility(View.VISIBLE);
+                    advanceSearch.setVisibility(View.GONE);
+                }
             } else {
-                // Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
-            //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchVehicle Fragment");
         }

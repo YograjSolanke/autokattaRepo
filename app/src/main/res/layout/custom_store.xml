@@ -1,86 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <ScrollView
-        android:id="@+id/scroll"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/linearbtn">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cattext"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Select Categories To Filter Results"
+            android:textStyle="bold" />
+
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="200dp"
+            android:id="@+id/listview1"
+            android:layout_below="@+id/cattext">
 
-            <TextView
-                android:id="@+id/cattext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="Categories"
-                android:textStyle="bold" />
+        </ListView>
 
-            <ListView
-                android:id="@+id/listview1"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@+id/cattext" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/listview1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp">
 
-            <TextView
-                android:id="@+id/loctext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:background="@drawable/buttonback"
+                android:text="Ok"
+                android:id="@+id/btnok"
+                android:textColor="@color/white" />
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:background="@drawable/buttonback"
+                android:text="Cancel"
                 android:layout_below="@+id/listview1"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="Location"
-                android:textStyle="bold" />
+                android:layout_marginLeft="5dp"
+                android:id="@+id/btncancel"
+                android:textColor="@color/white" />
 
-            <ListView
-                android:id="@+id/listview2"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@+id/loctext" />
+        </LinearLayout>
+    </RelativeLayout>
 
-        </RelativeLayout>
 
-    </ScrollView>
-
-    <TableRow
-        android:id="@+id/linearbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp">
-
-        <Button
-            android:id="@+id/btncancel"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginEnd="5dp"
-            android:background="@color/background"
-            android:text="Cancel"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/btnok"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Ok"
-            android:background="@color/background"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
-
-    </TableRow>
 </RelativeLayout>
-
-
-
-

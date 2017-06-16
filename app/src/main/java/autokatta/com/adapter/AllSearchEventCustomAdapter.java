@@ -43,11 +43,11 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
     private List<ModelSearchAuction> allSearchDataArrayList = new ArrayList<>();
     private LayoutInflater inflater;
     private Handler handler;
-    String startdatetime, enddatetime, special_clause, spcl;
+    private String startdatetime, enddatetime, special_clause, spcl;
     private HashMap<TextView, CountDownTimer> counters;
 
-    public AllSearchEventCustomAdapter(Activity activity, List<ModelSearchAuction> allSearchDataArrayList) {
-        this.activity = activity;
+    public AllSearchEventCustomAdapter(Activity activity1, List<ModelSearchAuction> allSearchDataArrayList) {
+        this.activity = activity1;
         this.allSearchDataArrayList = allSearchDataArrayList;
         this.counters = new HashMap<>();
         inflater = (LayoutInflater) activity.

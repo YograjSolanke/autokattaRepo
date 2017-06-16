@@ -1,6 +1,7 @@
 package autokatta.com.search;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +34,8 @@ import autokatta.com.R;
 import autokatta.com.adapter.BrowseStoreAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrowseStoreResponse;
 import retrofit2.Response;
 
@@ -54,17 +57,18 @@ public class SearchStore extends Fragment implements RequestNotifier {
     TextView mNoData;
     CheckedCategoryAdapter categoryAdapter;
     CheckedLocationAdapter locationAdapter;
-    ArrayList<String> categoryList = new ArrayList<>();
-    ArrayList<String> LocationList = new ArrayList<>();
+    List<String> categoryList = new ArrayList<>();
+    List<String> LocationList = new ArrayList<>();
     HashSet<String> locationHashSet;
-    ArrayList<String> finalcategory = new ArrayList<>();
-    ArrayList<String> finallocation = new ArrayList<>();
+    List<String> finalcategory = new ArrayList<>();
+    List<String> finallocation = new ArrayList<>();
+    ConnectionDetector mConnectionDetector;
+    private ProgressDialog dialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchStore = inflater.inflate(R.layout.fragment_search_store_list, container, false);
-
         return mSearchStore;
     }
 
@@ -73,11 +77,11 @@ public class SearchStore extends Fragment implements RequestNotifier {
         super.onViewCreated(view, savedInstanceState);
 
         mNoData = (TextView) mSearchStore.findViewById(R.id.no_category);
-        mNoData.setVisibility(View.GONE);
-
+        //mNoData.setVisibility(View.GONE);
 
         searchList = (RecyclerView) mSearchStore.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchStore.findViewById(R.id.filterimg);
+        filterImg.setVisibility(View.GONE);
 
         searchList.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -89,6 +93,10 @@ public class SearchStore extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 try {
+                    dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage("Loading...");
+
+                    mConnectionDetector = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
                     if (bundle != null) {
                         searchString = bundle.getString("searchText1");
@@ -116,19 +124,29 @@ public class SearchStore extends Fragment implements RequestNotifier {
     get Store Search Results...
      */
     private void getSearchResults(String searchString) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.searchStore(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", ""));
+
+        if (mConnectionDetector.isConnectedToInternet()) {
+            dialog.show();
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.searchStore(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
+                    Context.MODE_PRIVATE).getString("loginContact", ""));
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
                 BrowseStoreResponse searchData = (BrowseStoreResponse) response.body();
                 if (!searchData.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     allSearchDataArrayList.clear();
+                    filterImg.setVisibility(View.VISIBLE);
                     for (BrowseStoreResponse.Success success : searchData.getSuccess()) {
                         success.setStoreId(success.getStoreId());
                         success.setContactNo(success.getContactNo());
@@ -168,57 +186,33 @@ public class SearchStore extends Fragment implements RequestNotifier {
                     searchList.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
-                } else
+                } else {
                     mNoData.setVisibility(View.VISIBLE);
+                    filterImg.setVisibility(View.GONE);
+                }
             } else {
-                //Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
-            //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-           /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchStore Fragment");
         }
@@ -251,7 +245,7 @@ public class SearchStore extends Fragment implements RequestNotifier {
     public void filterResult(final String[] incomingCategory, final String[] incomingLocation) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View convertView = inflater.inflate(R.layout.custom_store, null);
+        View convertView = inflater.inflate(R.layout.custom_store_1, null);
         alertDialog.setView(convertView);
         final AlertDialog alert = alertDialog.show();
         alertDialog.setTitle("Select option to filter data");
@@ -337,15 +331,13 @@ public class SearchStore extends Fragment implements RequestNotifier {
         CheckBox checkBox;
     }
 
-    public class CheckedCategoryAdapter extends BaseAdapter {
+    private class CheckedCategoryAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
         Activity activity;
+        List<String> titles = new ArrayList<>();
 
-        ArrayList<String> titles = new ArrayList<>();
-
-
-        public CheckedCategoryAdapter(Activity a, String titles[]) {
+        CheckedCategoryAdapter(Activity a, String titles[]) {
             this.activity = a;
 
             this.titles = new ArrayList<>(Arrays.asList(titles));
@@ -427,18 +419,18 @@ public class SearchStore extends Fragment implements RequestNotifier {
         }
     }
 
-    static class ViewHolder1 {
+    private static class ViewHolder1 {
         TextView text;
         CheckBox checkBox;
     }
 
-    public class CheckedLocationAdapter extends BaseAdapter {
+    private class CheckedLocationAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
         Activity activity;
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
-        public CheckedLocationAdapter(Activity a, String titles[]) {
+        CheckedLocationAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
             if (finallocation.size() == 0) {
@@ -511,5 +503,11 @@ public class SearchStore extends Fragment implements RequestNotifier {
             });
             return convertView;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSearchResults(searchString);
     }
 }

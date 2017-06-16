@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,7 +17,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -31,6 +31,7 @@ import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.SearchPersonResponse;
+import autokatta.com.view.ChatActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -48,7 +49,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     private Activity mActivity;
     private List<SearchPersonResponse.Success> contactdata = new ArrayList<>();
     private List<SearchPersonResponse.Success> contactdata_copy = new ArrayList<>();
-    private SearchPersonAdapter.ItemFilter mFilter = new SearchPersonAdapter.ItemFilter();
+    private ItemFilter mFilter = new SearchPersonAdapter.ItemFilter();
     private String myContact = "";
     private ApiCall apicall;
     private String Rcontact = "";
@@ -58,7 +59,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         CardView mCardView;
         ImageView imgProfile;
         TextView mTextName, mTextNumber, mTextStatus;
-        Button btnFollow, btnUnfollow;
+        Button btnFollow, btnUnfollow, btnsendmsg;
 
         private YoHolder(View itemView) {
             super(itemView);
@@ -69,6 +70,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             mTextStatus = (TextView) itemView.findViewById(R.id.txtstatus);
             btnFollow = (Button) itemView.findViewById(R.id.btnfollow);
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
+            btnsendmsg = (Button) itemView.findViewById(R.id.btnsendmsg);
         }
     }
 
@@ -77,6 +79,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             this.mActivity = mActivity;
             this.contactdata = contactdata;
             contactdata_copy = contactdata;
+            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
             apicall = new ApiCall(this.mActivity, this);
         } catch (ClassCastException e) {
             e.printStackTrace();
@@ -86,8 +89,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     @Override
     public SearchPersonAdapter.YoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_autokatta_contact, parent, false);
-        SearchPersonAdapter.YoHolder yoHolder = new SearchPersonAdapter.YoHolder(v);
-        return yoHolder;
+        return new YoHolder(v);
     }
 
     @Override
@@ -122,7 +124,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
                     .load("http://autokatta.com/mobile/profile_profile_pics/" + contactdata.get(position).getProfilePhoto())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                    .placeholder(R.drawable.hdlogo) //To show image before loading an original image.
+                    .placeholder(R.drawable.logo) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.imgProfile);
         }
@@ -137,6 +139,24 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             }
         });*/
 
+        /*Send Message*/
+        holder.btnsendmsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle b = new Bundle();
+                b.putString("sender", contactdata.get(position).getContact());
+                b.putString("sendername", contactdata.get(position).getUsername());
+                b.putString("product_id", "");
+                b.putString("service_id", "");
+                b.putString("vehicle_id", "");
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(mActivity, ChatActivity.class);
+                intent.putExtras(b);
+                mActivity.startActivity(intent, options.toBundle());
+            }
+        });
+
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             Bundle bundle = new Bundle();
 
@@ -144,13 +164,17 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             public void onClick(View v) {
                 bundle.putString("contactOtherProfile", contactdata.get(holder.getAdapterPosition()).getContact());
                 if (myContact.equalsIgnoreCase(contactdata.get(holder.getAdapterPosition()).getContact())) {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(mActivity, UserProfile.class);
                     i.putExtras(bundle);
-                    mActivity.startActivity(i);
+                    mActivity.startActivity(i, options.toBundle());
+
                 } else {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(mActivity, OtherProfile.class);
                     i.putExtras(bundle);
-                    mActivity.startActivity(i);
+                    mActivity.startActivity(i, options.toBundle());
+
 
                 }
             }
@@ -194,14 +218,14 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string._404), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else {
             Log.i("Check Class-"
-                    , "Autokatta Contact Adapter");
+                    , "Search Person Adapter");
             error.printStackTrace();
         }
     }
@@ -244,6 +268,9 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
 
     public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new ItemFilter();
+        }
         return mFilter;
     }
 
@@ -254,18 +281,36 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             FilterResults results = new FilterResults();
             final List<SearchPersonResponse.Success> list = contactdata_copy;
             int count = list.size();
-            final List<SearchPersonResponse.Success> nlist = new ArrayList<>(count);
-            SearchPersonResponse.Success filterableString;
 
-            for (int i = 0; i < count; i++) {
-                filterableString = list.get(i);
-                if (filterableString.getUsername().toLowerCase().contains(filterString)) {
-                    nlist.add(filterableString);
+            if (filterString != null && filterString.length() > 0) {
+                final List<SearchPersonResponse.Success> nlist = new ArrayList<>(count);
+                SearchPersonResponse.Success filterableString;
+
+                for (int i = 0; i < count; i++) {
+                    filterableString = list.get(i);
+                    /*if (filterableString.getUsername().toLowerCase().contains(filterString)) {
+                        nlist.add(filterableString);
+                    }*/
+
+                    if (filterableString.getUsername().contains(" ")) {
+                        String[] arr = filterableString.getUsername().split(" ");
+                        String fname = arr[0];
+                        String lname = arr[1];
+
+                        if (fname.toLowerCase().startsWith(filterString) || lname.toLowerCase().startsWith(filterString)) {
+                            nlist.add(filterableString);
+                        }
+                    } else if (filterableString.getUsername().toLowerCase().startsWith(filterString)) {
+                        nlist.add(filterableString);
+                    }
                 }
-            }
 
-            results.values = nlist;
-            results.count = nlist.size();
+                results.values = nlist;
+                results.count = nlist.size();
+            } else {
+                results.values = list;
+                results.count = list.size();
+            }
             return results;
         }
 

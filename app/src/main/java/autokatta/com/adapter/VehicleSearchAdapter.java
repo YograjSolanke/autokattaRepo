@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,10 +30,9 @@ import autokatta.com.view.VehicleDetails;
 
 public class VehicleSearchAdapter extends BaseAdapter {
     Activity activity;
-    private String vimagename = "";
     private List<SearchVehicleResponse.Success> mystorevehicle = new ArrayList<>();
-    ArrayList<String> vimages = new ArrayList<>();
-    ArrayList<String> images = new ArrayList<String>();
+    private List<String> vimages = new ArrayList<>();
+    List<String> images = new ArrayList<String>();
 
     public VehicleSearchAdapter(Activity activity, List<SearchVehicleResponse.Success> mystorevehicle) {
         this.activity = activity;
@@ -75,7 +75,7 @@ public class VehicleSearchAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.vehicle_new, null);
@@ -122,7 +122,7 @@ public class VehicleSearchAdapter extends BaseAdapter {
            /* DateFormat date = new SimpleDateFormat(" MMM dd ");
             DateFormat time = new SimpleDateFormat(" hh:mm a");*/
             //holder.edituploadedon.setText(date.format(obj.getDate())+ time.format(obj.getDate()));
-            holder.edituploadedon.setText(obj.getDate() + " " + obj.getDate());
+            holder.edituploadedon.setText(obj.getDate());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,23 +141,25 @@ public class VehicleSearchAdapter extends BaseAdapter {
 
         try {
             System.out.println(obj.getImage());
-            if (obj.getImage().equalsIgnoreCase("") || obj.getImage().equalsIgnoreCase(null) || obj.getImage().equalsIgnoreCase("null")) {
+            if (obj.getImage().equalsIgnoreCase("") || obj.getImage().equalsIgnoreCase(null) ||
+                    obj.getImage().equalsIgnoreCase("null")) {
                 holder.vehicleimage.setBackgroundResource(R.drawable.vehiimg);
-            }
-            if (!obj.getImage().equals("") || !obj.getImage().equalsIgnoreCase(null) || !obj.getImage().equalsIgnoreCase("null")) {
+            } else {
+                vimages.clear();
                 String[] parts = obj.getImage().split(",");
                 for (int l = 0; l < parts.length; l++) {
                     vimages.add(parts[l]);
                     System.out.println(parts[l]);
                 }
-                vimagename = "http://autokatta.com/mobile/uploads/" + vimages.get(0);
+                String vimagename = "http://autokatta.com/mobile/uploads/" + vimages.get(0);
+                Log.i("vehiii", "--" + vimagename);
                 vimagename = vimagename.replaceAll(" ", "%20");
                 try {
                     Glide.with(activity)
-                            .load("http://autokatta.com/mobile/uploads/" + vimages.get(0))
+                            .load(vimagename)
                             //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            //.placeholder(R.drawable.logo) //To show image before loading an original image.
+                            .placeholder(R.drawable.logo) //To show image before loading an original image.
                             //.error(R.drawable.blocked) //To show error image if problem in loading.
                             .override(100, 100)
                             .into(holder.vehicleimage);
@@ -178,17 +180,6 @@ public class VehicleSearchAdapter extends BaseAdapter {
                 Intent intent = new Intent(activity, VehicleDetails.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);
-                /*
-                Vehical_Details frag = new Vehical_Details();
-                b.putString("Vehical_id",obj.vehicleId);
-                frag.setArguments(b);
-
-                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.containerView, frag);
-                fragmentTransaction.addToBackStack("vehicle_details");
-                fragmentTransaction.commit();*/
-
             }
         });
         convertView.setOnTouchListener(new View.OnTouchListener() {

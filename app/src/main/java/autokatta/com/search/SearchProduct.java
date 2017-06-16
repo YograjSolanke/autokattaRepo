@@ -31,6 +31,8 @@ import autokatta.com.R;
 import autokatta.com.adapter.SearchProductAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetSearchProductResponse;
 import retrofit2.Response;
 
@@ -58,9 +60,10 @@ public class SearchProduct extends Fragment implements RequestNotifier {
     CheckedTagsAdapter tagsadapter;
     CheckedCategoryAdapter categoryAdapter;
     CheckedBrandTagsAdapter brandTagsAdapter;
-    ArrayList<String> finalcategory = new ArrayList<>();
-    ArrayList<String> finalTags = new ArrayList<>();
-    ArrayList<String> finalBrandTags = new ArrayList<>();
+    List<String> finalcategory = new ArrayList<>();
+    List<String> finalTags = new ArrayList<>();
+    List<String> finalBrandTags = new ArrayList<>();
+    ConnectionDetector mConnectionDetector;
 
     @Nullable
     @Override
@@ -74,13 +77,15 @@ public class SearchProduct extends Fragment implements RequestNotifier {
         super.onViewCreated(view, savedInstanceState);
 
         mNoData = (TextView) mSearchProduct.findViewById(R.id.no_category);
-        mNoData.setVisibility(View.GONE);
+        //mNoData.setVisibility(View.GONE);
         searchList = (ListView) mSearchProduct.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchProduct.findViewById(R.id.filterimg);
+        filterImg.setVisibility(View.GONE);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                mConnectionDetector = new ConnectionDetector(getActivity());
                 bundle = getArguments();
                 if (bundle != null) {
                     searchString = bundle.getString("searchText1");
@@ -115,10 +120,15 @@ public class SearchProduct extends Fragment implements RequestNotifier {
             }
         }
     }
+
     private void getSearchResults(String searchString) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.searchProduct(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", ""));
+
+        if (mConnectionDetector.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.searchProduct(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
+                    Context.MODE_PRIVATE).getString("loginContact", ""));
+        } else
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
     }
 
     @Override
@@ -128,30 +138,30 @@ public class SearchProduct extends Fragment implements RequestNotifier {
                 GetSearchProductResponse productResponse = (GetSearchProductResponse) response.body();
                 if (!productResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
+                    filterImg.setVisibility(View.VISIBLE);
                     mList.clear();
                     for (GetSearchProductResponse.Success success : productResponse.getSuccess()) {
                         success.setStoreId(success.getStoreId());
-                        success.setStoreId(success.getProductId());
-                        success.setStoreId(success.getType());
-                        success.setStoreId(success.getProductName());
-                        success.setStoreId(success.getImages());
-                        success.setStoreId(success.getProductType());
-                        success.setStoreId(success.getPrice());
-                        success.setStoreId(success.getCategory());
-                        success.setStoreId(success.getBrandtags());
-                        success.setStoreId(success.getProductDetails());
-                        success.setStoreId(success.getStorecontact());
-                        success.setStoreId(success.getStoreName());
-                        success.setStoreId(success.getStorewebsite());
-                        success.setStoreId(success.getStorerating());
-                        success.setStoreId(success.getProductlikecount());
-                        success.setStoreId(success.getProductlikestatus());
-                        success.setStoreId(success.getPrate());
-                        success.setStoreId(success.getPrate1());
-                        success.setStoreId(success.getPrate2());
-                        success.setStoreId(success.getPrate3());
-                        success.setStoreId(success.getProductrating());
-                        success.setStoreId(success.getProductTags());
+                        success.setProductId(success.getProductId());
+                        success.setProductType(success.getProductType());
+                        success.setProductName(success.getProductName());
+                        success.setImages(success.getImages());
+                        success.setPrice(success.getPrice());
+                        success.setCategory(success.getCategory());
+                        success.setBrandtags(success.getBrandtags());
+                        success.setProductDetails(success.getProductDetails());
+                        success.setStorecontact(success.getStorecontact());
+                        success.setStoreName(success.getStoreName());
+                        success.setStorewebsite(success.getStorewebsite());
+                        success.setStorerating(success.getStorerating());
+                        success.setProductlikecount(success.getProductlikecount());
+                        success.setProductlikestatus(success.getProductlikestatus());
+                        success.setPrate(success.getPrate());
+                        success.setPrate1(success.getPrate1());
+                        success.setPrate2(success.getPrate2());
+                        success.setPrate3(success.getPrate3());
+                        success.setProductrating(success.getProductrating());
+                        success.setProductTags(success.getProductTags());
                         success.visibility = true;
 
                         if (success.getCategory().trim().contains(",")) {
@@ -217,56 +227,29 @@ public class SearchProduct extends Fragment implements RequestNotifier {
                     searchList.setAdapter(adapter);
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
+                    filterImg.setVisibility(View.GONE);
                 }
 
             } else {
-                //Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchProduct Fragment");
         }
@@ -508,13 +491,13 @@ public class SearchProduct extends Fragment implements RequestNotifier {
         CheckBox checkBox;
     }
 
-    public class CheckedTagsAdapter extends BaseAdapter {
+    private class CheckedTagsAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
         Activity activity;
 
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
-        public CheckedTagsAdapter(Activity a, String titles[]) {
+        CheckedTagsAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
 
@@ -593,18 +576,18 @@ public class SearchProduct extends Fragment implements RequestNotifier {
     /*
     Adpters...
      */
-    static class ViewHolder1 {
+    private static class ViewHolder1 {
         TextView text;
         Button remove;
         CheckBox checkBox;
     }
 
-    public class CheckedCategoryAdapter extends BaseAdapter {
+    private class CheckedCategoryAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
         Activity activity;
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
-        public CheckedCategoryAdapter(Activity a, String titles[]) {
+        CheckedCategoryAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
             if (finalcategory.size() == 0) {
@@ -675,18 +658,18 @@ public class SearchProduct extends Fragment implements RequestNotifier {
         }
     }
 
-    static class ViewHolder2 {
+    private static class ViewHolder2 {
         TextView text;
         Button remove;
         CheckBox checkBox;
     }
 
-    public class CheckedBrandTagsAdapter extends BaseAdapter {
+    private class CheckedBrandTagsAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
         Activity activity;
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
-        public CheckedBrandTagsAdapter(Activity a, String titles[]) {
+        CheckedBrandTagsAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
             if (finalBrandTags.size() == 0) {

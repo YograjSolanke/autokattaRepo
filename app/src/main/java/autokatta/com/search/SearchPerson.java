@@ -1,5 +1,6 @@
 package autokatta.com.search;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import autokatta.com.R;
 import autokatta.com.adapter.SearchPersonAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.SearchPersonResponse;
 import retrofit2.Response;
 
@@ -44,12 +47,13 @@ public class SearchPerson extends Fragment implements RequestNotifier {
     boolean[] checkedValues;
     boolean hasViewCreated = false;
     TextView mNoData;
-
     String myContact;
     ImageView filterImg;
     ArrayList<String> cityList = new ArrayList<>();
     HashSet<String> citySet;
     SearchPersonAdapter adapter;
+    ConnectionDetector mConnectionDetector;
+    private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -64,9 +68,11 @@ public class SearchPerson extends Fragment implements RequestNotifier {
         super.onViewCreated(view, savedInstanceState);
 
         mNoData = (TextView) mSearchPerson.findViewById(R.id.no_category);
-        mNoData.setVisibility(View.GONE);
+        //mNoData.setVisibility(View.GONE);
         searchList = (RecyclerView) mSearchPerson.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchPerson.findViewById(R.id.filterimg);
+        filterImg.setVisibility(View.GONE);
+
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                 .getString("loginContact", "");
 
@@ -80,6 +86,10 @@ public class SearchPerson extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 try {
+                    dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage("Loading...");
+
+                    mConnectionDetector = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
                     if (bundle != null) {
                         searchString = bundle.getString("searchText1");
@@ -100,18 +110,28 @@ public class SearchPerson extends Fragment implements RequestNotifier {
     }
 
     private void getSearchResults(String searchString) {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getPersonSearchData(searchString, myContact);
+
+        if (mConnectionDetector.isConnectedToInternet()) {
+            dialog.show();
+            ApiCall mApiCall = new ApiCall(getActivity(), this);
+            mApiCall.getPersonSearchData(searchString, myContact);
+        } else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchPersonResponse contactResponse = (SearchPersonResponse) response.body();
                 if (!contactResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     allSearchDataArrayList.clear();
+                    filterImg.setVisibility(View.VISIBLE);
                     for (SearchPersonResponse.Success success : contactResponse.getSuccess()) {
                         success.setUsername(success.getUsername());
                         success.setCity(success.getCity());
@@ -134,56 +154,32 @@ public class SearchPerson extends Fragment implements RequestNotifier {
                     searchList.setAdapter(adapter);
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
+                    filterImg.setVisibility(View.GONE);
             }
             } else {
-                //Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            // Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
-            //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            // Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            /*Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchPerson Fragment");
         }
@@ -200,7 +196,7 @@ public class SearchPerson extends Fragment implements RequestNotifier {
      */
     public void filterData(final String[] incomingCity) {
 
-        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        final List<String> mSelectedItems = new ArrayList<>();
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
         // set the dialog title
         builder.setTitle("Please Select City/Location to filter!!")
@@ -279,5 +275,11 @@ public class SearchPerson extends Fragment implements RequestNotifier {
                 hasViewCreated = true;
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSearchResults(searchString);
     }
 }

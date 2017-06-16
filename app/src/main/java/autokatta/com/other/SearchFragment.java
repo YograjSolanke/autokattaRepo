@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
-import autokatta.com.events.MyActiveAuctionFragment;
 import autokatta.com.search.SearchAuction;
 import autokatta.com.search.SearchPerson;
 import autokatta.com.search.SearchProduct;
@@ -78,7 +77,7 @@ public class SearchFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
-        tabAdapterName.addFragment(new MyActiveAuctionFragment(), "Promotional");
+        //tabAdapterName.addFragment(new MyActiveAuctionFragment(), "Promotional");
         tabAdapterName.addFragment(mSearchProduct, "Products");
         tabAdapterName.addFragment(mSearchService, "Services");
         tabAdapterName.addFragment(mSearchStore, "Store");
