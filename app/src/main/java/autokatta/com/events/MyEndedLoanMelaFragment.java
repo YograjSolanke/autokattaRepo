@@ -101,7 +101,7 @@ public class MyEndedLoanMelaFragment extends Fragment implements SwipeRefreshLay
             apiCall = new ApiCall(getActivity(), this);
             apiCall.getEndedLoanMela(loginContact);
         } else {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -165,19 +165,19 @@ public class MyEndedLoanMelaFragment extends Fragment implements SwipeRefreshLay
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
            // showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
           //  showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
          //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
          //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
          //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "My Ended Loan Mela Fragment");

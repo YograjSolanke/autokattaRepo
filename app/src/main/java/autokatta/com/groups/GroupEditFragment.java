@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -39,6 +38,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.other.CustomToast;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -112,7 +112,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                             .into(mGroup_image);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(getActivity(),"Error uploading image", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(getActivity(),"Error uploading image");
 
                     //showMessage(getActivity(), "Error uploading image");
                 }
@@ -132,7 +132,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             public void onClick(View v) {
                 group_name_update = group_name.getText().toString();
                 if (group_name_update.equals("")||group_name_update.startsWith(" ")&&group_name_update.endsWith(" ")) {
-                    Toast.makeText(getActivity(),"Please provide group name", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(getActivity(),"Please provide group name");
                     //  showMessage(getActivity(), "Please provide group name");
                 } else {
                     if (!lastWord.equals("")) {
@@ -310,20 +310,20 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
-            // showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-            //  errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "editgroupfragment");
@@ -349,8 +349,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                         .into(mGroup_image);
             } catch (Exception e) {
                 e.printStackTrace();
-
-                Toast.makeText(getActivity(),"Error uploading image", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(),"Error uploading image");
                 //showMessage(getActivity(), "Error uploading image");
             }
         }

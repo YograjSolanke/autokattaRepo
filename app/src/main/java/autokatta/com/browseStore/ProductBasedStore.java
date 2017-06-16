@@ -21,7 +21,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -133,14 +132,14 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
 //                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(mActivity, getString(R.string._404_), Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(mActivity,getString(R.string._404_));
+
                 // mNoData.setVisibility(View.VISIBLE);
                 // showMessage(mActivity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(mActivity, getString(R.string.no_response), Toast.LENGTH_SHORT).show();
-
+            CustomToast.customToast(mActivity,getString(R.string.no_response));
             // showMessage(mActivity, getString(R.string.no_response));
         }
 
@@ -204,22 +203,17 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(mActivity, getString(R.string._404_), Toast.LENGTH_SHORT).show();
-
-            // showMessage(mActivity, getString(R.string._404_));
+            CustomToast.customToast(mActivity,getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(mActivity, getString(R.string.no_response), Toast.LENGTH_SHORT).show();
-
-            //  showMessage(mActivity, getString(R.string.no_response));
+            CustomToast.customToast(mActivity,getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(mActivity, getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity,getString(R.string.no_response));
             //  showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(mActivity, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity,getString(R.string.no_internet));
             //  errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(mActivity, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-
+            CustomToast.customToast(mActivity,getString(R.string.no_internet));
             //  errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "ProductBasedStore Fragment");
@@ -235,8 +229,8 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     @Override
     public void onRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
-//        getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-//                .getString("loginContact", ""));
+      getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""));
     }
 
     @Override

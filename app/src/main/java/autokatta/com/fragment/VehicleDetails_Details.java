@@ -87,6 +87,7 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getVehicleById(contact, mVehicleId);
         } else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -171,15 +172,20 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            //  showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //  errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "VehicleDetails_Details");
             error.printStackTrace();

@@ -204,16 +204,21 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
         }
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            // showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //  showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //  errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            // errorMessage(getActivity(), getString(R.string.no_internet));
-        } else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        }else {
             Log.i("Check Class-", "Search Store Fragment");
             error.printStackTrace();
         }

@@ -256,8 +256,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
     public void notifyString(String str) {
         if (str != null) {
             if (str.startsWith("Success")) {
-                Toast.makeText(getActivity(), "Auction Created Successfully",
-                        Toast.LENGTH_LONG).show();
+                CustomToast.customToast(getActivity(),  "Auction Created Successfully");
                 /*Update data in SqLite
                 sqlite_obj.open();
                 SQlitewallDB.DatabaseHelper obg = new SQlitewallDB.DatabaseHelper(getActivity());

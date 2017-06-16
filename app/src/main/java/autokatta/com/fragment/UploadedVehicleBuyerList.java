@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,7 +59,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
     String vehicle_id, title, price, vcategory, brand, vmodel, image, noofleads, uploaddate, rto_city, manufacture_year;
     ImageView vehicleimage;
     TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
-
+    String myContact;
 
     @Nullable
     @Override
@@ -67,7 +69,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
 
         apiCall = new ApiCall(getActivity(), this);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        final String myContact = mSharedPreferences.getString("loginContact", "7841023392");
+         myContact = mSharedPreferences.getString("loginContact", "7841023392");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutUploadedVehicleBuyer);
         mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.buyerlist);
@@ -169,6 +171,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
 
     @Override
     public void onRefresh() {
+        getBuyerdata(myContact);
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -240,12 +243,22 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "UploadedVehicleBuyerList Fragment");
             error.printStackTrace();

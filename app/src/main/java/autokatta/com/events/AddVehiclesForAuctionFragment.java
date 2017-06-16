@@ -385,24 +385,23 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 endTimeUpdate = endTime.getText().toString();
                 if (auctionTitleUpdate.equals("")) {
                     auctionTitle.setError("Enter auction title");
-                    Toast.makeText(getActivity(), "Enter auction title", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Enter auction title");
 //                    auctioname.setFocusable(true);
                 } else if (startDateUpdate.equals("")) {
 //                    startdate.setError("Enter start date");
-                    Toast.makeText(getActivity(), "Enter start date", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Enter start date");
                 } else if (startTimeUpdate.equals("")) {
 //                    starttime.setError("Enter start time");
-                    Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Enter start time");
                 } else if (startDateUpdate.equals(dateString) && !genericFunctions.startTimeEndTimeValidation(time, startTimeUpdate)) {
-
-                    Toast.makeText(getActivity(), "time is invalid", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(),  "time is invalid");
 
                 } else if (endDateUpdate.equals("")) {
+                    CustomToast.customToast(getActivity(), "Enter end date");
 //                    enddate.setError("Enter end date");
-                    Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
                 } else if (endTimeUpdate.equals("")) {
+                    CustomToast.customToast(getActivity(),"Enter end time");
 //                    endtime.setError("Enter end time");
-                    Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
                 } else if (!genericFunctions.startDateValidatioon(startDateUpdate)) {
                     startDate.setError("Enter valid Date");
                 } else if (!genericFunctions.startDateEndDateValidation(endDateUpdate, startDateUpdate)) {
@@ -443,9 +442,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 }
 
                 if (finalVehiclesData.size() == 0)
-                    Toast.makeText(getActivity(), "Please select vehicle(s)", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(),"Please select vehicle(s)");
                 else {
-                    Toast.makeText(getActivity(), "Please confirm vehicles that you selected now", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(),"Please confirm vehicles that you selected now");
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("finalVehiclesData", (Serializable) finalVehiclesData);
                     bundle.putString("auction_id", auction_id);
@@ -522,7 +521,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             dialog.dismiss();
                             //Toast.makeText(getActivity(), "Web Service call to get vehicles", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getActivity(), "Please select checkbox", Toast.LENGTH_SHORT).show();
+                            CustomToast.customToast(getActivity(),"Please select checkbox");
                         }
 
                     }
@@ -874,8 +873,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
         if (str != null) {
             if (str.startsWith("Success")) {
-                Toast.makeText(getActivity(), "Update Successfull",
-                        Toast.LENGTH_LONG).show();
+                CustomToast.customToast(getActivity(),  "Update Successfull");
                 auctionTitle.setEnabled(false);
                 startDate.setEnabled(false);
                 startTime.setEnabled(false);

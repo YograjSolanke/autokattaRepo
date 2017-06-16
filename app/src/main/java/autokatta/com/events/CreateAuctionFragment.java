@@ -170,7 +170,7 @@ public class CreateAuctionFragment extends Fragment
                             public void onClick(DialogInterface dialog, int which) {
                                 recieve = input.getText().toString();
                                 if (recieve.equals("")||recieve.startsWith(" ")&&recieve.endsWith(" "))
-                                    Toast.makeText(getActivity(), "Please enter clause", Toast.LENGTH_LONG).show();
+                                    CustomToast.customToast(getActivity(), "Please enter clause");
                                 else {
                                     //new AddClauseTask().execute();
 
@@ -244,27 +244,27 @@ public class CreateAuctionFragment extends Fragment
                     if (name.equals("")||name.startsWith(" ")&&name.endsWith(" ")) {
                         auctioname.setError("Enter auction title");
                         auctioname.requestFocus();
-                        Toast.makeText(getActivity(), "Enter auction title", Toast.LENGTH_LONG).show();
+                        CustomToast.customToast(getActivity(), "Enter auction title");
 //                    auctioname.setFocusable(true);
                     } else if (stdate.equals("")) {
                         startdate.requestFocus();
 //                    startdate.setError("Enter start date");
-                        Toast.makeText(getActivity(), "Enter start date", Toast.LENGTH_LONG).show();
+                        CustomToast.customToast(getActivity(), "Enter start date");
                     } else if (sttime.equals("")) {
                         starttime.requestFocus();
 //                    starttime.setError("Enter start time");
-                        Toast.makeText(getActivity(), "Enter start time", Toast.LENGTH_LONG).show();
+                        CustomToast.customToast(getActivity(),"Enter start time");
                     } else if (stdate.equals(dateString) && !validObj.startTimeEndTimeValidation(time, sttime)) {
                         starttime.setError("time is invalid");
 
                     } else if (eddate.equals("")) {
                         enddate.requestFocus();
                         //                    enddate.setError("Enter end date");
-                        Toast.makeText(getActivity(), "Enter end date", Toast.LENGTH_LONG).show();
+                        CustomToast.customToast(getActivity(), "Enter end date");
                     } else if (edtime.equals("")) {
                         endtime.requestFocus();
                         //                    endtime.setError("Enter end time");
-                        Toast.makeText(getActivity(), "Enter end time", Toast.LENGTH_LONG).show();
+                        CustomToast.customToast(getActivity(), "Enter end time");
                     } else if (!validObj.startDateValidatioon(stdate)) {
                         startdate.setError("Enter valid Date");
                         startdate.requestFocus();
@@ -283,11 +283,12 @@ public class CreateAuctionFragment extends Fragment
                         address.setError("Please Select Location From Dropdown Only");
                         address.requestFocus();
                     } else if (address.getVisibility() == View.GONE && stockLocation.equalsIgnoreCase("-SelectState-")) {
-                        Toast.makeText(getActivity(), "Please select states ", Toast.LENGTH_LONG).show();
+
+                        CustomToast.customToast(getActivity(),  "Please select states ");
                         stockLocationSpinner.requestFocus();
 
                     } else if (auctionCategory.equalsIgnoreCase("-Select Auction Category-")) {
-                        Toast.makeText(getActivity(), "Please select category of auction", Toast.LENGTH_LONG).show();
+                        CustomToast.customToast(getActivity(),"Please select category of auction");
                         auctionCategorySpinner.requestFocus();
                     } else {
 
@@ -317,7 +318,7 @@ public class CreateAuctionFragment extends Fragment
                         System.out.println(checkedids + "positionArray " + positionArray.length);
 
                         if (ids.equals(""))
-                            Toast.makeText(getActivity(), "Please select atleast single clause", Toast.LENGTH_LONG).show();
+                            CustomToast.customToast(getActivity(),  "Please select atleast single clause");
                         else {
                             final Dialog dialog = new Dialog(getActivity());
                             dialog.setTitle("Auction");
@@ -496,8 +497,7 @@ public class CreateAuctionFragment extends Fragment
                                     .setNegativeButton("Later", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
 
-                                            Toast.makeText(getActivity(), "Auction saved in my saved event", Toast.LENGTH_LONG).show();
-
+                                            CustomToast.customToast(getActivity(),"Auction saved in my saved event");
                                             Intent intent = new Intent(getActivity(), MySavedAuctionEventActivity.class);
                                             startActivity(intent);
 

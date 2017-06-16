@@ -20,7 +20,9 @@ import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -316,7 +318,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                         //.bitmapTransform(new CropCircleTransformation(getActivity()))
                                         .into(buyer_lead_image);
                             } catch (Exception e) {
-                                Toast.makeText(getActivity(), "Error image uploading", Toast.LENGTH_LONG).show();
+                               CustomToast.customToast(getActivity(),"Error image uploading");
                             }
                         }
                         final String itemLocation = mainList.get(i).getFound().get(j).getLocationCity();
@@ -563,12 +565,21 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
-        } else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        }else {
             Log.i("Check Class", "Buyer Notification Fragment");
             error.printStackTrace();
         }

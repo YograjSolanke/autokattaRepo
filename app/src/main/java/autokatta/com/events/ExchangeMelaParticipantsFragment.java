@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -125,7 +124,7 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
                     .getString("loginContact", ""), strExchangeId);
             // apiCall.AuctionParticipantData("9890950817", "1047");
         } else {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
            // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -179,10 +178,10 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
            // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Exchange Participants Fragment");

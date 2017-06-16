@@ -1,6 +1,5 @@
 package autokatta.com.events;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,6 +27,8 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetAuctionEventResponse;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-003 on 6/4/17.
@@ -94,7 +95,7 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-                            /*apiCall.MyActiveAuction(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"),
+                           /* apiCall.MyActiveAuction(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"),
                                     "ACTIVE");*/
                             getAuctionVehicle(strAuctionId);
                         }
@@ -118,7 +119,7 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getAuctionEvent(strAuctionId);
         } else {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -159,7 +160,7 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (getActivity() != null) {
                         PreviewAuctionAdapter adapter = new PreviewAuctionAdapter(getActivity(), vehicles, strAuctionId, "0",
-                                getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                                         .getString("loginContact", ""));
                         mRecyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
@@ -193,19 +194,19 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
            // showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
          //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
            // errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Auction Vehicles Fragment");

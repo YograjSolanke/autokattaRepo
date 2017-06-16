@@ -27,6 +27,7 @@ import autokatta.com.adapter.StoreServiceAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
 import retrofit2.Response;
 
@@ -68,6 +69,7 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //errorMessage(mActivity, getString(R.string.no_internet));
         }
     }
@@ -128,16 +130,21 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
-        } else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        }else {
             Log.i("Check Class-"
                     , "StoreServices");
             error.printStackTrace();

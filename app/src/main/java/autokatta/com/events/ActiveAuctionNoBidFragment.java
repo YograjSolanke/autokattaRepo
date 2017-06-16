@@ -116,7 +116,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionNoBid(strAuctionId);
         } else {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
            // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }

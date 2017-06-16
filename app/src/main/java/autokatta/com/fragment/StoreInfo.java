@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -26,6 +25,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.enquiries.AllEnquiryTabActivity;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.MyStoreListActivity;
 import autokatta.com.view.StoreViewActivity;
@@ -64,6 +64,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreData(myContact, store_id);
         } else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //errorMessage(mActivity, getString(R.string.no_internet));
         }
     }
@@ -117,10 +118,10 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
 
                 }
             } else {
-                Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(),getString(R.string._404));
             }
         } else {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
         }
 
     }
@@ -128,15 +129,20 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "StoreInfo");

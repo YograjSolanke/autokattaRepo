@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -117,7 +116,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionHighBid(myContact, strAuctionId);
         } else {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
             //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -392,7 +391,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
                                     public void onClick(View v) {
 
                                         if (mVehicleLists.get(finalI).getBiddersList().get(finalJ1).getContact().equals(myContact)) {
-                                            Snackbar.make(v, "You can't call yourself", Snackbar.LENGTH_SHORT).show();
+                                            CustomToast.customToast(getActivity(), "You can't call yourself");
                                         } else {
 //                                    action = "call";
 //                                    //vehicle_id = v_ids[position];
@@ -532,19 +531,19 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
          //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
        //     showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         //    showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
          //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
          //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Ended Auction HighesBid Fragment");
@@ -559,19 +558,19 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             //Blacklist
             if (str.equals("success")) {
                 if (keyword.equals("blacklist")) {
+                    CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     Toast.makeText(getActivity(), "Add To Blacklist", Toast.LENGTH_SHORT).show();
                 } else {
+                    CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     Toast.makeText(getActivity(), "Remove from blacklist", Toast.LENGTH_SHORT).show();
                 }
             }
 
             //Reauction
             else if (str.equals("success_reauction"))
-                Toast.makeText(getActivity(), "Vehicle added to reauction", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(),"Vehicle added to reauction !!!");
             else
-                Toast.makeText(getActivity(), "Problem while adding vehicle to reauction", Toast.LENGTH_SHORT).show();
-
-
+            CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction Try Later!!!");
         } else
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
     }
@@ -583,7 +582,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             mApiCall.ApproveVehicle(mAuctionId, keyword1, vehicleid, bidderContact, bidPrice);
             //mApiCall.ApproveVehicle("1047", keyword1, vehicleid, bidderContact, bidPrice);
         } else {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -594,7 +593,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             mApiCall.addToReauction(vehicleid, mAuctionId);
             //mApiCall.addToReauction(vehicleid, "1047");
         } else {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -605,7 +604,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
             mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
             //mApiCall.Add_RemoveBlacklistContact(myContact, "1047", rContact, keyword);
         } else {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }

@@ -18,11 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -289,11 +290,20 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Preview My Active Auction Activity");
             error.printStackTrace();
@@ -305,10 +315,9 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
 
         if (str != null) {
             if (str.startsWith("1"))
-                Toast.makeText(getApplicationContext(), "Mail Sent Successfully", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getApplicationContext(),"Mail Sent Successfully");
             else
-                Toast.makeText(getApplicationContext(), "Problem in sending mail", Toast.LENGTH_SHORT).show();
-
+            CustomToast.customToast(getApplicationContext(),"Problem in sending mail");
 
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
