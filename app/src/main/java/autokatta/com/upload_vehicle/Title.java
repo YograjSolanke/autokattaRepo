@@ -724,7 +724,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                 String edbrand = input.getText().toString();
 
                                                 if (edbrand.equals(""))
-                                                    Toast.makeText(getActivity(), "Please enter brand", Toast.LENGTH_LONG).show();
+                                                    CustomToast.customToast(getActivity(), "Please enter brand");
+
                                                 else
                                                     AddBrand("Brand", edbrand, categoryId, subcategoryId);
 
@@ -806,7 +807,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                 String edmodel = input.getText().toString();
 
                                                 if (edmodel.equals(""))
-                                                    Toast.makeText(getActivity(), "Please enter model", Toast.LENGTH_LONG).show();
+                                                    CustomToast.customToast(getActivity(), "Please enter model");
                                                 else
                                                     AddModel("Model", edmodel, categoryId, subcategoryId, brandId);
 

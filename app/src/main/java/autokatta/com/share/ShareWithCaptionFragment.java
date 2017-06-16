@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -20,6 +19,7 @@ import java.net.UnknownHostException;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import retrofit2.Response;
 
 /**
@@ -140,12 +140,13 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            // Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            //Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            // Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
@@ -162,6 +163,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
 //            textView.setTextColor(Color.YELLOW);
 //            snackbar.show();
         } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
@@ -187,7 +189,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("success")) {
-                Toast.makeText(getActivity(), "Shared successfully", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(), "Shared successfully");
                 getActivity().finish();
                 /*startActivity(new Intent(getActivity(), AutokattaMainActivity.class));*/
             }

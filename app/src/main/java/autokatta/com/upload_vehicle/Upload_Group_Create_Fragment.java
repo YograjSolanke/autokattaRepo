@@ -1,9 +1,7 @@
 package autokatta.com.upload_vehicle;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,7 +46,7 @@ public class Upload_Group_Create_Fragment extends Fragment implements View.OnCli
         switch (v.getId()){
             case R.id.BtnCreateGroup:
                 if (mGroupTitle.getText().toString().equalsIgnoreCase("") || mGroupTitle.getText().toString().startsWith(" ")) {
-                    Snackbar.make(v, "Please provide group name and optional group icon", Snackbar.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Please provide group name and optional group icon");
                 } else {
                     createGroups(mGroupTitle.getText().toString(), lastWord,
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));

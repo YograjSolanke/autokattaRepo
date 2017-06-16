@@ -18,6 +18,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyBroadcastGroupsResponse;
 import retrofit2.Response;
 
@@ -90,13 +91,13 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
                     grouplist.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
-//                    Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
             } else {
-//                Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-//            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -104,12 +105,13 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            //  Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            //  Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //  Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
@@ -126,6 +128,7 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
 //            textView.setTextColor(Color.YELLOW);
 //            snackbar.show();
         } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
