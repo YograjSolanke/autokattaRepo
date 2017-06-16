@@ -27,7 +27,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -48,6 +47,7 @@ import autokatta.com.fragment.StoreServices;
 import autokatta.com.fragment.StoreVehicles;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.my_store.MyStoreHome;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
 import retrofit2.Response;
 
@@ -768,10 +768,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 //                    menuRed.setClosedOnTouchOutside(true);
 //                }
             } else {
-                Toast.makeText(getApplicationContext(), getString(R.string._404_), Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
             }
         } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
 
     }
@@ -779,13 +779,13 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
@@ -802,7 +802,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 //            textView.setTextColor(Color.WHITE);
 //            snackbar.show();
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {

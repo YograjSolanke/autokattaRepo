@@ -796,19 +796,19 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                 }
 
                 if (finance1.startsWith("-Select")) {
-                    Toast.makeText(getApplicationContext(), "Please provide finanace required or not", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getApplicationContext(), "Please provide finanace required or not");
 
                 } else if (Category.equalsIgnoreCase("Select Category")) {
-                    Toast.makeText(getApplicationContext(), "select category", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getApplicationContext(), "select category");
 
                 } else if (subcategorySpinner.getSelectedItem().toString().equalsIgnoreCase("Select subcategory")) {
-                    Toast.makeText(getApplicationContext(), "select subcategory", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getApplicationContext(), "select subcategory");
 
                 } else if (brandSpinner.getSelectedItem().toString().equalsIgnoreCase("Select Brands")) {
-                    Toast.makeText(getApplicationContext(), "select brand", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getApplicationContext(), "select brand");
 
                 } else if (modelSpinner.getSelectedItem().toString().equalsIgnoreCase("Select model")) {
-                    Toast.makeText(getApplicationContext(), "select model", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getApplicationContext(), "select model");
 
                 } else {
                     applySearch();
