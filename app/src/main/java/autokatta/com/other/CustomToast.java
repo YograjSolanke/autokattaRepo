@@ -27,7 +27,8 @@ public class CustomToast {
             //Creating the Toast object
             Toast toast = new Toast(context);
             toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+           // toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setGravity(Gravity.BOTTOM, 0, 50);
             toast.setView(layout);//setting the view of custom toast layout
             toast.show();
             //Toast.makeText(getApplicationContext(), "Using this you will Save the data!", Toast.LENGTH_LONG).show();
