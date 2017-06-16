@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -34,6 +33,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.model.LikeUnlike;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
@@ -342,11 +342,11 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
             } else {
                 hud.dismiss();
-                Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
             hud.dismiss();
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -365,15 +365,15 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "StoreViewActivity");

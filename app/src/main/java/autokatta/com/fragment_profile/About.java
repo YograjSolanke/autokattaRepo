@@ -38,6 +38,7 @@ import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
@@ -247,35 +248,35 @@ public class About extends Fragment implements RequestNotifier {
                     }
                 }
             } else {
-                //showMessage(mActivity, getString(R.string._404_));
+                CustomToast.customToast(mActivity, getString(R.string._404_));
             }
         } else {
-            //showMessage(mActivity, getString(R.string.no_response));
+            CustomToast.customToast(mActivity, getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            if (mActivity != null) {
-                // showMessage(mActivity, getString(R.string._404_));
-            }
+
+            CustomToast.customToast(mActivity, getString(R.string._404_));
+
         } else if (error instanceof NullPointerException) {
-            if (mActivity != null) {
-                // showMessage(mActivity, getString(R.string.no_response));
-            }
+
+            CustomToast.customToast(mActivity, getString(R.string.no_response));
+
         } else if (error instanceof ClassCastException) {
-            if (mActivity != null) {
-                //showMessage(mActivity, getString(R.string.no_response));
-            }
+
+            CustomToast.customToast(mActivity, getString(R.string.no_response));
+
         } else if (error instanceof ConnectException) {
-            if (mActivity != null) {
-                //errorMessage(mActivity, getString(R.string.no_internet));
-            }
+
+            CustomToast.customToast(mActivity, getString(R.string.no_internet));
+
         } else if (error instanceof UnknownHostException) {
-            if (mActivity != null) {
-                // errorMessage(mActivity, getString(R.string.no_internet));
-            }
+
+            CustomToast.customToast(mActivity, getString(R.string.no_internet));
+
         } else {
             Log.i("Check Class-", "About Activity");
         }
@@ -285,7 +286,7 @@ public class About extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("Success_update_profile")) {
-                //showMessage(mActivity, "Profile Updated");
+                CustomToast.customToast(mActivity, "Profile Updated");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
              /*   mCity.setEnabled(false);
                 mCity.setFocusable(false);*/

@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -36,6 +35,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.StoreViewActivity;
@@ -135,10 +135,10 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             public void onClick(View view) {
                 int size = mStoreList.size();
                 if (size == 1)
-                    Toast.makeText(mActivity, "You can not delete this store", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(mActivity, "You can not delete this store");
                 else {
                     if (!mConnectionDetector.isConnectedToInternet())
-                        Toast.makeText(mActivity, mActivity.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+                        CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
 
                     else {
                         new AlertDialog.Builder(mActivity)
@@ -168,14 +168,14 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.linearlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mActivity, "You can not like your own store", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(mActivity, "You can not like your own store");
 
             }
         });
         holder.linearfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mActivity, "You can not follow your own store", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(mActivity, "You can not follow your own store");
 
             }
         });
@@ -303,11 +303,11 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     public void notifyError(Throwable error) {
 
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string._404_), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else {
             Log.i("Check Class-", "MyStoreList Adapter");
         }
@@ -318,7 +318,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
 
         if (str != null) {
             if (str.startsWith("success")) {
-                Toast.makeText(mActivity, "Store deleted", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(mActivity, "Store deleted");
 
                 //mStoreList.remove(getAdapterPosition());
             }

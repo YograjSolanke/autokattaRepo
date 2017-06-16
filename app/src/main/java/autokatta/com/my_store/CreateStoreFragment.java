@@ -63,6 +63,7 @@ import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.CreateStoreResponse;
@@ -430,23 +431,23 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     closetime.setError("Enter Close Time");
                     closetime.requestFocus();
                 } else if (opentime.getText().toString().contains("PM") && closetime.getText().toString().contains("AM")) {
-                    Toast.makeText(getActivity(), "Enter Valid Time", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(getActivity(), "Enter Valid Time");
                 } else if (flagtime) {
-                    Toast.makeText(getActivity(), "Close time & open time should not same", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(getActivity(), "Close time & open time should not same");
                 } else if (workdays.equals("-Select Working Days-") || workdays.equals("")) {
-                    Toast.makeText(getActivity(), "Please select Working Days", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Please select Working Days");
                 } else if (storetype.equalsIgnoreCase("")) {
-                    Toast.makeText(getActivity(), "Select store type", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Select store type");
                 } else if (category.equalsIgnoreCase("")) {
-                    Toast.makeText(getActivity(), "Provide services offered", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Provide services offered");
                 } else if ((rbtstoreproduct.isChecked() || rbtstoreservice.isChecked()) && finalbrandtags.equals("")) {
-                    Toast.makeText(getActivity(), "Provide brand tags", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Provide brand tags");
                     multiautobrand.requestFocus();
                 } else if (check()) {
                     multiautobrand.setError("You can add maximum five tags only");
                     multiautobrand.requestFocus();
                 } else if (rbtstorevehicle.isChecked() && (strBrandSpinner.equalsIgnoreCase("-SelectBrands-") || strBrandSpinner.isEmpty())) {
-                    Toast.makeText(getActivity(), "Select brands", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(), "Select brands");
                     brandSpinner.requestFocus();
                 } else {
                     if (create.getText().toString().equalsIgnoreCase("create")) {
@@ -672,7 +673,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
             });
         } else {
 
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 //            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
 //                        @Override
@@ -811,7 +812,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, module);
                         multiautotext.setAdapter(dataadapter);
                     } else
-                        Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
                 /*
                         Response to get Brand tags
@@ -832,7 +833,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             multiautobrand.setAdapter(dataadapter);
                         }
                     } else
-                        Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
                  /*
                         Response after creating store
@@ -858,7 +859,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
 
                     } else
-                        Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
 
                 if (response.body() instanceof StoreResponse) {
@@ -902,15 +903,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         }
                     } else {
                         hud.dismiss();
-                        Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
                     }
                 }
             } else {
-                Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
             hud.dismiss();
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -918,13 +919,13 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void notifyError(Throwable error) {
         hud.dismiss();
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getActivity(), R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
@@ -941,7 +942,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 //            textView.setTextColor(Color.YELLOW);
 //            snackbar.show();
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(mParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
@@ -979,10 +980,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("brand_tag_added")) {
-                Toast.makeText(getActivity(), "No  Brand Tags Added", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(), "No  Brand Tags Added");
 
             } else if (str.equals("store_updated")) {
-                Toast.makeText(getActivity(), "Store updated", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(getActivity(), "Store updated");
                 if (!lastWord.equals(preLastWord) && !lastWord.equals(""))
                     uploadImage(mediaPath);
                 if (!coverlastWord.equals(preCoverLastWord) && !coverlastWord.equals(""))
@@ -1002,7 +1003,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
             }
         } else
-            Toast.makeText(getActivity(), R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
     }
 

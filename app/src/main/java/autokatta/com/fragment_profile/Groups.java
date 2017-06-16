@@ -25,6 +25,7 @@ import autokatta.com.adapter.GroupsExpandableListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.response.ProfileGroupResponse;
 import retrofit2.Response;
@@ -76,8 +77,8 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.profileGroup(contact);
         } else {
-            // if (mActivity != null)
-            // errorMessage(mActivity, getString(R.string.no_internet));
+
+            CustomToast.customToast(mActivity, getString(R.string.no_internet));
         }
     }
 
@@ -120,37 +121,37 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
                 adapter.notifyDataSetChanged();
 
             } else {
-                /*if (mActivity != null)
-                    showMessage(mActivity, getString(R.string._404_));*/
+
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-           /* if (mActivity != null)
-                showMessage(mActivity, getString(R.string.no_response));*/
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            if (mActivity != null) {
-                // showMessage(mActivity, getString(R.string._404_));
-            }
+
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
+
         } else if (error instanceof NullPointerException) {
-            if (mActivity != null) {
-                // showMessage(mActivity, getString(R.string.no_response));
-            }
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+
         } else if (error instanceof ClassCastException) {
-            if (mActivity != null) {
-                //  showMessage(mActivity, getString(R.string.no_response));
-            }
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+
         } else if (error instanceof ConnectException) {
-            if (mActivity != null) {
-                // errorMessage(mActivity, getString(R.string.no_internet));
-            }
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+
         } else if (error instanceof UnknownHostException) {
-            if (mActivity != null) {
-                //  errorMessage(mActivity, getString(R.string.no_internet));
-            }
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+
         } else {
             Log.i("Check Class-", "Groups Fragment");
         }

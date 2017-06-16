@@ -24,6 +24,7 @@ import autokatta.com.adapter.FollowersExpandableListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetFollowersResponse;
 import autokatta.com.response.ModelFollowers;
 import retrofit2.Response;
@@ -102,37 +103,37 @@ public class Follow extends Fragment implements RequestNotifier {
                 adapter.notifyDataSetChanged();
 
             } else {
-                /*if (mActivity != null)
-                    showMessage(mActivity, getString(R.string._404_));*/
+
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-            /*if (mActivity != null)
-                showMessage(mActivity, getString(R.string.no_response));*/
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            /*if (mActivity != null) {
-                showMessage(mActivity, getString(R.string._404_));
-            }*/
+
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
+
         } else if (error instanceof NullPointerException) {
-            /*if (mActivity != null) {
-                showMessage(mActivity, getString(R.string.no_response));
-            }*/
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+
         } else if (error instanceof ClassCastException) {
-            /*if (mActivity != null) {
-                showMessage(mActivity, getString(R.string.no_response));
-            }*/
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+
         } else if (error instanceof ConnectException) {
-           /* if (mActivity != null) {
-                errorMessage(mActivity, getString(R.string.no_internet));
-            }*/
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+
         } else if (error instanceof UnknownHostException) {
-            /*if (mActivity != null) {
-                errorMessage(mActivity, getString(R.string.no_internet));
-            }*/
+
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+
         } else {
             Log.i("Check Class-", "Follow Fragment");
         }
@@ -155,15 +156,15 @@ public class Follow extends Fragment implements RequestNotifier {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(mOtherContact);
                     } else {
-                       /* if (mActivity != null)
-                            errorMessage(mActivity, getString(R.string.no_internet));*/
+
+                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     }
                 } else {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(contact);
                     } else {
-                        /*if (mActivity != null)
-                            errorMessage(mActivity, getString(R.string.no_internet));*/
+
+                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     }
                 }
                 _hasLoadedOnce = true;
@@ -190,15 +191,15 @@ public class Follow extends Fragment implements RequestNotifier {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(mOtherContact);
                     } else {
-                        /*if (mActivity != null)
-                            errorMessage(mActivity, getString(R.string.no_internet));*/
+
+                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     }
                 } else {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(contact);
                     } else {
-                        /*if (mActivity != null)
-                            errorMessage(mActivity, getString(R.string.no_internet));*/
+
+                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     }
                 }
             }
