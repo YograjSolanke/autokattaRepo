@@ -27,9 +27,15 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.search_product, new SearchFragment()).commit();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.search_product, new SearchFragment(), "SearchFragment")
+                        //.addToBackStack("SearchFragment")
+                        .commit();
+            }
+        });
     }
 
     @Override
@@ -60,8 +66,17 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+        } else {
+            if (getFragmentManager().getBackStackEntryCount() > 1) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+            }
+        }
     }
 
     private void setupSearchView() {

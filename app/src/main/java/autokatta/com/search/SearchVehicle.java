@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +36,6 @@ import retrofit2.Response;
 public class SearchVehicle extends Fragment implements RequestNotifier {
     View mSearchVehicle;
     private ListView searchList;
-
     String searchString;
     private List<SearchVehicleResponse.Success> allSearchDataArrayList = new ArrayList<>();
     String myContact;
@@ -52,7 +49,6 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchVehicle = inflater.inflate(R.layout.fragment_search_product, container, false);
-
         return mSearchVehicle;
     }
 
@@ -62,7 +58,6 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
 
         mNoData = (TextView) mSearchVehicle.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
-
         searchList = (ListView) mSearchVehicle.findViewById(R.id.searchlist);
         filterImg = (ImageView) mSearchVehicle.findViewById(R.id.filterimg);
         advanceSearch = (Button) mSearchVehicle.findViewById(R.id.advBtn);
@@ -89,11 +84,10 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                             Bundle b=new Bundle();
                             b.putString("action", "Main");
                             filterActivity.setArguments(b);
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.search_product, filterActivity);
-                            fragmentTransaction.addToBackStack("filteractivity");
-                            fragmentTransaction.commit();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.search_product, filterActivity, "filteractivity")
+                                    .addToBackStack("filteractivity")
+                                    .commit();
                         }
                     });
                 } catch (Exception e) {

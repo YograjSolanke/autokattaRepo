@@ -56,7 +56,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     static class YoHolder extends RecyclerView.ViewHolder {
 
         CardView mCardView;
-        ImageView imgProfile, imgCall;
+        ImageView imgProfile;
         TextView mTextName, mTextNumber, mTextStatus;
         Button btnFollow, btnUnfollow;
 
@@ -64,16 +64,12 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             super(itemView);
             mCardView = (CardView) itemView.findViewById(R.id.adapter_autokatta_contactCard_view);
             imgProfile = (ImageView) itemView.findViewById(R.id.profileImg);
-            //imgCall = (ImageView) itemView.findViewById(R.id.callImg);
             mTextName = (TextView) itemView.findViewById(R.id.txtname);
             mTextNumber = (TextView) itemView.findViewById(R.id.txtnumber);
             mTextStatus = (TextView) itemView.findViewById(R.id.txtstatus);
             btnFollow = (Button) itemView.findViewById(R.id.btnfollow);
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
-
-
         }
-
     }
 
     public SearchPersonAdapter(Activity mActivity, List<SearchPersonResponse.Success> contactdata) {
@@ -81,7 +77,6 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             this.mActivity = mActivity;
             this.contactdata = contactdata;
             contactdata_copy = contactdata;
-            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
             apicall = new ApiCall(this.mActivity, this);
         } catch (ClassCastException e) {
             e.printStackTrace();
@@ -97,6 +92,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
     @Override
     public void onBindViewHolder(final SearchPersonAdapter.YoHolder holder, final int position) {
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
 
@@ -105,17 +101,14 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         else
             holder.mTextStatus.setText("No Status");
 
-
         if (contactdata.get(position).getStatus().equals("yes")) {
             holder.btnUnfollow.setVisibility(VISIBLE);
             holder.btnFollow.setVisibility(GONE);
-
         }
         if (contactdata.get(position).getStatus().equals("no")) {
             holder.btnUnfollow.setVisibility(GONE);
             holder.btnFollow.setVisibility(VISIBLE);
         }
-
 
         if (contactdata.get(position).getProfilePhoto() == null || contactdata.get(position).getProfilePhoto().equals("") ||
                 contactdata.get(position).getProfilePhoto().equals("null"))
@@ -134,7 +127,6 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
                     .into(holder.imgProfile);
         }
 
-
        /* //calling Functionality
         holder.imgCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,13 +143,10 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             @Override
             public void onClick(View v) {
                 bundle.putString("contactOtherProfile", contactdata.get(holder.getAdapterPosition()).getContact());
-
                 if (myContact.equalsIgnoreCase(contactdata.get(holder.getAdapterPosition()).getContact())) {
-
                     Intent i = new Intent(mActivity, UserProfile.class);
                     i.putExtras(bundle);
                     mActivity.startActivity(i);
-
                 } else {
                     Intent i = new Intent(mActivity, OtherProfile.class);
                     i.putExtras(bundle);
@@ -170,24 +159,20 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         holder.btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 holder.btnUnfollow.setVisibility(VISIBLE);
                 holder.btnFollow.setVisibility(GONE);
                 Rcontact = contactdata.get(holder.getAdapterPosition()).getContact();
                 sendFollowerUnfollower(Rcontact, "follow");
-
             }
         });
 
         holder.btnUnfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 holder.btnUnfollow.setVisibility(GONE);
                 holder.btnFollow.setVisibility(VISIBLE);
                 Rcontact = contactdata.get(holder.getAdapterPosition()).getContact();
                 sendFollowerUnfollower(Rcontact, "unfollow");
-
             }
         });
 
@@ -265,16 +250,11 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     private class ItemFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-
             String filterString = constraint.toString().toLowerCase();
-
             FilterResults results = new FilterResults();
-
             final List<SearchPersonResponse.Success> list = contactdata_copy;
-
             int count = list.size();
             final List<SearchPersonResponse.Success> nlist = new ArrayList<>(count);
-
             SearchPersonResponse.Success filterableString;
 
             for (int i = 0; i < count; i++) {
@@ -286,7 +266,6 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
             results.values = nlist;
             results.count = nlist.size();
-
             return results;
         }
 

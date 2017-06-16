@@ -29,18 +29,14 @@ import autokatta.com.view.VehicleDetails;
 
 public class VehicleSearchAdapter extends BaseAdapter {
     Activity activity;
-    private String contactnumber;
-    String vimagename = "";
-    private LayoutInflater inflater;
+    private String vimagename = "";
     private List<SearchVehicleResponse.Success> mystorevehicle = new ArrayList<>();
+    ArrayList<String> vimages = new ArrayList<>();
+    ArrayList<String> images = new ArrayList<String>();
 
     public VehicleSearchAdapter(Activity activity, List<SearchVehicleResponse.Success> mystorevehicle) {
         this.activity = activity;
         this.mystorevehicle = mystorevehicle;
-        contactnumber = activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE)
-                .getString("loginContact", "");
-        inflater = (LayoutInflater) activity.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -79,12 +75,11 @@ public class VehicleSearchAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final ViewHolder holder;
-        ArrayList<String> vimages = new ArrayList<>();
-        ArrayList<String> images = new ArrayList<String>();
+        ViewHolder holder = null;
         if (convertView == null) {
-            holder = new ViewHolder();
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.vehicle_new, null);
+            holder = new ViewHolder();
             // holder = new ViewHolder();
             holder.edittitles = (TextView) convertView.findViewById(R.id.edittitle);
             holder.editprices = (TextView) convertView.findViewById(R.id.editprice);

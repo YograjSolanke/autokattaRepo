@@ -158,6 +158,7 @@ public class SearchStore extends Fragment implements RequestNotifier {
 
                         if (!LocationList.contains(success.getLocation()))
                             LocationList.add(success.getLocation());
+                        Log.i("location", "->" + success.getLocation());
 
                         allSearchDataArrayList.add(success);
                     }

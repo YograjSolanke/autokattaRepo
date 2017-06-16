@@ -51,12 +51,12 @@ public class VehicleUpload extends AppCompatActivity {
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();
-            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         } else {
             if (getFragmentManager().getBackStackEntryCount() > 1) {
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }
     }
