@@ -55,30 +55,31 @@
 
                 <com.github.clans.fab.FloatingActionMenu
                     android:id="@+id/menu_red"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     app:layout_anchorGravity="end|top"
                     app:menu_fab_size="mini"
                     fab:menu_labels_singleLine="true"
-                    fab:menu_openDirection="up">
+                    fab:menu_openDirection="up"
+                    fab:menu_labels_ellipsize="end">
 
                     <com.github.clans.fab.FloatingActionButton
                         android:id="@+id/gotopreview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/auctionwhite"
-                        fab:fab_label="Preview"
-                        fab:fab_size="mini" />
+                        app:fab_label="Preview"
+                        app:fabSize="mini" />
 
                     <com.github.clans.fab.FloatingActionButton
                         android:id="@+id/btncluse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/clause"
-                        fab:fab_label="Clauses"
-                        fab:fab_size="mini" />
+                        app:fab_label="Clauses"
+                        app:fab_size="mini" />
 
                 </com.github.clans.fab.FloatingActionMenu>
             </RelativeLayout>

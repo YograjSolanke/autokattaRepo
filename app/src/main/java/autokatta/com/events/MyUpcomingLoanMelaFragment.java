@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -59,18 +58,13 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mTestConnection = new ConnectionDetector(getActivity());
 
         mNoData = (TextView) mMyUpcomngLoan.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
-
-
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyUpcomngLoan.findViewById(R.id.swipeRefreshLayoutMain);
         mRecyclerView = (RecyclerView) mMyUpcomngLoan.findViewById(R.id.recyclerMain);
-
         mRecyclerView.setHasFixedSize(true);
-
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
@@ -104,18 +98,13 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
-
             if (response.isSuccessful()) {
-
-
                 MyUpcomingLoanMelaResponse myUpcomingLoanMelaResponse = (MyUpcomingLoanMelaResponse) response.body();
                 if (!myUpcomingLoanMelaResponse.getSuccess().isEmpty()) {
                     upcomingLoanMelaResponseList.clear();
                     mNoData.setVisibility(View.GONE);
                     for (MyUpcomingLoanMelaResponse.Success successLoan : myUpcomingLoanMelaResponse.getSuccess()) {
-
                         successLoan.setId(successLoan.getId());
                         successLoan.setName(successLoan.getName());
                         successLoan.setLocation(successLoan.getLocation());
@@ -127,7 +116,6 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
                         successLoan.setImage(successLoan.getImage());
                         successLoan.setDetails(successLoan.getDetails());
                         successLoan.setContact(successLoan.getContact());
-
                         upcomingLoanMelaResponseList.add(successLoan);
 
                     }
@@ -135,17 +123,17 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
                     UpcomingLoanMelaAdapter adapter = new UpcomingLoanMelaAdapter(getActivity(), upcomingLoanMelaResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    Log.i("size loan list up", String.valueOf(upcomingLoanMelaResponseList.size()));
 
-                } else
+                } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                mNoData.setVisibility(View.VISIBLE);
-
-            } else
+                    mNoData.setVisibility(View.VISIBLE);
+                }
+            } else {
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
-
-        } else
+            }
+        } else {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+        }
 
     }
 

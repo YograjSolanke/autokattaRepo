@@ -30,21 +30,16 @@ public class MyUpcomingEventTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_upcoming_event_tabs, container, false);
-
         mViewPager = (ViewPager) view.findViewById(R.id.activity_myupcoming_event_viewpager);
         mTabLayout = (TabLayout) view.findViewById(R.id.activity_myupcoming_event_tab);
-
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-
                     if (mViewPager != null) {
                         setUpPager(mViewPager);
                     }
-
-
                     mTabLayout.setupWithViewPager(mViewPager);
                     //        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
                     //        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
@@ -64,7 +59,6 @@ public class MyUpcomingEventTabFragment extends Fragment {
         tabAdapterName.addFragment(new MyUpcomingExchangeMelaFragment(), "Exchange Mela");
         tabAdapterName.addFragment(new MyUpcomingSaleMelaFragment(), "Sale Mela");
         tabAdapterName.addFragment(new MyUpcomingServiceMelaFragment(), "Service Mela");
-
         viewPager.setAdapter(tabAdapterName);
     }
 
