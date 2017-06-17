@@ -89,7 +89,17 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
                 b.putString("cluases", mMainlist.get(position).getSpecialClauses());
                 b.putString("category", mMainlist.get(position).getAuctioncategory());
                 b.putString("location", mMainlist.get(position).getStockLocation());
+               if ( mMainlist.get(position).getNoOfVehicles().equalsIgnoreCase("")
+                       ||mMainlist.get(position).getNoOfVehicles().equalsIgnoreCase(null)
+               || mMainlist.get(position).getNoOfVehicles().isEmpty())
+               {
+                   b.putString("noofvehicles", "0");
+               }else
+               {
+                   b.putString("noofvehicles", mMainlist.get(position).getNoOfVehicles());
+               }
                 b.putBooleanArray("positionArray", mMainlist.get(position).getPositionArray());
+
                 AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

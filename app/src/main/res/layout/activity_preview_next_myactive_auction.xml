@@ -282,6 +282,7 @@
                 android:layout_height="?actionBarSize"
                 android:layout_marginTop="@dimen/margin_small"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>

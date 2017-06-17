@@ -72,7 +72,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@+id/noofvehicle"
                     android:enabled="false"
-                    android:hint="No of vehicle"
+                    android:hint="0"
                     android:textColor="#808080"
                     android:textSize="14sp" />
             </RelativeLayout>

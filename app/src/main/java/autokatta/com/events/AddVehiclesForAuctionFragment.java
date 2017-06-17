@@ -120,6 +120,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         startDate = (EditText) root.findViewById(R.id.startdate);
         startTime = (EditText) root.findViewById(R.id.starttime);
         endDate = (EditText) root.findViewById(R.id.enddate);
+         IntVehicleNo= Integer.parseInt(b.getString("noofvehicles"));
         endTime = (EditText) root.findViewById(R.id.endtime);
         btnspecial_clauses = (Button) root.findViewById(R.id.btnspecial_clauses);
 
@@ -128,7 +129,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         startTime.setText(bundleAuctionStartTime);
         endDate.setText(bundleAuctionEndDate);
         endTime.setText(bundleAuctionEndTime);
-        IntVehicleNo = 0;
+        //IntVehicleNo = 0;
         editNoOfVehicles.setText(String.valueOf(IntVehicleNo));
 
         editpencil = (ImageView) root.findViewById(R.id.editpencil);
