@@ -677,12 +677,9 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                         } catch (Exception e) {
                             System.out.println("Error in uploading images");
                         }
-                    } else if (data8[9].equals(""))
-
-                    {
+                    } else
                         holder.image.setImageResource(R.drawable.lonemelaimage);
 
-                    }
                 } catch (Exception e) {
 
                     e.printStackTrace();

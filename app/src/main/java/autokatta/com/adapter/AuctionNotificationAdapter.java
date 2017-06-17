@@ -263,12 +263,14 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
          */
         if (mItemList.get(position).getKeyWord().equals("sale")) {
             holder.title.setText("Sale Title");
+            holder.mShare.setVisibility(View.GONE);
         } else if (mItemList.get(position).getKeyWord().equals("loan")) {
             holder.title.setText("Loan Title");
         } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
             holder.title.setText("Exchange Title");
         } else if (mItemList.get(position).getKeyWord().equals("service")) {
             holder.title.setText("Service Title");
+            holder.mShare.setVisibility(View.GONE);
         }
 
         holder.mAuctionGoing.setOnClickListener(new OnClickListener() {
@@ -471,21 +473,65 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                allDetails = mItemList.get(position).getName() + "="
-                        + mItemList.get(position).getNoOfVehicles() + "="
-                        + mItemList.get(position).getEndDate() + "=" +
-                        mItemList.get(position).getEndTime() + "=" +
-                        mItemList.get(position).getAuctionType() + "=" +
-                        "0" + "=" + "0" + "=" + "a";
-                String mAuction = "auction";
+                if (mItemList.get(position).getKeyWord().equals("auction")) {
+                    allDetails = mItemList.get(position).getName() + "="
+                            + mItemList.get(position).getNoOfVehicles() + "="
+                            + mItemList.get(position).getEndDate() + "=" +
+                            mItemList.get(position).getEndTime() + "=" +
+                            mItemList.get(position).getAuctionType() + "=" +
+                            "0" + "=" + "0" + "=" + "a";
+                    String mAuction = "auction";
 
 
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", mAuction).apply();
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_sharedata", allDetails).apply();
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_keyword", mAuction).apply();
+                } else if (mItemList.get(position).getKeyWord().equals("loan")) {
+
+                    allDetails = mItemList.get(position).getUsername() + "="
+                            + "" + "="
+                            + mItemList.get(position).getName() + "="
+                            + mItemList.get(position).getLocation() + "="
+                            + "" + "="
+                            + mItemList.get(position).getStartDate() + "="
+                            + mItemList.get(position).getStartTime() + "="
+                            + mItemList.get(position).getEndDate() + "="
+                            + mItemList.get(position).getEndTime() + "="
+                            + mItemList.get(position).getImage();
+                    String mAuction = "loan";
+
+
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_sharedata", allDetails).apply();
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_loan_id", mItemList.get(position).getLoan_id()).apply();
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_keyword", mAuction).apply();
+                } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+
+                    allDetails = mItemList.get(position).getUsername() + "="
+                            + "" + "="
+                            + mItemList.get(position).getName() + "="
+                            + mItemList.get(position).getLocation() + "="
+                            + "" + "="
+                            + mItemList.get(position).getStartDate() + "="
+                            + mItemList.get(position).getStartTime() + "="
+                            + mItemList.get(position).getEndDate() + "="
+                            + mItemList.get(position).getEndTime() + "="
+                            + mItemList.get(position).getImage();
+                    String mAuction = "exchange";
+
+
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_sharedata", allDetails).apply();
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_exchange_id", mItemList.get(position).getExchange_id()).apply();
+                    mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                            putString("Share_keyword", mAuction).apply();
+                }
 
                 Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
                 mActivity.startActivity(i);
@@ -497,19 +543,41 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (mContact.equals(mItemList.get(position).getContact()))
-                    whoseAuction = "myauction";
+                    whoseAuction = "your";
                 else
                     //whoseAuction = "otherauction";
                     whoseAuction = mItemList.get(position).getUsername();
 
-                allDetails = "Auction Title: " + mItemList.get(position).getName() + "\n" +
-                        "No Of Vehicle: " + mItemList.get(position).getNoOfVehicles() + "\n" +
-                        "Auction End Date: " + mItemList.get(position).getEndDate() + "\n" +
-                        "Auction End Time: " + mItemList.get(position).getEndTime() + "\n" +
-                        "Auction Type: " + mItemList.get(position).getAuctionType() + "\n" +
+                if (mItemList.get(position).getKeyWord().equals("auction")) {
+                    allDetails = "Auction Title: " + mItemList.get(position).getName() + "\n" +
+                            "No Of Vehicle: " + mItemList.get(position).getNoOfVehicles() + "\n" +
+                            "Auction End Date: " + mItemList.get(position).getEndDate() + "\n" +
+                            "Auction End Time: " + mItemList.get(position).getEndTime() + "\n" +
+                            "Auction Type: " + mItemList.get(position).getAuctionType() + "\n" +
                        /* "0" + "\n"+//.auctionGoingcount+"="+
                         "0" + "\n"+//auctionIgnorecount*/
-                        "Auctioneer: " + whoseAuction;
+                            "Auctioneer: " + whoseAuction;
+                } else if (mItemList.get(position).getKeyWord().equals("loan")) {
+
+                    allDetails = "Loan Title: " + mItemList.get(position).getName() + "\n" +
+                            /*"No Of Vehicle: " + mItemList.get(position).getNoOfVehicles() + "\n" +*/
+                            "Loan End Date: " + mItemList.get(position).getEndDate() + "\n" +
+                            "Loan End Time: " + mItemList.get(position).getEndTime() + "\n" +
+                            "Loan Loacation: " + mItemList.get(position).getLocation() + "\n" +
+                       /* "0" + "\n"+//.auctionGoingcount+"="+
+                        "0" + "\n"+//auctionIgnorecount*/
+                            "Loan Owner: " + whoseAuction;
+                } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+
+                    allDetails = "Exchange Title: " + mItemList.get(position).getName() + "\n" +
+                            /*"No Of Vehicle: " + mItemList.get(position).getNoOfVehicles() + "\n" +*/
+                            "Exchange End Date: " + mItemList.get(position).getEndDate() + "\n" +
+                            "Exchange End Time: " + mItemList.get(position).getEndTime() + "\n" +
+                            "Exchange Loacation: " + mItemList.get(position).getLocation() + "\n" +
+                       /* "0" + "\n"+//.auctionGoingcount+"="+
+                        "0" + "\n"+//auctionIgnorecount*/
+                            "Exchange Owner: " + whoseAuction;
+                }
 
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
@@ -521,13 +589,11 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "auction").apply();*/
 
-
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 mActivity.startActivity(intent);
-
                 dialog.dismiss();
             }
 
