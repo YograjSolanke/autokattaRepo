@@ -136,9 +136,10 @@ public class MyUpcomingServiceMelaFragment extends Fragment implements SwipeRefr
                     adapter.notifyDataSetChanged();
                     Log.i("size sale list up", String.valueOf(upcomingExchangeResponseList.size()));
 
-                } else
+                } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                mNoData.setVisibility(View.VISIBLE);
+                    mNoData.setVisibility(View.VISIBLE);
+                }
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));

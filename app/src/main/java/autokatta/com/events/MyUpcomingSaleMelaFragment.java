@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -137,9 +136,10 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
                     adapter.notifyDataSetChanged();
                     Log.i("size sale list up", String.valueOf(upcomingExchangeResponseList.size()));
 
-                } else
+                } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                mNoData.setVisibility(View.VISIBLE);
+                    mNoData.setVisibility(View.VISIBLE);
+                }
 
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
