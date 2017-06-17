@@ -148,13 +148,15 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
                         LinearLayout.LayoutParams.MATCH_PARENT);
                /* input.setLayoutParams(lp);
                 alertDialog.setView(input);
-*/              lp.setMarginStart(30);
+*/             lp.setMarginStart(30);
+                input.setBackgroundColor(Color.LTGRAY);
                 input.setLayoutParams(lp);
                 input.setPadding(40, 40, 40, 40);
                 input.setGravity(Gravity.CENTER_VERTICAL);
-                input.setTextColor(Color.parseColor("#C39BD3"));
+                input.setTextColor(Color.parseColor("#110359"));
                 input.setTextSize(20);
                 alertDialog.setView(input);
+
 
 
                 alertDialog.setNeutralButton("cancel",

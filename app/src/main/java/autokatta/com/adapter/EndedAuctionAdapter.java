@@ -91,12 +91,14 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT);
                 lp.setMarginStart(30);
+                input.setBackgroundColor(Color.LTGRAY);
                 input.setLayoutParams(lp);
                 input.setPadding(40, 40, 40, 40);
                 input.setGravity(Gravity.CENTER_VERTICAL);
-                input.setTextColor(Color.parseColor("#C39BD3"));
+                input.setTextColor(Color.parseColor("#110359"));
                 input.setTextSize(20);
                 alertDialog.setView(input);
+
 
                 // alertDialog.setIcon(R.drawable.key);
 
