@@ -31,7 +31,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
@@ -244,27 +243,28 @@ public class CreateAuctionFragment extends Fragment
                     if (name.equals("")||name.startsWith(" ")&&name.endsWith(" ")) {
                         auctioname.setError("Enter auction title");
                         auctioname.requestFocus();
-                        CustomToast.customToast(getActivity(), "Enter auction title");
+                        //CustomToast.customToast(getActivity(), "Enter auction title");
 //                    auctioname.setFocusable(true);
                     } else if (stdate.equals("")) {
                         startdate.requestFocus();
-//                    startdate.setError("Enter start date");
-                        CustomToast.customToast(getActivity(), "Enter start date");
+                        startdate.setError("Enter start date");
+                        //CustomToast.customToast(getActivity(), "Enter start date");
                     } else if (sttime.equals("")) {
                         starttime.requestFocus();
-//                    starttime.setError("Enter start time");
-                        CustomToast.customToast(getActivity(),"Enter start time");
+                        starttime.setError("Enter start time");
+                        //CustomToast.customToast(getActivity(),"Enter start time");
                     } else if (stdate.equals(dateString) && !validObj.startTimeEndTimeValidation(time, sttime)) {
                         starttime.setError("time is invalid");
+                        starttime.requestFocus();
 
                     } else if (eddate.equals("")) {
                         enddate.requestFocus();
-                        //                    enddate.setError("Enter end date");
-                        CustomToast.customToast(getActivity(), "Enter end date");
+                        enddate.setError("Enter end date");
+                        //CustomToast.customToast(getActivity(), "Enter end date");
                     } else if (edtime.equals("")) {
                         endtime.requestFocus();
-                        //                    endtime.setError("Enter end time");
-                        CustomToast.customToast(getActivity(), "Enter end time");
+                        endtime.setError("Enter end time");
+                        //CustomToast.customToast(getActivity(), "Enter end time");
                     } else if (!validObj.startDateValidatioon(stdate)) {
                         startdate.setError("Enter valid Date");
                         startdate.requestFocus();
@@ -272,7 +272,7 @@ public class CreateAuctionFragment extends Fragment
                         enddate.requestFocus();
                         enddate.setError("Enter valid Date");
                     } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
-                        endtime.setError("Enter valid time");
+                        endtime.setError("Enter valid time should be greater than start time");
                         endtime.requestFocus();
 
                     } else if (address.getVisibility() == View.VISIBLE && location.isEmpty()) {
@@ -283,7 +283,6 @@ public class CreateAuctionFragment extends Fragment
                         address.setError("Please Select Location From Dropdown Only");
                         address.requestFocus();
                     } else if (address.getVisibility() == View.GONE && stockLocation.equalsIgnoreCase("-SelectState-")) {
-
                         CustomToast.customToast(getActivity(),  "Please select states ");
                         stockLocationSpinner.requestFocus();
 
