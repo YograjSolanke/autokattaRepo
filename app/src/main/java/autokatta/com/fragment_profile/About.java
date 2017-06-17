@@ -421,6 +421,15 @@ public class About extends Fragment implements RequestNotifier {
                         mCity.setFocusableInTouchMode(true);
                         mCity.setFocusable(true);
 
+                        mCompany.setFocusableInTouchMode(true);
+                        mCompany.setFocusable(true);
+
+                        mDesignation.setFocusableInTouchMode(true);
+                        mDesignation.setFocusable(true);
+
+                        mSkills.setFocusableInTouchMode(true);
+                        mSkills.setFocusable(true);
+
                         mCity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
                         mProfession.setEnabled(true);
                         mCity.setEnabled(true);
@@ -570,11 +579,11 @@ public class About extends Fragment implements RequestNotifier {
                                 mCity.setFocusable(false);
                                 mEmail.setEnabled(false);
                                 mCompany.setEnabled(false);
-                             //   mCompany.setFocusable(false);
+                                mCompany.setFocusable(false);
                                 mDesignation.setEnabled(false);
-                              //  mDesignation.setFocusable(false);
+                                mDesignation.setFocusable(false);
                                 mSkills.setEnabled(false);
-                             //   mSkills.setFocusable(false);
+                                mSkills.setFocusable(false);
                             }
                         }
                     }
