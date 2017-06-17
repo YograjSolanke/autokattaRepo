@@ -54,7 +54,6 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyEndedAuction = inflater.inflate(R.layout.fragment_simple_listview, container, false);
-
         return mMyEndedAuction;
     }
 
@@ -69,9 +68,6 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMyEndedAuction.findViewById(R.id.swipeRefreshLayoutMain);
         mRecyclerView = (RecyclerView) mMyEndedAuction.findViewById(R.id.recyclerMain);
-
-
-
         mRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -97,7 +93,6 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
     }
 
     private void getAuctionData(String myContact) {
-
         if (mTestConnection.isConnectedToInternet()) {
             apiCall = new ApiCall(getActivity(), this);
             apiCall.getMyEndedAuction(myContact);
@@ -116,19 +111,13 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 MyActiveAuctionResponse myActiveAuctionResponse = (MyActiveAuctionResponse) response.body();
                 if (!myActiveAuctionResponse.getSuccess().getAuction().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     myActiveAuctionResponseList = new ArrayList<>();
-
                     for (MyActiveAuctionResponse.Success.Auction auctionSuccess : myActiveAuctionResponse.getSuccess().getAuction()) {
-
-
                         auctionSuccess.setAuctionId(auctionSuccess.getAuctionId());
                         auctionSuccess.setActionTitle(auctionSuccess.getActionTitle());
                         auctionSuccess.setNoOfVehicle(auctionSuccess.getNoOfVehicle());
@@ -159,9 +148,7 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
                 }
             } else
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
-
         } else {
-
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
         }
         // CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
@@ -173,7 +160,6 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getAuctionData(myContact);
                 hasViewCreated = true;
             }

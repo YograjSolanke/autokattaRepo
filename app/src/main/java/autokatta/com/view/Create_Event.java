@@ -16,10 +16,10 @@ public class Create_Event extends AppCompatActivity {
         setContentView(R.layout.activity_create_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
         setTitle("Create Event");
         runOnUiThread(new Runnable() {
@@ -37,8 +37,6 @@ public class Create_Event extends AppCompatActivity {
         });
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -52,7 +50,10 @@ public class Create_Event extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        /*//super.onBackPressed();
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();
@@ -63,6 +64,6 @@ public class Create_Event extends AppCompatActivity {
                 super.onBackPressed();
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
-        }
+        }*/
     }
 }

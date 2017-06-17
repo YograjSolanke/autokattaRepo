@@ -62,8 +62,6 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
 
     @Override
     public void onBindViewHolder(EndedAuctionAdapter.AuctionHolder holder, final int position) {
-
-
         holder.action_title.setText(mMainList.get(position).getActionTitle());
         holder.auction_vehicle.setText(mMainList.get(position).getNoOfVehicle());
         holder.auction_enddate.setText(mMainList.get(position).getEndDate());
@@ -131,7 +129,6 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
                 b.putString("location", mMainList.get(position).getStockLocation());
 
                 // mActivity.finish();
-
                 Intent intent = new Intent(mActivity, MyEndedAuctionPreviewActivity.class);
                 intent.putExtras(b);
                 mActivity.startActivity(intent);
@@ -146,15 +143,12 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
     }
 
     static class AuctionHolder extends RecyclerView.ViewHolder {
-
-
         TextView action_title, auction_vehicle, auction_enddate, auction_endtime, auction_startdate, auction_starttime;
         TextView timer, mAuction_category, mStockLocation;
         FloatingActionButton btnPreview, btnCluse;
 
         AuctionHolder(View itemview) {
             super(itemview);
-
             action_title = (TextView) itemview.findViewById(R.id.typeofauction2);
             auction_vehicle = (TextView) itemview.findViewById(R.id.editvehicle);
             auction_enddate = (TextView) itemview.findViewById(R.id.datetime2);
@@ -166,12 +160,8 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             timer = (TextView) itemview.findViewById(R.id.timer);
             mAuction_category = (TextView) itemview.findViewById(R.id.auction_category);
             mStockLocation = (TextView) itemview.findViewById(R.id.stockLocation);
-
         }
-
     }
-
-
 }
 
 

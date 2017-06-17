@@ -34,7 +34,6 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mCreateEventFragment = inflater.inflate(R.layout.fragment_create_event, container, false);
-
         textAuction = (TextView) mCreateEventFragment.findViewById(R.id.textauctionevent);
         textLoanMela = (TextView) mCreateEventFragment.findViewById(R.id.textloanmela);
         textExchangeMela = (TextView) mCreateEventFragment.findViewById(R.id.textexchangemela);
@@ -46,7 +45,6 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         textExchangeMela.setOnClickListener(this);
         textSaleMela.setOnClickListener(this);
         textServiceMela.setOnClickListener(this);
-
         return mCreateEventFragment;
     }
 
@@ -55,11 +53,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (view.getId()) {
-
-
             case (R.id.textauctionevent):
-
-
                 /*CreateAuctionFragment fragment = new CreateAuctionFragment();
                 fragmentTransaction.replace(R.id.createEventFrame, fragment,"create_auction");
                 fragmentTransaction.addToBackStack("create_auction");
@@ -70,8 +64,6 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                         .commit();
                 break;
             case (R.id.textloanmela):
-
-
                 /*CreateLoanMelaFragment fragmentloan = new CreateLoanMelaFragment();
 
                 fragmentTransaction.replace(R.id.createEventFrame, fragmentloan);
@@ -83,8 +75,6 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                         .commit();
                 break;
             case (R.id.textexchangemela):
-
-
                 /*CreateExchangeMelafragment fragmentexch = new CreateExchangeMelafragment();
 
                 fragmentTransaction.replace(R.id.createEventFrame, fragmentexch);
@@ -97,8 +87,6 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                 break;
 
             case (R.id.textsalemela):
-
-
                /* CreateSaleMelaFragment fragmentsale = new CreateSaleMelaFragment();
 
                 fragmentTransaction.replace(R.id.createEventFrame, fragmentsale);
@@ -111,8 +99,6 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                 break;
 
             case (R.id.textservicemela):
-
-
                 /*CreateServiceMelaFragment fragmentservice = new CreateServiceMelaFragment();
 
                 fragmentTransaction.replace(R.id.createEventFrame, fragmentservice);
