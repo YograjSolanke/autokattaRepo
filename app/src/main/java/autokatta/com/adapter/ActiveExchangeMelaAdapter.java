@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ import autokatta.com.R;
 import autokatta.com.events.ActiveExchangeMelaPreviewActivity;
 import autokatta.com.response.MyActiveExchangeMelaResponse;
 import autokatta.com.view.ShareWithinAppActivity;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by ak-004 on 30/3/17.
@@ -60,6 +64,21 @@ public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchan
         holder.endtime.setText(mMainlist.get(position).getEndTime());
         holder.location.setText(mMainlist.get(position).getLocation());
         holder.address.setText(mMainlist.get(position).getAddress());
+
+
+        if (mMainlist.get(position).getImage().equals("") || mMainlist.get(position).getImage().equals("null")) {
+            holder.image.setImageResource(R.mipmap.exchange_event);
+        } else {
+            //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
+            String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mMainlist.get(position).getImage().trim();
+            Glide.with(mActivity)
+                    .load(dppath)
+                    .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .placeholder(R.drawable.logo)
+                    .into(holder.image);
+
+        }
 
         holder.mPreview.setOnClickListener(new OnClickListener() {
             @Override

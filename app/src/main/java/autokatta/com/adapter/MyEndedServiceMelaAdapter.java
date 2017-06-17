@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import autokatta.com.events.MyEndedServiceMelaPreviewActivity;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.EndedSaleMelaResponse;
 import autokatta.com.view.ShareWithinAppActivity;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by ak-005 on 27/4/17.
@@ -67,19 +71,17 @@ public class MyEndedServiceMelaAdapter extends RecyclerView.Adapter<MyEndedServi
         holder.location.setText(mMainList.get(position).getLocation());
         holder.address.setText(mMainList.get(position).getAddress());
 
-
-        if (!mMainList.get(position).getImage().equals("null") || !mMainList.get(position).getImage().equals("") ||
-                !mMainList.get(position).getImage().equals(null)) {
-//            Picasso.with(activity)
-//                    .load("http://autokatta.com/mobile/uploads/" + obj.vehicleSingleImage.replaceAll(" ","%20"))
-//                    .resize(100,100)
-//                    .into(holder.imageView);
-
-//            Glide.with(mActivity)
-//                    .load("http://autokatta.com/mobile/uploads/" + mMainList.get(position).getImage().replaceAll(" ","%20"))
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .override(100,100)
-//                    .into(holder.image);
+        if (mMainList.get(position).getImage().equals("") || mMainList.get(position).getImage().equals("null")) {
+            holder.image.setImageResource(R.mipmap.service);
+        } else {
+            //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
+            String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mMainList.get(position).getImage().trim();
+            Glide.with(mActivity)
+                    .load(dppath)
+                    .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .placeholder(R.drawable.logo)
+                    .into(holder.image);
 
         }
 

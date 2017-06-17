@@ -9,11 +9,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.MyUpcomingLoanMelaResponse;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by ak-004 on 31/3/17.
@@ -50,6 +54,21 @@ public class UpcomingLoanMelaAdapter extends RecyclerView.Adapter<UpcomingLoanMe
         holder.endtime.setText(mMainlist.get(position).getEndTime());
         holder.location.setText(mMainlist.get(position).getLocation());
         holder.address.setText(mMainlist.get(position).getAddress());
+
+
+        if (mMainlist.get(position).getImage().equals("") || mMainlist.get(position).getImage().equals("null")) {
+            holder.image.setImageResource(R.mipmap.loan_mela);
+        } else {
+            //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
+            String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mMainlist.get(position).getImage().trim();
+            Glide.with(mActivity)
+                    .load(dppath)
+                    .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .placeholder(R.drawable.logo)
+                    .into(holder.image);
+
+        }
 
     }
 
