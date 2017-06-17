@@ -339,7 +339,7 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
             }
         } else {
             CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-        }
+         }
     }
 
     @Override
