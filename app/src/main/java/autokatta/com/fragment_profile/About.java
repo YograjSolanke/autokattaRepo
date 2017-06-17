@@ -250,10 +250,10 @@ public class About extends Fragment implements RequestNotifier {
                     }
                 }
             } else {
-                CustomToast.customToast(mActivity, getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-            CustomToast.customToast(mActivity, getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -261,23 +261,23 @@ public class About extends Fragment implements RequestNotifier {
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
 
-            CustomToast.customToast(mActivity, getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
 
         } else if (error instanceof NullPointerException) {
 
-            CustomToast.customToast(mActivity, getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
 
         } else if (error instanceof ClassCastException) {
 
-            CustomToast.customToast(mActivity, getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
 
         } else if (error instanceof ConnectException) {
 
-            CustomToast.customToast(mActivity, getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else if (error instanceof UnknownHostException) {
 
-            CustomToast.customToast(mActivity, getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else {
             Log.i("Check Class-", "About Activity");
@@ -288,7 +288,7 @@ public class About extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("Success_update_profile")) {
-                CustomToast.customToast(mActivity, "Profile Updated");
+                CustomToast.customToast(getActivity(), "Profile Updated");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
              /*   mCity.setEnabled(false);
                 mCity.setFocusable(false);*/
@@ -451,7 +451,7 @@ public class About extends Fragment implements RequestNotifier {
                         mContact.setOnTouchListener(new OnTouchListener() {
                             @Override
                             public boolean onTouch(View view, MotionEvent motionEvent) {
-                                //showMessage(mActivity, "You can't edit contact");
+                                //showMessage(getActivity(), "You can't edit contact");
                                 return false;
                             }
                         });

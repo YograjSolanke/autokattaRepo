@@ -78,7 +78,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
             apiCall.profileGroup(contact);
         } else {
 
-            CustomToast.customToast(mActivity, getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
