@@ -116,6 +116,7 @@ public class CreateAuctionFragment extends Fragment
         apiCall = new ApiCall(getActivity(), this);
         validObj = new GenericFunctions();
 
+        auctioname.requestFocus();
         rgauctiontype.setOnCheckedChangeListener(this);
         startdate.setOnTouchListener(this);
         starttime.setOnTouchListener(this);
@@ -594,7 +595,7 @@ public class CreateAuctionFragment extends Fragment
     }
 
 
-    public class SpecialCluasesAdapter extends BaseAdapter {
+    private class SpecialCluasesAdapter extends BaseAdapter {
 
         Activity activity;
         FragmentActivity fragmentActivity;
