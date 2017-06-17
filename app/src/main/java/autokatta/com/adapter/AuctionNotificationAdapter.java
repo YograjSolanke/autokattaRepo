@@ -138,6 +138,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         holder.mEndTime.setText(mItemList.get(position).getEndTime());
         holder.mAuction_category.setText(mItemList.get(position).getAuctionCategory());
         holder.mStockLocation.setText(mItemList.get(position).getLocation());
+        holder.closeopentxt.setText(mItemList.get(position).getOpenClose() + " type auction");
 
         final TextView tv = holder.mTimer;
         CountDownTimer cdt = counters.get(tv);

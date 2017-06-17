@@ -482,6 +482,7 @@ public class CreateAuctionFragment extends Fragment
                                             b.putString("location", stockLocation);
                                             b.putString("location", location);
                                             b.putBooleanArray("positionArray", positionArray);
+                                            b.putString("noofvehicles", String.valueOf(0));
 
                                             AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();
 
