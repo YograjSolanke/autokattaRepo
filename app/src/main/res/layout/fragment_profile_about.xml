@@ -66,7 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/subprofession"
-                android:hint="Sub Profession"/>
+                android:hint="Sub Profession"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

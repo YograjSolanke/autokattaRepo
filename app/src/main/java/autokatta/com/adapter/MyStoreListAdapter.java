@@ -191,7 +191,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                 imageshare = imageshare.replaceAll(" ", "%20");
                 System.out.println("image============" + imageshare);
 
-                String timing = mStoreList.get(position).getStoreOpenTime() + "" + mStoreList.get(position).getStoreCloseTime();
+                String timing = mStoreList.get(position).getStoreOpenTime() + "To" + mStoreList.get(position).getStoreCloseTime();
 
                 strDetailsShare = mStoreList.get(position).getName() + "=" + mStoreList.get(position).getWebsite() + "="
                         + timing + "=" + mStoreList.get(position).getWorkingDays() + "="
