@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -51,6 +52,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
 
     TabLayout mTabLayout;
     ViewPager mViewPager;
+    FloatingActionMenu menuRed;
     TextView txtVehicle, txtEndDate, txtEndTime, txtStartTime, txtStartDate, txtParticipant, txtTimer, txtCategory, txtLocation;
     FloatingActionButton btnSpecialclause, btnLive, btnMail;
     AuctionVehiclesFragment auctionVehiclesFragment;
@@ -84,6 +86,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
         strLocation = getIntent().getExtras().getString("location");
 
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
         mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_auction_tabs);
         mViewPager = (ViewPager) findViewById(R.id.preview_myactive_auction_viewpager);
         txtVehicle = (TextView) findViewById(R.id.editvehicle);
@@ -117,6 +120,8 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 try {
+                    menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+                    menuRed.setClosedOnTouchOutside(true);
                     mCollapsingToolbar.setTitle("Title: " + strAuctionTitle);
                     mCollapsingToolbar.setExpandedTitleColor(Color.parseColor("#00FFFFFF"));
                     txtStartDate.setText(strStartDate);

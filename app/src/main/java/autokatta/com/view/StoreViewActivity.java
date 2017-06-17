@@ -106,6 +106,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 try {
                     mLayout = (CoordinatorLayout) findViewById(R.id.store_coordinate);
                     menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+                    menuRed.setClosedOnTouchOutside(true);
 //                    mCall = (FloatingActionButton) findViewById(R.id.call_c);
 //                    mLike = (FloatingActionButton) findViewById(R.id.like_l);
 //                    mFollow = (FloatingActionButton) findViewById(R.id.follow_f);

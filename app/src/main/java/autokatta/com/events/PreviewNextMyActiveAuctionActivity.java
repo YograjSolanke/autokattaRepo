@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,7 +44,7 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
     TabLayout mTabLayout;
     ViewPager mViewPager;
     TextView txtVehicle, txtEndDate, txtEndTime, txtStartTime, txtStartDate, txtParticipant, txtTimer, txtCategory, txtLocation;
-
+    FloatingActionMenu menuRed;
     FloatingActionButton btnSpecialclause;
     ActiveAuctionHighestBidFragment auctionHighestBid;
     ActiveAuctionNoBidFragment auctionNoBid;
@@ -75,6 +76,7 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
         strParticipantcount = getIntent().getExtras().getString("participant_count");
         strCategory = getIntent().getExtras().getString("category");
         strLocation = getIntent().getExtras().getString("location");
+
 
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mTabLayout = (TabLayout) findViewById(R.id.preview_next_myactive_auction_tabs);
@@ -108,6 +110,9 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
             @Override
             public void run() {
                 try {
+
+                    menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+                    menuRed.setClosedOnTouchOutside(true);
                     mCollapsingToolbar.setTitle("Title: " + strAuctionTitle);
                     txtStartDate.setText(strStartDate);
                     txtStartTime.setText(strStartTime);
