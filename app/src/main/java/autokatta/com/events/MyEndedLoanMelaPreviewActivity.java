@@ -33,7 +33,7 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_ended_loan_mela_preview);
+        setContentView(R.layout.content_my_ended_loan_mela_preview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
