@@ -754,14 +754,22 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
                 }
                 //field validation
-                if (uptype.equals("") || uptype.startsWith(" ") && uptype.endsWith(" ")) {
+                if (uptype.equals("")) {
                     servicetype.setError("Enter service Type");
-                } else if (upname.equals("") || upname.startsWith(" ") && upname.endsWith(" ")) {
+                } else if (!uptype.equals("") && uptype.startsWith(" ") && uptype.endsWith(" ")) {
+                    servicetype.setError("Enter valid service Type");
+                } else if (upname.equals("")) {
                     servicename.setError("Enter Service Name");
-                } else if (upprice.equals("") || upprice.startsWith(" ") && upprice.endsWith(" ")) {
+                } else if (!upname.equals("") && upname.startsWith(" ") && upname.endsWith(" ")) {
+                    servicename.setError("Enter valid Service Name");
+                } else if (upprice.equals("")) {
                     serviceprice.setError("Enter Service Price");
-                } else if (updetails.equals("") || updetails.startsWith(" ") && updetails.endsWith(" ")) {
+                } else if (!upprice.equals("") && upprice.startsWith(" ") && upprice.endsWith(" ")) {
+                    serviceprice.setError("Enter valid Service Price");
+                } else if (!updetails.equals("") && updetails.startsWith(" ") && updetails.endsWith(" ")) {
                     servicedetails.setError("Enter Service Details");
+                } else if (!upcat.equalsIgnoreCase("") && upcat.startsWith(" ") && upcat.endsWith(" ")) {
+                    CustomToast.customToast(ServiceViewActivity.this, "Please Select Valid Service Category");
                 } else {
                     servicename.setEnabled(false);
                     serviceprice.setEnabled(false);

@@ -161,20 +161,31 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                 if (name.equals("") && price.equals("") && details.equals("") && type.equals("")) {
 
                     CustomToast.customToast(AddProductActivity.this, "Please Enter All details");
-                } else if (type.equals("") || type.startsWith(" ") && type.endsWith(" ")) {
+                } else if (type.equals("")) {
                     producttype.setError("Enter Product Type");
                     producttype.requestFocus();
-                } else if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
+                } else if (!type.equals("") && type.startsWith(" ") && type.endsWith(" ")) {
+                    producttype.setError("Enter valid Product Type");
+                    producttype.requestFocus();
+                } else if (name.equals("")) {
+                    productname.setError("Enter Product Name");
+                    productname.requestFocus();
+                } else if (!name.equals("") && name.startsWith(" ") && name.endsWith(" ")) {
                     productname.setError("Enter Valid Product Name");
                     productname.requestFocus();
-                } else if (price.equals("") || price.startsWith(" ") && price.endsWith(" ")) {
+                } else if (price.equals("")) {
+                    productprice.setError("Enter Product Price");
+                    productprice.requestFocus();
+                } else if (!price.equals("") && price.startsWith(" ") && price.endsWith(" ")) {
                     productprice.setError("Enter Valid Product Price");
                     productprice.requestFocus();
-                } else if (details.equals("") || details.startsWith(" ")) {
-                    productdetails.setError("Enter Product details");
+                } else if (!details.equals("") && details.startsWith(" ") && details.endsWith(" ")) {
+                    productdetails.setError("Enter valid Product details");
                     productdetails.requestFocus();
                 } else if (category.equalsIgnoreCase("")) {
                     CustomToast.customToast(AddProductActivity.this, "Please Select Product Category");
+                } else if (!category.equalsIgnoreCase("") && category.startsWith(" ") && category.endsWith(" ")) {
+                    CustomToast.customToast(AddProductActivity.this, "Please Select valid Product Category");
                 } else if (check()) {
                     multiautotext.setError("You can add maximum five tags only");
                     multiautotext.requestFocus();

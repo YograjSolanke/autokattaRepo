@@ -785,14 +785,22 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
                 }
 
-                if (uptype.equals("")||uptype.startsWith(" ")&&uptype.endsWith(" ")) {
+                if (uptype.equals("")) {
                     producttype.setError("Enter Product Type");
-                } else if (upname.equals("")||upname.startsWith(" ")&&upname.endsWith(" ")) {
+                } else if (!uptype.equals("") && uptype.startsWith(" ") && uptype.endsWith(" ")) {
+                    producttype.setError("Enter valid Product Type");
+                } else if (upname.equals("")) {
                     productname.setError("Enter Product Name");
-                } else if (upprice.equals("")||upprice.startsWith(" ")&&upprice.endsWith(" ")) {
+                } else if (!upname.equals("") && upname.startsWith(" ") && upname.endsWith(" ")) {
+                    productname.setError("Enter valid Product Name");
+                } else if (upprice.equals("")) {
                     productprice.setError("Enter Product Price");
-                } else if (updetails.equals("")||updetails.startsWith(" ")&&updetails.endsWith(" ")) {
-                    productdetails.setError("Enter Product Details");
+                } else if (!upprice.equals("") && upprice.startsWith(" ") && upprice.endsWith(" ")) {
+                    productprice.setError("Enter valid Product Price");
+                } else if (!updetails.equals("") && updetails.startsWith(" ") && updetails.endsWith(" ")) {
+                    productdetails.setError("Enter valid Product Details");
+                } else if (!upcat.equalsIgnoreCase("") && upcat.startsWith(" ") && upcat.endsWith(" ")) {
+                    CustomToast.customToast(ProductViewActivity.this, "Please Select valid Product Category");
                 } else {
                     productname.setEnabled(false);
                     productprice.setEnabled(false);

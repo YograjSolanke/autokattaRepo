@@ -176,20 +176,31 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                 //fields validation
                 if (name.equals("") && price.equals("") && details.equals("") && type.equals("")) {
                     CustomToast.customToast(AddServiceActivity.this, "Please Enter All details");
-                } else if (type.equals("") || type.startsWith(" ") && type.endsWith(" ")) {
+                } else if (type.equals("")) {
                     servicetype.setError("Enter Service Type");
                     servicetype.requestFocus();
-                } else if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
+                } else if (!type.equals("") && type.startsWith(" ") && type.endsWith(" ")) {
+                    servicetype.setError("Enter valid Service Type");
+                    servicetype.requestFocus();
+                } else if (name.equals("")) {
                     servicename.setError("Enter Service Name");
                     servicename.requestFocus();
-                } else if (price.equals("") || price.startsWith(" ") && price.endsWith(" ")) {
+                } else if (!name.equals("") && name.startsWith(" ") && name.endsWith(" ")) {
+                    servicename.setError("Enter valid Service Name");
+                    servicename.requestFocus();
+                } else if (price.equals("")) {
                     serviceprice.setError("Enter Service Price");
                     serviceprice.requestFocus();
-                } else if (details.equals("") || details.startsWith(" ")) {
-                    servicedetails.setError("Enter Service details");
+                } else if (!price.equals("") && price.startsWith(" ") && price.endsWith(" ")) {
+                    serviceprice.setError("Enter valid Service Price");
+                    serviceprice.requestFocus();
+                } else if (!details.equals("") && details.startsWith(" ") && details.endsWith(" ")) {
+                    servicedetails.setError("Enter valid Service details");
                     servicedetails.requestFocus();
                 } else if (category.equalsIgnoreCase("")) {
                     CustomToast.customToast(AddServiceActivity.this, "Please Select Service Category");
+                } else if (!category.equalsIgnoreCase("") && category.startsWith(" ") && category.endsWith(" ")) {
+                    CustomToast.customToast(AddServiceActivity.this, "Please Select valid Service Category");
                 } else if (check()) {
                     multiautotext.setError("You can add maximum five tags only");
                     multiautotext.requestFocus();
