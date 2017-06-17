@@ -3,15 +3,14 @@ package autokatta.com.register;
 import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +27,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -393,54 +391,32 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             } else {
-                Snackbar.make(mRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
             }
         } else {
-            Snackbar.make(mRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(mRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(mRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(mRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
+            Log.i("Check Class-", " Registration");
             error.printStackTrace();
         }
     }
@@ -452,7 +428,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             if (str.equalsIgnoreCase("Success")) {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
                     CustomToast.customToast(getApplicationContext(),"Already Registered Please Login");
-                Snackbar.make(mRegistration, "Already Registered", Snackbar.LENGTH_LONG).show();
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -462,13 +437,13 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 mButton.setVisibility(View.VISIBLE);
             } else {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
-                Snackbar.make(mRegistration, "Registered", Snackbar.LENGTH_SHORT).show();
+                CustomToast.customToast(getApplicationContext()," Registered Successfully");
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }
         } else {
-            Snackbar.make(mRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
         }
 
     }

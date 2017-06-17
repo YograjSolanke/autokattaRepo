@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -36,6 +35,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.GroupContactFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.other.CustomToast;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -110,7 +110,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.BtnAddMember:
                 if (mGroupTitle.getText().toString().equalsIgnoreCase("") || mGroupTitle.getText().toString().startsWith(" ") && mGroupTitle.getText().toString().endsWith(" ")/*|| mGroupTitle.getText().toString().startsWith(" ")*/) {
-                    Snackbar.make(view, "Please provide group name and optional group icon", Snackbar.LENGTH_LONG).show();
+                    CustomToast.customToast(getActivity(),"Please provide group name and optional group icon");
                 } else {
                     mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);
                 }
@@ -285,44 +285,21 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            //  Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            //   Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            // Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-           /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // //Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-           /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
-        } else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        }else {
             Log.i("Check Class-", "Create Group Fragment");
             error.printStackTrace();
         }
@@ -359,6 +336,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             }
 
         } else {
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
             //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         }
     }

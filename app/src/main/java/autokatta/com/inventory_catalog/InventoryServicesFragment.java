@@ -3,11 +3,8 @@ package autokatta.com.inventory_catalog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -137,7 +134,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+          /*  Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -150,7 +147,8 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
             View sbView = snackbar.getView();
             TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
             textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            snackbar.show();*/
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
         }
     }
 
@@ -159,7 +157,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
         mSwipeRefreshLayout.setRefreshing(false);
 
 //        serviceList.clear();
-//        getInventoryService(Sharedcontact);
+        getInventoryService(Sharedcontact);
     }
 
 
@@ -217,10 +215,12 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
+                CustomToast.customToast(getActivity(),getString(R.string.no_internet));
                 // Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //  Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -229,44 +229,21 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            //   Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            // Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //  Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-           /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-           /* Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
-        } else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        }  else {
             Log.i("Check Class-"
                     , "StoreServices");
             error.printStackTrace();

@@ -28,6 +28,7 @@ import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.browseStore.ProductBasedStore;
 import autokatta.com.browseStore.ServiceBasedStore;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 
 /**
  * Created by ak-004 on 4/4/17.
@@ -56,6 +57,7 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         if (mTestConnection.isConnectedToInternet()) {
             buildGoogleApiClient();
         } else {
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //errorMessage(getActivity(), getString(R.string.no_internet));
         }
 

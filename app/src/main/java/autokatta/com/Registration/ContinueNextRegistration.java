@@ -962,7 +962,8 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     finish();
                 } else if (action.equals("MyVehicles")) ;
                 {
-                    Toast.makeText(getApplicationContext(), "to Do in Continue Next reg", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getApplication(),"updated Successfully");
+                  //  Toast.makeText(getApplicationContext(), "updated Successfully", Toast.LENGTH_LONG).show();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
 

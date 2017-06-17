@@ -1,8 +1,6 @@
 package autokatta.com.initial_fragment;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -26,6 +24,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.BlacklistMemberAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.BlacklistMemberResponse;
 import retrofit2.Response;
 
@@ -128,10 +127,10 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
                     mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
-                Snackbar.make(getView(), getString(R.string._404), Snackbar.LENGTH_SHORT);
+                CustomToast.customToast(getActivity(),getString(R.string._404));
             }
         } else {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT);
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
         }
 
     }
@@ -140,43 +139,20 @@ public class MyBlacklistedMemberFragment extends Fragment implements RequestNoti
     public void notifyError(Throwable error) {
         swipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "MyBlacklistedMemberFragment");
             error.printStackTrace();

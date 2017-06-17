@@ -140,9 +140,9 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
 
 
                 if (strCategory.equals("") && strContact.equals("")) {
-                    Snackbar.make(v, "Please select category to search", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getActivity(),"Please select category to search");
                 } else if (strContact.equalsIgnoreCase(myContact)) {
-                    Snackbar.make(v, "you can not search store by your contact...", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getActivity(),"you can not search store by your contact...");
 
                 } else {
                     SearchStoreFragment searchStoreFragment = new SearchStoreFragment();
@@ -269,15 +269,20 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            // showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchStore Activity");
         }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -23,8 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -39,6 +36,7 @@ import autokatta.com.Registration.Multispinner;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.AddTags;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetDistrictsResponse;
@@ -533,7 +531,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edbrand = input.getText().toString();
                                                 if (edbrand.equals(""))
-                                                    Toast.makeText(getApplicationContext(), "Please enter brand", Toast.LENGTH_LONG).show();
+                                                    CustomToast.customToast(getApplicationContext(),"Please enter brand");
                                                 else
                                                     AddBrand("Brand", edbrand, categoryId, subCategoryId);
 
@@ -566,43 +564,20 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(mCompanyBased, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(mCompanyBased, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(mCompanyBased, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mCompanyBased, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mCompanyBased, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Company Based Registration");
             error.printStackTrace();
@@ -674,17 +649,17 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     break;
 
                 case "success_brand_add":
-                    Snackbar.make(mCompanyBased, "Brand Added", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(),"Brand Added");
                     getBrand(categoryId, subCategoryId);
                     Log.i("msg", "Brand added successfully");
                     break;
 
                 default:
-                    Snackbar.make(mCompanyBased, "Check all fields are filled", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(), "Check all fields are filled");
                     break;
             }
         } else {
-            Snackbar.make(mCompanyBased, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
         }
     }
 

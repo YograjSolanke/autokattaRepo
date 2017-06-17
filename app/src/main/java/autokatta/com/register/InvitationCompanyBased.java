@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,7 @@ import autokatta.com.Registration.SkillsBasedInvitation;
 import autokatta.com.adapter.CompanyBasedInvitationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetContactByCompanyResponse;
 import retrofit2.Response;
 
@@ -95,7 +99,22 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override

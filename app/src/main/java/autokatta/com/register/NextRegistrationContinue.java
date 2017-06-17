@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
@@ -35,6 +34,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleModelResponse;
@@ -278,31 +278,32 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 if (mSpinnerVehitype.getSelectedItem() != null && mSpinnerVehitype != null) {
                     vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
                 } else {
-                    Snackbar.make(mNextRegistration, "Select Vehicle Type", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(),"Select Vehicle Type");
                 }
 
                 if (mSpinnerBrand.getSelectedItem() != null && mSpinnerBrand != null) {
                     brandtext = mSpinnerBrand.getSelectedItem().toString();
                 } else {
-                    Snackbar.make(mNextRegistration, "Select Brand", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(),"Select Brand");
                 }
+
 
                 if (mSpinnerModel.getSelectedItem() != null && mSpinnerModel != null) {
                     modeltext = mSpinnerModel.getSelectedItem().toString();
                 } else {
-                    Snackbar.make(mNextRegistration, "Select Model", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(),"Select Model");
                 }
 
                 if (mSpinnerVersion.getSelectedItem() != null && mSpinnerVersion != null) {
                     versiontext = mSpinnerVersion.getSelectedItem().toString();
                 } else {
-                    Snackbar.make(mNextRegistration, "Select Version", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(),"Select Version");
                 }
 
                 if (mSpinnerSubType.getSelectedItem() != null && mSpinnerSubType != null) {
                     subcattext = mSpinnerSubType.getSelectedItem().toString();
                 } else {
-                    Snackbar.make(mNextRegistration, "Select SubType", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(), "Select SubType");
                 }
 
                 yeartext = edtyear.getText().toString();
@@ -393,7 +394,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         mApicall.addOwn(contact, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                                 taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
                     } else {
-                        Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                       /* Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Go Online", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -406,7 +407,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         View sbView = snackbar.getView();
                         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                         textView.setTextColor(Color.YELLOW);
-                        snackbar.show();
+                        snackbar.show();*/
+                        CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
                     }
                     //addOwn();
 
@@ -420,7 +422,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         mApicall.uploadVehicle(ids, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                                 taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
                     } else {
-                        Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                       /* Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Go Online", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -433,11 +435,12 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         View sbView = snackbar.getView();
                         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                         textView.setTextColor(Color.YELLOW);
-                        snackbar.show();
+                        snackbar.show();*/
+                        CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
                     }
-                    Snackbar.make(mNextRegistration, "Vehicle Uploaded", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(), "Vehicle Uploaded");
                 } else {
-                    Snackbar.make(mNextRegistration, "Provide all details", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(getApplicationContext(),"Provide all details");
                 }
                 break;
 
@@ -768,7 +771,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edbrand = input.getText().toString();
                                                 if (edbrand.equals(""))
-                                                    Snackbar.make(mNextRegistration, "Enter Brand", Snackbar.LENGTH_SHORT).show();
+                                                    CustomToast.customToast(getApplicationContext(), "Enter Brand");
                                                 else
                                                     AddBrand("Brand", edbrand, vehicle_idD, subcategoryId);
                                                 dialog.dismiss();
@@ -834,7 +837,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edmodel = input.getText().toString();
                                                 if (edmodel.equals(""))
-                                                    Snackbar.make(mNextRegistration, "Enter Model", Snackbar.LENGTH_SHORT).show();
+                                                    CustomToast.customToast(getApplicationContext(),"Enter Model");
                                                 else
                                                     AddModel("Model", edmodel, vehicle_idD, subcategoryId, brandId);
                                                 dialog.dismiss();
@@ -901,7 +904,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edversion = input.getText().toString();
                                                 if (edversion.equals(""))
-                                                    Snackbar.make(mNextRegistration, "Enter Version", Snackbar.LENGTH_SHORT).show();
+
+                                                    CustomToast.customToast(getApplicationContext(),"Enter Version");
                                                 else
                                                     AddVersion("Version", edversion, vehicle_idD, subcategoryId, brandId, modelId);
                                                 dialog.dismiss();
@@ -932,44 +936,21 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(mNextRegistration, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(mNextRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(mNextRegistration, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
-        } else {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
+        }else {
             Log.i("Check Class-", "Continue Next Registration");
             error.printStackTrace();
         }
@@ -986,7 +967,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     finish();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
-                Snackbar.make(mNextRegistration, "Vehicle Added", Snackbar.LENGTH_SHORT).show();
+                CustomToast.customToast(getApplicationContext(),"Vehicle Added");
                 android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(NextRegistrationContinue.this);
                 // set title
                 alertDialogBuilder.setTitle("Add Vehicle");
@@ -1059,18 +1040,18 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 // show it
                 alertDialog.show();
             } else if (str.equals("success_brand_add")) {
-                Snackbar.make(mNextRegistration, "Brand Added", Snackbar.LENGTH_SHORT).show();
+                CustomToast.customToast(getApplicationContext(),"Brand Added");
                 getBrand(vehicle_idD, subcategoryId);
                 Log.i("msg", "Brand added successfully");
             } else if (str.equals("success_model_add")) {
-                Snackbar.make(mNextRegistration, "Model Added", Snackbar.LENGTH_SHORT).show();
+                CustomToast.customToast(getApplicationContext(),"Model Added");
                 getModel(vehicle_idD, subcategoryId, brandId);
             } else if (str.equals("success_version_add")) {
-                Snackbar.make(mNextRegistration, "Version Added", Snackbar.LENGTH_SHORT).show();
+                CustomToast.customToast(getApplicationContext(),"Version Added");
                 getVersion(vehicle_idD, subcategoryId, brandId, modelId);
             }
         } else
-            Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
     }
 
     /*
