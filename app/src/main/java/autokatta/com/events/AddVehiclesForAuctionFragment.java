@@ -895,5 +895,4 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
 
     }
-
 }
