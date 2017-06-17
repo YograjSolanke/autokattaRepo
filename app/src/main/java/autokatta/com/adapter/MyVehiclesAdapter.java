@@ -25,7 +25,7 @@ import autokatta.com.response.GetOwnVehiclesResponse;
 
 public class MyVehiclesAdapter extends RecyclerView.Adapter<MyVehiclesAdapter.MyViewHolder> {
 
-    List<GetOwnVehiclesResponse.Success> mGetOwnVehiclesList = new ArrayList<>();
+    private List<GetOwnVehiclesResponse.Success> mGetOwnVehiclesList = new ArrayList<>();
     Activity activity;
     Bundle bundle = new Bundle();
 
@@ -46,7 +46,7 @@ public class MyVehiclesAdapter extends RecyclerView.Adapter<MyVehiclesAdapter.My
             vehicleModel = (TextView) itemView.findViewById(R.id.model);
             vehicleVersion = (TextView) itemView.findViewById(R.id.version);
             vehicleSubcategory = (TextView) itemView.findViewById(R.id.subcategory);
-            uploadDates = (TextView) itemView.findViewById(R.id.year);
+            uploadDates = (TextView) itemView.findViewById(R.id.uploaddate);
 
             vehi_pic = (ImageView) itemView.findViewById(R.id.image1);
             edit_vehi = (ImageView) itemView.findViewById(R.id.edtVehicle);
@@ -59,8 +59,7 @@ public class MyVehiclesAdapter extends RecyclerView.Adapter<MyVehiclesAdapter.My
     public MyVehiclesAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_my_vehicles, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -72,6 +71,7 @@ public class MyVehiclesAdapter extends RecyclerView.Adapter<MyVehiclesAdapter.My
         holder.vehicleModel.setText(mGetOwnVehiclesList.get(position).getModelNo());
         holder.vehicleVersion.setText(mGetOwnVehiclesList.get(position).getVersion());
         holder.vehicleSubcategory.setText(mGetOwnVehiclesList.get(position).getSubcategory());
+        //holder.uploadDates.setText(mGetOwnVehiclesList.get(position).getUploaddate());
 
         holder.edit_vehi.setOnClickListener(new View.OnClickListener() {
             @Override

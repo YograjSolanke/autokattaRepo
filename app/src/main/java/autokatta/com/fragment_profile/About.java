@@ -153,11 +153,13 @@ public class About extends Fragment implements RequestNotifier {
                         Log.i("SUBProfession-->","   --->"+subProfession);
                         if (!subProfession.equalsIgnoreCase("Select Category")) {
                             msubprofession.setText("Sub Profession- "+subProfession);
-                        }/*else
-                        {
-                           msubprofession.setText("Sub Profession- "+"NA");
-                        }*/
+                        }
                         mProfession.setText(profession);
+                        if (!profession.equalsIgnoreCase("Student"))
+                        {
+                            msubprofession.setVisibility(View.VISIBLE);
+                        }else
+                            msubprofession.setVisibility(View.GONE);
                         mEmail.setText(email);
                         mWebsite.setText(websitestr);
                         mCity.setText(city);
@@ -382,15 +384,18 @@ public class About extends Fragment implements RequestNotifier {
                         if (checkedId == R.id.student) {
                             mProfession.setText("Student");
                             spinner.setVisibility(View.GONE);
+                            msubprofession.setVisibility(View.GONE);
 
                         } else if (checkedId == R.id.employee) {
                             mProfession.setText("Employee");
                             spinner.setVisibility(View.VISIBLE);
+                            msubprofession.setVisibility(View.VISIBLE);
                             spinner.setSelection(0);
 
                         } else if (checkedId == R.id.selfemployee) {
                             mProfession.setText("Self Employee");
                             spinner.setVisibility(View.VISIBLE);
+                            msubprofession.setVisibility(View.VISIBLE);
                             spinner.setSelection(0);
 
                         }
@@ -412,6 +417,7 @@ public class About extends Fragment implements RequestNotifier {
                         }
                         if (student.isChecked()) {
                             spinner.setVisibility(View.GONE);
+                            msubprofession.setVisibility(View.GONE);
                         } else if (employee.isChecked()) {
                             spinner.setVisibility(View.VISIBLE);
                         } else if (selfemployee.isChecked()) {
@@ -420,6 +426,15 @@ public class About extends Fragment implements RequestNotifier {
 
                         mCity.setFocusableInTouchMode(true);
                         mCity.setFocusable(true);
+
+                        mCompany.setFocusableInTouchMode(true);
+                        mCompany.setFocusable(true);
+
+                        mDesignation.setFocusableInTouchMode(true);
+                        mDesignation.setFocusable(true);
+
+                        mSkills.setFocusableInTouchMode(true);
+                        mSkills.setFocusable(true);
 
                         mCity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
                         mProfession.setEnabled(true);
@@ -570,11 +585,11 @@ public class About extends Fragment implements RequestNotifier {
                                 mCity.setFocusable(false);
                                 mEmail.setEnabled(false);
                                 mCompany.setEnabled(false);
-                             //   mCompany.setFocusable(false);
+                                mCompany.setFocusable(false);
                                 mDesignation.setEnabled(false);
-                              //  mDesignation.setFocusable(false);
+                                mDesignation.setFocusable(false);
                                 mSkills.setEnabled(false);
-                             //   mSkills.setFocusable(false);
+                                mSkills.setFocusable(false);
                             }
                         }
                     }

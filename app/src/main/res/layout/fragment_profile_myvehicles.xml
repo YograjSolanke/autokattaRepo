@@ -6,36 +6,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#C8C9CC"
-        >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/colorPrimary"
-        android:id="@+id/Title"
-        android:gravity="center"
-        android:text="My Vehicles"
-        android:layout_marginBottom="10dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/white"/>
+        android:layout_marginTop="5dp"
+        android:background="#C8C9CC">
+
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="My Vehicles"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/white" />
 
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayoutMyVehicles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Title">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclermyVehicles"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayoutMyVehicles"
             android:layout_width="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_height="452dp"
-            android:scrollbars="vertical"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Title">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclermyVehicles"
+                android:layout_width="wrap_content"
+                android:layout_height="452dp"
+                android:layout_marginTop="50dp"
+                android:scrollbars="vertical" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <!--<android.support.design.widget.FloatingActionButton
              android:id="@+id/add_vehicle"
@@ -45,5 +45,7 @@
              android:layout_alignParentEnd="true"
              android:src="@mipmap/ic_plus" />-->
     </RelativeLayout>
+
+    <include layout="@layout/error_view" />
 
 </RelativeLayout>

@@ -204,6 +204,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
+                app:layout_collapseMode="pin"
                 android:layout_marginTop="@dimen/margin_small"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
