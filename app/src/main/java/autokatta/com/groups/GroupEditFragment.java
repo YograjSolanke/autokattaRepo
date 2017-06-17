@@ -40,6 +40,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -107,7 +108,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 try {
                     Glide.with(getActivity())
                             .load("http://autokatta.com/mobile/group_profile_pics/" + bundle_image)
-                            .bitmapTransform(new CropCircleTransformation(getActivity()))
+                            .bitmapTransform(new CropSquareTransformation(getActivity()))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mGroup_image);
                 } catch (Exception e) {
@@ -190,7 +191,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
-                //uploadImage(mediaPath);
+                uploadImage(mediaPath);
 
             } else if (requestCode == 101) {
                 if (resultCode == RESULT_OK) {
@@ -242,7 +243,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             out.close();
             /*if (cd.isConnectingToInternet()) {*/
             lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
-            //uploadImage(mediaPath);
+            uploadImage(mediaPath);
             Log.i("image", "path" + lastWord);
             //      /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
             /*} else {
@@ -335,7 +336,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (str.equals("Success")) {
             //showMessage(getActivity(), "Group Updated");
-            uploadImage(mediaPath);
+            //uploadImage(mediaPath);
             MyGroupsFragment frag = new MyGroupsFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction mTransaction = fragmentManager.beginTransaction();

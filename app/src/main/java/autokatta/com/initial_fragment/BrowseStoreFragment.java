@@ -54,13 +54,13 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         }
 
         browseTab.setupWithViewPager(browseViewPager);
+
         if (mTestConnection.isConnectedToInternet()) {
             buildGoogleApiClient();
         } else {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //errorMessage(getActivity(), getString(R.string.no_internet));
         }
-
         return view;
     }
 

@@ -84,12 +84,12 @@ public class GroupTabs extends AppCompatActivity {
         int fragment = getSupportFragmentManager().getBackStackEntryCount();
         if (fragment == 1) {
             finish();
-            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         } else {
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 getSupportFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }
     }

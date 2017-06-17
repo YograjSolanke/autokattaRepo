@@ -146,7 +146,6 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        mJoinedGroupsList.clear();
         getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", ""));
         mRecyclerView.getRecycledViewPool().clear();
@@ -205,6 +204,22 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                Activity activity = getActivity();
+                if (activity != null) {
+                    getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", ""));
+                }
+            }
+        });
     }
 
     /*public void showMessage(Activity activity, String message) {

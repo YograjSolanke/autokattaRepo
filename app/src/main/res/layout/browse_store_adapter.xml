@@ -40,11 +40,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/storeprofileimage"
                         android:background="@color/medium_sea_green"
-                        android:text="4.0"
                         android:maxLength="4"
+                        android:text="4.0"
                         android:textColor="@color/white"
                         android:textStyle="bold"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <RatingBar
                         android:id="@+id/storerating"
@@ -97,98 +97,194 @@
                     android:layout_marginStart="@dimen/item_padding"
                     android:layout_toEndOf="@+id/actionlinear">
 
-                    <TextView
-                        android:id="@+id/storename"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/one"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/layout_top"
-                        android:fontFamily="sans-serif"
-                        android:layout_toStartOf="@+id/call_image"
                         android:layout_alignParentStart="true"
-                        android:text="Store Name"
-                        android:textSize="@dimen/article_subheading"
-                        android:textStyle="bold" />
+                        android:layout_toStartOf="@+id/call_image">
 
-                    <TextView
-                        android:id="@+id/storetype"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/storename"
-                        android:fontFamily="sans-serif"
-                        android:text="Store Type"
-                        android:visibility="gone" />
+                        <TextView
+                            android:id="@+id/storename"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/layout_top"
+                            android:fontFamily="sans-serif"
+                            android:text="Store Name"
+                            android:textSize="@dimen/article_subheading"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/storelocation"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/two"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/storetype"
-                        android:layout_toStartOf="@+id/call_image"
+                        android:layout_below="@+id/one">
+
+                        <TextView
+                            android:id="@+id/storetype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:text="Store Type"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/three"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:drawableStart="@mipmap/map"
-                        android:fontFamily="sans-serif"
+                        android:layout_below="@+id/two"
+                        android:layout_toStartOf="@+id/call_image"
                         android:gravity="start"
-                        android:text="Location" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/storewebsite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/storelocation"
-                        android:drawableStart="@mipmap/web"
-                        android:fontFamily="sans-serif"
-                        android:gravity="start"
-                        android:text="Website" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:src="@mipmap/map" />
 
-                    <TextView
-                        android:id="@+id/storetiming"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/storewebsite"
-                        android:drawableStart="@mipmap/ic_timer"
-                        android:fontFamily="sans-serif"
-                        android:gravity="start"
-                        android:text="Timing" />
+                        <TextView
+                            android:id="@+id/storelocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:layout_gravity="center"
+                            android:text="Location" />
 
-                    <TextView
-                        android:id="@+id/storeservices"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/storetiming"
-                        android:drawableStart="@mipmap/ic_wrench"
-                        android:fontFamily="sans-serif"
-                        android:gravity="start"
-                        android:text="Store Services" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/storeworkingdays"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/four"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/storeservices"
-                        android:drawableStart="@mipmap/ic_calendar_small"
-                        android:fontFamily="sans-serif"
-                        android:gravity="start"
-                        android:text="Working days" />
+                        android:layout_below="@+id/three"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/productCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/storeworkingdays"
-                        android:fontFamily="sans-serif"
-                        android:gravity="start"
-                        android:text="Products(10)" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:src="@mipmap/web" />
 
-                    <TextView
-                        android:id="@+id/serviceCount"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/storewebsite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:layout_gravity="center"
+                            android:text="Website" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/five"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/storeworkingdays"
-                        android:fontFamily="sans-serif"
-                        android:layout_toEndOf="@+id/productCount"
-                        android:gravity="start"
-                        android:layout_marginLeft="10dp"
-                        android:text="Services(10)" />
+                        android:layout_below="@+id/four"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:src="@mipmap/ic_timer" />
+
+                        <TextView
+                            android:id="@+id/storetiming"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:layout_gravity="center"
+                            android:text="Timing" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/six"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/five"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:src="@mipmap/ic_wrench" />
+
+                        <TextView
+                            android:id="@+id/storeservices"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:layout_gravity="center"
+                            android:text="Store Services" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/seven"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/six"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:layout_marginEnd="@dimen/margin_small"
+                            android:src="@mipmap/ic_calendar_small" />
+
+                        <TextView
+                            android:id="@+id/storeworkingdays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:layout_gravity="center"
+                            android:text="Working days" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/eight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/seven">
+
+                        <TextView
+                            android:id="@+id/productCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:layout_gravity="center"
+                            android:text="Products(10)" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/nine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/eight">
+
+                        <TextView
+                            android:id="@+id/serviceCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:layout_gravity="center"
+                            android:text="Services(10)" />
+
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/call_image"
@@ -210,14 +306,14 @@
 
             <LinearLayout
                 android:id="@+id/action_buttons"
-                android:layout_below="@+id/main_view"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/main_view"
                 android:layout_marginTop="@dimen/margin_small"
-                android:gravity="center"
                 android:baselineAligned="false"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -366,8 +462,8 @@
                         android:drawablePadding="1dp"
                         android:drawableStart="@mipmap/ic_comment_check"
                         android:gravity="center"
-                        android:textColor="@color/text_color"
-                        android:text="Follow" />
+                        android:text="Follow"
+                        android:textColor="@color/text_color" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

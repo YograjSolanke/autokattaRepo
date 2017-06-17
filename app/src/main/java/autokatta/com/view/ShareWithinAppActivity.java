@@ -29,7 +29,7 @@ public class ShareWithinAppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_share_within_app);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        setTitle("Share Within App");
         mShareApp = (CoordinatorLayout) findViewById(R.id.shareApp);
         IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
@@ -42,7 +42,6 @@ public class ShareWithinAppActivity extends AppCompatActivity {
         }, intentFilter);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setIcon(R.mipmap.ic_launcher);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -67,12 +66,12 @@ public class ShareWithinAppActivity extends AppCompatActivity {
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();
-            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         } else {
             if (getFragmentManager().getBackStackEntryCount() > 1) {
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

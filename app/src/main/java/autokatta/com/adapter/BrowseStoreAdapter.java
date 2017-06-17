@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -68,6 +69,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     public void onBindViewHolder(final BrowseStoreAdapter.StoreHolder holder, final int position) {
         final BrowseStoreResponse.Success success = mMainlist.get(holder.getAdapterPosition());
         mApiCall = new ApiCall(activity, this);
+        Typeface tf = Typeface.createFromAsset(activity.getAssets(), "font/Roboto-Light.ttf");
 
         holder.storename.setText(success.getStoreName());
         holder.storelocation.setText(success.getLocation());
@@ -80,6 +82,16 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
         holder.storerating.setEnabled(false);
+
+        holder.storename.setTypeface(tf);
+        holder.storelocation.setTypeface(tf);
+        holder.storewebsite.setTypeface(tf);
+        holder.storetype.setTypeface(tf);
+        holder.storeservices.setTypeface(tf);
+        holder.storeworkingdays.setTypeface(tf);
+        holder.storetiming.setTypeface(tf);
+        holder.btnlike.setTypeface(tf);
+        holder.btnfollow.setTypeface(tf);
 
         if (success.getLikestatus().equalsIgnoreCase("yes")) {
             holder.linearlike.setVisibility(View.GONE);

@@ -61,21 +61,17 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
     @Override
     public SearchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_search_adapter, parent, false);
-
         SearchHolder holder = new SearchHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final SearchHolder holder, final int position) {
-
-
         //To Check Search Status
         if (mMainlist.get(position).getSearchstatus().equalsIgnoreCase("stop")) {
             holder.Stopsearch.setVisibility(View.GONE);
             holder.Startsearch.setVisibility(View.VISIBLE);
             holder.relativeLayout.setVisibility(View.VISIBLE);
-
         }
 
         if (mMainlist.get(position).getMysearchstatus().equalsIgnoreCase("") ||
@@ -85,17 +81,16 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             holder.relativeLayout.setVisibility(View.GONE);
         }
 
-
         //To Check Favourite Status
         if (mMainlist.get(position).getSearchstatus().equals("yes")) {
             holder.unfavImg.setVisibility(View.VISIBLE);
             holder.favImg.setVisibility(View.GONE);
         }
+
         if (mMainlist.get(position).getSearchstatus().equals("no")) {
             holder.unfavImg.setVisibility(View.GONE);
             holder.favImg.setVisibility(View.VISIBLE);
         }
-
 
         holder.textcategory.setText(mMainlist.get(position).getCategory());
         holder.textbrand.setText(mMainlist.get(position).getBrand());
@@ -104,10 +99,8 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.textyear.setText(mMainlist.get(position).getYearOfManufactur());
         holder.BuyerLeads.setText(mMainlist.get(position).getBuyerLeads());
 
-
         //To set Date
         try {
-
             DateFormat date = new SimpleDateFormat(" MMM dd ");
             DateFormat time = new SimpleDateFormat(" hh:mm a");
             holder.textsearchdate.setText(date.format(mMainlist.get(position).getSearchDateNew()) +
@@ -119,7 +112,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
         //To set LastDate
         try {
-
             DateFormat date1 = new SimpleDateFormat(" MMM dd ");
             DateFormat time1 = new SimpleDateFormat(" hh:mm a");
             holder.Stopdate.setText(date1.format(mMainlist.get(position).getStopDateNew()) +
@@ -141,7 +133,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 bundle.putString("year", holder.textyear.getText().toString());
                 bundle.putString("search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId());
 
-                activity.finish();
+                //activity.finish();
                 Intent intent = new Intent(activity, SearchVehicleActivity.class);
                 intent.putExtras(bundle);
                 activity.startActivity(intent);
@@ -153,22 +145,17 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.deleteData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
-
                 new AlertDialog.Builder(activity)
                         .setTitle("Delete")
                         .setMessage("Are you sure you want to delete this Search?")
-
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
                                 keyword = "delete";
                                 //new deleteData().execute();
                                 apiCall.deleteMySearch(SearchId, keyword);
                                 mMainlist.remove(position);
                                 notifyDataSetChanged();
-
                             }
                         })
 
@@ -187,14 +174,11 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.favImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
-
                 apiCall.addRemovefavouriteStatus(myContact, "", SearchId, "");
                 holder.favImg.setVisibility(View.INVISIBLE);
                 holder.unfavImg.setVisibility(View.VISIBLE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
-
                 mMainlist.set(position, mMainlist.get(holder.getAdapterPosition()));
                 // obj.searchFavouritestatus.set(position, "yes");
 
@@ -206,23 +190,18 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
-
                 new AlertDialog.Builder(activity)
                         .setTitle("Stop Notification")
                         .setMessage("Are you sure you want to Stop Notification?")
-
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
                                 keyword = "stop";
                                 //new deleteData().execute();
                                 apiCall.deleteMySearch(SearchId, keyword);
-
                                 holder.Stopsearch.setVisibility(View.INVISIBLE);
                                 holder.Startsearch.setVisibility(View.VISIBLE);
                                 holder.relativeLayout.setVisibility(View.VISIBLE);
                                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("stop");
-
                             }
                         })
 
@@ -247,19 +226,15 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 new AlertDialog.Builder(activity)
                         .setTitle("Start Notification")
                         .setMessage("Are you sure you want to Start Notification?")
-
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
                                 keyword = "start";
                                 //new deleteData().execute();
                                 apiCall.deleteMySearch(SearchId, keyword);
-
                                 holder.Startsearch.setVisibility(View.INVISIBLE);
                                 holder.Stopsearch.setVisibility(View.VISIBLE);
                                 holder.relativeLayout.setVisibility(View.GONE);
                                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("start");
-
                             }
                         })
 
@@ -270,8 +245,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-
-
             }
         });
 
@@ -289,7 +262,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                         mMainlist.get(holder.getAdapterPosition()).getYearOfManufactur() + "=" +
                         mMainlist.get(holder.getAdapterPosition()).getSearchdate() + "=" +
                         mMainlist.get(holder.getAdapterPosition()).getBuyerLeads();
-
 
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
@@ -330,8 +302,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             public void onClick(View v) {
 
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
-
-
                 allDetails = mMainlist.get(holder.getAdapterPosition()).getCategory() + "=" +
                         mMainlist.get(holder.getAdapterPosition()).getBrand() + "=" +
                         mMainlist.get(holder.getAdapterPosition()).getModel() + "=" +
@@ -340,7 +310,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                         mMainlist.get(holder.getAdapterPosition()).getSearchdate() + "=" +
                         mMainlist.get(holder.getAdapterPosition()).getBuyerLeads();
 
-
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
@@ -348,13 +317,9 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_keyword", "mysearch").apply();
 
-
                 Intent i=new Intent(activity, ShareWithinAppActivity.class);
                 activity.startActivity(i);
-                activity.finish();
-
-
-
+                //activity.finish();
             }
         });
 
@@ -362,7 +327,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (holder.BuyerLeads.getText().toString().equalsIgnoreCase("0")) {
                     // Toast.makeText(activity, "No leads found", Toast.LENGTH_SHORT).show();
                     Snackbar.make(v, "No leads found", Snackbar.LENGTH_SHORT).show();

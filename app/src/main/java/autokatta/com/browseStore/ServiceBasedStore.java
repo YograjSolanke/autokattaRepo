@@ -72,10 +72,6 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
         return mProductBased;
     }
 
-    private void getStoreData(String contact) {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.getBrowseStores(contact, "Service");
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -89,14 +85,14 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
         }
     }
 
-    @Override
+    /*@Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Activity) {
             if (mActivity != null)
                 mActivity = (Activity) context;
         }
-    }
+    }*/
 
 
     @Override
@@ -123,8 +119,8 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""));
+                /*getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""));*/
             }
         });
     }
@@ -265,6 +261,10 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
         }
     }
 
+    private void getStoreData(String contact) {
+        ApiCall apiCall = new ApiCall(getActivity(), this);
+        apiCall.getBrowseStores(contact, "Service");
+    }
 
     public void filterResult(final String[] incomingCategory) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());

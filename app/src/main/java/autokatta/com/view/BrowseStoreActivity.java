@@ -21,13 +21,17 @@ public class BrowseStoreActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.browseStoreFrame, new BrowseStoreFragment(), "browseStoreFragment")
-                .commit();
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.browseStoreFrame, new BrowseStoreFragment(), "browseStoreFragment")
+                        .commit();
+            }
+        });
     }
 
     @Override

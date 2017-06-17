@@ -15,38 +15,28 @@ public class MySearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_search);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         setTitle("My Searched Vehicles");
 
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    setSupportActionBar(toolbar);
-
-                    if (getSupportActionBar() != null) {
-                        getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    }
-
-
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mysearchFrame, new MySearchfragment(), "mySearchfragment")
+                            .addToBackStack("mySearchfragment")
+                            .commit();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
-       /* FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.mysearchFrame, new MySearchfragment()).commit();*/
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mysearchFrame, new MySearchfragment(), "mySearchfragment")
-                .addToBackStack("mySearchfragment")
-                .commit();
-
-
     }
 
     @Override
@@ -65,12 +55,12 @@ public class MySearchActivity extends AppCompatActivity {
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();
-            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         } else {
             if (getFragmentManager().getBackStackEntryCount() > 1) {
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }
     }

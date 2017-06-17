@@ -36,7 +36,6 @@ import autokatta.com.groups.MemberDetailTabs;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.response.GetGroupContactsResponse;
-import autokatta.com.view.GroupTabs;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
@@ -415,8 +414,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 mActivity.finish();
             } else if (str.startsWith("success")) {
                 Snackbar.make(mView.mRelativeLayout, "done", Snackbar.LENGTH_SHORT).show();
-                Intent intent = new Intent(mActivity, GroupTabs.class);
-                mActivity.startActivity(intent);
+                /*Intent intent = new Intent(mActivity, GroupTabs.class);
+                mActivity.startActivity(intent);*/
                 mActivity.finish();
             }
 

@@ -106,11 +106,8 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void notifySuccess(Response<?> response) {
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 MySearchResponse mySearchResponse = (MySearchResponse) response.body();
                 if (!mySearchResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
@@ -155,10 +152,12 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
                 }
 
             } else {
+                mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
 
         } else {
+            mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }

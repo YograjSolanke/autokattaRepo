@@ -151,8 +151,8 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-                getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""));
+                /*getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""));*/
                 hasViewCreated = true;
             }
         }
@@ -189,14 +189,14 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         });
     }
 
-    @Override
+    /*@Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Activity) {
             if (mActivity != null)
                 mActivity = (Activity) context;
         }
-    }
+    }*/
 
 
     @Override
@@ -229,7 +229,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     @Override
     public void onRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
-      getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+        getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", ""));
     }
 

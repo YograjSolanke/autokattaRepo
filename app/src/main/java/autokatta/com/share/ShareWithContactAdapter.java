@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,19 +143,14 @@ public class ShareWithContactAdapter extends BaseAdapter {
                 b.putString("keyword", keyword);
                 b.putString("tab", "contact");
 
-                System.out.println("data in contact adapter=============" + sharedata);
-
                 ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
-
                 frag.setArguments(b);
 
-                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.shareInApp_container, frag);
-                fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
-                fragmentTransaction.commit();
-
-
+                ((FragmentActivity) activity).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.shareInApp_container, frag, "ShareWithCaptionFragment")
+                        .addToBackStack("ShareWithCaptionFragment")
+                        .commit();
             }
         });
 
