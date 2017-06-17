@@ -2,6 +2,7 @@ package autokatta.com.search;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -64,6 +65,7 @@ public class SearchProduct extends Fragment implements RequestNotifier {
     List<String> finalTags = new ArrayList<>();
     List<String> finalBrandTags = new ArrayList<>();
     ConnectionDetector mConnectionDetector;
+    private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -85,7 +87,11 @@ public class SearchProduct extends Fragment implements RequestNotifier {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage("Loading...");
                 mConnectionDetector = new ConnectionDetector(getActivity());
+
                 bundle = getArguments();
                 if (bundle != null) {
                     searchString = bundle.getString("searchText1");
@@ -125,6 +131,7 @@ public class SearchProduct extends Fragment implements RequestNotifier {
 
         if (mConnectionDetector.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
+            dialog.show();
             mApiCall.searchProduct(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
                     Context.MODE_PRIVATE).getString("loginContact", ""));
         } else
@@ -133,6 +140,9 @@ public class SearchProduct extends Fragment implements RequestNotifier {
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
                 GetSearchProductResponse productResponse = (GetSearchProductResponse) response.body();
@@ -240,6 +250,9 @@ public class SearchProduct extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
