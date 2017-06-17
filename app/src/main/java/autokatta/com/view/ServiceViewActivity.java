@@ -553,12 +553,15 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             }
                             if (!srate1.equals("0")) {
                                 pricebar.setRating(Float.parseFloat(srate1));
+                                pricerate = Float.parseFloat(srate1);
                             }
                             if (!srate2.equals("0")) {
                                 qualitybar.setRating(Float.parseFloat(srate2));
+                                qualityrate = Float.parseFloat(srate2);
                             }
                             if (!srate3.equals("0")) {
                                 tmbar.setRating(Float.parseFloat(srate3));
+                                tmrate = Float.parseFloat(srate3);
                             }
 
                             if (!rating.equals("null")) {

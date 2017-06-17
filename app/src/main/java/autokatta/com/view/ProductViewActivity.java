@@ -471,15 +471,19 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             //***************************setting previous rating*******************************
                             if (!prate.equals("0")) {
                                 overallbar.setRating(Float.parseFloat(prate));
+
                             }
                             if (!prate1.equals("0")) {
                                 pricebar.setRating(Float.parseFloat(prate1));
+                                pricerate = Float.parseFloat(prate1);
                             }
                             if (!prate2.equals("0")) {
                                 qualitybar.setRating(Float.parseFloat(prate2));
+                                qualityrate = Float.parseFloat(prate2);
                             }
                             if (!prate3.equals("0")) {
                                 stockbar.setRating(Float.parseFloat(prate3));
+                                stockrate = Float.parseFloat(prate3);
                             }
 
                             //rating conditions for store
