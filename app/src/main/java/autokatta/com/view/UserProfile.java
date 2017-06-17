@@ -60,6 +60,7 @@ import autokatta.com.fragment_profile.Modules;
 import autokatta.com.fragment_profile.MyVehicles;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.register.NextRegistrationContinue;
 import autokatta.com.response.ProfileAboutResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -676,7 +677,7 @@ public class  UserProfile extends AppCompatActivity implements RequestNotifier, 
             case R.id.add_vehicle:
                 ActivityOptions option = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
                         R.anim.ok_right_to_left);
-                Intent i = new Intent(getApplicationContext(), VehicleUpload.class);
+                Intent i = new Intent(getApplicationContext(), NextRegistrationContinue.class);
                 startActivity(i, option.toBundle());
                 break;
         }
