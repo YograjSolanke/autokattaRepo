@@ -226,12 +226,14 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 }
 
                 mGoLive.setVisibility(View.VISIBLE);
-                if (ignoreGoingStatus.equals("going")) {
+                mGoLive.setEnabled(false);
+                if (ignoreGoingStatus.equalsIgnoreCase("going")) {
                     mGoing.setEnabled(false);
                     mGoLive.setEnabled(true);
+                    //mGoLive.setVisibility(View.VISIBLE);
                     mIgnore.setVisibility(View.GONE);
                     mGoing.setVisibility(View.GONE);
-                } else if (ignoreGoingStatus.equals("ignore")) {
+                } else if (ignoreGoingStatus.equalsIgnoreCase("ignore")) {
                     mIgnore.setEnabled(false);
                     mGoing.setEnabled(false);
                 }
@@ -372,6 +374,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                                                                     mIgnore.setVisibility(View.GONE);
                                                                     mGoing.setVisibility(View.GONE);
                                                                     mGoLive.setEnabled(true);
+                                                                    //mGoLive.setVisibility(View.VISIBLE);
                                                                     //paymentMethodCall(null, null, "");
                                                                 }
                                                             }
@@ -424,6 +427,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                                                                     mIgnore.setVisibility(View.GONE);
                                                                     mGoing.setVisibility(View.GONE);
                                                                     mGoLive.setEnabled(true);
+                                                                    //mGoLive.setVisibility(View.VISIBLE);
 
                                                                 }
                                                             }
@@ -473,6 +477,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                                             mIgnore.setEnabled(false);
                                             mGoing.setEnabled(true);
                                             mGoLive.setEnabled(false);
+                                            //mGoLive.setVisibility(View.GONE);
                                         }
                                     }
                                 } else {
