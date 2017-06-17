@@ -3,6 +3,7 @@ package autokatta.com.events;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -71,6 +71,8 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
+        ViewCompat.setNestedScrollingEnabled(mSwipeRefreshLayout, true);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -87,7 +89,6 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-
                             getLoanAnalytics(strLoanId);
                         }
                     });
@@ -103,7 +104,6 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getLoanAnalytics(strLoanId);
                 hasViewCreated = true;
             }
@@ -119,7 +119,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            // apiCall.AuctionAnalyticsData(strLoanId);
+            apiCall.AuctionAnalyticsData(strLoanId);
             //apiCall.AuctionAnalyticsData("1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
@@ -134,7 +134,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             if (response.isSuccessful()) {
                 analyticsList.clear();
                 AuctionAnalyticsResponse analyticsResponse = (AuctionAnalyticsResponse) response.body();
-
+                mSwipeRefreshLayout.setRefreshing(false);
                 if (!analyticsResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     for (AuctionAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
@@ -150,7 +150,6 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                         success.setIgnoreEmployee(success.getIgnoreEmployee());
                         analyticsList.add(success);
                     }
-                    mSwipeRefreshLayout.setRefreshing(false);
                     AuctionAnalyticsAdapter adapter = new AuctionAnalyticsAdapter(getActivity(), strLoanId, analyticsList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -163,6 +162,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
@@ -170,6 +170,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {

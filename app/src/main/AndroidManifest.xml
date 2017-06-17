@@ -271,9 +271,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".auction.LiveAuctionEventBiding"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".events.PreviewMyActiveAuctionActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
