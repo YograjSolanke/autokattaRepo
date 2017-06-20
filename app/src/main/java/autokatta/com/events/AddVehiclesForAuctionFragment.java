@@ -61,6 +61,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         //empty constructor
     }
 
+    TextView mNoData;
     String contactnumber, str, singleAuctionId, UserId, sheet = "", ExcelsheetName = "";
     public static EditText editNoOfVehicles;
     public static int IntVehicleNo;
@@ -149,6 +150,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
         txtSheets = (TextView) root.findViewById(R.id.txtSheets);
         collapsingToolbar = (CollapsingToolbarLayout) root.findViewById(R.id.collapsing_toolbar);
+
+        mNoData = (TextView) root.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
 
         startDate.setOnTouchListener(this);
         startTime.setOnTouchListener(this);
@@ -314,6 +318,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 btnbyadmin.setTextColor(getResources().getColor(R.color.white));
                 btnbyreauction.setTextColor(getResources().getColor(R.color.white));
                 byteam_listview.setVisibility(View.VISIBLE);
+                mNoData.setVisibility(View.VISIBLE);
                 byself_listview.setVisibility(View.GONE);
                 byadmin_listview.setVisibility(View.GONE);
                 byreauction_listview.setVisibility(View.GONE);
@@ -327,7 +332,11 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 btnbyadmin.setTextColor(getResources().getColor(R.color.white));
                 btnbyreauction.setTextColor(getResources().getColor(R.color.white));
                 byteam_listview.setVisibility(View.GONE);
-                byself_listview.setVisibility(View.VISIBLE);
+                if (selfadapter.getCount() != 0) {
+                    byself_listview.setVisibility(View.VISIBLE);
+                    mNoData.setVisibility(View.GONE);
+                } else
+                    mNoData.setVisibility(View.VISIBLE);
                 byadmin_listview.setVisibility(View.GONE);
                 byreauction_listview.setVisibility(View.GONE);
                 selectAuctionsSpinner.setVisibility(View.GONE);
@@ -341,10 +350,15 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 btnbyreauction.setTextColor(getResources().getColor(R.color.white));
                 byteam_listview.setVisibility(View.GONE);
                 byself_listview.setVisibility(View.GONE);
-                byadmin_listview.setVisibility(View.VISIBLE);
+                if (adminadapter.getCount() != 0) {
+                    byadmin_listview.setVisibility(View.VISIBLE);
+                    txtSheets.setVisibility(View.VISIBLE);
+                    mNoData.setVisibility(View.GONE);
+                } else
+                    mNoData.setVisibility(View.VISIBLE);
                 byreauction_listview.setVisibility(View.GONE);
                 selectAuctionsSpinner.setVisibility(View.GONE);
-                txtSheets.setVisibility(View.VISIBLE);
+
                 break;
 
             case R.id.btnbyreauction:
@@ -355,8 +369,12 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 byteam_listview.setVisibility(View.GONE);
                 byself_listview.setVisibility(View.GONE);
                 byadmin_listview.setVisibility(View.GONE);
-                byreauction_listview.setVisibility(View.VISIBLE);
-                selectAuctionsSpinner.setVisibility(View.VISIBLE);
+                if (reauctionadapter.getCount() != 0) {
+                    mNoData.setVisibility(View.GONE);
+                    byreauction_listview.setVisibility(View.VISIBLE);
+                    selectAuctionsSpinner.setVisibility(View.VISIBLE);
+                } else
+                    mNoData.setVisibility(View.VISIBLE);
                 txtSheets.setVisibility(View.GONE);
                 break;
 
@@ -610,6 +628,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             uploadedVehicleData.add(auctionAllVehicleData);
                         }
                     }
+
                         /*
                             Reauctioned vehicle data
                          */
@@ -645,6 +664,8 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             reauctionAuctionAllVehicleData.add(auctionAllVehicleData);
                         }
                     }
+
+
                         /*
                             Admin vehicle data
                          */
@@ -684,6 +705,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             adminVehicleData.add(auctionAllVehicleData);
                         }
                     }
+
                     if (!auctionAllVehicleResponse.getSuccess().getAuctions().isEmpty()) {
                         auctionIds.add(0);
                         auctionTitles.add("Select auction here");
@@ -784,8 +806,11 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminData);
                         byadmin_listview.setAdapter(adminadapter);
                         btnbyadmin.setText("By admin(" + String.valueOf(adminData.size()) + ")");
-                    } else
+                    } else {
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
+
+                    }
+
                 }
 
                 /*
@@ -831,8 +856,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         byreauction_listview.setAdapter(reauctionadapter);
                         btnbyreauction.setText("Reauction(" + String.valueOf(reaucionData.size()) + ")");
 
-                    } else
+                    } else {
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                    }
                 }
 
                 /*

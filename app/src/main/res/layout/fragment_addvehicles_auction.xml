@@ -354,6 +354,8 @@
             android:text="Next"
             android:textColor="@color/white"
             android:textSize="16sp" />
+
+        <include layout="@layout/error_view" />
     </RelativeLayout>
 
 
