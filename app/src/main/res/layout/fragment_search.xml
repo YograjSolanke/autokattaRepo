@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- <EditText
+         android:id="@+id/search"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:drawableStart="@android:drawable/ic_menu_search"
+         android:hint="Search Here"/>-->
+
     <android.support.design.widget.TabLayout
         android:id="@+id/search_tabs"
         android:layout_width="match_parent"

@@ -42,11 +42,57 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
-        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
-        mSearchView = (SearchView) searchMenuItem.getActionView();
+        /*MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        *//*mSearchView = (SearchView) searchMenuItem.getActionView();
         searchMenuItem.expandActionView();
-        setupSearchView();
+        setupSearchView();*//*
+
+        final EditText editText = (EditText) searchMenuItem.getActionView().findViewById(R.id.search);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //fillter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                fillter(s.toString());
+            }
+        });
+
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                if (!TextUtils.isEmpty(editText.getText())) {
+                    editText.getText().clear();
+                    fillter(editText.getText().toString().trim());
+                }
+                //hideSoftKeyboard(getActivity());
+                return true;
+            }
+        });
+        */
         return true;
+    }
+
+    private void fillter(String query) {
+        SearchFragment searchTabFragment = new SearchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("searchText", query);
+        searchTabFragment.setArguments(bundle);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction xfragmentTransaction = manager.beginTransaction();
+        xfragmentTransaction.replace(R.id.search_product, searchTabFragment).commit();
     }
 
     @Override

@@ -54,7 +54,6 @@ public class SearchProductAdapter extends BaseAdapter implements RequestNotifier
         this.allSearchData = allSearchDataArrayList;
         connectionDetector = new ConnectionDetector(activity);
         apiCall = new ApiCall(activity, this);
-        myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
     }
 
     @Override
@@ -103,7 +102,8 @@ public class SearchProductAdapter extends BaseAdapter implements RequestNotifier
         } else {
             yoHolder = (YoHolder) convertView.getTag();
         }
-
+        myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference),
+                MODE_PRIVATE).getString("loginContact", "");
         final GetSearchProductResponse.Success product = allSearchData.get(position);
 
         List<String> images = new ArrayList<String>();

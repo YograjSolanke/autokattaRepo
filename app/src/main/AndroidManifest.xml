@@ -415,7 +415,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
@@ -423,7 +425,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="*/*" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".view.LocalityActivity"
@@ -564,7 +567,8 @@
         <activity
             android:name=".view.ManualEnquiryVehicleList"
             android:label="@string/title_activity_manual_enquiry_vehicle_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".search.SearchDemo"></activity>
     </application>
 
 </manifest>

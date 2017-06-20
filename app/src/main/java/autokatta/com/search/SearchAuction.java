@@ -6,10 +6,18 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -59,7 +67,7 @@ public class SearchAuction extends Fragment implements RequestNotifier {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSearchAuction = inflater.inflate(R.layout.fragment_search_product, container, false);
-
+        setHasOptionsMenu(true);
         return mSearchAuction;
     }
 
@@ -437,5 +445,53 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 hasViewCreated = true;
             }
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        //getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        /*mSearchView = (SearchView) searchMenuItem.getActionView();
+        searchMenuItem.expandActionView();
+        setupSearchView();*/
+
+        final EditText editText = (EditText) searchMenuItem.getActionView().findViewById(R.id.search);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //fillter(s.toString());
+                //getSearchResults(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //fillter(s.toString());
+                Log.i("Strings", "-->" + s.toString());
+                getSearchAuction(s.toString());
+            }
+        });
+
+        MenuItemCompat.setOnActionExpandListener(searchMenuItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                if (!TextUtils.isEmpty(editText.getText())) {
+                    editText.getText().clear();
+                    // fillter(editText.getText().toString().trim());
+                }
+                //hideSoftKeyboard(getActivity());
+                return true;
+            }
+        });
     }
 }
