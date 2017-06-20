@@ -94,8 +94,9 @@ public class MyVehiclesAdapter extends RecyclerView.Adapter<MyVehiclesAdapter.My
                 i.putExtra("puc", mGetOwnVehiclesList.get(position).getPuc());
                 i.putExtra("lastservice", mGetOwnVehiclesList.get(position).getLastServiceDate());
                 i.putExtra("nextservice", mGetOwnVehiclesList.get(position).getNextServiceDate());
+                i.putExtra("className", "myVehicleAdapter");
                 activity.startActivity(i);
-                activity.finish();
+                //activity.finish();
             }
         });
         try {

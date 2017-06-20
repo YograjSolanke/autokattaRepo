@@ -73,7 +73,6 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
         holder.storename.setText(success.getStoreName());
         holder.storelocation.setText(success.getLocation());
-        holder.storewebsite.setText(success.getWebsite());
         holder.storetype.setText(success.getStoreType());
         holder.storeservices.setText(success.getCategory());
         holder.storeworkingdays.setText(success.getWorkingDays());
@@ -82,6 +81,12 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
         holder.storerating.setEnabled(false);
+
+        if (success.getWebsite() == null || success.getWebsite().isEmpty() || success.getWebsite().equals("null")) {
+            holder.storewebsite.setText("No website found");
+        } else {
+            holder.storewebsite.setText(success.getWebsite());
+        }
 
         holder.storename.setTypeface(tf);
         holder.storelocation.setTypeface(tf);

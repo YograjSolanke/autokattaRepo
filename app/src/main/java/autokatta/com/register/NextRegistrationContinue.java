@@ -75,18 +75,18 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     HashMap<String, String> mVersionList1 = new HashMap<>();
 
     //Edit Vehicle data to show in spinner
-    List<String> TypeList=new ArrayList<>();
-    List<String> SubTypeList=new ArrayList<>();
-    List<String> BrandList=new ArrayList<>();
-    List<String> ModelList=new ArrayList<>();
-    List<String> VersionList=new ArrayList<>();
+    List<String> TypeList = new ArrayList<>();
+    List<String> SubTypeList = new ArrayList<>();
+    List<String> BrandList = new ArrayList<>();
+    List<String> ModelList = new ArrayList<>();
+    List<String> VersionList = new ArrayList<>();
 
     String vehicle_idD, brandId, brandName, modelId, modelName, versionId, versionName;
     ApiCall mApicall;
 
     String action = "", vehiType = "", vehiYear = "", vehiBrand = "", vehiModel = "", vehiVersion = "", vehiSubcat = "", ids = "", vehino = "",
             vehitaxValidity = "", vehifitnessValidity = "", vehipermitValidity = "", vehiinsurance = "", vehipuc = "", vehilastServicedate = "",
-            vehinextservicedate = "";
+            vehinextservicedate = "", className;
     Button btnsub, btncancle;
 
     String vehiclenotext = "", vehicletypetext = "", taxvaltext = "", permitvaltext = "", fitnessvaltext = "",
@@ -176,7 +176,14 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         vehipuc = i.getStringExtra("puc");
                         vehilastServicedate = i.getStringExtra("lastservice");
                         vehinextservicedate = i.getStringExtra("nextservice");
+                        className = i.getStringExtra("className");
                         btnsub.setText("Update");
+                    }
+
+                    if (className != null) {
+                        if (className.equals("myVehicleAdapter")) {
+                            btncancle.setVisibility(View.GONE);
+                        }
                     }
 
                     if (action.equalsIgnoreCase("MyVehicles")) {
@@ -223,7 +230,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         VersionList.add(vehiVersion);
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, TypeList);
-                        ArrayAdapter<String> adapter1= new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, SubTypeList);
+                        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, SubTypeList);
                         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, BrandList);
                         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, ModelList);
                         ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, VersionList);
@@ -278,26 +285,26 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 if (mSpinnerVehitype.getSelectedItem() != null && mSpinnerVehitype != null) {
                     vehicletypetext = mSpinnerVehitype.getSelectedItem().toString();
                 } else {
-                    CustomToast.customToast(getApplicationContext(),"Select Vehicle Type");
+                    CustomToast.customToast(getApplicationContext(), "Select Vehicle Type");
                 }
 
                 if (mSpinnerBrand.getSelectedItem() != null && mSpinnerBrand != null) {
                     brandtext = mSpinnerBrand.getSelectedItem().toString();
                 } else {
-                    CustomToast.customToast(getApplicationContext(),"Select Brand");
+                    CustomToast.customToast(getApplicationContext(), "Select Brand");
                 }
 
 
                 if (mSpinnerModel.getSelectedItem() != null && mSpinnerModel != null) {
                     modeltext = mSpinnerModel.getSelectedItem().toString();
                 } else {
-                    CustomToast.customToast(getApplicationContext(),"Select Model");
+                    CustomToast.customToast(getApplicationContext(), "Select Model");
                 }
 
                 if (mSpinnerVersion.getSelectedItem() != null && mSpinnerVersion != null) {
                     versiontext = mSpinnerVersion.getSelectedItem().toString();
                 } else {
-                    CustomToast.customToast(getApplicationContext(),"Select Version");
+                    CustomToast.customToast(getApplicationContext(), "Select Version");
                 }
 
                 if (mSpinnerSubType.getSelectedItem() != null && mSpinnerSubType != null) {
@@ -408,7 +415,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                         textView.setTextColor(Color.YELLOW);
                         snackbar.show();*/
-                        CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
                     //addOwn();
 
@@ -436,11 +443,11 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                         textView.setTextColor(Color.YELLOW);
                         snackbar.show();*/
-                        CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
                     CustomToast.customToast(getApplicationContext(), "Vehicle Uploaded");
                 } else {
-                    CustomToast.customToast(getApplicationContext(),"Provide all details");
+                    CustomToast.customToast(getApplicationContext(), "Provide all details");
                 }
                 break;
 
@@ -661,7 +668,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         }
                         parsedData1.addAll(mVehicleTypeList);
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData1);
-                     ///   dataadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        ///   dataadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSpinnerVehitype.setAdapter(dataadapter);
                         mSpinnerSubType.setAdapter(null);
 
@@ -739,8 +746,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     }
                     mBrandIdList.add("other");
                     brandData.addAll(mBrandIdList);
-                    ArrayAdapter<String> adapter =new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
-                  //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
+                    //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerBrand.setAdapter(adapter);
                     mSpinnerModel.setAdapter(null);
 
@@ -809,7 +816,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     mModelIdList.add("other");
                     modelData.addAll(mModelIdList);
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
-                  //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerModel.setAdapter(adapter);
                     mSpinnerVersion.setAdapter(null);
                     mSpinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -837,7 +844,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edmodel = input.getText().toString();
                                                 if (edmodel.equals(""))
-                                                    CustomToast.customToast(getApplicationContext(),"Enter Model");
+                                                    CustomToast.customToast(getApplicationContext(), "Enter Model");
                                                 else
                                                     AddModel("Model", edmodel, vehicle_idD, subcategoryId, brandId);
                                                 dialog.dismiss();
@@ -876,7 +883,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     mVersionIdList.add("other");
                     versionData.addAll(mVersionIdList);
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, versionData);
-                  //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerVersion.setAdapter(adapter);
 
                     mSpinnerVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -905,7 +912,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                                 String edversion = input.getText().toString();
                                                 if (edversion.equals(""))
 
-                                                    CustomToast.customToast(getApplicationContext(),"Enter Version");
+                                                    CustomToast.customToast(getApplicationContext(), "Enter Version");
                                                 else
                                                     AddVersion("Version", edversion, vehicle_idD, subcategoryId, brandId, modelId);
                                                 dialog.dismiss();
@@ -936,21 +943,21 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }else {
+        } else {
             Log.i("Check Class-", "Continue Next Registration");
             error.printStackTrace();
         }
@@ -967,7 +974,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     finish();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
-                CustomToast.customToast(getApplicationContext(),"Vehicle Added");
+                CustomToast.customToast(getApplicationContext(), "Vehicle Added");
                 android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(NextRegistrationContinue.this);
                 // set title
                 alertDialogBuilder.setTitle("Add Vehicle");
@@ -1005,7 +1012,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                         edtlastservice.setError(null);
                                         edtnextservice.setError(null);
 
-
                                         purchaseCal.setVisibility(View.VISIBLE);
                                         taxCal.setVisibility(View.VISIBLE);
                                         fitnessCal.setVisibility(View.VISIBLE);
@@ -1029,9 +1035,16 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
-                                        dialog.cancel();
-                                        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                                        startActivity(new Intent(getApplicationContext(), RegistrationCompanyBased.class), options.toBundle());
+                                        if (className != null) {
+                                            if (className.equals("myVehicleAdapter")) {
+                                                dialog.cancel();
+                                                finish();
+                                            }
+                                        } else {
+                                            dialog.cancel();
+                                            ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                            startActivity(new Intent(getApplicationContext(), RegistrationCompanyBased.class), options.toBundle());
+                                        }
                                     }
                                 });
 
@@ -1040,18 +1053,18 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 // show it
                 alertDialog.show();
             } else if (str.equals("success_brand_add")) {
-                CustomToast.customToast(getApplicationContext(),"Brand Added");
+                CustomToast.customToast(getApplicationContext(), "Brand Added");
                 getBrand(vehicle_idD, subcategoryId);
                 Log.i("msg", "Brand added successfully");
             } else if (str.equals("success_model_add")) {
-                CustomToast.customToast(getApplicationContext(),"Model Added");
+                CustomToast.customToast(getApplicationContext(), "Model Added");
                 getModel(vehicle_idD, subcategoryId, brandId);
             } else if (str.equals("success_version_add")) {
-                CustomToast.customToast(getApplicationContext(),"Version Added");
+                CustomToast.customToast(getApplicationContext(), "Version Added");
                 getVersion(vehicle_idD, subcategoryId, brandId, modelId);
             }
         } else
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
     }
 
     /*
