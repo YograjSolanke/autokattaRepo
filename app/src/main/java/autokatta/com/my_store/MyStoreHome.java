@@ -386,31 +386,31 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         if (str != null) {
             if (str.equals("success_follow")) {
                 //if (mActivity != null)
-                //showMessage(mActivity, "Following");
+                CustomToast.customToast(getActivity(), "Following");
                 /*mFollow.setVisibility(View.GONE);
                 mUnFollow.setVisibility(View.VISIBLE);*/
                 mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
                 //if (mActivity != null)
-                //showMessage(mActivity, "UnFollowing");
+                CustomToast.customToast(getActivity(), "UnFollowing");
                 /*mFollow.setVisibility(View.VISIBLE);
                 mUnFollow.setVisibility(View.GONE);*/
                 mFolllowstr = "no";
             } else if (str.equals("success_like")) {
                 //if (mActivity != null)
-                //showMessage(mActivity, "Liked");
+                CustomToast.customToast(getActivity(), "Liked");
                 /*mLike.setVisibility(View.VISIBLE);
                 mUnlike.setVisibility(View.GONE);*/
                 mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
                 //if (mActivity != null)
-                //showMessage(mActivity, "Unliked");
+                CustomToast.customToast(getActivity(), "Unliked");
                 /*mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);*/
                 mLikestr = "no";
             } else if (str.equals("success_rating_submitted")) {
-                /*if (mActivity != null)
-                showMessage(mActivity, "Rating Submitted");*/
+                if (mActivity != null)
+                    CustomToast.customToast(getActivity(), "Rating Submitted");
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
@@ -420,8 +420,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 startActivity(intent);
 
             } else if (str.equals("success_rating_updated")) {
-                /*if (mActivity != null)
-                showMessage(mActivity, "Rating Updated");*/
+                //if (mActivity != null)
+                CustomToast.customToast(getActivity(), "Rating Updated");
                 Bundle bundle = new Bundle();
                 bundle.putString("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
@@ -431,7 +431,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 startActivity(intent);
             } else if (str.equals("success_recommended")) {
                 //if (mActivity != null)
-                //showMessage(mActivity, "Store recommended");
+                CustomToast.customToast(getActivity(), "Store recommended");
             }
         }
     }
