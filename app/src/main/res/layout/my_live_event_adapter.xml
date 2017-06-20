@@ -28,10 +28,11 @@
                     android:id="@+id/check"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/rl1"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginTop="5dp"
+                    android:contentDescription="@string/app_name"
                     android:src="@drawable/liveimage"
                     android:visibility="visible" />
 
@@ -39,7 +40,6 @@
                     android:id="@+id/rl1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_toLeftOf="@+id/IV2"
                     android:background="#C8C9CC"
                     android:gravity="center_horizontal">
 
@@ -47,7 +47,7 @@
                         android:id="@+id/auctiontitle2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:text="Auction Title :"
                         android:textColor="#808080"
@@ -58,10 +58,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@+id/auctiontitle2"
-                        android:layout_toRightOf="@+id/auctiontitle2"
                         android:enabled="false"
                         android:hint="-"
                         android:textColor="#808080" />
@@ -77,7 +76,7 @@
                         android:id="@+id/noofvehicle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:text="No.of vehicle :"
                         android:textColor="#808080"
@@ -87,9 +86,9 @@
                         android:id="@+id/editvehicle"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@+id/noofvehicle"
+                        android:layout_toEndOf="@+id/noofvehicle"
                         android:enabled="false"
                         android:hint="0"
                         android:textColor="#808080" />
@@ -100,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rl2"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp">
 
                     <TextView
@@ -124,7 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:text="Start :"
                         android:textColor="#808080"
                         android:textStyle="bold">
@@ -135,8 +134,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="25dp"
-                        android:layout_toRightOf="@+id/datetime1"
+                        android:layout_marginStart="25dp"
+                        android:layout_toEndOf="@+id/datetime1"
                         android:text="&amp;"
                         android:textColor="#808080" />
 
@@ -147,8 +146,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="57dp"
-                        android:layout_toRightOf="@+id/datetime1"
+                        android:layout_marginStart="57dp"
+                        android:layout_toEndOf="@+id/datetime1"
                         android:enabled="false"
                         android:hint="Time"
                         android:textColor="#808080" />
@@ -158,10 +157,8 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="45dp"
                         android:layout_marginStart="50dp"
                         android:layout_toEndOf="@+id/start2"
-                        android:layout_toRightOf="@+id/start2"
                         android:enabled="false"
                         android:hint="Date"
                         android:textColor="#808080" />
@@ -180,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:text="End :"
                         android:textColor="#808080"
                         android:textStyle="bold">
@@ -191,8 +188,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="25dp"
-                        android:layout_toRightOf="@+id/datetime2"
+                        android:layout_marginStart="25dp"
+                        android:layout_toEndOf="@+id/datetime2"
                         android:text="&amp;"
                         android:textColor="#808080" />
 
@@ -203,8 +200,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="57dp"
-                        android:layout_toRightOf="@+id/datetime2"
+                        android:layout_marginStart="57dp"
+                        android:layout_toEndOf="@+id/datetime2"
                         android:enabled="false"
                         android:hint="Time"
                         android:textColor="#808080" />
@@ -214,10 +211,8 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="50dp"
                         android:layout_marginStart="50dp"
                         android:layout_toEndOf="@+id/end2"
-                        android:layout_toRightOf="@+id/end2"
                         android:enabled="false"
                         android:hint="Date"
                         android:textColor="#808080" />
@@ -237,7 +232,7 @@
                         android:id="@+id/clauses"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="0.50"
                         android:background="@color/background"
                         android:text="Special clauses"
@@ -247,9 +242,6 @@
                         android:id="@+id/timer"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/button"
-                        android:layout_toStartOf="@+id/button"
                         android:layout_weight="0.50"
                         android:gravity="center"
                         android:text="Timer"
@@ -279,8 +271,6 @@
                         android:id="@+id/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
                         android:layout_weight="1"
                         android:background="@color/background"
                         android:text="Preview"
@@ -290,8 +280,7 @@
                         android:id="@+id/share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_toRightOf="@+id/going"
+                        android:layout_marginStart="1dp"
                         android:layout_weight="1"
                         android:background="@color/background"
                         android:text="Share"
@@ -301,7 +290,7 @@
                         android:id="@+id/relativeshare"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="1dp"
+                        android:layout_marginStart="1dp"
                         android:layout_weight="1"
                         android:background="@color/background">
 
@@ -309,9 +298,9 @@
                             android:id="@+id/share1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="2dp"
-                            android:layout_toRightOf="@+id/going"
+                            android:layout_marginStart="2dp"
                             android:background="@drawable/button_background"
+                            android:contentDescription="@string/app_name"
                             android:src="@drawable/autoshare"
                             android:text="Share"
                             android:textAllCaps="false"
@@ -322,8 +311,8 @@
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@+id/share1"
+                            android:layout_marginStart="5dp"
+                            android:layout_toEndOf="@+id/share1"
                             android:gravity="center"
                             android:text="SHARE"
                             android:textAllCaps="false"
@@ -335,14 +324,14 @@
                 <!--<RelativeLayout-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
-                <!--android:layout_toRightOf="@+id/pramotespinner"-->
+                <!--android:layout_toEndOf="@+id/pramotespinner"-->
                 <!--android:layout_below="@+id/horizontallist">-->
                 <!--<ImageView-->
                 <!--android:layout_width="30dp"-->
                 <!--android:layout_height="30dp"-->
-                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentEnd="true"-->
                 <!--android:src="@drawable/downarrow"-->
-                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginEnd="10dp"-->
                 <!--android:id="@+id/downarrow"/>-->
 
                 <!--<TextView-->
@@ -350,7 +339,7 @@
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="More history..."-->
                 <!--android:layout_centerVertical="true"-->
-                <!--android:layout_toLeftOf="@+id/downarrow"/>-->
+                <!--android:layout_toStartOf="@+id/downarrow"/>-->
                 <!--</RelativeLayout>-->
 
             </RelativeLayout>

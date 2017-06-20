@@ -249,7 +249,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         View convertView = inflater.inflate(R.layout.custom_store, null);
         alertDialog.setView(convertView);
         final AlertDialog alert = alertDialog.show();
-        alertDialog.setTitle("Select option to filter data");
+        alertDialog.setTitle("Product Categories");
         ListView lvcat = (ListView) convertView.findViewById(R.id.listview1);
 
         Button Ok = (Button) convertView.findViewById(R.id.btnok);

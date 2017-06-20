@@ -136,7 +136,6 @@ public class SearchAuction extends Fragment implements RequestNotifier {
             if (response.isSuccessful()) {
                 mNoData.setVisibility(View.GONE);
                 filterImg.setVisibility(View.VISIBLE);
-                ModelSearchAuction modelAuction = new ModelSearchAuction();
                 GetSearchAuctionResponse auctionResponse = (GetSearchAuctionResponse) response.body();
                 allSearchDataArrayList.clear();
                 eventTypeList.clear();
@@ -144,6 +143,8 @@ public class SearchAuction extends Fragment implements RequestNotifier {
 
                 if (!auctionResponse.getSuccess().getAuctionLive().isEmpty()) {
                     for (GetSearchAuctionResponse.AuctionLive auctionLive : auctionResponse.getSuccess().getAuctionLive()) {
+                        ModelSearchAuction modelAuction = new ModelSearchAuction();
+
                         modelAuction.setAuctionId(auctionLive.getAuctionId());
                         modelAuction.setActionTitle(auctionLive.getActionTitle());
                         modelAuction.setStartDate(auctionLive.getStartDate());
@@ -168,6 +169,8 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 //Auction Up
                 if (!auctionResponse.getSuccess().getAuctionUp().isEmpty()) {
                     for (GetSearchAuctionResponse.AuctionUp auctionUp : auctionResponse.getSuccess().getAuctionUp()) {
+                        ModelSearchAuction modelAuction = new ModelSearchAuction();
+
                         modelAuction.setAuctionId(auctionUp.getAuctionId());
                         modelAuction.setActionTitle(auctionUp.getActionTitle());
                         modelAuction.setStartDate(auctionUp.getStartDate());
@@ -193,6 +196,8 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 //
                 if (!auctionResponse.getSuccess().getExchangeMelaLive().isEmpty()) {
                     for (GetSearchAuctionResponse.ExchangeMelaLive exchangeMelaLive : auctionResponse.getSuccess().getExchangeMelaLive()) {
+                        ModelSearchAuction modelAuction = new ModelSearchAuction();
+
                         modelAuction.setId(exchangeMelaLive.getId());
                         modelAuction.setContact(exchangeMelaLive.getContact());
                         modelAuction.setName(exchangeMelaLive.getName());
@@ -217,6 +222,8 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 //Exchange Mela Up
                 if (!auctionResponse.getSuccess().getExchangeMelaUp().isEmpty()) {
                     for (GetSearchAuctionResponse.ExchangeMelaUp exchangeMelaUp : auctionResponse.getSuccess().getExchangeMelaUp()) {
+                        ModelSearchAuction modelAuction = new ModelSearchAuction();
+
                         modelAuction.setId(exchangeMelaUp.getId());
                         modelAuction.setContact(exchangeMelaUp.getContact());
                         modelAuction.setName(exchangeMelaUp.getName());
@@ -241,6 +248,8 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 //Loan Mela Live
                 if (!auctionResponse.getSuccess().getLoanMelaLive().isEmpty()) {
                     for (GetSearchAuctionResponse.LoanMelaLive loanMelaLive : auctionResponse.getSuccess().getLoanMelaLive()) {
+                        ModelSearchAuction modelAuction = new ModelSearchAuction();
+
                         modelAuction.setId(loanMelaLive.getId());
                         modelAuction.setContact(loanMelaLive.getContact());
                         modelAuction.setName(loanMelaLive.getName());
@@ -266,6 +275,8 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 //Loan Mela Up
                 if (!auctionResponse.getSuccess().getLoanMelaUp().isEmpty()) {
                     for (GetSearchAuctionResponse.LoanMelaUp loanMelaUp : auctionResponse.getSuccess().getLoanMelaUp()) {
+                        ModelSearchAuction modelAuction = new ModelSearchAuction();
+
                         modelAuction.setId(loanMelaUp.getId());
                         modelAuction.setContact(loanMelaUp.getContact());
                         modelAuction.setName(loanMelaUp.getName());
@@ -291,6 +302,8 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 /*//Vehicle Live
                 if (!auctionResponse.getSuccess().getVehiclesLive().isEmpty()) {
                     for (GetSearchAuctionResponse.VehiclesLive vehiclesLive : auctionResponse.getSuccess().getVehiclesLive()) {
+                    ModelSearchAuction modelAuction = new ModelSearchAuction();
+
                         modelAuction.setAuctionId(vehiclesLive.getAuctionId());
                         modelAuction.setVehicleId(vehiclesLive.getVehicleId());
                         modelAuction.setTitle(vehiclesLive.getTitle());
@@ -307,6 +320,8 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 //Vehicle Up
                 if (!auctionResponse.getSuccess().getVehiclesUp().isEmpty()) {
                     for (GetSearchAuctionResponse.VehiclesUp vehiclesUp : auctionResponse.getSuccess().getVehiclesUp()) {
+                    ModelSearchAuction modelAuction = new ModelSearchAuction();
+
                         modelAuction.setAuctionId(vehiclesUp.getAuctionId());
                         modelAuction.setVehicleId(vehiclesUp.getVehicleId());
                         modelAuction.setTitle(vehiclesUp.getTitle());
@@ -324,11 +339,13 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 checkedValues = new boolean[eventTypeSet.size()];
                 Arrays.fill(checkedValues, Boolean.TRUE);
 
-                adapter = new AllSearchEventCustomAdapter(getActivity(), allSearchDataArrayList);
-                searchList.setAdapter(adapter);
-            } else {
-                mNoData.setVisibility(View.VISIBLE);
-                filterImg.setVisibility(View.GONE);
+                if (allSearchDataArrayList.size() != 0) {
+                    adapter = new AllSearchEventCustomAdapter(getActivity(), allSearchDataArrayList);
+                    searchList.setAdapter(adapter);
+                } else {
+                    mNoData.setVisibility(View.VISIBLE);
+                    filterImg.setVisibility(View.GONE);
+                }
             }
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));

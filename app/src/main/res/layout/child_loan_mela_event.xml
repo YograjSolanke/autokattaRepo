@@ -2,7 +2,6 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:background="@color/white">
 
@@ -28,7 +27,7 @@
                     android:id="@+id/rl1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_toLeftOf="@+id/IV2"
+                    android:layout_toStartOf="@+id/IV2"
                     android:background="#C8C9CC"
                     android:gravity="center_horizontal">
 
@@ -36,7 +35,7 @@
                         android:id="@+id/auctiontitle2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:text="Loan Title :"
                         android:textColor="#808080"
@@ -47,10 +46,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@+id/auctiontitle2"
-                        android:layout_toRightOf="@+id/auctiontitle2"
                         android:enabled="false"
                         android:hint="-"
                         android:textColor="#808080" />
@@ -60,20 +58,21 @@
                     android:id="@+id/loanmelaimg"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_below="@+id/rl1" />
+                    android:layout_below="@+id/rl1"
+                    android:contentDescription="@string/app_name" />
 
                 <RelativeLayout
                     android:id="@+id/relativelocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rl1"
-                    android:layout_toRightOf="@+id/loanmelaimg">
+                    android:layout_toEndOf="@+id/loanmelaimg">
 
                     <TextView
                         android:id="@+id/location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="Location :" />
 
@@ -81,9 +80,9 @@
                         android:id="@+id/setlocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@+id/location"
+                        android:layout_toEndOf="@+id/location"
                         android:text="Set Location :" />
 
                 </RelativeLayout>
@@ -93,13 +92,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relativelocation"
-                    android:layout_toRightOf="@+id/loanmelaimg">
+                    android:layout_toEndOf="@+id/loanmelaimg">
 
                     <TextView
                         android:id="@+id/address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="Address :" />
 
@@ -107,9 +106,9 @@
                         android:id="@+id/setaddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@+id/address"
+                        android:layout_toEndOf="@+id/address"
                         android:text="Set Address :" />
 
                 </RelativeLayout>
@@ -126,7 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:text="Start :"
                         android:textColor="#808080"
                         android:textStyle="bold">
@@ -137,8 +136,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="25dp"
-                        android:layout_toRightOf="@+id/datetime1"
+                        android:layout_marginStart="25dp"
+                        android:layout_toEndOf="@+id/datetime1"
                         android:text="&amp;"
                         android:textColor="#808080" />
 
@@ -148,8 +147,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="57dp"
-                        android:layout_toRightOf="@+id/datetime1"
+                        android:layout_marginStart="57dp"
+                        android:layout_toEndOf="@+id/datetime1"
                         android:enabled="false"
                         android:hint="Time"
                         android:textColor="#808080" />
@@ -159,10 +158,8 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="45dp"
                         android:layout_marginStart="50dp"
                         android:layout_toEndOf="@+id/start2"
-                        android:layout_toRightOf="@+id/start2"
                         android:enabled="false"
                         android:hint="Date"
                         android:textColor="#808080" />
@@ -180,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:text="End :"
                         android:textColor="#808080"
                         android:textStyle="bold">
@@ -191,8 +188,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="25dp"
-                        android:layout_toRightOf="@+id/datetime2"
+                        android:layout_marginStart="25dp"
+                        android:layout_toEndOf="@+id/datetime2"
                         android:text="&amp;"
                         android:textColor="#808080" />
 
@@ -202,8 +199,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="57dp"
-                        android:layout_toRightOf="@+id/datetime2"
+                        android:layout_marginStart="57dp"
+                        android:layout_toEndOf="@+id/datetime2"
                         android:enabled="false"
                         android:hint="Time"
                         android:textColor="#808080" />
@@ -213,10 +210,8 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="50dp"
                         android:layout_marginStart="50dp"
                         android:layout_toEndOf="@+id/end2"
-                        android:layout_toRightOf="@+id/end2"
                         android:enabled="false"
                         android:hint="Date"
                         android:textColor="#808080" />
@@ -243,8 +238,6 @@
                         android:id="@+id/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
                         android:layout_weight="1"
                         android:background="@color/background"
                         android:text="Preview"
@@ -254,8 +247,7 @@
                         android:id="@+id/share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="1dp"
-                        android:layout_toRightOf="@+id/going"
+                        android:layout_marginStart="1dp"
                         android:layout_weight="1"
                         android:background="@color/background"
                         android:text="Share"
@@ -265,7 +257,7 @@
                         android:id="@+id/relativeshare"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="1dp"
+                        android:layout_marginStart="1dp"
                         android:layout_weight="1"
                         android:background="@color/background">
 
@@ -273,9 +265,9 @@
                             android:id="@+id/share1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="2dp"
-                            android:layout_toRightOf="@+id/going"
+                            android:layout_marginStart="2dp"
                             android:background="@color/background"
+                            android:contentDescription="@string/app_name"
                             android:src="@drawable/autoshare"
                             android:text="Share"
                             android:textAllCaps="false"
@@ -286,8 +278,8 @@
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@+id/share1"
+                            android:layout_marginStart="5dp"
+                            android:layout_toEndOf="@+id/share1"
                             android:background="@color/background"
                             android:gravity="center"
                             android:text="SHARE"
