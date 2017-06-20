@@ -5,12 +5,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -223,7 +227,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         holder.mSpecialClauses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(mActivity);
+                /*final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(mActivity);
                 alertDialog.setTitle("Special Clauses");
 
                 final TextView input = new TextView(mActivity);
@@ -242,7 +246,38 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                             }
                         });
 
-                alertDialog.show();
+                alertDialog.show();*/
+                android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(mActivity)
+                        .setTitle("Special Clauses")
+                        .setMessage("YOUR_MSG")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+                TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+                //textView.setMaxLines(5);
+                if (textView != null) {
+                    textView.setScroller(new Scroller(mActivity));
+                    textView.setVerticalScrollBarEnabled(true);
+                    textView.setText(mItemList.get(holder.getAdapterPosition()).getSpecialClauses().replaceAll(",", "\n"));
+                    textView.setMovementMethod(new ScrollingMovementMethod());
+
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    lp.setMarginStart(30);
+                    textView.setBackgroundColor(Color.LTGRAY);
+                    textView.setLayoutParams(lp);
+                    textView.setPadding(40, 40, 40, 40);
+                    textView.setGravity(Gravity.CENTER_VERTICAL);
+                    textView.setTextColor(Color.parseColor("#110359"));
+                    textView.setTextSize(20);
+
+                    dialog.setView(textView);
+                }
             }
         });
 

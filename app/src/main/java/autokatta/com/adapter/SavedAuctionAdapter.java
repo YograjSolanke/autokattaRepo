@@ -2,17 +2,21 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,7 +49,7 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
     }
 
     @Override
-    public void onBindViewHolder(SavedAuctionAdapter.AuctionHolder holder, final int position) {
+    public void onBindViewHolder(final SavedAuctionAdapter.AuctionHolder holder, final int position) {
         holder.title.setText(mMainlist.get(position).getActionTitle());
         holder.start_date.setText(mMainlist.get(position).getStartDate());
         holder.start_time.setText(mMainlist.get(position).getStartTime());
@@ -58,7 +62,7 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
         holder.special_clauses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String clauses[] = new String[0];
+                /*String clauses[] = new String[0];
                 try {
                     clauses = mMainlist.get(position).getSpecialClauses().split(",");
                 } catch (Exception e) {
@@ -71,7 +75,39 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
                     public void onClick(DialogInterface dialog, int item) {
                         dialog.dismiss();
                     }
-                }).show();
+                }).show();*/
+
+                android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(activity)
+                        .setTitle("Special Clauses")
+                        .setMessage("YOUR_MSG")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+                TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+                //textView.setMaxLines(5);
+                if (textView != null) {
+                    textView.setScroller(new Scroller(activity));
+                    textView.setVerticalScrollBarEnabled(true);
+                    textView.setText(mMainlist.get(holder.getAdapterPosition()).getSpecialClauses().replaceAll(",", "\n"));
+                    textView.setMovementMethod(new ScrollingMovementMethod());
+
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    lp.setMarginStart(30);
+                    textView.setBackgroundColor(Color.LTGRAY);
+                    textView.setLayoutParams(lp);
+                    textView.setPadding(40, 40, 40, 40);
+                    textView.setGravity(Gravity.CENTER_VERTICAL);
+                    textView.setTextColor(Color.parseColor("#110359"));
+                    textView.setTextSize(20);
+
+                    dialog.setView(textView);
+                }
             }
         });
 

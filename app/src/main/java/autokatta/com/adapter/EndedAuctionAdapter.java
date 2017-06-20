@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -61,7 +63,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
     }
 
     @Override
-    public void onBindViewHolder(EndedAuctionAdapter.AuctionHolder holder, final int position) {
+    public void onBindViewHolder(final EndedAuctionAdapter.AuctionHolder holder, final int position) {
         holder.action_title.setText(mMainList.get(position).getActionTitle());
         holder.auction_vehicle.setText(mMainList.get(position).getNoOfVehicle());
         holder.auction_enddate.setText(mMainList.get(position).getEndDate());
@@ -76,7 +78,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             @Override
             public void onClick(View v) {
 
-                final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(mActivity);
+                /*final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(mActivity);
                 alertDialog.setTitle("Special Clauses");
                 //alertDialog.setMessage("Enter Clause");
                 //String names[] ={,};
@@ -107,7 +109,39 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
                             }
                         });
 
-                alertDialog.show();
+                alertDialog.show();*/
+
+                android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(mActivity)
+                        .setTitle("Special Clauses")
+                        .setMessage("YOUR_MSG")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+                TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+                //textView.setMaxLines(5);
+                if (textView != null) {
+                    textView.setScroller(new Scroller(mActivity));
+                    textView.setVerticalScrollBarEnabled(true);
+                    textView.setText(mMainList.get(holder.getAdapterPosition()).getSpecialClauses().replaceAll(",", "\n"));
+                    textView.setMovementMethod(new ScrollingMovementMethod());
+
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    lp.setMarginStart(30);
+                    textView.setBackgroundColor(Color.LTGRAY);
+                    textView.setLayoutParams(lp);
+                    textView.setPadding(40, 40, 40, 40);
+                    textView.setGravity(Gravity.CENTER_VERTICAL);
+                    textView.setTextColor(Color.parseColor("#110359"));
+                    textView.setTextSize(20);
+
+                    dialog.setView(textView);
+                }
 
             }
         });
