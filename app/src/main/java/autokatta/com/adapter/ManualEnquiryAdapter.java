@@ -53,8 +53,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mVehicleSubCategory = (TextView) profileView.findViewById(R.id.sub_category_str);
             mVehicleModel = (TextView) profileView.findViewById(R.id.model_str);
             mVehiclePrice = (TextView) profileView.findViewById(R.id.price_str);
-            mCustomerName = (TextView) profileView.findViewById(R.id.custname_str);
-            mCustomerContact = (TextView) profileView.findViewById(R.id.custcontact_str);
+            /*mCustomerName = (TextView) profileView.findViewById(R.id.custname_str);
+            mCustomerContact = (TextView) profileView.findViewById(R.id.custcontact_str);*/
             mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
             mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
             profileView.setOnClickListener(this);
@@ -83,8 +83,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mProductCategory = (TextView) profileView.findViewById(R.id.product_category_str);
             mProductType = (TextView) profileView.findViewById(R.id.product_type_str);
             mProductPrice = (TextView) profileView.findViewById(R.id.product_price_str);
-            mCustomerName = (TextView) profileView.findViewById(R.id.product_custname_str);
-            mCustomerContact = (TextView) profileView.findViewById(R.id.product_custcontact_str);
+            /*mCustomerName = (TextView) profileView.findViewById(R.id.product_custname_str);
+            mCustomerContact = (TextView) profileView.findViewById(R.id.product_custcontact_str);*/
             mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
             mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
             mUsedRelative = (RelativeLayout) profileView.findViewById(R.id.used_relative);
@@ -114,8 +114,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             mServiceCategory = (TextView) profileView.findViewById(R.id.category_str);
             mServiceType = (TextView) profileView.findViewById(R.id.type_str);
             mServicePrice = (TextView) profileView.findViewById(R.id.price_str);
-            mCustomerName = (TextView) profileView.findViewById(R.id.custname_str);
-            mCustomerContact = (TextView) profileView.findViewById(R.id.custcontact_str);
+            /*mCustomerName = (TextView) profileView.findViewById(R.id.custname_str);
+            mCustomerContact = (TextView) profileView.findViewById(R.id.custcontact_str);*/
             mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
             mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
             mUsedRelative = (RelativeLayout) profileView.findViewById(R.id.used_relative);
@@ -169,8 +169,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 vehicleDetails.mVehicleModel.setText(mItemList.get(position).getVehicleModel());
                 vehicleDetails.mVehiclePrice.setText(mItemList.get(position).getVehiclePrice());
                 vehicleDetails.mVehicleCount.setText(mItemList.get(position).getEnquiryCount());
-                vehicleDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
-                vehicleDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());
+                /*vehicleDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
+                vehicleDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());*/
                 vehicleDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
                 vehicleDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
@@ -201,8 +201,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 productDetails.mProductType.setText(mItemList.get(position).getProductType());
                 productDetails.mProductPrice.setText(mItemList.get(position).getProductPrice());
                 productDetails.mProductCount.setText(mItemList.get(position).getEnquiryCount());
-                productDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
-                productDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());
+                /*productDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
+                productDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());*/
                 productDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
                 productDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
@@ -233,8 +233,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 serviceDetails.mServiceType.setText(mItemList.get(position).getServiceType());
                 serviceDetails.mServicePrice.setText(mItemList.get(position).getServicePrice());
                 serviceDetails.mServiceCount.setText(mItemList.get(position).getEnquiryCount());
-                serviceDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
-                serviceDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());
+               /* serviceDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
+                serviceDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());*/
                 serviceDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
                 serviceDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
