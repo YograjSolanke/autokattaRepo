@@ -226,7 +226,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
             Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
-                    , "Manual Enquiry");
+                    , "EnquiredPersons Activity");
             error.printStackTrace();
         }
     }

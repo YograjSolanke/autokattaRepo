@@ -39,7 +39,6 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     RecyclerView mPersonRecyclerView;
     List<GetPersonDataResponse.Success> mList = new ArrayList<>();
     FrameLayout mFrameLayout;
-    private String strId, strKeyword;
     TextView mNoData;
     ConnectionDetector mConnectionDetector;
     private ProgressDialog dialog;
@@ -58,8 +57,6 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             @Override
             public void run() {
 
-                strId = getIntent().getExtras().getString("id");
-                strKeyword = getIntent().getExtras().getString("keyword");
 
                 mNoData = (TextView) findViewById(R.id.no_category);
 
@@ -95,7 +92,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getPersonData(strId, strKeyword);
+                        //getPersonData(strId, strKeyword);
                     }
                 });
 
@@ -105,7 +102,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
 
     @Override
     public void onRefresh() {
-        getPersonData(strId, strKeyword);
+        //getPersonData(strId, strKeyword);
     }
 
     /*
@@ -221,7 +218,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
-                    , "Manual Enquiry");
+                    , "EnquiredPersonsList Activity");
             error.printStackTrace();
         }
     }

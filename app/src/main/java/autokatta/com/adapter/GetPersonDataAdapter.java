@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.gsm.SmsManager;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.GetPersonDataResponse;
+import autokatta.com.view.EnquiredPersonsListActivity;
 
 /**
  * Created by ak-001 on 11/5/17.
@@ -39,6 +41,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
     static class PersonData extends RecyclerView.ViewHolder {
         TextView mPersonName, mContact, mAddress, mFollowUpDate, mDiscussion, mInvite;
         ImageView mProfilePic, mCallImg, mMailImage, mIsAuto;
+        CardView mCardView;
 
         PersonData(View itemView) {
             super(itemView);
@@ -52,6 +55,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             mMailImage = (ImageView) itemView.findViewById(R.id.mail_image);
             mIsAuto = (ImageView) itemView.findViewById(R.id.is_auto);
             mInvite = (TextView) itemView.findViewById(R.id.txtInvite);
+            mCardView = (CardView) itemView.findViewById(R.id.person_card_view);
         }
     }
 
@@ -111,6 +115,17 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             holder.mIsAuto.setVisibility(View.GONE);
             holder.mInvite.setVisibility(View.VISIBLE);
         }
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, EnquiredPersonsListActivity.class);
+                /*intent.putExtra("id", request.getVehicleId());
+                intent.putExtra("keyword", request.getVehicleInventory());*/
+                mActivity.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
