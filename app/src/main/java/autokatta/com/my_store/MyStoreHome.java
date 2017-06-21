@@ -34,6 +34,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.model.LikeUnlike;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
@@ -63,7 +64,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     String pretmrate = "";
     String preoverall = "";
     String isDealing = "";
-    String myContact;
+    String myContact, storeAdmins = "";
     Activity mActivity;
     String mOtherContact, mLoginContact, store_id, storeOtherContact, mFolllowstr, mLikestr, storeRating;
     String storeName = "", storeImage = "", storeCoverImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
@@ -222,6 +223,10 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.call:
+//                if(!storeAdmins.equals("")){
+//                    createCotactsList();
+//                }
+//                else
                 call();
                 break;
             case R.id.web:
@@ -251,9 +256,11 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         }
         if (response != null) {
             if (response.isSuccessful()) {
-                StoreResponse storeResponse = (StoreResponse) response.body();
-                mLinear.setVisibility(View.VISIBLE);
-                for (StoreResponse.Success success : storeResponse.getSuccess()) {
+
+                if (response.body() instanceof StoreResponse) {
+                    StoreResponse storeResponse = (StoreResponse) response.body();
+                    mLinear.setVisibility(View.VISIBLE);
+                    for (StoreResponse.Success success : storeResponse.getSuccess()) {
                     storeName = success.getName();
                     storeImage = success.getStoreImage();
                     storeOtherContact = success.getContact();
@@ -338,6 +345,21 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 } else {
                     mFollow.setVisibility(View.GONE);
                     mUnFollow.setVisibility(View.VISIBLE);
+                }
+                } else if (response.body() instanceof StoreOldAdminResponse) {
+                    StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
+                    if (!adminResponse.getSuccess().isEmpty()) {
+                        for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
+                            if (storeAdmins.equals(""))
+                                storeAdmins = success.getAdmin();
+                            else
+                                storeAdmins = storeAdmins + "," + success.getAdmin();
+                        }
+
+                        System.out.println("alreadyadmin=" + storeAdmins);
+
+                    }
+
                 }
 
             } else {
@@ -434,6 +456,24 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 CustomToast.customToast(getActivity(), "Store recommended");
             }
         }
+    }
+
+    //call list of admin contacts
+    public void createCotactsList() {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View convertView = inflater.inflate(R.layout.custom_store_rate_layout, null);
+        alertDialog.setView(convertView);
+        final AlertDialog alert = alertDialog.show();
+        alert.setTitle("Rate This Store");
+
+        convertView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
     }
 
     /*
@@ -636,6 +676,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     private void getOtherStore(String contact, String store_id) {
         dialog.show();
         mApiCall.getStoreData(contact, store_id);
+        mApiCall.StoreAdmin(store_id);
     }
 
     private void drawMap(Double storelattitude, Double storelongitude) {

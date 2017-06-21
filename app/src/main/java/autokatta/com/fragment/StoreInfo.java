@@ -26,6 +26,7 @@ import autokatta.com.enquiries.AllEnquiryTabActivity;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.MyStoreListActivity;
 import autokatta.com.view.StoreViewActivity;
@@ -45,9 +46,10 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     NestedScrollView scrollView;
     RelativeLayout mRel;
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen,
-            storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData;
+            storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData, adminContacts;
     ConnectionDetector mTestConnection;
     Activity mActivity;
+    String storeAdmins = "";
     public StoreInfo() {
         //empty constructor...
     }
@@ -63,6 +65,8 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreData(myContact, store_id);
+            mApiCall.StoreAdmin(store_id);
+
         } else {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //errorMessage(mActivity, getString(R.string.no_internet));
@@ -94,7 +98,9 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                StoreResponse storeResponse = (StoreResponse) response.body();
+
+                if (response.body() instanceof StoreResponse) {
+                    StoreResponse storeResponse = (StoreResponse) response.body();
                 if (!storeResponse.getSuccess().isEmpty()) {
 
                     for (StoreResponse.Success success : storeResponse.getSuccess()) {
@@ -116,6 +122,23 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                     }
                 } else {
 
+                }
+                } else if (response.body() instanceof StoreOldAdminResponse) {
+                    StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
+                    if (!adminResponse.getSuccess().isEmpty()) {
+                        storeAdmins = "";
+                        for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
+                            if (storeAdmins.equals(""))
+                                storeAdmins = success.getAdmin();
+                            else
+                                storeAdmins = storeAdmins + "," + success.getAdmin();
+                        }
+
+                        System.out.println("alreadyadmin=" + storeAdmins);
+                        adminContacts.setText(storeAdmins);
+                    } else {
+                        adminContacts.setText("No Data");
+                    }
                 }
             } else {
                 CustomToast.customToast(getActivity(),getString(R.string._404));
@@ -189,6 +212,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 storeWorkDays = (TextView) mAbout.findViewById(R.id.editworkingdays);
                 storeServiceOffered = (TextView) mAbout.findViewById(R.id.autoservices);
                 scrollView = (NestedScrollView) mAbout.findViewById(R.id.mainScroll);
+                adminContacts = (TextView) mAbout.findViewById(R.id.editAdminContact);
 
                 Bundle b = getArguments();
                 Store_id = b.getString("store_id");

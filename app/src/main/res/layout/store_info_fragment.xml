@@ -385,6 +385,35 @@
                 android:layout_below="@+id/linear12"
                 android:background="@color/black" />
 
+            <RelativeLayout
+                android:id="@+id/linear13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear12"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtAdminContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admin Contact"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editAdminContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtAdminContact"
+                    android:layout_marginTop="5dp"
+                    android:hint="admin contacts"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
