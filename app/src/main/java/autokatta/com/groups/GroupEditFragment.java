@@ -335,8 +335,9 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (str.equals("Success")) {
+            CustomToast.customToast(getActivity(),"Group Updated");
             //showMessage(getActivity(), "Group Updated");
-            //uploadImage(mediaPath);
+            uploadImage(mediaPath);
             MyGroupsFragment frag = new MyGroupsFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction mTransaction = fragmentManager.beginTransaction();
