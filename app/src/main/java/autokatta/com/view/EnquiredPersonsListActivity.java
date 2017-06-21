@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -34,14 +33,13 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetPersonDataResponse;
 import retrofit2.Response;
 
-public class EnquiredPersonsActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
+public class EnquiredPersonsListActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mPersonRecyclerView;
     List<GetPersonDataResponse.Success> mList = new ArrayList<>();
     FrameLayout mFrameLayout;
     private String strId, strKeyword;
-    LinearLayout filterLayout;
     TextView mNoData;
     ConnectionDetector mConnectionDetector;
     private ProgressDialog dialog;
@@ -49,13 +47,13 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enquired_persons);
+        setContentView(R.layout.activity_enquired_persons_list);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setTitle("Enquired Person's List");
+        setTitle("Personal Enquiries");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -65,16 +63,15 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
 
                 mNoData = (TextView) findViewById(R.id.no_category);
 
-                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
-                mPersonRecyclerView = (RecyclerView) findViewById(R.id.person_recycler_view);
-                mFrameLayout = (FrameLayout) findViewById(R.id.person_enquiry_frame);
-                filterLayout = (LinearLayout) findViewById(R.id.below);
-                filterLayout.setVisibility(View.GONE);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.personList_swipeRefreshLayout);
+                mPersonRecyclerView = (RecyclerView) findViewById(R.id.personList_recycler_view);
+                mFrameLayout = (FrameLayout) findViewById(R.id.personList_enquiry_frame);
 
-                dialog = new ProgressDialog(EnquiredPersonsActivity.this);
+
+                dialog = new ProgressDialog(EnquiredPersonsListActivity.this);
                 dialog.setMessage("Loading...");
 
-                mConnectionDetector = new ConnectionDetector(EnquiredPersonsActivity.this);
+                mConnectionDetector = new ConnectionDetector(EnquiredPersonsListActivity.this);
 
                 mPersonRecyclerView.setHasFixedSize(true);
 
@@ -87,7 +84,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 mPersonRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
 
-                mSwipeRefreshLayout.setOnRefreshListener(EnquiredPersonsActivity.this);
+                mSwipeRefreshLayout.setOnRefreshListener(EnquiredPersonsListActivity.this);
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
@@ -144,7 +141,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                         if (!mPersonDataResponse.getSuccess().isEmpty()) {
 
                             mNoData.setVisibility(View.GONE);
-                            filterLayout.setVisibility(View.VISIBLE);
                             for (GetPersonDataResponse.Success success : mPersonDataResponse.getSuccess()) {
                                 //success.setUsername(success.getUsername());
 
@@ -165,7 +161,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                         } else {
                             Snackbar.make(mFrameLayout, mPersonDataResponse.getError(), Snackbar.LENGTH_SHORT).show();
                             mNoData.setVisibility(View.VISIBLE);
-                            filterLayout.setVisibility(View.GONE);
                         }
                     }
                 }

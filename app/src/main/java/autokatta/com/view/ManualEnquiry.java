@@ -26,22 +26,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.GetPersonDataAdapter;
 import autokatta.com.adapter.ManualEnquiryAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.request.ManualEnquiryRequest;
-import autokatta.com.response.GetPersonDataResponse;
 import autokatta.com.response.ManualEnquiryResponse;
 import retrofit2.Response;
 
 public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, ItemClickListener {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerView mRecyclerView, mPersonRecyclerView;
+    RecyclerView mRecyclerView;
     List<ManualEnquiryRequest> mMyGroupsList = new ArrayList<>();
-    List<GetPersonDataResponse.Success> mList = new ArrayList<>();
     FrameLayout mFrameLayout;
 
     @Override
@@ -61,26 +58,15 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 //mPersonSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
 
                 mRecyclerView = (RecyclerView) findViewById(R.id.manual_recycler_view);
-                mPersonRecyclerView = (RecyclerView) findViewById(R.id.person_recycler_view);
 
                 mFrameLayout = (FrameLayout) findViewById(R.id.manual_enquiry);
                 mRecyclerView.setHasFixedSize(true);
-                mPersonRecyclerView.setHasFixedSize(true);
 
                 LinearLayoutManager mLinearLayout = new LinearLayoutManager(getApplicationContext());
                 mLinearLayout.setReverseLayout(true);
                 mLinearLayout.setStackFromEnd(true);
 
-                LinearLayoutManager mLinearLayout1 = new LinearLayoutManager(getApplicationContext());
-                mLinearLayout.setReverseLayout(true);
-                mLinearLayout.setStackFromEnd(true);
-
                 mRecyclerView.setLayoutManager(mLinearLayout);
-                mPersonRecyclerView.setLayoutManager(mLinearLayout1);
-
-                mPersonRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mPersonRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
-
                 mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
@@ -116,14 +102,6 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
     }
 
     /*
-    Get Person Data...
-     */
-    private void getPersonData(String id, String keyword) {
-        ApiCall mApiCall = new ApiCall(ManualEnquiry.this, this);
-        mApiCall.getPersonData(id, keyword);
-    }
-
-    /*
     Get Manual Data...
      */
     private void getManualData() {
@@ -148,7 +126,6 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             case android.R.id.home:
                 if (mRecyclerView.getVisibility() == View.GONE) {
                     mRecyclerView.setVisibility(View.VISIBLE);
-                    mPersonRecyclerView.setVisibility(View.GONE);
                     getManualData();
                 } else {
                     onBackPressed();
@@ -290,34 +267,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                                 .setDuration(4000).show();
                     }
                 }
-                /*Person's information */
-                else if (response.body() instanceof GetPersonDataResponse) {
-                    GetPersonDataResponse mPersonDataResponse = (GetPersonDataResponse) response.body();
-                    if (mPersonDataResponse.getSuccess() != null) {
-                        mRecyclerView.setVisibility(View.GONE);
-                        mPersonRecyclerView.setVisibility(View.VISIBLE);
-                        mList.clear();
-                        for (GetPersonDataResponse.Success success : mPersonDataResponse.getSuccess()) {
-                            //success.setUsername(success.getUsername());
 
-                            if (success.getUsername().equals("") || success.getUsername().isEmpty())
-                                success.setUsername("Unknown");
-                            else
-                                success.setUsername(success.getUsername());
-                            success.setContactNo(success.getContactNo());
-                            success.setCity(success.getCity());
-                            success.setProfilePic(success.getProfilePic());
-                            success.setNextFollowupDate(success.getNextFollowupDate());
-                            success.setIsPresent(success.getIsPresent());
-                            mList.add(success);
-                        }
-                        GetPersonDataAdapter adapter = new GetPersonDataAdapter(ManualEnquiry.this, mList);
-                        mPersonRecyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Snackbar.make(mFrameLayout, mPersonDataResponse.getError(), Snackbar.LENGTH_SHORT).show();
-                    }
-                }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
@@ -385,7 +335,13 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
     @Override
     public void onClick(View view, int position) {
         ManualEnquiryRequest request = mMyGroupsList.get(position);
-        getPersonData(request.getVehicleId(), request.getVehicleInventory());
+        //getPersonData(request.getVehicleId(), request.getVehicleInventory());
+
+        Intent intent = new Intent(ManualEnquiry.this, EnquiredPersonsActivity.class);
+        intent.putExtra("id", request.getVehicleId());
+        intent.putExtra("keyword", request.getVehicleInventory());
+        startActivity(intent);
+
         Log.i("dsfasd", "->" + request.getVehicleInventory());
         Log.i("dsfaascssd", "->" + request.getVehicleId());
     }

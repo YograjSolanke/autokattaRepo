@@ -569,7 +569,8 @@
             android:label="@string/title_activity_manual_enquiry_vehicle_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".search.SearchDemo" />
-        <activity android:name=".view.EnquiredPersonsActivity"></activity>
+        <activity android:name=".view.EnquiredPersonsActivity" />
+        <activity android:name=".view.EnquiredPersonsListActivity"></activity>
     </application>
 
 </manifest>

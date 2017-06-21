@@ -86,21 +86,6 @@
                 android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <!--<android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/person_swipeRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_padding"
-            android:visibility="gone">-->
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/person_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/below"
-            android:scrollbars="vertical"
-            android:visibility="gone" />
-
     </RelativeLayout>
 
 </FrameLayout>

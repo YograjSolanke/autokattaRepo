@@ -173,6 +173,21 @@
             android:textColor="@color/text_color" />
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="@dimen/card_margin"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_view" />
+    </RelativeLayout>
+
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
