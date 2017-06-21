@@ -137,7 +137,6 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
                         success.setId(success.getId());
                         success.setName(success.getName());
                         success.setImages(success.getImages());
-                        success.setPrice(success.getPrice());
                         success.setVehicleId(success.getVehicleId());
                         success.setCategory(success.getCategory());
                         success.setManufacturer(success.getManufacturer());

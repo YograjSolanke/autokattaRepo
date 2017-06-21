@@ -3,7 +3,9 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="#efefef">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -23,6 +25,7 @@
                 android:layout_height="80dp"
                 android:padding="5dp"
                 android:id="@+id/profile"
+                android:src="@drawable/profile"
                 android:contentDescription="@string/app_name" />
 
             <TextView

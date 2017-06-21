@@ -71,17 +71,38 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
                 b.putString("product_id", mItemList.get(getAdapterPosition()).getProductId());
                 b.putString("service_id", "");
                 b.putString("vehicle_id", "");
+                b.putString("keyword", "Product");
+                b.putString("title", mItemList.get(getAdapterPosition()).getProductName());
+                b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
+                b.putString("category", "");
+                b.putString("brand", "");
+                b.putString("model", "");
+                b.putString("image", mItemList.get(getAdapterPosition()).getImages());
             }
             if (mKeyword.getText().toString().equals("Service")) {
                 b.putString("product_id", "");
                 b.putString("service_id", mItemList.get(getAdapterPosition()).getId());
                 b.putString("vehicle_id", "");
+                b.putString("keyword", "Service");
+                b.putString("title", mItemList.get(getAdapterPosition()).getName());
+                b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
+                b.putString("category", "");
+                b.putString("brand", "");
+                b.putString("model", "");
+                b.putString("image", mItemList.get(getAdapterPosition()).getImages());
             }
 
             if (mKeyword.getText().toString().equals("Vehicle")) {
                 b.putString("product_id", "");
                 b.putString("service_id", "");
                 b.putString("vehicle_id", mItemList.get(getAdapterPosition()).getVehicleId());
+                b.putString("keyword", "Vehicle");
+                b.putString("title", mItemList.get(getAdapterPosition()).getTitle());
+                b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
+                b.putString("category", mItemList.get(getAdapterPosition()).getCategory());
+                b.putString("brand", mItemList.get(getAdapterPosition()).getManufacturer());
+                b.putString("model", mItemList.get(getAdapterPosition()).getModel());
+                b.putString("image", mItemList.get(getAdapterPosition()).getImage());
             }
 
             BussinessMsgSenders obj = new BussinessMsgSenders();

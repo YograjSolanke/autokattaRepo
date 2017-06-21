@@ -5,11 +5,29 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <RelativeLayout
+        android:id="@+id/MainRel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/business_chat_module" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/MainRel"
+        android:id="@+id/textlist"
+        android:text="List of Message Senders"
+        android:textStyle="bold" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutBussinessChatmsglist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:layout_below="@+id/textlist"
+        android:layout_marginTop="10dp">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_viewmsglist"
         android:scrollbars="vertical"

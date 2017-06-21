@@ -13,6 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -26,6 +32,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastReceivedResponse;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -41,6 +48,13 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
     BussinessMsgSendersAdapter mMsgReplyAdapter;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    TextView Title, Category, Brand, Model, Keyword, price;
+    RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel;
+    String vehi_img_url = "http://autokatta.com/mobile/uploads/";
+    String prduct_img_url = "http://autokatta.com/mobile/Product_pics/";
+    String service_img_url = "http://autokatta.com/mobile/Service_pics/";
+    String fullpath = "";
+    ImageView Image;
     ApiCall mApiCall;
     List<BroadcastReceivedResponse.Success> mSuccesses = new ArrayList<>();
     @Nullable
@@ -53,6 +67,22 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
         mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_viewmsglist);
         mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayoutBussinessChatmsglist);
+
+
+        Keyword = (TextView) root.findViewById(R.id.keyword);
+        Title = (TextView) root.findViewById(R.id.settitle);
+        Category = (TextView) root.findViewById(R.id.setcategory);
+        Brand = (TextView) root.findViewById(R.id.setbrand);
+        Model = (TextView) root.findViewById(R.id.setmodel);
+        Image = (ImageView) root.findViewById(R.id.image);
+        price = (TextView) root.findViewById(R.id.setprice);
+        relCategory = (RelativeLayout) root.findViewById(R.id.relative2);
+        relBrand = (RelativeLayout) root.findViewById(R.id.relative3);
+        relModel = (RelativeLayout) root.findViewById(R.id.relative4);
+        relPrice = (RelativeLayout) root.findViewById(R.id.relative5);
+        MainRel = (RelativeLayout) root.findViewById(R.id.MainRel);
+
+
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
@@ -80,6 +110,60 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     product_id = b.getString("product_id");
                     service_id = b.getString("service_id");
                     vehicle_id = b.getString("vehicle_id");
+                    Keyword.setText(b.getString("keyword"));
+                    Title.setText(b.getString("title"));
+                    price.setText(b.getString("price"));
+                    Category.setText(b.getString("category"));
+                    Brand.setText(b.getString("brand"));
+                    Model.setText(b.getString("model"));
+                    String image = b.getString("image");
+
+                    if (b.getString("keyword").equalsIgnoreCase("Product")) {
+                        relCategory.setVisibility(View.GONE);
+                        relBrand.setVisibility(View.GONE);
+                        relModel.setVisibility(View.GONE);
+                        if (!image.equals("") && !image.equals("null")) {
+                            fullpath = prduct_img_url + image;
+                            fullpath = fullpath.replaceAll(" ", "%20");
+                            Glide.with(getActivity())
+                                    .load(fullpath)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                    .placeholder(R.drawable.logo)
+                                    .into(Image);
+                        } else {
+                            Image.setImageResource(R.drawable.logo);
+                        }
+                    } else if (b.getString("keyword").equalsIgnoreCase("Service")) {
+                        relCategory.setVisibility(View.GONE);
+                        relBrand.setVisibility(View.GONE);
+                        relModel.setVisibility(View.GONE);
+                        if (!image.equals("") && !image.equals("null")) {
+                            fullpath = service_img_url + image;
+                            fullpath = fullpath.replaceAll(" ", "%20");
+                            Glide.with(getActivity())
+                                    .load(fullpath)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                    .placeholder(R.drawable.logo)
+                                    .into(Image);
+                        } else {
+                            Image.setImageResource(R.drawable.logo);
+                        }
+                    } else if (b.getString("keyword").equalsIgnoreCase("Vehicle")) {
+                        if (!image.equals("") && !image.equals("null")) {
+                            fullpath = vehi_img_url + image;
+                            fullpath = fullpath.replaceAll(" ", "%20");
+                            Glide.with(getActivity())
+                                    .load(fullpath)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                    .placeholder(R.drawable.logo)
+                                    .into(Image);
+                        } else {
+                            Image.setImageResource(R.drawable.logo);
+                        }
+                    }
 
                    mApiCall.getBroadcastReceivers(mContact,product_id,service_id,vehicle_id);
                 } catch (Exception e) {
