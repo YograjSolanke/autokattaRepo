@@ -270,6 +270,7 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
 
 
         final Dialog openDialog = new Dialog(getActivity());
+        openDialog.setCancelable(false);
         openDialog.setContentView(R.layout.custom_store);
         openDialog.setTitle("Custom Dialog Box");
 

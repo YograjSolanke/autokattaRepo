@@ -111,6 +111,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
         try {
             if (str != null) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setCancelable(false);
                 alertDialog.setTitle("Upload Vehicle");
                 alertDialog.setMessage("You already uploaded" + str + " vehicles. you want to upload another vehicle?");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);

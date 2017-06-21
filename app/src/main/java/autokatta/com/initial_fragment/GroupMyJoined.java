@@ -25,7 +25,7 @@ public class GroupMyJoined extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mGroupMyJoined = inflater.inflate(R.layout.fragment_group_my_joined, container, false);
-
+        getActivity().setTitle("My Groups");
         ViewPager mviewPager = (ViewPager) mGroupMyJoined.findViewById(R.id.activity_groups_tab_viewpager);
         if (mviewPager != null) {
             setupViewPager(mviewPager);

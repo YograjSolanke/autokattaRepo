@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +33,7 @@ import java.util.Random;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.initial_fragment.GroupMyJoined;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
@@ -338,10 +337,16 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             CustomToast.customToast(getActivity(),"Group Updated");
             //showMessage(getActivity(), "Group Updated");
             uploadImage(mediaPath);
-            MyGroupsFragment frag = new MyGroupsFragment();
+           /* MyGroupsFragment frag = new MyGroupsFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction mTransaction = fragmentManager.beginTransaction();
-            mTransaction.replace(R.id.group_container, frag).commit();
+            mTransaction.replace(R.id.group_container, frag).commit();*/
+
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.group_container, new GroupMyJoined())
+                    .commit();
+
         } else if (str.equals("ProfileUpdated")) {
             try {
                 Glide.with(getActivity())

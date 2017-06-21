@@ -273,6 +273,7 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
         View convertView = inflater.inflate(R.layout.custom_store, null);
         alertDialog.setView(convertView);
         final AlertDialog alert = alertDialog.show();
+        alert.setCancelable(false);
         alertDialog.setTitle("Service Categories");
         ListView lvcat = (ListView) convertView.findViewById(R.id.listview1);
 

@@ -104,6 +104,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         holder.mGroupTitleID.setText(mItemList.get(position).getTitle());
         holder.mEditMemberCount.setText(String.valueOf(mItemList.get(position).getGroupCount()));
         holder.mEditVehicleCount.setText(String.valueOf(mItemList.get(position).getVehicleCount()));
+
         holder.mGroupEdit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
