@@ -313,17 +313,10 @@ public class  UserProfile extends AppCompatActivity implements RequestNotifier, 
                 break;
         }
     }
-    /*@Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_autokatta_main, menu);
-        mSearchView = (SearchView) menu.findItem(R.id.action_searchs).getActionView();
-        *//*mSearchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setupSearchView();
-            }
-        });*//*
+        getMenuInflater().inflate(R.menu.profile_edit, menu);
 
         return true;
     }*/
