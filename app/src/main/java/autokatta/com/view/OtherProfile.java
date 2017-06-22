@@ -130,7 +130,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
         adapter.addFragment(mGroupsFrag, "GROUP");
         adapter.addFragment(mEventFrag, "EVENT");
-        adapter.addFragment(mKattaFrag, "KATTA");
+        adapter.addFragment(mKattaFrag, "WALL");
         adapter.addFragment(mFollowFrag, "FOLLOW");
         viewPager.setAdapter(adapter);
     }
