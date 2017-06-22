@@ -172,6 +172,43 @@ public class GetPersonDataResponse {
         @Expose
         private String isPresent;
 
+        @SerializedName("lastEnquiryDate")
+        @Expose
+        private String lastEnquiryDate;
+
+        @SerializedName("custEnquiryStatus")
+        @Expose
+        private String custEnquiryStatus;
+
+        @SerializedName("lastDiscussion")
+        @Expose
+        private String lastDiscussion;
+
+        public String getLastDiscussion() {
+            return lastDiscussion;
+        }
+
+        public void setLastDiscussion(String lastDiscussion) {
+            this.lastDiscussion = lastDiscussion;
+        }
+
+        public String getCustEnquiryStatus() {
+            return custEnquiryStatus;
+        }
+
+        public void setCustEnquiryStatus(String custEnquiryStatus) {
+            this.custEnquiryStatus = custEnquiryStatus;
+        }
+
+        public String getLastEnquiryDate() {
+            return lastEnquiryDate;
+        }
+
+        public void setLastEnquiryDate(String lastEnquiryDate) {
+            this.lastEnquiryDate = lastEnquiryDate;
+        }
+
+
         public String getId() {
             return id;
         }

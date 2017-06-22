@@ -99,11 +99,81 @@
             </RelativeLayout>
         </LinearLayout>
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/Enquiredperson_card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/below"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginTop="@dimen/card_margin"
+            android:foreground="?attr/selectableItemBackground">
+
+            <LinearLayout
+                android:id="@+id/belowDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:weightSum="1">
+
+                <RelativeLayout
+                    android:id="@+id/relDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/typetxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:padding="5dp"
+                        android:text="Type :"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/typetxt"
+                        android:contentDescription="@string/app_name"
+                        android:padding="5dp"
+                        android:text="-"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/titletxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/typetxt"
+                        android:contentDescription="@string/app_name"
+                        android:padding="5dp"
+                        android:text="Title :"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/type"
+                        android:layout_toEndOf="@+id/titletxt"
+                        android:contentDescription="@string/app_name"
+                        android:padding="5dp"
+                        android:text="-"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/person_swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/below"
+            android:layout_below="@+id/Enquiredperson_card_view"
             android:visibility="visible">
 
             <android.support.v7.widget.RecyclerView

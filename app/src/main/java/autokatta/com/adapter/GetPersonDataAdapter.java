@@ -31,15 +31,19 @@ import autokatta.com.view.EnquiredPersonsListActivity;
 public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdapter.PersonData> {
     Activity mActivity;
     List<GetPersonDataResponse.Success> list = new ArrayList<>();
+    private String strId, strKeyword, strTitle;
 
-    public GetPersonDataAdapter(Activity mActivity, List<GetPersonDataResponse.Success> list) {
+    public GetPersonDataAdapter(Activity mActivity, List<GetPersonDataResponse.Success> list, String strId, String strKeyword, String strTitle) {
         this.mActivity = mActivity;
         this.list = list;
+        this.strId = strId;
+        this.strKeyword = strKeyword;
+        this.strTitle = strTitle;
     }
 
 
     static class PersonData extends RecyclerView.ViewHolder {
-        TextView mPersonName, mContact, mAddress, mFollowUpDate, mDiscussion, mInvite;
+        TextView mPersonName, mContact, mAddress, mFollowUpDate, mDiscussion, mInvite, mLastEnquiry, mEnquiryStatus;
         ImageView mProfilePic, mCallImg, mMailImage, mIsAuto;
         CardView mCardView;
 
@@ -55,6 +59,8 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
             mMailImage = (ImageView) itemView.findViewById(R.id.mail_image);
             mIsAuto = (ImageView) itemView.findViewById(R.id.is_auto);
             mInvite = (TextView) itemView.findViewById(R.id.txtInvite);
+            mLastEnquiry = (TextView) itemView.findViewById(R.id.last_enquiry);
+            mEnquiryStatus = (TextView) itemView.findViewById(R.id.enquiryStatus);
             mCardView = (CardView) itemView.findViewById(R.id.person_card_view);
         }
     }
@@ -74,6 +80,9 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         holder.mContact.setText(list.get(position).getContactNo());
         holder.mAddress.setText(list.get(position).getCity());
         holder.mFollowUpDate.setText(list.get(position).getNextFollowupDate());
+        holder.mLastEnquiry.setText(list.get(position).getLastEnquiryDate());
+        holder.mEnquiryStatus.setText(list.get(position).getCustEnquiryStatus());
+        holder.mDiscussion.setText(list.get(position).getLastDiscussion());
 
         if (list.get(position).getProfilePic().equals("") || list.get(position).getProfilePic().equals("null")
                 || list.get(position).getProfilePic().equals(null)) {
@@ -119,9 +128,12 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(mActivity, EnquiredPersonsListActivity.class);
-                /*intent.putExtra("id", request.getVehicleId());
-                intent.putExtra("keyword", request.getVehicleInventory());*/
+                intent.putExtra("id", strId);
+                intent.putExtra("keyword", strKeyword);
+                intent.putExtra("name", strTitle);
+
                 mActivity.startActivity(intent);
             }
         });

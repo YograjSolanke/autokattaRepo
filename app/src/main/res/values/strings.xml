@@ -110,7 +110,9 @@
     <string name="completeAddress_manual">Complete Address<font color='#FF0000'>\u002A</font></string>
     <string name="completeAddress">Complete Address</string>
     <string name="discussion">Discussion</string>
+    <string name="discussion1">Discussion<font color='#FF0000'>\u002A</font></string>
     <string name="followdate">Follow-up Date</string>
+    <string name="followdate1">Follow-up Date<font color='#FF0000'>\u002A</font></string>
     <string name="date">Date</string>
     <string name="time">Time</string>
 

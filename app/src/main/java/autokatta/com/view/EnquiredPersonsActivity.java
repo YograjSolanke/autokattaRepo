@@ -40,9 +40,9 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     RecyclerView mPersonRecyclerView;
     List<GetPersonDataResponse.Success> mList = new ArrayList<>();
     FrameLayout mFrameLayout;
-    private String strId, strKeyword;
+    private String strId, strKeyword, strTitle;
     LinearLayout filterLayout;
-    TextView mNoData;
+    TextView mNoData, mTitletxt, mTypetxt;
     ConnectionDetector mConnectionDetector;
     private ProgressDialog dialog;
 
@@ -62,14 +62,20 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
 
                 strId = getIntent().getExtras().getString("id");
                 strKeyword = getIntent().getExtras().getString("keyword");
+                strTitle = getIntent().getExtras().getString("name");
 
                 mNoData = (TextView) findViewById(R.id.no_category);
 
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
                 mPersonRecyclerView = (RecyclerView) findViewById(R.id.person_recycler_view);
                 mFrameLayout = (FrameLayout) findViewById(R.id.person_enquiry_frame);
+                mTypetxt = (TextView) findViewById(R.id.type);
+                mTitletxt = (TextView) findViewById(R.id.title);
                 filterLayout = (LinearLayout) findViewById(R.id.below);
                 filterLayout.setVisibility(View.GONE);
+
+                mTypetxt.setText(strKeyword);
+                mTitletxt.setText(strTitle);
 
                 dialog = new ProgressDialog(EnquiredPersonsActivity.this);
                 dialog.setMessage("Loading...");
@@ -102,6 +108,13 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                     }
                 });
 
+            }
+        });
+
+        filterLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomToast.customToast(getApplicationContext(), "Coming soon....");
             }
         });
     }
@@ -157,9 +170,12 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                                 success.setProfilePic(success.getProfilePic());
                                 success.setNextFollowupDate(success.getNextFollowupDate());
                                 success.setIsPresent(success.getIsPresent());
+                                success.setLastEnquiryDate(success.getLastEnquiryDate());
+                                success.setCustEnquiryStatus(success.getCustEnquiryStatus());
+                                success.setLastDiscussion(success.getLastDiscussion());
                                 mList.add(success);
                             }
-                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList);
+                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle);
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {

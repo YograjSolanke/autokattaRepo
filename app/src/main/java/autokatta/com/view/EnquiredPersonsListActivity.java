@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,11 +12,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -25,8 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.GetPersonDataAdapter;
+import autokatta.com.adapter.GetPersonsEnquiriesAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -38,10 +47,12 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mPersonRecyclerView;
     List<GetPersonDataResponse.Success> mList = new ArrayList<>();
-    FrameLayout mFrameLayout;
-    TextView mNoData;
+    RelativeLayout mRelativeLayout;
+    private String strId, strKeyword, strTitle;
+    TextView mNoData, mTitletxt, mTypetxt;
     ConnectionDetector mConnectionDetector;
     private ProgressDialog dialog;
+    FloatingActionButton fabAddNewEnquiry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +68,21 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             @Override
             public void run() {
 
+                strId = getIntent().getExtras().getString("id");
+                strKeyword = getIntent().getExtras().getString("keyword");
+                strTitle = getIntent().getExtras().getString("name");
 
                 mNoData = (TextView) findViewById(R.id.no_category);
 
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.personList_swipeRefreshLayout);
                 mPersonRecyclerView = (RecyclerView) findViewById(R.id.personList_recycler_view);
-                mFrameLayout = (FrameLayout) findViewById(R.id.personList_enquiry_frame);
+                mRelativeLayout = (RelativeLayout) findViewById(R.id.personList_enquiry_frame);
+                mTypetxt = (TextView) findViewById(R.id.type);
+                mTitletxt = (TextView) findViewById(R.id.title);
+                fabAddNewEnquiry = (FloatingActionButton) findViewById(R.id.fabAddNewEnquiry);
 
+                mTypetxt.setText(strKeyword);
+                mTitletxt.setText(strTitle);
 
                 dialog = new ProgressDialog(EnquiredPersonsListActivity.this);
                 dialog.setMessage("Loading...");
@@ -92,17 +111,40 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        //getPersonData(strId, strKeyword);
+                        getPersonData(strId, strKeyword);
                     }
                 });
 
+            }
+        });
+
+        fabAddNewEnquiry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                newEnquiryPopUp();
+            }
+        });
+
+        mPersonRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0) {
+                    // Scrolling up
+                    fabAddNewEnquiry.hide(true);
+
+                } else {
+                    // Scrolling down
+                    fabAddNewEnquiry.show(true);
+                }
             }
         });
     }
 
     @Override
     public void onRefresh() {
-        //getPersonData(strId, strKeyword);
+        getPersonData(strId, strKeyword);
     }
 
     /*
@@ -152,22 +194,22 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                                 success.setIsPresent(success.getIsPresent());
                                 mList.add(success);
                             }
-                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList);
+                            GetPersonsEnquiriesAdapter adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle);
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {
-                            Snackbar.make(mFrameLayout, mPersonDataResponse.getError(), Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(mRelativeLayout, mPersonDataResponse.getError(), Snackbar.LENGTH_SHORT).show();
                             mNoData.setVisibility(View.VISIBLE);
                         }
                     }
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -177,14 +219,14 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(mFrameLayout, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRelativeLayout, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mFrameLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+            Snackbar snackbar = Snackbar.make(mRelativeLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -200,7 +242,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             snackbar.show();
         } else if (error instanceof UnknownHostException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(mFrameLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+            Snackbar snackbar = Snackbar.make(mRelativeLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -215,7 +257,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             textView.setTextColor(Color.YELLOW);
             snackbar.show();
         } else if (error instanceof IOException) {
-            Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         } else {
             Log.i("Check Class-"
                     , "EnquiredPersonsList Activity");
@@ -226,6 +268,67 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     @Override
     public void notifyString(String str) {
 
+    }
+
+
+    public void newEnquiryPopUp() {
+        final Dialog openDialog = new Dialog(EnquiredPersonsListActivity.this);
+        openDialog.setContentView(R.layout.add_new_enquiry);
+
+
+        final EditText edtDiscussion = (EditText) openDialog.findViewById(R.id.edtDiscussion);
+        final Spinner spnStatus = (Spinner) openDialog.findViewById(R.id.spnStatus);
+        final EditText edtDate = (EditText) openDialog.findViewById(R.id.edtDate);
+
+        Button addEnquiry = (Button) openDialog.findViewById(R.id.btnSend);
+
+        /*titleText.setText(mMainList.get(holder.getAdapterPosition()).getTitle() + " of Category "
+                + mMainList.get(holder.getAdapterPosition()).getCategory());*/
+
+        edtDate.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int action = event.getAction();
+                if (action == MotionEvent.ACTION_DOWN) {
+                    edtDate.setInputType(InputType.TYPE_NULL);
+                    edtDate.setError(null);
+                    new SetMyDateAndTime("date", edtDate, EnquiredPersonsListActivity.this);
+                }
+                return false;
+            }
+        });
+        addEnquiry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                String strNewDiscussion = "", strNewFollowDate = "", strNewStatus = "";
+
+                strNewDiscussion = edtDiscussion.getText().toString();
+                strNewFollowDate = edtDate.getText().toString();
+                int i = spnStatus.getSelectedItemPosition();
+                //if (i!=0)
+
+                if (strNewDiscussion.equals("")) {
+                    edtDiscussion.setError("Enter Discussion");
+                    edtDiscussion.requestFocus();
+                } else if (!strNewDiscussion.equals("") && strNewDiscussion.startsWith(" ") && strNewDiscussion.endsWith(" ")) {
+                    edtDiscussion.setError("Enter Valid Discussion");
+                    edtDiscussion.requestFocus();
+                } else if (strNewFollowDate.equals("") || strNewFollowDate.startsWith(" ")) {
+                    edtDate.setError("Enter Date");
+                    edtDate.requestFocus();
+                } else if (spnStatus.getSelectedItemPosition() == 0) {
+                    CustomToast.customToast(getApplicationContext(), "Please provide status");
+                    spnStatus.requestFocus();
+                } else {
+                    strNewStatus = spnStatus.getSelectedItem().toString();
+                    Log.i("Result", "-" + strNewDiscussion + "\n" + strNewFollowDate + "\n" + strNewStatus);
+                    openDialog.dismiss();
+                }
+            }
+        });
+        openDialog.show();
     }
 
 

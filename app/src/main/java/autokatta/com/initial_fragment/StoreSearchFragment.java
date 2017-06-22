@@ -1,5 +1,6 @@
 package autokatta.com.initial_fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -7,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -41,6 +41,7 @@ import autokatta.com.response.CategoryResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
 /**
  * Created by ak-004 on 6/4/17.
@@ -113,10 +114,8 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.getContact:
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                // BoD con't: CONTENT_TYPE instead of CONTENT_ITEM_TYPE
-                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-                startActivityForResult(intent, 1);
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
 
             case R.id.search:
@@ -163,36 +162,38 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
         To get contacts from mobile
      */
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null) {
-            Uri uri = data.getData();
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+        switch (reqCode) {
+            case (REQUEST_CODE):
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+                        Uri contactData = data.getData();
+                        Cursor c = getActivity().getContentResolver().query(contactData, null, null, null, null);
+                        if (c.moveToFirst()) {
+                            String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                            String hasNumber = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                            String num = "";
+                            if (Integer.valueOf(hasNumber) == 1) {
+                                Cursor numbers = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+                                while (numbers.moveToNext()) {
+                                    num = numbers.getString(numbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                    num = num.replaceAll("-", "");
+                                    num = num.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
 
-            if (uri != null) {
-                Cursor c = null;
-                try {
-                    c = getActivity().getContentResolver().query(uri, new String[]{
-                                    ContactsContract.CommonDataKinds.Phone.NUMBER,
-                                    ContactsContract.CommonDataKinds.Phone.TYPE},
-                            null, null, null);
-
-                    if (c != null && c.moveToFirst()) {
-                        String number = c.getString(0);
-                        int type = c.getInt(1);
-
-                        number = number.replaceAll("-", "");
-                        number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
-
-                        if (number.length() > 10)
-                            number = number.substring(number.length() - 10);
-
-                        showSelectedNumber(type, number);
-                    }
-                } finally {
-                    if (c != null) {
-                        c.close();
+                                    if (num.length() > 10)
+                                        num = num.substring(num.length() - 10);
+                                    //Toast.makeText(getActivity(), "Number=" + num, Toast.LENGTH_LONG).show();
+                                    edtContactSearch.setText(num);
+                                }
+                            }
+                            c.close();
+                        }
+                        break;
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-            }
         }
     }
 

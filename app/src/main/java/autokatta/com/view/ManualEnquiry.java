@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ import autokatta.com.adapter.ManualEnquiryAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.request.ManualEnquiryRequest;
 import autokatta.com.response.ManualEnquiryResponse;
 import retrofit2.Response;
@@ -40,6 +42,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
     RecyclerView mRecyclerView;
     List<ManualEnquiryRequest> mMyGroupsList = new ArrayList<>();
     FrameLayout mFrameLayout;
+    LinearLayout filterLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,8 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
                 mFrameLayout = (FrameLayout) findViewById(R.id.manual_enquiry);
                 mRecyclerView.setHasFixedSize(true);
+
+                filterLayout = (LinearLayout) findViewById(R.id.below);
 
                 LinearLayoutManager mLinearLayout = new LinearLayoutManager(getApplicationContext());
                 mLinearLayout.setReverseLayout(true);
@@ -97,6 +102,13 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         //getPersonData();
                     }
                 });*/
+            }
+        });
+
+        filterLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomToast.customToast(getApplicationContext(), "Coming soon....");
             }
         });
     }
@@ -340,6 +352,17 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         Intent intent = new Intent(ManualEnquiry.this, EnquiredPersonsActivity.class);
         intent.putExtra("id", request.getVehicleId());
         intent.putExtra("keyword", request.getVehicleInventory());
+        switch (request.getVehicleInventory()) {
+            case "Products":
+                intent.putExtra("name", request.getProductName());
+                break;
+            case "Services":
+                intent.putExtra("name", request.getServiceName());
+                break;
+            case "Used Vehicle":
+                intent.putExtra("name", request.getVehicleName());
+                break;
+        }
         startActivity(intent);
 
         Log.i("dsfasd", "->" + request.getVehicleInventory());
