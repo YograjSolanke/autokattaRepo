@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -63,7 +64,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
     HashSet<String> categoryHashSet;
     CheckedCategoryAdapter categoryAdapter;
     ArrayList<String> finalcategory = new ArrayList<>();
-
+    RelativeLayout relativeFilter;
     int counter = 0;
 
 
@@ -91,6 +92,8 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
                 //titleText = (TextView) mService.findViewById(R.id.titleText);
                 mNoData = (TextView) mService.findViewById(R.id.no_category);
                 filterImg = (ImageView) mService.findViewById(R.id.filterimg);
+                relativeFilter = (RelativeLayout) mService.findViewById(R.id.rel);
+                relativeFilter.setVisibility(View.GONE);
                 mNoData.setVisibility(View.GONE);
                 //titleText.setText("Services");
                 mRecyclerView.setHasFixedSize(true);
@@ -114,6 +117,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
         filterImg.setOnClickListener(this);
+
     }
 
     @Override
@@ -189,26 +193,26 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
                         success.setSrate3(success.getSrate3());
                         serviceList.add(success);
 
-
-                        if (success.getServicecategory().trim().contains(",")) {
-                            String arr[] = success.getServicecategory().trim().split(",");
-                            for (int l = 0; l < arr.length; l++) {
-                                String part = arr[l].trim();
-                                if (!part.equals(" ") && !part.equals(""))
-                                    categoryList.add(part);
-                            }
-                        } else {
-                            categoryList.add(success.getServicecategory().trim());
-                        }
+//filter code commented
+//                        if (success.getServicecategory().trim().contains(",")) {
+//                            String arr[] = success.getServicecategory().trim().split(",");
+//                            for (int l = 0; l < arr.length; l++) {
+//                                String part = arr[l].trim();
+//                                if (!part.equals(" ") && !part.equals(""))
+//                                    categoryList.add(part);
+//                            }
+//                        } else {
+//                            categoryList.add(success.getServicecategory().trim());
+//                        }
                     }
-
-
-                    categoryHashSet = new HashSet<>(categoryList);
-                    filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
+//
+//
+//                    categoryHashSet = new HashSet<>(categoryList);
+//                    filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
                     mSwipeRefreshLayout.setRefreshing(false);
-//                    adapter = new StoreServiceAdapter(getActivity(), serviceList, Sharedcontact, storeContact);
-//                    mRecyclerView.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
+                    adapter = new StoreServiceAdapter(getActivity(), serviceList, Sharedcontact, storeContact);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);

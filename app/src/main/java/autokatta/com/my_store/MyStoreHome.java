@@ -3,6 +3,7 @@ package autokatta.com.my_store;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -223,11 +224,37 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.call:
-//                if(!storeAdmins.equals("")){
-//                    createCotactsList();
-//                }
-//                else
-                call();
+                if (!storeAdmins.equals("")) {
+                    // createCotactsList();
+                    final String[] items;
+                    // @Here are the list of items to be shown in the list
+                    if (storeAdmins.contains(",")) {
+                        storeAdmins = storeAdmins + "," + mOtherContact + "-" + "owner";
+                        items = storeAdmins.split(",");
+
+                    } else {
+                        items = new String[]{storeAdmins, mOtherContact + "-" + "Owner"};
+
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Make your selection");
+                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+
+                            // will toast your selection
+                            //   showToast("Name: " + items[item]);
+                            String[] arr = items[item].split("-");
+                            call(arr[0]);
+
+
+                            dialog.dismiss();
+
+                        }
+                    }).show();
+
+                } else
+                    call(mOtherContact);
                 break;
             case R.id.web:
                 String website = mWebSite.getText().toString().trim();
@@ -239,8 +266,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     /*
     Call Intent...
      */
-    private void call() {
-        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mOtherContact));
+    private void call(String contact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
         System.out.println("calling started");
         try {
             startActivity(in);

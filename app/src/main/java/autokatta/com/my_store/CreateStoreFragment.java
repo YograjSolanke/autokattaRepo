@@ -857,6 +857,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
+                        getActivity().finish();
 
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));

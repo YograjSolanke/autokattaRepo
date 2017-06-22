@@ -35,6 +35,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.Db_AutokattaContactResponse;
 import autokatta.com.response.StoreOldAdminResponse;
+import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
 
 import static autokatta.com.database.DbConstants.userName;
@@ -296,11 +297,12 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                 b.putString("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
-                    /*ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    getActivity().finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent intent = new Intent(getActivity(), StoreViewActivity.class);
                     intent.putExtras(b);
-                    getActivity().startActivity(intent, options.toBundle());*/
-                    getActivity().finish();
+                    getActivity().startActivity(intent, options.toBundle());
+
                 } else {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);

@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -49,6 +50,7 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
 
     View mProduct;
     ImageView filterImg;
+    RelativeLayout relativeFilter;
     String Sharedcontact, storeContact;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
@@ -86,6 +88,8 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
                 Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mNoData = (TextView) mProduct.findViewById(R.id.no_category);
                 filterImg = (ImageView) mProduct.findViewById(R.id.filterimg);
+                relativeFilter = (RelativeLayout) mProduct.findViewById(R.id.rel);
+                relativeFilter.setVisibility(View.GONE);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mProduct.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
                 mRecyclerView.setHasFixedSize(true);
@@ -109,6 +113,7 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
         filterImg.setOnClickListener(this);
+
     }
 
     @Override
@@ -182,28 +187,28 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
                         success.setPrate2(success.getPrate2());
                         success.setPrate3(success.getPrate3());
                         productList.add(success);
+//filter code commented
 
-
-                        if (success.getCategory().trim().contains(",")) {
-                            String arr[] = success.getCategory().trim().split(",");
-                            for (int l = 0; l < arr.length; l++) {
-                                String part = arr[l].trim();
-                                if (!part.equals(" ") && !part.equals(""))
-                                    categoryList.add(part);
-                            }
-                        } else {
-                            categoryList.add(success.getCategory().trim());
-                        }
-
+//                        if (success.getCategory().trim().contains(",")) {
+//                            String arr[] = success.getCategory().trim().split(",");
+//                            for (int l = 0; l < arr.length; l++) {
+//                                String part = arr[l].trim();
+//                                if (!part.equals(" ") && !part.equals(""))
+//                                    categoryList.add(part);
+//                            }
+//                        } else {
+//                            categoryList.add(success.getCategory().trim());
+//                        }
+//
                     }
-                    categoryHashSet = new HashSet<>(categoryList);
-                    filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
+//                    categoryHashSet = new HashSet<>(categoryList);
+//                    filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
                     mSwipeRefreshLayout.setRefreshing(false);
 
 
-//                    adapter = new StoreProductAdapter(getActivity(), productList, Sharedcontact, storeContact);
-//                    mRecyclerView.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
+                    adapter = new StoreProductAdapter(getActivity(), productList, Sharedcontact, storeContact);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);

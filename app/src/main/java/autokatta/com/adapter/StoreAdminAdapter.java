@@ -128,6 +128,7 @@ public class StoreAdminAdapter extends RecyclerView.Adapter<StoreAdminAdapter.It
             holder.roleText.setText(arr[1]);
             holder.check.setChecked(true);
             holder.rolelayout.setVisibility(View.VISIBLE);
+            positionArray.set(position, true);
             // boxdata.set(position,contactdata.get(position).getContact());
         } else {
             holder.text.setText(contactdata.get(position).getUsername());

@@ -11,7 +11,8 @@
         android:id="@+id/rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="30dp"
@@ -33,7 +34,8 @@
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_marginTop="@dimen/card_title_height"
+        android:layout_below="@+id/rel"
+        android:layout_marginTop="10dp"
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

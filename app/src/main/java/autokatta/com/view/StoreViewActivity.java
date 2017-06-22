@@ -153,7 +153,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     }
 
                     tabLayout.setupWithViewPager(viewPager);
-                    tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
+                    // tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
                     tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                         @Override
                         public void onTabSelected(TabLayout.Tab tab) {
@@ -460,7 +460,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(mMyStoreHome, "");
+        adapter.addFragment(mMyStoreHome, "Home");
         adapter.addFragment(storeInfo, "About");
         adapter.addFragment(storeProducts, "Products");
         adapter.addFragment(storeServices, "Services");
