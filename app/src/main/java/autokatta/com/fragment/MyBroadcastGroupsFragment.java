@@ -382,7 +382,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
         MyBroadcastGroupsAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> broadcastlist) {
             this.mItemList = broadcastlist;
             this.activity = activity;
-            contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
 
             for (int i = 0; i < mItemList.size(); i++) {
                 grpidslist.add("0");
@@ -402,6 +402,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
 
         @Override
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
+            contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
             holder.group_title.setText(mItemList.get(position).getGroupTitle());
             holder.membercount.setText("Members(" + mItemList.get(position).getGrpMemberCount() + ")");
             holder.itemView.setOnClickListener(new OnClickListener() {

@@ -190,23 +190,23 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success updation")) {
-                CustomToast.customToast(ctx, "Broadcast Group Updated Successfully");
+                CustomToast.customToast(getActivity(), "Broadcast Group Updated Successfully");
                 MyBroadcastGroupsFragment broadcastGroup = new MyBroadcastGroupsFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.broadcast_groups_container, broadcastGroup);
                 fragmentTransaction.addToBackStack("createbroadcastgroup");
                 fragmentTransaction.commit();
-                getActivity().finish();
+               // getActivity().finish();
             } else {
-                CustomToast.customToast(ctx, "Broadcast Group Created Successfully");
+                CustomToast.customToast(getActivity(), "Broadcast Group Created Successfully");
                 MyBroadcastGroupsFragment broadcastGroup = new MyBroadcastGroupsFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.broadcast_groups_container, broadcastGroup);
                 fragmentTransaction.addToBackStack("createbroadcastgroup");
                 fragmentTransaction.commit();
-                getActivity().finish();
+               // getActivity().finish();
             }
         }
     }
