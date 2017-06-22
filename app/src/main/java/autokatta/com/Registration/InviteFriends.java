@@ -61,10 +61,11 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
         skip.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
                 startActivity(i, options.toBundle());
-                finish();
+
             }
         });
 

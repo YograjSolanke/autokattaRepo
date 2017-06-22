@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -65,6 +66,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     @Override
     public void onBindViewHolder(final ViewSearchedStoreAdapter.StoreHolder holder, final int position) {
         mApiCall = new ApiCall(activity, this);
+        Typeface tf = Typeface.createFromAsset(activity.getAssets(), "font/Roboto-Light.ttf");
         final SearchStoreResponse.Success object = mMainList.get(position);
         final String image;
 
@@ -98,6 +100,20 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.btnlike.setText("Likes(" + object.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + object.getFollowcount() + ")");
         holder.ratingBar.setRating(Float.parseFloat(object.getRating()));
+
+        if (object.getWebsite() == null || object.getWebsite().isEmpty() || object.getWebsite().equals("null")) {
+            holder.storewebsite.setText("No website found");
+        } else {
+            holder.storewebsite.setText(object.getWebsite());
+        }
+
+        holder.storename.setTypeface(tf);
+        holder.storelocation.setTypeface(tf);
+        holder.storewebsite.setTypeface(tf);
+        holder.storeworkingdays.setTypeface(tf);
+        holder.storetiming.setTypeface(tf);
+        holder.btnlike.setTypeface(tf);
+        holder.btnfollow.setTypeface(tf);
 
         holder.call_image.setOnClickListener(new View.OnClickListener() {
             @Override

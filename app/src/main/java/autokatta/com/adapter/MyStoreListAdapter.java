@@ -6,6 +6,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -117,6 +118,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     public void onBindViewHolder(final MyStoreListAdapter.YoHolder holder, final int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
+        Typeface tf = Typeface.createFromAsset(mActivity.getAssets(), "font/Roboto-Light.ttf");
         holder.stname.setText(mStoreList.get(position).getName());
         holder.stlocation.setText(mStoreList.get(position).getLocation());
         holder.stwebsite.setText(mStoreList.get(position).getWebsite());
@@ -129,6 +131,22 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.storerating.setEnabled(false);
         if (!(mStoreList.get(position).getRating() == null) && !mStoreList.get(position).getRating().equals("null"))
             holder.storerating.setRating(Float.parseFloat(mStoreList.get(position).getRating()));
+
+
+        if (mStoreList.get(position).getWebsite() == null || mStoreList.get(position).getWebsite().isEmpty() ||
+                mStoreList.get(position).getWebsite().equals("null")) {
+            holder.stwebsite.setText("No website found");
+        } else {
+            holder.stwebsite.setText(mStoreList.get(position).getWebsite());
+        }
+
+        holder.stname.setTypeface(tf);
+        holder.stlocation.setTypeface(tf);
+        holder.stwebsite.setTypeface(tf);
+        holder.stworkdays.setTypeface(tf);
+        holder.storetiming.setTypeface(tf);
+        holder.stlike.setTypeface(tf);
+        holder.stfollow.setTypeface(tf);
 
         holder.storedelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +225,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                         putString("Share_keyword", "store").apply();
 
                 mActivity.startActivity(new Intent(mActivity, ShareWithinAppActivity.class));
-                mActivity.finish();
+                //mActivity.finish();
 
             }
         });
