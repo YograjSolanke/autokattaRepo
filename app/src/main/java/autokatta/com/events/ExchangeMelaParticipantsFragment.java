@@ -164,6 +164,7 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
@@ -171,6 +172,7 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {

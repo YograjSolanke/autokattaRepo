@@ -64,6 +64,7 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
                 finish();
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i, options.toBundle());
 
             }

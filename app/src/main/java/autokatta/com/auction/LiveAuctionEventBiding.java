@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +44,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
     CountDownTimer cdt;
     Bundle b1;
     FloatingActionButton fabCal, fabMail;
+    FloatingActionMenu menuRed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,8 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
         b1.putString("openClose", openClose);
         b1.putString("showPrice", showPrice);
 
+        menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+        menuRed.setClosedOnTouchOutside(true);
         mLiveTitle = (TextView) findViewById(R.id.live_title);
         mLiveVehicles = (TextView) findViewById(R.id.live_no_of_vehicles);
         mLiveAuctionType = (TextView) findViewById(R.id.live_auction_type);
@@ -224,6 +228,16 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
                 }
             }
         });
+    }
+
+    public void hideFloatingButton() {
+        menuRed.hideMenu(true);
+
+    }
+
+    public void showFloatingButton() {
+        menuRed.showMenu(true);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
