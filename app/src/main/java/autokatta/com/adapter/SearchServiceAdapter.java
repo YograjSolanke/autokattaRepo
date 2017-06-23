@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -242,7 +241,7 @@ public class SearchServiceAdapter extends BaseAdapter implements RequestNotifier
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success")) {
-                Toast.makeText(activity, "Service Deleted", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(activity, "Service Deleted");
 
             }
         }

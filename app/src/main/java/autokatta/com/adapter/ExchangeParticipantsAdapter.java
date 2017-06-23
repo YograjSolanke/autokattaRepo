@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -212,9 +211,9 @@ public class ExchangeParticipantsAdapter extends RecyclerView.Adapter<ExchangePa
         if (str != null) {
             if (str.equals("success")) {
                 if (keyword.equals("blacklist")) {
-                    Toast.makeText(mActivity, "Added To Blacklist", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(mActivity, "Added To Blacklist");
                 } else {
-                    Toast.makeText(mActivity, "Removed from blacklist", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(mActivity, "Removed from blacklist");
 
                 }
             }

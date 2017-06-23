@@ -41,13 +41,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_title_height"
             android:layout_gravity="bottom"
-            android:background="#000000"
+            android:background="#ffffff"
             app:tabSelectedTextColor="@color/colorAccent"
             app:layout_anchorGravity="bottom"
             app:tabGravity="fill"
-            app:tabIndicatorColor="#C8C9CC"
             app:tabMode="scrollable"
-            app:tabTextColor="#ffffff" />
+            app:tabTextColor="#000000" />
 
     </LinearLayout>
 

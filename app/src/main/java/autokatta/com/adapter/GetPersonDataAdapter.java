@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetPersonDataResponse;
 import autokatta.com.view.EnquiredPersonsListActivity;
 
@@ -199,9 +199,9 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
-            Toast.makeText(mActivity, "SMS sent.", Toast.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, "SMS sent.");
         } catch (Exception e) {
-            Toast.makeText(mActivity, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, "SMS failed, please try again.");
             e.printStackTrace();
         }
     }

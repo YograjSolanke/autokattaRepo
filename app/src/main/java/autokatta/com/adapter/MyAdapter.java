@@ -5,9 +5,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -33,6 +31,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.GroupEditFragment;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelGroups;
 import autokatta.com.view.GroupsActivity;
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
@@ -246,43 +245,45 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string._404), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.RED);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.YELLOW);
+//            snackbar.show();
         } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
-            Snackbar snackbar = Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();
+//            Snackbar snackbar = Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+//                    .setAction("Go Online", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+//                        }
+//                    });
+//            // Changing message text color
+//            snackbar.setActionTextColor(Color.RED);
+//            // Changing action button text color
+//            View sbView = snackbar.getView();
+//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            textView.setTextColor(Color.YELLOW);
+//            snackbar.show();
         } else {
             Log.i("Check Class-", "My Adapter");
             error.printStackTrace();
@@ -293,12 +294,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success")) {
-                Snackbar.make(view.mCardView, "Group deleted", Snackbar.LENGTH_LONG).show();
+                CustomToast.customToast(mActivity, "Group deleted");
                /* Intent i = new Intent(mActivity, GroupTabs.class);
                 mActivity.startActivity(i);*/
             }
         } else {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         }
     }
 

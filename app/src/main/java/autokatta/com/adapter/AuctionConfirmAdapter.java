@@ -291,7 +291,7 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
         if (str != null) {
 
             if (str.equalsIgnoreCase("Success")) {
-                Toast.makeText(activity, "Thank you price save successfully", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(activity, "Thank you price saved successfully");
             } else {
                 Toast.makeText(activity, "Price not saved", Toast.LENGTH_SHORT).show();
                 Log.i("Response", "->addPrice:" + str);

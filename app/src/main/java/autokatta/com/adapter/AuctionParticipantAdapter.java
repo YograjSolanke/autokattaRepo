@@ -233,9 +233,9 @@ public class AuctionParticipantAdapter extends RecyclerView.Adapter<AuctionParti
         if (str != null) {
             if (str.equals("success")) {
                 if (keyword.equals("blacklist")) {
-                    Toast.makeText(mActivity, "Add To Blacklist", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(mActivity, "Add To Blacklist");
                 } else {
-                    Toast.makeText(mActivity, "Remove from blacklist", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(mActivity, "Remove from blacklist");
                 }
             }
         } else

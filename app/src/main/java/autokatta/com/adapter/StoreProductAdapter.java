@@ -29,6 +29,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
 import autokatta.com.view.ProductViewActivity;
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
@@ -178,13 +179,13 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(activity, R.string._404, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(activity, activity.getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(activity, R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(activity, R.string.no_response, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(mView.mCardView, activity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
@@ -201,7 +202,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
 //            textView.setTextColor(Color.YELLOW);
 //            snackbar.show();
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(activity, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
             //mNoInternetIcon.setVisibility(View.VISIBLE);
 //            Snackbar snackbar = Snackbar.make(mView.mCardView, activity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
 //                    .setAction("Go Online", new View.OnClickListener() {
@@ -228,7 +229,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success")) {
-                Toast.makeText(activity, "Product Deleted", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(activity, "Product Deleted");
 
             }
         }

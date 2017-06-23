@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetContactByCompanyResponse;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -133,7 +133,7 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
         } catch (Exception e) {
-            Toast.makeText(mContext, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            CustomToast.customToast(mContext, "SMS failed, please try again.");
             e.printStackTrace();
         }
     }

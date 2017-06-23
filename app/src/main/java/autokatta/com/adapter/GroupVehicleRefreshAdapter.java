@@ -37,6 +37,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.VehicleDetails;
@@ -445,15 +446,15 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string._404), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_response), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "GroupVehiclRefresh Adapter");
             error.printStackTrace();
@@ -464,7 +465,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success_like")) {
-                Snackbar.make(view.mCardView, "Liked", Snackbar.LENGTH_LONG).show();
+                CustomToast.customToast(mActivity, "Liked");
             } else if (str.equals("success_unlike")) {
                 Log.e("Unlike", "->");
             }

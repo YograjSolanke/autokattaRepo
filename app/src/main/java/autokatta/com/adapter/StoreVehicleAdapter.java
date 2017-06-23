@@ -211,11 +211,11 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(activity, activity.getString(R.string._404), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(activity, activity.getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(activity, activity.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(activity, activity.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else {
             Log.i("Check Class-"
                     , "StoreServiceAdaper");

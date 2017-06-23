@@ -17,13 +17,13 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.other.CustomToast;
 
 /**
  * Created by ak-003 on 1/4/17.
@@ -173,9 +173,9 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
-            Toast.makeText(mActivity, "SMS sent.", Toast.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, "SMS sent.");
         } catch (Exception e) {
-            Toast.makeText(mActivity, "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+            CustomToast.customToast(mActivity, "SMS faild, please try again.");
             e.printStackTrace();
         }
     }

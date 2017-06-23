@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,6 +31,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.StoreViewActivity;
@@ -177,7 +177,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     success.setLikestatus("yes");
                 } else {
-                    Snackbar.make(v, "Sorry!! you can not like your own store", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(activity, "Sorry!! you can not like your own store");
                 }
 
             }
@@ -205,7 +205,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     success.setLikestatus("no");
                 } else {
-                    Snackbar.make(v, "Sorry!! you can not unlike your own store", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(activity, "Sorry!! you can not unlike your own store");
                 }
 
             }
@@ -235,7 +235,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     success.setFollowstatus("yes");
                 } else {
-                    Snackbar.make(v, "Sorry!! you can not follow your own store", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(activity, "Sorry!! you can not follow your own store");
                 }
 
             }
@@ -264,7 +264,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     success.setFollowstatus("no");
                 } else {
-                    Snackbar.make(v, "Sorry!! you can not follow your own store", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(activity, "Sorry!! you can not follow your own store");
                 }
 
             }
@@ -279,7 +279,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                         .getString("loginContact", ""))) {
                     call(StoreContact);
                 } else {
-                    Snackbar.make(v, "Sorry!! you can not call yourself ", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(activity, "Sorry!! you can not call yourself ");
                 }
             }
         });

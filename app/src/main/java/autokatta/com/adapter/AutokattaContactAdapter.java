@@ -18,7 +18,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -233,11 +232,11 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string._404), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else {
             Log.i("Check Class-"
                     , "Autokatta Contact Adapter");

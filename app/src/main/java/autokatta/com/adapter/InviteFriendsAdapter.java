@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,7 @@ import autokatta.com.R;
 import autokatta.com.Registration.InviteFriends;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.CreateUserResponse;
 import autokatta.com.response.GetRegisteredContactsResponse;
 import autokatta.com.response.GetRegisteredContactsResponse.Success;
@@ -164,7 +164,7 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
-            Toast.makeText(mContext, "SMS sent.", Toast.LENGTH_LONG).show();
+            CustomToast.customToast(mContext, "SMS sent.");
             Intent i = new Intent(mContext, InviteFriends.class);
             mContext.startActivity(i);
             mContext.finish();
@@ -173,7 +173,7 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.containerView, fr).commit();*/
         } catch (Exception e) {
-            Toast.makeText(mContext, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            CustomToast.customToast(mContext, "SMS failed, please try again.");
             e.printStackTrace();
         }
     }
