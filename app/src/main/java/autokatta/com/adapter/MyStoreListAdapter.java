@@ -58,7 +58,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     // you provide access to all the views for a data item in a view holder
     static class YoHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
-        TextView stname, stlocation, stwebsite, storetiming, stlike, stshare, stfollow, stworkdays;
+        TextView stname, stlocation, stwebsite, storetiming, stlike, stshare, stfollow, stworkdays, serviceOffered;
         ImageView img, storedelete;
         RatingBar storerating;
         LinearLayout linearlike, linearunlike, linearshare, linearshare1, linearfollow, linearunfollow;
@@ -71,7 +71,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             stlocation = (TextView) itemView.findViewById(R.id.autolocation);
             stwebsite = (TextView) itemView.findViewById(R.id.editwebsite);
             storetiming = (TextView) itemView.findViewById(R.id.edittiming);
-          //  stclose = (TextView) itemView.findViewById(R.id.edittiming1);
+            serviceOffered = (TextView) itemView.findViewById(R.id.servicesOffered);
             stworkdays = (TextView) itemView.findViewById(R.id.editworkingdays);
             img = (ImageView) itemView.findViewById(R.id.profile);
             storerating = (RatingBar) itemView.findViewById(R.id.storerating);
@@ -122,6 +122,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.stname.setText(mStoreList.get(position).getName());
         holder.stlocation.setText(mStoreList.get(position).getLocation());
         holder.stwebsite.setText(mStoreList.get(position).getWebsite());
+        holder.serviceOffered.setText(mStoreList.get(position).getCategory());
         holder.storetiming.setText(mStoreList.get(position).getStoreOpenTime()+" TO "+(mStoreList.get(position).getStoreCloseTime()));
        // holder.stclose.setText(mStoreList.get(position).getStoreCloseTime());
         holder.stlike.setText("Like(" + mStoreList.get(position).getLikecount() + ")");
@@ -147,6 +148,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.storetiming.setTypeface(tf);
         holder.stlike.setTypeface(tf);
         holder.stfollow.setTypeface(tf);
+        holder.serviceOffered.setTypeface(tf);
 
         holder.storedelete.setOnClickListener(new View.OnClickListener() {
             @Override
