@@ -148,7 +148,8 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
                                 public void onClick(DialogInterface dialog, int which) {
                                     apiCall.deleteProduct(product_id, "delete");
                                     mMainList.remove(position);
-                                    notifyDataSetChanged();
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position, mMainList.size());
                                 }
                             })
 

@@ -163,7 +163,8 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
                                     apiCall.deleteVehicle(vehicle_id, "delete");
                                     vehicleList.remove(holder.getAdapterPosition());
-                                    notifyDataSetChanged();
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position, vehicleList.size());
 
 
                                 }
