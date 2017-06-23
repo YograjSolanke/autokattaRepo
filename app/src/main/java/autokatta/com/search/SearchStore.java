@@ -1,7 +1,6 @@
 package autokatta.com.search;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -71,7 +70,7 @@ public class SearchStore extends Fragment implements RequestNotifier {
     List<String> finalcategory = new ArrayList<>();
     List<String> finallocation = new ArrayList<>();
     ConnectionDetector mConnectionDetector;
-    private ProgressDialog dialog;
+    //private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -102,8 +101,8 @@ public class SearchStore extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 try {
-                    dialog = new ProgressDialog(getActivity());
-                    dialog.setMessage("Loading...");
+                    /*dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage("Loading...");*/
 
                     mConnectionDetector = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
@@ -135,7 +134,7 @@ public class SearchStore extends Fragment implements RequestNotifier {
     private void getSearchResults(String searchString) {
 
         if (mConnectionDetector.isConnectedToInternet()) {
-            dialog.show();
+            //dialog.show();
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.searchStore(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
                     Context.MODE_PRIVATE).getString("loginContact", ""));
@@ -146,9 +145,9 @@ public class SearchStore extends Fragment implements RequestNotifier {
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (dialog.isShowing()) {
+        /*if (dialog.isShowing()) {
             dialog.dismiss();
-        }
+        }*/
         if (response != null) {
             if (response.isSuccessful()) {
                 BrowseStoreResponse searchData = (BrowseStoreResponse) response.body();
@@ -200,7 +199,7 @@ public class SearchStore extends Fragment implements RequestNotifier {
                     filterImg.setVisibility(View.GONE);
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
@@ -209,11 +208,11 @@ public class SearchStore extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyError(Throwable error) {
-        if (dialog.isShowing()) {
+       /* if (dialog.isShowing()) {
             dialog.dismiss();
-        }
+        }*/
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {

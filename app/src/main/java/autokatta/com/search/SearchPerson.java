@@ -1,6 +1,5 @@
 package autokatta.com.search;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -61,7 +60,7 @@ public class SearchPerson extends Fragment implements RequestNotifier {
     HashSet<String> citySet;
     SearchPersonAdapter adapter;
     ConnectionDetector mConnectionDetector;
-    private ProgressDialog dialog;
+    //private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -95,8 +94,8 @@ public class SearchPerson extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 try {
-                    dialog = new ProgressDialog(getActivity());
-                    dialog.setMessage("Loading...");
+                    /*dialog = new ProgressDialog(getActivity());
+                    dialog.setMessage("Loading...");*/
 
                     mConnectionDetector = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
@@ -121,7 +120,7 @@ public class SearchPerson extends Fragment implements RequestNotifier {
     private void getSearchResults(String searchString) {
 
         if (mConnectionDetector.isConnectedToInternet()) {
-            dialog.show();
+            //dialog.show();
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getPersonSearchData(searchString, myContact);
         } else {
@@ -131,9 +130,9 @@ public class SearchPerson extends Fragment implements RequestNotifier {
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (dialog.isShowing()) {
+        /*if (dialog.isShowing()) {
             dialog.dismiss();
-        }
+        }*/
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchPersonResponse contactResponse = (SearchPersonResponse) response.body();
@@ -176,9 +175,9 @@ public class SearchPerson extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyError(Throwable error) {
-        if (dialog.isShowing()) {
+        /*if (dialog.isShowing()) {
             dialog.dismiss();
-        }
+        }*/
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
