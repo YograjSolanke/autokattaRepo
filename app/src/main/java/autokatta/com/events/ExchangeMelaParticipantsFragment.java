@@ -63,12 +63,10 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
         mSwipeRefreshLayout = (SwipeRefreshLayout) mExchangeParticipants.findViewById(R.id.swipeRefreshLayoutMain);
 
         mRecyclerView.setHasFixedSize(true);
-
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         getActivity().runOnUiThread(new Runnable() {
@@ -87,7 +85,6 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-
                             getExchangeParticipant(strExchangeId);
                         }
                     });
@@ -103,7 +100,6 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getExchangeParticipant(strExchangeId);
                 hasViewCreated = true;
             }
@@ -116,7 +112,6 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
     }
 
     private void getExchangeParticipant(String strExchangeId) {
-
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
         /*to do new  webservice*/
@@ -136,11 +131,10 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
             if (response.isSuccessful()) {
                 participantList.clear();
                 ExchangeMelaParticipantsResponse participantsResponse = (ExchangeMelaParticipantsResponse) response.body();
-
                 if (!participantsResponse.getSuccess().isEmpty()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.GONE);
                     for (ExchangeMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
-
                         success.setContact(success.getContact());
                         success.setProfilePhoto(success.getProfilePhoto());
                         success.setUsername(success.getUsername());
@@ -148,16 +142,14 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
                         success.setProfession(success.getProfession());
                         success.setSubprofession(success.getSubprofession());
                         success.setBlackliststatus(success.getBlackliststatus());
-
                         participantList.add(success);
                     }
-                    mSwipeRefreshLayout.setRefreshing(false);
                     ExchangeParticipantsAdapter adapter = new ExchangeParticipantsAdapter(getActivity(), strExchangeId, participantList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
-                    mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);

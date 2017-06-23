@@ -85,7 +85,6 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-
                             getExchangeAnalytics(strExchangeId);
                         }
                     });
@@ -101,7 +100,6 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getExchangeAnalytics(strExchangeId);
                 hasViewCreated = true;
             }
@@ -118,7 +116,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
       /*to do new webservice*/
-            //apiCall.AuctionAnalyticsData(strExchangeId);
+            apiCall.AuctionAnalyticsData(strExchangeId);
             //apiCall.AuctionAnalyticsData("1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
@@ -132,13 +130,11 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
         if (response != null) {
             if (response.isSuccessful()) {
                 analyticsList.clear();
-                mSwipeRefreshLayout.setRefreshing(false);
                 AuctionAnalyticsResponse analyticsResponse = (AuctionAnalyticsResponse) response.body();
-
                 if (!analyticsResponse.getSuccess().isEmpty()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.GONE);
                     for (AuctionAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
-
                         success.setReachedCount(success.getReachedCount());
                         success.setGoingCount(success.getGoingCount());
                         success.setIgnoreCount(success.getIgnoreCount());
@@ -152,13 +148,12 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
 
                         analyticsList.add(success);
                     }
-                    mSwipeRefreshLayout.setRefreshing(false);
                     AuctionAnalyticsAdapter adapter = new AuctionAnalyticsAdapter(getActivity(), strExchangeId, analyticsList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
-                    mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
