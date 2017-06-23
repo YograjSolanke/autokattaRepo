@@ -1032,7 +1032,8 @@
                 android:id="@+id/moresearchlinear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <!-- Invoice -->
 
@@ -2112,6 +2113,7 @@
                 android:weightSum="1">
 
                 <Button
+                    style="?android:attr/buttonBarButtonStyle"
                     android:id="@+id/BtnRefresh"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
@@ -2123,6 +2125,7 @@
                     android:textSize="15sp" />
 
                 <Button
+                    style="?android:attr/buttonBarButtonStyle"
                     android:id="@+id/BtnApplySearch"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"

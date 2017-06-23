@@ -154,6 +154,9 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         spinnerfual = (MultiSelectionSpinner) findViewById(R.id.fualEdit1);
 
         financeSpinner = (Spinner) findViewById(R.id.finacialEdit1);
+        financeSpinner.setFocusable(true);
+        financeSpinner.setFocusableInTouchMode(true);
+        financeSpinner.requestFocus();
         allcategorySpinner = (Spinner) findViewById(R.id.allCategory1);
         subcategorySpinner = (Spinner) findViewById(R.id.subCategory);
         brandSpinner = (Spinner) findViewById(R.id.BrandEdit1);
