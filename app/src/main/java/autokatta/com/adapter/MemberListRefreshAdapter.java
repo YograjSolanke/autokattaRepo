@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -35,8 +33,9 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.MemberDetailTabs;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
-import autokatta.com.view.GroupsActivity;
+import autokatta.com.view.GroupTabs;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -54,7 +53,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private String mGroupId;
     private ApiCall mApiCall;
     private MyViewHolder mView;
-    ConnectionDetector mTestConnection;
+    private ConnectionDetector mTestConnection;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mContact, mVehicleCount, mAdmin;
@@ -81,6 +80,9 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         this.mItemList = mItemList;
         this.mCallFrom = mCallfrom;
         mApiCall = new ApiCall(mActivity, this);
+        mTestConnection = new ConnectionDetector(mActivity);
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", "");
 
     }
 
@@ -90,16 +92,13 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_group_member_list, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        MemberListRefreshAdapter.MyViewHolder vh = new MemberListRefreshAdapter.MyViewHolder(v);
-        mTestConnection = new ConnectionDetector(mActivity);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, final int position) {
         mView = holder;
-        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", "");
+
         holder.mName.setText(mItemList.get(position).getUsername());
         holder.mContact.setText(mItemList.get(position).getContact());
         holder.mAdmin.setText(mItemList.get(position).getMember());
@@ -217,10 +216,10 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 bundle.putString("Rcontact", holder.mContact.getText().toString());
                 bundle.putString("grouptype", mCallFrom);
                 bundle.putString("className", "MemberListRefreshAdapter");
-                bundle.putString("bundle_GroupId",mGroupId );
+                bundle.putString("bundle_GroupId", mGroupId);
                 bundle.putString("bundle_UserName", mItemList.get(position).getUsername());
 
-                MemberDetailTabs memberDetailTabs=new MemberDetailTabs();
+                MemberDetailTabs memberDetailTabs = new MemberDetailTabs();
                 memberDetailTabs.setArguments(bundle);
                 ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.profile_groups_container, memberDetailTabs, "MemberList")
@@ -233,7 +232,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             @Override
             public void onClick(View v) {
                 if (holder.mContact.getText().toString().equals(myContact)) {
-                 Intent i=new Intent(mActivity, UserProfile.class);
+                    Intent i = new Intent(mActivity, UserProfile.class);
                     mActivity.startActivity(i);
                     Log.e("You", "->");
                 } else {
@@ -300,6 +299,9 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                                             // if(!nextContact.equals("")||!nextContact.equals("null")||!nextContact.equals(null))
                                             //new DeleteMembers().execute();
                                             DeleteMembers(position, nextContact, rmContact);
+                                            mItemList.remove(position);
+                                            notifyItemRemoved(position);
+                                            notifyItemRangeChanged(position, mItemList.size());
 //                                else
 //                                    Snackbar.make(v,"please delete group",Snackbar.LENGTH_SHORT).show();
 
@@ -317,6 +319,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                         } else if (options[item].equals("Make an admin") || options[item].equals("Remove from Admin")) {
                             rmContact = holder.mContact.getText().toString();
                             makeAdmin(rmContact, finalAction);
+
                         } else if (options[item].equals("Cancel")) {
                             dialog.dismiss();
                         }
@@ -332,34 +335,21 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private void DeleteMembers(int position, String nextContact, String rmContact) {
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.DeleteGroupMembers(mGroupId, mCallFrom, rmContact, myContact, nextContact, String.valueOf(mItemList.size()));
-            mItemList.remove(position);
-            notifyDataSetChanged();
+            /*mItemList.remove(position);
+            notifyDataSetChanged();*/
+
         } else {
-            errorMessage(mActivity, mActivity.getString(R.string.no_internet));
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         }
-
-
-
-        /*params.put("group_id", groupid);
-        params.put("grouptype", grptype);
-        params.put("contact", rmContact);
-        params.put("mycontact", Contact);
-        params.put("next", nextContact);
-        params.put("membercount", String.valueOf(groupMembersDataArrayList.size()));*/
     }
 
     private void makeAdmin(String contact, String action) {
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.makeGroupAdmin(mGroupId, contact, action);
         } else {
-            errorMessage(mActivity, mActivity.getString(R.string.no_internet));
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         }
 
-
-
-        /*params.put("groupid", groupid);
-        params.put("contact", contact);
-        params.put("action", action);*/
     }
 
     //Calling Functionality
@@ -385,15 +375,15 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            showMessage(mActivity, mActivity.getString(R.string._404_));
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            showMessage(mActivity, mActivity.getString(R.string.no_response));
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            showMessage(mActivity, mActivity.getString(R.string.no_response));
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            errorMessage(mActivity, mActivity.getString(R.string.no_internet));
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            errorMessage(mActivity, mActivity.getString(R.string.no_internet));
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "memberlistfrgmentrefreshadapter");
@@ -405,48 +395,25 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success_admin")) {
-                Snackbar.make(mView.mRelativeLayout, "Done", Snackbar.LENGTH_SHORT).show();
-                Intent intent = new Intent(mActivity, GroupsActivity.class);
-                intent.putExtra("grouptype", "MyGroup");
+                CustomToast.customToast(mActivity, "Admin Successful");
+                Intent intent = new Intent(mActivity, GroupTabs.class);
+                /*intent.putExtra("grouptype", "MyGroup");
                 intent.putExtra("className", "MemberListRefreshAdapter");
-                intent.putExtra("bundle_GroupId", mGroupId);
+                intent.putExtra("bundle_GroupId", mGroupId);*/
+
                 mActivity.startActivity(intent);
                 mActivity.finish();
-            } else if (str.startsWith("success")) {
-                Snackbar.make(mView.mRelativeLayout, "done", Snackbar.LENGTH_SHORT).show();
-                /*Intent intent = new Intent(mActivity, GroupTabs.class);
-                mActivity.startActivity(intent);*/
+            } else if (str.equals("success_1")) {
+                CustomToast.customToast(mActivity, "remove successfully");
+            } else {
+                CustomToast.customToast(mActivity, "left successfully");
+                Intent intent = new Intent(mActivity, GroupTabs.class);
+                mActivity.startActivity(intent);
                 mActivity.finish();
             }
 
+
         } else
-            Snackbar.make(mView.mRelativeLayout, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
     }
-
-    public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                       // getGroupContact(mGroupId);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }
-
 }

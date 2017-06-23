@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
@@ -30,8 +31,8 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
     EditText inputSearch;
     Button invite, skip;
     InviteFriendsAdapter adapter;
-    ArrayList<Success> webcontact;
-    ArrayList<String> finalcontacts;
+    List<Success> webcontact;
+    List<String> finalcontacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

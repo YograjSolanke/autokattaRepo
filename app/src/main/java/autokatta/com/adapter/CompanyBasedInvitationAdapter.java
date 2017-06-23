@@ -77,10 +77,10 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
         });
 
         //Set Profile Photo
-        if (contactListHolder.mPro_pic.equals("") || contactListHolder.mPro_pic.equals(null) || contactListHolder.mPro_pic.equals("null")) {
+        if (success.getProfilePic().equals("") || success.getProfilePic().equals(null) || success.getProfilePic().equals("null"))
             contactListHolder.mPro_pic.setBackgroundResource(R.drawable.profile);
-        }
-        if (!contactListHolder.mPro_pic.equals("") || !contactListHolder.mPro_pic.equals(null) || !contactListHolder.mPro_pic.equals("null")) {
+
+        else {
             Glide.with(mContext)
                     .load("http://autokatta.com/mobile/profile_profile_pics/" + success.getProfilePic())
                     .bitmapTransform(new CropCircleTransformation(mContext)) //To display image in Circular form.

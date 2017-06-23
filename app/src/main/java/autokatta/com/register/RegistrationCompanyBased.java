@@ -58,13 +58,13 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
             dealpart = "", dealid = "", Skidlist = "", Deidlist = "", Skills = "", Deals = "", page = "2";
     boolean skillflag = false, dealflag = false;
 
-    ArrayList<String> mSkillList = new ArrayList<>();
+    List<String> mSkillList = new ArrayList<>();
     HashMap<String, String> mSkillList1 = new HashMap<>();
 
-    ArrayList<String> mDealList = new ArrayList<>();
+    List<String> mDealList = new ArrayList<>();
     HashMap<String, String> mDealList1 = new HashMap<>();
 
-    ArrayList<String> mCompanyList = new ArrayList<>();
+    List<String> mCompanyList = new ArrayList<>();
     HashMap<String, String> mCompanyList1 = new HashMap<>();
 
     HashMap<String, String> mdistList1 = new HashMap<>();
@@ -78,7 +78,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     List<String> parsedDataSkills = new ArrayList<>();
     List<String> parsedDataDeals = new ArrayList<>();
 
-    ArrayList<String> mDesignationList = new ArrayList<>();
+    List<String> mDesignationList = new ArrayList<>();
     HashMap<String, String> mDesignationList1 = new HashMap<>();
 
     HashMap<String, String> mCategoryListHash = new HashMap<>();
@@ -590,62 +590,6 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
             switch (str) {
                 case "success":
                     Snackbar.make(mCompanyBased, "Registered", Snackbar.LENGTH_SHORT).show();
-                    Skills = autoSkills.getText().toString().trim();
-                    Deals = autoDeals.getText().toString().trim();
-                    if (strArea.equalsIgnoreCase("Select Area Of Operations"))
-                        strArea = "";
-                    if (strKms.equalsIgnoreCase("By Kms"))
-                        strKms = "";
-                    if (strDistrict.equalsIgnoreCase("By District"))
-                        strDistrict = "";
-                    if (strState.equalsIgnoreCase("By State"))
-                        strState = "";
-
-                    strDistrict = strDistrict.replaceAll(" ", "");
-                    strState = strState.replaceAll(" ", "");
-                    Skills = Skills.replaceAll(" ", "");
-                    // Deals = Deals.replaceAll(" ","");
-
-                    spinArea.setSelection(0);
-                    spinKms.setSelection(0);
-                    spinDistrict.setSelection(0);
-                    spinState.setSelection(0);
-
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationCompanyBased.this);
-                    // set title
-                    alertDialogBuilder.setTitle("Interest Area ");
-                    // set dialog message
-                    alertDialogBuilder
-                            .setMessage("Create Business Profile ?")
-                            .setCancelable(false)
-                            .setPositiveButton("Yes",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,
-                                                            int id) {
-                                            dialog.cancel();
-                                            ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                                            Bundle b = new Bundle();
-                                            b.putString("className", "interestbased");
-                                            Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
-                                            intent.putExtras(b);
-                                            startActivity(intent, options.toBundle());
-                                        }
-                                    })
-                            .setNegativeButton("No",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,
-                                                            int id) {
-                                            dialog.cancel();
-                                            ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                                            Intent i = new Intent(getApplicationContext(), InvitationCompanyBased.class);
-                                            startActivity(i, options.toBundle());
-                                        }
-                                    });
-
-                    // create alert dialog
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    // show it
-                    alertDialog.show();
                     break;
 
                 case "success_brand_add":
@@ -699,8 +643,8 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 /******************************** Skills code *****************************************************/
 
                 String strSkill = autoSkills.getText().toString();
-                ArrayList<String> skillList = new ArrayList<>();
-                ArrayList<String> otherSkills = new ArrayList<>();
+                List<String> skillList = new ArrayList<>();
+                List<String> otherSkills = new ArrayList<>();
 
                 if (strSkill.endsWith(","))
                     strSkill = strSkill.substring(0, strSkill.length() - 1);
@@ -750,8 +694,8 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 /***********************************************Dealing  code *********************************************/
 
                 String strDeal = autoDeals.getText().toString();
-                ArrayList<String> dealList = new ArrayList<>();
-                ArrayList<String> otherDeals = new ArrayList<>();
+                List<String> dealList = new ArrayList<>();
+                List<String> otherDeals = new ArrayList<>();
 
                 if (strDeal.endsWith(","))
                     strDeal = strDeal.substring(0, strDeal.length() - 1);
@@ -846,7 +790,8 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     autoDeals.setError("Enter Deals Name");
                     autoDeals.requestFocus();
                 } else {
-                    mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState,
+
+                    nextTask(RegiId, page, strArea, strKms, strDistrict, strState,
                             autoCompany.getText().toString(), autoDesignation.getText().toString(), strSkill,
                             strDeal, categoryName, subCategoryName, brandName);
                 }
@@ -910,6 +855,72 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         }
     }
 
+    public void nextTask(final String regiId, final String page, final String strArea, final String strKms, final String strDistrict, final String strState,
+                         final String strCompany, final String strDesignation, final String strSkill, final String strDeal, final String categoryName,
+                         final String subCategoryName, final String brandName) {
+        Skills = autoSkills.getText().toString().trim();
+        Deals = autoDeals.getText().toString().trim();
+        if (this.strArea.equalsIgnoreCase("Select Area Of Operations"))
+            this.strArea = "";
+        if (this.strKms.equalsIgnoreCase("By Kms"))
+            this.strKms = "";
+        if (this.strDistrict.equalsIgnoreCase("By District"))
+            this.strDistrict = "";
+        if (this.strState.equalsIgnoreCase("By State"))
+            this.strState = "";
+
+        this.strDistrict = this.strDistrict.replaceAll(" ", "");
+        this.strState = this.strState.replaceAll(" ", "");
+        Skills = Skills.replaceAll(" ", "");
+        // Deals = Deals.replaceAll(" ","");
+
+        spinArea.setSelection(0);
+        spinKms.setSelection(0);
+        spinDistrict.setSelection(0);
+        spinState.setSelection(0);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationCompanyBased.this);
+        // set title
+        alertDialogBuilder.setTitle("Interest Area ");
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Create Business Profile ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                dialog.cancel();
+                                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                Bundle b = new Bundle();
+                                b.putString("className", "interestbased");
+                                Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
+                                intent.putExtras(b);
+                                startActivity(intent, options.toBundle());
+                                mApiCall.updateRegistration(regiId, page, strArea, strKms, strDistrict, strState,
+                                        strCompany, strDesignation, strSkill, strDeal, categoryName,
+                                        subCategoryName, brandName);
+                            }
+                        })
+                .setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                dialog.cancel();
+                                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                Intent i = new Intent(getApplicationContext(), InvitationCompanyBased.class);
+                                startActivity(i, options.toBundle());
+                                mApiCall.updateRegistration(regiId, page, strArea, strKms, strDistrict, strState,
+                                        strCompany, strDesignation, strSkill, strDeal, categoryName,
+                                        subCategoryName, brandName);
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+    }
     @Override
     public void onItemsSelected(boolean[] selected) {
 

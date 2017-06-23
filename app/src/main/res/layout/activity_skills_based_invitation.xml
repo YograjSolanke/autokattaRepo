@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
     android:id="@+id/skill_based"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
@@ -26,6 +26,7 @@
             android:id="@+id/inputSearch"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="7dp"
             android:layout_weight="1.5"
             android:hint="Search Contacts.."
             android:inputType="textVisiblePassword"
