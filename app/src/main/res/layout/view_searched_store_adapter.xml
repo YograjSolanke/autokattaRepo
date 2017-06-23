@@ -171,6 +171,16 @@
                         android:gravity="start"
                         android:text="Working days" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storeworkingdays"
+                        android:drawableStart="@mipmap/ic_wrench"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:id="@+id/servicesOffered"
+                        android:text="Services Offered" />
+
                     <ImageView
                         android:id="@+id/call_image"
                         android:layout_width="30dp"

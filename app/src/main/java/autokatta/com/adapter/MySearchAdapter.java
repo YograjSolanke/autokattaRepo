@@ -44,9 +44,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.SearchHolder> implements RequestNotifier {
 
     Activity activity;
-    String SearchId, keyword, allDetails;
+    private String SearchId, keyword, allDetails;
     List<MySearchResponse.Success> mMainlist;
-    int flag = 0;
+    private int flag = 0;
     ApiCall apiCall;
     String myContact;
 
@@ -58,11 +58,11 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
     }
+
     @Override
     public SearchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_search_adapter, parent, false);
-        SearchHolder holder = new SearchHolder(view);
-        return holder;
+        return new SearchHolder(view);
     }
 
     @Override
@@ -155,7 +155,8 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                                 //new deleteData().execute();
                                 apiCall.deleteMySearch(SearchId, keyword);
                                 mMainlist.remove(position);
-                                notifyDataSetChanged();
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position, mMainlist.size());
                             }
                         })
 
@@ -317,7 +318,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_keyword", "mysearch").apply();
 
-                Intent i=new Intent(activity, ShareWithinAppActivity.class);
+                Intent i = new Intent(activity, ShareWithinAppActivity.class);
                 activity.startActivity(i);
                 //activity.finish();
             }
@@ -362,28 +363,28 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
     }
 
 
-    public static class SearchHolder extends RecyclerView.ViewHolder {
+    static class SearchHolder extends RecyclerView.ViewHolder {
 
-        public TextView textcategory;
-        public TextView textbrand;
-        public TextView textmodel;
-        public TextView textprice;
-        public TextView textyear;
-        public TextView textsearchdate;
-        public TextView BuyerLeads;
-        public ImageView editImg;
-        public ImageView deleteData;
-        public ImageView favImg;
-        public ImageView unfavImg;
-        public ImageView share;
-        public ImageView share1;
-        public Button Stopsearch;
-        public Button Startsearch;
-        public RelativeLayout relativeLayout;
-        public TextView Stopdate;
+        TextView textcategory;
+        TextView textbrand;
+        TextView textmodel;
+        TextView textprice;
+        TextView textyear;
+        TextView textsearchdate;
+        TextView BuyerLeads;
+        ImageView editImg;
+        ImageView deleteData;
+        ImageView favImg;
+        ImageView unfavImg;
+        ImageView share;
+        ImageView share1;
+        Button Stopsearch;
+        Button Startsearch;
+        RelativeLayout relativeLayout;
+        TextView Stopdate;
         CardView cardView;
 
-        public SearchHolder(View itemView) {
+        SearchHolder(View itemView) {
             super(itemView);
 
             textcategory = (TextView) itemView.findViewById(R.id.mysearch_category);
@@ -436,14 +437,19 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
         if (str != null) {
 
-            if (str.equals("successdelete")) {
-                CustomToast.customToast(activity, "Search deleted");
-            } else if (str.equals("successstop")) {
-                CustomToast.customToast(activity, "Notification Stopped");
-            } else if (str.equals("successstart")) {
-                CustomToast.customToast(activity, "Notification Started");
-            } else if (str.equals("success_favourite")) {
-                CustomToast.customToast(activity, "Favourite data send");
+            switch (str) {
+                case "successdelete":
+                    CustomToast.customToast(activity, "Search deleted");
+                    break;
+                case "successstop":
+                    CustomToast.customToast(activity, "Notification Stopped");
+                    break;
+                case "successstart":
+                    CustomToast.customToast(activity, "Notification Started");
+                    break;
+                case "success_favourite":
+                    CustomToast.customToast(activity, "Favourite data send");
+                    break;
             }
 
         }

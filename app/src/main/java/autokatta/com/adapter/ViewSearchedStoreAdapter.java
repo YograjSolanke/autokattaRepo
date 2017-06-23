@@ -95,7 +95,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.storelocation.setText(object.getLocation());
         holder.storewebsite.setText(object.getWebsite());
         holder.storetiming.setText(object.getOpenTime() + " TO " + object.getCloseTime());
-//        holder.callText.setText(object.getContact());
+        holder.serviceOffered.setText(object.getCategory());
         holder.storeworkingdays.setText("working days:" + object.getWorkingDays());
         holder.btnlike.setText("Likes(" + object.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + object.getFollowcount() + ")");
@@ -114,6 +114,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.storetiming.setTypeface(tf);
         holder.btnlike.setTypeface(tf);
         holder.btnfollow.setTypeface(tf);
+        holder.serviceOffered.setTypeface(tf);
 
         holder.call_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -337,7 +338,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     }
 
     static class StoreHolder extends RecyclerView.ViewHolder {
-        TextView storename, storelocation, storewebsite, storetiming, storeworkingdays;
+        TextView storename, storelocation, storewebsite, storetiming, storeworkingdays, serviceOffered;
         ImageView store_image, call_image;
         TextView btnshare, btnlike, btnfollow, btnunlike, btnunfollow;
 
@@ -361,7 +362,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             btnlike = (TextView) itemView.findViewById(R.id.like);
             btnfollow = (TextView) itemView.findViewById(R.id.follow);
             detailrel = (CardView) itemView.findViewById(R.id.card_view);
-         //   callText = (TextView) itemView.findViewById(R.id.callText);
+            serviceOffered = (TextView) itemView.findViewById(R.id.servicesOffered);
 
             linearshare = (LinearLayout) itemView.findViewById(R.id.linearshare);
             linearshare1 = (LinearLayout) itemView.findViewById(R.id.linearshare1);

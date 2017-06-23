@@ -171,7 +171,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
 
                                     apiCall.deleteService(serviceId, "delete");
                                     mMainList.remove(position);
-                                    notifyDataSetChanged();
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position, mMainList.size());
 
                                 }
                             })
