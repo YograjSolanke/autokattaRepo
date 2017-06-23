@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -133,6 +132,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
         if (response != null) {
             if (response.isSuccessful()) {
                 analyticsList.clear();
+                mSwipeRefreshLayout.setRefreshing(false);
                 AuctionAnalyticsResponse analyticsResponse = (AuctionAnalyticsResponse) response.body();
 
                 if (!analyticsResponse.getSuccess().isEmpty()) {
@@ -165,6 +165,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
@@ -172,6 +173,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
