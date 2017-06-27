@@ -81,8 +81,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         this.mCallFrom = mCallfrom;
         mApiCall = new ApiCall(mActivity, this);
         mTestConnection = new ConnectionDetector(mActivity);
-        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
-                Context.MODE_PRIVATE).getString("loginContact", "");
+
 
     }
 
@@ -98,7 +97,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     @Override
     public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, final int position) {
         mView = holder;
-
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+                Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mName.setText(mItemList.get(position).getUsername());
         holder.mContact.setText(mItemList.get(position).getContact());
         holder.mAdmin.setText(mItemList.get(position).getMember());
@@ -118,11 +118,11 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         }
 
         if (holder.mAdmin.getText().toString().equals("member")) {
-            holder.mAdmin.setVisibility(View.INVISIBLE);
+            holder.mAdmin.setVisibility(View.GONE);
         }
         if (holder.mContact.getText().toString().equals(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                 Context.MODE_PRIVATE).getString("loginContact", ""))) {
-            holder.mCall.setVisibility(View.INVISIBLE);
+            holder.mCall.setVisibility(View.GONE);
         }
 
         /*String groupName = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE)
@@ -172,7 +172,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                         holder.mName.setText(mItemList.get(position).getUsername());
                 }
             } else
-                holder.mAdmin.setVisibility(View.INVISIBLE);
+                holder.mAdmin.setVisibility(View.GONE);
 
             if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
                 holder.mName.setText("You");
@@ -185,14 +185,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 if (holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("member")) {
                     holder.mOption.setText("Leave");
                 } else {
-                    holder.mOption.setVisibility(View.INVISIBLE);
+                    holder.mOption.setVisibility(View.GONE);
                 }
             }
             if (mCallFrom.equals("MyGroups")) {
                 if (holder.mName.getText().toString().equals("You")) {
                     holder.mOption.setText("Leave");
                 } else if (!holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("Admin")) {
-                    holder.mOption.setVisibility(View.INVISIBLE);
+                    holder.mOption.setVisibility(View.GONE);
                 } else {
                     holder.mOption.setText("Options");
                 }
@@ -270,16 +270,12 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                     options = new CharSequence[]{tx, "Make an admin", "Cancel"};
                 }
 
-
                 final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
                 builder.setTitle("Action");
                 final String finalAction = action;
                 builder.setItems(options, new DialogInterface.OnClickListener() {
-
                     @Override
-
                     public void onClick(DialogInterface dialog, int item) {
-
                         if (options[item].equals("Remove Member") || options[item].equals("Leave")) {
                             new AlertDialog.Builder(mActivity)
                                     //.setTitle(alertText)
@@ -319,7 +315,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                         } else if (options[item].equals("Make an admin") || options[item].equals("Remove from Admin")) {
                             rmContact = holder.mContact.getText().toString();
                             makeAdmin(rmContact, finalAction);
-
+                            holder.mAdmin.setText("Admin");
                         } else if (options[item].equals("Cancel")) {
                             dialog.dismiss();
                         }
@@ -345,6 +341,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
     private void makeAdmin(String contact, String action) {
         if (mTestConnection.isConnectedToInternet()) {
+            mView.mOption.setVisibility(View.GONE);
             mApiCall.makeGroupAdmin(mGroupId, contact, action);
         } else {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
@@ -366,6 +363,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     public int getItemCount() {
         return mItemList.size();
     }
+
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -396,13 +394,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         if (str != null) {
             if (str.equals("success_admin")) {
                 CustomToast.customToast(mActivity, "Admin Successful");
-                Intent intent = new Intent(mActivity, GroupTabs.class);
+                //Intent intent = new Intent(mActivity, GroupTabs.class);
                 /*intent.putExtra("grouptype", "MyGroup");
                 intent.putExtra("className", "MemberListRefreshAdapter");
                 intent.putExtra("bundle_GroupId", mGroupId);*/
 
-                mActivity.startActivity(intent);
-                mActivity.finish();
+                // mActivity.startActivity(intent);
+                //mActivity.finish();
+                notifyDataSetChanged();
             } else if (str.equals("success_1")) {
                 CustomToast.customToast(mActivity, "remove successfully");
             } else {
@@ -416,4 +415,5 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         } else
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
     }
+
 }

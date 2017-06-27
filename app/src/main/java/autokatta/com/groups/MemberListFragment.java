@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -358,4 +357,11 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         textView.setTextColor(Color.WHITE);
         snackbar.show();
     }*/
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSwipeRefreshLayout.setRefreshing(true);
+        getGroupContact(mGroupId);
+    }
 }
