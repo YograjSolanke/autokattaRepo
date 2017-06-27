@@ -28,6 +28,7 @@ public class GroupDetailTabs extends Fragment {
     GroupServicesFragment serviceListFragment;
     MemberListFragment memberListFragment;
     GroupVehicleList groupVehicleList;
+    ViewPager mViewPager;
 
     @Nullable
     @Override
@@ -61,7 +62,7 @@ public class GroupDetailTabs extends Fragment {
         serviceListFragment = new GroupServicesFragment();
         serviceListFragment.setArguments(b);
 
-        ViewPager mViewPager = (ViewPager) mGroupDetail.findViewById(R.id.groups_details_viewpager);
+        mViewPager = (ViewPager) mGroupDetail.findViewById(R.id.groups_details_viewpager);
         if (mViewPager != null) {
             setupViewPager(mViewPager);
         }

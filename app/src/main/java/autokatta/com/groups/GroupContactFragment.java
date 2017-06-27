@@ -143,7 +143,6 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     }
                 }
                 if (!flag) {
-
                     Intent intent = new Intent(getActivity(), GroupsActivity.class);
                     intent.putExtra("grouptype", "MyGroup");
                     intent.putExtra("className", "GroupContactFragment");
@@ -263,11 +262,12 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         if (str != null) {
             if (str.startsWith("success")) {
                 CustomToast.customToast(getActivity(), "Contact Added Successfully");
-                Intent intent = new Intent(getActivity(), GroupsActivity.class);
+                /*Intent intent = new Intent(getActivity(), GroupsActivity.class);
                 intent.putExtra("grouptype", "MyGroup");
                 intent.putExtra("className", "GroupContactFragment");
                 intent.putExtra("bundle_GroupId", mGroup_id);
-                getActivity().startActivity(intent);
+                getActivity().startActivity(intent);*/
+                getActivity().getSupportFragmentManager().popBackStack();
             } else {
                 CustomToast.customToast(getActivity(), "Error");
             }
