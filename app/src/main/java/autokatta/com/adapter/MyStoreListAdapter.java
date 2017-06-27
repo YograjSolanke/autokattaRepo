@@ -141,7 +141,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             holder.stwebsite.setText(mStoreList.get(position).getWebsite());
         }
 
-        holder.stname.setTypeface(tf);
+      //  holder.stname.setTypeface(tf);
         holder.stlocation.setTypeface(tf);
         holder.stwebsite.setTypeface(tf);
         holder.stworkdays.setTypeface(tf);

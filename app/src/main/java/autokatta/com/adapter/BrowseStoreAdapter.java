@@ -88,7 +88,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             holder.storewebsite.setText(success.getWebsite());
         }
 
-        holder.storename.setTypeface(tf);
+     //   holder.storename.setTypeface(tf);
         holder.storelocation.setTypeface(tf);
         holder.storewebsite.setTypeface(tf);
         holder.storetype.setTypeface(tf);
