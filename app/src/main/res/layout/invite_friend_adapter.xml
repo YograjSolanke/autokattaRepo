@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textColor="#2C3343"
+                android:textColor="@color/textColor"
 
                 android:textSize="16dp"/>
             <TextView
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Number"
-                android:textColor="#2C3343"
+                android:textColor="@color/textColor"
 
                 android:textSize="15dp"/>
         </LinearLayout>
