@@ -97,19 +97,31 @@ public class InviteFriendsAdapter extends BaseAdapter implements RequestNotifier
             FilterResults results = new FilterResults();
             final List<GetRegisteredContactsResponse.Success> list = mListCopy;
             int count = list.size();
+            if (filterString != null && filterString.length() > 0) {
+
             final ArrayList<GetRegisteredContactsResponse.Success> nlist = new ArrayList<>(count);
             GetRegisteredContactsResponse.Success filterableString;
             for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);
-                if (filterString.equals("")) {
-                    nlist.add(filterableString);
-                } else if (filterableString.getUsername().toLowerCase().contains(filterString)) {
+                if (filterableString.getUsername().contains(" ")) {
+                    String[] arr = filterableString.getUsername().split(" ");
+                    String fname = arr[0];
+                    String lname = arr[1];
+
+                    if (fname.toLowerCase().startsWith(filterString) || lname.toLowerCase().startsWith(filterString)) {
+                        nlist.add(filterableString);
+                    }
+                } else if (filterableString.getUsername().toLowerCase().startsWith(filterString)) {
                     nlist.add(filterableString);
                 }
             }
 
             results.values = nlist;
             results.count = nlist.size();
+            } else {
+                results.values = list;
+                results.count = list.size();
+            }
             return results;
         }
 

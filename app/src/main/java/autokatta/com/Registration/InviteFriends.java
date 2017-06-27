@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
     InviteFriendsAdapter adapter;
     List<Success> webcontact;
     List<String> finalcontacts;
+    TextView mNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,8 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+        mNoData = (TextView) findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
         invite = (Button) findViewById(R.id.invite);
         skip = (Button) findViewById(R.id.skip);
         lv = (ListView) findViewById(R.id.l1);
@@ -99,15 +102,21 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
             webcontact = new ArrayList<>();
             finalcontacts = new ArrayList<>();
             GetRegisteredContactsResponse mGetRegisteredContactsResponse = (GetRegisteredContactsResponse) response.body();
-            for (GetRegisteredContactsResponse.Success contactRegistered : mGetRegisteredContactsResponse.getSuccess()) {
-                contactRegistered.setContact(contactRegistered.getContact());
-                contactRegistered.setUsername(contactRegistered.getUsername());
-                webcontact.add(contactRegistered);
-            }
+            if (!mGetRegisteredContactsResponse.getSuccess().isEmpty()) {
+                webcontact.clear();
+                mNoData.setVisibility(View.GONE);
+                for (GetRegisteredContactsResponse.Success contactRegistered : mGetRegisteredContactsResponse.getSuccess()) {
+                    contactRegistered.setContact(contactRegistered.getContact());
+                    contactRegistered.setUsername(contactRegistered.getUsername());
+                    webcontact.add(contactRegistered);
+                }
 
             adapter = new InviteFriendsAdapter(InviteFriends.this, webcontact);
             lv.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+            } else {
+                mNoData.setVisibility(View.VISIBLE);
+            }
         }
     }
 
