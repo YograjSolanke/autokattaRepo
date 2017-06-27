@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
@@ -79,7 +78,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
             if (response.isSuccessful()) {
                 Log.i("seller Response", "" + response);
                 BuyerResponse object = (BuyerResponse) response.body();
-                BuyerResponse.Success objsuccess = (BuyerResponse.Success) object.getSuccess();
+                BuyerResponse.Success objsuccess = object.getSuccess();
 
                 for (BuyerResponse.Success.Vehicle obj : objsuccess.getVehicles()) {
                     childlist = new ArrayList<>();
@@ -125,7 +124,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             objectmatch.setRcAvailable(objectmatch.getRcAvailable());
                             objectmatch.setInsuranceValid(objectmatch.getInsuranceValid());
                             objectmatch.setHpcapacity(objectmatch.getHpcapacity());
-
                             objectmatch.setLastcall(objectmatch.getLastcall());
 
 
@@ -165,18 +163,14 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     final TextView mLocationName = (TextView) mLinearView.findViewById(R.id.setlocation);
                     final TextView mPriceName = (TextView) mLinearView.findViewById(R.id.setprice);
                     final TextView mYearName = (TextView) mLinearView.findViewById(R.id.setyear);
-                   final TextView myreg= (TextView) mLinearView.findViewById(R.id.yreg);
+                    final TextView myreg = (TextView) mLinearView.findViewById(R.id.yreg);
                     final TextView mRto_city = (TextView) mLinearView.findViewById(R.id.setrto);
                     final TextView mKms = (TextView) mLinearView.findViewById(R.id.setkms);
                     final TextView mRegno = (TextView) mLinearView.findViewById(R.id.setregno);
-
                     final TextView mmatchCount = (TextView) mLinearView.findViewById(R.id.match_count);
-
                     final ImageView mdownarrow = (ImageView) mLinearView.findViewById(R.id.postdownarrow);
                     final ImageView muparrow = (ImageView) mLinearView.findViewById(R.id.postuparrow);
-
                     ViewFlipper mViewFlipperbuyer = (ViewFlipper) mLinearView.findViewById(R.id.buyervehicalimgflicker);
-
                     final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
                     //final ImageView mImageArrowFirst=(ImageView)mLinearView.findViewById(R.id.imageFirstArrow);
                     mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
@@ -214,12 +208,10 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     mPriceName.setText(mainList.get(i).getPrice());
                     mYearName.setText(mainList.get(i).getYearOfManufacture());
                     mRto_city.setText(mainList.get(i).getRtoCity());
-                    if (mainList.get(i).getRtoCity().equalsIgnoreCase("Unregistered")||mainList.get(i).getRtoCity().equalsIgnoreCase("")||mainList.get(i).getRtoCity().isEmpty())
-                    {
+                    if (mainList.get(i).getRtoCity().equalsIgnoreCase("Unregistered") || mainList.get(i).getRtoCity().equalsIgnoreCase("") || mainList.get(i).getRtoCity().isEmpty()) {
                         mRegno.setVisibility(View.GONE);
                         myreg.setVisibility(View.GONE);
-                    }else
-                    {
+                    } else {
                         mRegno.setText(mainList.get(i).getRegistrationNumber());
 
                     }
@@ -235,11 +227,11 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     }
 
 
-                    final String imagenames = mainList.get(i).getImage();
+                    final String imagenames = mainList.get(i).getImage().replaceAll(" ", "");
 
                     List<String> iname = new ArrayList<>();
 
-                    try {
+                    if (!imagenames.equalsIgnoreCase("")) {
                         String[] imagenamecame = imagenames.split(",");
 
                         if (imagenamecame.length != 0) {
@@ -267,9 +259,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         }
 
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    } else
+                        mViewFlipperbuyer.setBackgroundResource(R.drawable.vehiimg);
 
 //
                     for (int j = 0; j < mainList.get(i).getFound().size(); j++) {
@@ -309,7 +300,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
 
                         if (image_buyer.equals("")) {
-                            buyer_lead_image.setBackgroundResource(R.drawable.logo);
+                            buyer_lead_image.setBackgroundResource(R.drawable.profile);
                         } else {
                             try {
 
@@ -318,7 +309,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                         //.bitmapTransform(new CropCircleTransformation(getActivity()))
                                         .into(buyer_lead_image);
                             } catch (Exception e) {
-                               CustomToast.customToast(getActivity(),"Error image uploading");
+                                CustomToast.customToast(getActivity(), "Error image uploading");
                             }
                         }
                         final String itemLocation = mainList.get(i).getFound().get(j).getLocationCity();
@@ -514,7 +505,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             public void onClick(View v) {
                                 recieverContact = mainList.get(finalI).getFound().get(finalJ).getContactNo();
 
-
                                 Calendar c = Calendar.getInstance();
                                 System.out.println("Current time => " + c.getTime());
 
@@ -565,21 +555,16 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
             Log.i("Check Class", "Buyer Notification Fragment");
             error.printStackTrace();
         }

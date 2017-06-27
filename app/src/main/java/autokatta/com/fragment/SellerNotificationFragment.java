@@ -59,13 +59,9 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     RelativeLayout relativeLayout;
     Button compare;
     String getBundle_vehicle_id = "";
-
     ApiCall mApiCall;
 
-
     @SuppressLint("NewApi")
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
@@ -129,7 +125,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
             if (response.isSuccessful()) {
                 Log.i("seller Response", "" + response);
                 SellerResponse object = (SellerResponse) response.body();
-                SellerResponse.Success objsuccess = (SellerResponse.Success) object.getSuccess();
+                SellerResponse.Success objsuccess = object.getSuccess();
 
                 for (SellerResponse.Success.SavedSearch obj : objsuccess.getSavedSearch()) {
                     childlist = new ArrayList<>();
@@ -217,14 +213,9 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     final TextView mkmsname = (TextView) mLinearView.findViewById(R.id.setkms);
                     final TextView mlocationname = (TextView) mLinearView.findViewById(R.id.setlocation);
                     final TextView mregnoname = (TextView) mLinearView.findViewById(R.id.setregno);
-
                     final TextView msellerMatchCount = (TextView) mLinearView.findViewById(R.id.seller_match_count);
-
-                    //
-
                     ImageView msellerdownarrow = (ImageView) mLinearView.findViewById(R.id.sellerdownarrow);
                     ImageView mselleruparrow = (ImageView) mLinearView.findViewById(R.id.selleruparrow);
-
                     final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
                     //final ImageView mImageArrowFirst=(ImageView)mLinearView.findViewById(R.id.imageFirstArrow);
                     mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
@@ -309,9 +300,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                         TextView mtitle = (TextView) mLinearView2.findViewById(R.id.title);
                         checkBox[j] = (CheckBox) mLinearView2.findViewById(R.id.checkauc);
-
                         ViewFlipper mViewFlippersell = (ViewFlipper) mLinearView2.findViewById(R.id.sellvehicalimgflicker);
-
                         TextView mUserName = (TextView) mLinearView2.findViewById(R.id.username);
                         TextView mVehicleCount = (TextView) mLinearView2.findViewById(R.id.vehiclecount);
                         TextView mDateTime = (TextView) mLinearView2.findViewById(R.id.addon);
@@ -490,7 +479,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         checkBox3.setEnabled(false);
                         checkBox4.setEnabled(false);
                         checkBox5.setEnabled(false);
-
                         checkBox6.setEnabled(false);
                         checkBox7.setEnabled(false);
                         checkBox8.setEnabled(false);
@@ -504,8 +492,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                         List<String> iname = new ArrayList<String>();
 
+                        if (!imagenames.equals("")) {
 
-                        try {
                             String[] imagenamecame = imagenames.split(",");
 
                             if (imagenamecame.length != 0) {
@@ -533,11 +521,9 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 }
 
                             }
+                        } else
+                            mViewFlippersell.setBackgroundResource(R.drawable.vehiimg);
 
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
 
                         int mFlippingsell = 0;
 
@@ -655,20 +641,15 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class", "Seller Notification Fragment");
             error.printStackTrace();

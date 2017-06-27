@@ -565,19 +565,14 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Company Based Registration");
             error.printStackTrace();

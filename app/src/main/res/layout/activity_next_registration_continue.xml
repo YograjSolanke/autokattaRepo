@@ -11,19 +11,19 @@
         android:id="@+id/hint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/layout_top"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="@dimen/layout_top">
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
+            android:layout_marginEnd="@dimen/layout_top"
             android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="1"
-            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -32,12 +32,12 @@
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
+            android:layout_marginEnd="@dimen/layout_top"
             android:layout_toEndOf="@+id/textView1"
             android:background="@mipmap/ic_circle_red"
             android:gravity="center"
             android:padding="2sp"
             android:text="2"
-            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -46,12 +46,12 @@
             android:layout_width="20dip"
             android:layout_height="20dip"
             android:layout_gravity="bottom|start"
+            android:layout_marginEnd="@dimen/layout_top"
             android:layout_toEndOf="@+id/textView2"
             android:background="@drawable/ic_circular_shape_silhouette"
             android:gravity="center"
             android:padding="2sp"
             android:text="3"
-            android:layout_marginEnd="@dimen/layout_top"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -59,8 +59,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/hint_layout"
-        android:layout_above="@+id/tablerow">
+        android:layout_above="@+id/tablerow"
+        android:layout_below="@+id/hint_layout">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@android:color/transparent"
-                    android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM- "
+                    android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-. "
                     android:hint="Enter Vehicle No"
                     android:inputType="text"
                     android:textColor="#2C3343"
@@ -744,11 +744,12 @@
         </RelativeLayout>
     </ScrollView>
 
-    <TableRow
+    <LinearLayout
         android:id="@+id/tablerow"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
         android:weightSum="2">
 
         <Button
@@ -768,11 +769,12 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@color/background"
             android:selectAllOnFocus="true"
             android:text="Submit"
             android:textColor="@color/white"
             android:textSize="16sp" />
-    </TableRow>
+    </LinearLayout>
 </RelativeLayout>

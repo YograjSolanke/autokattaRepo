@@ -94,7 +94,6 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/bbrand"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
 
@@ -118,7 +117,6 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/mmodel"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
 
@@ -142,7 +140,6 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/pprice"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
 
@@ -166,7 +163,6 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/yyear"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
 
@@ -189,7 +185,6 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/yrto"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
 
@@ -212,7 +207,6 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/ykms"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
 
@@ -235,7 +229,6 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/ylocation"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
 
@@ -258,7 +251,6 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/yregno"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
 
@@ -281,9 +273,9 @@
             android:layout_marginEnd="2dp"
             android:layout_marginTop="2dip"
             android:layout_toEndOf="@+id/yregno"
-            android:layout_toStartOf="@+id/sellvehicalimgflicker"
             android:text="--"
             android:textColor="#808080" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"

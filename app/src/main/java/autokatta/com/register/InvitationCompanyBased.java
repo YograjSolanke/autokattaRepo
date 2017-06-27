@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -35,6 +37,7 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
     List<GetContactByCompanyResponse.Success> invitationDataArrayList = new ArrayList<>();
     CompanyBasedInvitationAdapter adapter;
     Button Next;
+    TextView mNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
         lv = (ListView) findViewById(R.id.l1);
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         Next = (Button) findViewById(R.id.next);
+        mNoData = (TextView) findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
 
         ApiCall mApiCall = new ApiCall(InvitationCompanyBased.this, this);
         mApiCall.getContactByCompany(page, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
@@ -85,35 +90,38 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
     public void notifySuccess(Response<?> response) {
         if (response.isSuccessful()) {
             GetContactByCompanyResponse mgetContactByCompanyResponse = (GetContactByCompanyResponse) response.body();
-            for (GetContactByCompanyResponse.Success contactbycompany : mgetContactByCompanyResponse.getSuccess()) {
-                contactbycompany.setContact(contactbycompany.getContact());
-                contactbycompany.setUsername(contactbycompany.getUsername());
-                contactbycompany.setProfilePic(contactbycompany.getProfilePic());
-                invitationDataArrayList.add(contactbycompany);
-            }
-            adapter = new CompanyBasedInvitationAdapter(InvitationCompanyBased.this, invitationDataArrayList);
-            lv.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+
+            if (!mgetContactByCompanyResponse.getSuccess().isEmpty()) {
+                mNoData.setVisibility(View.GONE);
+                for (GetContactByCompanyResponse.Success contactbycompany : mgetContactByCompanyResponse.getSuccess()) {
+                    contactbycompany.setContact(contactbycompany.getContact());
+                    contactbycompany.setUsername(contactbycompany.getUsername());
+                    contactbycompany.setProfilePic(contactbycompany.getProfilePic());
+                    invitationDataArrayList.add(contactbycompany);
+                }
+                adapter = new CompanyBasedInvitationAdapter(InvitationCompanyBased.this, invitationDataArrayList);
+                lv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            } else
+                mNoData.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", "InvitationCompanyBased Activity");
+            error.printStackTrace();
         }
     }
 

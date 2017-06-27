@@ -32,6 +32,7 @@ import autokatta.com.response.GetContactByCompanyResponse.Success;
 import retrofit2.Response;
 
 public class SkillsBasedInvitation extends AppCompatActivity implements RequestNotifier {
+
     private ListView lv;
     EditText inputSearch;
     String page = "2";
@@ -39,6 +40,7 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
     CompanyBasedInvitationAdapter adapter;
     Button Next;
     RelativeLayout mSkillRelative;
+    TextView mNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         Next = (Button) findViewById(R.id.next);
         mSkillRelative = (RelativeLayout) findViewById(R.id.skill_based);
+        mNoData = (TextView) findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
 
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getContactByCompany(page, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
@@ -91,16 +95,20 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
     public void notifySuccess(Response<?> response) {
         if (response.isSuccessful()) {
             GetContactByCompanyResponse mgetContactByCompanyResponse = (GetContactByCompanyResponse) response.body();
-            for (GetContactByCompanyResponse.Success contactbycompany : mgetContactByCompanyResponse.getSuccess()) {
-                contactbycompany.setContact(contactbycompany.getContact());
-                contactbycompany.setUsername(contactbycompany.getUsername());
-                contactbycompany.setProfilePic(contactbycompany.getProfilePic());
-                invitationDataArrayList.add(contactbycompany);
-            }
+            if (!mgetContactByCompanyResponse.getSuccess().isEmpty()) {
+                mNoData.setVisibility(View.GONE);
+                for (GetContactByCompanyResponse.Success contactbycompany : mgetContactByCompanyResponse.getSuccess()) {
+                    contactbycompany.setContact(contactbycompany.getContact());
+                    contactbycompany.setUsername(contactbycompany.getUsername());
+                    contactbycompany.setProfilePic(contactbycompany.getProfilePic());
+                    invitationDataArrayList.add(contactbycompany);
+                }
 
-            adapter = new CompanyBasedInvitationAdapter(SkillsBasedInvitation.this, invitationDataArrayList);
-            lv.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+                adapter = new CompanyBasedInvitationAdapter(SkillsBasedInvitation.this, invitationDataArrayList);
+                lv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            } else
+                mNoData.setVisibility(View.VISIBLE);
         }
     }
 
@@ -145,7 +153,7 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
             textView.setTextColor(Color.YELLOW);
             snackbar.show();
         } else {
-            Log.i("Check Class-", "Add more Admins Store Fragment");
+            Log.i("Check Class-", "SkillsBasedInvitation Activity");
             error.printStackTrace();
         }
     }
