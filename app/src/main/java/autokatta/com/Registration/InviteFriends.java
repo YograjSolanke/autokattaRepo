@@ -111,9 +111,9 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
                     webcontact.add(contactRegistered);
                 }
 
-            adapter = new InviteFriendsAdapter(InviteFriends.this, webcontact);
-            lv.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+                adapter = new InviteFriendsAdapter(InviteFriends.this, webcontact);
+                lv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             } else {
                 mNoData.setVisibility(View.VISIBLE);
             }
