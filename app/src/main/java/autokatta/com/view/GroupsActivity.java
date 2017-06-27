@@ -28,11 +28,11 @@ public class GroupsActivity extends AppCompatActivity {
         String grouptype = i.getStringExtra("grouptype");
         className = i.getStringExtra("className");
         if (grouptype != null) {
-
             b.putString("grouptype", i.getStringExtra("grouptype"));
             b.putString("className", i.getStringExtra("className"));
             b.putString("bundle_GroupId", i.getStringExtra("bundle_GroupId"));
             b.putString("bundle_GroupName", i.getStringExtra("bundle_GroupName"));
+            b.putString("tabIndex", i.getStringExtra("tabIndex"));
             groupDetailTabs.setArguments(b);
         }
         getSupportFragmentManager().beginTransaction()

@@ -29,6 +29,8 @@ public class GroupDetailTabs extends Fragment {
     MemberListFragment memberListFragment;
     GroupVehicleList groupVehicleList;
     ViewPager mViewPager;
+    String tabAt;
+    int tabIndex;
 
     @Nullable
     @Override
@@ -44,7 +46,10 @@ public class GroupDetailTabs extends Fragment {
             b.putString("className", b1.getString("className"));
             b.putString("bundle_GroupId", b1.getString("bundle_GroupId"));
             b.putString("bundle_GroupName", b1.getString("bundle_GroupName"));
-
+            tabAt = b1.getString("tabIndex");
+            if (tabAt != null) {
+                tabIndex = Integer.parseInt(tabAt);
+            }
         }
 
         memberListFragment = new MemberListFragment();
@@ -68,6 +73,9 @@ public class GroupDetailTabs extends Fragment {
         }
 
         TabLayout tabLayout = (TabLayout) mGroupDetail.findViewById(R.id.groups_details_tab);
+        if (tabAt != null) {
+            mViewPager.setCurrentItem(tabIndex);
+        }
         tabLayout.setupWithViewPager(mViewPager);
         return mGroupDetail;
     }

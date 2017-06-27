@@ -36,6 +36,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
 import autokatta.com.view.GroupTabs;
+import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -49,6 +50,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private Activity mActivity;
     private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
     private String mCallFrom;
+    private String bundle_GroupName;
     private String myContact;
     private String mGroupId;
     private ApiCall mApiCall;
@@ -74,11 +76,13 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         }
     }
 
-    public MemberListRefreshAdapter(Activity mActivity1, String GroupId, List<GetGroupContactsResponse.Success> mItemList, String mCallfrom) {
+    public MemberListRefreshAdapter(Activity mActivity1, String GroupId,
+                                    List<GetGroupContactsResponse.Success> mItemList, String mCallfrom, String bundle_GroupName) {
         this.mActivity = mActivity1;
         mGroupId = GroupId;
         this.mItemList = mItemList;
         this.mCallFrom = mCallfrom;
+        this.bundle_GroupName = bundle_GroupName;
         mApiCall = new ApiCall(mActivity, this);
         mTestConnection = new ConnectionDetector(mActivity);
 
@@ -394,14 +398,16 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         if (str != null) {
             if (str.equals("success_admin")) {
                 CustomToast.customToast(mActivity, "Admin Successful");
-                //Intent intent = new Intent(mActivity, GroupTabs.class);
-                /*intent.putExtra("grouptype", "MyGroup");
-                intent.putExtra("className", "MemberListRefreshAdapter");
-                intent.putExtra("bundle_GroupId", mGroupId);*/
+                Intent intent = new Intent(mActivity, GroupsActivity.class);
+                intent.putExtra("grouptype", "MyGroups");
+                intent.putExtra("className", "MyAdapter");
+                intent.putExtra("bundle_GroupId", mGroupId);
+                intent.putExtra("bundle_GroupName", bundle_GroupName);
+                intent.putExtra("tabIndex", "1");
 
-                // mActivity.startActivity(intent);
-                //mActivity.finish();
-                notifyDataSetChanged();
+                mActivity.startActivity(intent);
+                mActivity.finish();
+                //notifyDataSetChanged();
             } else if (str.equals("success_1")) {
                 CustomToast.customToast(mActivity, "remove successfully");
             } else {

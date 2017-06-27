@@ -150,7 +150,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         }
                         mSuccesses.add(success);
                     }
-                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom);
+                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom, bundle_GroupName);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
                 } else {
