@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -164,6 +166,8 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                 mLayoutManager.setReverseLayout(true);
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(PreviewGoingEvents.this, LinearLayoutManager.VERTICAL));
 
                 mCollapsingToolbar.setTitle(auctioneername);
                 mStartDate.setText(auction_startdate);
@@ -171,8 +175,10 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                 mEndDate.setText(auction_enddate);
                 mEndTime.setText(auction_endtime);
                 mCloseOpenType.setText(openClose + " " + "Type Auction");
-                mAuctionText.setText(getString(R.string.going_auction));
-                mCategory.setText(strCategory);
+                //mAuctionText.setText(getString(R.string.going_auction));
+                mAuctionText.setText("Title: " + action_title);
+                mCategory.setText("Category: " + strCategory);
+                //mCategory.setText(strCategory);
                 mLocation.setText(strLocation);
 
                 final TextView tv = mLiveTimer;

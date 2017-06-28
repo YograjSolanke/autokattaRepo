@@ -144,16 +144,16 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
                             android:layout_marginEnd="@dimen/margin_small"
+                            android:contentDescription="@string/app_name"
                             android:src="@mipmap/map" />
 
                         <TextView
                             android:id="@+id/storelocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
                             android:layout_gravity="center"
+                            android:fontFamily="sans-serif"
                             android:text="Location" />
 
                     </LinearLayout>
@@ -168,16 +168,16 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
                             android:layout_marginEnd="@dimen/margin_small"
+                            android:contentDescription="@string/app_name"
                             android:src="@mipmap/web" />
 
                         <TextView
                             android:id="@+id/storewebsite"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
                             android:layout_gravity="center"
+                            android:fontFamily="sans-serif"
                             android:text="Website" />
 
                     </LinearLayout>
@@ -192,16 +192,16 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
                             android:layout_marginEnd="@dimen/margin_small"
+                            android:contentDescription="@string/app_name"
                             android:src="@mipmap/ic_timer" />
 
                         <TextView
                             android:id="@+id/storetiming"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
                             android:layout_gravity="center"
+                            android:fontFamily="sans-serif"
                             android:text="Timing" />
 
                     </LinearLayout>
@@ -216,16 +216,16 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
                             android:layout_marginEnd="@dimen/margin_small"
+                            android:contentDescription="@string/app_name"
                             android:src="@mipmap/ic_wrench" />
 
                         <TextView
                             android:id="@+id/storeservices"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
                             android:layout_gravity="center"
+                            android:fontFamily="sans-serif"
                             android:text="Store Services" />
 
                     </LinearLayout>
@@ -240,16 +240,16 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
                             android:layout_marginEnd="@dimen/margin_small"
+                            android:contentDescription="@string/app_name"
                             android:src="@mipmap/ic_calendar_small" />
 
                         <TextView
                             android:id="@+id/storeworkingdays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
                             android:layout_gravity="center"
+                            android:fontFamily="sans-serif"
                             android:text="Working days" />
 
                     </LinearLayout>
@@ -264,8 +264,8 @@
                             android:id="@+id/productCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
                             android:layout_gravity="center"
+                            android:fontFamily="sans-serif"
                             android:text="Products(10)" />
 
                     </LinearLayout>
@@ -280,8 +280,8 @@
                             android:id="@+id/serviceCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
                             android:layout_gravity="center"
+                            android:fontFamily="sans-serif"
                             android:text="Services(10)" />
 
                     </LinearLayout>
@@ -1176,4 +1176,11 @@
         </RelativeLayout>-->
         <!--</android.support.v7.widget.CardView>-->
     </android.support.v7.widget.CardView>
+
+    <View
+        android:id="@+id/vieww"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/card_view"
+        android:background="@color/grey" />
 </RelativeLayout>

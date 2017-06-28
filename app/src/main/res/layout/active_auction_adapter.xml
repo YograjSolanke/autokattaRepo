@@ -19,7 +19,6 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-
                 android:id="@+id/relativelayoutmain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -140,7 +139,6 @@
                         android:textColor="#808080" />
 
                     <TextView
-
                         android:id="@+id/editTime"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
@@ -162,7 +160,6 @@
                         android:enabled="false"
                         android:hint="Date"
                         android:textColor="#808080" />
-                    />
                 </RelativeLayout>
 
 
@@ -182,7 +179,6 @@
                         android:text="End :"
                         android:textColor="#808080"
                         android:textStyle="bold">
-
                     </TextView>
 
                     <TextView
@@ -195,7 +191,6 @@
                         android:textColor="#808080" />
 
                     <TextView
-
                         android:id="@+id/editText"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
@@ -217,7 +212,6 @@
                         android:enabled="false"
                         android:hint="Date"
                         android:textColor="#808080" />
-                    />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -242,6 +236,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/Txt_auction_category"
                         android:hint="category"
+                        android:textStyle="bold"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -282,7 +277,6 @@
                     android:orientation="horizontal"
                     android:weightSum="1">
 
-
                     <Button
                         style="?android:attr/borderlessButtonStyle"
                         android:id="@+id/btnclauses"
@@ -317,7 +311,6 @@
                 android:background="@android:drawable/dialog_holo_light_frame">
 
                 <LinearLayout
-
                     android:id="@+id/relatebutton"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -392,7 +385,10 @@
         android:orientation="vertical" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="2dp"
+        android:layout_below="@+id/card_view"
+        android:background="@color/grey" />
 
 </RelativeLayout>

@@ -15,21 +15,19 @@
         android:layout_marginTop="@dimen/card_margin"
         android:foreground="?attr/selectableItemBackground">
 
-
         <RelativeLayout
-
             android:id="@+id/Rel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:id="@+id/userimage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/profile"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/profile" />
 
             <RelativeLayout
                 android:id="@+id/relname"
@@ -37,8 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_toStartOf="@+id/call"
-                android:layout_toEndOf="@+id/userimage">
+                android:layout_toEndOf="@+id/userimage"
+                android:layout_toStartOf="@+id/call">
 
                 <TextView
                     android:id="@+id/nametxt"
@@ -74,7 +72,6 @@
                     android:textStyle="bold" />
 
                 <TextView
-
                     android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,7 +146,6 @@
                     android:text="Confirm"
                     android:textColor="@color/white" />
 
-
             </RelativeLayout>
 
 
@@ -160,8 +156,8 @@
                 android:layout_below="@+id/relname"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toStartOf="@+id/call"
-                android:layout_toEndOf="@+id/userimage">
+                android:layout_toEndOf="@+id/userimage"
+                android:layout_toStartOf="@+id/call">
 
                 <TextView
                     android:id="@+id/usertypetxt"
@@ -181,7 +177,6 @@
             </RelativeLayout>
 
             <ImageView
-                android:contentDescription="@string/app_name"
                 android:id="@+id/call"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -189,7 +184,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/call_icon" />
+                android:background="@drawable/call_icon"
+                android:contentDescription="@string/app_name" />
 
             <LinearLayout
                 android:id="@+id/relreminder"
@@ -204,6 +200,7 @@
 
                 <Button
                     android:id="@+id/reminder_for_limit"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_weight="0.50"
@@ -213,6 +210,7 @@
 
                 <Button
                     android:id="@+id/blacklist"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="120dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="2dp"
@@ -224,6 +222,7 @@
 
                 <Button
                     android:id="@+id/removeblacklist"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="120dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="2dp"
@@ -281,10 +280,11 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
+
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:id="@+id/view"
         android:layout_below="@+id/auction_card_view"
-        android:background="@color/grey"/>
+        android:background="@color/grey" />
 </RelativeLayout>

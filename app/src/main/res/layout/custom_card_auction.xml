@@ -142,7 +142,7 @@
                         android:id="@+id/Txt_auction_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Auction Category :"
+                        android:text="Auction Category: "
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -152,7 +152,8 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/Txt_auction_category"
                         android:hint="category"
-                        android:textColor="#808080" />
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -204,12 +205,12 @@
                         android:layout_toEndOf="@+id/btnspecial_clauses">
 
                         <ImageView
+                            android:id="@+id/stamp"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:id="@+id/stamp"
                             android:layout_marginStart="@dimen/fab_margin"
-                            android:visibility="gone"
-                            android:contentDescription="@string/app_name" />
+                            android:contentDescription="@string/app_name"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/closeopentxt"
@@ -346,10 +347,10 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="@dimen/margin_small"
                         android:layout_weight="1"
                         android:background="@color/medium_sea_green"
                         android:text="PREVIEW"
-                        android:layout_marginEnd="@dimen/margin_small"
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:visibility="visible" />
@@ -359,10 +360,10 @@
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="@dimen/margin_small"
                         android:layout_weight="1"
                         android:background="@color/medium_sea_green"
                         android:text="GOING"
-                        android:layout_marginEnd="@dimen/margin_small"
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:visibility="gone" />

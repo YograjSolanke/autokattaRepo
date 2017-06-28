@@ -38,7 +38,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
             no_of_vehicles, auctioncontact, specialcluases, endDateTime, openClose, auctiontype, showPrice, ignoreGoing,
             startDateTime, blackListStatus, keyWord, strCategory, strLocation;
     Boolean isEMDPaid;
-    TextView mLiveTitle, mLiveVehicles, mLiveAuctionType, mLiveCurrentlyActive, mEndDate, mEndTime, mLiveTimer;
+    TextView mLiveTitle, mLiveVehicles, mLiveAuctionType, mCategory, mEndDate, mEndTime, mLiveTimer;
     TextView mLimitForBid, mHighBidTotal, mTotalRemains;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
     CountDownTimer cdt;
@@ -88,7 +88,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
         mLiveTitle = (TextView) findViewById(R.id.live_title);
         mLiveVehicles = (TextView) findViewById(R.id.live_no_of_vehicles);
         mLiveAuctionType = (TextView) findViewById(R.id.live_auction_type);
-        mLiveCurrentlyActive = (TextView) findViewById(R.id.live_currently_active);
+        mCategory = (TextView) findViewById(R.id.category);
         mEndDate = (TextView) findViewById(R.id.end_date);
         mEndTime = (TextView) findViewById(R.id.end_time);
         mLiveTimer = (TextView) findViewById(R.id.live_timer);
@@ -122,7 +122,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
                     mLiveTitle.setText(action_title);
                     mLiveVehicles.setText(no_of_vehicles);
                     mLiveAuctionType.setText(auctiontype);
-                    mLiveCurrentlyActive.setText(openClose + "" + "type auction");
+                    mCategory.setText(strCategory);
                     mEndDate.setText(auction_enddate);
                     mEndTime.setText(auction_endtime);
                     //mLiveTimer.setText(action_title);

@@ -354,7 +354,10 @@
         android:orientation="vertical" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="2dp"
+        android:layout_below="@+id/card_view"
+        android:background="@color/grey" />
 
 </RelativeLayout>

@@ -5,14 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -21,7 +24,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetVehicleForAuctionResponse;
 import retrofit2.Response;
 
-public class MyAuctionVehicleDetails extends AppCompatActivity implements RequestNotifier {
+public class MyAuctionVehicleDetails extends AppCompatActivity implements RequestNotifier, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     String contactnumber, auction_id, vehicle_id;
     //String aauction_id, action_title, auctioncontact, start_date, start_time, end_date, end_time, auction_type, location, special_clauses, no_of_vehicles, endDateTime, highbid;
@@ -30,12 +33,14 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
 
     TextView vehiclemodel, vehicletitle, vehiclebrand, vehicleyear, vehicle_km_hrs, vehiclerc_invoice, vehicle_rto_city, vehicle_location, current_bid, moredetail, startpricetxt, startprice, lotNo;
     TextView categorydetails, regyeardetails, insurencedetails, ownerdetails, rc_availabledetails, ins_validitydetails, tax_validitydetails, fitness_validitydetails, permit_validitydetails, fueldetails, seatingdetails, hypodetails, permitdetails, drivedetails, transmissiondetails, bodydetails, boatdetails, rvdetails, applicationdetails, colordetails, tyredetails, bustypedetails, airdetails, registrationdetails, enginedetails, implementationdetails, chassicdetails, hpcapacitydetails, jibdetails, boondetails;
-    ImageView vehicleImage;
+    //ImageView vehicleImage;
     View vhapcapacity, vimplement, vair, vbus, vapp, vboat, vbody, vtrans, vdrive, vseat, vboon, vjib, vrv, vfuel, vhypo, vtyre, vengine, vchassic;
     TextView hpcapacitytxt, jibtxt, boontxt, bustext, airtext, seatcaptxt, implimentstext, applicationtext, transmissiontext, drivetext, bodytext, boattext, rvtext;
     TextView cameracount;
     String sendImage = "", Allimages = "";
-    ArrayList<String> iname = new ArrayList<>();
+    List<String> iname = new ArrayList<>();
+    SliderLayout sliderLayout;
+    HashMap<String, String> Hash_file_maps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +64,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
         moredetail = (TextView) findViewById(R.id.moredetail);
         startpricetxt = (TextView) findViewById(R.id.startpricetxt);
         startprice = (TextView) findViewById(R.id.startprice);
-        vehicleImage = (ImageView) findViewById(R.id.auctionimage);
+        // vehicleImage = (ImageView) findViewById(R.id.auctionimage);
         //lotNo = (TextView) findViewById(R.id.setlotno);
 
         categorydetails = (TextView) findViewById(R.id.categorydetails);
@@ -125,6 +130,8 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
         vchassic = (View) findViewById(R.id.vchassic);
         vrv = (View) findViewById(R.id.vrv);
 
+        sliderLayout = (SliderLayout) findViewById(R.id.auctionimage);
+
         vehicle_id = getIntent().getExtras().getString("vehicle_id");
         auction_id = getIntent().getExtras().getString("auction_id");
 
@@ -164,7 +171,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
                     categorydetails.setText(auction.getCategory());
                     vehicletitle.setText(auction.getTitle());
                     vehicleyear.setText(auction.getYear());
-                    if ((auction.getImage() == null) || auction.getImage().equals("") || auction.getImage().equals("null")) {
+                   /* if ((auction.getImage() == null) || auction.getImage().equals("") || auction.getImage().equals("null")) {
                         vehicleImage.setBackgroundResource(R.drawable.vehiimg);
                         sendImage = "http://autokatta.com/mobile/uploads/amitkamble.jpg";
                     } else {
@@ -179,7 +186,44 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
                                 .override(100, 100)
                                 .into(vehicleImage);
 
+                    }*/
+
+                    Hash_file_maps = new HashMap<>();
+                    String dp_path = "http://autokatta.com/mobile/uploads/";
+                    String dp = "";
+                    dp = auction.getImage();
+                    if (dp.contains(",")) {
+                        String[] items = dp.split(",");
+                        for (String item : items) {
+                            Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
+                        }
+                    } else {
+
+                        Hash_file_maps.put("Image-" + dp, dp_path + dp.replaceAll(" ", ""));
                     }
+
+                    /* Banner...*/
+                    if (!Hash_file_maps.isEmpty()) {
+                        for (String name : Hash_file_maps.keySet()) {
+                            TextSliderView textSliderView = new TextSliderView(MyAuctionVehicleDetails.this);
+                            textSliderView
+                            /*.description(name)*/
+                                    .image(Hash_file_maps.get(name))
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener(this);
+                            textSliderView.bundle(new Bundle());
+                            textSliderView.getBundle()
+                                    .putString("extra", name);
+                            sliderLayout.addSlider(textSliderView);
+                        }
+                    } else
+                        sliderLayout.setBackgroundResource(R.drawable.vehiimg);
+
+                    sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+                    sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                    sliderLayout.setDuration(4000);
+                    sliderLayout.addOnPageChangeListener(this);
+
 
                     if (auction.getCategory().equalsIgnoreCase("bus")) {
                         bustypedetails.setVisibility(View.VISIBLE);
@@ -329,17 +373,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
 
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
+    /*    @Override
     public void onBackPressed() {
         super.onBackPressed();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -374,6 +408,32 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
                 super.onBackPressed();
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        sliderLayout.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
 

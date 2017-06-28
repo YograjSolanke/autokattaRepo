@@ -9,9 +9,9 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="5dp"
         card_view:cardCornerRadius="2dp"
         card_view:contentPadding="5dp">
@@ -23,7 +23,7 @@
             android:orientation="vertical"
             android:padding="10dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp" >
+            android:paddingRight="10dp">
             <!--<TextView-->
             <!--android:id="@+id/tv"-->
             <!--android:layout_width="wrap_content"-->
@@ -33,25 +33,25 @@
                 android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
 
             <ImageView
                 android:id="@+id/byselfimage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/checkbox"
                 android:background="@drawable/vehiimg"
-                android:layout_toRightOf="@+id/checkbox"
-                android:layout_toEndOf="@+id/checkbox" />
+                android:contentDescription="@string/app_name" />
+
             <RelativeLayout
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/byselfimage"
                 android:id="@+id/RelativeLayoutself3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/byselfimage">
 
                 <TextView
                     android:id="@+id/byselftitle"
@@ -66,19 +66,20 @@
                     android:id="@+id/vehicletitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/byselftitle"
                     android:text="title"
                     android:textColor="#848484"
-                    android:layout_toRightOf="@+id/byselftitle"
                     android:textSize="12sp" />
 
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/byselfimage"
-                android:layout_below="@+id/RelativeLayoutself3"
                 android:id="@+id/RelativeLayoutcategory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RelativeLayoutself3"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/byselfimage">
 
                 <TextView
                     android:id="@+id/byselfcategory"
@@ -93,19 +94,20 @@
                     android:id="@+id/vehiclecategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/byselfcategory"
                     android:text="category"
                     android:textColor="#848484"
-                    android:layout_toRightOf="@+id/byselfcategory"
                     android:textSize="12sp" />
 
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/byselfimage"
-                android:layout_below="@+id/RelativeLayoutcategory"
                 android:id="@+id/RelativeLayoutbrand"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RelativeLayoutcategory"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/byselfimage">
 
                 <TextView
                     android:id="@+id/byselfbrand"
@@ -120,19 +122,21 @@
                     android:id="@+id/vehiclebrand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/byselfbrand"
                     android:text="brand"
                     android:textColor="#848484"
-                    android:layout_toRightOf="@+id/byselfbrand"
                     android:textSize="12sp" />
 
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/byselfimage"
-                android:layout_below="@+id/RelativeLayoutbrand"
                 android:id="@+id/RelativeLayoutself4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RelativeLayoutbrand"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/byselfimage">
+
                 <TextView
                     android:id="@+id/byselfmodel"
                     android:layout_width="55dp"
@@ -141,23 +145,26 @@
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/vehiclemodel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/byselfmodel"
                     android:text="model"
                     android:textColor="#848484"
-                    android:layout_toRightOf="@+id/byselfmodel"
                     android:textSize="12sp" />
 
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/byselfimage"
-                android:layout_below="@+id/RelativeLayoutself4"
                 android:id="@+id/RelativeLayoutself5"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RelativeLayoutself4"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/byselfimage">
+
                 <TextView
                     android:id="@+id/byselfrtocity"
                     android:layout_width="55dp"
@@ -166,94 +173,109 @@
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/vehiclertocity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/byselfrtocity"
                     android:text="city "
                     android:textColor="#848484"
-                    android:layout_toRightOf="@+id/byselfrtocity"
                     android:textSize="12sp" />
 
             </RelativeLayout>
+
             <RelativeLayout
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/byselfimage"
-                android:layout_below="@+id/RelativeLayoutself5"
                 android:id="@+id/RelativeLayoutself6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RelativeLayoutself5"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/byselfimage">
+
                 <TextView
-                    android:textColor="#848484"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:text="Color"
                     android:id="@+id/byselfcolor"
                     android:layout_width="55dp"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_toRightOf="@+id/byselfcolor"
-                    android:textSize="12sp"
-                    android:text="color"
+                    android:layout_height="wrap_content"
+                    android:text="Color"
                     android:textColor="#848484"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/vehiclecolor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/byselfcolor"
+                    android:text="color"
+                    android:textColor="#848484"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/byselfimage"
-                android:layout_below="@+id/RelativeLayoutself6"
                 android:id="@+id/RelativeLayoutself7"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RelativeLayoutself6"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/byselfimage">
+
                 <TextView
-                    android:textColor="#848484"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:text="Reg.No"
                     android:id="@+id/byselfreg"
                     android:layout_width="55dp"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_toRightOf="@+id/byselfreg"
-                    android:textSize="12sp"
-                    android:text="-"
+                    android:layout_height="wrap_content"
+                    android:text="Reg.No"
                     android:textColor="#848484"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/vehiclereg"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/byselfreg"
+                    android:text="-"
+                    android:textColor="#848484"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/byselfimage"
-                android:layout_below="@+id/RelativeLayoutself7"
                 android:id="@+id/RelativeLayoutself8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RelativeLayoutself7"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/byselfimage">
+
                 <TextView
-                    android:textColor="#848484"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:text="Manufacture Year"
                     android:id="@+id/byself_manu_year"
                     android:layout_width="110dp"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_toRightOf="@+id/byself_manu_year"
-                    android:textSize="12sp"
-                    android:text="-"
+                    android:layout_height="wrap_content"
+                    android:text="Manufacture Year"
                     android:textColor="#848484"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/vehicle_manu_year"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/byself_manu_year"
+                    android:text="-"
+                    android:textColor="#848484"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+    <View
+        android:id="@+id/vieww"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/card_view"
+        android:background="@color/grey" />
 </RelativeLayout>

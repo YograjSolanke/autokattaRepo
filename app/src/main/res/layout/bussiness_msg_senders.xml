@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:background="#efefef">
+    android:background="#efefef"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/mCardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:id="@+id/mCardview"
         card_view:cardCornerRadius="10dp"
         card_view:contentPadding="5dp">
 
@@ -21,30 +21,30 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/profile"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:contentDescription="@string/app_name"
                 android:padding="5dp"
-                android:id="@+id/profile"
-                android:src="@drawable/profile"
-                android:contentDescription="@string/app_name" />
+                android:src="@drawable/profile" />
 
             <TextView
+                android:id="@+id/msgFrom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Message From"
-                android:layout_toStartOf="@+id/enquiry"
                 android:layout_toEndOf="@+id/profile"
-                android:paddingLeft="10dp"
+                android:layout_toStartOf="@+id/enquiry"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="Message From"
                 android:textColor="@color/textColor"
-                android:textStyle="bold"
-                android:id="@+id/msgFrom" />
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/enquiry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_marginStart="@dimen/padding_small"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_comment_question_outline"
@@ -56,7 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/padding_small"
                 android:contentDescription="@string/app_name"
@@ -64,49 +63,56 @@
                 android:visibility="visible" />
 
             <TextView
+                android:id="@+id/msgFromCnt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Message From Cnt"
                 android:layout_below="@+id/msgFrom"
-                android:layout_toRightOf="@+id/profile"
-                android:paddingLeft="10dp"
-                android:layout_toLeftOf="@+id/forward"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/textColor"
-                android:id="@+id/msgFromCnt" />
+                android:layout_toEndOf="@+id/profile"
+                android:layout_toStartOf="@+id/forward"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="Message From Cnt"
+                android:textColor="@color/textColor" />
 
             <TextView
+                android:id="@+id/msgText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="last message"
-                android:lines="1"
-                android:layout_toLeftOf="@+id/forward"
                 android:layout_below="@+id/msgFromCnt"
-                android:layout_toRightOf="@+id/profile"
-                android:paddingLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:paddingRight="5dp"
-                android:textColor="@color/textColor"
-                android:id="@+id/msgText" />
+                android:layout_toEndOf="@+id/profile"
+                android:layout_toStartOf="@+id/forward"
+                android:lines="1"
+                android:paddingEnd="5dp"
+                android:paddingStart="10dp"
+                android:text="last message"
+                android:textColor="@color/textColor" />
 
             <TextView
+                android:id="@+id/msgTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="last message time"
-                android:lines="1"
                 android:layout_below="@+id/msgText"
-                android:layout_toRightOf="@+id/profile"
-                android:paddingLeft="10dp"
                 android:layout_marginTop="5dp"
-                android:paddingRight="5dp"
-                android:textColor="@color/textColor"
-                android:id="@+id/msgTime" />
+                android:layout_toEndOf="@+id/profile"
+                android:lines="1"
+                android:paddingEnd="5dp"
+                android:paddingStart="10dp"
+                android:text="last message time"
+                android:textColor="@color/textColor" />
 
 
         </RelativeLayout>
 
 
     </android.support.v7.widget.CardView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/grey" />
 
 
 </LinearLayout>

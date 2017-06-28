@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.fragment.MyEndedEventFragment;
-import autokatta.com.fragment.MyParticipatedEndedFragment;
 
 /**
  * Created by ak-004 on 27/3/17.
@@ -41,7 +40,7 @@ public class MyEndedTabFragment extends Fragment {
     private void setupViewPager(ViewPager mViewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
         tabAdapterName.addFragment(new MyEndedEventFragment(), "My Ended Events");
-        tabAdapterName.addFragment(new MyParticipatedEndedFragment(), "My Participated Ended");
+        //tabAdapterName.addFragment(new MyParticipatedEndedFragment(), "My Participated Ended");
         mViewPager.setAdapter(tabAdapterName);
     }
 }
