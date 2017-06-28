@@ -7,12 +7,15 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/activity_groups_tab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:tabGravity="fill"
         app:tabMode="fixed"
         android:background="@color/colorPrimary"
-        app:tabTextColor="#ffffff"/>
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="#B0C4DE"
+        android:longClickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="35dip" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/activity_groups_tab_viewpager"

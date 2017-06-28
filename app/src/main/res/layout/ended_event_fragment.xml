@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
-
 
     <android.support.design.widget.TabLayout
         android:id="@+id/ended_event_tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dip"
         android:background="@color/colorPrimary"
+        android:longClickable="true"
         app:tabGravity="fill"
-        app:tabTextColor="@color/white"
-        app:tabIndicatorColor="@color/orange"
-        app:tabSelectedTextColor="@color/orange"
-        app:tabMode="fixed" />
+        app:tabIndicatorColor="@color/white"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="#B0C4DE" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/ended_event_tabs_viewpager"
@@ -23,6 +23,5 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/ended_event_tabs"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
 
 </RelativeLayout>
