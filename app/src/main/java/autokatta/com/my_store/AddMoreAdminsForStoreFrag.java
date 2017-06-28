@@ -121,24 +121,24 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StoreAdminAdapter.boxdata.clear();
-                System.out.println("finalAdmins=====" + finaladmins);
-                finaladmins = "";
-                addStoreAdmins(store_id, finaladmins);
-//                Bundle b = new Bundle();
-//                // b.putString("action", "main");
-//                b.putString("store_id", store_id);
-//
-//
-//                if (!callFrom.equalsIgnoreCase("interestbased")) {
-//                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
-//                    intent.putExtras(b);
-//                    getActivity().startActivity(intent);
-//                } else {
-//                    Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
-//                    getActivity().startActivity(i);
-//                }
-//                getActivity().finish();
+                Bundle b = new Bundle();
+                //  b.putString("action", "main");
+                b.putString("store_id", store_id);
+                b.putString("flow_tab_name", "adminMore");
+                if (!callFrom.equalsIgnoreCase("interestbased")) {
+                    getActivity().finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
+                    intent.putExtras(b);
+                    getActivity().startActivity(intent, options.toBundle());
+
+                } else {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
+                    getActivity().startActivity(i, options.toBundle());
+                    getActivity().finish();
+
+                }
 
             }
         });
