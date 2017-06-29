@@ -5,7 +5,6 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.widget.NestedScrollView;
@@ -117,6 +116,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         txtInvite.setVisibility(View.GONE);
                     }
                 });
+
+                if (getIntent().getExtras() != null) {
+                    edtName.setText(getIntent().getExtras().getString("sendername"));
+                    edtContact.setText(getIntent().getExtras().getString("sender"));
+                    edtName.setSelection(edtName.getText().length());
+                    edtContact.setSelection(edtContact.getText().length());
+                }
 
                 txtUser.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -354,14 +360,16 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.left_to_right, R.anim.right_to_left);
             startActivity(new Intent(getApplicationContext(), ManualEnquiry.class), options.toBundle());
             finish();
         } else {
             finish();
             startActivity(new Intent(getApplicationContext(), ManualEnquiry.class));
-        }
+        }*/
     }
 
     @Override

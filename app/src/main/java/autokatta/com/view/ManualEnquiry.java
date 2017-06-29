@@ -147,7 +147,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             case R.id.add_manual:
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(ManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 startActivity(new Intent(getApplicationContext(), AddManualEnquiry.class), options.toBundle());
-                finish();
+                //finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

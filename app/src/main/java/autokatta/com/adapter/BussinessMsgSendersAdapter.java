@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.enquiries.AllEnquiryTabActivity;
 import autokatta.com.response.BroadcastReceivedResponse;
+import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.ChatActivity;
 import autokatta.com.view.OtherProfile;
 
@@ -98,7 +98,12 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
             @Override
             public void onClick(View view) {
                 ActivityOptions option = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                mActivity.startActivity(new Intent(mActivity, AllEnquiryTabActivity.class), option.toBundle());
+                Bundle b = new Bundle();
+                b.putString("sender", msender);
+                b.putString("sendername", msendername);
+                Intent intent = new Intent(mActivity, AddManualEnquiry.class);
+                intent.putExtras(b);
+                mActivity.startActivity(intent, option.toBundle());
 
             }
         });
