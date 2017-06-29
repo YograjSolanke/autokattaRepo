@@ -168,6 +168,15 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         btnbyreauction.setOnClickListener(this);
         txtSheets.setOnClickListener(this);
         buttonnext.setOnClickListener(this);
+        editpencil.setVisibility(View.GONE);
+        donecheck.setVisibility(View.VISIBLE);
+        auctionTitle.setEnabled(true);
+        startDate.setEnabled(true);
+        startTime.setEnabled(true);
+        endDate.setEnabled(true);
+        endTime.setEnabled(true);
+        btnspecial_clauses.setEnabled(true);
+        btnspecial_clauses.setVisibility(View.VISIBLE);
 
 
         getActivity().runOnUiThread(new Runnable() {
@@ -413,13 +422,15 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 //                    starttime.setError("Enter start time");
                     CustomToast.customToast(getActivity(), "Enter start time");
                 } else if (startDateUpdate.equals(dateString) && !genericFunctions.startTimeEndTimeValidation(time, startTimeUpdate)) {
-                    CustomToast.customToast(getActivity(),  "time is invalid");
+                    //CustomToast.customToast(getActivity(), "time is invalid");
+                    startTime.setError("Time is invalid");
+                    startTime.requestFocus();
 
                 } else if (endDateUpdate.equals("")) {
                     CustomToast.customToast(getActivity(), "Enter end date");
 //                    enddate.setError("Enter end date");
                 } else if (endTimeUpdate.equals("")) {
-                    CustomToast.customToast(getActivity(),"Enter end time");
+                    CustomToast.customToast(getActivity(), "Enter end time");
 //                    endtime.setError("Enter end time");
                 } else if (!genericFunctions.startDateValidatioon(startDateUpdate)) {
                     startDate.setError("Enter valid Date");
@@ -442,7 +453,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 break;
 
             case R.id.buttonnext:
-
+                if (donecheck.getVisibility() == View.VISIBLE) {
+                    CustomToast.customToast(getActivity(), "Please Confirm Auction Details");
+                } else {
                 List<AuctionAllVehicleData> finalVehiclesData = new ArrayList<>();
                 List<AuctionAllVehicleData> byselfVehiclesData = new ArrayList<>();
                 List<AuctionAllVehicleData> reauctionVehiclesData = new ArrayList<>();
@@ -461,9 +474,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 }
 
                 if (finalVehiclesData.size() == 0)
-                    CustomToast.customToast(getActivity(),"Please select vehicle(s)");
+                    CustomToast.customToast(getActivity(), "Please select vehicle(s)");
                 else {
-                    CustomToast.customToast(getActivity(),"Please confirm vehicles that you selected now");
+                    CustomToast.customToast(getActivity(), "Please confirm vehicles that you selected now");
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("finalVehiclesData", (Serializable) finalVehiclesData);
                     bundle.putString("auction_id", auction_id);
@@ -492,6 +505,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         fragmentTransaction.addToBackStack("AuctionCreateConfirm");
                         fragmentTransaction.commit();
                     }
+                }
                 }
                 break;
 
