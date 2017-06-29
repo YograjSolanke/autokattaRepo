@@ -18,15 +18,17 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/preview_next_myactive_auction_tabs"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/card_title_height"
         android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorPrimary"
+        android:longClickable="true"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom"
         app:tabGravity="fill"
-        app:tabIndicatorColor="#C8C9CC"
-        app:tabMode="scrollable"
-        app:tabTextColor="#ffffff" />
+        app:tabIndicatorColor="@color/white"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="#B0C4DE" />
 
 
     <android.support.design.widget.AppBarLayout
