@@ -390,8 +390,10 @@
         android:orientation="vertical" />
 
     <View
+        android:id="@+id/vieww"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="2dp"
+        android:background="@color/grey" />
 
 
 </LinearLayout>

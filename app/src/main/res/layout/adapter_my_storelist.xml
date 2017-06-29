@@ -3,6 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <android.support.v7.widget.CardView
         android:id="@+id/adapter_mystoreListCard_view"
         android:layout_width="match_parent"
@@ -39,11 +40,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/profile"
                         android:background="@color/medium_sea_green"
-                        android:text="4.0"
                         android:maxLength="4"
+                        android:text="4.0"
                         android:textColor="@color/white"
                         android:textStyle="bold"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <RatingBar
                         android:id="@+id/storerating"
@@ -83,7 +84,6 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="10dp"
-                        android:layout_toStartOf="@+id/like"
                         android:gravity="center"
                         android:text="Unfollow"
                         android:visibility="gone" />
@@ -100,10 +100,10 @@
                         android:id="@+id/editstname"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/layout_top"
-                        android:fontFamily="sans-serif"
-                        android:layout_toStartOf="@+id/storedelete"
                         android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/layout_top"
+                        android:layout_toStartOf="@+id/storedelete"
+                        android:fontFamily="sans-serif"
                         android:text="Store Name"
                         android:textSize="@dimen/article_subheading"
                         android:textStyle="bold" />
@@ -121,9 +121,9 @@
                         android:id="@+id/autolocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_below="@+id/storetype"
                         android:layout_toStartOf="@+id/storedelete"
-                        android:layout_alignParentStart="true"
                         android:drawableStart="@mipmap/map"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
@@ -158,7 +158,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="Store Services"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/editworkingdays"
@@ -171,11 +171,11 @@
                         android:text="Working days" />
 
                     <TextView
+                        android:id="@+id/servicesOffered"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/servicesOffered"
-                        android:drawableStart="@mipmap/ic_wrench"
                         android:layout_below="@+id/editworkingdays"
+                        android:drawableStart="@mipmap/ic_wrench"
                         android:text="services offered" />
 
 
@@ -199,14 +199,14 @@
 
             <LinearLayout
                 android:id="@+id/action_buttons"
-                android:layout_below="@+id/main_view"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/main_view"
                 android:layout_marginTop="@dimen/margin_small"
-                android:gravity="center"
                 android:baselineAligned="false"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="4">
 
@@ -355,8 +355,8 @@
                         android:drawablePadding="1dp"
                         android:drawableStart="@drawable/followicon"
                         android:gravity="center"
-                        android:textColor="@color/text_color"
-                        android:text="Following" />
+                        android:text="Following"
+                        android:textColor="@color/text_color" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -900,4 +900,11 @@
                 </LinearLayout>
             </RelativeLayout>-->
     </android.support.v7.widget.CardView>
+
+    <View
+        android:id="@+id/vieww"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/adapter_mystoreListCard_view"
+        android:background="@color/grey" />
 </RelativeLayout>
