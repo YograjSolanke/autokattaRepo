@@ -317,6 +317,7 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                         model.setEndDate(success.getEndDate());
                         model.setEndTime(success.getEndTime());
                         model.setLocation(success.getLocation());
+                        model.setImage(success.getImage());
                         model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
                         model.setEndDateTime(success.getEndDateTime());
                         model.setStartDateTime(success.getStartDateTime());

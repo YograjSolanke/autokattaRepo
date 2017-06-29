@@ -2,12 +2,15 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -18,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +33,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -300,13 +306,32 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         if (mItemList.get(position).getKeyWord().equals("sale")) {
             holder.title.setText("Sale Title");
             holder.mShare.setVisibility(View.GONE);
+            if (!auctionType.equals("Going") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+                holder.mAuctionGoing.setVisibility(View.GONE);
+            } else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);
+
         } else if (mItemList.get(position).getKeyWord().equals("loan")) {
             holder.title.setText("Loan Title");
+            if (!auctionType.equals("Going") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+                holder.mAuctionGoing.setVisibility(View.GONE);
+            } else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);
+
         } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
             holder.title.setText("Exchange Title");
+            if (!auctionType.equals("Going") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+                holder.mAuctionGoing.setVisibility(View.GONE);
+            } else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);
+
         } else if (mItemList.get(position).getKeyWord().equals("service")) {
             holder.title.setText("Service Title");
             holder.mShare.setVisibility(View.GONE);
+            if (!auctionType.equals("Going") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+                holder.mAuctionGoing.setVisibility(View.GONE);
+            } else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);
         }
 
         holder.mAuctionGoing.setOnClickListener(new OnClickListener() {
@@ -578,6 +603,10 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                String imageFilePath = "", imagename = "http://autokatta.com/mobile/AutokattaImages/" + "logo.png";
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
                 if (mContact.equals(mItemList.get(position).getContact()))
                     whoseAuction = "your";
                 else
@@ -593,7 +622,15 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                        /* "0" + "\n"+//.auctionGoingcount+"="+
                         "0" + "\n"+//auctionIgnorecount*/
                             "Auctioneer: " + whoseAuction;
+
                 } else if (mItemList.get(position).getKeyWord().equals("loan")) {
+
+                    if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
+                            mItemList.get(position).getImage().equalsIgnoreCase("null")) {
+                        imagename = "http://autokatta.com/mobile/AutokattaImages/" + "logo.png";
+                    } else {
+                        imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mItemList.get(position).getImage();
+                    }
 
                     allDetails = "Loan Title: " + mItemList.get(position).getName() + "\n" +
                             /*"No Of Vehicle: " + mItemList.get(position).getNoOfVehicles() + "\n" +*/
@@ -603,7 +640,15 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                        /* "0" + "\n"+//.auctionGoingcount+"="+
                         "0" + "\n"+//auctionIgnorecount*/
                             "Loan Owner: " + whoseAuction;
+
                 } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+
+                    if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
+                            mItemList.get(position).getImage().equalsIgnoreCase("null")) {
+                        imagename = "http://autokatta.com/mobile/AutokattaImages/" + "logo.png";
+                    } else {
+                        imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mItemList.get(position).getImage();
+                    }
 
                     allDetails = "Exchange Title: " + mItemList.get(position).getName() + "\n" +
                             /*"No Of Vehicle: " + mItemList.get(position).getNoOfVehicles() + "\n" +*/
@@ -613,23 +658,46 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                        /* "0" + "\n"+//.auctionGoingcount+"="+
                         "0" + "\n"+//auctionIgnorecount*/
                             "Exchange Owner: " + whoseAuction;
+
                 }
 
 
-                Intent intent = new Intent(Intent.ACTION_SEND);
-
-                /*mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "auction").apply();*/
-
+                /*Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 mActivity.startActivity(intent);
+                dialog.dismiss();
+*/
+
+
+                Log.e("TAG", "img : " + imagename);
+
+                DownloadManager.Request request = new DownloadManager.Request(
+                        Uri.parse(imagename));
+                request.allowScanningByMediaScanner();
+                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                Log.e("ShareImagePath :", filename);
+                Log.e("TAG", "img : " + imagename);
+
+                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                Log.e("TAG", "img URL: " + imagename);
+
+                manager.enqueue(request);
+
+                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                System.out.println("ImageFilePath:" + imageFilePath);
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
                 dialog.dismiss();
             }
 

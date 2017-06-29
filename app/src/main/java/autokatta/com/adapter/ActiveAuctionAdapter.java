@@ -1,27 +1,34 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -146,30 +153,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
         holder.btnclause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
-                alertDialog.setTitle("Special Clauses");
-                final TextView input = new TextView(activity);
-                input.setText(spcl);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
-                lp.setMarginStart(30);
-                input.setBackgroundColor(Color.LTGRAY);
-                input.setLayoutParams(lp);
-                input.setPadding(40, 40, 40, 40);
-                input.setGravity(Gravity.CENTER_VERTICAL);
-                input.setTextColor(Color.parseColor("#110359"));
-                input.setTextSize(20);
-                alertDialog.setView(input);
 
-                alertDialog.setNeutralButton("cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                alertDialog.show();*/
                 AlertDialog dialog = new AlertDialog.Builder(activity)
                         .setTitle("Special Clauses")
                         .setMessage("YOUR_MSG")
@@ -235,9 +219,6 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
         holder.relativeshare.setOnClickListener(new View.OnClickListener() {
 
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
-
             @Override
             public void onClick(View v) {
 
@@ -265,31 +246,43 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
         holder.btnshare.setOnClickListener(new View.OnClickListener() {
 
+            String imageFilePath = "", imagename = "http://autokatta.com/mobile/AutokattaImages/" + "logo.png";
             Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
 
             @Override
             public void onClick(View v) {
 
-                allDetails = auctionDetailsArrayList.get(position).getActionTitle() + "="
-                        + auctionDetailsArrayList.get(position).getNoOfVehicle() + "="
-                        + auctionDetailsArrayList.get(position).getEndDate() + "=" +
-                        auctionDetailsArrayList.get(position).getEndTime() + "=" +
-                        auctionDetailsArrayList.get(position).getAuctionType() + "=" +
-                        "0" + "=" + "0" + "=" + "a";
+                allDetails = "Auction Title: " + auctionDetailsArrayList.get(position).getActionTitle() + "\n" +
+                        "No Of Vehicle: " + auctionDetailsArrayList.get(position).getNoOfVehicle() + "\n" +
+                        "Auction End Date: " + auctionDetailsArrayList.get(position).getEndDate() + "\n" +
+                        "Auction End Time: " + auctionDetailsArrayList.get(position).getEndTime() + "\n" +
+                        "Auction Type: " + auctionDetailsArrayList.get(position).getAuctionType() + "\n";
 
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "auction").apply();
+                Log.e("TAG", "img : " + imagename);
 
-                System.out.println("Share Image \n");
+                DownloadManager.Request request = new DownloadManager.Request(
+                        Uri.parse(imagename));
+                request.allowScanningByMediaScanner();
+                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                Log.e("ShareImagePath :", filename);
+                Log.e("TAG", "img : " + imagename);
+
+                DownloadManager manager = (DownloadManager) activity.getApplication()
+                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                Log.e("TAG", "img URL: " + imagename);
+
+                manager.enqueue(request);
+
+                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                System.out.println("ImageFilePath:" + imageFilePath);
+
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
-                activity.startActivity(intent);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
             }
         });

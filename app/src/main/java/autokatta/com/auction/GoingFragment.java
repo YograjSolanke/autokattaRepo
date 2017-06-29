@@ -246,7 +246,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     mLiveSaleEventList.add(model);
                 }
                 mSaleCount.setText(String.valueOf(mLiveSaleEventList.size()));
-                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveSaleEventList, "Upcoming");
+                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveSaleEventList, "Going");
                 mSaleRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
@@ -294,7 +294,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     mLiveServiceEventList.add(model);
                 }
                 mServiceCount.setText(String.valueOf(mLiveServiceEventList.size()));
-                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveServiceEventList, "Upcoming");
+                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveServiceEventList, "Going");
                 mServiceEventRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
@@ -342,7 +342,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     mLiveExchangeEventList.add(model);
                 }
                 mExchangeEventCount.setText(String.valueOf(mLiveExchangeEventList.size()));
-                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveExchangeEventList, "Upcoming");
+                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveExchangeEventList, "Going");
                 mExchangeEventRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
@@ -390,7 +390,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     mLiveLoanEventList.add(model);
                 }
                 mLoanMelaCount.setText(String.valueOf(mLiveLoanEventList.size()));
-                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveLoanEventList, "Upcoming");
+                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveLoanEventList, "Going");
                 mLoanMelaRecyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
             }
