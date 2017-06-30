@@ -212,23 +212,25 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
                 String startPrice = holder.startprice1.getText().toString();
                 String reservedPrice = holder.reserveprice1.getText().toString();
                 String vehicleId = obj.vehicleId;
+                if (holder.checkBox.isChecked()) {
 
-                if (startPrice.equals("")) {
-                    //isSave.set(position,false);
-                    holder.startprice1.setError("Start price should not be empty");
-                } else if (reservedPrice.equals("")) {
-                    //isSave.set(position,false);
-                    holder.reserveprice1.setError("Reserved price should not be empty");
-                } else if (!startPrice.equals("") && !reservedPrice.equals("")) {
+                    if (startPrice.equals("")) {
+                        //isSave.set(position,false);
+                        holder.startprice1.setError("Start price should not be empty");
+                    } else if (reservedPrice.equals("")) {
+                        //isSave.set(position,false);
+                        holder.reserveprice1.setError("Reserved price should not be empty");
+                    } else if (!startPrice.equals("") && !reservedPrice.equals("")) {
 
-                    addPrice(startPrice, reservedPrice, vehicleId);
-                    isSave.set(position, true);
+                        addPrice(startPrice, reservedPrice, vehicleId);
+                        isSave.set(position, true);
 
 
-                    holder.startprice1.setEnabled(false);
-                    holder.reserveprice1.setEnabled(false);
-                    holder.btnedit.setVisibility(View.VISIBLE);
-                    holder.btnsave.setVisibility(View.INVISIBLE);
+                        holder.startprice1.setEnabled(false);
+                        holder.reserveprice1.setEnabled(false);
+                        holder.btnedit.setVisibility(View.VISIBLE);
+                        holder.btnsave.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
