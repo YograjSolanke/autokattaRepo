@@ -132,6 +132,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
             service_id = getIntent().getExtras().getString("service_id");
             vehicle_id = getIntent().getExtras().getString("vehicle_id");
 
+            setTitle(sendername);
             chatwithtext.setText(sendername);
             apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);
             if (product_id.equals("") && service_id.equals("") && vehicle_id.equals(""))
