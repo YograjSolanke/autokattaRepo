@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -56,6 +57,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     ApiCall mApiCall;
     String mGroupId = "", className = "";
     Button goSearch;
+    TextView mNoData;
     Bundle getBundle;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
@@ -79,7 +81,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getMyVehicles(rcontact);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(activity, getString(R.string.no_internet));
         }
     }
@@ -99,7 +101,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(activity, getString(R.string.no_internet));
         }
     }
@@ -112,70 +114,79 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 if (response.body() instanceof GetGroupVehiclesResponse) {
                     mSuccesses.clear();
                     GetGroupVehiclesResponse mGetGroupVehiclesResponse = (GetGroupVehiclesResponse) response.body();
-                    for (GetGroupVehiclesResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
-                        success.setVehicleId(success.getVehicleId());
-                        success.setTitle(success.getTitle());
-                        success.setCategory(success.getCategory());
-                        success.setModel(success.getModel());
-                        success.setManufacturer(success.getManufacturer());
-                        success.setRTOCity(success.getRTOCity());
-                        success.setLocationCity(success.getLocationCity());
-                        success.setLocationState(success.getLocationState());
-                        success.setLocationCountry(success.getLocationCountry());
-                        success.setLocationAddress(success.getLocationAddress());
-                        success.setYearOfRegistration(success.getYearOfRegistration());
-                        success.setYearOfManufacture(success.getYearOfManufacture());
-                        success.setContact(success.getContact());
-                        success.setColor(success.getColor());
-                        success.setRegistrationNumber(success.getRegistrationNumber());
-                        success.setRcAvailable(success.getRcAvailable());
-                        success.setInsuranceValid(success.getInsuranceValid());
-                        success.setInsuranceIdv(success.getInsuranceIdv());
-                        success.setTaxValidity(success.getTaxValidity());
-                        success.setFitnessValidity(success.getFitnessValidity());
-                        success.setPermitValidity(success.getPermitValidity());
-                        success.setFualType(success.getFualType());
-                        success.setSeatingCapacity(success.getSeatingCapacity());
-                        success.setPermit(success.getPermit());
-                        success.setKmsRunning(success.getKmsRunning());
-                        success.setNoOfOwners(success.getNoOfOwners());
-                        success.setHypothication(success.getHypothication());
-                        success.setEngineNo(success.getEngineNo());
-                        success.setChassisNo(success.getChassisNo());
-                        success.setPrice(success.getPrice());
-                        //success.setImage(success.getImage());
-                        success.setDrive(success.getDrive());
-                        success.setTransmission(success.getTransmission());
-                        success.setBodyType(success.getBodyType());
-                        success.setBoatType(success.getBoatType());
-                        success.setRvType(success.getRvType());
-                        success.setApplication(success.getApplication());
-                        success.setStatus(success.getStatus());
-                        success.setDate(success.getDate());
-                        success.setVehiclelikestatus(success.getVehiclelikestatus());
-                        success.setUsername(success.getUsername());
+                    if (!mGetGroupVehiclesResponse.getSuccess().isEmpty()) {
+                        mNoData.setVisibility(View.GONE);
+                        for (GetGroupVehiclesResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
+                            success.setVehicleId(success.getVehicleId());
+                            success.setTitle(success.getTitle());
+                            success.setCategory(success.getCategory());
+                            success.setModel(success.getModel());
+                            success.setManufacturer(success.getManufacturer());
+                            success.setRTOCity(success.getRTOCity());
+                            success.setLocationCity(success.getLocationCity());
+                            success.setLocationState(success.getLocationState());
+                            success.setLocationCountry(success.getLocationCountry());
+                            success.setLocationAddress(success.getLocationAddress());
+                            success.setYearOfRegistration(success.getYearOfRegistration());
+                            success.setYearOfManufacture(success.getYearOfManufacture());
+                            success.setContact(success.getContact());
+                            success.setColor(success.getColor());
+                            success.setRegistrationNumber(success.getRegistrationNumber());
+                            success.setRcAvailable(success.getRcAvailable());
+                            success.setInsuranceValid(success.getInsuranceValid());
+                            success.setInsuranceIdv(success.getInsuranceIdv());
+                            success.setTaxValidity(success.getTaxValidity());
+                            success.setFitnessValidity(success.getFitnessValidity());
+                            success.setPermitValidity(success.getPermitValidity());
+                            success.setFualType(success.getFualType());
+                            success.setSeatingCapacity(success.getSeatingCapacity());
+                            success.setPermit(success.getPermit());
+                            success.setKmsRunning(success.getKmsRunning());
+                            success.setNoOfOwners(success.getNoOfOwners());
+                            success.setHypothication(success.getHypothication());
+                            success.setEngineNo(success.getEngineNo());
+                            success.setChassisNo(success.getChassisNo());
+                            success.setPrice(success.getPrice());
+                            //success.setImage(success.getImage());
+                            success.setDrive(success.getDrive());
+                            success.setTransmission(success.getTransmission());
+                            success.setBodyType(success.getBodyType());
+                            success.setBoatType(success.getBoatType());
+                            success.setRvType(success.getRvType());
+                            success.setApplication(success.getApplication());
+                            success.setStatus(success.getStatus());
+                            success.setDate(success.getDate());
+                            success.setVehiclelikestatus(success.getVehiclelikestatus());
+                            success.setUsername(success.getUsername());
 
-                        String img = success.getImage();
-                        String firstWord = "", all = "";
-                        if (img.contains(",")) {
-                            String arr[] = img.split(",", 2);
-                            firstWord = arr[0].replaceAll(" ", "");
-                            success.setSingleImage(firstWord);
-                            all = img.replace(",", "/ ");
-                            success.setAllImage(all);
-                        } else {
-                            success.setSingleImage(img);
-                            success.setAllImage(all);
+                            String img = success.getImage();
+                            String firstWord = "", all = "";
+                            if (img.contains(",")) {
+                                String arr[] = img.split(",", 2);
+                                firstWord = arr[0].replaceAll(" ", "");
+                                success.setSingleImage(firstWord);
+                                all = img.replace(",", "/ ");
+                                success.setAllImage(all);
+                            } else {
+                                success.setSingleImage(img);
+                                success.setAllImage(all);
+                            }
+                            mSuccesses.add(success);
                         }
-                        mSuccesses.add(success);
+                        mGroupVehicleRefreshAdapter = new GroupVehicleRefreshAdapter(getActivity(), mSuccesses);
+                        if (mSuccesses.size() != 0) {
+                            mRecyclerView.setAdapter(mGroupVehicleRefreshAdapter);
+                            mGroupVehicleRefreshAdapter.notifyDataSetChanged();
+                        } else {
+                            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                            relativefilter.setVisibility(View.GONE);
+                        }
+                    } else {
+                        mNoData.setVisibility(View.VISIBLE);
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
-                    mGroupVehicleRefreshAdapter = new GroupVehicleRefreshAdapter(getActivity(), mSuccesses);
-                    if (mSuccesses.size() != 0) {
-                        mRecyclerView.setAdapter(mGroupVehicleRefreshAdapter);
-                        mGroupVehicleRefreshAdapter.notifyDataSetChanged();
-                    }
-                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                    relativefilter.setVisibility(View.GONE);
+
+
                 }
                 //Rto city
                 else if (response.body() instanceof GetRTOCityResponse) {
@@ -195,12 +206,12 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(),getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
                 //showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //showMessage(activity, getString(R.string.no_response));
         }
     }
@@ -219,21 +230,21 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }  else {
+        } else {
             Log.i("Check Class-"
                     , "groupvehiclelist");
             error.printStackTrace();
@@ -294,6 +305,8 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 relativefilter = (RelativeLayout) mGroupVehicleList.findViewById(R.id.relative_filter);
                 goSearch = (Button) mGroupVehicleList.findViewById(R.id.goSearch);
 
+                mNoData = (TextView) mGroupVehicleList.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mGroupVehicleList.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView.setHasFixedSize(true);
                 mLayoutManager = new LinearLayoutManager(getActivity());
@@ -382,7 +395,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                         if (brand.equals("") && model.equals("") && version.equals("") && city.equals("") && RTOcity.equals("")
                                 && price.equals("") && reg_year.equals("") && mgf_year.equals("") && kmsrunning.equals("")
                                 && no_of_owner.equals("")) {
-                            CustomToast.customToast(getActivity(),"Enter value to search");
+                            CustomToast.customToast(getActivity(), "Enter value to search");
                             //showMessage(getActivity(),"Enter value to search");
                         } else {
                             getGroupVehicles();

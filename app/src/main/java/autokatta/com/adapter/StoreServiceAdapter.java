@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -158,7 +157,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
 
 
                 if (!connectionDetector.isConnectedToInternet()) {
-                    Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(activity, "Please try later");
+                   // Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
 
                 } else {
 

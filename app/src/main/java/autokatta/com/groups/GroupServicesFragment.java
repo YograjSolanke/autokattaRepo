@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -115,7 +114,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    CustomToast.customToast(getActivity(),"No services found");
+                 //   CustomToast.customToast(getActivity(),"No services found");
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
