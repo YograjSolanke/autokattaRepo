@@ -165,7 +165,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
         if (mItemList.get(position).getSingleImage().equals("") || mItemList.get(position).getSingleImage().equals(null) ||
                 mItemList.get(position).getSingleImage().equals("null")) {
-            holder.mCardImage.setBackgroundResource(R.mipmap.ic_launcher);
+            holder.mCardImage.setBackgroundResource(R.drawable.vehiimg);
         } else {
             //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
             String dppath = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getSingleImage();
@@ -188,7 +188,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         }
 
         if (mItemList.get(position).getContact().equals(myContact)) {
-            Snackbar.make(holder.mCardView, "You Can't Like Your Profile: ", Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(holder.mCardView, "You Can't Like Your Profile: ", Snackbar.LENGTH_LONG).show();
            /* holder.mLike.setVisibility(View.VISIBLE);
             holder.mLike.setEnabled(false);
             holder.mUnlike.setVisibility(View.VISIBLE);

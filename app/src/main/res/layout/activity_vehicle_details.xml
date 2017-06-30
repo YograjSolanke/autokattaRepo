@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="autokatta.com.view.VehicleDetails">
@@ -20,13 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/card_title_height"
         android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorPrimary"
+        android:longClickable="true"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom"
         app:tabGravity="fill"
-        app:tabIndicatorColor="#C8C9CC"
+        app:tabIndicatorColor="@color/white"
         app:tabMode="fixed"
-        app:tabTextColor="#ffffff" />
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="#B0C4DE" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -49,8 +51,8 @@
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
                 android:background="@drawable/vehiimg"
+                android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax" />
             <!--<ImageView
                 android:id="@+id/vehicle_image"
@@ -73,13 +75,13 @@
 
     <!--<include layout="@layout/content_vehicle_details" />-->
 
-   <!-- <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />-->
+    <!-- <android.support.design.widget.FloatingActionButton
+         android:id="@+id/fab"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="bottom|end"
+         android:layout_margin="@dimen/fab_margin"
+         app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu_red"
@@ -87,9 +89,9 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
 
@@ -99,40 +101,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_call"
-            fab:fab_size="mini"
-            fab:fab_label="Send Enquiry" />
+            fab:fab_label="Send Enquiry"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/call_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_call"
-            fab:fab_size="mini"
-            fab:fab_label="Call" />
+            fab:fab_label="Call"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/like_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/like"
-            fab:fab_size="mini"
-            fab:fab_label="Like" />
+            fab:fab_label="Like"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_share"
-            fab:fab_size="mini"
-            fab:fab_label="Share" />
+            fab:fab_label="Share"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/autokatta_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/autoshare"
-            fab:fab_size="mini"
-            fab:fab_label="Share" />
+            fab:fab_label="Share"
+            fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
 
