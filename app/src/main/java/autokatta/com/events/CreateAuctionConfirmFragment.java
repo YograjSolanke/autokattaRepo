@@ -228,8 +228,8 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
     private void UpdateAuction() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
 
-        mApiCall.UpdateAuction(bundleAuctionId, "", "", "", "",
-                "", "", stringVehicleIds, SaveActivate, ShowHide, stringNoofVehicle);
+        mApiCall.UpdateAuction(bundleAuctionId, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime,
+                bundleAuctionEndDate, bundleAuctionEndTime, bundleSpecialClauses, stringVehicleIds, SaveActivate, ShowHide, stringNoofVehicle);
     }
 
     @Override
