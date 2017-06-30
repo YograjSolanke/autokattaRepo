@@ -18,6 +18,9 @@ import android.widget.TextView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,8 +28,12 @@ import java.util.HashMap;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import retrofit2.Response;
 
-public class LiveAuctionEventBiding extends AppCompatActivity implements View.OnClickListener {
+public class LiveAuctionEventBiding extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     CollapsingToolbarLayout collapsingToolbar;
     HighestBid mHighestBid;
@@ -328,7 +335,8 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
                 call(auctioncontact);
                 break;
             case R.id.mail:
-                mail();
+                //mail();
+                mailAuctionData();
                 break;
         }
     }
@@ -351,5 +359,47 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements View.On
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
         startActivity(Intent.createChooser(emailIntent, "Send Email..."));
+    }
+
+    private void mailAuctionData() {
+        ApiCall apiCall = new ApiCall(LiveAuctionEventBiding.this, this);
+        apiCall.SendAuctionMail(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""), AuctionId);
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", "Live Auction Event Biding Activity");
+            error.printStackTrace();
+        }
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            if (str.startsWith("1"))
+                CustomToast.customToast(getApplicationContext(), "Mail Sent Successfully");
+            else
+                CustomToast.customToast(getApplicationContext(), "Problem in sending mail");
+
+        } else
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+
     }
 }

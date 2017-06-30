@@ -272,8 +272,8 @@ public class CreateAuctionFragment extends Fragment
                     } else if (!validObj.startDateEndDateValidation(eddate, stdate)) {
                         enddate.requestFocus();
                         enddate.setError("Enter valid Date");
-                    } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
-                        endtime.setError("Enter valid time should be greater than start time");
+                    } else if (stdate.equals(eddate) && sttime.equals(edtime)) {
+                        endtime.setError("End time should be greater than start time");
                         endtime.requestFocus();
 
                     } else if (address.getVisibility() == View.VISIBLE && location.isEmpty()) {

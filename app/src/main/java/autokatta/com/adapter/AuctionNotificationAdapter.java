@@ -76,6 +76,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
     private HashMap<TextView, CountDownTimer> counters;
     private ConnectionDetector mConnectionDetector;
     private Boolean boolGoing = true;
+    private MyViewHolder mHolderViewCopy;
 
     public AuctionNotificationAdapter(Activity mActivity, List<ModelLiveFragment> mItemList, String auctionType) {
         this.mActivity = mActivity;
@@ -124,14 +125,15 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
     @Override
     public AuctionNotificationAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_card_auction, parent, false);
-        MyViewHolder holder = new MyViewHolder(mView);
+        View mHolderViewCopy = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_card_auction, parent, false);
+        MyViewHolder holder = new MyViewHolder(mHolderViewCopy);
         mContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final AuctionNotificationAdapter.MyViewHolder holder, final int position) {
+        mHolderViewCopy = holder;
         auction_id = mItemList.get(position).getAuctionId();
         loan_id = mItemList.get(position).getLoan_id();
         exchange_id = mItemList.get(position).getExchange_id();
@@ -449,6 +451,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                                                     if (response.body() != null) {
                                                         if (response.body().equals("success")) {
                                                             Log.e("Success", "Going");
+                                                            mHolderViewCopy.mAuctionGoing.setVisibility(View.GONE);
                                                         }
                                                     }
                                                 } else {
@@ -498,6 +501,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                                                     if (response.body() != null) {
                                                         if (response.body().equals("success")) {
                                                             Log.e("Success", "Later");
+                                                            mHolderViewCopy.mAuctionGoing.setVisibility(View.GONE);
                                                         }
                                                     }
                                                 } else {

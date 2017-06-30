@@ -27,6 +27,9 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -303,11 +306,32 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", "Preview Live Events Activity");
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void notifyString(String str) {
+        if (str != null) {
+            if (str.startsWith("1"))
+                CustomToast.customToast(getApplicationContext(), "Mail Sent Successfully");
+            else
+                CustomToast.customToast(getApplicationContext(), "Problem in sending mail");
+
+        } else
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
 
     }
 
@@ -516,7 +540,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 break;
 
             case R.id.mail:
-                mail();
+                //mail();
+                mailAuctionData();
                 break;
         }
     }
@@ -540,6 +565,13 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
         startActivity(Intent.createChooser(emailIntent, "Send Email..."));
     }
+
+    private void mailAuctionData() {
+        ApiCall apiCall = new ApiCall(PreviewLiveEvents.this, this);
+        apiCall.SendAuctionMail(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""), auction_id);
+    }
+
 
     /*
     On Share Butoon Clicked....

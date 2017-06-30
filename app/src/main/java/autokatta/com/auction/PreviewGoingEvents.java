@@ -27,6 +27,9 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -303,11 +306,32 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", "Preview Going Events Activity");
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void notifyString(String str) {
+        if (str != null) {
+            if (str.startsWith("1"))
+                CustomToast.customToast(getApplicationContext(), "Mail Sent Successfully");
+            else
+                CustomToast.customToast(getApplicationContext(), "Problem in sending mail");
+
+        } else
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
 
     }
 
@@ -512,7 +536,8 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                 break;
 
             case R.id.mail:
-                mail();
+                //mail();
+                mailAuctionData();
                 break;
         }
     }
@@ -581,15 +606,6 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
                         "Auctioneer: " + whoseAuction;
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
-
-                /*getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "auction").apply();*/
-
-
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
@@ -612,6 +628,12 @@ public class PreviewGoingEvents extends AppCompatActivity implements RequestNoti
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
         emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
         startActivity(Intent.createChooser(emailIntent, "Send Email..."));
+    }
+
+    private void mailAuctionData() {
+        ApiCall apiCall = new ApiCall(PreviewGoingEvents.this, this);
+        apiCall.SendAuctionMail(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""), auction_id);
     }
 
     @Override
