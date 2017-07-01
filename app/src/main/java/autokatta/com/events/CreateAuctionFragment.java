@@ -500,7 +500,8 @@ public class CreateAuctionFragment extends Fragment
 
                                             CustomToast.customToast(getActivity(),"Auction saved in my saved event");
                                             Intent intent = new Intent(getActivity(), MySavedAuctionEventActivity.class);
-                                            startActivity(intent);
+                                            getActivity().startActivity(intent);
+                                            getActivity().finish();
 
                                             dialog.cancel();
                                         }

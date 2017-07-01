@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,11 +16,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.view.VehicleDetails;
 import retrofit2.Response;
 
@@ -38,7 +42,7 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
     ListView storelistView, grouplistView;
     Button ok, cancel;
     String[] arrGroupIds, arrGroupTitle, arrStoreIds, arrStoreTitle;
-    ArrayList<String> groupIdlist, groupTitlelist, storeIdlist, storeTitlelist;
+    List<String> groupIdlist, groupTitlelist, storeIdlist, storeTitlelist;
 
     CheckedGrouptAdapter adpgroupAdapter;
     CheckedStoreAdapter adpstoreAdapter;
@@ -172,7 +176,20 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", "Vehicle Privacy Fragment");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -182,6 +199,7 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
                 Intent intent = new Intent(getActivity(), VehicleDetails.class);
                 intent.putExtra("vehicle_id", vehicle_id);
                 getActivity().startActivity(intent);
+                getActivity().finish();
             }
         }
 
@@ -191,20 +209,16 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
 
         private LayoutInflater mInflater;
         Activity activity;
-        ArrayList<String> id = new ArrayList<>();
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> id = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
 
-        public CheckedGrouptAdapter(Activity a, ArrayList<String> id, ArrayList<String> titles) {
-//
+        CheckedGrouptAdapter(Activity a, List<String> id, List<String> titles) {
 
             this.activity = a;
             this.id = id;
             this.titles = titles;
-//
 
-
-            // mInflater = LayoutInflater.from(context);
             mInflater = (LayoutInflater) activity.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -278,20 +292,15 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
 
         private LayoutInflater mInflater;
         Activity activity;
-        ArrayList<String> id = new ArrayList<>();
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> id = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
 
-        public CheckedStoreAdapter(Activity a, ArrayList<String> id, ArrayList<String> titles) {
-//
+        CheckedStoreAdapter(Activity a, List<String> id, List<String> titles) {
 
             this.activity = a;
             this.id = id;
             this.titles = titles;
-//
-
-
-            // mInflater = LayoutInflater.from(context);
             mInflater = (LayoutInflater) activity.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -354,7 +363,7 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
 
     }
 
-    @Override
+   /* @Override
     public void onResume() {
         super.onResume();
         getView().setFocusableInTouchMode(true);
@@ -379,5 +388,5 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
         }
-    }
+    }*/
 }

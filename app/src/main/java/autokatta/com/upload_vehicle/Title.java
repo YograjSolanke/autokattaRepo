@@ -489,7 +489,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     Alert Dialog
      */
     private void alertBoxToSelectExcelSheet(final String[] stringTitles) {
-        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
         stringgroupids = "";
         stringgroupname = "";
@@ -550,7 +550,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
 
     private void alertBoxToSelectStore(final String[] choices) {
-        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
         stringstoreids = "";
         stringstorename = "";
@@ -1094,24 +1094,30 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     public void notifyString(String str) {
 
         if (str != null) {
-            if (str.equals("success_brand_add")) {
-                CustomToast.customToast(getActivity(), "Brand added successfully");
-                getBrand(categoryId, subcategoryId);
-                Log.i("msg", "Brand added successfully");
+            switch (str) {
+                case "success_brand_add":
+                    CustomToast.customToast(getActivity(), "Brand added successfully");
+                    getBrand(categoryId, subcategoryId);
+                    Log.i("msg", "Brand added successfully");
 
-            } else if (str.equals("success_model_add")) {
+                    break;
+                case "success_model_add":
 
-                CustomToast.customToast(getActivity(), "Model added successfully");
-                getModel(categoryId, subcategoryId, brandId);
-            } else if (str.equals("success_version_add")) {
-                CustomToast.customToast(getActivity(), "Version added successfully");
-                getVersion(categoryId, subcategoryId, brandId, modelId);
-            } else if (str.equals("success_break_add")) {
-                CustomToast.customToast(getActivity(), "Break added successfully");
-                getBreaks();
-            } else if (str.equals("success_pump_add")) {
-                CustomToast.customToast(getActivity(), "Pump added successfully");
-                getPumps();
+                    CustomToast.customToast(getActivity(), "Model added successfully");
+                    getModel(categoryId, subcategoryId, brandId);
+                    break;
+                case "success_version_add":
+                    CustomToast.customToast(getActivity(), "Version added successfully");
+                    getVersion(categoryId, subcategoryId, brandId, modelId);
+                    break;
+                case "success_break_add":
+                    CustomToast.customToast(getActivity(), "Break added successfully");
+                    getBreaks();
+                    break;
+                case "success_pump_add":
+                    CustomToast.customToast(getActivity(), "Pump added successfully");
+                    getPumps();
+                    break;
             }
 
         } else {

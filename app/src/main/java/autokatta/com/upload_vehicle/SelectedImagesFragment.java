@@ -38,7 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SelectedImagesFragment extends Fragment implements View.OnClickListener {
     View mSelectedImages;
-    ArrayList<String> image = new ArrayList<>();
+    List<String> image = new ArrayList<>();
     String allimg = "";
     public List<String> map = new ArrayList<>();
     int count = 0;
@@ -87,8 +87,8 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
             image.set(a, newpath);
 
         } else {
-            ArrayList<String> ImgData = b.getStringArrayList("IMAGE");
-            for (int i1 = 0; i1 < ImgData.size(); i1++) {
+            List<String> ImgData = b.getStringArrayList("IMAGE");
+            for (int i1 = 0; i1 < (ImgData != null ? ImgData.size() : 0); i1++) {
                 if (allimg.equalsIgnoreCase("")) {
                     allimg = "" + ImgData.get(i1);
                 } else {
@@ -145,7 +145,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
         String[] mStrings;
         ImageLoader imageLoader;
 
-        private MyPagerAdapter(SelectedImagesFragment sliderActivity, ArrayList<String> image) {
+        private MyPagerAdapter(SelectedImagesFragment sliderActivity, List<String> image) {
             mStrings = new String[image.size()];
             mStrings = (String[]) image.toArray(mStrings);
             imageLoader = new ImageLoader(sliderActivity.getActivity());

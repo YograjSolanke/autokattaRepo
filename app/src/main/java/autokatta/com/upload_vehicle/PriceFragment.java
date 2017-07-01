@@ -162,8 +162,6 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
             @Override
             public void run() {
                 try {
-
-
                     getPrice(strCategoryId, strSubcategoryId, strBrandId, strModelId, strVersionId, strMfgYr, strRto);
                 } catch (Exception e) {
                     e.printStackTrace();

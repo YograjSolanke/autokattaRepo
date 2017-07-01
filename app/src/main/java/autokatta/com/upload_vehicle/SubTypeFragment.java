@@ -218,18 +218,17 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     mFuel.add("LPG");
                     mFuel.add("Electric");
                     mFuel.add("Hybrid");
-
-                    final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_spinner_item, mFuel);
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    mSetFuel.setAdapter(dataAdapter);
+                    if (getActivity() != null) {
+                        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                                android.R.layout.simple_spinner_item, mFuel);
+                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mSetFuel.setAdapter(dataAdapter);
+                    }
 
 
                     if (Category.equalsIgnoreCase("2 Wheeler") || Category.equalsIgnoreCase("3 Wheeler")) {
 
-
                         mTaxValidSpinner.setVisibility(View.GONE);
-
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
                     }
@@ -243,7 +242,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     }
 
                     if (Category.equalsIgnoreCase("tractor")) {
-
 
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
@@ -264,15 +262,17 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         } else
                             RCInvoiceText = "-Select RC Available-";
 
-                        ArrayList<String> RcInvoice = new ArrayList<>();
+                        List<String> RcInvoice = new ArrayList<>();
                         RcInvoice.add(RCInvoiceText);
                         RcInvoice.add("Yes");
                         RcInvoice.add("No");
 
-                        final ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(getActivity(),
-                                android.R.layout.simple_spinner_item, RcInvoice);
-                        dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        mRcSpinner.setAdapter(dataAdapter1);
+                        if (getActivity() != null) {
+                            final ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_spinner_item, RcInvoice);
+                            dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            mRcSpinner.setAdapter(dataAdapter1);
+                        }
 
                     }
                     /*car Fragment
@@ -332,15 +332,16 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                             RCInvoiceText = "Select RC Available";
 
 
-                        ArrayList<String> RcInvoice = new ArrayList<>();
+                        List<String> RcInvoice = new ArrayList<>();
                         RcInvoice.add(RCInvoiceText);
                         RcInvoice.add("Yes");
                         RcInvoice.add("No");
-
-                        final ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_spinner_item, RcInvoice);
-                        dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        mInvoiceSpinner.setAdapter(dataAdapter1);
+                        if (getActivity() != null) {
+                            final ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_item, RcInvoice);
+                            dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            mInvoiceSpinner.setAdapter(dataAdapter1);
+                        }
                         mInvoiceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -707,8 +708,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         if (!flag) {
             mLocation.setError("Please Select Address From Dropdown Only");
             mLocation.setFocusable(true);
-        }
-        else if (!checkBox1.isChecked() && rtostr.equalsIgnoreCase(""))
+        } else if (!checkBox1.isChecked() && rtostr.equalsIgnoreCase(""))
             Toast.makeText(getActivity(), "Please provide RTO city", Toast.LENGTH_LONG).show();
         else {
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Location", locationstr).apply();
@@ -788,7 +788,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
             mImages = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
             StringBuilder sb = new StringBuilder();
-            ArrayList<String> addData = new ArrayList<>();
+            List<String> addData = new ArrayList<>();
             ArrayList<String> mPath = new ArrayList<>();
             for (int i = 0; i < mImages.size(); i++) {
                 sb.append(mImages.get(i).getPath());
@@ -845,9 +845,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 b.putInt("call", 1);
                 SelectedImagesFragment mSelectedImagesFragment = new SelectedImagesFragment();
                 mSelectedImagesFragment.setArguments(b);
-                /*FragmentManager manager = getFragmentManager();
-                FragmentTransaction mFragmentTransaction = manager.beginTransaction();
-                mFragmentTransaction.replace(R.id.vehicle_upload_container, mSelectedImagesFragment).addToBackStack("selectedimagefragment").commit();*/
+
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.vehicle_upload_container, mSelectedImagesFragment, "selectedimagefragment")
                         .addToBackStack("selectedimagefragment")

@@ -29,10 +29,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:weightSum="2">
 
         <Button
             android:id="@+id/btnBack"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -43,8 +47,10 @@
 
         <Button
             android:id="@+id/btnGo"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@color/background"
             android:text="Go"
