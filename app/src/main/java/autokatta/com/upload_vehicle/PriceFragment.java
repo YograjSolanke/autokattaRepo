@@ -158,6 +158,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         strMfgYr = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_mfgYear", "20");
 
         System.out.println("incoming images=" + strImages);
+        Log.i("incoming images=", "->" + strImages);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
