@@ -38,6 +38,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     ListView mListView;
     List<GetStoreProfileInfoResponse.Success> mSuccesses = new ArrayList<>();
     ProfileMyStoreAdapter myStoreAdapter;
+    String mOtherContact,action;
     //android.support.design.widget.FloatingActionButton mCreateStore;
     //FloatingActionButton mCreateStore;
     boolean _hasLoadedOnce = false;
@@ -106,7 +107,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
                     myStoreAdapter.notifyDataSetChanged();
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
-                    CustomToast.customToast(getActivity(), "No product found");
+                    CustomToast.customToast(getActivity(), "No Store found");
                 }
             } else {
 //                if (mActivity != null)
@@ -175,8 +176,18 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !_hasLoadedOnce) {
-                getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
-                        Context.MODE_PRIVATE).getString("loginContact", ""));
+                Bundle b=getArguments();
+                if (b!=null)
+                {
+                    mOtherContact= b.getString("otherContact");
+                    action=b.getString("action");
+                    getStoreProfileInfo(mOtherContact);
+                }else {
+                    getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
+                            Context.MODE_PRIVATE).getString("loginContact", ""));
+                }
+               /* getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
+                        Context.MODE_PRIVATE).getString("loginContact", ""));*/
                 _hasLoadedOnce = true;
             }
         }
@@ -185,6 +196,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -197,8 +209,16 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
                 dialog = new ProgressDialog(getActivity());
                 dialog.setMessage("Loading...");
 
-                getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
-                                Context.MODE_PRIVATE).getString("loginContact",""));
+                Bundle b=getArguments();
+                if (b!=null)
+                {
+                   mOtherContact= b.getString("otherContact");
+                    action=b.getString("action");
+                    getStoreProfileInfo(mOtherContact);
+                }else {
+                    getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
+                            Context.MODE_PRIVATE).getString("loginContact", ""));
+                }
 
             }
         });
