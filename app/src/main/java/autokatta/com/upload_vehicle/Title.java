@@ -345,6 +345,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     /*
                     Staring Spinner
                      */
+                    mStaringList.clear();
                     mStaringList.add("Select Steering Type");
                     mStaringList.add("Power");
                     mStaringList.add("Manual");
@@ -531,6 +532,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             CustomToast.customToast(getActivity(), "No Group Was Selected");
                             radioButton1.setChecked(false);
                             radioButton2.setChecked(true);
+                            stringgroupids = "";
+                            stringgroupname = "";
                         }
                     }
                 })
@@ -539,6 +542,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     public void onClick(DialogInterface dialog, int id) {
                         radioButton1.setChecked(false);
                         radioButton2.setChecked(true);
+                        stringgroupids = "";
+                        stringgroupname = "";
                     }
 
                 })
@@ -621,6 +626,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
             if (response.isSuccessful()) {
                 if (response.body() instanceof ProfileGroupResponse) {
                     Log.e("ProfileGroupResponse", "->");
+                    list.clear();
                     ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
                     for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
                         list.add(success.getTitle());
@@ -628,6 +634,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     stringTitles = list.toArray(new String[list.size()]);
                 } else if (response.body() instanceof MyStoreResponse) {
                     Log.e("MyStoreResponse", "->");
+                    list1.clear();
                     MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
                     for (MyStoreResponse.Success success : myStoreResponse.getSuccess()) {
                         list1.add(success.getName());
@@ -635,6 +642,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     storetitlearray = list1.toArray(new String[list1.size()]);
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
                     Log.e("GetVehicleTypes", "->");
+                    mSubTypeList.clear();
+                    mSubTypeList1.clear();
+                    parsedData.clear();
                     mSubTypeList.add("Select Vehicle Types");
                     GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
@@ -918,6 +928,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 } else if (response.body() instanceof GetBreaks) {
                     Log.e("Get", "Breaks");
                     GetBreaks mGetBreaks = (GetBreaks) response.body();
+                    mBreakList.clear();
+                    mBreakList1.clear();
+                    breakListData.clear();
                     mBreakList.add("Select Break Types");
                     for (GetBreaks.Success success : mGetBreaks.getSuccess()) {
                         success.setId(success.getId());
@@ -993,6 +1006,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 } else if (response.body() instanceof GetPumpResponse) {
                     Log.e("Get", "Pumps");
                     GetPumpResponse mGetPumpResponse = (GetPumpResponse) response.body();
+                    mPumpList.clear();
+                    mPumpList1.clear();
+                    pumpListData.clear();
                     mPumpList.add("Select Pump Types");
                     for (GetPumpResponse.Success success : mGetPumpResponse.getSuccess()) {
                         success.setId(success.getId());
@@ -1195,7 +1211,10 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     e.printStackTrace();
                 }
 
-                if (brandstr.startsWith("Select") || modelstr.startsWith("Select") || brandstr.equals("") || modelstr.equals("")) {
+                if (strTitle.equals("")) {
+                    title.setError("Please provide title");
+                    title.requestFocus();
+                } else if (brandstr.startsWith("Select") || modelstr.startsWith("Select") || brandstr.equals("") || modelstr.equals("")) {
 
                     if (brandstr.startsWith("Select")) {
                         Toast.makeText(getActivity(), "Please select Brand", Toast.LENGTH_SHORT).show();

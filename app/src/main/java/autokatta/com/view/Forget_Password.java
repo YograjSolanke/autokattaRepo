@@ -18,13 +18,13 @@ import java.net.SocketTimeoutException;
 import java.util.Random;
 
 import autokatta.com.R;
-import autokatta.com.Registration.RegistrationActivity;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.register.Registration;
 import retrofit2.Response;
 
-public class Forget_Password extends AppCompatActivity implements  View.OnClickListener,RequestNotifier {
+public class Forget_Password extends AppCompatActivity implements View.OnClickListener, RequestNotifier {
 
     EditText edtContact;
     String contact;
@@ -51,9 +51,10 @@ public class Forget_Password extends AppCompatActivity implements  View.OnClickL
         submit.setOnClickListener(this);
         clear.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.submit:
                 forgetPassword();
                 break;
@@ -63,14 +64,13 @@ public class Forget_Password extends AppCompatActivity implements  View.OnClickL
         }
     }
 
-    private void  forgetPassword()
-    {
-       contact=edtContact.getText().toString().trim();
+    private void forgetPassword() {
+        contact = edtContact.getText().toString().trim();
         if (TextUtils.isEmpty(edtContact.getText().toString().trim())) {
             edtContact.requestFocus();
             edtContact.setFocusable(true);
             edtContact.setError(getString(R.string.err_mobile));
-        }else {
+        } else {
             ApiCall mApiCall = new ApiCall(Forget_Password.this, this);
             mApiCall.forgetPassword(contact);
         }
@@ -78,9 +78,9 @@ public class Forget_Password extends AppCompatActivity implements  View.OnClickL
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
-                Toast.makeText(getApplicationContext(), "S"+response.body(), Toast.LENGTH_SHORT).show();
+        if (response != null) {
+            if (response.isSuccessful()) {
+                Toast.makeText(getApplicationContext(), "S" + response.body(), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -101,26 +101,24 @@ public class Forget_Password extends AppCompatActivity implements  View.OnClickL
 
     @Override
     public void notifyString(String str) {
-        if (str !=null){
-            if(str.equals("Success")){
-                Log.i("String","->"+str);
-                CustomToast.customToast(getApplicationContext(),"You are a valid user");
-                Intent i=new Intent(Forget_Password.this,OTP.class);
-                System.out.println("contact================================================"+contact);
-                i.putExtra("contact",contact);
-                i.putExtra("call","forgot");
+        if (str != null) {
+            if (str.equals("Success")) {
+                Log.i("String", "->" + str);
+                CustomToast.customToast(getApplicationContext(), "You are a valid user");
+                Intent i = new Intent(Forget_Password.this, OTP.class);
+                System.out.println("contact================================================" + contact);
+                i.putExtra("contact", contact);
+                i.putExtra("call", "forgot");
                 startActivity(i);
-            }
-            else
-            {
-                CustomToast.customToast(getApplicationContext(),"You are not a valid user");
+            } else {
+                CustomToast.customToast(getApplicationContext(), "You are not a valid user");
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 // alertDialog.setTitle("Upload Vehicle");
                 alertDialog.setMessage("You are not registered user. Do you want to register now?");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(Forget_Password.this, RegistrationActivity.class);
+                        Intent i = new Intent(Forget_Password.this, Registration.class);
                         startActivity(i);
                     }
                 });
@@ -136,7 +134,7 @@ public class Forget_Password extends AppCompatActivity implements  View.OnClickL
 
             }
 
-        }else {
+        } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }

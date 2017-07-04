@@ -40,7 +40,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.other.MonthYearPicker;
 import autokatta.com.response.BodyAndSeatResponse;
 import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetRTOCityResponse;
@@ -58,9 +57,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class SubTypeFragment extends Fragment implements View.OnClickListener, RequestNotifier, View.OnTouchListener {
 
     View mSubtype;
-    private MonthYearPicker myp;
-    EditText mMakeMonth, mMakeYear;
-    EditText mRegisterMonth, mRegisterYear;
     Button mUploadVehicle;
     String allimgpath = "";
     ArrayList<Image> mImages = new ArrayList<>();
@@ -210,7 +206,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         }
                     });
 
-
+                    mFuel.clear();
                     mFuel.add("-Select Fuel Type-");
                     mFuel.add("Petrol");
                     mFuel.add("Diesel");
@@ -865,6 +861,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
                 //Rto city
                 if (response.body() instanceof GetRTOCityResponse) {
+                    mRtoCity.clear();
                     GetRTOCityResponse mGetRTOCityResponse = (GetRTOCityResponse) response.body();
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
                         success.setRtoCityId(success.getRtoCityId());
@@ -879,6 +876,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 }
                 //Vehicle color
                 else if (response.body() instanceof GetVehicleColor) {
+                    mVehicleColor.clear();
                     GetVehicleColor mGetVehicleColor = (GetVehicleColor) response.body();
                     for (GetVehicleColor.Success success : mGetVehicleColor.getSuccess()) {
                         success.setColorId(success.getColorId());
@@ -912,6 +910,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 }
                 //Body Type
                 else if (response.body() instanceof GetBodyTypeResponse) {
+                    mBodyType.clear();
                     GetBodyTypeResponse mGetBodyTypeResponse = (GetBodyTypeResponse) response.body();
                     for (GetBodyTypeResponse.Success success : mGetBodyTypeResponse.getSuccess()) {
                         success.setTitle(success.getTitle());
@@ -944,6 +943,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 }
                 //Vehicle Implements
                 else if (response.body() instanceof GetVehicleImplementsResponse) {
+                    mVehicleImplements.clear();
                     GetVehicleImplementsResponse mGetVehicleImplementsResponse = (GetVehicleImplementsResponse) response.body();
                     mVehicleImplements.add("Select Implements");
                     for (GetVehicleImplementsResponse.Success success : mGetVehicleImplementsResponse.getSuccess()) {

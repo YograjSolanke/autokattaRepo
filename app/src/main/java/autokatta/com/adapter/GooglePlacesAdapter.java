@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
@@ -40,9 +41,10 @@ public class GooglePlacesAdapter extends ArrayAdapter<String> implements Filtera
         return resultList.get(index);
     }
 
+    @NonNull
     @Override
     public Filter getFilter() {
-        Filter filter = new Filter() {
+        return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults filterResults = new FilterResults();
@@ -66,7 +68,6 @@ public class GooglePlacesAdapter extends ArrayAdapter<String> implements Filtera
                 }
             }
         };
-        return filter;
     }
 
 

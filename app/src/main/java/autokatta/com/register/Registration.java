@@ -391,30 +391,25 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             } else {
-                CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
             }
         } else {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", " Registration");
             error.printStackTrace();
@@ -427,7 +422,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
-                    CustomToast.customToast(getApplicationContext(),"Already Registered Please Login");
+                CustomToast.customToast(getApplicationContext(), "Already Registered Please Login");
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -437,13 +432,13 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 mButton.setVisibility(View.VISIBLE);
             } else {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
-                CustomToast.customToast(getApplicationContext()," Registered Successfully");
+                CustomToast.customToast(getApplicationContext(), " Registered Successfully");
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }
         } else {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
 
     }

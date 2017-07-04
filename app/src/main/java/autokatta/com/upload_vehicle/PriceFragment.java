@@ -227,7 +227,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                     PriceSuggestionResponse priceSuggestionResponse = (PriceSuggestionResponse) response.body();
                     Log.i("response", response.body().toString());
                     if (!priceSuggestionResponse.getSuccess().isEmpty()) {
-
+                        priceList.clear();
                         for (PriceSuggestionResponse.Success success : priceSuggestionResponse.getSuccess()) {
                             success.setPriceSuggestion(success.getPriceSuggestion());
                             String i = success.getPriceSuggestion();

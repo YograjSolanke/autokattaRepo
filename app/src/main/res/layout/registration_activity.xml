@@ -43,12 +43,12 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/background"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginStart="@dimen/fab_margin"
+            android:background="@color/background"
             android:text="Next"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -159,10 +159,10 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
                 android:id="@+id/doblayout"
-                android:orientation="horizontal"
-                android:layout_height="@dimen/text_layout_height">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_layout_height"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -170,29 +170,29 @@
 
 
                     <ImageView
+                        android:id="@+id/clearDate"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
                         android:src="@android:drawable/ic_delete"
-                        android:id="@+id/clearDate"
-                        android:visibility="gone"
-                        android:layout_alignParentRight="true" />
+                        android:visibility="gone" />
 
-                <EditText
-                    android:id="@+id/editdob"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/card_margin"
-                    android:drawableStart="@mipmap/ic_calendar"
-                    android:drawableRight="@null"
-                    android:hint="Date of Birth"
-                    android:inputType="date"
-                    android:maxLines="1"
-                    android:layout_toLeftOf="@+id/clearDate"
-                    android:paddingEnd="@dimen/margin_heading_top"
-                    android:paddingStart="@dimen/margin_heading_top"
-                    android:textColor="@color/textColor"
-                    android:textColorHint="@color/hintColor"
-                    android:textSize="15sp" />
+                    <EditText
+                        android:id="@+id/editdob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/clearDate"
+                        android:drawablePadding="@dimen/card_margin"
+                        android:drawableRight="@null"
+                        android:drawableStart="@mipmap/ic_calendar"
+                        android:hint="Date of Birth"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/margin_heading_top"
+                        android:paddingStart="@dimen/margin_heading_top"
+                        android:textColor="@color/textColor"
+                        android:textColorHint="@color/hintColor"
+                        android:textSize="15sp" />
 
                 </RelativeLayout>
 
@@ -359,6 +359,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
         android:visibility="gone"
         android:weightSum="2">
 
@@ -377,6 +378,7 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@color/background"
             android:text="Clear"
