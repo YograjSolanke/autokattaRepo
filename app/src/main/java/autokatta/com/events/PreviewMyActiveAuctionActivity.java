@@ -123,7 +123,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
                     menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
                     menuRed.setClosedOnTouchOutside(true);
                     mCollapsingToolbar.setTitle("Title: " + strAuctionTitle);
-                    mCollapsingToolbar.setExpandedTitleColor(Color.parseColor("#00FFFFFF"));
+                    mCollapsingToolbar.setExpandedTitleColor(Color.WHITE);
                     txtStartDate.setText(strStartDate);
                     txtStartTime.setText(strStartTime);
                     txtEndDate.setText(strEndDate);
