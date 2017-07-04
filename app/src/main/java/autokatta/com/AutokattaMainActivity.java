@@ -46,7 +46,6 @@ import autokatta.com.fragment.AuctionNotification;
 import autokatta.com.fragment.FavoriteNotificationFragment;
 import autokatta.com.fragment.SocialFragment;
 import autokatta.com.fragment.StoreNotification;
-import autokatta.com.fragment.UpdatesFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.SearchActivity;
@@ -244,18 +243,18 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
         tabLayout.getTabAt(1).setIcon(R.mipmap.ic_bell);
-        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);
-        tabLayout.getTabAt(3).setIcon(R.mipmap.ic_calendar_check);
-        tabLayout.getTabAt(4).setIcon(R.mipmap.ic_cart);
-        tabLayout.getTabAt(5).setIcon(R.mipmap.ic_account_multiple);
-        tabLayout.getTabAt(6).setIcon(R.mipmap.ic_heart);
+        /*tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);*/
+        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_calendar_check);
+        tabLayout.getTabAt(3).setIcon(R.mipmap.ic_cart);
+        tabLayout.getTabAt(4).setIcon(R.mipmap.ic_account_multiple);
+        tabLayout.getTabAt(5).setIcon(R.mipmap.ic_heart);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new WallNotificationFragment());
         adapter.addFragment(new SocialFragment());
-        adapter.addFragment(new UpdatesFragment());
+        /*adapter.addFragment(new UpdatesFragment());*/
         adapter.addFragment(new AuctionNotification());
         adapter.addFragment(new StoreNotification());
         adapter.addFragment(new WallNotificationFragment());
