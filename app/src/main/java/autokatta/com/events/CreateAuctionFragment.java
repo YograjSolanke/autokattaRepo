@@ -218,7 +218,7 @@ public class CreateAuctionFragment extends Fragment
 
 
                     auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
-                    stockLocation = stockLocationSpinner.getSelectedItem().toString().replaceAll(" ", "");
+                    stockLocation = stockLocationSpinner.getSelectedItem().toString();
                     Log.i("category", "->" + auctionCategory);
                     Log.i("states", "->" + stockLocation);
 
@@ -283,7 +283,7 @@ public class CreateAuctionFragment extends Fragment
                     } else if (address.getVisibility() == View.VISIBLE && !flag) {
                         address.setError("Please Select Location From Dropdown Only");
                         address.requestFocus();
-                    } else if (address.getVisibility() == View.GONE && stockLocation.equalsIgnoreCase("-SelectState-")) {
+                    } else if (stockLocation.equalsIgnoreCase("-Select State-") || stockLocation.equals("")) {
                         CustomToast.customToast(getActivity(),  "Please select states ");
                         stockLocationSpinner.requestFocus();
 
@@ -523,6 +523,7 @@ public class CreateAuctionFragment extends Fragment
                 else if (response.body() instanceof AllStatesResponse) {
                     Log.e("GetAllStates", "->");
                     final List<String> mStateList = new ArrayList<>();
+                    mStateList.clear();
 
                     AllStatesResponse getStateResponse = (AllStatesResponse) response.body();
                     for (AllStatesResponse.Success success : getStateResponse.getSuccess()) {

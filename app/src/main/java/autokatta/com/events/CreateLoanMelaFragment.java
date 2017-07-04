@@ -221,6 +221,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
                     String id = createResponse.getSuccess().getLoanID().toString();
                     Log.i("Loanid", "->" + id);
                     CustomToast.customToast(getActivity(), "Loan Event Created Successfully");
+                    if (!lastWord.equals(""))
                     uploadImage(mediaPath);
 
                     getActivity().finish();
