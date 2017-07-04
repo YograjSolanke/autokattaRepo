@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -43,7 +44,7 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
     Button ok, cancel;
     String[] arrGroupIds, arrGroupTitle, arrStoreIds, arrStoreTitle;
     List<String> groupIdlist, groupTitlelist, storeIdlist, storeTitlelist;
-
+    RelativeLayout groupLayout, storeLayout;
     CheckedGrouptAdapter adpgroupAdapter;
     CheckedStoreAdapter adpstoreAdapter;
 
@@ -70,12 +71,20 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
 
         storelistView = (ListView) mVehiclePrivacy.findViewById(R.id.storelist);
         grouplistView = (ListView) mVehiclePrivacy.findViewById(R.id.grouplist);
+        groupLayout = (RelativeLayout) mVehiclePrivacy.findViewById(R.id.relativegrouplist);
+        storeLayout = (RelativeLayout) mVehiclePrivacy.findViewById(R.id.relativestorelist);
         ok = (Button) mVehiclePrivacy.findViewById(R.id.ok);
         cancel = (Button) mVehiclePrivacy.findViewById(R.id.cancel);
         groupIdlist = new ArrayList<>();
         groupTitlelist = new ArrayList<>();
         storeIdlist = new ArrayList<>();
         storeTitlelist = new ArrayList<>();
+
+        if (GroupIds.equals(""))
+            groupLayout.setVisibility(View.GONE);
+        else if (StoreIds.equals(""))
+            storeLayout.setVisibility(View.GONE);
+
 
 
         arrGroupIds = GroupIds.split(",");
