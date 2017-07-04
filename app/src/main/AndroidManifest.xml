@@ -570,7 +570,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".search.SearchDemo" />
         <activity android:name=".view.EnquiredPersonsActivity" />
-        <activity android:name=".view.EnquiredPersonsListActivity"></activity>
+        <activity android:name=".view.EnquiredPersonsListActivity" />
+        <activity android:name=".app_info.GradientBackgroundExampleActivity" />
     </application>
 
 </manifest>

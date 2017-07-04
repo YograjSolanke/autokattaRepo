@@ -3,6 +3,7 @@ package autokatta.com.register;
 import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.app_info.GradientBackgroundExampleActivity;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -70,6 +72,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     ApiCall apiCall;
     GenericFunctions functions;
     List<String> resultList = new ArrayList<>();
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
     private DatePickerDialog datePicker;
 
     @Override
@@ -82,7 +86,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         personName = (EditText) findViewById(R.id.editPersonName);
         mobileNo = (EditText) findViewById(R.id.editMobileNo);
         email = (EditText) findViewById(R.id.editEmail);
@@ -507,6 +511,17 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         } else {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("firstRun", true)) {
+            startActivity(new Intent(getApplicationContext(), GradientBackgroundExampleActivity.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("firstRun", false);
+            editor.apply();
         }
     }
 }
