@@ -374,7 +374,9 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         MODULE = (String[]) module.toArray(MODULE);
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, MODULE);
                         moduleSpinner.setAdapter(dataadapter);
-                    }
+                    } else
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+
                 } else if (response.body() instanceof IndustryResponse) {
                     IndustryResponse moduleResponse = (IndustryResponse) response.body();
                     final List<String> module = new ArrayList<>();
@@ -388,7 +390,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         INDUSTRY = (String[]) module.toArray(INDUSTRY);
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, INDUSTRY);
                         industrySpinner.setAdapter(dataadapter);
-                    }
+                    } else
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                 }
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
