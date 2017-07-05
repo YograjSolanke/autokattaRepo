@@ -172,6 +172,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
                     starttime.requestFocus();
                 } else if (stdate.equals(dateString) && !validObj.startTimeEndTimeValidation(time, sttime)) {
                     starttime.setError("time is invalid");
+                    starttime.requestFocus();
 
                 } else if (eddate.equals("")) {
                     enddate.setError("Enter end date");
