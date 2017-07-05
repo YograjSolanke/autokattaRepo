@@ -85,6 +85,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     private SearchView mSearchView;
     //qr code scanner object
     private IntentIntegrator qrScan;
+    private ViewPager viewPager;
 
     private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -225,12 +226,12 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             setupDrawerContent(navigationView);
         }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -248,6 +249,30 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout.getTabAt(3).setIcon(R.mipmap.ic_cart);
         tabLayout.getTabAt(4).setIcon(R.mipmap.ic_account_multiple);
         tabLayout.getTabAt(5).setIcon(R.mipmap.ic_heart);
+
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0)
+                    fab.setVisibility(View.VISIBLE);
+                else
+                    fab.setVisibility(View.GONE);
+                Log.i("Position", "->" + tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

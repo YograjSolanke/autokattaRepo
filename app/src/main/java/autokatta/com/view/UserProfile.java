@@ -54,7 +54,6 @@ import autokatta.com.fragment_profile.AboutStore;
 import autokatta.com.fragment_profile.Event;
 import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
-import autokatta.com.fragment_profile.Katta;
 import autokatta.com.fragment_profile.Modules;
 import autokatta.com.fragment_profile.MyVehicles;
 import autokatta.com.interfaces.RequestNotifier;
@@ -352,7 +351,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         adapter.addFragment(new Groups(), "GROUP");
         adapter.addFragment(new AboutStore(), "STORE");
         adapter.addFragment(new Event(), "EVENT");
-        adapter.addFragment(new Katta(), "KATTA");
+        //adapter.addFragment(new Katta(), "KATTA");
         adapter.addFragment(new Modules(), "MODULE");
         adapter.addFragment(new Follow(), "FOLLOW");
         adapter.addFragment(new MyVehicles(), "MY VEHICLES");
