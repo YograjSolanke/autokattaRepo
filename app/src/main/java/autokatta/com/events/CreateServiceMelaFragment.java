@@ -226,6 +226,7 @@ public class CreateServiceMelaFragment extends Fragment implements RequestNotifi
                     String id = createResponse.getSuccess().getServiceID().toString();
                     Log.i("ServiceMelaId", "->" + id);
                     CustomToast.customToast(getActivity(), "Service Mela Created Successfully");
+                    if (!lastWord.equals(""))
                     uploadImage(mediaPath);
 
                     /*String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());

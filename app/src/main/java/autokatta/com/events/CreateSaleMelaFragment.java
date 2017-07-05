@@ -226,6 +226,7 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                     String id = createResponse.getSuccess().getSaleID().toString();
                     Log.i("SaleMelaId", "->" + id);
                     CustomToast.customToast(getActivity(), "Sale Mela Created Successfully");
+                    if (!lastWord.equals(""))
                     uploadImage(mediaPath);
 
                     /*String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
