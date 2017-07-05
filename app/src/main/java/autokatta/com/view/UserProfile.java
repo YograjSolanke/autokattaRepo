@@ -33,7 +33,6 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -60,6 +59,7 @@ import autokatta.com.fragment_profile.Modules;
 import autokatta.com.fragment_profile.MyVehicles;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.other.CustomToast;
 import autokatta.com.register.NextRegistrationContinue;
 import autokatta.com.response.ProfileAboutResponse;
 import okhttp3.MediaType;
@@ -210,9 +210,10 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 updatedUsername = name.getText().toString();
-                                if (updatedUsername.equals("")) {
-                                    Snackbar.make(view, "Please Enter Your Name", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
+                                if (updatedUsername.equals("")||updatedUsername.startsWith(" ")&&updatedUsername.endsWith(" ")) {
+                                    CustomToast.customToast(getApplicationContext(),"Please Enter Your Name");
+                                    /*Snackbar.make(view, "Please Enter Your Name", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();*/
                                 } else {
                                     updateProfile();
                                     uploadImage(mediaPath);
@@ -399,11 +400,14 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
-            Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+          //  Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(),  getString(R.string.no_response));
+           // Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ClassCastException) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+         //   Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
             //mNoInternetIcon.setVisibility(View.VISIBLE);
             Snackbar snackbar = Snackbar.make(mUserParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
@@ -506,7 +510,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
-                mProfilePicture.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+              //  mProfilePicture.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 cursor.close();
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
