@@ -42,7 +42,7 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_sale_mela_preview);
-        setContentView(R.layout.activity_active_loanmela_preview);
+     //   setContentView(R.layout.activity_active_loanmela_preview);
         mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
