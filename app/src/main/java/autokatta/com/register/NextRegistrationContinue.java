@@ -1,5 +1,6 @@
 package autokatta.com.register;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,6 +12,8 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -110,6 +113,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
             @Override
             public void run() {
                 try {
+                    getWindow().setSoftInputMode(
+                            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                     mTestConnection = new ConnectionDetector(NextRegistrationContinue.this);
                     edtvehicleno = (EditText) findViewById(R.id.editvehicleno);
                     edttax = (EditText) findViewById(R.id.edittaxval);
@@ -1128,6 +1133,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                hideSoftKeyboard(NextRegistrationContinue.this);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -1146,5 +1152,14 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
             startActivity(new Intent(getApplicationContext(), RegistrationContinue.class));
             finish();
         }*/
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        final InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (inputMethodManager.isActive()) {
+            if (activity.getCurrentFocus() != null) {
+                inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+            }
+        }
     }
 }

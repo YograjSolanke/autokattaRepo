@@ -343,7 +343,7 @@
             android:name=".register.RegistrationCompanyBased"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"
             android:label="@string/registration_company_based"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".register.InvitationCompanyBased"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection"

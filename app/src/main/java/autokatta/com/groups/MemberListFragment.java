@@ -183,7 +183,8 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
@@ -203,6 +204,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             error.printStackTrace();
         }
     }
+
 
     @Override
     public void notifyString(String str) {
