@@ -74,6 +74,11 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         broadcastgroupid = b.getString("broadcastgroupid");
         groupname = b.getString("groupname");
 
+        System.out.println("Data in caption fragment" + "-" +
+                "Keyword =" + keyword + "-" +
+                "Loan id =" + loan_id + "-" +
+                "Exchange id =" + exchange_id);
+
         if (!profile_contact.equals(""))
             layoutNumber = "1";
 

@@ -218,8 +218,6 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             holder.mTimer.setVisibility(View.GONE);
             holder.mStamp.setVisibility(View.VISIBLE);
             holder.mStamp.setImageResource(R.mipmap.upcomingstamp);
-        } else if (auctionType.equals("Going")) {
-            holder.mTimer.setVisibility(View.VISIBLE);
         }
 
         if (mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE)
@@ -293,13 +291,18 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         if (mItemList.get(position).getKeyWord().equals("auction")) {
             holder.mAuctionGoing.setVisibility(View.GONE);
         } else {
-            holder.mAuctionGoing.setVisibility(View.VISIBLE);
             holder.mAuctionPreview.setVisibility(View.GONE);
             holder.profilenamerel1.setVisibility(View.GONE);
             holder.profilenamerel2.setVisibility(View.GONE);
             holder.Rl_auction_category.setVisibility(View.GONE);
             holder.mSpecialClauses.setVisibility(View.GONE);
             holder.closeopentxt.setVisibility(View.GONE);
+
+            if (!auctionType.equals("Live"))
+                holder.mAuctionGoing.setVisibility(View.GONE);
+            else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);
+
         }
 
         /*
@@ -308,32 +311,32 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         if (mItemList.get(position).getKeyWord().equals("sale")) {
             holder.title.setText("Sale Title");
             holder.mShare.setVisibility(View.GONE);
-            if (!auctionType.equals("Going") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+            if (auctionType.equals("Live") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
                 holder.mAuctionGoing.setVisibility(View.GONE);
-            } else
-                holder.mAuctionGoing.setVisibility(View.VISIBLE);
+            } /*else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);*/
 
         } else if (mItemList.get(position).getKeyWord().equals("loan")) {
             holder.title.setText("Loan Title");
-            if (!auctionType.equals("Going") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+            if (auctionType.equals("Live") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
                 holder.mAuctionGoing.setVisibility(View.GONE);
-            } else
-                holder.mAuctionGoing.setVisibility(View.VISIBLE);
+            } /*else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);*/
 
         } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
             holder.title.setText("Exchange Title");
-            if (!auctionType.equals("Going") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+            if (auctionType.equals("Live") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
                 holder.mAuctionGoing.setVisibility(View.GONE);
-            } else
-                holder.mAuctionGoing.setVisibility(View.VISIBLE);
+            }/* else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);*/
 
         } else if (mItemList.get(position).getKeyWord().equals("service")) {
             holder.title.setText("Service Title");
             holder.mShare.setVisibility(View.GONE);
-            if (!auctionType.equals("Going") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+            if (auctionType.equals("Live") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
                 holder.mAuctionGoing.setVisibility(View.GONE);
-            } else
-                holder.mAuctionGoing.setVisibility(View.VISIBLE);
+            } /*else
+                holder.mAuctionGoing.setVisibility(View.VISIBLE);*/
         }
 
         holder.mAuctionGoing.setOnClickListener(new OnClickListener() {
@@ -537,6 +540,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String imagename = "";
 
                 if (mItemList.get(position).getKeyWord().equals("auction")) {
                     allDetails = mItemList.get(position).getName() + "="
@@ -554,7 +558,16 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                             putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                             putString("Share_keyword", mAuction).apply();
-                } else if (mItemList.get(position).getKeyWord().equals("loan")) {
+                }
+                /* Loan */
+                else if (mItemList.get(position).getKeyWord().equals("loan")) {
+
+                    if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
+                            mItemList.get(position).getImage().equalsIgnoreCase("null")) {
+                        imagename = "logo.png";
+                    } else {
+                        imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mItemList.get(position).getImage();
+                    }
 
                     allDetails = mItemList.get(position).getUsername() + "="
                             + "" + "="
@@ -565,7 +578,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                             + mItemList.get(position).getStartTime() + "="
                             + mItemList.get(position).getEndDate() + "="
                             + mItemList.get(position).getEndTime() + "="
-                            + mItemList.get(position).getImage();
+                            + imagename;
                     String mAuction = "loan";
 
 
@@ -575,7 +588,17 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                             putString("Share_loan_id", mItemList.get(position).getLoan_id()).apply();
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                             putString("Share_keyword", mAuction).apply();
-                } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+                }
+
+                /* exchange */
+                else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+
+                    if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
+                            mItemList.get(position).getImage().equalsIgnoreCase("null")) {
+                        imagename = "logo.png";
+                    } else {
+                        imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mItemList.get(position).getImage();
+                    }
 
                     allDetails = mItemList.get(position).getUsername() + "="
                             + "" + "="
@@ -586,7 +609,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                             + mItemList.get(position).getStartTime() + "="
                             + mItemList.get(position).getEndDate() + "="
                             + mItemList.get(position).getEndTime() + "="
-                            + mItemList.get(position).getImage();
+                            + imagename;
                     String mAuction = "exchange";
 
 

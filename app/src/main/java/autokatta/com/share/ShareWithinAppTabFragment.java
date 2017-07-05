@@ -49,11 +49,21 @@ public class ShareWithinAppTabFragment extends Fragment {
         exchange_id = prefs.getString("Share_exchange_id", "");
         keyword = prefs.getString("Share_keyword", "");
 
+        System.out.println("Data in share Tab before" + "-" +
+                "Keyword =" + keyword + "-" +
+                "Loan id =" + loan_id + "-" +
+                "Exchange id =" + exchange_id);
+
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("Share_auction_id", "");
         editor.putString("Share_loan_id", "");
         editor.putString("Share_exchange_id", "");
         editor.apply();
+
+        System.out.println("Data in share Tab after" + "\n" +
+                "Keyword =" + keyword + "\n" +
+                "Loan id =" + loan_id + "\n" +
+                "Exchange id =" + exchange_id);
 
         tabLayout = (TabLayout) root.findViewById(R.id.tabs);
         viewPager = (ViewPager) root.findViewById(R.id.viewpager);

@@ -111,7 +111,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         @Override
                         public void onClick(View v) {
                             if (mLiveEventList == null || mLiveEventList.size() == 0) {
-                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "No any upcoming auction event", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
@@ -130,7 +130,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         @Override
                         public void onClick(View v) {
                             if (mLiveLoanEventList == null || mLiveLoanEventList.size() == 0) {
-                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "No any upcoming loan event", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
@@ -149,7 +149,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         @Override
                         public void onClick(View v) {
                             if (mLiveExchangeEventList == null || mLiveExchangeEventList.size() == 0) {
-                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "No any upcoming exchange event", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
@@ -168,7 +168,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         @Override
                         public void onClick(View v) {
                             if (mLiveServiceEventList == null || mLiveServiceEventList.size() == 0) {
-                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "No any upcoming service event", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
@@ -187,7 +187,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         @Override
                         public void onClick(View v) {
                             if (mLiveSaleEventList == null || mLiveSaleEventList.size() == 0) {
-                                Toast.makeText(getActivity(), "No any auction live today", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "No any upcoming sale event", Toast.LENGTH_LONG).show();
                             } else {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
@@ -223,7 +223,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                 mLiveServiceEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setExchange_id(success.getId());
+                    model.setService_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
                     model.setStartDate(success.getStartDate());
@@ -319,7 +319,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                 mLiveLoanEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setExchange_id(success.getId());
+                    model.setLoan_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
                     model.setStartDate(success.getStartDate());
@@ -367,7 +367,7 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                 mLiveSaleEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setExchange_id(success.getId());
+                    model.setSale_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
                     model.setStartDate(success.getStartDate());
