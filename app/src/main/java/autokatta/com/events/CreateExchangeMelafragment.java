@@ -221,6 +221,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                     String id = createResponse.getSuccess().getExchangeID().toString();
                     Log.i("Exid", "->" + id);
                     CustomToast.customToast(getActivity(), "Exchange Event Created Successfully");
+                    if (!lastWord.equals(""))
                     uploadImage(mediaPath);
 
                     getActivity().finish();
