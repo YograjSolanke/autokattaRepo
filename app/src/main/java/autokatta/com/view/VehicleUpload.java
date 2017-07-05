@@ -1,5 +1,7 @@
 package autokatta.com.view;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.v7.app.AppCompatActivity;
@@ -7,10 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
+import autokatta.com.app_info.UploadVehicleAppIntro;
 import autokatta.com.upload_vehicle.VehicleList;
 
 public class VehicleUpload extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
     @Override
     @CallSuper
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +24,7 @@ public class VehicleUpload extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Upload Vehicle");
-
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,6 +63,17 @@ public class VehicleUpload extends AppCompatActivity {
                 super.onBackPressed();
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("uploadVehicleFirstRun", true)) {
+            startActivity(new Intent(getApplicationContext(), UploadVehicleAppIntro.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("uploadVehicleFirstRun", false);
+            editor.apply();
         }
     }
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

@@ -3,6 +3,7 @@ package autokatta.com.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ import autokatta.com.Registration.MultiSelectionSpinner;
 import autokatta.com.Registration.Multispinner;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.app_info.SearchVehicleAppIntro;
 import autokatta.com.generic.RangeSeekBar;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -92,6 +94,9 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
     String mClassName, mCategory, mBrand, mModel, mPrice, mYear, mSearch_id;
 
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +105,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         setSupportActionBar(toolbar);
         setTitle("Search Vehicle");
 
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         mApiCall = new ApiCall(this, this);
         final TextView financetxt = (TextView) findViewById(R.id.financetxt);
@@ -1455,5 +1461,16 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("vehicleFirstRun", true)) {
+            startActivity(new Intent(getApplicationContext(), SearchVehicleAppIntro.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("vehicleFirstRun", false);
+            editor.apply();
+        }
     }
 }

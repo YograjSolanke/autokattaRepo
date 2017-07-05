@@ -13,31 +13,28 @@ import java.util.List;
 
 import autokatta.com.R;
 
-public class GradientBackgroundExampleActivity extends AhoyOnboarderActivity {
+/**
+ * Created by ak-001 on 5/7/17.
+ */
+
+public class UploadVehicleAppIntro extends AhoyOnboarderActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Create your profile in autokatta",
-                "A place where service providers and customers, engage and manage business..", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "Tell more about yourself..", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Tell us your interests",
-                "This will help us to connect you to the right customers and service providers.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("My vehicle",
-                "Upload the vehicles you own with correct information and we will remind you expiring services in time.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("",
+                "Upload your used vehicle for sale.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "Upload maximum details of the vehicles so that the " +
+                "quality lead can be passed on to you.", R.drawable.hdlogo);
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
-        ahoyOnboarderCard3.setBackgroundColor(R.color.black_transparent);
-        ahoyOnboarderCard4.setBackgroundColor(R.color.black_transparent);
 
         List<AhoyOnboarderCard> pages = new ArrayList<>();
 
         pages.add(ahoyOnboarderCard1);
         pages.add(ahoyOnboarderCard2);
-        pages.add(ahoyOnboarderCard3);
-        pages.add(ahoyOnboarderCard4);
 
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);

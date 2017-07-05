@@ -1,16 +1,20 @@
 package autokatta.com.view;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
+import autokatta.com.app_info.BrowseStoreAppIntro;
 import autokatta.com.initial_fragment.BrowseStoreFragment;
 
 public class BrowseStoreActivity extends AppCompatActivity {
 
-
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +22,7 @@ public class BrowseStoreActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Browse Store");
-
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -52,6 +56,16 @@ public class BrowseStoreActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("browseStoreFirstRun", true)) {
+            startActivity(new Intent(getApplicationContext(), BrowseStoreAppIntro.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("browseStoreFirstRun", false);
+            editor.apply();
+        }
+    }
    /* @Override
     protected void onResume() {
         super.onResume();

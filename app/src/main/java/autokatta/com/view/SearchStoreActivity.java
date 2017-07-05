@@ -1,17 +1,21 @@
 package autokatta.com.view;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
+import autokatta.com.app_info.SearchStoreAppIntro;
 import autokatta.com.initial_fragment.StoreSearchFragment;
 
 
 public class SearchStoreActivity extends AppCompatActivity {
 
-
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +23,7 @@ public class SearchStoreActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Search Store");
-
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,6 +70,17 @@ public class SearchStoreActivity extends AppCompatActivity {
         /*super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("searchStoreFirstRun", true)) {
+            startActivity(new Intent(getApplicationContext(), SearchStoreAppIntro.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("searchStoreFirstRun", false);
+            editor.apply();
+        }
     }
 
 }

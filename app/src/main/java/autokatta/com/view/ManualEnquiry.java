@@ -2,6 +2,7 @@ package autokatta.com.view;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.ManualEnquiryAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.app_info.ManualAppIntro;
 import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -43,6 +45,8 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
     List<ManualEnquiryRequest> mMyGroupsList = new ArrayList<>();
     FrameLayout mFrameLayout;
     LinearLayout filterLayout;
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setTitle("Enquiry List");
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -367,6 +372,17 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
         Log.i("dsfasd", "->" + request.getVehicleInventory());
         Log.i("dsfaascssd", "->" + request.getVehicleId());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("manualFirstRun", true)) {
+            startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("manualFirstRun", false);
+            editor.apply();
+        }
     }
     /*public static boolean isValidPhone(String phone){
         String expression = "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$";

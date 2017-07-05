@@ -572,6 +572,12 @@
         <activity android:name=".view.EnquiredPersonsActivity" />
         <activity android:name=".view.EnquiredPersonsListActivity" />
         <activity android:name=".app_info.GradientBackgroundExampleActivity" />
+        <activity android:name=".app_info.ManualAppIntro" />
+        <activity android:name=".app_info.MyInventoryAppIntro" />
+        <activity android:name=".app_info.UploadVehicleAppIntro" />
+        <activity android:name=".app_info.SearchVehicleAppIntro" />
+        <activity android:name=".app_info.SearchStoreAppIntro" />
+        <activity android:name=".app_info.BrowseStoreAppIntro" />
     </application>
 
 </manifest>

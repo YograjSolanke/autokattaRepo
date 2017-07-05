@@ -13,24 +13,33 @@ import java.util.List;
 
 import autokatta.com.R;
 
-public class GradientBackgroundExampleActivity extends AhoyOnboarderActivity {
+/**
+ * Created by ak-001 on 5/7/17.
+ */
+
+public class ManualAppIntro extends AhoyOnboarderActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Create your profile in autokatta",
-                "A place where service providers and customers, engage and manage business..", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "Tell more about yourself..", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Tell us your interests",
-                "This will help us to connect you to the right customers and service providers.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("My vehicle",
-                "Upload the vehicles you own with correct information and we will remind you expiring services in time.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Inquiries",
+                "Get inquiries for your products, service or vehicles as it gets searched.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "Add manual enquiries against the inventory and" +
+                " keep a track of the sales cycle of each customer.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("",
+                "Get inquiry from the product/ service or vehicle inventory page. Customer send enquiry directly as a business" +
+                        " communication", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("",
+                "Customers send enquiry from the store page through the inquiry module.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard5 = new AhoyOnboarderCard("",
+                "Manage inquires and update status of the inquiries, follow take mail of the inquiry list received against each inventory.", R.drawable.hdlogo);
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard3.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard4.setBackgroundColor(R.color.black_transparent);
+        ahoyOnboarderCard5.setBackgroundColor(R.color.black_transparent);
 
         List<AhoyOnboarderCard> pages = new ArrayList<>();
 
@@ -38,6 +47,7 @@ public class GradientBackgroundExampleActivity extends AhoyOnboarderActivity {
         pages.add(ahoyOnboarderCard2);
         pages.add(ahoyOnboarderCard3);
         pages.add(ahoyOnboarderCard4);
+        pages.add(ahoyOnboarderCard5);
 
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);
