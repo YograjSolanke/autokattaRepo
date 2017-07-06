@@ -393,6 +393,41 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
+                    android:id="@+id/txtbrandtags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Brand Tags"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editbrandtags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtbrandtags"
+                    android:layout_marginTop="5dp"
+                    android:hint="Brand tags"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/linear13"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/linear14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear13"
+                android:layout_marginTop="10dp">
+
+                <TextView
                     android:id="@+id/txtAdminContact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

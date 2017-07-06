@@ -91,7 +91,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
             storetype = "", store_id, preLastWord = "", preCoverLastWord;
-    MultiSelectionSpinnerForBrands brandSpinner;
+    //  MultiSelectionSpinnerForBrands brandSpinner;
     MultiSelectionSpinner weekspn;
     MultiAutoCompleteTextView multiautotext, multiautobrand;
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
@@ -148,7 +148,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         mLinearautobrand = (LinearLayout) mCreateStore.findViewById(R.id.linearautobrand);
         mRelativeBrand = (RelativeLayout) mCreateStore.findViewById(R.id.rell);
         mParent = (RelativeLayout) mCreateStore.findViewById(R.id.relativeparent);
-        brandSpinner = (MultiSelectionSpinnerForBrands) mCreateStore.findViewById(R.id.brandSpinner);
+        //  brandSpinner = (MultiSelectionSpinnerForBrands) mCreateStore.findViewById(R.id.brandSpinner);
 
         btnaddprofile.setOnClickListener(this);
         btnaddcover.setOnClickListener(this);
@@ -228,16 +228,16 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         }
                     });
 
-
-                    List<String> Brands = new ArrayList<>();
-                    Brands.add("Honda");
-                    Brands.add("Hero");
-                    Brands.add("Mahindra");
-                    Brands.add("Tata");
-                    Brands.add("Bajaj");
-                    Brands.add("Volvo");
-                    Brands.add("Yamaha");
-                    brandSpinner.setItems(Brands, "-Select Brands-", CreateStoreFragment.this);
+//
+//                    List<String> Brands = new ArrayList<>();
+//                    Brands.add("Honda");
+//                    Brands.add("Hero");
+//                    Brands.add("Mahindra");
+//                    Brands.add("Tata");
+//                    Brands.add("Bajaj");
+//                    Brands.add("Volvo");
+//                    Brands.add("Yamaha");
+//                    brandSpinner.setItems(Brands, "-Select Brands-", CreateStoreFragment.this);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -319,7 +319,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 strclose = closetime.getText().toString();
                 category = multiautotext.getText().toString();
 
-                strBrandSpinner = brandSpinner.getSelectedItem().toString().replaceAll(" ", "");
+//                strBrandSpinner = brandSpinner.getSelectedItem().toString().replaceAll(" ", "");
 
                 List<String> tempbrands = new ArrayList<>();
                 String textbrand = multiautobrand.getText().toString();
@@ -446,20 +446,22 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 } else if (check()) {
                     multiautobrand.setError("You can add maximum five tags only");
                     multiautobrand.requestFocus();
-                } else if (rbtstorevehicle.isChecked() && (strBrandSpinner.equalsIgnoreCase("-SelectBrands-") || strBrandSpinner.isEmpty())) {
-                    CustomToast.customToast(getActivity(), "Select brands");
-                    brandSpinner.requestFocus();
-                } else {
+                }
+//                else if (rbtstorevehicle.isChecked() && (strBrandSpinner.equalsIgnoreCase("-SelectBrands-") || strBrandSpinner.isEmpty())) {
+//                    CustomToast.customToast(getActivity(), "Select brands");
+//                    brandSpinner.requestFocus();
+//                }
+                else {
                     if (create.getText().toString().equalsIgnoreCase("create")) {
                         createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription
-                                , finalbrandtags, strBrandSpinner);
+                                , finalbrandtags, "");
                     } else {
                         if (lastWord.equals(""))
                             lastWord = preLastWord;
                         if (coverlastWord.equals(""))
                             coverlastWord = preCoverLastWord;
                         updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription, storetype, address,
-                                coverlastWord, finalbrandtags, strBrandSpinner);
+                                coverlastWord, finalbrandtags, "");
                     }
                 }
                 break;
