@@ -23,13 +23,12 @@ public class MyInventoryAppIntro extends AhoyOnboarderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("",
-                "Upload products/ services you sell. it could be transport service, cab service, accessories, " +
-                        "tyres, lubricants, vehicles - new or old, etc.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "People searching for a specific service or product " +
-                "will be directed to your inventory and that inquiry will be shared to you. You can follow-up and convert.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("",
-                "Add manual enquiries against the inventory and keep a track of the sales cycle of each customer.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Upload products/services you sell. it could be transport service, cab service, accessories, " +
+                "tyres, lubricants, vehicles-new or old, etc.", "");
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("People searching for a specific service or product " +
+                "will be directed to your inventory and that inquiry will be shared to you. You can follow-up and convert.", "");
+        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Add manual enquiries against the inventory and keep a track of the sales cycle of each customer.",
+                "");
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
@@ -43,15 +42,15 @@ public class MyInventoryAppIntro extends AhoyOnboarderActivity {
 
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);
-            page.setDescriptionColor(R.color.grey_200);
-            page.setTitleTextSize(dpToPixels(12, this));
+            page.setDescriptionColor(R.color.white);
+            page.setTitleTextSize(dpToPixels(10, this));
             page.setDescriptionTextSize(dpToPixels(8, this));
             //page.setIconLayoutParams(width, height, marginTop, marginLeft, marginRight, marginBottom);
         }
 
         setFinishButtonTitle("Finish");
         showNavigationControls(true);
-        setGradientBackground();
+        setGradientBackground(R.drawable.translates);
 
         //set the button style you created
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

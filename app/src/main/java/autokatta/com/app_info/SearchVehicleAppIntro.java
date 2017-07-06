@@ -23,12 +23,12 @@ public class SearchVehicleAppIntro extends AhoyOnboarderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("",
-                "Search the used vehicle available for sale in Autokatta.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "Your search is saved and matching sellers are " +
-                "notified to you.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("", "Add maximum details so that exact match can be " +
-                "notified to you.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Search the used vehicle available for sale in Autokatta.",
+                "");
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Your search is saved and matching sellers are " +
+                "notified to you.", "");
+        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Add maximum details so that exact match can be " +
+                "notified to you.", "");
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
@@ -42,15 +42,15 @@ public class SearchVehicleAppIntro extends AhoyOnboarderActivity {
 
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);
-            page.setDescriptionColor(R.color.grey_200);
-            page.setTitleTextSize(dpToPixels(12, this));
-            page.setDescriptionTextSize(dpToPixels(8, this));
+            page.setDescriptionColor(R.color.white);
+            page.setTitleTextSize(dpToPixels(10, this));
+            page.setDescriptionTextSize(dpToPixels(10, this));
             //page.setIconLayoutParams(width, height, marginTop, marginLeft, marginRight, marginBottom);
         }
 
         setFinishButtonTitle("Finish");
         showNavigationControls(true);
-        setGradientBackground();
+        setGradientBackground(R.drawable.translates);
 
         //set the button style you created
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

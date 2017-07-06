@@ -24,16 +24,15 @@ public class ManualAppIntro extends AhoyOnboarderActivity {
         super.onCreate(savedInstanceState);
 
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Inquiries",
-                "Get inquiries for your products, service or vehicles as it gets searched.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "Add manual enquiries against the inventory and" +
-                " keep a track of the sales cycle of each customer.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("",
-                "Get inquiry from the product/ service or vehicle inventory page. Customer send enquiry directly as a business" +
-                        " communication", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("",
-                "Customers send enquiry from the store page through the inquiry module.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard5 = new AhoyOnboarderCard("",
-                "Manage inquires and update status of the inquiries, follow take mail of the inquiry list received against each inventory.", R.drawable.hdlogo);
+                "Get inquiries for your products, service or vehicles as it gets searched.");
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Add manual enquiries against the inventory and" +
+                " keep a track of the sales cycle of each customer.", "");
+        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Get inquiry from the product/ service or vehicle inventory page. Customer send enquiry directly as a business" +
+                " communication", "");
+        AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("Customers send enquiry from the store page through the inquiry module.",
+                "");
+        AhoyOnboarderCard ahoyOnboarderCard5 = new AhoyOnboarderCard("Manage inquires and update status of the inquiries, follow take mail of the inquiry list received against each inventory.",
+                "");
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
@@ -51,15 +50,15 @@ public class ManualAppIntro extends AhoyOnboarderActivity {
 
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);
-            page.setDescriptionColor(R.color.grey_200);
-            page.setTitleTextSize(dpToPixels(12, this));
+            page.setDescriptionColor(R.color.white);
+            page.setTitleTextSize(dpToPixels(10, this));
             page.setDescriptionTextSize(dpToPixels(8, this));
             //page.setIconLayoutParams(width, height, marginTop, marginLeft, marginRight, marginBottom);
         }
 
         setFinishButtonTitle("Finish");
         showNavigationControls(true);
-        setGradientBackground();
+        setGradientBackground(R.drawable.translates);
 
         //set the button style you created
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

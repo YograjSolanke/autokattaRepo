@@ -20,12 +20,12 @@ public class GradientBackgroundExampleActivity extends AhoyOnboarderActivity {
         super.onCreate(savedInstanceState);
 
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Create your profile in autokatta",
-                "A place where service providers and customers, engage and manage business..", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "Tell more about yourself..", R.drawable.hdlogo);
+                "A place where service providers and customers, engage and manage business.");
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Tell more about yourself", "");
         AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Tell us your interests",
-                "This will help us to connect you to the right customers and service providers.", R.drawable.hdlogo);
+                "This will help us to connect you to the right customers and service providers.");
         AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("My vehicle",
-                "Upload the vehicles you own with correct information and we will remind you expiring services in time.", R.drawable.hdlogo);
+                "Upload the vehicles you own with correct information and we will remind you expiring services in time.");
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
@@ -41,15 +41,15 @@ public class GradientBackgroundExampleActivity extends AhoyOnboarderActivity {
 
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);
-            page.setDescriptionColor(R.color.grey_200);
-            page.setTitleTextSize(dpToPixels(12, this));
+            page.setDescriptionColor(R.color.white);
+            page.setTitleTextSize(dpToPixels(10, this));
             page.setDescriptionTextSize(dpToPixels(8, this));
             //page.setIconLayoutParams(width, height, marginTop, marginLeft, marginRight, marginBottom);
         }
 
         setFinishButtonTitle("Finish");
         showNavigationControls(true);
-        setGradientBackground();
+        setGradientBackground(R.drawable.translates);
 
         //set the button style you created
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

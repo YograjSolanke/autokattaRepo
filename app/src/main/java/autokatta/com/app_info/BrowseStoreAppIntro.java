@@ -23,9 +23,9 @@ public class BrowseStoreAppIntro extends AhoyOnboarderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("", "Browse store based on a category.", R.drawable.hdlogo);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("", "You can browse store in a specific category near you. " +
-                "This helps you to locate stores for emergency services also.", R.drawable.hdlogo);
+        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Browse store based on a category.", "");
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("You can browse store in a specific category near you. " +
+                "This helps you to locate stores for emergency services also.", "");
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
@@ -37,15 +37,15 @@ public class BrowseStoreAppIntro extends AhoyOnboarderActivity {
 
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);
-            page.setDescriptionColor(R.color.grey_200);
-            page.setTitleTextSize(dpToPixels(12, this));
+            page.setDescriptionColor(R.color.white);
+            page.setTitleTextSize(dpToPixels(10, this));
             page.setDescriptionTextSize(dpToPixels(8, this));
             //page.setIconLayoutParams(width, height, marginTop, marginLeft, marginRight, marginBottom);
         }
 
         setFinishButtonTitle("Finish");
         showNavigationControls(true);
-        setGradientBackground();
+        setGradientBackground(R.drawable.translates);
 
         //set the button style you created
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
