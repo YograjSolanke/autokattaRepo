@@ -1,10 +1,13 @@
 package autokatta.com.initial_fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +48,22 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         textExchangeMela.setOnClickListener(this);
         textSaleMela.setOnClickListener(this);
         textServiceMela.setOnClickListener(this);
+        showMessage();
         return mCreateEventFragment;
+    }
+
+    private void showMessage() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setMessage(Html.fromHtml("This is trial period, Participate in auction free without deposit. After trial period, you can participate for buying or selling through 5 auction per Rs. 1000/-. Deposits still needs to be paid for bidding limit. Other terms and conditions apply for auction participating. This package is called AUCTION PACK.<br>" +
+                "<font color='#FF0000'>Rs. 1000/- you can create auctions for selling or participate in auction for buying. 1 AUCTION PACK gives you a total of 5 opportunities of buying or selling through auction in a fees of Rs. 1000/-</font>"));
+        alertDialog.setCancelable(false);
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialog.setPositiveButton("Continue Trial Version", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     @Override
