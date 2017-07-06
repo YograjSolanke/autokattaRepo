@@ -48,9 +48,9 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
     LinearLayoutManager mLayoutManager;
     StoreProductAdapter adapter;
     ConnectionDetector mTestConnection;
-    private TextView mPlaceHolder;
     boolean _hasLoadedOnce = false;
     Activity activity;
+    TextView mNoData;
 
     @Nullable
     @Override
@@ -71,8 +71,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
             mApiCall.getGroupProducts(GroupId, mBundleContact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -103,7 +102,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
                 String storeContact = null;
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getProduct().isEmpty()) {
-                    mPlaceHolder.setVisibility(View.GONE);
+                    mNoData.setVisibility(View.GONE);
                     for (StoreInventoryResponse.Success.Product success : storeResponse.getSuccess().getProduct()) {
                         success.setProductId(success.getProductId());
                         success.setName(success.getName());
@@ -129,7 +128,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
                     adapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    mPlaceHolder.setVisibility(View.GONE);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -155,25 +154,20 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
-                Log.i("Check Class-"
-                        , "memberproductfragment");
-                error.printStackTrace();
-            }
+            Log.i("Check Class-"
+                    , "memberproductfragment");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -188,7 +182,8 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
             @Override
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
-                mPlaceHolder = (TextView) mProduct.findViewById(R.id.no_category);
+                mNoData = (TextView) mProduct.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mProduct.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
@@ -217,29 +212,4 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getProducts(mGroupId);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

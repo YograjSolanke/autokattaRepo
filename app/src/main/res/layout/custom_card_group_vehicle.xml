@@ -11,6 +11,7 @@
     app:cardBackgroundColor="@color/white">
 
     <RelativeLayout
+        android:id="@+id/re"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/card_margin"
@@ -42,8 +43,8 @@
                         android:maxLines="1"
                         android:text="@string/no_register"
                         android:textColor="@color/button_default"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/registration_no"
@@ -70,8 +71,8 @@
                         android:maxLines="1"
                         android:text="@string/year_of_mfg"
                         android:textColor="@color/button_default"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/year_of_mfg"
@@ -98,8 +99,8 @@
                         android:maxLines="1"
                         android:text="@string/kms_hrs"
                         android:textColor="@color/button_default"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/kms_hrs"
@@ -126,8 +127,8 @@
                         android:maxLines="1"
                         android:text="@string/Rs"
                         android:textColor="@color/button_default"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_size" />
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/price"
@@ -212,8 +213,8 @@
                     android:maxLines="1"
                     android:text="@string/model"
                     android:textColor="@color/button_default"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/model"
@@ -240,8 +241,8 @@
                     android:maxLines="1"
                     android:text="@string/brand_no"
                     android:textColor="@color/button_default"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/brand"
@@ -268,8 +269,8 @@
                     android:maxLines="1"
                     android:text="@string/updated_by"
                     android:textColor="@color/button_default"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/updated_by"
@@ -296,8 +297,8 @@
                     android:maxLines="1"
                     android:text="@string/location"
                     android:textColor="@color/button_default"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/location"
@@ -325,8 +326,8 @@
                     android:maxLines="1"
                     android:text="@string/rto_city"
                     android:textColor="@color/button_default"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/text_size" />
+                    android:textSize="@dimen/text_size"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/rto_city"
@@ -366,9 +367,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:visibility="visible"
                 android:layout_marginStart="10dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/likeimg"
@@ -395,8 +396,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
-                android:visibility="gone"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/unlike"
@@ -511,12 +512,12 @@
                 android:layout_weight="1">
 
                 <ImageButton
-                android:id="@+id/share_autokatta"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="@dimen/cards_button_width"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                app:srcCompat="@drawable/autoshare" />
+                    android:id="@+id/share_autokatta"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="@dimen/cards_button_width"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    app:srcCompat="@drawable/autoshare" />
 
                 <TextView
                     android:id="@+id/share_autokatta_txt"
@@ -534,9 +535,11 @@
         <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_below="@+id/relalike2"
             android:layout_marginTop="@dimen/margin_small"
-            android:background="#cccccc" />
+            android:background="@color/grey" />
+
     </RelativeLayout>
+
 </android.support.v7.widget.CardView>

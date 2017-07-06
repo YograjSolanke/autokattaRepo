@@ -96,7 +96,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
             insurance = "", puc = "", lastservice = "", nextservice = "", subcattext = "", brandtext = "", modeltext = "",
             versiontext = "", yeartext = "", contact;
 
-    RelativeLayout mNextRegistration;
+    RelativeLayout mNextRegistration, mHintLayout;
     ConnectionDetector mTestConnection;
 
     @Override
@@ -133,6 +133,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     mSpinnerModel = (Spinner) findViewById(R.id.spinner_model);
                     mSpinnerVersion = (Spinner) findViewById(R.id.spinner_version);
                     mNextRegistration = (RelativeLayout) findViewById(R.id.next_registration);
+                    mHintLayout = (RelativeLayout) findViewById(R.id.hint_layout);
 
                     edtyear.setInputType(InputType.TYPE_NULL);
                     edttax.setInputType(InputType.TYPE_NULL);
@@ -188,6 +189,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     if (className != null) {
                         if (className.equals("myVehicleAdapter")) {
                             btncancle.setVisibility(View.GONE);
+                            mHintLayout.setVisibility(View.GONE);
                         }
                     }
 

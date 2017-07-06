@@ -77,11 +77,13 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
         mViewHolder.mStoreName.setText(mItemList.get(position).getStoreName());
         mViewHolder.mStoreLocation.setText(mItemList.get(position).getLocation());
 
-        if (mItemList.get(position).getStoreLogo().contains(".jpg") || mItemList.get(position).getStoreLogo().contains(".png")) {
+        if (!mItemList.get(position).getStoreLogo().equals("") || !mItemList.get(position).getStoreLogo().equals("null")
+                || mItemList.get(position).getStoreLogo() != null) {
             Glide.with(mActivity)
                     .load("http://autokatta.com/mobile/store_profiles/" + mItemList.get(position).getStoreLogo())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .placeholder(R.drawable.logo)
                     .override(110, 100)
                     .into(mViewHolder.imageView);
         } else {

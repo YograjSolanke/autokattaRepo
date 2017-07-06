@@ -51,7 +51,6 @@ import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.fragment_profile.AboutStore;
-import autokatta.com.fragment_profile.Event;
 import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
 import autokatta.com.fragment_profile.Modules;
@@ -209,8 +208,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 updatedUsername = name.getText().toString();
-                                if (updatedUsername.equals("")||updatedUsername.startsWith(" ")&&updatedUsername.endsWith(" ")) {
-                                    CustomToast.customToast(getApplicationContext(),"Please Enter Your Name");
+                                if (updatedUsername.equals("") || updatedUsername.startsWith(" ") && updatedUsername.endsWith(" ")) {
+                                    CustomToast.customToast(getApplicationContext(), "Please Enter Your Name");
                                     /*Snackbar.make(view, "Please Enter Your Name", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();*/
                                 } else {
@@ -350,7 +349,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         adapter.addFragment(new About(), "ABOUT");
         adapter.addFragment(new Groups(), "GROUP");
         adapter.addFragment(new AboutStore(), "STORE");
-        adapter.addFragment(new Event(), "EVENT");
+        //adapter.addFragment(new Event(), "EVENT");
         //adapter.addFragment(new Katta(), "KATTA");
         adapter.addFragment(new Modules(), "MODULE");
         adapter.addFragment(new Follow(), "FOLLOW");
@@ -400,15 +399,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         }
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
-          //  Toast.makeText(getApplicationContext(), getString(R.string._404), Toast.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(),  getString(R.string.no_response));
-           // Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-         //   Toast.makeText(getApplicationContext(), getString(R.string.no_response), Toast.LENGTH_SHORT).show();
         } else if (error instanceof ConnectException) {
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
             Snackbar snackbar = Snackbar.make(mUserParent, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                     .setAction("Go Online", new View.OnClickListener() {
                         @Override
@@ -509,7 +504,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
-              //  mProfilePicture.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                //  mProfilePicture.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                 cursor.close();
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg

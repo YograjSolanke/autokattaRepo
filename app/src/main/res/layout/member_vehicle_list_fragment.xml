@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
+        android:id="@+id/relfilter"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:id="@+id/relfilter">
+        android:layout_height="45dp">
+
         <ImageView
             android:id="@+id/filterimg"
             android:layout_width="40dip"
@@ -27,6 +28,7 @@
             android:text="Apply filter to search"
             android:textColor="#2C3343" />
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -476,12 +478,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
+                android:layout_below="@+id/relativenoofowner"
                 android:background="@color/background"
                 android:text="Filter All"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:layout_below="@+id/relativenoofowner"
                 android:textSize="15sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -493,7 +495,9 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/relfilter"
-        android:background="@color/kprogresshud_grey_color"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="@dimen/fab_margin"
         android:visibility="visible">
 
@@ -503,4 +507,6 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include layout="@layout/error_view" />
 </RelativeLayout>

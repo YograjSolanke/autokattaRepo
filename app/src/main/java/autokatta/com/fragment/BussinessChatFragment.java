@@ -62,7 +62,7 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
         mTestConnection = new ConnectionDetector(getActivity());
 
         mNoData = (TextView) mMychat.findViewById(R.id.no_category);
-        mNoData.setVisibility(View.GONE);
+        //mNoData.setVisibility(View.GONE);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMychat.findViewById(R.id.swipeRefreshLayoutBussinessChat);
 
@@ -113,8 +113,7 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
             apiCall = new ApiCall(getActivity(), this);
             apiCall.getBussinessChat(loginContact);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -152,12 +151,10 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
                     mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
-                CustomToast.customToast(getActivity(),getString(R.string._404_));
-                //  showMessage(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -165,20 +162,15 @@ public class BussinessChatFragment extends Fragment implements RequestNotifier, 
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Bussiness Chat Fragment");
         }

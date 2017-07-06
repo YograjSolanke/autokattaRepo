@@ -62,8 +62,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
             mApiCall.getGroupService(GroupId, mBundleContact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -125,13 +124,11 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(),getString(R.string._404_));
-                // showMessage(activity, getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(activity, getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -139,21 +136,16 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
             Log.i("Check Class-"
                     , "memberservicefragment");
             error.printStackTrace();
@@ -181,6 +173,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
                 mNoData = (TextView) mService.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
 
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
@@ -210,29 +203,4 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    /*public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getServices(mGroupId);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

@@ -82,7 +82,6 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
             mApiCall.getMyVehicles(rcontact);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -102,7 +101,6 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
             mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -177,13 +175,15 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                         if (mSuccesses.size() != 0) {
                             mRecyclerView.setAdapter(mGroupVehicleRefreshAdapter);
                             mGroupVehicleRefreshAdapter.notifyDataSetChanged();
-                        } else {
+                        }
                             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                             relativefilter.setVisibility(View.GONE);
-                        }
+
                     } else {
                         mNoData.setVisibility(View.VISIBLE);
                         mSwipeRefreshLayout.setRefreshing(false);
+                        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                        relativefilter.setVisibility(View.GONE);
                     }
 
 
@@ -207,12 +207,10 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
-                //showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            //showMessage(activity, getString(R.string.no_response));
         }
     }
 
@@ -231,19 +229,14 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "groupvehiclelist");
@@ -364,9 +357,11 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                         if (mSwipeRefreshLayout.getVisibility() == View.VISIBLE) {
                             mSwipeRefreshLayout.setVisibility(View.GONE);
                             relativefilter.setVisibility(View.VISIBLE);
+                            mNoData.setVisibility(View.GONE);
                         } else {
                             mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                             relativefilter.setVisibility(View.GONE);
+                            mNoData.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -396,7 +391,6 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                                 && price.equals("") && reg_year.equals("") && mgf_year.equals("") && kmsrunning.equals("")
                                 && no_of_owner.equals("")) {
                             CustomToast.customToast(getActivity(), "Enter value to search");
-                            //showMessage(getActivity(),"Enter value to search");
                         } else {
                             getGroupVehicles();
                         }
@@ -409,29 +403,4 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }
