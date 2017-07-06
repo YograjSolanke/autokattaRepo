@@ -153,7 +153,8 @@ public class MyUpcomingServiceMelaFragment extends Fragment implements SwipeRefr
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            if(isAdded())
+                CustomToast.customToast(getActivity(),getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
