@@ -78,8 +78,8 @@
                         android:layout_width="@dimen/cards_button_width"
                         android:layout_height="@dimen/card_title_height"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/text_margin_top"
                         android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/text_margin_top"
                         android:contentDescription="@string/app_name"
                         android:tint="@color/button_grey"
                         app:srcCompat="@mipmap/ic_heart_like" />
@@ -115,7 +115,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"
                 android:textStyle="italic"
-                tools:text="Store Name" />
+                tools:text="Group Name" />
 
             <LinearLayout
                 android:id="@+id/linear_card"
@@ -126,16 +126,16 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/profilenamerel"
+                    android:id="@+id/groupMemberRel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
 
                     <TextView
                         android:id="@+id/members"
-                        android:layout_width="100dp"
+                        android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="Members:"
+                        android:text="No of Members: "
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -150,14 +150,14 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/profileworkrel"
+                    android:id="@+id/groupVehicleRel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
 
                     <TextView
                         android:id="@+id/vehicles"
-                        android:layout_width="100dp"
+                        android:layout_width="105dp"
                         android:layout_height="wrap_content"
                         android:text="No of Vehicles: "
                         android:textColor="#808080"
@@ -168,11 +168,66 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/vehicles"
-                        android:hint="Vehicles"
+                        android:hint="vehicles"
+                        android:textColor="#808080" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/groupProductRel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp">
+
+                    <TextView
+                        android:id="@+id/products"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:text="No of Products: "
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/group_no_of_products"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/products"
+                        android:hint="products"
+                        android:textColor="#808080" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/groupServiceRel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp">
+
+                    <TextView
+                        android:id="@+id/service"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:text="No of Services: "
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/group_no_of_services"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/service"
+                        android:hint="services"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+    <View
+        android:id="@+id/vieww"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/group_card_view"
+        android:background="@color/grey" />
 </RelativeLayout>
