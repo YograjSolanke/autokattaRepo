@@ -39,47 +39,65 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
     /* view class Group*/
     private static class GroupNotifications extends RecyclerView.ViewHolder {
         CardView mGroupCardView;
-        ImageView mGroupPic, mGroupImage;
+        ImageView mUserPic, mGroupImage;
         ImageButton mGroupFavourite;
-        TextView mGroupActionName, mGroupActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles;
+        TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
+                mGroupNoOfServices;
 
         private GroupNotifications(View groupView) {
             super(groupView);
             mGroupCardView = (CardView) groupView.findViewById(R.id.group_card_view);
-            mGroupPic = (ImageView) groupView.findViewById(R.id.group_pic);
+            mUserPic = (ImageView) groupView.findViewById(R.id.profile_pic);
+            mActionName = (TextView) groupView.findViewById(R.id.action_names);
+            mActionTime = (TextView) groupView.findViewById(R.id.action_time);
+
             mGroupImage = (ImageView) groupView.findViewById(R.id.group_image);
-
             mGroupFavourite = (ImageButton) groupView.findViewById(R.id.group_favourite);
-
-            mGroupActionName = (TextView) groupView.findViewById(R.id.group_action_names);
-            mGroupActionTime = (TextView) groupView.findViewById(R.id.group_action_time);
             mGroupName = (TextView) groupView.findViewById(R.id.group_name);
-            mGroupMembers = (TextView) groupView.findViewById(R.id.group_members);
+            mGroupMembers = (TextView) groupView.findViewById(R.id.group_no_of_members);
             mGroupNoOfVehicles = (TextView) groupView.findViewById(R.id.group_no_of_vehicles);
+            mGroupNoOfProducts = (TextView) groupView.findViewById(R.id.group_no_of_products);
+            mGroupNoOfServices = (TextView) groupView.findViewById(R.id.group_no_of_services);
         }
     }
 
-    /* view class Upload vehicle*/
+    /*
+        Uploaded Vehicle Notification Class...
+     */
     private static class UploadVehicleNotifications extends RecyclerView.ViewHolder {
-        CardView mGroupCardView;
-        ImageView mGroupPic, mGroupImage;
-        ImageButton mGroupFavourite;
-        TextView mGroupActionName, mGroupActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles;
+        CardView mVehicleCardView;
+        ImageView mUserPic, mVehicleImage;
+        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mVehicleFavourite;
+        TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
+                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;
 
-        private UploadVehicleNotifications(View groupView) {
-            super(groupView);
-            mGroupCardView = (CardView) groupView.findViewById(R.id.group_card_view);
-            mGroupPic = (ImageView) groupView.findViewById(R.id.group_pic);
-            mGroupImage = (ImageView) groupView.findViewById(R.id.group_image);
+        private UploadVehicleNotifications(View upVehicleView) {
+            super(upVehicleView);
+            mVehicleCardView = (CardView) upVehicleView.findViewById(R.id.vehicle_card_view);
+            mUserPic = (ImageView) upVehicleView.findViewById(R.id.profile_pic);
+            mActionTime = (TextView) upVehicleView.findViewById(R.id.action_time);
+            mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
 
-            mGroupFavourite = (ImageButton) groupView.findViewById(R.id.group_favourite);
+            mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.vehicle_call);
+            mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
+            mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
 
-            mGroupActionName = (TextView) groupView.findViewById(R.id.group_action_names);
-            mGroupActionTime = (TextView) groupView.findViewById(R.id.group_action_time);
-            mGroupName = (TextView) groupView.findViewById(R.id.group_name);
-            mGroupMembers = (TextView) groupView.findViewById(R.id.group_members);
-            mGroupNoOfVehicles = (TextView) groupView.findViewById(R.id.group_no_of_vehicles);
+            mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
+            mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
+            mVehicleName = (TextView) upVehicleView.findViewById(R.id.vehicle_name);
+            mVehiclePrice = (TextView) upVehicleView.findViewById(R.id.vehicle_price);
+            mVehicleBrand = (TextView) upVehicleView.findViewById(R.id.vehicle_brand);
+            mVehicleModel = (TextView) upVehicleView.findViewById(R.id.vehicle_model);
+            mVehicleYearOfMfg = (TextView) upVehicleView.findViewById(R.id.vehicle_year_of_mfg);
+            mVehicleKmsHrs = (TextView) upVehicleView.findViewById(R.id.vehicle_kms_hrs);
+            mVehicleLocation = (TextView) upVehicleView.findViewById(R.id.vehicle_locations);
+            mRtoCity = (TextView) upVehicleView.findViewById(R.id.vehicle_rto_city);
+            mLikesTxt = (TextView) upVehicleView.findViewById(R.id.likes);
+            mSharesTxt = (TextView) upVehicleView.findViewById(R.id.share);
         }
+
     }
 
     @Override
@@ -92,7 +110,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                 return new GroupNotifications(mView);
 
             case 10:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_group_notifications, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_vehicle_notifications, parent, false);
                 return new UploadVehicleNotifications(mView);
         }
         return null;
@@ -100,6 +118,18 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        //final FavouriteAllResponse objAllResponse = allResponseList.get(position);
+        Log.i("GroupNoti_Layout", "BindHolder" + holder.getItemViewType());
+        switch (holder.getItemViewType()) {
+
+            case 3:
+                GroupNotifications groupNotifications = (GroupNotifications) holder;
+                break;
+
+            case 10:
+                UploadVehicleNotifications uploadVehicleNotifications = (UploadVehicleNotifications) holder;
+                break;
+        }
 
     }
 

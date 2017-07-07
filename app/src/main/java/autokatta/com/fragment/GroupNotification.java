@@ -17,6 +17,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import autokatta.com.R;
+import autokatta.com.adapter.GroupNotificationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -36,6 +37,7 @@ public class GroupNotification extends Fragment implements SwipeRefreshLayout.On
     TextView mNoData;
     ConnectionDetector mTestConnection;
     String myContact;
+    GroupNotificationAdapter mAdapter;
 
     public GroupNotification() {
     }
@@ -92,7 +94,7 @@ public class GroupNotification extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void groupNotification(String id) {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
 
     }
 

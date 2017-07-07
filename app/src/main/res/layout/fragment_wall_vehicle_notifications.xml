@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/vehicle_pro_pic"
+                        android:id="@+id/profile_pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -41,13 +41,13 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relContact"
+                    android:id="@+id/relAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/relImg">
 
                     <TextView
-                        android:id="@+id/vehicle_action_name"
+                        android:id="@+id/action_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -56,10 +56,10 @@
                         android:textColor="#2C3343" />
 
                     <TextView
-                        android:id="@+id/vehicle_action_time"
+                        android:id="@+id/action_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/vehicle_action_name"
+                        android:layout_below="@+id/action_name"
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
@@ -70,7 +70,7 @@
                     android:id="@+id/rating_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/relContact">
+                    android:layout_toEndOf="@+id/relAction">
 
                     <ImageButton
                         android:id="@+id/vehicle_favourite"
@@ -146,7 +146,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/profilenamerel"
+                    android:id="@+id/vehicle_price_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
@@ -170,7 +170,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/profileworkrel"
+                    android:id="@+id/vehicle_brand_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
@@ -194,7 +194,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/profilewebsiterel"
+                    android:id="@+id/vehicle_model_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
@@ -219,7 +219,7 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/time_layout"
+                    android:id="@+id/vehicle_year_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
@@ -243,7 +243,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/working_day_layout"
+                    android:id="@+id/vehicle_kms_rel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
@@ -267,7 +267,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/profilelocationrel"
+                    android:id="@+id/vehicle_location_rel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
@@ -291,7 +291,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rto_city"
+                    android:id="@+id/vehicle_rto_rel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp">
@@ -365,8 +365,7 @@
                 android:layout_below="@+id/linear_card"
                 android:layout_marginEnd="@dimen/text_margin_top"
                 android:contentDescription="@string/app_name"
-                android:tint="@color/button_grey"
-                app:srcCompat="@android:drawable/ic_menu_share" />
+                app:srcCompat="@drawable/logo48x48" />
 
             <ImageButton
                 android:id="@+id/share_other"

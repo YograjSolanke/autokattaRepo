@@ -42,7 +42,7 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
         ImageView mStorePic, mStoreImage;
         ImageButton mShareAutokatta, mShareOther, mCall, mLike, mFollow;
         RatingBar mStoreRating;
-        TextView mStoreActionName, mActionTime, mStoreName, mStoreText, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
+        TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
                 mStoreLocation, mFollowCount, mLikes, mShares;
 
         private StoreNotification(View storeView) {
@@ -61,7 +61,7 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             mStoreActionName = (TextView) storeView.findViewById(R.id.store_action_names);
             mActionTime = (TextView) storeView.findViewById(R.id.store_action_time);
             mStoreName = (TextView) storeView.findViewById(R.id.store_name);
-            mStoreText = (TextView) storeView.findViewById(R.id.store_txt);
+            mStoreCategory = (TextView) storeView.findViewById(R.id.store_category);
             mStoreWorkAt = (TextView) storeView.findViewById(R.id.store_workat);
             mStoreWebSite = (TextView) storeView.findViewById(R.id.store_website);
             mStoreTiming = (TextView) storeView.findViewById(R.id.store_time);

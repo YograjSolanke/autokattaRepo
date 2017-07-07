@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/group_pic"
+                        android:id="@+id/profile_pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -41,13 +41,13 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relContact"
+                    android:id="@+id/group_action_rel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/relImg">
 
                     <TextView
-                        android:id="@+id/group_action_names"
+                        android:id="@+id/action_names"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
@@ -56,10 +56,10 @@
                         android:textColor="#2C3343" />
 
                     <TextView
-                        android:id="@+id/group_action_time"
+                        android:id="@+id/action_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/group_action_names"
+                        android:layout_below="@+id/action_names"
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
@@ -70,7 +70,7 @@
                     android:id="@+id/rating_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/relContact">
+                    android:layout_toEndOf="@+id/group_action_rel">
 
                     <ImageButton
                         android:id="@+id/group_favourite"
@@ -140,7 +140,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/group_members"
+                        android:id="@+id/group_no_of_members"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/members"
