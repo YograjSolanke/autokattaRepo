@@ -20,12 +20,12 @@ public class GradientBackgroundExampleActivity extends AhoyOnboarderActivity {
         super.onCreate(savedInstanceState);
 
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Create your profile in autokatta",
-                "A place where service providers and customers, engage and manage business.");
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Tell more about yourself", "");
+                "A place where service providers and customers, engage and manage business.", R.drawable.autokatta_filpcardddd);
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Tell more about yourself", "", R.drawable.eee);
         AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Tell us your interests",
-                "This will help us to connect you to the right customers and service providers.");
+                "This will help us to connect you to the right customers and service providers.", R.drawable.autokatta_filpcard45);
         AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("My vehicle",
-                "Upload the vehicles you own with correct information and we will remind you expiring services in time.");
+                "Upload the vehicles you own with correct information and we will remind you expiring services in time.", R.drawable.autokatta_filpcard211);
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
@@ -42,9 +42,9 @@ public class GradientBackgroundExampleActivity extends AhoyOnboarderActivity {
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);
             page.setDescriptionColor(R.color.white);
-            page.setTitleTextSize(dpToPixels(10, this));
-            page.setDescriptionTextSize(dpToPixels(8, this));
-            //page.setIconLayoutParams(width, height, marginTop, marginLeft, marginRight, marginBottom);
+            page.setTitleTextSize(dpToPixels(7, this));
+            page.setDescriptionTextSize(dpToPixels(5, this));
+            page.setIconLayoutParams(600, 600, 0, 0, 0, 0);
         }
 
         setFinishButtonTitle("Finish");

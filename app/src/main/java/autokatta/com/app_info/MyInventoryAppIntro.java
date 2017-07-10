@@ -43,9 +43,9 @@ public class MyInventoryAppIntro extends AhoyOnboarderActivity {
         for (AhoyOnboarderCard page : pages) {
             page.setTitleColor(R.color.white);
             page.setDescriptionColor(R.color.white);
-            page.setTitleTextSize(dpToPixels(10, this));
-            page.setDescriptionTextSize(dpToPixels(8, this));
-            //page.setIconLayoutParams(width, height, marginTop, marginLeft, marginRight, marginBottom);
+            page.setTitleTextSize(dpToPixels(7, this));
+            page.setDescriptionTextSize(dpToPixels(5, this));
+            page.setIconLayoutParams(600, 600, 0, 0, 0, 0);
         }
 
         setFinishButtonTitle("Finish");
