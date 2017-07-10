@@ -162,53 +162,56 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                 mTeamServices.setVisibility(View.GONE);
                                 mTeamProduct.setVisibility(View.GONE);
                             }*/
+                           /* Products tab */
                             if (tab.getPosition() == 2) {
-                                if (storeOtherContact != null) {
-                                    if (storeOtherContact.equals(mOtherContact)) {
-                                        mTeamVehicle.setVisibility(View.GONE);
-                                        mTeamServices.setVisibility(View.GONE);
-                                        mTeamProduct.setVisibility(View.GONE);
 
-                                    }
-                                } else {
+                                if (mLoginContact.equals(mOtherContact)) {
                                     mTeamVehicle.setVisibility(View.GONE);
                                     mTeamServices.setVisibility(View.GONE);
                                     mTeamProduct.setVisibility(View.VISIBLE);
 
-                                }
-                            } else if (tab.getPosition() == 3) {
-                                if (storeOtherContact != null) {
-                                    if (storeOtherContact.equals(mOtherContact)) {
-                                        mTeamVehicle.setVisibility(View.GONE);
-                                        mTeamServices.setVisibility(View.GONE);
-                                        mTeamProduct.setVisibility(View.GONE);
-                                        mShare.setVisibility(View.GONE);
-                                        mAutoshare.setVisibility(View.GONE);
-                                    }
                                 } else {
+                                    mTeamVehicle.setVisibility(View.GONE);
+                                    mTeamServices.setVisibility(View.GONE);
+                                    mTeamProduct.setVisibility(View.GONE);
+                                }
+                            }
+                            /* Services tab */
+                            else if (tab.getPosition() == 3) {
+
+                                if (mLoginContact.equals(mOtherContact)) {
                                     mTeamVehicle.setVisibility(View.GONE);
                                     mTeamServices.setVisibility(View.VISIBLE);
                                     mTeamProduct.setVisibility(View.GONE);
-                                    mShare.setVisibility(View.GONE);
-                                    mAutoshare.setVisibility(View.GONE);
-                                }
-                            } else if (tab.getPosition() == 4) {
-                                if (storeOtherContact != null) {
-                                    if (storeOtherContact.equals(mOtherContact)) {
-                                        mTeamVehicle.setVisibility(View.GONE);
-                                        mTeamServices.setVisibility(View.GONE);
-                                        mTeamProduct.setVisibility(View.GONE);
-                                        mShare.setVisibility(View.GONE);
-                                        mAutoshare.setVisibility(View.GONE);
-                                    }
+                                    /*mShare.setVisibility(View.GONE);
+                                    mAutoshare.setVisibility(View.GONE);*/
                                 } else {
+                                    mTeamVehicle.setVisibility(View.GONE);
+                                    mTeamServices.setVisibility(View.GONE);
+                                    mTeamProduct.setVisibility(View.GONE);
+                                    /*mShare.setVisibility(View.VISIBLE);
+                                    mAutoshare.setVisibility(View.VISIBLE);*/
+                                }
+                            }
+                            /* Vehicles tab */
+                            else if (tab.getPosition() == 4) {
+
+                                if (mLoginContact.equals(mOtherContact)) {
                                     mTeamVehicle.setVisibility(View.VISIBLE);
                                     mTeamServices.setVisibility(View.GONE);
                                     mTeamProduct.setVisibility(View.GONE);
-                                    mShare.setVisibility(View.GONE);
-                                    mAutoshare.setVisibility(View.GONE);
+                                    /*mShare.setVisibility(View.GONE);
+                                    mAutoshare.setVisibility(View.GONE);*/
+                                } else {
+                                    mTeamVehicle.setVisibility(View.GONE);
+                                    mTeamServices.setVisibility(View.GONE);
+                                    mTeamProduct.setVisibility(View.GONE);
+                                   /* mShare.setVisibility(View.VISIBLE);
+                                    mAutoshare.setVisibility(View.VISIBLE);*/
                                 }
-                            } else {
+                            }
+                            /* Other tabs */
+                            else {
                                 mTeamVehicle.setVisibility(View.GONE);
                                 mTeamServices.setVisibility(View.GONE);
                                 mTeamProduct.setVisibility(View.GONE);
@@ -564,6 +567,19 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         R.anim.ok_right_to_left);
                 startActivity(new Intent(StoreViewActivity.this, ShareWithinAppActivity.class), options.toBundle());
                 break;
+
+            case R.id.add_product_team:
+                CustomToast.customToast(getApplicationContext(), "Coming soon... please be connected for update..");
+                break;
+
+            case R.id.add_services_team:
+                CustomToast.customToast(getApplicationContext(), "Coming soon... please be connected for update..");
+                break;
+
+            case R.id.add_vehicle_team:
+                CustomToast.customToast(getApplicationContext(), "Coming soon... please be connected for update..");
+                break;
+
         }
 
     }
