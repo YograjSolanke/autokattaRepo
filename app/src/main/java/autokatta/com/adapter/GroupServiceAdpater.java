@@ -2,6 +2,8 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -26,6 +27,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
+import autokatta.com.view.ServiceViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -35,16 +37,18 @@ import retrofit2.Response;
 
 public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpater.ServiceHolder> implements RequestNotifier {
     Activity activity;
-    private List<StoreInventoryResponse.Success.Service> mMainList = new ArrayList<>();
-    String myContact, storeContact;
+    List<StoreInventoryResponse.Success.Service> mMainList = new ArrayList<>();
+    private String myContact, storeContact, mGroupType;
     ApiCall apiCall;
-    private String pimagename = "";
     private ConnectionDetector connectionDetector;
 
-    public GroupServiceAdpater(Activity activity, List<StoreInventoryResponse.Success.Service> serviceList, String myContact) {
+    public GroupServiceAdpater(Activity activity, List<StoreInventoryResponse.Success.Service> serviceList, String myContact,
+                               String storeContact, String mGroupType) {
         this.activity = activity;
         this.mMainList = serviceList;
         this.myContact = myContact;
+        this.storeContact = storeContact;
+        this.mGroupType = mGroupType;
         connectionDetector = new ConnectionDetector(activity);
         apiCall = new ApiCall(activity, this);
 
@@ -58,9 +62,9 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
     }
 
     @Override
-    public void onBindViewHolder(final GroupServiceAdpater.ServiceHolder holder, int position) {
+    public void onBindViewHolder(final GroupServiceAdpater.ServiceHolder holder, final int position) {
 
-        ArrayList<String> images = new ArrayList<String>();
+        List<String> images = new ArrayList<String>();
 
         final StoreInventoryResponse.Success.Service service = mMainList.get(position);
 
@@ -73,11 +77,13 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         holder.ptags.setText(service.getServicetags());
 
         holder.ptype.setText(service.getServiceType());
+
+        holder.pCategory.setText(service.getServicecategory());
         holder.productrating.setEnabled(false);
 
-        /*if (myContact.equals(storeContact)) {
+        if (myContact.equals(service.getStorecontact()) && mGroupType.startsWith("MyGroup")) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
-        }*/
+        }
 
 
         holder.pname.setEnabled(false);
@@ -85,6 +91,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         holder.pdetails.setEnabled(false);
         holder.ptags.setEnabled(false);
         holder.ptype.setEnabled(false);
+        holder.pCategory.setEnabled(false);
 
 
         try {
@@ -92,7 +99,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
             if (service.getServiceImages().equals("") || service.getServiceImages().equals("null") ||
                     service.getServiceImages().equals("")) {
 
-                holder.image.setBackgroundResource(R.drawable.store);
+                holder.image.setBackgroundResource(R.drawable.logo);
             } else {
                 String[] parts = service.getServiceImages().split(",");
 
@@ -102,7 +109,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
                 }
                 System.out.println("http://autokatta.com/mobile/Service_pics/" + images.get(0));
 
-                pimagename = "http://autokatta.com/mobile/Service_pics/" + images.get(0);
+                String pimagename = "http://autokatta.com/mobile/Service_pics/" + images.get(0);
                 pimagename = pimagename.replaceAll(" ", "%20");
                 try {
 
@@ -134,40 +141,10 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                Bundle b = new Bundle();
-//                b.putString("name", name.get(position).toString());
-//                b.putString("pid", id.get(position).toString());
-//
-//                b.putString("price", price.get(position).toString());
-//                b.putString("details", details.get(position).toString());
-//                b.putString("tags", tags.get(position).toString());
-//                b.putString("type", type.get(position).toString());
-//                b.putString("likestatus", plikestatus.get(position).toString());
-//                b.putString("images", image.get(position).toString());
-//                b.putString("category", category.get(position).toString());
-//                b.putString("plikecnt", plike.get(position).toString());
-//                b.putString("prating", prating.get(position).toString());
-//                b.putString("prate", prate.get(position).toString());
-//                b.putString("prate1", prate1.get(position).toString());
-//                b.putString("prate2", prate2.get(position).toString());
-//                b.putString("prate3", prate3.get(position).toString());
-//                b.putString("store_id", store_id);
-//                b.putString("storecontact", storecontact);
-//                b.putString("storename", storename);
-//                b.putString("storewebsite", storewebsite);
-//                b.putString("storerating", storerating);
-//                b.putString("brandtags_list", brandtags_list.get(position).toString());
-//
-//
-//                ProductViewActivity frag = new ProductViewActivity();
-//                frag.setArguments(b);
-//
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, frag);
-//                fragmentTransaction.addToBackStack("product_view");
-//                fragmentTransaction.commit();
+                String serviceId = service.getServiceId();
+                Intent intent = new Intent(activity, ServiceViewActivity.class);
+                intent.putExtra("service_id", serviceId);
+                activity.startActivity(intent);
 
             }
         });
@@ -179,8 +156,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
 
 
                 if (!connectionDetector.isConnectedToInternet()) {
-                    Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
-
+                    CustomToast.customToast(activity, "Please try later");
                 } else {
 
                     new android.support.v7.app.AlertDialog.Builder(activity)
@@ -191,8 +167,9 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     apiCall.deleteService(serviceId, "delete");
-                                    mMainList.remove(holder.getAdapterPosition());
-                                    notifyDataSetChanged();
+                                    mMainList.remove(position);
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position, mMainList.size());
 
                                 }
                             })
@@ -254,10 +231,12 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
     }
 
     class ServiceHolder extends RecyclerView.ViewHolder {
-        TextView pname, pprice, pdetails, ptype, ptags;
+        TextView pname, pprice, pdetails, ptype, ptags, pCategory;
         ImageView image, deleteproduct;
-        Button viewdetails, sviewdetails, vehidetails;
+        Button sviewdetails, vehidetails;
         RatingBar productrating;
+        CardView viewdetails;
+
 
         ServiceHolder(View itemView) {
             super(itemView);
@@ -268,10 +247,13 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
             pdetails = (TextView) itemView.findViewById(R.id.editdetails);
             ptags = (TextView) itemView.findViewById(R.id.edittags);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
-            viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
+            pCategory = (TextView) itemView.findViewById(R.id.editCategory);
+            viewdetails = (CardView) itemView.findViewById(R.id.card_view);
+            //  viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
         }
+
     }
 }

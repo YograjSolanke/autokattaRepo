@@ -2,18 +2,11 @@ package autokatta.com.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.app.OnNavigationBlockedListener;
-import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 import com.heinrichreimersoftware.materialintro.slide.Slide;
-
-import autokatta.com.R;
-import autokatta.com.fragment_profile.AboutStore;
-import autokatta.com.fragment_profile.Katta;
-import autokatta.com.fragment_profile.Modules;
 
 /**
  * Created by ak-001 on 19/3/17.

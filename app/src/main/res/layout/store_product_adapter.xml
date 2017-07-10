@@ -18,7 +18,7 @@
             android:id="@+id/r1"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="@color/grey">
+            android:background="@color/button_pressed">
 
             <TextView
                 android:id="@+id/edittxt"
@@ -27,7 +27,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif"
                 android:text="Store Name"
-                android:textColor="@color/black"
+                android:textColor="#2C3343"
                 android:textSize="@dimen/article_subheading"
                 android:textStyle="bold" />
 
@@ -49,6 +49,7 @@
             <RelativeLayout
                 android:id="@+id/actionlinear"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -90,6 +91,7 @@
                     android:id="@+id/one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:orientation="horizontal">
 
                     <TextView

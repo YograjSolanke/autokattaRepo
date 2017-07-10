@@ -17,6 +17,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import autokatta.com.R;
+import autokatta.com.adapter.GroupNotificationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -24,28 +25,29 @@ import autokatta.com.other.CustomToast;
 import retrofit2.Response;
 
 /**
- * Created by ak-001 on 17/3/17.
+ * Created by ak-003 on 7/7/17.
  */
 
-public class StoreNotification extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+public class GroupNotification extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
-    View mStoreView;
+    View mGroupView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     boolean hasViewCreated = false;
     TextView mNoData;
     ConnectionDetector mTestConnection;
     String myContact;
+    GroupNotificationAdapter mAdapter;
 
-    public StoreNotification() {
+    public GroupNotification() {
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //mStoreView = inflater.inflate(R.layout.fragment_store_layout, container, false);
-        mStoreView = inflater.inflate(R.layout.fragment_simple_listview, container, false);
-        return mStoreView;
+        //mGroupView = inflater.inflate(R.layout.fragment_store_layout, container, false);
+        mGroupView = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        return mGroupView;
     }
 
     @Override
@@ -81,7 +83,7 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
 
-                            //storeNotification(strAuctionId);
+                            //groupNotification(strAuctionId);
                         }
                     });
                 } catch (Exception e) {
@@ -91,14 +93,14 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
         });
     }
 
-    private void storeNotification(String id) {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
+    private void groupNotification(String id) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
 
     }
 
     @Override
     public void onRefresh() {
-        //storeNotification(strAuctionId);
+        //groupNotification(strAuctionId);
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -108,7 +110,7 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
 
-                //storeNotification(strAuctionId);
+                //groupNotification(strAuctionId);
                 hasViewCreated = true;
             }
         }
@@ -133,7 +135,7 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
-            Log.i("Check class", "Store notification Fragment");
+            Log.i("Check class", "Group notification Fragment");
             error.printStackTrace();
         }
     }
@@ -143,3 +145,4 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
 
     }
 }
+

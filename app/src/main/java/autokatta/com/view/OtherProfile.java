@@ -27,7 +27,7 @@ import autokatta.com.fragment_profile.AboutStore;
 import autokatta.com.fragment_profile.Event;
 import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
-import autokatta.com.fragment_profile.Katta;
+import autokatta.com.fragment_profile.OtherWall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ProfileAboutResponse;
@@ -45,7 +45,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     Groups mGroupsFrag;
     AboutStore mStore;
     Event mEventFrag;
-    Katta mKattaFrag;
+    OtherWall mOtherWallFrag;
     String mAction = "other";
     Follow mFollowFrag;
     String key;
@@ -75,10 +75,10 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         mGroupsFrag.setArguments(mBundle);
         mStore = new AboutStore();
         mStore.setArguments(mBundle);
-        mEventFrag = new Event();
-        mEventFrag.setArguments(mBundle);
-        mKattaFrag = new Katta();
-        mKattaFrag.setArguments(mBundle);
+       /* mEventFrag = new Event();
+        mEventFrag.setArguments(mBundle);*/
+        mOtherWallFrag = new OtherWall();
+        mOtherWallFrag.setArguments(mBundle);
         mFollowFrag = new Follow();
         mFollowFrag.setArguments(mBundle);
         /*
@@ -134,8 +134,8 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
         adapter.addFragment(mGroupsFrag, "GROUP");
         adapter.addFragment(mStore, "STORE");
-        adapter.addFragment(mEventFrag, "EVENT");
-        adapter.addFragment(mKattaFrag, "WALL");
+        //adapter.addFragment(mEventFrag, "EVENT");
+        adapter.addFragment(mOtherWallFrag, "WALL");
         adapter.addFragment(mFollowFrag, "FOLLOW");
         viewPager.setAdapter(adapter);
     }

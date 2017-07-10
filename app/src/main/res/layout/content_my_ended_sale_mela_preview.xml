@@ -10,22 +10,22 @@
         android:id="@+id/preview_myactive_mela_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-   <!-- android:layout_marginTop="?attr/actionBarSize"-->
+        android:layout_marginTop="25dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    <!-- android:layout_marginTop="?attr/actionBarSize"-->
     <android.support.design.widget.TabLayout
         android:id="@+id/preview_myactive_mela_tabs"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom"
-        android:background="@color/colorPrimary"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/white"
         app:tabGravity="fill"
-        app:tabMode="fixed"/>
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/white"/>
 
 
     <android.support.design.widget.AppBarLayout
@@ -51,15 +51,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
-                android:layout_marginLeft="220dp">
+                android:layout_marginLeft="220dp"
+                android:layout_marginTop="45dp">
+
                 <TextView
                     android:id="@+id/live_timer"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginTop="15dp"
                     android:layout_marginLeft="100dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
                     android:text="Finished"
                     android:textColor="@color/red"
@@ -205,8 +206,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
                 android:layout_marginTop="@dimen/margin_small"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
 

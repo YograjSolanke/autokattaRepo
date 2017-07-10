@@ -1079,7 +1079,7 @@ public interface ServiceApi {
 
     //Notification Like Group
     @POST("newlikes.php")
-    Call<String> notificationLikegroup(@Query("groupid") String groupid, @Query("sender_contact") String mycontact, @Query("receiver_contact") String OtherContact, @Query("layout") String layout);
+    Call<String> notificationLikegroup(@Query("group_createid") String groupid, @Query("sender_contact") String mycontact, @Query("receiver_contact") String OtherContact, @Query("layout") String layout);
 
 
     //update a store...

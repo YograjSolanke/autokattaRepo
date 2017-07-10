@@ -160,7 +160,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     for (int i = 0; i < parts.length; i++) {
                         receiver_contact = parts[i];
                         if (!receiver_contact.equalsIgnoreCase(mContact)) {
-                            // mApiCall.groupLikeNotification(pass_id, mContact, receiver_contact, "3");
+                             mApiCall.groupLikeNotification(mGroup_id, mContact, receiver_contact, "3");
                         }
                     }
                 }
@@ -262,6 +262,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         if (str != null) {
             if (str.startsWith("success")) {
                 CustomToast.customToast(getActivity(), "Contact Added Successfully");
+                Log.i("Notification send","success add group member");
                 /*Intent intent = new Intent(getActivity(), GroupsActivity.class);
                 intent.putExtra("grouptype", "MyGroup");
                 intent.putExtra("className", "GroupContactFragment");

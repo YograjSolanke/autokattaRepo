@@ -189,7 +189,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success updation")) {
+            if (str.equals("success_updation")) {
                 CustomToast.customToast(getActivity(), "Broadcast Group Updated Successfully");
                 MyBroadcastGroupsFragment broadcastGroup = new MyBroadcastGroupsFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

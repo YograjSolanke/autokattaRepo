@@ -87,7 +87,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         ImageView mStorePic, mStoreImage;
         ImageButton mShareAutokatta, mShareOther, mCall, mLike, mFollow;
         RatingBar mStoreRating;
-        TextView mStoreActionName, mActionTime, mStoreName, mStoreText, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
+        TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
                 mStoreLocation, mFollowCount, mLikes, mShares;
 
         private StoreNotifications(View storeView) {
@@ -106,7 +106,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mStoreActionName = (TextView) storeView.findViewById(R.id.store_action_names);
             mActionTime = (TextView) storeView.findViewById(R.id.store_action_time);
             mStoreName = (TextView) storeView.findViewById(R.id.store_name);
-            mStoreText = (TextView) storeView.findViewById(R.id.store_txt);
+            mStoreCategory = (TextView) storeView.findViewById(R.id.store_category);
             mStoreWorkAt = (TextView) storeView.findViewById(R.id.store_workat);
             mStoreWebSite = (TextView) storeView.findViewById(R.id.store_website);
             mStoreTiming = (TextView) storeView.findViewById(R.id.store_time);
@@ -115,7 +115,6 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mFollowCount = (TextView) storeView.findViewById(R.id.followcnt);
             mLikes = (TextView) storeView.findViewById(R.id.likes);
             mShares = (TextView) storeView.findViewById(R.id.share);
-
         }
     }
 
@@ -124,23 +123,25 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class GroupNotifications extends RecyclerView.ViewHolder {
         CardView mGroupCardView;
-        ImageView mGroupPic, mGroupImage;
+        ImageView mUserPic, mGroupImage;
         ImageButton mGroupFavourite;
-        TextView mGroupActionName, mGroupActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles;
+        TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
+                mGroupNoOfServices;
 
         private GroupNotifications(View groupView) {
             super(groupView);
             mGroupCardView = (CardView) groupView.findViewById(R.id.group_card_view);
-            mGroupPic = (ImageView) groupView.findViewById(R.id.group_pic);
+            mUserPic = (ImageView) groupView.findViewById(R.id.profile_pic);
+            mActionName = (TextView) groupView.findViewById(R.id.action_names);
+            mActionTime = (TextView) groupView.findViewById(R.id.action_time);
+
             mGroupImage = (ImageView) groupView.findViewById(R.id.group_image);
-
             mGroupFavourite = (ImageButton) groupView.findViewById(R.id.group_favourite);
-
-            mGroupActionName = (TextView) groupView.findViewById(R.id.group_action_names);
-            mGroupActionTime = (TextView) groupView.findViewById(R.id.group_action_time);
             mGroupName = (TextView) groupView.findViewById(R.id.group_name);
-            mGroupMembers = (TextView) groupView.findViewById(R.id.group_members);
+            mGroupMembers = (TextView) groupView.findViewById(R.id.group_no_of_members);
             mGroupNoOfVehicles = (TextView) groupView.findViewById(R.id.group_no_of_vehicles);
+            mGroupNoOfProducts = (TextView) groupView.findViewById(R.id.group_no_of_products);
+            mGroupNoOfServices = (TextView) groupView.findViewById(R.id.group_no_of_services);
         }
     }
 
@@ -149,36 +150,36 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class VehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
-        ImageView mVehiclePic, mVehicleImage;
-        ImageButton mVehicleAutokatta, mVehicleOther, mCall, mLike, mVehicleFavourite;
-        TextView mVehicleActionName, mVehicleActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
-                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;
+        ImageView mUserPic, mVehicleImage;
+        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mVehicleFavourite;
+        TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
+                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;
 
-        private VehicleNotifications(View vehicleView) {
-            super(vehicleView);
-            mVehicleCardView = (CardView) vehicleView.findViewById(R.id.store_card_view);
-            mVehiclePic = (ImageView) vehicleView.findViewById(R.id.store_pic);
-            mVehicleImage = (ImageView) vehicleView.findViewById(R.id.store_image);
+        private VehicleNotifications(View upVehicleView) {
+            super(upVehicleView);
+            mVehicleCardView = (CardView) upVehicleView.findViewById(R.id.vehicle_card_view);
+            mUserPic = (ImageView) upVehicleView.findViewById(R.id.profile_pic);
+            mActionTime = (TextView) upVehicleView.findViewById(R.id.action_time);
+            mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
 
-            mVehicleAutokatta = (ImageButton) vehicleView.findViewById(R.id.share_autokatta);
-            mVehicleOther = (ImageButton) vehicleView.findViewById(R.id.share_other);
-            mCall = (ImageButton) vehicleView.findViewById(R.id.call);
-            mLike = (ImageButton) vehicleView.findViewById(R.id.like);
-            mVehicleFavourite = (ImageButton) vehicleView.findViewById(R.id.vehicle_favourite);
+            mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.vehicle_call);
+            mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
+            mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
 
-            mVehicleActionName = (TextView) vehicleView.findViewById(R.id.vehicle_action_name);
-            mVehicleActionTime = (TextView) vehicleView.findViewById(R.id.vehicle_action_time);
-            mVehicleRegistration = (TextView) vehicleView.findViewById(R.id.vehicle_registration);
-            mVehicleName = (TextView) vehicleView.findViewById(R.id.vehicle_name);
-            mVehiclePrice = (TextView) vehicleView.findViewById(R.id.vehicle_price);
-            mVehicleBrand = (TextView) vehicleView.findViewById(R.id.vehicle_brand);
-            mVehicleModel = (TextView) vehicleView.findViewById(R.id.vehicle_model);
-            mVehicleYearOfMfg = (TextView) vehicleView.findViewById(R.id.vehicle_year_of_mfg);
-            mVehicleKmsHrs = (TextView) vehicleView.findViewById(R.id.vehicle_kms_hrs);
-            mVehicleLocation = (TextView) vehicleView.findViewById(R.id.vehicle_locations);
-            mRtoCity = (TextView) vehicleView.findViewById(R.id.vehicle_rto_city);
-            mLikes = (TextView) vehicleView.findViewById(R.id.likes);
-            mShares = (TextView) vehicleView.findViewById(R.id.share);
+            mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
+            mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
+            mVehicleName = (TextView) upVehicleView.findViewById(R.id.vehicle_name);
+            mVehiclePrice = (TextView) upVehicleView.findViewById(R.id.vehicle_price);
+            mVehicleBrand = (TextView) upVehicleView.findViewById(R.id.vehicle_brand);
+            mVehicleModel = (TextView) upVehicleView.findViewById(R.id.vehicle_model);
+            mVehicleYearOfMfg = (TextView) upVehicleView.findViewById(R.id.vehicle_year_of_mfg);
+            mVehicleKmsHrs = (TextView) upVehicleView.findViewById(R.id.vehicle_kms_hrs);
+            mVehicleLocation = (TextView) upVehicleView.findViewById(R.id.vehicle_locations);
+            mRtoCity = (TextView) upVehicleView.findViewById(R.id.vehicle_rto_city);
+            mLikesTxt = (TextView) upVehicleView.findViewById(R.id.likes);
+            mSharesTxt = (TextView) upVehicleView.findViewById(R.id.share);
         }
     }
 
@@ -329,25 +330,25 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class UpVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
-        ImageView mVehiclePic, mVehicleImage;
-        ImageButton mVehicleAutokatta, mVehicleOther, mCall, mLike, mVehicleFavourite;
-        TextView mVehicleActionName, mVehicleActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
-                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;
+        ImageView mUserPic, mVehicleImage;
+        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mVehicleFavourite;
+        TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
+                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;
 
         private UpVehicleNotifications(View upVehicleView) {
             super(upVehicleView);
-            mVehicleCardView = (CardView) upVehicleView.findViewById(R.id.store_card_view);
-            mVehiclePic = (ImageView) upVehicleView.findViewById(R.id.store_pic);
-            mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.store_image);
+            mVehicleCardView = (CardView) upVehicleView.findViewById(R.id.vehicle_card_view);
+            mUserPic = (ImageView) upVehicleView.findViewById(R.id.profile_pic);
+            mActionTime = (TextView) upVehicleView.findViewById(R.id.action_time);
+            mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
 
-            mVehicleAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
-            mVehicleOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
+            mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.vehicle_call);
             mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
 
-            mVehicleActionName = (TextView) upVehicleView.findViewById(R.id.vehicle_action_name);
-            mVehicleActionTime = (TextView) upVehicleView.findViewById(R.id.vehicle_action_time);
+            mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
             mVehicleName = (TextView) upVehicleView.findViewById(R.id.vehicle_name);
             mVehiclePrice = (TextView) upVehicleView.findViewById(R.id.vehicle_price);
@@ -357,8 +358,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mVehicleKmsHrs = (TextView) upVehicleView.findViewById(R.id.vehicle_kms_hrs);
             mVehicleLocation = (TextView) upVehicleView.findViewById(R.id.vehicle_locations);
             mRtoCity = (TextView) upVehicleView.findViewById(R.id.vehicle_rto_city);
-            mLikes = (TextView) upVehicleView.findViewById(R.id.likes);
-            mShares = (TextView) upVehicleView.findViewById(R.id.share);
+            mLikesTxt = (TextView) upVehicleView.findViewById(R.id.likes);
+            mSharesTxt = (TextView) upVehicleView.findViewById(R.id.share);
         }
     }
 

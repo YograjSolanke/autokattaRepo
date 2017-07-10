@@ -33,6 +33,7 @@ public class GroupsActivity extends AppCompatActivity {
             b.putString("bundle_GroupId", i.getStringExtra("bundle_GroupId"));
             b.putString("bundle_GroupName", i.getStringExtra("bundle_GroupName"));
             b.putString("tabIndex", i.getStringExtra("tabIndex"));
+            b.putString("bundle_Contact", i.getStringExtra("bundle_Contact"));
             groupDetailTabs.setArguments(b);
         }
         getSupportFragmentManager().beginTransaction()
