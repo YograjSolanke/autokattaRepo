@@ -116,7 +116,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
                 mGroupList.put(mHeaderList.get(0), list);
                 mGroupList.put(mHeaderList.get(1), list1);
 
-                adapter = new GroupsExpandableListAdapter(getActivity(), mHeaderList, mGroupList,GroupType);
+                adapter = new GroupsExpandableListAdapter(getActivity(), mHeaderList, mGroupList, GroupType, contact);
                 groupExpandableListView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
 

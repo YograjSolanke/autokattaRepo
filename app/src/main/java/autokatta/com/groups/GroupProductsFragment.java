@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.StoreProductAdapter;
+import autokatta.com.adapter.GroupProductAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -38,13 +38,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GroupProductsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mProduct;
-    String myContact;
+    String myContact, mGroupType;
     String mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<StoreInventoryResponse.Success.Product> productList = new ArrayList<>();
     LinearLayoutManager mLayoutManager;
-    StoreProductAdapter adapter;
+    GroupProductAdapter adapter;
     boolean _hasLoadedOnce = false;
     ConnectionDetector mTestConnection;
     TextView mNoData;
@@ -67,7 +67,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getGroupProducts(GroupId, myContact);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -107,21 +107,20 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                         storeContact = success.getStorecontact();
                         productList.add(success);
                     }
-                    adapter = new StoreProductAdapter(getActivity(), productList, myContact, storeContact);
+                    adapter = new GroupProductAdapter(getActivity(), productList, myContact, storeContact, mGroupType);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                  //  CustomToast.customToast(getActivity(),"No product found");
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(),getString(R.string._404_));
-                           }
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
+            }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -139,20 +138,15 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "groupproductfragent");
@@ -195,9 +189,18 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                 mLayoutManager.setReverseLayout(true);
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
-                Bundle getBundle = getArguments();
-                mGroupId = getBundle.getString("bundle_GroupId");
 
+                Bundle bundle = getArguments();
+                if (bundle != null) {
+                    mGroupType = bundle.getString("grouptype");
+                    mGroupId = bundle.getString("bundle_GroupId");
+                    if (bundle.getString("bundle_Contact") != null) {
+                        myContact = bundle.getString("bundle_Contact");
+                    }
+
+                }
+                Log.i("Group", "ProductsContact->" + myContact);
+                Log.i("Group", "ProductsType->" + mGroupType);
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
@@ -213,30 +216,4 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
-
-    /*public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getProducts(mGroupId);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

@@ -29,12 +29,14 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> mListHeaders;
     private HashMap<String, List<ModelGroups>> mSettingList;
     private String GroupType;
+    private String contact;
 
-    public GroupsExpandableListAdapter(Activity mContext, List<String> mListHeaders, HashMap<String, List<ModelGroups>> mSettingList, String grpType) {
+    public GroupsExpandableListAdapter(Activity mContext, List<String> mListHeaders, HashMap<String, List<ModelGroups>> mSettingList, String grpType, String contact) {
         this.mContext = mContext;
         this.mListHeaders = mListHeaders;
         this.mSettingList = mSettingList;
         this.GroupType = grpType;
+        this.contact = contact;
     }
 
     @Override
@@ -123,8 +125,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                 Log.i("GroupId", "Profile->" + rowItem.getId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mContext, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(mContext, GroupsActivity.class);
-                //i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
-                //mContext.getSharedPreferences(mContext.getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", rowItem.getId()).apply();
+
                 //If Call From OtherProfile
                 if (GroupType.equalsIgnoreCase("OtherGroup")) {
                     i.putExtra("grouptype", "OtherGroup");
@@ -135,6 +136,7 @@ public class GroupsExpandableListAdapter extends BaseExpandableListAdapter {
                 }
                 i.putExtra("bundle_GroupId", rowItem.getId());
                 i.putExtra("bundle_GroupName", rowItem.getTitle());
+                i.putExtra("bundle_Contact", contact);
                 mContext.startActivity(i, options.toBundle());
             }
         });
