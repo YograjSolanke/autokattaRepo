@@ -43,7 +43,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     AutoCompleteTextView autoCompany, autoDesignation;
     MultiAutoCompleteTextView autoSkills, autoDeals;
     Button Next, Cancel;
-    String strCompany, strDesignation, updatecompany, updatedesignation, RegiId = "234";
+    String strCompany, strDesignation, updatecompany, updatedesignation;
     String skillpart = "", skillid = "";
     String dealpart = "", dealid = "";
     String Skidlist = "", Deidlist = "";
@@ -51,7 +51,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     boolean dealflag = false;
     String Skills = "", Deals = "";
     String result = "";
-    String page = "2";
+    int page = 2,RegiId;
     private String[] MODULE = null;
 
 

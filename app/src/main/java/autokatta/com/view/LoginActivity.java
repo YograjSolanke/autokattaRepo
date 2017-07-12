@@ -114,10 +114,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 LoginResponse mLoginResponse = (LoginResponse) response.body();
                 String myContact = mUserName.getText().toString();
                 if (!mLoginResponse.getSuccess().isEmpty()) {
-                    String id = mLoginResponse.getSuccess().get(0).getRegID();
+                    int id = mLoginResponse.getSuccess().get(0).getRegID();
                     Snackbar.make(mLogin, "Success", Snackbar.LENGTH_SHORT).show();
                     if (getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", null) == null) {
-                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", id).apply();
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("loginregistrationid", id).apply();
                     }
 
                     getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginContact", myContact).apply();

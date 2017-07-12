@@ -60,8 +60,8 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
         mNoData.setVisibility(View.GONE);
 
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.getContactByCompany(page, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""));
+        mApiCall.getContactByCompany(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""),page);
 
         inputSearch.addTextChangedListener(new TextWatcher() {
 

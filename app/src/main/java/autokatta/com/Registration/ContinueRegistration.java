@@ -174,8 +174,8 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
                 }
 
                 if (flag) {
-                    String page="1";
-                    mApiCall.updateRegistration("324",page,lastWord,abouttext,websitetext);
+                    int page=1;
+                    mApiCall.updateRegistration(324,page,lastWord,abouttext,websitetext);
 
                 }
                 break;

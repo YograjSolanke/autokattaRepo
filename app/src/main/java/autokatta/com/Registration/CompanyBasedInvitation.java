@@ -55,8 +55,8 @@ public class CompanyBasedInvitation extends AppCompatActivity implements Request
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         mRelative = (RelativeLayout) findViewById(R.id.company_base);
         Next = (Button) findViewById(R.id.next);
-        mApiCall.getContactByCompany(page, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", null));
+        mApiCall.getContactByCompany(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", null),page);
 
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override

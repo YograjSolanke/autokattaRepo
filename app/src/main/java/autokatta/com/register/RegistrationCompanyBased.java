@@ -54,8 +54,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     AutoCompleteTextView autoCompany, autoDesignation;
     MultiAutoCompleteTextView autoSkills, autoDeals;
     Button Next, Cancel;
-    String strCompany, strDesignation, updatecompany, updatedesignation, RegiId = "", skillpart = "", skillid = "",
-            dealpart = "", dealid = "", Skidlist = "", Deidlist = "", Skills = "", Deals = "", page = "2";
+    Integer RegiId,page = 2;
+    String strCompany, strDesignation, updatecompany, updatedesignation, skillpart = "", skillid = "",
+            dealpart = "", dealid = "", Skidlist = "", Deidlist = "", Skills = "", Deals = "";
     boolean skillflag = false, dealflag = false;
 
     List<String> mSkillList = new ArrayList<>();
@@ -149,7 +150,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 mCompanyBased = (RelativeLayout) findViewById(R.id.company_based);
 
                 prefs = getApplicationContext().getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);
-                RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", "");
+                RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid", Integer.parseInt(""));
 
                 mApiCall.getCompany();
                 mApiCall.getDeals();
@@ -850,7 +851,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         }
     }
 
-    public void nextTask(final String regiId, final String page, final String strArea, final String strKms, final String strDistrict, final String strState,
+    public void nextTask(final Integer regiId, final Integer page, final String strArea, final String strKms, final String strDistrict, final String strState,
                          final String strCompany, final String strDesignation, final String strSkill, final String strDeal, final String categoryName,
                          final String subCategoryName, final String brandName) {
         Skills = autoSkills.getText().toString().trim();

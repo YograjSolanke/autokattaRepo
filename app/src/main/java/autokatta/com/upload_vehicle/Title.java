@@ -385,7 +385,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
     private void getGroup() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.Groups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+        mApiCall.Groups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null),"");
     }
 
     /*

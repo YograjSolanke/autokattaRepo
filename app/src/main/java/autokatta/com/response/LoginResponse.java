@@ -38,13 +38,13 @@ public class LoginResponse {
 
         @SerializedName("Reg_ID")
         @Expose
-        private String regID;
+        private int regID;
 
-        public String getRegID() {
+        public int getRegID() {
             return regID;
         }
 
-        public void setRegID(String regID) {
+        public void setRegID(int regID) {
             this.regID = regID;
         }
     }

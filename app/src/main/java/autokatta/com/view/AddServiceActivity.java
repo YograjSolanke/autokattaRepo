@@ -600,7 +600,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
     private void getGroupData() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.Groups(myContact);
+        mApiCall.Groups(myContact,"");
     }
 
 

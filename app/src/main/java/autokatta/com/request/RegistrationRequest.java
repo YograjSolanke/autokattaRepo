@@ -96,4 +96,19 @@ public class RegistrationRequest {
         this.fitnessValidity = fitnessValidity;
         this.permitValidity = permitValidity;
     }
+
+
+//registration activity
+    public RegistrationRequest(String username, String contact, String email, String dob, String gender, String city, String profession, String password, String sub_profession, String industry) {
+        this.userName = username;
+        this.contact = contact;
+        this.emial = email;
+        this.dOB = dob;
+        this.gender = gender;
+        this.city = city;
+        this.profession = profession;
+        this.password = password;
+        this.subProfession = sub_profession;
+        this.industry = industry;
+    }
 }

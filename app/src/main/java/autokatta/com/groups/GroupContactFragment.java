@@ -79,7 +79,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         args = getArguments();
 
         if (mTestConnection.isConnectedToInternet()) {
-            mApiCall.getRegisteredContacts();
+            mApiCall.getRegisteredContacts(mContact);
         } else {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             // errorMessage(getActivity(), getString(R.string.no_internet));
