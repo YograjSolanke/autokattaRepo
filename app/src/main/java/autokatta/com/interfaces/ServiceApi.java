@@ -1,6 +1,10 @@
 package autokatta.com.interfaces;
 
 import autokatta.com.request.AddManualEnquiryRequest;
+import autokatta.com.request.AddOwnVehicle;
+import autokatta.com.request.RegistrationCompanyBasedrequest;
+import autokatta.com.request.RegistrationRequest;
+import autokatta.com.request.UpdateMyVehicleRequest;
 import autokatta.com.request.UploadUsedVehicleRequest;
 import autokatta.com.response.*;
 import okhttp3.MultipartBody;
@@ -20,18 +24,18 @@ import retrofit2.http.Query;
 public interface ServiceApi {
 
     // Login API...
-    @POST("login.php")
-    Call<LoginResponse> _autokattaLogin(@Query("contact") String username, @Query("password") String password);
+    @POST("Login")
+    Call<LoginResponse> _autokattaLogin(@Query("Contact") String username, @Query("Password") String password);
 
 
     //Get Profile Data...
-    @GET("getProfileData.php")
-    Call<ProfileAboutResponse> _autokattaGetProfile(@Query("contact") String mycontact,
-                                                    @Query("sender_contact") String otherContact);
+    @GET("GetProfileData")
+    Call<ProfileAboutResponse> _autokattaGetProfile(@Query("Contact") String mycontact,
+                                                    @Query("SenderContact") String otherContact);
 
     //Get Groups...
-    @GET("getGroups.php")
-    Call<ProfileGroupResponse> _autokattaProfileGroup(@Query("contact") String contact);
+    @GET("GetGroups")
+    Call<ProfileGroupResponse> _autokattaProfileGroup(@Query("Contact") String contact,@Query("Timestamp") String timestamp);
 
     //Get Upload Count...
     @GET("getuploadcount.php")
@@ -42,16 +46,16 @@ public interface ServiceApi {
     Call<MyStoreResponse> _autokattaGetMyStoreList(@Query("contact") String contact);
 
     //Get Vehicle List...
-    @GET("getVehicleType.php")
+    @GET("GetVehicleType")
     Call<GetVehicleListResponse> _autokattaGetVehicleList();
 
     //Get Category...
-    @GET("getModule.php")
+    @GET("GetModule")
     Call<CategoryResponse> _autokattaGetCategories(@Query("type") String type);
 
     //Forgot Password
-    @POST("getContactForgotPass.php")
-    Call<String> _autokattaForgotPassword(@Query("contact") String contact);
+    @POST("GetContactForgotPassword")
+    Call<String> _autokattaForgotPassword(@Query("Contact") String contact);
 
     //SearchStore Result
     @POST("getStoreByContact.php")
@@ -61,22 +65,22 @@ public interface ServiceApi {
 
 
     //Registered Contact Validation
-    @POST("registrationValidation.php")
-    Call<String> regContactValidation(@Query("contact") String contact);
+    @POST("RegistrationValidation")
+    Call<String> regContactValidation(@Query("Contact") String contact);
 
 
     //add other category
-    @POST("add_module.php")
+    @POST("AddModule")
     Call<String> addOtherCategory(@Query("title") String contact);
 
 
     // get Industries
-    @POST("getRegisteredIndustries.php")
+    @GET("GetRegisteredIndustries")
     Call<IndustryResponse> _getindustry();
 
     //add other Industry
-    @POST("add_other_industry.php")
-    Call<String> addOtherIndustry(@Query("newIndustry") String contact);
+    @POST("AddOtherIndustry")
+    Call<String> addOtherIndustry(@Query("newIndustry") String industryname);
 
     // get OTP
     @POST("otp.php")
@@ -84,11 +88,8 @@ public interface ServiceApi {
 
 
     // After OTP Registration
-    @POST("registration1.php")
-    Call<String> _autokattaAfterOtpRegistration(@Query("username") String username, @Query("contact") String contact, @Query("email") String email,
-                                                @Query("dob") String dob, @Query("gender") String gender, @Query("pincode") String pincode,
-                                                @Query("city") String city, @Query("profession") String profession, @Query("password") String password,
-                                                @Query("sub_profession") String sub_profession, @Query("industry") String industry);
+    @POST("Registration1")
+    Call<String> _autokattaAfterOtpRegistration(@Body RegistrationRequest registrationRequest);
 
     //get My Search
     @POST("getMyVehicleSearch.php")
@@ -143,38 +144,36 @@ public interface ServiceApi {
     Call<String> _autokattaCreateGroup(@Query("title") String title, @Query("image") String image, @Query("admin_contact") String contact);
 
     //get Vehicle Sub Types...
-    @GET("getVehicleSubType.php")
-    Call<GetVehicleSubTypeResponse> _autokattaGetVehicleSubType(@Query("vehicle_id") String vehicleId);
+    @GET("GetVehicleSubType")
+    Call<GetVehicleSubTypeResponse> _autokattaGetVehicleSubType(@Query("CategoryID") String vehicleId);
 
     //get Blacklisted contacts
     @GET("getMyBlacklistedContact.php")
     Call<BlacklistMemberResponse> _autokattaBlacklistMembers(@Query("contact") String contact);
 
     //Update Registration
-    @POST("updateRegistrationInfo.php")
-    Call<String> _autokattaUpdateRegistration(@Query("Regid") String Regid, @Query("page") String page, @Query("profileImage") String profileImage,
-                                              @Query("about") String about,
-                                              @Query("website") String website);
+    @POST("UpdateRegistration")
+    Call<String> _autokattaUpdateRegistration(@Body RegistrationCompanyBasedrequest registrationCompanyBasedrequest);
 
     /*
     Add Brand Model Version...
      */
     //Add Brand
-    @POST("addYourOptions.php")
-    Call<String> _autokattaAddBrand(@Query("keyword") String keyword, @Query("title") String title,
-                                    @Query("category_id") String categoryId, @Query("subcat_id") String subCatID);
+    @POST("AddYourOptions")
+    Call<String> _autokattaAddBrand(@Query("Keyword") String keyword, @Query("Title") String title,
+                                    @Query("CategoryID") String categoryId, @Query("SubCategoryID") String subCatID);
 
     //Add Model
-    @POST("addYourOptions.php")
-    Call<String> _autokattaAddModel(@Query("keyword") String keyword, @Query("title") String title,
-                                    @Query("category_id") String categoryId, @Query("subcat_id") String subCatID,
-                                    @Query("brand_id") String brandId);
+    @POST("AddYourOptions")
+    Call<String> _autokattaAddModel(@Query("Keyword") String keyword, @Query("Title") String title,
+                                    @Query("CategoryID") String categoryId, @Query("SubCategoryID") String subCatID,
+                                    @Query("BrandID") String brandId);
 
     //Add Version
-    @POST("addYourOptions.php")
-    Call<String> _autokattaAddVersion(@Query("keyword") String keyword, @Query("title") String title,
-                                      @Query("category_id") String categoryId, @Query("subcat_id") String subCatID,
-                                      @Query("brand_id") String brandId, @Query("model_id") String modleId);
+    @POST("AddYourOptions")
+    Call<String> _autokattaAddVersion(@Query("Keyword") String keyword, @Query("Title") String title,
+                                      @Query("CategoryID") String categoryId, @Query("SubCategoryID") String subCatID,
+                                      @Query("BrandID") String brandId, @Query("ModelID") String modleId);
 
     //Add Break..
     @POST("post_other_brake.php")
@@ -190,26 +189,26 @@ public interface ServiceApi {
                                                        @Query("seatManufacturerName") String seatManufacture);
 
     // Add Body Type
-    @POST("addYourOptions.php")
-    Call<String> _autokattaAddBodyType(@Query("keyword") String keyword, @Query("title") String title);
+    @POST("AddYourOptions")
+    Call<String> _autokattaAddBodyType(@Query("Keyword") String keyword, @Query("Title") String title);
 
     /*
     Get Data...
      */
 
     //Get Brand
-    @GET("getVehicleBrand.php")
-    Call<GetVehicleBrandResponse> _autokattaGetBrand(@Query("category") String category, @Query("subcategory") String subCategory);
+    @GET("GetVehicleBrands")
+    Call<GetVehicleBrandResponse> _autokattaGetBrand(@Query("CategoryID") String category, @Query("SubCategoryID") String subCategory);
 
     //Get Model
-    @GET("getVehicleModel.php")
-    Call<GetVehicleModelResponse> _autokattaGetModel(@Query("category") String category, @Query("subcategory") String subCategory,
-                                                     @Query("brand_id") String brandId);
+    @GET("GetVehicleModel")
+    Call<GetVehicleModelResponse> _autokattaGetModel(@Query("CategoryID") String category, @Query("SubCategoryID") String subCategory,
+                                                     @Query("BrandID") String brandId);
 
     //Get Version
-    @GET("getVehicleVersion.php")
-    Call<GetVehicleVersionResponse> _autokattaGetVersion(@Query("category") String category, @Query("subcategory") String subCategory,
-                                                         @Query("brand_id") String brandId, @Query("model_id") String modelId);
+    @GET("GetVehicleVersion")
+    Call<GetVehicleVersionResponse> _autokattaGetVersion(@Query("CategoryID") String category, @Query("SubCategoryID") String subCategory,
+                                                         @Query("BrandID") String brandId, @Query("ModelID") String modelId);
 
     //Get Breaks
     @GET("getBrakes.php")
@@ -280,26 +279,13 @@ public interface ServiceApi {
 
 
     //Upload Vehicle
-    @POST("updateMyVehicle.php")
-    Call<String> _autokattaUploadVehicle(@Query("id") String id, @Query("vehicle_no") String vehicle_no,
-                                         @Query("vehicle_type") String vehicle_type, @Query("subcategory") String subcategory,
-                                         @Query("model_no") String model_no, @Query("brand") String brand,
-                                         @Query("version") String version, @Query("year") String year,
-                                         @Query("tax_validity") String tax_validity, @Query("fitness_validity") String fitness_validity,
-                                         @Query("permit_validity") String permit_validity, @Query("insurance") String insurance,
-                                         @Query("PUC") String PUC, @Query("last_service_date") String last_service_date,
-                                         @Query("next_service_date") String next_service_date);
+    @POST("UpdateMyVehicle")
+    Call<String> _autokattaUploadVehicle(UpdateMyVehicleRequest updateMyVehicleRequest);
 
 
     //ADD own Vehicle
-    @POST("addOwnVehicles.php")
-    Call<String> _autokattaAddOwn(@Query("contact") String contact, @Query("vehicle_no") String vehicle_no,
-                                  @Query("vehicle_type") String vehicle_type, @Query("subcategory") String subcategory,
-                                  @Query("model_no") String model_no, @Query("brand") String brand,
-                                  @Query("version") String version, @Query("year") String year,
-                                  @Query("tax_validity") String tax_validity, @Query("fitness_validity") String fitness_validity,
-                                  @Query("permit_validity") String permit_validity, @Query("insurance") String insurance,
-                                  @Query("PUC") String PUC, @Query("last_service_date") String last_service_date, @Query("next_service_date") String next_service_date);
+    @POST("AddOwnVehicles")
+    Call<String> _autokattaAddOwn(AddOwnVehicle addOwnVehicle);
 
 
     //Get Brand Modle Version
@@ -370,53 +356,48 @@ public interface ServiceApi {
 
 
     //Update Company Based Registration
-    @POST("updateRegistrationInfo.php")
-    Call<String> _autokattaUpdateCompanyRegistration(@Query("Regid") String Regid, @Query("page") String page, @Query("area") String area,
-                                                     @Query("bykms") String bykms, @Query("bydistrict") String bydistrict,
-                                                     @Query("bystate") String bystate, @Query("company") String company,
-                                                     @Query("designation") String designation, @Query("skills") String skills,
-                                                     @Query("deals") String deals, @Query("categoryName") String categoryName,
-                                                     @Query("subCategoryName") String subCategoryName, @Query("brandName") String brandName);
+    @POST("UpdateRegistration")
+    Call<String> _autokattaUpdateCompanyRegistration(RegistrationCompanyBasedrequest registrationCompanyBasedrequest);
 
     //Get States
-    @GET("getRegisteredStates.php")
+    @GET("GetRegisteredStates")
     Call<GetStatesResponse> _autokattaGetStates();
 
     //Get Districts
-    @GET("getRegisteredDistricts.php")
+    @GET("GetRegisteredDistricts")
     Call<GetDistrictsResponse> _autokattaGetDistricts();
 
     //Get New Designation
-    @GET("add_other_designations.php")
-    Call<String> _autokattaAddNewDesignation(@Query("designationName") String designationName);
+    @POST("AddOtherDesignations")
+    Call<String> _autokattaAddNewDesignation(@Query("DesignationName") String designationName);
 
     //Add New Company
-    @GET("add_other_companyNames.php")
-    Call<String> _autokattaAddNewCompany(@Query("companyName") String companyName);
+    @POST("AddOtherCompanyNames")
+    Call<String> _autokattaAddNewCompany(@Query("CompanyName") String companyName);
 
     //Add New Deal
-    @GET("add_other_dealing.php")
+    @POST("AddOtherDealing")
     Call<String> _autokattaAddNewDeal(@Query("deals") String deals);
 
     //Add New Skill
-    @GET("add_other_skills.php")
-    Call<String> _autokattaAddNewSkills(@Query("skill") String deals);
+    @POST("AddOtherSkills")
+    Call<String> _autokattaAddNewSkills(@Query("Skill") String skills);
 
     //Get deals
-    @GET("getRegisteredDeals.php")
+    @GET("GetRegisteredDeals")
     Call<getDealsResponse> _autokattaGetDeals();
 
     //Get  Skills
-    @GET("getRegisteredSkills.php")
+    @GET("GetRegisteredSkills")
     Call<GetSkillsResponse> _autokattaGetSkills();
 
     //Get  Designation
-    @GET("getRegisteredDesignation.php")
+    @GET("GetRegisteredDesignation")
     Call<GetDesignationResponse> _autokattaGetDesignation();
 
 
     //Get  Company
-    @GET("getRegisteredCompanies.php")
+    @GET("GetRegisteredCompanies")
     Call<GetCompaniesResponse> _autokattaGetCompany();
 
 
@@ -467,12 +448,12 @@ public interface ServiceApi {
     Call<String> _autokattaAddNewStoreAdmin(@Query("store_id") String store_id, @Query("adminContact") String admins);
 
     //get Contact By Company
-    @POST("getContactsBasedOnCompany.php")
-    Call<GetContactByCompanyResponse> _autokattaGetContactByCompany(@Query("page") String page, @Query("mycontact") String contact);
+    @GET("GetContactsBasedOnCompany")
+    Call<GetContactByCompanyResponse> _autokattaGetContactByCompany(@Query("Contact") String contact, @Query("Page") String Page);
 
     //Get Store Profile Info...
-    @POST("getStoreProfileInfo.php")
-    Call<GetStoreProfileInfoResponse> _autokattaGetProfileInfo(@Query("contact") String contact);
+    @GET("GetStoreProfileInfo")
+    Call<GetStoreProfileInfoResponse> _autokattaGetProfileInfo(@Query("Contact") String contact);
 
     //Get My Autokatta Contacts...
     @POST("getAutokattaContact.php")
@@ -480,8 +461,8 @@ public interface ServiceApi {
                                                           @Query("namestring") String name);
 
     //Get My Registered Contacts...
-    @POST("getAllContactResistered.php")
-    Call<GetRegisteredContactsResponse> _autokattaGetRegisteredContact();
+    @GET("GetAllContactResistered")
+    Call<GetRegisteredContactsResponse> _autokattaGetRegisteredContact(@Query("Contact") String contact);
 
     //create User.
     @POST("createDefaultUser.php")
@@ -838,16 +819,16 @@ public interface ServiceApi {
     Call<SellerResponse> getSavedSearchSellerList(@Query("contact") String contact);
 
     //get Own Vehicles
-    @POST("getOwnVehicles.php")
-    Call<GetOwnVehiclesResponse> _autokattaGetOwnVehicles(@Query("contact") String contact);
+    @GET("GetOwnVehicles")
+    Call<GetOwnVehiclesResponse> _autokattaGetOwnVehicles(@Query("Contact") String contact);
 
     //get All States
     @POST("getStates.php")
     Call<AllStatesResponse> _autokattaGetAllStates();
 
     //get Followers
-    @POST("getFollowers.php")
-    Call<GetFollowersResponse> _autokattaGetFollowers(@Query("id") String contact);
+    @GET("GetFollowers")
+    Call<GetFollowersResponse> _autokattaGetFollowers(@Query("Contact") String contact);
 
 
     //get single store info

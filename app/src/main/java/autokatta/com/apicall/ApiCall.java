@@ -15,6 +15,10 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.request.AddManualEnquiryRequest;
+import autokatta.com.request.AddOwnVehicle;
+import autokatta.com.request.RegistrationCompanyBasedrequest;
+import autokatta.com.request.RegistrationRequest;
+import autokatta.com.request.UpdateMyVehicleRequest;
 import autokatta.com.request.UploadUsedVehicleRequest;
 import autokatta.com.response.*;
 import okhttp3.OkHttpClient;
@@ -126,7 +130,7 @@ public class ApiCall {
     Get Profile Data Group...
      */
 
-    public void profileGroup(String contact) {
+    public void profileGroup(String contact,String timestamp) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -135,7 +139,7 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<ProfileGroupResponse> mProfileGroupCall = mServiceApi._autokattaProfileGroup(contact);
+                Call<ProfileGroupResponse> mProfileGroupCall = mServiceApi._autokattaProfileGroup(contact,timestamp);
                 mProfileGroupCall.enqueue(new Callback<ProfileGroupResponse>() {
                     @Override
                     public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -224,7 +228,7 @@ public class ApiCall {
     getGroups
      */
 
-    public void Groups(String contact) {
+    public void Groups(String contact,String timestamp) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -234,7 +238,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ProfileGroupResponse> groupResponseCall = serviceApi._autokattaProfileGroup(contact);
+                Call<ProfileGroupResponse> groupResponseCall = serviceApi._autokattaProfileGroup(contact,timestamp);
                 groupResponseCall.enqueue(new Callback<ProfileGroupResponse>() {
                     @Override
                     public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -572,7 +576,9 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration(username, contact, email, dob, gender, pincode, city, profession, password, sub_profession, industry);
+                RegistrationRequest registrationRequest=new RegistrationRequest(username, contact, email, dob, gender, city, profession, password, sub_profession, industry);
+
+                Call<String> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration(registrationRequest);
                 afterOtpRegistrationResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -1151,7 +1157,7 @@ public class ApiCall {
     /*
  Update Registration/continue Registration
    */
-    public void updateRegistration(String Regid, String page, String profileImage, String about, String website) {
+    public void updateRegistration(Integer Regid, Integer page, String profileImage, String about, String website) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -1166,7 +1172,8 @@ public class ApiCall {
                 Log.i("Regid---->", "->" + Regid);
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateRegistration(Regid, page, profileImage, about, website);
+                RegistrationCompanyBasedrequest registrationCompanyBasedrequest=new RegistrationCompanyBasedrequest(Regid, page, profileImage, about, website);
+                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateRegistration(registrationCompanyBasedrequest);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -2035,7 +2042,8 @@ create Service Mela Event
                             .client(initLog().build())
                             .build();
                     ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                    Call<String> mAddOwn = mServiceApi._autokattaAddOwn(contact, vehicle_no, vehicle_type, subcategory, model_no, brand, version, year, tax_validity, fitness_validity, permit_validity, insurance, PUC, last_service_date, next_service_date);
+                    AddOwnVehicle addOwnVehicle=new AddOwnVehicle(contact, vehicle_no, vehicle_type, subcategory, model_no, brand, version, year, tax_validity, fitness_validity, permit_validity, insurance, PUC, last_service_date, next_service_date);
+                    Call<String> mAddOwn = mServiceApi._autokattaAddOwn(addOwnVehicle);
                     mAddOwn.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
@@ -2077,7 +2085,8 @@ Upload Vehicle
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<String> mUploadVehicle = mServiceApi._autokattaUploadVehicle(ids, vehicle_no, vehicle_type, subcategory, model_no, brand, version, year, tax_validity, fitness_validity, permit_validity, insurance, PUC, last_service_date, next_service_date);
+                UpdateMyVehicleRequest updateMyVehicleRequest=new UpdateMyVehicleRequest(ids, vehicle_no, vehicle_type, subcategory, model_no, brand, version, year, tax_validity, fitness_validity, permit_validity, insurance, PUC, last_service_date, next_service_date);
+                Call<String> mUploadVehicle = mServiceApi._autokattaUploadVehicle(updateMyVehicleRequest);
                 mUploadVehicle.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -2531,7 +2540,7 @@ Upload Vehicle
 
     /*Update Company Based Registration */
 
-    public void updateRegistration(String Regid, String page, String area, String bykm, String bydistrict,
+    public void updateRegistration(int Regid, int page, String area, String bykm, String bydistrict,
                                    String bystate, String company, String designation, String skills, String deals,
                                    String categoryName, String subCategoryName, String brandName) {
         //JSON to Gson conversion
@@ -2548,8 +2557,10 @@ Upload Vehicle
                 Log.i("Regid---->", "->" + Regid);
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateCompanyRegistration(Regid, page, area, bykm,
+                RegistrationCompanyBasedrequest registrationCompanyBasedrequest=new RegistrationCompanyBasedrequest(Regid, page, area, bykm,
                         bydistrict, bystate, company, designation, skills, deals, categoryName, subCategoryName, brandName);
+
+                Call<String> mUpdateRegistration = serviceApi._autokattaUpdateCompanyRegistration(registrationCompanyBasedrequest);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3185,7 +3196,7 @@ Upload Vehicle
     /*
  Get Contact By Company
     */
-    public void getContactByCompany(String page, String contact) {
+    public void getContactByCompany( String contact,String page) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -3194,7 +3205,7 @@ Upload Vehicle
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<GetContactByCompanyResponse> mGetContactByCompany = mServiceApi._autokattaGetContactByCompany(page, contact);
+                Call<GetContactByCompanyResponse> mGetContactByCompany = mServiceApi._autokattaGetContactByCompany(contact,page);
                 mGetContactByCompany.enqueue(new Callback<GetContactByCompanyResponse>() {
                     @Override
                     public void onResponse(Call<GetContactByCompanyResponse> call, Response<GetContactByCompanyResponse> response) {
@@ -3252,7 +3263,7 @@ Upload Vehicle
        Get Registered Contacts
      */
 
-    public void getRegisteredContacts() {
+    public void getRegisteredContacts(String contact) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -3265,7 +3276,7 @@ Upload Vehicle
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<GetRegisteredContactsResponse> mGetRegisteredContact = serviceApi._autokattaGetRegisteredContact();
+                Call<GetRegisteredContactsResponse> mGetRegisteredContact = serviceApi._autokattaGetRegisteredContact(contact);
                 mGetRegisteredContact.enqueue(new Callback<GetRegisteredContactsResponse>() {
                     @Override
                     public void onResponse(Call<GetRegisteredContactsResponse> call, Response<GetRegisteredContactsResponse> response) {
@@ -7718,7 +7729,6 @@ get ExchangeMela Participants Data
     /*
       Post Manual Enquiry Details...
     */
-
     public void addManualEnquiryData(String myContact, String custName, String custContact, String custAddress,
                                      String custFullAddress, String custInventoryType, String custEnquiryStatus,
                                      String discussion, String nextFollowupDate, String idsList) {
