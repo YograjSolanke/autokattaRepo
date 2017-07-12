@@ -25,7 +25,6 @@ import autokatta.com.R;
 import autokatta.com.adapter.InviteContactAdapter;
 import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
-import autokatta.com.response.Db_AutokattaContactResponse;
 
 /**
  * Created by ak-003 on 19/3/17.
@@ -36,7 +35,7 @@ public class InviteContactFragment extends Fragment {
     RecyclerView mRecyclerView;
     EditText edtSearchContact;
     View mInviteContact;
-    ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+    List<String> contactdata = new ArrayList<>();
     List<String> finalContacts;
     List<String> names = new ArrayList<>();
     List<String> numbers = new ArrayList<>();
@@ -98,20 +97,21 @@ public class InviteContactFragment extends Fragment {
             cursor.moveToFirst();
             do {
                 Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
-                Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
+//                Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
+//
+//                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+//                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
+//                obj.setMystatus(cursor.getString(cursor.getColumnIndex(DbConstants.myStatus)));
+//                obj.setFollowstatus(cursor.getString(cursor.getColumnIndex(DbConstants.followStatus)));
+//                obj.setUserprofile(cursor.getString(cursor.getColumnIndex(DbConstants.profilePic)));
 
-                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
-                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
-                obj.setMystatus(cursor.getString(cursor.getColumnIndex(DbConstants.myStatus)));
-                obj.setFollowstatus(cursor.getString(cursor.getColumnIndex(DbConstants.followStatus)));
-                obj.setUserprofile(cursor.getString(cursor.getColumnIndex(DbConstants.profilePic)));
-
-                contactdata.add(obj);
+                contactdata.add(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
             } while (cursor.moveToNext());
         }
         dbAdpter.CLOSE();
 
         finalContacts = new ArrayList<>();
+        finalContacts.clear();
         for (int i = 0; i < numbers.size(); i++) {
             if (!contactdata.contains(numbers.get(i)) && !myContact.equals(numbers.get(i))) {
 
