@@ -59,23 +59,7 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
         mApiCall.getContactByCompany(page, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", ""));
 
-        inputSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s.toString());
-            }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +76,7 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
             GetContactByCompanyResponse mgetContactByCompanyResponse = (GetContactByCompanyResponse) response.body();
 
             if (!mgetContactByCompanyResponse.getSuccess().isEmpty()) {
+                invitationDataArrayList.clear();
                 mNoData.setVisibility(View.GONE);
                 for (GetContactByCompanyResponse.Success contactbycompany : mgetContactByCompanyResponse.getSuccess()) {
                     contactbycompany.setContact(contactbycompany.getContact());
@@ -102,8 +87,30 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
                 adapter = new CompanyBasedInvitationAdapter(InvitationCompanyBased.this, invitationDataArrayList);
                 lv.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-            } else
+
+
+                inputSearch.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        adapter.getFilter().filter(s.toString());
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count,
+                                                  int after) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+            } else {
                 mNoData.setVisibility(View.VISIBLE);
+
+            }
         }
     }
 

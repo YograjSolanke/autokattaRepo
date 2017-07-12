@@ -1,91 +1,137 @@
 package autokatta.com.Registration;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
-import autokatta.com.adapter.InviteFriendsAdapter;
-import autokatta.com.apicall.ApiCall;
-import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.response.GetRegisteredContactsResponse;
-import autokatta.com.response.GetRegisteredContactsResponse.Success;
-import retrofit2.Response;
+import autokatta.com.adapter.InviteContactAdapter;
+import autokatta.com.database.DbConstants;
+import autokatta.com.database.DbOperation;
 
-public class InviteFriends extends AppCompatActivity implements RequestNotifier {
+public class InviteFriends extends AppCompatActivity {
 
-    private ListView lv;
-    EditText inputSearch;
-    Button invite, skip;
-    InviteFriendsAdapter adapter;
-    List<Success> webcontact;
-    List<String> finalcontacts;
-    TextView mNoData;
+
+    RecyclerView mRecyclerView;
+    EditText edtSearchContact;
+    List<String> contactdata = new ArrayList<>();
+    List<String> finalContacts;
+    List<String> names = new ArrayList<>();
+    List<String> numbers = new ArrayList<>();
+    InviteContactAdapter inviteContactAdapter;
+    String myContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_invite_friends);
+        setContentView(R.layout.fragment_invite_contacts);
+
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mNoData = (TextView) findViewById(R.id.no_category);
-        mNoData.setVisibility(View.GONE);
-        invite = (Button) findViewById(R.id.invite);
-        skip = (Button) findViewById(R.id.skip);
-        lv = (ListView) findViewById(R.id.l1);
-        inputSearch = (EditText) findViewById(R.id.inputSearch);
 
-        ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.getRegisteredContacts();
+        edtSearchContact = (EditText) findViewById(R.id.inputSearch);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_recycler_view);
 
-        invite.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lv.setVisibility(View.VISIBLE);
+
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(InviteFriends.this);
+        mLinearLayoutManager.setReverseLayout(true);
+        mLinearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        myContact = getApplicationContext().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+        Cursor people = getApplicationContext().getContentResolver().query(uri, projection, null, null, null);
+
+        int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+        int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+        people.moveToFirst();
+        do {
+            String name = people.getString(indexName);
+            String number = people.getString(indexNumber);
+
+            number = number.replaceAll("-", "");
+            number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
+
+            if (number.length() > 10)
+                number = number.substring(number.length() - 10);
+
+            names.add(name + "=" + number);
+            numbers.add(number);
+
+        } while (people.moveToNext());
+
+        DbOperation dbAdpter = new DbOperation(InviteFriends.this);
+        dbAdpter.OPEN();
+        Cursor cursor = dbAdpter.getAutokattaContact();
+        if (cursor.getCount() > 0) {
+            contactdata.clear();
+            cursor.moveToFirst();
+            do {
+                Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+//                Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
+//
+//                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+//                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
+//                obj.setMystatus(cursor.getString(cursor.getColumnIndex(DbConstants.myStatus)));
+//                obj.setFollowstatus(cursor.getString(cursor.getColumnIndex(DbConstants.followStatus)));
+//                obj.setUserprofile(cursor.getString(cursor.getColumnIndex(DbConstants.profilePic)));
+
+                contactdata.add(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+            } while (cursor.moveToNext());
+        }
+        dbAdpter.CLOSE();
+
+        finalContacts = new ArrayList<>();
+        finalContacts.clear();
+        for (int i = 0; i < numbers.size(); i++) {
+            if (!contactdata.contains(numbers.get(i)) && !myContact.equals(numbers.get(i))) {
+
+                finalContacts.add(names.get(i));
             }
-        });
+        }
+        Log.i("contact b4", "->" + finalContacts);
 
-        skip.setOnClickListener(new OnClickListener() {
+
+        /*products = new String[finalContacts.size()];
+        products = finalContacts.toArray(products);*/
+
+        Collections.sort(finalContacts, Collections.<String>reverseOrder());
+        inviteContactAdapter = new InviteContactAdapter(InviteFriends.this, finalContacts);
+        mRecyclerView.setAdapter(inviteContactAdapter);
+        inviteContactAdapter.notifyDataSetChanged();
+
+
+        edtSearchContact.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                finish();
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i, options.toBundle());
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-        });
-
-
-        inputSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s.toString());
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
+                inviteContactAdapter.getFilter().filter(s.toString());
             }
 
             @Override
@@ -95,40 +141,6 @@ public class InviteFriends extends AppCompatActivity implements RequestNotifier 
         });
     }
 
-
-    @Override
-    public void notifySuccess(Response<?> response) {
-        if (response.isSuccessful()) {
-            webcontact = new ArrayList<>();
-            finalcontacts = new ArrayList<>();
-            GetRegisteredContactsResponse mGetRegisteredContactsResponse = (GetRegisteredContactsResponse) response.body();
-            if (!mGetRegisteredContactsResponse.getSuccess().isEmpty()) {
-                webcontact.clear();
-                mNoData.setVisibility(View.GONE);
-                for (GetRegisteredContactsResponse.Success contactRegistered : mGetRegisteredContactsResponse.getSuccess()) {
-                    contactRegistered.setContact(contactRegistered.getContact());
-                    contactRegistered.setUsername(contactRegistered.getUsername());
-                    webcontact.add(contactRegistered);
-                }
-
-                adapter = new InviteFriendsAdapter(InviteFriends.this, webcontact);
-                lv.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            } else {
-                mNoData.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    @Override
-    public void notifyError(Throwable error) {
-
-    }
-
-    @Override
-    public void notifyString(String str) {
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
