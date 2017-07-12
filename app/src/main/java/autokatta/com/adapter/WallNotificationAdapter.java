@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,11 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import autokatta.com.R;
+import autokatta.com.response.WallResponse;
 
 /**
  * Created by ak-001 on 1/4/17.
@@ -20,9 +25,11 @@ import autokatta.com.R;
 
 public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Activity mActivity;
+    private List<WallResponse.Success.WallNotification> notificationList = new ArrayList<>();
 
-    public WallNotificationAdapter(Activity mActivity) {
+    public WallNotificationAdapter(Activity mActivity, List<WallResponse.Success.WallNotification> notificationList) {
         this.mActivity = mActivity;
+        this.notificationList = notificationList;
     }
 
     /*
@@ -418,54 +425,54 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     public int getItemViewType(int position) {
         // Just as an example, return 0 or 2 depending on position
         // Note that unlike in ListView adapters, types don't have to be contiguous
-        return position % 2 * 2;
+        return Integer.parseInt(notificationList.get(position).getLayout());
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View mView;
         switch (viewType) {
-            case 0:
+            case 1:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_profile_notifications, parent, false);
                 return new ProfileNotifications(mView);
 
-            case 1:
+            case 2:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_store_notifications, parent, false);
                 return new StoreNotifications(mView);
 
-            case 2:
+            case 3:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_group_notifications, parent, false);
                 return new GroupNotifications(mView);
 
-            case 3:
+            case 4:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_vehicle_notifications, parent, false);
                 return new VehicleNotifications(mView);
 
-            case 4:
+            case 5:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_product_notification, parent, false);
                 return new ProductNotifications(mView);
 
-            case 5:
+            case 6:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_service_notifications, parent, false);
                 return new ServiceNotifications(mView);
 
-            case 6:
+            case 7:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_profile_notifications, parent, false);
                 return new PostNotifications(mView);
 
-            case 7:
+            case 8:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_search_notifications, parent, false);
                 return new SearchNotifications(mView);
 
-            case 8:
+            case 9:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_active_notifications, parent, false);
                 return new ActiveNotifications(mView);
 
-            case 9:
+            case 10:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_vehicle_notifications, parent, false);
                 return new UpVehicleNotifications(mView);
 
-            case 10:
+            case 11:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
                 return new ShareNotifications(mView);
         }
@@ -474,13 +481,25 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Log.i("Wall", "Adapter->" + holder.getItemViewType());
         switch (holder.getItemViewType()) {
+            case 1:
+                ((ProfileNotifications) holder).mProfileName.setText(notificationList.get(position).getSenderName() + " "
+                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " " + "Profile");
 
+                ((ProfileNotifications) holder).mProfileContact.setText(notificationList.get(position).getDateTime());
+                ((ProfileNotifications) holder).mUserName.setText(notificationList.get(position).getSenderName());
+                ((ProfileNotifications) holder).mProfileWorkAt.setText(notificationList.get(position).getSenderProfession());
+                ((ProfileNotifications) holder).mProfileWebSite.setText(notificationList.get(position).getSenderWebsite());
+                ((ProfileNotifications) holder).mLocation.setText(notificationList.get(position).getSenderCity());
+                ((ProfileNotifications) holder).mFollowCount.setText("Followers(" + notificationList.get(position).getSenderFollowCount() + ")");
+                ((ProfileNotifications) holder).mLikes.setText("Likes(" + notificationList.get(position).getSenderLikeCount() + ")");
+                break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return notificationList.size();
     }
 }
