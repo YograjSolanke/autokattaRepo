@@ -19,15 +19,20 @@ import retrofit2.http.Query;
 
 public interface ServiceApi {
 
+    //Wall Notifications...
+    @GET("GetAllWallNotification")
+    Call<WallResponse> _getWallNotifications(@Query("Contact") String contact, @Query("UserContact") String userContact,
+                                             @Query("Layout") String layout);
+
     // Login API...
-    @POST("login.php")
-    Call<LoginResponse> _autokattaLogin(@Query("contact") String username, @Query("password") String password);
+    @POST("Login")
+    Call<LoginResponse> _autokattaLogin(@Query("Contact") String username, @Query("Password") String password);
 
 
     //Get Profile Data...
-    @GET("getProfileData.php")
-    Call<ProfileAboutResponse> _autokattaGetProfile(@Query("contact") String mycontact,
-                                                    @Query("sender_contact") String otherContact);
+    @GET("GetProfileData")
+    Call<ProfileAboutResponse> _autokattaGetProfile(@Query("Contact") String mycontact,
+                                                    @Query("SenderContact") String otherContact);
 
     //Get Groups...
     @GET("getGroups.php")
@@ -838,8 +843,8 @@ public interface ServiceApi {
     Call<SellerResponse> getSavedSearchSellerList(@Query("contact") String contact);
 
     //get Own Vehicles
-    @POST("getOwnVehicles.php")
-    Call<GetOwnVehiclesResponse> _autokattaGetOwnVehicles(@Query("contact") String contact);
+    @GET("GetOwnVehicles")
+    Call<GetOwnVehiclesResponse> _autokattaGetOwnVehicles(@Query("Contact") String contact);
 
     //get All States
     @POST("getStates.php")
