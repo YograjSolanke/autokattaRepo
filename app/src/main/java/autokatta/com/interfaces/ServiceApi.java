@@ -23,6 +23,11 @@ import retrofit2.http.Query;
 
 public interface ServiceApi {
 
+    //Wall Notifications...
+    @GET("GetAllWallNotification")
+    Call<WallResponse> _getWallNotifications(@Query("Contact") String contact, @Query("UserContact") String userContact,
+                                             @Query("Layout") String layout);
+
     // Login API...
     @POST("Login")
     Call<LoginResponse> _autokattaLogin(@Query("Contact") String username, @Query("Password") String password);

@@ -41,7 +41,7 @@ public class UploadVehicleAppIntro extends AhoyOnboarderActivity {
             page.setDescriptionColor(R.color.white);
             page.setTitleTextSize(dpToPixels(7, this));
             page.setDescriptionTextSize(dpToPixels(5, this));
-            page.setIconLayoutParams(600, 600, 0, 0, 0, 0);
+            page.setIconLayoutParams(450, 450, 0, 0, 0, 0);
         }
 
         setFinishButtonTitle("Finish");

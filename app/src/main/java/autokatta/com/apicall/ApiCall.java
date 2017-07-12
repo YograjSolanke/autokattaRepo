@@ -61,6 +61,39 @@ public class ApiCall {
     }
 
     /*
+    Wall Notifications...
+     */
+
+    public void wallNotifications(String contact, String userContact, String layout) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit mRetrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+                Call<WallResponse> mLoginCall = mServiceApi._getWallNotifications(contact, userContact, layout);
+                mLoginCall.enqueue(new Callback<WallResponse>() {
+                    @Override
+                    public void onResponse(Call<WallResponse> call, Response<WallResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<WallResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
     Login Api Call
      */
     public void userLogin(String userName, String password) {
