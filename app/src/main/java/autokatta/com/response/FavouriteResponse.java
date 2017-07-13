@@ -906,6 +906,153 @@ public class FavouriteResponse {
             @SerializedName("favid")
             @Expose
             private String favid;
+            @SerializedName("date")
+            @Expose
+            private String date;
+            @SerializedName("Ssearch_id")
+            @Expose
+            private String ssearchId;
+            @SerializedName("Scontact_no")
+            @Expose
+            private String scontactNo;
+            @SerializedName("Sstatus")
+            @Expose
+            private String sstatus;
+            @SerializedName("Scategory")
+            @Expose
+            private String scategory;
+            @SerializedName("Smanufacturer")
+            @Expose
+            private String smanufacturer;
+            @SerializedName("Smodel")
+            @Expose
+            private String smodel;
+            @SerializedName("Sversion")
+            @Expose
+            private String sversion;
+            @SerializedName("Srto_city")
+            @Expose
+            private String srtoCity;
+            @SerializedName("Srto_city2")
+            @Expose
+            private String srtoCity2;
+            @SerializedName("Srto_city3")
+            @Expose
+            private String srtoCity3;
+            @SerializedName("Srto_city4")
+            @Expose
+            private String srtoCity4;
+            @SerializedName("Srto_city5")
+            @Expose
+            private String srtoCity5;
+            @SerializedName("Slocation_city")
+            @Expose
+            private String slocationCity;
+            @SerializedName("Slocation_city2")
+            @Expose
+            private String slocationCity2;
+            @SerializedName("Slocation_city3")
+            @Expose
+            private String slocationCity3;
+            @SerializedName("Slocation_city4")
+            @Expose
+            private String slocationCity4;
+            @SerializedName("Slocation_city5")
+            @Expose
+            private String slocationCity5;
+            @SerializedName("Slocation_state")
+            @Expose
+            private String slocationState;
+            @SerializedName("Syear_of_registration")
+            @Expose
+            private String syearOfRegistration;
+            @SerializedName("Scolor")
+            @Expose
+            private String scolor;
+            @SerializedName("Src_available")
+            @Expose
+            private String srcAvailable;
+            @SerializedName("Syear_of_manufacture")
+            @Expose
+            private String syearOfManufacture;
+            @SerializedName("Sinsurance_valid")
+            @Expose
+            private String sinsuranceValid;
+            @SerializedName("Stax_validity")
+            @Expose
+            private String staxValidity;
+            @SerializedName("Sfitness_validity")
+            @Expose
+            private String sfitnessValidity;
+            @SerializedName("Spermit_validity")
+            @Expose
+            private String spermitValidity;
+            @SerializedName("Sfual_type")
+            @Expose
+            private String sfualType;
+            @SerializedName("Sseating_capacity")
+            @Expose
+            private String sseatingCapacity;
+            @SerializedName("Spermit")
+            @Expose
+            private String spermit;
+            @SerializedName("Skms_running")
+            @Expose
+            private String skmsRunning;
+            @SerializedName("Sno_of_owners")
+            @Expose
+            private String snoOfOwners;
+            @SerializedName("Shypothication")
+            @Expose
+            private String shypothication;
+            @SerializedName("Sprice")
+            @Expose
+            private String sprice;
+            @SerializedName("Sdrive")
+            @Expose
+            private String sdrive;
+            @SerializedName("Stransmission")
+            @Expose
+            private String stransmission;
+            @SerializedName("Sbody_type")
+            @Expose
+            private String sbodyType;
+            @SerializedName("Sboat_type")
+            @Expose
+            private String sboatType;
+            @SerializedName("Srv_type")
+            @Expose
+            private String srvType;
+            @SerializedName("Sapplication")
+            @Expose
+            private String sapplication;
+            @SerializedName("Sdate")
+            @Expose
+            private String sdate;
+            @SerializedName("Scalldate")
+            @Expose
+            private String scalldate;
+            @SerializedName("Sstopdate")
+            @Expose
+            private String sstopdate;
+            @SerializedName("Styre_condition")
+            @Expose
+            private String styreCondition;
+            @SerializedName("Simplements")
+            @Expose
+            private String simplements;
+            @SerializedName("Sbus_type")
+            @Expose
+            private String sbusType;
+            @SerializedName("Sair_condition")
+            @Expose
+            private String sairCondition;
+            @SerializedName("Sfinance_req")
+            @Expose
+            private String sfinanceReq;
+            @SerializedName("Sinvoice")
+            @Expose
+            private String sinvoice;
             @SerializedName("Vvehicle_id")
             @Expose
             private String vvehicleId;
@@ -1087,6 +1234,398 @@ public class FavouriteResponse {
 
             public void setFavid(String favid) {
                 this.favid = favid;
+            }
+
+            public String getDate() {
+                return date;
+            }
+
+            public void setDate(String date) {
+                this.date = date;
+            }
+
+            public String getSsearchId() {
+                return ssearchId;
+            }
+
+            public void setSsearchId(String ssearchId) {
+                this.ssearchId = ssearchId;
+            }
+
+            public String getScontactNo() {
+                return scontactNo;
+            }
+
+            public void setScontactNo(String scontactNo) {
+                this.scontactNo = scontactNo;
+            }
+
+            public String getSstatus() {
+                return sstatus;
+            }
+
+            public void setSstatus(String sstatus) {
+                this.sstatus = sstatus;
+            }
+
+            public String getScategory() {
+                return scategory;
+            }
+
+            public void setScategory(String scategory) {
+                this.scategory = scategory;
+            }
+
+            public String getSmanufacturer() {
+                return smanufacturer;
+            }
+
+            public void setSmanufacturer(String smanufacturer) {
+                this.smanufacturer = smanufacturer;
+            }
+
+            public String getSmodel() {
+                return smodel;
+            }
+
+            public void setSmodel(String smodel) {
+                this.smodel = smodel;
+            }
+
+            public String getSversion() {
+                return sversion;
+            }
+
+            public void setSversion(String sversion) {
+                this.sversion = sversion;
+            }
+
+            public String getSrtoCity() {
+                return srtoCity;
+            }
+
+            public void setSrtoCity(String srtoCity) {
+                this.srtoCity = srtoCity;
+            }
+
+            public String getSrtoCity2() {
+                return srtoCity2;
+            }
+
+            public void setSrtoCity2(String srtoCity2) {
+                this.srtoCity2 = srtoCity2;
+            }
+
+            public String getSrtoCity3() {
+                return srtoCity3;
+            }
+
+            public void setSrtoCity3(String srtoCity3) {
+                this.srtoCity3 = srtoCity3;
+            }
+
+            public String getSrtoCity4() {
+                return srtoCity4;
+            }
+
+            public void setSrtoCity4(String srtoCity4) {
+                this.srtoCity4 = srtoCity4;
+            }
+
+            public String getSrtoCity5() {
+                return srtoCity5;
+            }
+
+            public void setSrtoCity5(String srtoCity5) {
+                this.srtoCity5 = srtoCity5;
+            }
+
+            public String getSlocationCity() {
+                return slocationCity;
+            }
+
+            public void setSlocationCity(String slocationCity) {
+                this.slocationCity = slocationCity;
+            }
+
+            public String getSlocationCity2() {
+                return slocationCity2;
+            }
+
+            public void setSlocationCity2(String slocationCity2) {
+                this.slocationCity2 = slocationCity2;
+            }
+
+            public String getSlocationCity3() {
+                return slocationCity3;
+            }
+
+            public void setSlocationCity3(String slocationCity3) {
+                this.slocationCity3 = slocationCity3;
+            }
+
+            public String getSlocationCity4() {
+                return slocationCity4;
+            }
+
+            public void setSlocationCity4(String slocationCity4) {
+                this.slocationCity4 = slocationCity4;
+            }
+
+            public String getSlocationCity5() {
+                return slocationCity5;
+            }
+
+            public void setSlocationCity5(String slocationCity5) {
+                this.slocationCity5 = slocationCity5;
+            }
+
+            public String getSlocationState() {
+                return slocationState;
+            }
+
+            public void setSlocationState(String slocationState) {
+                this.slocationState = slocationState;
+            }
+
+            public String getSyearOfRegistration() {
+                return syearOfRegistration;
+            }
+
+            public void setSyearOfRegistration(String syearOfRegistration) {
+                this.syearOfRegistration = syearOfRegistration;
+            }
+
+            public String getScolor() {
+                return scolor;
+            }
+
+            public void setScolor(String scolor) {
+                this.scolor = scolor;
+            }
+
+            public String getSrcAvailable() {
+                return srcAvailable;
+            }
+
+            public void setSrcAvailable(String srcAvailable) {
+                this.srcAvailable = srcAvailable;
+            }
+
+            public String getSyearOfManufacture() {
+                return syearOfManufacture;
+            }
+
+            public void setSyearOfManufacture(String syearOfManufacture) {
+                this.syearOfManufacture = syearOfManufacture;
+            }
+
+            public String getSinsuranceValid() {
+                return sinsuranceValid;
+            }
+
+            public void setSinsuranceValid(String sinsuranceValid) {
+                this.sinsuranceValid = sinsuranceValid;
+            }
+
+            public String getStaxValidity() {
+                return staxValidity;
+            }
+
+            public void setStaxValidity(String staxValidity) {
+                this.staxValidity = staxValidity;
+            }
+
+            public String getSfitnessValidity() {
+                return sfitnessValidity;
+            }
+
+            public void setSfitnessValidity(String sfitnessValidity) {
+                this.sfitnessValidity = sfitnessValidity;
+            }
+
+            public String getSpermitValidity() {
+                return spermitValidity;
+            }
+
+            public void setSpermitValidity(String spermitValidity) {
+                this.spermitValidity = spermitValidity;
+            }
+
+            public String getSfualType() {
+                return sfualType;
+            }
+
+            public void setSfualType(String sfualType) {
+                this.sfualType = sfualType;
+            }
+
+            public String getSseatingCapacity() {
+                return sseatingCapacity;
+            }
+
+            public void setSseatingCapacity(String sseatingCapacity) {
+                this.sseatingCapacity = sseatingCapacity;
+            }
+
+            public String getSpermit() {
+                return spermit;
+            }
+
+            public void setSpermit(String spermit) {
+                this.spermit = spermit;
+            }
+
+            public String getSkmsRunning() {
+                return skmsRunning;
+            }
+
+            public void setSkmsRunning(String skmsRunning) {
+                this.skmsRunning = skmsRunning;
+            }
+
+            public String getSnoOfOwners() {
+                return snoOfOwners;
+            }
+
+            public void setSnoOfOwners(String snoOfOwners) {
+                this.snoOfOwners = snoOfOwners;
+            }
+
+            public String getShypothication() {
+                return shypothication;
+            }
+
+            public void setShypothication(String shypothication) {
+                this.shypothication = shypothication;
+            }
+
+            public String getSprice() {
+                return sprice;
+            }
+
+            public void setSprice(String sprice) {
+                this.sprice = sprice;
+            }
+
+            public String getSdrive() {
+                return sdrive;
+            }
+
+            public void setSdrive(String sdrive) {
+                this.sdrive = sdrive;
+            }
+
+            public String getStransmission() {
+                return stransmission;
+            }
+
+            public void setStransmission(String stransmission) {
+                this.stransmission = stransmission;
+            }
+
+            public String getSbodyType() {
+                return sbodyType;
+            }
+
+            public void setSbodyType(String sbodyType) {
+                this.sbodyType = sbodyType;
+            }
+
+            public String getSboatType() {
+                return sboatType;
+            }
+
+            public void setSboatType(String sboatType) {
+                this.sboatType = sboatType;
+            }
+
+            public String getSrvType() {
+                return srvType;
+            }
+
+            public void setSrvType(String srvType) {
+                this.srvType = srvType;
+            }
+
+            public String getSapplication() {
+                return sapplication;
+            }
+
+            public void setSapplication(String sapplication) {
+                this.sapplication = sapplication;
+            }
+
+            public String getSdate() {
+                return sdate;
+            }
+
+            public void setSdate(String sdate) {
+                this.sdate = sdate;
+            }
+
+            public String getScalldate() {
+                return scalldate;
+            }
+
+            public void setScalldate(String scalldate) {
+                this.scalldate = scalldate;
+            }
+
+            public String getSstopdate() {
+                return sstopdate;
+            }
+
+            public void setSstopdate(String sstopdate) {
+                this.sstopdate = sstopdate;
+            }
+
+            public String getStyreCondition() {
+                return styreCondition;
+            }
+
+            public void setStyreCondition(String styreCondition) {
+                this.styreCondition = styreCondition;
+            }
+
+            public String getSimplements() {
+                return simplements;
+            }
+
+            public void setSimplements(String simplements) {
+                this.simplements = simplements;
+            }
+
+            public String getSbusType() {
+                return sbusType;
+            }
+
+            public void setSbusType(String sbusType) {
+                this.sbusType = sbusType;
+            }
+
+            public String getSairCondition() {
+                return sairCondition;
+            }
+
+            public void setSairCondition(String sairCondition) {
+                this.sairCondition = sairCondition;
+            }
+
+            public String getSfinanceReq() {
+                return sfinanceReq;
+            }
+
+            public void setSfinanceReq(String sfinanceReq) {
+                this.sfinanceReq = sfinanceReq;
+            }
+
+            public String getSinvoice() {
+                return sinvoice;
+            }
+
+            public void setSinvoice(String sinvoice) {
+                this.sinvoice = sinvoice;
             }
 
             public String getVvehicleId() {
