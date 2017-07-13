@@ -127,7 +127,7 @@ public class CreateAuctionFragment extends Fragment
         clauseList.setOnTouchListener(this);
 
         address.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
-        apiCall.getSpecialClauses("getClause");
+        apiCall.getSpecialClauses("getClause","");
 
         apiCall.getAllStates();
 
@@ -446,7 +446,7 @@ public class CreateAuctionFragment extends Fragment
                         String id = moduleResponse.getSuccess().getClauseID().toString();
                         Log.i("ClauseId", "->" + id);
                         CustomToast.customToast(getActivity(), "Clause Added Successfully");
-                        apiCall.getSpecialClauses("getClause");
+                        apiCall.getSpecialClauses("getClause","");
                     }
 
                 } else if (response.body() instanceof AuctionCreateResponse) {

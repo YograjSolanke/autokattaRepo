@@ -75,7 +75,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     private void getGroups() {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.profileGroup(contact,"");
+            apiCall.profileGroup(contact);
         } else {
 
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));

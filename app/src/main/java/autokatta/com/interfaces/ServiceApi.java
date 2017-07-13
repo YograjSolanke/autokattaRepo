@@ -2,6 +2,11 @@ package autokatta.com.interfaces;
 
 import autokatta.com.request.AddManualEnquiryRequest;
 import autokatta.com.request.AddOwnVehicle;
+import autokatta.com.request.CreateAuctionRequest;
+import autokatta.com.request.CreateExchangeMelaRequest;
+import autokatta.com.request.CreateLoanMelaRequest;
+import autokatta.com.request.CreateSaleMelaRequest;
+import autokatta.com.request.CreateServiceMelaRequest;
 import autokatta.com.request.RegistrationCompanyBasedrequest;
 import autokatta.com.request.RegistrationRequest;
 import autokatta.com.request.UpdateMyVehicleRequest;
@@ -40,7 +45,7 @@ public interface ServiceApi {
 
     //Get Groups...
     @GET("GetGroups")
-    Call<ProfileGroupResponse> _autokattaProfileGroup(@Query("Contact") String contact,@Query("Timestamp") String timestamp);
+    Call<ProfileGroupResponse> _autokattaProfileGroup(@Query("Contact") String contact);
 
     //Get Upload Count...
     @GET("getuploadcount.php")
@@ -109,23 +114,23 @@ public interface ServiceApi {
     Call<MyUploadedVehiclesResponse> _autokattaGetMyUploadedVehicles(@Query("mycontact") String myContact);
 
     //get My Active Events
-    @POST("getAuctionEvents.php")
-    Call<MyActiveAuctionResponse> _autokattaGetMyActiveAuction(@Query("contact") String myContact, @Query("status") String status);
+    @GET("GetAuctionEvents")
+    Call<MyActiveAuctionResponse> _autokattaGetMyActiveAuction(@Query("Contact") String myContact, @Query("Status") String status,@Query("timestamp") int timestamp);
 
     //get My Active Loan Mela
-    @POST("getAllMyloanMela.php")
-    Call<MyActiveLoanMelaResponse> _autokattaGetMyActiveLoanMela(@Query("contact") String myContact);
+    @GET("GetAllLoanMela")
+    Call<MyActiveLoanMelaResponse> _autokattaGetMyActiveLoanMela(@Query("Contact") String myContact);
 
     //get My Active Exchange Mela
-    @POST("getAllMyExchangeMela.php")
-    Call<MyActiveExchangeMelaResponse> _autokattaGetMyActiveExchangeMela(@Query("contact") String myContact);
+    @GET("GetAllMyExchangeMela")
+    Call<MyActiveExchangeMelaResponse> _autokattaGetMyActiveExchangeMela(@Query("Contact") String myContact);
 
     //get My Upcoming Auction
-    @POST("getMyUpcomingAuction.php")
+    @GET("getMyUpcomingAuction.php")
     Call<MyUpcomingAuctionResponse> __autokattaGetMyUpcomingAuction(@Query("contact") String myContact);
 
     //get My Upcoming Loan Mela
-    @POST("getUpcomingLoanMela.php")
+    @GET("getUpcomingLoanMela.php")
     Call<MyUpcomingLoanMelaResponse> __autokattaGetMyUpcomingLoanMela(@Query("contact") String myContact);
 
     //get My Upcoming Exchange Mela
@@ -246,37 +251,21 @@ public interface ServiceApi {
     Call<GetVehicleImplementsResponse> _autokattaGetVehicleImplements();
 
     //create loan mela event
-    @GET("createLoanMela.php")
-    Call<LoanMelaCreateResponse> _createLoanMela(@Query("title") String title, @Query("location") String location,
-                                                 @Query("address") String address, @Query("start_date") String start_date,
-                                                 @Query("start_time") String start_time, @Query("end_date") String end_date,
-                                                 @Query("end_time") String end_time, @Query("image") String image,
-                                                 @Query("details") String details, @Query("contact") String contact);
+    @POST("CreateLoanMela")
+    Call<LoanMelaCreateResponse> _createLoanMela(@Body CreateLoanMelaRequest createLoanMelaRequest);
 
 
     //create loan mela event
-    @GET("createExchangeMela.php")
-    Call<ExchangeMelaCreateResponse> _createExchangeMela(@Query("title") String title, @Query("location") String location,
-                                                         @Query("address") String address, @Query("start_date") String start_date,
-                                                         @Query("start_time") String start_time, @Query("end_date") String end_date,
-                                                         @Query("end_time") String end_time, @Query("image") String image,
-                                                         @Query("details") String details, @Query("contact") String contact);
+    @POST("CreateExchangeMela")
+    Call<ExchangeMelaCreateResponse> _createExchangeMela(@Body CreateExchangeMelaRequest createExchangeMelaRequest);
 
     //create Sale mela event
-    @GET("createSaleMela.php")
-    Call<SaleMelaCreateResponse> _createSaleMela(@Query("title") String title, @Query("location") String location,
-                                                 @Query("address") String address, @Query("start_date") String start_date,
-                                                 @Query("start_time") String start_time, @Query("end_date") String end_date,
-                                                 @Query("end_time") String end_time, @Query("image") String image,
-                                                 @Query("details") String details, @Query("contact") String contact);
+    @POST("CreateSaleMela")
+    Call<SaleMelaCreateResponse> _createSaleMela(@Body CreateSaleMelaRequest createSaleMelaRequest);
 
     //create Service mela event
-    @GET("createServiceMela.php")
-    Call<ServiceMelaCreateResponse> _createServiceMela(@Query("title") String title, @Query("location") String location,
-                                                       @Query("address") String address, @Query("start_date") String start_date,
-                                                       @Query("start_time") String start_time, @Query("end_date") String end_date,
-                                                       @Query("end_time") String end_time, @Query("image") String image,
-                                                       @Query("details") String details, @Query("contact") String contact);
+    @POST("CreateServiceMela")
+    Call<ServiceMelaCreateResponse> _createServiceMela(@Body CreateServiceMelaRequest createServiceMelaRequest);
 
     //get My Broadcast groups
     @POST("getBroadcastGroups.php")
@@ -290,7 +279,7 @@ public interface ServiceApi {
 
     //ADD own Vehicle
     @POST("AddOwnVehicles")
-    Call<String> _autokattaAddOwn(AddOwnVehicle addOwnVehicle);
+    Call<String> _autokattaAddOwn(@Body AddOwnVehicle addOwnVehicle);
 
 
     //Get Brand Modle Version
@@ -319,13 +308,13 @@ public interface ServiceApi {
 
 
     //Get SpecialCaluses For Auction
-    @GET("specialclauses.php")
-    Call<SpecialClauseGetResponse> getSpecialClauses(@Query("keyword") String keyword);
+    @POST("SpecialClauses")
+    Call<SpecialClauseGetResponse> getSpecialClauses(@Query("KeyWord") String keyword, @Query("Clause") String clause);
 
 
     //Add SpecialCaluses For Auction
-    @GET("specialclauses.php")
-    Call<SpecialClauseAddResponse> addSpecialClauses(@Query("keyword") String keyword, @Query("clause") String clause);
+    @POST("SpecialClauses")
+    Call<SpecialClauseAddResponse> addSpecialClauses(@Query("KeyWord") String keyword, @Query("Clause") String clause);
 
     //Get Group Contacts...
     @GET("getGroupContacts.php")
@@ -351,18 +340,13 @@ public interface ServiceApi {
                                           @Query("action") String action);
 
     //Create an Auction
-    @GET("createAuction.php")
-    Call<AuctionCreateResponse> createAuction(@Query("title") String title, @Query("start_date") String start_date,
-                                              @Query("start_time") String start_time, @Query("end_date") String end_date,
-                                              @Query("end_time") String end_time, @Query("auction_type") String auction_type,
-                                              @Query("contact") String contact, @Query("location") String location,
-                                              @Query("auction_category") String product_category, @Query("special_clauses") String special_clauses,
-                                              @Query("openClose") String openClose, @Query("stockLocation") String stockLocation);
+    @GET("CreateAuction")
+    Call<AuctionCreateResponse> createAuction(@Body CreateAuctionRequest createAuctionRequest);
 
 
     //Update Company Based Registration
     @POST("UpdateRegistration")
-    Call<String> _autokattaUpdateCompanyRegistration(RegistrationCompanyBasedrequest registrationCompanyBasedrequest);
+    Call<String> _autokattaUpdateCompanyRegistration(@Body RegistrationCompanyBasedrequest registrationCompanyBasedrequest);
 
     //Get States
     @GET("GetRegisteredStates")
@@ -828,7 +812,7 @@ public interface ServiceApi {
     Call<GetOwnVehiclesResponse> _autokattaGetOwnVehicles(@Query("Contact") String contact);
 
     //get All States
-    @POST("getStates.php")
+    @GET("GetStates")
     Call<AllStatesResponse> _autokattaGetAllStates();
 
     //get Followers
@@ -1055,17 +1039,21 @@ public interface ServiceApi {
     Call<FavouriteResponse> getMyFavourites(@Body SampleResponse sampleResponse);
 
     //Create Groups
-    @POST("createGroup.php")
-    Call<String> createGroup(@Query("title") String title, @Query("image") String image, @Query("admin_contact") String admin_contact);
+    @POST("CreateGroup")
+    Call<String> createGroup(@Query("Title") String title, @Query("Image") String image, @Query("AdminContact") String admin_contact);
 
     //Add contacts to  Groups
-    @POST("add_contacts.php")
-    Call<String> addContactToGroup(@Query("groupid") String groupid, @Query("contacts") String contacts);
+    @POST("AddContacts")
+    Call<String> addContactToGroup(@Query("GroupID") String groupid, @Query("Contacts") String contacts);
 
 
     //Notification Like Group
-    @POST("newlikes.php")
-    Call<String> notificationLikegroup(@Query("group_createid") String groupid, @Query("sender_contact") String mycontact, @Query("receiver_contact") String OtherContact, @Query("layout") String layout);
+    @POST("Newlikes")
+    Call<String> notificationLikegroup(@Query("GroupID") String groupid, @Query("SenderContact") String mycontact, @Query("ReceiverContact") String OtherContact,
+                                       @Query("Layout") String layout, @Query("StoreID") String StoreID,
+                                       @Query("VehicleID") String VehicleID, @Query("ProductID") String ProductID,
+                                       @Query("ServiceID") String ServiceID,@Query("StatusID")
+                                               String StatusID,@Query("SearchID") String SearchID);
 
 
     //update a store...
@@ -1134,44 +1122,44 @@ public interface ServiceApi {
 
 
     //get product data
-    @POST("getProductDataById.php")
+    @GET("getProductDataById.php")
     Call<ProductResponse> getProductDetails(@Query("product_id") String product_id, @Query("mycontact") String mycontact);
 
 
     //get Service data
-    @POST("getServiceDataById.php")
+    @GET("getServiceDataById.php")
     Call<ServiceResponse> getServiceDetails(@Query("service_id") String product_id, @Query("mycontact") String mycontact);
 
     //get Service Mela data
-    @POST("getAllMyServiceMela.php")
-    Call<MyActiveServiceMelaResponse> _autokattaGetServiceMelaDetails(@Query("contact") String mycontact);
+    @GET("GetAllMyServiceMela")
+    Call<MyActiveServiceMelaResponse> _autokattaGetServiceMelaDetails(@Query("Contact") String mycontact);
 
     //get Sale Mela data
-    @POST("getAllMySaleMela.php")
-    Call<MyActiveSaleMelaResponse> _autokattaGetSaleMelaDetails(@Query("contact") String mycontact);
+    @GET("GetAllMySaleMela")
+    Call<MyActiveSaleMelaResponse> _autokattaGetSaleMelaDetails(@Query("Contact") String mycontact);
 
     //get Ended Sale Mela data
-    @POST("getEndedSaleMela.php")
+    @GET("getEndedSaleMela.php")
     Call<EndedSaleMelaResponse> _autokattaGetEndedSaleMelaDetails(@Query("contact") String mycontact);
 
     //get Ended Sale Mela data
-    @POST("getEndedServiceMela.php")
+    @GET("getEndedServiceMela.php")
     Call<EndedSaleMelaResponse> _autokattaGetEndedServiceMelaDetails(@Query("contact") String mycontact);
 
     //get Loan Mela Participants data
-    @POST("getConfirmedParticipants_Loan.php")
+    @GET("getConfirmedParticipants_Loan.php")
     Call<LoanMelaParticipantsResponse> _autokattagetConfirmedParticipants_Loan(@Query("mycontact") String mycontact, @Query("loan_id") String loan_id);
 
     //get  Sale Mela Participants data
-    @POST("getConfirmedParticipants_Sale.php")
+    @GET("getConfirmedParticipants_Sale.php")
     Call<SaleMelaParticipantsResponse> _autokattagetConfirmedParticipants_Sale(@Query("mycontact") String mycontact, @Query("sale_id") String sale_id);
 
     //get  Service Mela Participants data
-    @POST("getConfirmedParticipants_Service.php")
+    @GET("getConfirmedParticipants_Service.php")
     Call<ServiceMelaParticipantsResponse> _autokattagetConfirmedParticipants_Service(@Query("mycontact") String mycontact, @Query("service_id") String service_id);
 
     //get Exchange Mela  Participantsdata
-    @POST("getConfirmedParticipants_Exchange.php")
+    @GET("getConfirmedParticipants_Exchange.php")
     Call<ExchangeMelaParticipantsResponse> _autokattagetConfirmedParticipants_Exchange(@Query("mycontact") String mycontact, @Query("exchange_id") String exchange_id);
 
     //update product details

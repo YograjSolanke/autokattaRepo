@@ -612,7 +612,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
     private void getGroupData() {
         ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
-        mApiCall.Groups(myContact,"");
+        mApiCall.Groups(myContact);
     }
 
 

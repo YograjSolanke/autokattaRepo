@@ -592,7 +592,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     }
 
     private void getClause() {
-        mApiCall.getSpecialClauses("getClause");
+        mApiCall.getSpecialClauses("getClause","");
     }
 
     @Override
