@@ -147,6 +147,12 @@
 
     </RelativeLayout>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"></View>
+
     <LinearLayout
         android:id="@+id/selllinear1"
         android:layout_width="fill_parent"
@@ -159,7 +165,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-
 
             <TextView
                 android:id="@+id/sellseachreq"
@@ -177,7 +182,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-
 
             <TextView
                 android:id="@+id/sellcardetails"
@@ -290,6 +294,12 @@
 
             </RelativeLayout>
         </LinearLayout>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#cccccc"></View>
 
         <LinearLayout
             android:layout_width="fill_parent"

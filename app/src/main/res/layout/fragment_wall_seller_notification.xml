@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/dialog_holo_light_frame">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/seller_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:foreground="?attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/linearSecond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#80bebebe"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/sellertext"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/button_background"
+                    android:gravity="center"
+                    android:text="Seller lead"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sellertext"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Title"
+                    android:textColor="#2C3343"
+                    android:textSize="15sp" />
+
+
+                <TextView
+                    android:id="@+id/compare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sellertext"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_toStartOf="@+id/checkauc"
+                    android:text="Compare"
+                    android:textColor="#2C3343"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
+                <CheckBox
+                    android:id="@+id/checkauc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/sellertext"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/sellrelative1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearSecond">
+
+                <ViewFlipper
+                    android:id="@+id/sellvehicalimgflicker"
+                    android:layout_width="80dip"
+                    android:layout_height="80dip"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:flipInterval="500"></ViewFlipper>
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Username"
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/vehiclecount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/username"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Vehicle Count"
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/addon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sellvehicalimgflicker"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Added On"
+                    android:textColor="#2C3343" />
+
+                <TextView
+                    android:id="@+id/lastcall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addon"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Last Call: "
+                    android:textColor="#2C3343" />
+
+                <ImageView
+                    android:id="@+id/sellcallimg"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/sellvehicalimgflicker"
+                    android:layout_marginEnd="10dip"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/call_icon"
+                    android:contentDescription="@string/app_name" />
+
+                <ImageView
+                    android:id="@+id/sellfevimg"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/sellvehicalimgflicker"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/sellcallimg"
+                    android:background="@drawable/fav1"
+                    android:contentDescription="@string/app_name"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/deletefav"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/sellvehicalimgflicker"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toStartOf="@+id/sellcallimg"
+                    android:background="@drawable/ic_delete"
+                    android:contentDescription="@string/app_name"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/sellrelative1"
+                android:background="#cccccc">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/selllinear1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sellrelative1"
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/sellseachreq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Search requirement"
+                        android:textColor="#2C3343"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/sellcardetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Car details"
+                        android:textColor="#2C3343"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lData"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/selllinear1"
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox1"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox2"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox3"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox4"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBoxRc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox5"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBoxIns"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBoxRc"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBoxHp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBoxIns"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#cccccc"></View>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox6"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox7"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox8"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBox10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox9"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBoxRcRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBox10"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBoxInsRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBoxRcRight"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+
+                        <CheckBox
+                            android:id="@+id/sellcheckBoxHpRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sellcheckBoxInsRight"
+                            android:layout_marginStart="20dp"
+                            android:enabled="false"
+                            android:text="---"
+                            android:textColor="#2C3343" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vieww"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/lData"
+                android:background="@color/grey" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

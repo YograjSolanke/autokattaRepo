@@ -2,6 +2,11 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,6 +33,8 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.FavouriteAllResponse;
+import autokatta.com.view.OtherProfile;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 /**
@@ -410,8 +417,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     Buyer Notification Class...
      */
     private static class BuyerNotifications extends RecyclerView.ViewHolder {
-        ImageView buyer_lead_image, callbuyer, favouritebuyer;
-        TextView mBuyerUserName, mBuyerLocation, mItemNameCity;
+        ImageView buyer_lead_image, callbuyer, favouritebuyer, deleteFav;
+        TextView mBuyerUserName, mBuyerLocation, mItemNameCity, buyertext;
         CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBoxRc, checkBoxIns,
                 checkBoxHpcap, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10, checkBoxRcRight,
                 checkBoxINSRight, checkBoxHPcapRight;
@@ -424,6 +431,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             buyer_lead_image = (ImageView) buyerView.findViewById(R.id.buyer_lead_image);
             callbuyer = (ImageView) buyerView.findViewById(R.id.callbuyer);
             favouritebuyer = (ImageView) buyerView.findViewById(R.id.favouritebuyer);
+            deleteFav = (ImageView) buyerView.findViewById(R.id.deletefav);
 
             mItemNameCity = (TextView) buyerView.findViewById(R.id.namecity);
             checkBox1 = (CheckBox) buyerView.findViewById(R.id.checkBox1);
@@ -443,6 +451,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             checkBoxRcRight = (CheckBox) buyerView.findViewById(R.id.checkBoxRcRight);
             checkBoxINSRight = (CheckBox) buyerView.findViewById(R.id.checkBoxINSRight);
             checkBoxHPcapRight = (CheckBox) buyerView.findViewById(R.id.checkBoxHPcapRight);
+
+            buyertext = (TextView) buyerView.findViewById(R.id.buyertext);
         }
     }
 
@@ -451,8 +461,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     Seller Notification Class...
      */
     private static class SellerNotifications extends RecyclerView.ViewHolder {
-        ImageView mCallimg, mFavimg;
-        TextView mUserName, mVehicleCount, mDateTime, lastcall;
+        ImageView mCallimg, mFavimg, deleteFav;
+        TextView mUserName, mVehicleCount, mDateTime, lastcall, sellertext, Title;
         CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBoxRc, checkBoxIns,
                 checkBoxHp, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10, checkBoxRcright,
                 checkBoxInsRight, checkBoxHpRight;
@@ -466,9 +476,11 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mVehicleCount = (TextView) sellerView.findViewById(R.id.vehiclecount);
             mDateTime = (TextView) sellerView.findViewById(R.id.addon);
             lastcall = (TextView) sellerView.findViewById(R.id.lastcall);
+            Title = (TextView) sellerView.findViewById(R.id.title);
 
             mCallimg = (ImageView) sellerView.findViewById(R.id.sellcallimg);
             mFavimg = (ImageView) sellerView.findViewById(R.id.sellfevimg);
+            deleteFav = (ImageView) sellerView.findViewById(R.id.deletefav);
 
             checkBox1 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox1);
             checkBox2 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox2);
@@ -583,12 +595,12 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
             case 111:
                 //buyer
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.buyer_list_adapter, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_buyer_notification, parent, false);
                 return new BuyerNotifications(mView);
 
             case 112:
                 //seller
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.seller_list_adapter, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_seller_notification, parent, false);
                 return new SellerNotifications(mView);
 
             case 113:
@@ -600,7 +612,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final FavouriteAllResponse objAllResponse = allResponseList.get(position);
         Log.i("Layout", "BindHolder" + holder.getItemViewType());
         switch (holder.getItemViewType()) {
@@ -728,10 +740,10 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
 
                             mStoreHolder.mLikes.setText("Likes(" + storelikecountint + ")");
-                            // locallist.get(position).storelikestatusld.toString();
+                            // allResponseList.get(position).storelikestatusld.toString();
 
                             objAllResponse.setStorelikestatus("yes");
-                            allResponseList.set(position, objAllResponse);
+                            allResponseList.set(mStoreHolder.getAdapterPosition(), objAllResponse);
                         } else {
                             String storelikecountstr = objAllResponse.getStorelikecount();
                             storelikecountint = Integer.parseInt(storelikecountstr);
@@ -752,10 +764,10 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
 
                             mStoreHolder.mLikes.setText("Likes(" + storelikecountint + ")");
-                            // locallist.get(position).storelikestatusld.toString();
+                            // allResponseList.get(position).storelikestatusld.toString();
 
                             objAllResponse.setStorelikestatus("yes");
-                            allResponseList.set(position, objAllResponse);
+                            allResponseList.set(mStoreHolder.getAdapterPosition(), objAllResponse);
 
 
                         }
@@ -811,12 +823,368 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
             case 111:
-                BuyerNotifications mBuyerHolder = (BuyerNotifications) holder;
+                //buyer
+
+                final BuyerNotifications mBuyerHolder = (BuyerNotifications) holder;
+
+                mBuyerHolder.mBuyerUserName.setText(allResponseList.get(position).getSendername());
+                mBuyerHolder.mBuyerLocation.setText(allResponseList.get(position).getVlocationCity());
+
+                mBuyerHolder.buyertext.setVisibility(View.VISIBLE);
+
+
+                mBuyerHolder.checkBox1.setText(allResponseList.get(position).getVcategory());
+                mBuyerHolder.checkBox2.setText(allResponseList.get(position).getVmanufacturer());
+                mBuyerHolder.checkBox3.setText(allResponseList.get(position).getVmodel());
+                mBuyerHolder.checkBox4.setText(allResponseList.get(position).getVyearOfManufacture());
+                mBuyerHolder.checkBox5.setText(allResponseList.get(position).getVrtoCity());
+
+
+                mBuyerHolder.checkBox6.setText(allResponseList.get(position).getScategory());
+                mBuyerHolder.checkBox7.setText(allResponseList.get(position).getSmanufacturer());
+                mBuyerHolder.checkBox8.setText(allResponseList.get(position).getSmodel());
+                mBuyerHolder.checkBox9.setText(allResponseList.get(position).getSyearOfManufacture());
+                mBuyerHolder.checkBox10.setText(allResponseList.get(position).getSrtoCity());
+
+                mBuyerHolder.favouritebuyer.setVisibility(View.GONE);
+                mBuyerHolder.deleteFav.setVisibility(View.VISIBLE);
+
+                try {
+
+                    if (mBuyerHolder.checkBox1.getText().toString().equalsIgnoreCase(mBuyerHolder.checkBox6.getText().toString())) {
+                        mBuyerHolder.checkBox1.setChecked(true);
+                        mBuyerHolder.checkBox6.setChecked(true);
+                    }
+
+                    if (mBuyerHolder.checkBox2.getText().toString().equalsIgnoreCase(mBuyerHolder.checkBox7.getText().toString())) {
+                        mBuyerHolder.checkBox2.setChecked(true);
+                        mBuyerHolder.checkBox7.setChecked(true);
+                    }
+
+                    if (mBuyerHolder.checkBox3.getText().toString().equalsIgnoreCase(mBuyerHolder.checkBox8.getText().toString())) {
+                        mBuyerHolder.checkBox3.setChecked(true);
+                        mBuyerHolder.checkBox8.setChecked(true);
+                    }
+
+                    if (mBuyerHolder.checkBox4.getText().toString().equalsIgnoreCase(mBuyerHolder.checkBox9.getText().toString())) {
+                        mBuyerHolder.checkBox4.setChecked(true);
+                        mBuyerHolder.checkBox9.setChecked(true);
+                    }
+
+                    if (mBuyerHolder.checkBox5.getText().toString().equalsIgnoreCase(mBuyerHolder.checkBox10.getText().toString())) {
+                        mBuyerHolder.checkBox5.setChecked(true);
+                        mBuyerHolder.checkBox10.setChecked(true);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                mBuyerHolder.checkBox1.setEnabled(false);
+                mBuyerHolder.checkBox2.setEnabled(false);
+                mBuyerHolder.checkBox3.setEnabled(false);
+                mBuyerHolder.checkBox4.setEnabled(false);
+                mBuyerHolder.checkBox5.setEnabled(false);
+
+                mBuyerHolder.checkBox6.setEnabled(false);
+                mBuyerHolder.checkBox7.setEnabled(false);
+                mBuyerHolder.checkBox8.setEnabled(false);
+                mBuyerHolder.checkBox9.setEnabled(false);
+                mBuyerHolder.checkBox10.setEnabled(false);
+
+
+                if (allResponseList.get(position).getSenderPic().equals(""))
+                    mBuyerHolder.buyer_lead_image.setBackgroundResource(R.drawable.logo);
+                else {
+
+                    /****************
+                     Glide code for image uploading
+
+                     *****************/
+                    Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + allResponseList.get(position).getSenderPic())
+                            .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            //.placeholder(R.drawable.logo) //To show image before loading an original image.
+                            //.error(R.drawable.blocked) //To show error image if problem in loading.
+                            .into(mBuyerHolder.buyer_lead_image);
+                }
+
+                mBuyerHolder.mBuyerUserName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String otherContact = allResponseList.get(mBuyerHolder.getAdapterPosition()).getVcontactNo();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("contactOtherProfile", otherContact);
+                        bundle.putString("action", "otherProfile");
+                        Log.i("Contact", "->" + otherContact);
+                        Intent mOtherProfile = new Intent(mActivity, OtherProfile.class);
+                        mOtherProfile.putExtras(bundle);
+                        mActivity.startActivity(mOtherProfile);
+                    }
+                });
+
+                mBuyerHolder.buyer_lead_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = allResponseList.get(mBuyerHolder.getAdapterPosition()).getVcontactNo();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("contactOtherProfile", otherContact);
+                        bundle.putString("action", "otherProfile");
+                        Log.i("Contact", "->" + otherContact);
+                        Intent mOtherProfile = new Intent(mActivity, OtherProfile.class);
+                        mOtherProfile.putExtras(bundle);
+                        mActivity.startActivity(mOtherProfile);
+                    }
+                });
+
+                mBuyerHolder.callbuyer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = allResponseList.get(mBuyerHolder.getAdapterPosition()).getVcontactNo();
+                        call(otherContact);
+                    }
+                });
+
+                mBuyerHolder.deleteFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        new AlertDialog.Builder(mActivity)
+                                .setTitle("Delete")
+                                .setMessage("Are you sure you want to delete this?")
+
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        /*deleteFromFavourite("",mBuyerHolder.getAdapterPosition(),
+                                                allResponseList.get(mBuyerHolder.getAdapterPosition()).getSsearchId(),
+                                                allResponseList.get(mBuyerHolder.getAdapterPosition()).getVvehicleId(),
+                                                "buyer");*/
+
+                                    }
+                                })
+
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+
+                    }
+                });
 
                 break;
 
             case 112:
-                SellerNotifications mSellerHolder = (SellerNotifications) holder;
+                //seller
+
+                final SellerNotifications mSellerHolder = (SellerNotifications) holder;
+                mSellerHolder.mUserName.setText(allResponseList.get(position).getSendername());
+                // mSellerHolder.UploadedDate.setText("Uploaded On:-"+"\n"+Vdate.get(position).toString());
+
+                mSellerHolder.sellertext.setVisibility(View.VISIBLE);
+
+                //To set Date
+                try {
+
+                    DateFormat date1 = new SimpleDateFormat(" MMM dd ");
+                    DateFormat time1 = new SimpleDateFormat(" hh:mm a");
+                    System.out.println("Date: " + date1.format(allResponseList.get(position).getVdate()));
+                    System.out.println("Time: " + time1.format(allResponseList.get(position).getVdate()));
+
+                    mSellerHolder.mDateTime.setText("Uploaded On:-" + "\n" + date1.format(allResponseList.get(position).getVdate()) +
+                            time1.format(allResponseList.get(position).getVdate()));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                mSellerHolder.Title.setText(allResponseList.get(position).getVdate());
+                // mSellerHolder.buyerlocation.setText(location_city.get(position).toString());
+
+                mSellerHolder.mFavimg.setVisibility(View.GONE);
+                mSellerHolder.deleteFav.setVisibility(View.VISIBLE);
+
+                mSellerHolder.checkBox1.setText(allResponseList.get(position).getScategory());
+                mSellerHolder.checkBox2.setText(allResponseList.get(position).getSmanufacturer());
+                mSellerHolder.checkBox3.setText(allResponseList.get(position).getSmodel());
+                mSellerHolder.checkBox4.setText(allResponseList.get(position).getSyearOfManufacture());
+                mSellerHolder.checkBox5.setText(allResponseList.get(position).getSrtoCity());
+
+
+                mSellerHolder.checkBox6.setText(allResponseList.get(position).getVcategory());
+                mSellerHolder.checkBox7.setText(allResponseList.get(position).getVmonthOfManufacture());
+                mSellerHolder.checkBox8.setText(allResponseList.get(position).getVmodel());
+                mSellerHolder.checkBox9.setText(allResponseList.get(position).getVyearOfManufacture());
+                mSellerHolder.checkBox10.setText(allResponseList.get(position).getVrtoCity());
+
+
+                try {
+
+                    if (mSellerHolder.checkBox1.getText().toString().equalsIgnoreCase(mSellerHolder.checkBox6.getText().toString())) {
+                        mSellerHolder.checkBox1.setChecked(true);
+                        mSellerHolder.checkBox6.setChecked(true);
+                    }
+
+                    if (mSellerHolder.checkBox2.getText().toString().equalsIgnoreCase(mSellerHolder.checkBox7.getText().toString())) {
+                        mSellerHolder.checkBox2.setChecked(true);
+                        mSellerHolder.checkBox7.setChecked(true);
+                    }
+
+                    if (mSellerHolder.checkBox3.getText().toString().equalsIgnoreCase(mSellerHolder.checkBox8.getText().toString())) {
+                        mSellerHolder.checkBox3.setChecked(true);
+                        mSellerHolder.checkBox8.setChecked(true);
+                    }
+
+                    if (mSellerHolder.checkBox4.getText().toString().equalsIgnoreCase(mSellerHolder.checkBox9.getText().toString())) {
+                        mSellerHolder.checkBox4.setChecked(true);
+                        mSellerHolder.checkBox9.setChecked(true);
+                    }
+
+                    if (mSellerHolder.checkBox5.getText().toString().equalsIgnoreCase(mSellerHolder.checkBox10.getText().toString())) {
+                        mSellerHolder.checkBox5.setChecked(true);
+                        mSellerHolder.checkBox10.setChecked(true);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                mSellerHolder.checkBox1.setEnabled(false);
+                mSellerHolder.checkBox2.setEnabled(false);
+                mSellerHolder.checkBox3.setEnabled(false);
+                mSellerHolder.checkBox4.setEnabled(false);
+                mSellerHolder.checkBox5.setEnabled(false);
+
+                mSellerHolder.checkBox6.setEnabled(false);
+                mSellerHolder.checkBox7.setEnabled(false);
+                mSellerHolder.checkBox8.setEnabled(false);
+                mSellerHolder.checkBox9.setEnabled(false);
+                mSellerHolder.checkBox10.setEnabled(false);
+
+
+                /*mSellerHolder.Compare.setVisibility(View.GONE);
+                mSellerHolder.Vehic_cnt.setVisibility(View.GONE);
+                mSellerHolder.chckbox.setVisibility(View.GONE);*/
+
+
+                final String imagenames = allResponseList.get(position).getVimage();
+                ArrayList<String> iname = new ArrayList<String>();
+
+                try {
+                    String[] imagenamecame = imagenames.split(",");
+
+                    if (imagenamecame.length != 0) {
+                        for (int z = 0; z < imagenamecame.length; z++) {
+                            iname.add(imagenamecame[z]);
+                        }
+
+                        System.out.println("lis=" + iname);
+
+                        ImageView[] imageView = new ImageView[iname.size()];
+
+                        for (int l = 0; l < imageView.length; l++) {
+                            imageView[l] = new ImageView(mActivity);
+
+                            /****************
+                             Glide code for image uploading
+
+                             *****************/
+                            Glide.with(mActivity)
+                                    .load("http://autokatta.com/mobile/uploads/" + iname.get(l).replaceAll(" ", "%20"))
+                                    //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                                    //.placeholder(R.drawable.logo) //To show image before loading an original image.
+                                    //.error(R.drawable.blocked) //To show error image if problem in loading.
+                                    .into(imageView[l]);
+
+                            mSellerHolder.mViewFlippersell.addView(imageView[l]);
+                        }
+                    } else {
+                        ImageView[] imageView = new ImageView[2];
+                        for (int l = 0; l < imageView.length; l++) {
+                            imageView[l] = new ImageView(mActivity);
+                            imageView[l].setBackgroundResource(R.drawable.vehiimg);
+                            mSellerHolder.mViewFlippersell.addView(imageView[l]);
+                        }
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                int mFlippingsell = 0;
+
+                if (mFlippingsell == 0) {
+                    /** Start Flipping */
+                    mSellerHolder.mViewFlippersell.startFlipping();
+                    mFlippingsell = 1;
+                } else {
+                    /** Stop Flipping */
+                    mSellerHolder.mViewFlippersell.stopFlipping();
+                    mFlippingsell = 0;
+                }
+
+                mSellerHolder.mUserName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String otherContact = allResponseList.get(mSellerHolder.getAdapterPosition()).getVcontactNo();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("contactOtherProfile", otherContact);
+                        bundle.putString("action", "otherProfile");
+                        Log.i("Contact", "->" + otherContact);
+                        Intent mOtherProfile = new Intent(mActivity, OtherProfile.class);
+                        mOtherProfile.putExtras(bundle);
+                        mActivity.startActivity(mOtherProfile);
+                    }
+                });
+
+
+                mSellerHolder.mCallimg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = allResponseList.get(mSellerHolder.getAdapterPosition()).getVcontactNo();
+                        call(otherContact);
+                    }
+                });
+
+
+                mSellerHolder.deleteFav.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        new AlertDialog.Builder(mActivity)
+                                .setTitle("Delete")
+                                .setMessage("Are you sure you want to delete this?")
+
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        /*deleteFromFavourite("", mSellerHolder.getAdapterPosition(),
+                                                allResponseList.get(mSellerHolder.getAdapterPosition()).getSsearchId(),
+                                                allResponseList.get(mSellerHolder.getAdapterPosition()).getVvehicleId(),
+                                                "seller");*/
+                                        dialog.dismiss();
+                                    }
+                                })
+
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+
+                    }
+                });
 
                 break;
 
@@ -826,6 +1194,15 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
 
+        }
+    }
+
+    private void call(String otherConatct) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + otherConatct));
+        try {
+            mActivity.startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Car Details Fragment\n");
         }
     }
 
