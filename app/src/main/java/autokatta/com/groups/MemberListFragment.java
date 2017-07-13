@@ -102,7 +102,9 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         success.setDp(success.getDp());
                         success.setMember(success.getMember());
                         success.setVehiclecount(success.getVehiclecount());
-                        if (success.getStatus().equals("null"))
+                        success.setProductcount(success.getProductcount());
+                        success.setServicecount(success.getServicecount());
+                        if (success.getStatus()==null)
                             success.setStatus("No Status");
 
                         success.setContact(success.getContact().replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "").

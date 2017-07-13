@@ -57,7 +57,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private ConnectionDetector mTestConnection;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView mName, mContact, mVehicleCount, mAdmin;
+        TextView mName, mContact, mVehicleCount, mAdmin,mproductcnt,mServicecnt;
         ImageView mCall, mProfilePic;
         Button mOption;
         RelativeLayout mRelativeLayout;
@@ -72,6 +72,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             mProfilePic = (ImageView) itemView.findViewById(R.id.pro_pic);
             mOption = (Button) itemView.findViewById(R.id.delete_member);
             mRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.relative);
+            mproductcnt= (TextView) itemView.findViewById(R.id.edtproductcnt);
+            mServicecnt= (TextView) itemView.findViewById(R.id.edtservicecnt);
         }
     }
 
@@ -105,7 +107,9 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         holder.mName.setText(mItemList.get(position).getUsername());
         holder.mContact.setText(mItemList.get(position).getContact());
         holder.mAdmin.setText(mItemList.get(position).getMember());
-        holder.mVehicleCount.setText(mItemList.get(position).getVehiclecount());
+        holder.mVehicleCount.setText(String.valueOf(mItemList.get(position).getVehiclecount()));
+        holder.mproductcnt.setText(String.valueOf(mItemList.get(position).getProductcount()));
+        holder.mServicecnt.setText(String.valueOf(mItemList.get(position).getServicecount()));
 
         //Set Profile Photo
         if (mItemList.get(position).getDp().equalsIgnoreCase("") || mItemList.get(position).getDp().equalsIgnoreCase(null)

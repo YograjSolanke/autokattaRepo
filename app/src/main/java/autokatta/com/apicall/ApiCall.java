@@ -7492,6 +7492,38 @@ get SaleMela Participants Data*/
         }
     }
 
+    /*
+get SaleMela analytics Data*/
+    public void getSaleMelaanalytics(String saleid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<SaleMelaAnalyticsResponse> msaleMelaResponse = serviceApi._autokattagetanalytics_Sale( saleid);
+                msaleMelaResponse.enqueue(new Callback<SaleMelaAnalyticsResponse>() {
+                    @Override
+                    public void onResponse(Call<SaleMelaAnalyticsResponse> call, Response<SaleMelaAnalyticsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<SaleMelaAnalyticsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /*
 get Service Mela Participants Data
@@ -7516,6 +7548,38 @@ get Service Mela Participants Data
 
                     @Override
                     public void onFailure(Call<ServiceMelaParticipantsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /*
+get Service Mela Participants Data
+*/
+    public void getServiceMelaAnalytics( String Serviceid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ServiceMelaAnalyticsResponse> mServiceMelaResponse = serviceApi._autokattagetServiceAnalytics( Serviceid);
+                mServiceMelaResponse.enqueue(new Callback<ServiceMelaAnalyticsResponse>() {
+                    @Override
+                    public void onResponse(Call<ServiceMelaAnalyticsResponse> call, Response<ServiceMelaAnalyticsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ServiceMelaAnalyticsResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -7550,6 +7614,39 @@ get ExchangeMela Participants Data
 
                     @Override
                     public void onFailure(Call<ExchangeMelaParticipantsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+get ExchangeMela Analytics Data
+*/
+    public void getExchangeMelaAnalytics( String exchangeid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ExchangeMelaAnalyticsResponse> mServiceMelaResponse = serviceApi._autokattagetExchangeAnalytics( exchangeid);
+                mServiceMelaResponse.enqueue(new Callback<ExchangeMelaAnalyticsResponse>() {
+                    @Override
+                    public void onResponse(Call<ExchangeMelaAnalyticsResponse> call, Response<ExchangeMelaAnalyticsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ExchangeMelaAnalyticsResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

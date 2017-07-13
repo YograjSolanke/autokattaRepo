@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -122,6 +121,7 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
+            apiCall.getSaleMelaanalytics(strSaleId);
             //apiCall.AuctionAnalyticsData(strSaleId);
             //apiCall.AuctionAnalyticsData("1047");
         } else {

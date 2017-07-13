@@ -39,14 +39,17 @@ public class CreateLoanMelaRequest {
     @Expose
     private String details;
 
-    public CreateLoanMelaRequest(String contact, String name, String startDate, String startTime, String endDate,
-                                 String endTime, String location, String address, String image, String details) {
+    public CreateLoanMelaRequest(String title, String location,
+                                 String address, String start_date,
+                                 String start_time, String end_date,
+                                 String end_time, String image,
+                                 String details, String contact) {
         this.contact = contact;
-        this.name = name;
-        this.startDate = startDate;
-        this.startTime = startTime;
-        this.endDate = endDate;
-        this.endTime = endTime;
+        this.name = title;
+        this.startDate = start_date;
+        this.startTime = start_time;
+        this.endDate = end_date;
+        this.endTime = end_time;
         this.location = location;
         this.address = address;
         this.image = image;

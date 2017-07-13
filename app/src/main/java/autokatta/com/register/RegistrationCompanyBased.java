@@ -150,7 +150,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 mCompanyBased = (RelativeLayout) findViewById(R.id.company_based);
 
                 prefs = getApplicationContext().getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);
-                RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid", Integer.parseInt(""));
+                RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid",0);
 
                 mApiCall.getCompany();
                 mApiCall.getDeals();

@@ -127,28 +127,28 @@ public interface ServiceApi {
     Call<MyActiveExchangeMelaResponse> _autokattaGetMyActiveExchangeMela(@Query("Contact") String myContact);
 
     //get My Upcoming Auction
-    @GET("getMyUpcomingAuction.php")
-    Call<MyUpcomingAuctionResponse> __autokattaGetMyUpcomingAuction(@Query("contact") String myContact);
+    @GET("GetMyUpcomingAuction")
+    Call<MyUpcomingAuctionResponse> __autokattaGetMyUpcomingAuction(@Query("Contact") String myContact);
 
     //get My Upcoming Loan Mela
-    @GET("getUpcomingLoanMela.php")
-    Call<MyUpcomingLoanMelaResponse> __autokattaGetMyUpcomingLoanMela(@Query("contact") String myContact);
+    @GET("GetUpcomingLoanMela")
+    Call<MyUpcomingLoanMelaResponse> __autokattaGetMyUpcomingLoanMela(@Query("Contact") String myContact);
 
     //get My Upcoming Exchange Mela
-    @POST("getUpcomingExchangeMela.php")
-    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingExchangeMela(@Query("contact") String myContact);
+    @GET("GetUpcomingExchangeMela")
+    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingExchangeMela(@Query("Contact") String myContact);
 
     //get My Upcoming Sale Mela
-    @POST("getUpcomingSaleMela.php")
-    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingSaleMela(@Query("contact") String myContact);
+    @GET("GetUpcomingSaleMela")
+    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingSaleMela(@Query("Contact") String myContact);
 
     //get My Upcoming Service Mela
-    @POST("getUpcomingServiceMela.php")
-    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingServiceMela(@Query("contact") String myContact);
+    @GET("GetUpcomingServiceMela")
+    Call<MyUpcomingExchangeMelaResponse> __autokattaGetMyUpcomingServiceMela(@Query("Contact") String myContact);
 
     //get saved Auctions
-    @POST("getMySavedAuction.php")
-    Call<MySavedAuctionResponse> _autokattaMySavedAuctions(@Query("contact") String myContact);
+    @GET("GetMySavedAuction")
+    Call<MySavedAuctionResponse> _autokattaMySavedAuctions(@Query("Contact") String myContact);
 
     //Create Group
     @POST("createGroup.php")
@@ -232,7 +232,7 @@ public interface ServiceApi {
     /*
     GetRTOCity
      */
-    @GET("getVehicleRTOCity.php")
+    @GET("GetVehicleRTOCity")
     Call<GetRTOCityResponse> _autokattaGetVehicleRTOCity();
 
     //Get Body and Seat Manufacture
@@ -295,17 +295,17 @@ public interface ServiceApi {
                                                                @Query("RTOCity") String rtoCity);
 
     //Get Group Vehicles
-    @GET("getGroupVehicles.php")
-    Call<GetGroupVehiclesResponse> _autokattaGetGroupVehicles(@Query("group_id") String groupId, @Query("brand") String brand,
-                                                              @Query("model") String model, @Query("version") String version,
-                                                              @Query("city") String city, @Query("RTOcity") String rtoCity,
-                                                              @Query("price") String price, @Query("reg_year") String regYear,
-                                                              @Query("mgf_year") String mgfYear, @Query("kms") String kms,
-                                                              @Query("owners") String owners);
+    @GET("GetGroupVehicles")
+    Call<GetGroupVehiclesResponse> _autokattaGetGroupVehicles(@Query("GroupID") String groupId, @Query("Brand") String brand,
+                                                              @Query("Model") String model, @Query("Version") String version,
+                                                              @Query("City") String city, @Query("RTOcity") String rtoCity,
+                                                              @Query("Price") String price, @Query("RegistrationYear") String regYear,
+                                                              @Query("ManufactureYear") String mgfYear, @Query("Kms") String kms,
+                                                              @Query("Owners") String owners);
 
     //Get My Uploaded Vehicle...
-    @GET("getMyUploadedVehicles.php")
-    Call<GetGroupVehiclesResponse> _autokattaMyUploadedVehicles(@Query("contact") String contact);
+    @GET("GetMyUploadedVehicles")
+    Call<GetGroupVehiclesResponse> _autokattaMyUploadedVehicles(@Query("Contact") String contact);
 
 
     //Get SpecialCaluses For Auction
@@ -318,27 +318,27 @@ public interface ServiceApi {
     Call<SpecialClauseAddResponse> addSpecialClauses(@Query("KeyWord") String keyword, @Query("Clause") String clause);
 
     //Get Group Contacts...
-    @GET("getGroupContacts.php")
-    Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("group_id") String groupId);
+    @GET("GetGroupContacts")
+    Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("GroupID") String groupId);
 
     //Get Group Products...
-    @GET("getGroupProducts.php")
-    Call<StoreInventoryResponse> _autokattaGetGroupProducts(@Query("group_id") String groupId, @Query("mycontact") String myContact);
+    @GET("GetGroupProducts")
+    Call<StoreInventoryResponse> _autokattaGetGroupProducts(@Query("GroupID") String groupId, @Query("MyContact") String myContact);
 
     //Get Group Services...
-    @GET("getGroupServices.php")
-    Call<StoreInventoryResponse> _autokattaGetGroupServices(@Query("group_id") String groupId, @Query("mycontact") String myContact);
+    @GET("GetGroupServices")
+    Call<StoreInventoryResponse> _autokattaGetGroupServices(@Query("GroupID") String groupId, @Query("MyContact") String myContact);
 
     //delete group members...
-    @POST("deleteMyGroupMembers.php")
-    Call<String> _autokattaDeleteGroupMembers(@Query("group_id") String group_id, @Query("grouptype") String grouptype,
-                                              @Query("contact") String contact, @Query("mycontact") String mycontact,
-                                              @Query("next") String next, @Query("membercount") String membercount);
+    @POST("DeleteMyGroupMembers")
+    Call<String> _autokattaDeleteGroupMembers(@Query("GroupID") String group_id, @Query("GroupType") String grouptype,
+                                              @Query("Contact") String contact, @Query("MyContact") String mycontact,
+                                              @Query("Next") String next, @Query("MemberCount") String membercount);
 
     //make group admin
-    @POST("makeAdmin.php")
-    Call<String> _autokattaMakeGroupAdmin(@Query("groupid") String mGroupId, @Query("contact") String contact,
-                                          @Query("action") String action);
+    @POST("MakeAdmin")
+    Call<String> _autokattaMakeGroupAdmin(@Query("GroupID") String mGroupId, @Query("Contact") String contact,
+                                          @Query("Action") String action);
 
     //Create an Auction
     @GET("CreateAuction")
@@ -392,26 +392,26 @@ public interface ServiceApi {
 
 
     //get  Ended Auction Events
-    @POST("getEndedAuction.php")
-    Call<MyActiveAuctionResponse> getEndedAuctions(@Query("contact") String myContact);
+    @GET("GetEndedAuction")
+    Call<MyActiveAuctionResponse> getEndedAuctions(@Query("Contact") String myContact);
 
 
     //get Ended Loan Mela
-    @POST("getEndedLoanMela.php")
-    Call<EndedSaleMelaResponse> getEndedLoanMela(@Query("contact") String myContact);
+    @GET("GetEndedLoanMela")
+    Call<EndedSaleMelaResponse> getEndedLoanMela(@Query("Contact") String myContact);
 
 
     //get Ended Exchange Mela
-    @POST("getEndedExchangeMela.php")
-    Call<EndedSaleMelaResponse> getEndedExchangeMela(@Query("contact") String myContact);
+    @GET("GetEndedExchangeMela")
+    Call<EndedSaleMelaResponse> getEndedExchangeMela(@Query("Contact") String myContact);
 
     //set vehicle privacy
-    @POST("vehicle_group_store_ref.php")
+    @GET("vehicle_group_store_ref.php")
     Call<String> _autokattaSetVehiclePrivacy(@Query("contact") String myContact, @Query("vehicle_id") String vehicleid,
                                              @Query("group_ids") String groupIds, @Query("store_ids") String storeIds);
 
     //Get Vehicle By Id...
-    @POST("getVehicleById.php")
+    @GET("getVehicleById.php")
     Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("yourcontact") String yourcontact, @Query("vehicle_id") String vehicleId);
 
     //Delete a store...
@@ -498,12 +498,12 @@ public interface ServiceApi {
 
 
     //Edit Group
-    @GET("updateGroupProfile.php")
-    Call<String> editGroup(@Query("groupname") String groupname, @Query("group_id") String group_id, @Query("profile") String profile);
+    @POST("UpdateGroupProfile")
+    Call<String> editGroup(@Query("GroupName") String groupname, @Query("GroupID") String group_id, @Query("ProfilePicture") String profile);
 
     //Delete Group
-    @GET("deleteMyGroups.php")
-    Call<String> deleteGroup(@Query("group_id") String group_id, @Query("keyword") String keyword, @Query("contact") String contact);
+    @GET("DeleteMyGroups")
+    Call<String> deleteGroup(@Query("GroupID") String group_id, @Query("Keyword") String keyword, @Query("Mycontact") String contact);
 
     //All Live Events
     @POST("getAllLiveEvents.php")
@@ -514,31 +514,31 @@ public interface ServiceApi {
     Call<GetLiveLoanEventsResponse> getLiveLoanEvents(@Query("contact") String contact);
 
     //All Live Exchange Events
-    @POST("getAllLiveExchangeEvents.php")
+    @GET("getAllLiveExchangeEvents.php")
     Call<GetLiveExchangeEventsResponse> getLiveExchangeEvents(@Query("contact") String contact);
 
     //All Live Sale Events
-    @POST("getAllLiveSaleEvents.php")
+    @GET("getAllLiveSaleEvents.php")
     Call<GetLiveSaleEventsResponse> getLiveSaleEvents(@Query("contact") String contact);
 
     //All Live Service Events
-    @POST("getAllLiveServiceEvents.php")
+    @GET("getAllLiveServiceEvents.php")
     Call<GetLiveServiceEventsResponse> getLiveServiceEvents(@Query("contact") String contact);
 
     //All Upcoming Sale Events Events
-    @POST("getAllUpcomingSaleEvents.php")
+    @GET("getAllUpcomingSaleEvents.php")
     Call<GetLiveSaleEventsResponse> getUpcomingSaleEvents(@Query("contact") String contact);
 
     //All Upcoming Loan Events Events
-    @POST("getAllUpcomingLoanEvents.php")
+    @GET("getAllUpcomingLoanEvents.php")
     Call<GetLiveSaleEventsResponse> getUpcomingLoanEvents(@Query("contact") String contact);
 
     //All Upcoming Exchange Events Events
-    @POST("getAllUpcomingExchangeEvents.php")
+    @GET("getAllUpcomingExchangeEvents.php")
     Call<GetLiveSaleEventsResponse> getUpcomingExchangeEvents(@Query("contact") String contact);
 
     //All Upcoming Service Events Events
-    @POST("getAllUpcomingServiceEvents.php")
+    @GET("getAllUpcomingServiceEvents.php")
     Call<GetLiveSaleEventsResponse> getUpcomingServiceEvents(@Query("contact") String contact);
 
     //All Going Events
@@ -588,8 +588,8 @@ public interface ServiceApi {
     Call<String> _autokattaSendAuctionMail(@Query("contact") String myContact, @Query("auction_id") String strAuctionId);
 
     //get Auction Participants
-    @POST("getAuctionConfirmedparticipants.php")
-    Call<AuctionParticipantsResponse> _autokattaGetAuctionParticipants(@Query("mycontact") String myContact, @Query("auction_id")
+    @GET("GetAuctionConfirmedParticipants")
+    Call<AuctionParticipantsResponse> _autokattaGetAuctionParticipants(@Query("MyContact") String myContact, @Query("AuctionID")
             String strAuctionId);
 
     //Add/remove blacklist contact
@@ -599,8 +599,8 @@ public interface ServiceApi {
                                               @Query("eventType") String eventType);
 
     // Get Auction Analytics
-    @POST("get_analytics_count.php")
-    Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("auctionid") String strAuctionId);
+    @POST("GetAnalyticsCount")
+    Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("AuctionID") String strAuctionId);
 
     //get Active Auction high bid
     @POST("auctionHighestBidding.php")
@@ -636,8 +636,8 @@ public interface ServiceApi {
     Call<BrowseStoreResponse> getBrowseStores(@Query("yourcontact") String yourcontact, @Query("keyword") String keyword);
 
     //Get Auction Preview By Id...
-    @GET("getAuctionEvent_Details.php")
-    Call<GetAuctionEventResponse> getAuctionEvent(@Query("auction_id") String auctionId);
+    @GET("GetAuctionEventDetails")
+    Call<GetAuctionEventResponse> getAuctionEvent(@Query("AuctionID") String auctionId);
 
     // Create  BroadCast Group
 
@@ -1133,28 +1133,40 @@ public interface ServiceApi {
     Call<MyActiveSaleMelaResponse> _autokattaGetSaleMelaDetails(@Query("Contact") String mycontact);
 
     //get Ended Sale Mela data
-    @GET("getEndedSaleMela.php")
-    Call<EndedSaleMelaResponse> _autokattaGetEndedSaleMelaDetails(@Query("contact") String mycontact);
+    @GET("GetEndedSaleMela")
+    Call<EndedSaleMelaResponse> _autokattaGetEndedSaleMelaDetails(@Query("Contact") String mycontact);
 
     //get Ended Sale Mela data
-    @GET("getEndedServiceMela.php")
-    Call<EndedSaleMelaResponse> _autokattaGetEndedServiceMelaDetails(@Query("contact") String mycontact);
+    @GET("GetEndedServiceMela")
+    Call<EndedSaleMelaResponse> _autokattaGetEndedServiceMelaDetails(@Query("Contact") String mycontact);
 
     //get Loan Mela Participants data
-    @GET("getConfirmedParticipants_Loan.php")
-    Call<LoanMelaParticipantsResponse> _autokattagetConfirmedParticipants_Loan(@Query("mycontact") String mycontact, @Query("loan_id") String loan_id);
+    @GET("GetConfirmedParticipantsLoan")
+    Call<LoanMelaParticipantsResponse> _autokattagetConfirmedParticipants_Loan(@Query("MyContact") String mycontact, @Query("LoanID") String loan_id);
 
     //get  Sale Mela Participants data
-    @GET("getConfirmedParticipants_Sale.php")
-    Call<SaleMelaParticipantsResponse> _autokattagetConfirmedParticipants_Sale(@Query("mycontact") String mycontact, @Query("sale_id") String sale_id);
+    @GET("GetConfirmedParticipantsSale")
+    Call<SaleMelaParticipantsResponse> _autokattagetConfirmedParticipants_Sale(@Query("MyContact") String mycontact, @Query("SaleID") String sale_id);
+
+    //get  Sale Mela analytics data
+    @GET("GetSaleAnalyticsCount")
+    Call<SaleMelaAnalyticsResponse> _autokattagetanalytics_Sale( @Query("SaleMelaID") String sale_id);
 
     //get  Service Mela Participants data
-    @GET("getConfirmedParticipants_Service.php")
-    Call<ServiceMelaParticipantsResponse> _autokattagetConfirmedParticipants_Service(@Query("mycontact") String mycontact, @Query("service_id") String service_id);
+    @GET("GetConfirmedParticipantsService")
+    Call<ServiceMelaParticipantsResponse> _autokattagetConfirmedParticipants_Service(@Query("MyContact") String mycontact, @Query("ServiceID") String service_id);
+
+    //get  Service Mela analytics data
+    @GET("GetServiceAnalyticsCount")
+    Call<ServiceMelaAnalyticsResponse> _autokattagetServiceAnalytics( @Query("ServiceMelaID") String service_id);
 
     //get Exchange Mela  Participantsdata
-    @GET("getConfirmedParticipants_Exchange.php")
-    Call<ExchangeMelaParticipantsResponse> _autokattagetConfirmedParticipants_Exchange(@Query("mycontact") String mycontact, @Query("exchange_id") String exchange_id);
+    @GET("GetConfirmedParticipantsExchange")
+    Call<ExchangeMelaParticipantsResponse> _autokattagetConfirmedParticipants_Exchange(@Query("MyContact") String mycontact, @Query("ExchangeID") String exchange_id);
+
+    //get Exchange Mela  Analytics
+    @GET("GetExchangeAnalyticsCount")
+    Call<ExchangeMelaAnalyticsResponse> _autokattagetExchangeAnalytics( @Query("ExchangeMelaID") String exchange_id);
 
     //update product details
     @POST("updateStoreProduct.php")
@@ -1191,11 +1203,11 @@ public interface ServiceApi {
 
 
     //get chat enquiry status
-    @POST("getEnquiryCount.php")
-    Call<EnquiryCountResponse> getEnquiryCount(@Query("sender") String sender,
-                                               @Query("product_id") String product_id,
-                                               @Query("service_id") String service_id,
-                                               @Query("vehicle_id") String vehicle_id);
+    @GET("GetEnquiryCount")
+    Call<EnquiryCountResponse> getEnquiryCount(@Query("Sender") String sender,
+                                               @Query("ProductID") String product_id,
+                                               @Query("ServiceID") String service_id,
+                                               @Query("VehicleID") String vehicle_id);
 
     //Get Manual enquiry
     @GET("addEnquiryData.php")

@@ -116,7 +116,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
       /*to do new webservice*/
-            apiCall.AuctionAnalyticsData(strExchangeId);
+            apiCall.getExchangeMelaAnalytics(strExchangeId);
             //apiCall.AuctionAnalyticsData("1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));

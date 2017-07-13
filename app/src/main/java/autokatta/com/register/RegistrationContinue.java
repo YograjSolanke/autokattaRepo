@@ -276,7 +276,7 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
                     if (mTestConnection.isConnectedToInternet()) {
                         ApiCall mApiCall = new ApiCall(RegistrationContinue.this, this);
                         mApiCall.updateRegistration(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                .getInt("loginregistrationid", Integer.parseInt("")), 1, lastWord, abouttext, websitetext);
+                                .getInt("loginregistrationid", 0), 1, lastWord, abouttext, websitetext);
                     } else {
                        /* Snackbar snackbar = Snackbar.make(mCoordinate, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Go Online", new View.OnClickListener() {
