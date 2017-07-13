@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -73,7 +72,6 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     Double storelattitude;
     Double storelongitude;
     ApiCall mApiCall;
-    KProgressHUD hud;
     private int likecountint, followcountint;
     private ProgressDialog dialog;
     LikeUnlike likeUnlike = new LikeUnlike();
@@ -390,11 +388,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 }
 
             } else {
-                hud.dismiss();
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            hud.dismiss();
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }

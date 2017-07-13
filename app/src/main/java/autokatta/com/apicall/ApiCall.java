@@ -21,6 +21,7 @@ import autokatta.com.request.CreateExchangeMelaRequest;
 import autokatta.com.request.CreateLoanMelaRequest;
 import autokatta.com.request.CreateSaleMelaRequest;
 import autokatta.com.request.CreateServiceMelaRequest;
+import autokatta.com.request.CreateStoreRequest;
 import autokatta.com.request.RegistrationCompanyBasedrequest;
 import autokatta.com.request.RegistrationRequest;
 import autokatta.com.request.UpdateMyVehicleRequest;
@@ -3135,10 +3136,10 @@ Upload Vehicle
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
-
+                CreateStoreRequest storeRequest = new CreateStoreRequest(contact, name, lastWord, location, category, storetype,
+                        website, workdays, open, close, address, storeDescription, coverlastWord, textbrand, strBrandSpinner);
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<CreateStoreResponse> deleteStore = serviceApi._autokattaCreatetore(name, contact, location, website, storetype, lastWord,
-                        workdays, open, close, category, address, coverlastWord, storeDescription, textbrand, strBrandSpinner);
+                Call<CreateStoreResponse> deleteStore = serviceApi._autokattaCreatetore(storeRequest);
                 deleteStore.enqueue(new Callback<CreateStoreResponse>() {
                     @Override
                     public void onResponse(Call<CreateStoreResponse> call, Response<CreateStoreResponse> response) {

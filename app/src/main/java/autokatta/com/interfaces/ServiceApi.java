@@ -7,6 +7,7 @@ import autokatta.com.request.CreateExchangeMelaRequest;
 import autokatta.com.request.CreateLoanMelaRequest;
 import autokatta.com.request.CreateSaleMelaRequest;
 import autokatta.com.request.CreateServiceMelaRequest;
+import autokatta.com.request.CreateStoreRequest;
 import autokatta.com.request.RegistrationCompanyBasedrequest;
 import autokatta.com.request.RegistrationRequest;
 import autokatta.com.request.UpdateMyVehicleRequest;
@@ -52,8 +53,8 @@ public interface ServiceApi {
     Call<String> _autokattaGetVehicleCount(@Query("contact") String contact);
 
     //Get Own Store...
-    @GET("getOwnStores.php")
-    Call<MyStoreResponse> _autokattaGetMyStoreList(@Query("contact") String contact);
+    @GET("GetOwnStoreList")
+    Call<MyStoreResponse> _autokattaGetMyStoreList(@Query("Contact") String contact);
 
     //Get Vehicle List...
     @GET("GetVehicleType")
@@ -418,15 +419,8 @@ public interface ServiceApi {
     Call<String> _autokattaDeleteStore(@Query("store_id") String storeId, @Query("keyword") String keyword);
 
     //Create a store...
-    @POST("createStore.php")
-    Call<CreateStoreResponse> _autokattaCreatetore(@Query("store_name") String name, @Query("contact_no") String contact,
-                                                   @Query("location") String location, @Query("website") String website,
-                                                   @Query("store_type") String storetype, @Query("store_image") String lastWord,
-                                                   @Query("workingdays") String workdays, @Query("store_open_time") String open,
-                                                   @Query("store_close_time") String close, @Query("category") String category,
-                                                   @Query("address") String address, @Query("coverImage") String coverlastWord,
-                                                   @Query("storeDescription") String storeDescription, @Query("brandTags") String textbrand,
-                                                   @Query("Brands") String strBrandSpinner);
+    @POST("CreateStore")
+    Call<CreateStoreResponse> _autokattaCreatetore(@Body CreateStoreRequest request);
 
     //Get Store Admins...
     @POST("getStoreAdmin.php")

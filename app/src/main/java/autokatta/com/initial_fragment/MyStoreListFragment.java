@@ -198,7 +198,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 apiCall.MyStoreList(myContact);
                 hasViewCreated = true;
             }
