@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -35,13 +36,13 @@ public class InviteContactFragment extends Fragment {
     RecyclerView mRecyclerView;
     EditText edtSearchContact;
     View mInviteContact;
+    Button mNext;
     List<String> contactdata = new ArrayList<>();
     List<String> finalContacts;
     List<String> names = new ArrayList<>();
     List<String> numbers = new ArrayList<>();
     InviteContactAdapter inviteContactAdapter;
     String myContact;
-    String[] products;
 
 
     public InviteContactFragment() {
@@ -54,6 +55,8 @@ public class InviteContactFragment extends Fragment {
         mInviteContact = inflater.inflate(R.layout.fragment_invite_contacts, container, false);
 
         edtSearchContact = (EditText) mInviteContact.findViewById(R.id.inputSearch);
+        mNext = (Button) mInviteContact.findViewById(R.id.next);
+        mNext.setVisibility(View.GONE);
         mRecyclerView = (RecyclerView) mInviteContact.findViewById(R.id.rv_recycler_view);
 
 
@@ -70,24 +73,29 @@ public class InviteContactFragment extends Fragment {
 
         Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
 
-        int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-        int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+        int indexName, indexNumber;
+        if (people != null) {
+            indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-        people.moveToFirst();
-        do {
-            String name = people.getString(indexName);
-            String number = people.getString(indexNumber);
+            people.moveToFirst();
+            do {
+                String name = people.getString(indexName);
+                String number = people.getString(indexNumber);
 
-            number = number.replaceAll("-", "");
-            number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
+                number = number.replaceAll("-", "");
+                number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
 
-            if (number.length() > 10)
-                number = number.substring(number.length() - 10);
+                if (number.length() > 10)
+                    number = number.substring(number.length() - 10);
 
-            names.add(name + "=" + number);
-            numbers.add(number);
+                names.add(name + "=" + number);
+                numbers.add(number);
 
-        } while (people.moveToNext());
+            } while (people.moveToNext());
+            people.close();
+        }
+
 
         DbOperation dbAdpter = new DbOperation(getActivity());
         dbAdpter.OPEN();

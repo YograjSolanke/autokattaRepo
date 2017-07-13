@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/search_contact"
         android:inputType="textVisiblePassword"
+        android:layout_marginTop="@dimen/card_margin"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:textColor="#2C3343"

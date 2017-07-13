@@ -1,6 +1,7 @@
 package autokatta.com.Registration;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,12 +13,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
 import autokatta.com.adapter.InviteContactAdapter;
 import autokatta.com.database.DbConstants;
@@ -28,6 +32,7 @@ public class InviteFriends extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
     EditText edtSearchContact;
+    Button mNext;
     List<String> contactdata = new ArrayList<>();
     List<String> finalContacts;
     List<String> names = new ArrayList<>();
@@ -47,6 +52,7 @@ public class InviteFriends extends AppCompatActivity {
         }
 
         edtSearchContact = (EditText) findViewById(R.id.inputSearch);
+        mNext = (Button) findViewById(R.id.next);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_recycler_view);
 
 
@@ -63,24 +69,29 @@ public class InviteFriends extends AppCompatActivity {
 
         Cursor people = getApplicationContext().getContentResolver().query(uri, projection, null, null, null);
 
-        int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-        int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+        int indexName, indexNumber;
+        if (people != null) {
+            indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
 
-        people.moveToFirst();
-        do {
-            String name = people.getString(indexName);
-            String number = people.getString(indexNumber);
+            indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-            number = number.replaceAll("-", "");
-            number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
+            people.moveToFirst();
+            do {
+                String name = people.getString(indexName);
+                String number = people.getString(indexNumber);
 
-            if (number.length() > 10)
-                number = number.substring(number.length() - 10);
+                number = number.replaceAll("-", "");
+                number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
 
-            names.add(name + "=" + number);
-            numbers.add(number);
+                if (number.length() > 10)
+                    number = number.substring(number.length() - 10);
 
-        } while (people.moveToNext());
+                names.add(name + "=" + number);
+                numbers.add(number);
+
+            } while (people.moveToNext());
+            people.close();
+        }
 
         DbOperation dbAdpter = new DbOperation(InviteFriends.this);
         dbAdpter.OPEN();
@@ -137,6 +148,15 @@ public class InviteFriends extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        mNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), AutokattaMainActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }

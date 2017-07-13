@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -259,39 +261,6 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     /*
-    Search Notification Class...
-     */
-    private static class SearchNotifications extends RecyclerView.ViewHolder {
-        CardView mSearchCardView;
-        ImageView mSearchPic;
-        ImageButton mSearchAutokatta, mSearchOther, mCall, mLike;
-        TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
-                mSearchDate, mSearchLeads;
-
-        private SearchNotifications(View serviceView) {
-            super(serviceView);
-            mSearchCardView = (CardView) serviceView.findViewById(R.id.search_card_view);
-            mSearchPic = (ImageView) serviceView.findViewById(R.id.search_pro_pic);
-
-            mSearchAutokatta = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
-            mSearchOther = (ImageButton) serviceView.findViewById(R.id.share_other);
-            mCall = (ImageButton) serviceView.findViewById(R.id.call);
-            mLike = (ImageButton) serviceView.findViewById(R.id.like);
-
-            mSearchActionName = (TextView) serviceView.findViewById(R.id.search_action_names);
-            mSearchActionTime = (TextView) serviceView.findViewById(R.id.search_action_time);
-            mSearchCategory = (TextView) serviceView.findViewById(R.id.search_category);
-            mSearchBrand = (TextView) serviceView.findViewById(R.id.search_brand);
-            mSearchModel = (TextView) serviceView.findViewById(R.id.search_model);
-            mSearchPrice = (TextView) serviceView.findViewById(R.id.search_price);
-            mSearchYear = (TextView) serviceView.findViewById(R.id.search_year);
-            mSearchDate = (TextView) serviceView.findViewById(R.id.search_date);
-            mSearchLeads = (TextView) serviceView.findViewById(R.id.search_leads);
-
-        }
-    }
-
-    /*
     Active Notification Class...
      */
     private static class ActiveNotifications extends RecyclerView.ViewHolder {
@@ -437,6 +406,124 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         }
     }
 
+    /*
+    Buyer Notification Class...
+     */
+    private static class BuyerNotifications extends RecyclerView.ViewHolder {
+        ImageView buyer_lead_image, callbuyer, favouritebuyer;
+        TextView mBuyerUserName, mBuyerLocation, mItemNameCity;
+        CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBoxRc, checkBoxIns,
+                checkBoxHpcap, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10, checkBoxRcRight,
+                checkBoxINSRight, checkBoxHPcapRight;
+
+        private BuyerNotifications(View buyerView) {
+            super(buyerView);
+
+            mBuyerUserName = (TextView) buyerView.findViewById(R.id.buyerusername);
+            mBuyerLocation = (TextView) buyerView.findViewById(R.id.buyerlocation);
+            buyer_lead_image = (ImageView) buyerView.findViewById(R.id.buyer_lead_image);
+            callbuyer = (ImageView) buyerView.findViewById(R.id.callbuyer);
+            favouritebuyer = (ImageView) buyerView.findViewById(R.id.favouritebuyer);
+
+            mItemNameCity = (TextView) buyerView.findViewById(R.id.namecity);
+            checkBox1 = (CheckBox) buyerView.findViewById(R.id.checkBox1);
+            checkBox2 = (CheckBox) buyerView.findViewById(R.id.checkBox2);
+            checkBox3 = (CheckBox) buyerView.findViewById(R.id.checkBox3);
+            checkBox4 = (CheckBox) buyerView.findViewById(R.id.checkBox4);
+            checkBox5 = (CheckBox) buyerView.findViewById(R.id.checkBox5);
+            checkBoxRc = (CheckBox) buyerView.findViewById(R.id.checkBoxRc);
+            checkBoxIns = (CheckBox) buyerView.findViewById(R.id.checkBoxINS);
+            checkBoxHpcap = (CheckBox) buyerView.findViewById(R.id.checkBoxHPcap);
+
+            checkBox6 = (CheckBox) buyerView.findViewById(R.id.checkBox6);
+            checkBox7 = (CheckBox) buyerView.findViewById(R.id.checkBox7);
+            checkBox8 = (CheckBox) buyerView.findViewById(R.id.checkBox8);
+            checkBox9 = (CheckBox) buyerView.findViewById(R.id.checkBox9);
+            checkBox10 = (CheckBox) buyerView.findViewById(R.id.checkBox10);
+            checkBoxRcRight = (CheckBox) buyerView.findViewById(R.id.checkBoxRcRight);
+            checkBoxINSRight = (CheckBox) buyerView.findViewById(R.id.checkBoxINSRight);
+            checkBoxHPcapRight = (CheckBox) buyerView.findViewById(R.id.checkBoxHPcapRight);
+        }
+    }
+
+
+    /*
+    Seller Notification Class...
+     */
+    private static class SellerNotifications extends RecyclerView.ViewHolder {
+        ImageView mCallimg, mFavimg;
+        TextView mUserName, mVehicleCount, mDateTime, lastcall;
+        CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBoxRc, checkBoxIns,
+                checkBoxHp, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10, checkBoxRcright,
+                checkBoxInsRight, checkBoxHpRight;
+        ViewFlipper mViewFlippersell;
+
+        private SellerNotifications(View sellerView) {
+            super(sellerView);
+
+            mViewFlippersell = (ViewFlipper) sellerView.findViewById(R.id.sellvehicalimgflicker);
+            mUserName = (TextView) sellerView.findViewById(R.id.username);
+            mVehicleCount = (TextView) sellerView.findViewById(R.id.vehiclecount);
+            mDateTime = (TextView) sellerView.findViewById(R.id.addon);
+            lastcall = (TextView) sellerView.findViewById(R.id.lastcall);
+
+            mCallimg = (ImageView) sellerView.findViewById(R.id.sellcallimg);
+            mFavimg = (ImageView) sellerView.findViewById(R.id.sellfevimg);
+
+            checkBox1 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox1);
+            checkBox2 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox2);
+            checkBox3 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox3);
+            checkBox4 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox4);
+            checkBox5 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox5);
+            checkBoxRc = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxRc);
+            checkBoxIns = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxIns);
+            checkBoxHp = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxHp);
+
+            checkBox6 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox6);
+            checkBox7 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox7);
+            checkBox8 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox8);
+            checkBox9 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox9);
+            checkBox10 = (CheckBox) sellerView.findViewById(R.id.sellcheckBox10);
+            checkBoxRcright = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxRcRight);
+            checkBoxInsRight = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxInsRight);
+            checkBoxHpRight = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxHpRight);
+        }
+    }
+
+    /*
+    Search Notification Class...
+     */
+    private static class SearchNotifications extends RecyclerView.ViewHolder {
+        CardView mSearchCardView;
+        ImageView mSearchPic;
+        ImageButton mSearchAutokatta, mSearchOther, mCall, mLike;
+        TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
+                mSearchDate, mSearchLeads;
+
+        private SearchNotifications(View serviceView) {
+            super(serviceView);
+            mSearchCardView = (CardView) serviceView.findViewById(R.id.search_card_view);
+            mSearchPic = (ImageView) serviceView.findViewById(R.id.search_pro_pic);
+
+            mSearchAutokatta = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
+            mSearchOther = (ImageButton) serviceView.findViewById(R.id.share_other);
+            mCall = (ImageButton) serviceView.findViewById(R.id.call);
+            mLike = (ImageButton) serviceView.findViewById(R.id.like);
+
+            mSearchActionName = (TextView) serviceView.findViewById(R.id.search_action_names);
+            mSearchActionTime = (TextView) serviceView.findViewById(R.id.search_action_time);
+            mSearchCategory = (TextView) serviceView.findViewById(R.id.search_category);
+            mSearchBrand = (TextView) serviceView.findViewById(R.id.search_brand);
+            mSearchModel = (TextView) serviceView.findViewById(R.id.search_model);
+            mSearchPrice = (TextView) serviceView.findViewById(R.id.search_price);
+            mSearchYear = (TextView) serviceView.findViewById(R.id.search_year);
+            mSearchDate = (TextView) serviceView.findViewById(R.id.search_date);
+            mSearchLeads = (TextView) serviceView.findViewById(R.id.search_leads);
+
+        }
+    }
+
+
     @Override
     public int getItemViewType(int position) {
         // Just as an example, return 0 or 2 depending on position
@@ -479,7 +566,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 return new PostNotifications(mView);
 
             case 8:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_search_notifications, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_profile_notifications, parent, false);
                 return new SearchNotifications(mView);
 
             case 9:
@@ -495,16 +582,19 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 return new ShareNotifications(mView);
 
             case 111:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
-                return new ShareNotifications(mView);
+                //buyer
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.buyer_list_adapter, parent, false);
+                return new BuyerNotifications(mView);
 
             case 112:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
-                return new ShareNotifications(mView);
+                //seller
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.seller_list_adapter, parent, false);
+                return new SellerNotifications(mView);
 
             case 113:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
-                return new ShareNotifications(mView);
+                //search
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_search_notifications, parent, false);
+                return new SearchNotifications(mView);
         }
         return null;
     }
@@ -516,13 +606,13 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         switch (holder.getItemViewType()) {
 
             case 1:
-                ProfileNotifications profile = (ProfileNotifications) holder;
+                ProfileNotifications mProfileHolder = (ProfileNotifications) holder;
 
                 break;
             case 2:
                 final String allDetails, store_id;
 
-                final StoreNotifications store = (StoreNotifications) holder;
+                final StoreNotifications mStoreHolder = (StoreNotifications) holder;
 
                 /*
                 ImageView mStorePic, mStoreImage;
@@ -539,7 +629,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     System.out.println("Date: " + date.format(objAllResponse.getDatetime()));
                     System.out.println("Time: " + time.format(objAllResponse.getDatetime()));
 
-                    store.mActionTime.setText(date.format(objAllResponse.getDatetime()) + time.format(objAllResponse.getDatetime()));
+                    mStoreHolder.mActionTime.setText(date.format(objAllResponse.getDatetime()) + time.format(objAllResponse.getDatetime()));
 
 
                 } catch (Exception e) {
@@ -559,46 +649,46 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     holder.storeaction.setText(objAllResponse.sendernameld.toString() + " " + objAllResponse.actionld.toString() + " " + objAllResponse.store_nameld.toString() + " " + "store");
                 }*/
 
-                store.mStoreName.setText(objAllResponse.getStoreName());
-                //store.storetype.setText(objAllResponse.store_typeld.toString());
-                store.mStoreLocation.setText(objAllResponse.getStoreLocation());
-                store.mStoreWebSite.setText(objAllResponse.getStoreWebsite());
-                store.mStoreWorkingDay.setText(objAllResponse.getWorkingDays());
-                store.mStoreTiming.setText(objAllResponse.getStoretiming());
-                store.mFollowCount.setText("Followers(" + objAllResponse.getStorefollowcount() + ")");
-                //store.storelikecnt.setText("Likes(" + objAllResponse.storelikecountld.toString() + ")");
+                mStoreHolder.mStoreName.setText(objAllResponse.getStoreName());
+                //mStoreHolder.storetype.setText(objAllResponse.store_typeld.toString());
+                mStoreHolder.mStoreLocation.setText(objAllResponse.getStoreLocation());
+                mStoreHolder.mStoreWebSite.setText(objAllResponse.getStoreWebsite());
+                mStoreHolder.mStoreWorkingDay.setText(objAllResponse.getWorkingDays());
+                mStoreHolder.mStoreTiming.setText(objAllResponse.getStoretiming());
+                mStoreHolder.mFollowCount.setText("Followers(" + objAllResponse.getStorefollowcount() + ")");
+                //mStoreHolder.storelikecnt.setText("Likes(" + objAllResponse.storelikecountld.toString() + ")");
 
-                allDetails = "storename: " + store.mStoreName.getText().toString() + "\n" +
+                allDetails = "storename: " + mStoreHolder.mStoreName.getText().toString() + "\n" +
                         /*"storetype: "+holder.storetype.getText().toString()+"\n"+*/
-                        "location: " + store.mStoreLocation.getText().toString() + "\n" +
-                        "website: " + store.mStoreWebSite.getText().toString() + "\n" +
-                        "workingday: " + store.mStoreWorkingDay.getText().toString() + "\n";
+                        "location: " + mStoreHolder.mStoreLocation.getText().toString() + "\n" +
+                        "website: " + mStoreHolder.mStoreWebSite.getText().toString() + "\n" +
+                        "workingday: " + mStoreHolder.mStoreWorkingDay.getText().toString() + "\n";
                 System.out.println("all details=========" + allDetails);
 
 
                 store_id = objAllResponse.getStoreId();
 
                 if (objAllResponse.getStorelikestatus().equalsIgnoreCase("yes")) {
-                    //store.mLike.setImageTintMode(PorterDuff.Mode.DARKEN);
-                    store.mLike.setColorFilter(R.color.black); // black Tint
+                    //mStoreHolder.mLike.setImageTintMode(PorterDuff.Mode.DARKEN);
+                    mStoreHolder.mLike.setColorFilter(R.color.black); // black Tint
                 }
                 if (objAllResponse.getStorelikestatus().equalsIgnoreCase("no")) {
-                    //store.mLike.setImageTintMode(PorterDuff.Mode.LIGHTEN);
-                    store.mLike.setColorFilter(R.color.button_grey); // grey Tint
+                    //mStoreHolder.mLike.setImageTintMode(PorterDuff.Mode.LIGHTEN);
+                    mStoreHolder.mLike.setColorFilter(R.color.button_grey); // grey Tint
                 }
 
                 if (objAllResponse.getStorefollowstatus().equalsIgnoreCase("yes")) {
-                    //store.mFollow.setImageTintMode(PorterDuff.Mode.DARKEN);
-                    store.mFollow.setColorFilter(R.color.black); // black Tint
+                    //mStoreHolder.mFollow.setImageTintMode(PorterDuff.Mode.DARKEN);
+                    mStoreHolder.mFollow.setColorFilter(R.color.black); // black Tint
                 }
                 if (objAllResponse.getStorefollowstatus().equalsIgnoreCase("no")) {
-                    //store.mFollow.setImageTintMode(PorterDuff.Mode.LIGHTEN);
-                    store.mFollow.setColorFilter(R.color.button_grey); // grey Tint
+                    //mStoreHolder.mFollow.setImageTintMode(PorterDuff.Mode.LIGHTEN);
+                    mStoreHolder.mFollow.setColorFilter(R.color.button_grey); // grey Tint
                 }
 
                 if (objAllResponse.getStoreImage() == null || objAllResponse.getStoreImage().equals("") || objAllResponse.getStoreImage().equals("null"))
 
-                    store.mStoreImage.setBackgroundResource(R.drawable.store);
+                    mStoreHolder.mStoreImage.setBackgroundResource(R.drawable.store);
 
                 else {
 
@@ -609,10 +699,10 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     Glide.with(mActivity)
                             .load("http://autokatta.com/mobile/store_profiles/" + objAllResponse.getStoreImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(store.mStoreImage);
+                            .into(mStoreHolder.mStoreImage);
                 }
 
-                store.mLike.setOnClickListener(new View.OnClickListener() {
+                mStoreHolder.mLike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String mOtherContact = "";
@@ -622,7 +712,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             String storelikecountstr = objAllResponse.getStorelikecount();
                             storelikecountint = Integer.parseInt(storelikecountstr);
 
-                            store.mLike.setColorFilter(R.color.black); // black Tint
+                            mStoreHolder.mLike.setColorFilter(R.color.black); // black Tint
 
 
                             if (objAllResponse.getStoreContact().contains(",")) {
@@ -637,7 +727,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
 
-                            store.mLikes.setText("Likes(" + storelikecountint + ")");
+                            mStoreHolder.mLikes.setText("Likes(" + storelikecountint + ")");
                             // locallist.get(position).storelikestatusld.toString();
 
                             objAllResponse.setStorelikestatus("yes");
@@ -646,7 +736,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             String storelikecountstr = objAllResponse.getStorelikecount();
                             storelikecountint = Integer.parseInt(storelikecountstr);
 
-                            store.mLike.setColorFilter(R.color.button_grey); // black Tint
+                            mStoreHolder.mLike.setColorFilter(R.color.button_grey); // black Tint
 
 
                             if (objAllResponse.getStoreContact().contains(",")) {
@@ -661,7 +751,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
 
-                            store.mLikes.setText("Likes(" + storelikecountint + ")");
+                            mStoreHolder.mLikes.setText("Likes(" + storelikecountint + ")");
                             // locallist.get(position).storelikestatusld.toString();
 
                             objAllResponse.setStorelikestatus("yes");
@@ -675,27 +765,27 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
             case 3:
-                GroupNotifications groups = (GroupNotifications) holder;
+                GroupNotifications mGroupHolder = (GroupNotifications) holder;
 
                 break;
 
             case 4:
-                VehicleNotifications vehicle = (VehicleNotifications) holder;
+                VehicleNotifications mVehicleHolder = (VehicleNotifications) holder;
 
                 break;
 
             case 5:
-                ProductNotifications products = (ProductNotifications) holder;
+                ProductNotifications mProductHolder = (ProductNotifications) holder;
 
                 break;
 
             case 6:
-                ServiceNotifications service = (ServiceNotifications) holder;
+                ServiceNotifications mServiceHolder = (ServiceNotifications) holder;
 
                 break;
 
             case 7:
-                PostNotifications post = (PostNotifications) holder;
+                PostNotifications mPostHolder = (PostNotifications) holder;
 
                 break;
 
@@ -711,22 +801,28 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
             case 10:
-                UpVehicleNotifications upVehicle = (UpVehicleNotifications) holder;
+                UpVehicleNotifications mUpVehicleHolder = (UpVehicleNotifications) holder;
 
                 break;
 
             case 11:
-                ShareNotifications share = (ShareNotifications) holder;
+                ShareNotifications mShareHolder = (ShareNotifications) holder;
 
                 break;
 
             case 111:
+                BuyerNotifications mBuyerHolder = (BuyerNotifications) holder;
+
                 break;
 
             case 112:
+                SellerNotifications mSellerHolder = (SellerNotifications) holder;
+
                 break;
 
             case 113:
+                SearchNotifications mSearchHolder = (SearchNotifications) holder;
+
                 break;
 
 

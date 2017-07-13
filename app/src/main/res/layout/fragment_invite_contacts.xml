@@ -5,7 +5,38 @@
 
     <!-- Editext for Search -->
 
-    <EditText
+    <LinearLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/card_margin"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <EditText
+            android:id="@+id/inputSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="7dp"
+            android:layout_weight="1.5"
+            android:hint="Search Contacts.."
+            android:inputType="textVisiblePassword"
+            android:paddingEnd="7dp"
+            android:paddingStart="5dp"
+            android:textColor="#2C3343"
+            android:textColorHint="#848484" />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="0.5"
+            android:background="@color/background"
+            android:text="Next"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+    <!--<EditText
         android:id="@+id/inputSearch"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -14,13 +45,13 @@
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:textColor="#2C3343"
-        android:textColorHint="#848484" />
+        android:textColorHint="#848484" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/inputSearch"
+        android:layout_below="@+id/rl"
         android:scrollbars="vertical" />
 
 </RelativeLayout>
