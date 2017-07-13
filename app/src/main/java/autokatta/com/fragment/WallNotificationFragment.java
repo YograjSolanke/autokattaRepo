@@ -6,18 +6,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.adapter.WallNotificationAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
 import retrofit2.Response;
 
@@ -27,7 +33,7 @@ import retrofit2.Response;
 
 public class WallNotificationFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
-    RecyclerView mRecyclerView;
+    public static RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     View mWallNotify;
     TextView mNoData;
@@ -91,6 +97,13 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        adapter = new WallNotificationAdapter();
+        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                Log.i("Loaded", "->");
+            }
+        });
     }
 
     private void getData() {
@@ -234,6 +247,20 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", " Registration");
+            error.printStackTrace();
+        }
     }
 
     @Override

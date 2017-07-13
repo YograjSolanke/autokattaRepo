@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.fragment.WallNotificationFragment;
+import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.response.WallResponse;
 
 /**
@@ -26,10 +29,38 @@ import autokatta.com.response.WallResponse;
 public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Activity mActivity;
     private List<WallResponse.Success.WallNotification> notificationList = new ArrayList<>();
+    private int lastVisibleItem, totalItemCount;
+    private boolean isLoading;
+    private int visibleThreshold = 5;
+    private OnLoadMoreListener mOnLoadMoreListener;
 
     public WallNotificationAdapter(Activity mActivity, List<WallResponse.Success.WallNotification> notificationList) {
         this.mActivity = mActivity;
         this.notificationList = notificationList;
+    }
+
+    public WallNotificationAdapter() {
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) WallNotificationFragment.mRecyclerView.getLayoutManager();
+        WallNotificationFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                totalItemCount = linearLayoutManager.getItemCount();
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+
+                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    if (mOnLoadMoreListener != null) {
+                        mOnLoadMoreListener.onLoadMore();
+                    }
+                    isLoading = true;
+                }
+            }
+        });
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
+        this.mOnLoadMoreListener = mOnLoadMoreListener;
     }
 
     /*
@@ -495,11 +526,93 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 ((ProfileNotifications) holder).mFollowCount.setText("Followers(" + notificationList.get(position).getSenderFollowCount() + ")");
                 ((ProfileNotifications) holder).mLikes.setText("Likes(" + notificationList.get(position).getSenderLikeCount() + ")");
                 break;
+
+            case 2:
+                ImageView mStorePic, mStoreImage;
+                ImageButton mShareAutokatta, mShareOther, mCall, mLike, mFollow;
+                RatingBar mStoreRating;
+                TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
+                        mStoreLocation, mFollowCount, mLikes, mShares;
+
+                break;
+
+            case 3:
+                /*ImageView mUserPic, mGroupImage;
+                ImageButton mGroupFavourite;
+                TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
+                        mGroupNoOfServices;*/
+                break;
+
+            case 4:
+                ImageView mUserPic, mVehicleImage;
+                /*ImageButton mShareAutokatta, mShareOther, mCall, mLike, mVehicleFavourite;
+                TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
+                        mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;*/
+                break;
+
+            case 5:
+                /*ImageView mProductPic, mProductImage;
+                ImageButton mProductAutokatta, mProductOther, mCall, mLike, mVehicleFavourite;
+                RatingBar mProductRating;
+                TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;*/
+                break;
+
+            case 6:
+                /*ImageView mServicePic, mServiceImage;
+                ImageButton mServiceAutokatta, mServiceOther, mCall, mLike, mServiceFavourite;
+                RatingBar mServiceRating;
+                TextView mServiceActionName, mServiceActionTime, mServiceTitle, mServiceName, mServiceType, mLikes, mShares;*/
+                break;
+
+            case 7:
+
+                break;
+
+            case 8:
+                /*ImageView mSearchPic;
+                ImageButton mSearchAutokatta, mSearchOther, mCall, mLike;
+                TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
+                        mSearchDate, mSearchLeads;*/
+                break;
+
+            case 9:
+                ImageView mAuctionPic;
+                ImageButton mAuctionAutokatta, mAuctionOther, mAuctionFavourite;
+                Button mAuctionGoing, mAuctionIgnore;
+                TextView mAuctionActionName, mAuctionActionTime, mAuctionTitle, mAuctionNoOfVehicles, mAuctionEndDate, mAuctionEndTime,
+                        mAuctionType, mAuctionGoingCount, mAuctionIgnoreCount;
+                break;
+
+            case 10:
+                /*ImageView mUserPic, mVehicleImage;
+                ImageButton mShareAutokatta, mShareOther, mCall, mLike, mVehicleFavourite;
+                TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
+                        mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;*/
+                break;
+
+            case 11:
+                ImageView mSharePic;
+                ImageButton mShareFavourite;
+                TextView mShareActionName, mShareActionTime, mShareProfileName, mShareProfileLocation, mShareProfileWorkAt,
+                        mShareProfileWebSite;
+                TextView mShareStoreName, mShareType, mShareLocation, mShareWebSite, mShareTiming, mShareWorkingDay;
+                TextView mShareProductName, mShareProductType, mShareServiceName, mShareServiceType;
+                TextView mShareTitle, mSharePrice, mShareBrand, mShareModel, mShareYear, mShareKmsHrs, mShareRto, mShareRegistrationNo, mShareVehicleLocation;
+                TextView mShareMySearchCategory, mShareMySearchBrand, mShareMySearchModel, mShareMySearchPrice, mShareMySearchYear,
+                        mShareDateOfSearch, mShareMySearchLeads;
+                TextView mShareAuctionName, mShareAuctionNoOfVehicles, mShareAuctionEndDate, mShareAuctionEndTime, mShareAuctionType,
+                        mShareAuctionGoingCount, mShareAuctionIgnoreCount;
+                TextView mShareStatus;
+                break;
         }
     }
 
     @Override
     public int getItemCount() {
         return notificationList.size();
+    }
+
+    public void setLoaded() {
+        isLoading = false;
     }
 }
