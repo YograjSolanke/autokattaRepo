@@ -90,7 +90,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
-            storetype = "", store_id, preLastWord = "", preCoverLastWord;
+            storetype = "", preLastWord = "", preCoverLastWord;
+    int store_id;
     //  MultiSelectionSpinnerForBrands brandSpinner;
     MultiSelectionSpinner weekspn;
     MultiAutoCompleteTextView multiautotext, multiautobrand;
@@ -175,7 +176,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         System.out.println("Call from in Store Fragment" + callFrom);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         if (callFrom.equals("StoreViewActivity")) {
-            store_id = bundle.getString("store_id");
+            store_id = bundle.getInt("store_id");
             create.setText("update");
             getActivity().setTitle("Update Store");
             // textstore.setText("Update Store");
@@ -789,7 +790,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 storeDescription, textbrand, strBrandSpinner);
     }
 
-    private void updateStore(String name, String store_id, String location, String website, String stropen, String strclose,
+    private void updateStore(String name, int store_id, String location, String website, String stropen, String strclose,
                              String lastWord, String category, String workdays, String storeDescription, String storetype,
                              String address, String coverlastWord, String finalbrandtags, String strBrandSpinner) {
 
@@ -994,7 +995,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
 
                 bundle = new Bundle();
-                bundle.putString("store_id", store_id);
+                bundle.putInt("store_id", store_id);
                 bundle.putString("call", callFrom);
 
                 AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();

@@ -54,7 +54,8 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
     RelativeLayout btnlayout;
     EditText inputSearch;
-    String store_id, callFrom, storetype;
+    String callFrom, storetype;
+    int store_id;
     String finaladmins = "";
     ArrayList<String> alreadyAdmin = new ArrayList<>();
     ApiCall apiCall;
@@ -91,7 +92,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
         try {
             Bundle b = getArguments();
-            store_id = b.getString("store_id");
+            store_id = b.getInt("store_id");
             callFrom = b.getString("call");
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,7 +124,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             public void onClick(View v) {
                 Bundle b = new Bundle();
                 //  b.putString("action", "main");
-                b.putString("store_id", store_id);
+                b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
                     getActivity().finish();
@@ -201,7 +202,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
         apiCall.StoreAdmin(store_id);
     }
 
-    private void addStoreAdmins(String storeId, String adminNos) {
+    private void addStoreAdmins(int storeId, String adminNos) {
         apiCall.newStoreAdmin(storeId, adminNos);
     }
 
@@ -294,7 +295,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             if (str.startsWith("success")) {
                 Bundle b = new Bundle();
                 //  b.putString("action", "main");
-                b.putString("store_id", store_id);
+                b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
                     getActivity().finish();

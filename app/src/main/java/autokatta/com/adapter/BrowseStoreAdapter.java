@@ -49,7 +49,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     List<BrowseStoreResponse.Success> mMainlist;
     Activity activity;
     String image = "";
-    private String StoreContact, StoreId, allDetails;
+    private String StoreContact, allDetails;
+    private int StoreId;
     private int likecountint, followcountint;
     ApiCall mApiCall;
 
@@ -146,7 +147,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             public void onClick(View v) {
                 Bundle b = new Bundle();
                 b.putString("StoreContact", success.getContactNo());
-                b.putString("store_id", success.getStoreId());
+                b.putInt("store_id", success.getStoreId());
                 Intent intent = new Intent(activity, StoreViewActivity.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);
@@ -304,7 +305,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_store_id", success.getStoreId()).apply();
+                        putInt("Share_store_id", success.getStoreId()).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "store").apply();
 

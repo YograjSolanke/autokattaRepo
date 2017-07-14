@@ -282,7 +282,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendupdatedproductrating() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.sendUpdatedrating(contact, "", product_id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendUpdatedrating(contact, 0, product_id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(stockrate), "", "", "product");
     }
 
@@ -291,7 +291,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendproductrating() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.sendNewrating(contact, "", product_id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendNewrating(contact, 0, product_id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(stockrate), "", "", "product");
     }
 

@@ -628,7 +628,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
                 break;
             case 2:
-                final String allDetails, store_id;
+                final String allDetails;
+                final int store_id;
 
                 final StoreNotifications mStoreHolder = (StoreNotifications) holder;
 

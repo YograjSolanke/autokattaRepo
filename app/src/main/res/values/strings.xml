@@ -76,6 +76,7 @@
     <string name="contact_enquiry">Contact<font color='#FF0000'>\u002A</font></string>
     <string name="email">Email</string>
     <string name="website">WebSite</string>
+    <string name="interest">Interest</string>
 
     <string name="group_alert"><font color='#FF0000'>1. IGNITION package of price is 750/- per month gives you unlimited uploads, Unlimited groups, unlimited stores. Payment options will be monthly, quarterly, half yearly and annually.</font></string>
     <!--User Profile-->
@@ -234,34 +235,30 @@
     <string name="standard_cloud">Standard cloud using FlexboxLayout with dividerDrawable:</string>
     <string name="horizontalscrollview_example">HorizontalScrollView with useInsetPadding config:</string>
     <string-array name="demo_array">
-        <item>Aphex Twin</item>
-        <item>Autechre</item>
-        <item>B12</item>
-        <item>The Black Dog</item>
-        <item>Boards of Canada</item>
-        <item>Brian Eno</item>
-        <item>Broadcast</item>
-        <item>Brothomstates</item>
-        <item>Clark</item>
-        <item>DJ Mink</item>
-        <item>Disjecta</item>
-        <item>Drexciya</item>
-        <item>Freeform</item>
-        <item>Jake Slazenger</item>
-        <item>Leila</item>
-        <item>LFO</item>
-        <item>Luke Vibert</item>
-        <item>Mira Calix</item>
-        <item>Nightmares on Wax</item>
-        <item>Plaid</item>
-        <item>Plone</item>
-        <item>Prefuse 73</item>
+        <item>Launch</item>
+        <item>Review</item>
+        <item>Demo</item>
+        <item>News</item>
+        <item>Buying</item>
+        <item>Selling</item>
+        <item>Spare Parts</item>
+        <item>Vehicles</item>
+        <item>Accessories</item>
+        <item>New Vehicle</item>
+        <item>Used Vehicle</item>
+        <item>Auction</item>
+        <item>Auto Sports</item>
+        <item>Information</item>
+        <item>Jobs</item>
+        <item>Car pool</item>
+        <item>Others</item>
+        <item>2 wheelers</item>
+        <item>3 wheelers</item>
+        <item>Cars</item>
+        <item>Trucks</item>
+        <item>Transport and Cargo</item>
         <item>Sabres of Paradise</item>
-        <item>Seefeel</item>
-        <item>Speedy J</item>
-        <item>Squarepusher</item>
-        <item>Sweet Exorcist</item>
-        <item>Tricky Disco</item>
+        <item>Construction Equipment</item>
     </string-array>
     <string name="title_activity_location">LocationActivity</string>
     <string name="title_activity_edit_profile">EditProfile</string>

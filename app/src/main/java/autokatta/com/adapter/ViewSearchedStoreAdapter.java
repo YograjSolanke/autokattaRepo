@@ -46,11 +46,11 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
 
     List<SearchStoreResponse.Success> mMainList;
     Activity activity;
-    String StoreContact, StoreId;
-    int likecountint, followcountint;
-    String imagename = "", allDetails;
+    private String StoreContact;
+    private int likecountint, followcountint, StoreId;
+    private String imagename = "", allDetails;
     ApiCall mApiCall;
-    String callText;
+    private String callText;
     public ViewSearchedStoreAdapter(Activity activity, List<SearchStoreResponse.Success> successList) {
         this.activity = activity;
         this.mMainList = successList;
@@ -151,7 +151,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             public void onClick(View v) {
                 Bundle b = new Bundle();
                 b.putString("StoreContact", object.getContact());
-                b.putString("store_id", object.getStoreId());
+                b.putInt("store_id", object.getStoreId());
                 Intent intent = new Intent(activity, StoreViewActivity.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);
@@ -254,7 +254,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_store_id", object.getStoreId()).apply();
+                        putInt("Share_store_id", object.getStoreId()).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "store").apply();
 

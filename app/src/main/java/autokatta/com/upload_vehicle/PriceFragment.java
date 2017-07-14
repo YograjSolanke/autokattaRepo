@@ -56,16 +56,18 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         //empty comstructor
     }
 
-    String vehicle_id = "", strCategoryId = "", strCategoryName = "", strSubcategoryId = "", strSubcategoryName = "", strBrandId = "", strModelId = "", strVersionId = "",
+    String vehicle_id = "", strCategoryName = "", strSubcategoryId = "", strSubcategoryName = "", strBrandId = "", strModelId = "", strVersionId = "",
             strStearing = "", strBrakename = "", strPumpname = "", strTitle = "", strGroupprivacy = "", strGroupids = "", strGroupnames = "",
             strStoreprivacy = "", strStoreids = "", strStorenames = "", strFinancestatus = "", strExhangestatus = "", strPermit = "",
-            strMakemonth = "", strMakeyear = "", strRegmonth = "", strRegyear = "", strHrs = "", strKms = "", strInvoice = "", strLocation = "",
-            strRto = "", strRegno = "", strBodyMfg = "", strSeatMfg = "", strOwner = "", strEmission = "", strHypo = "", strRc = "", strInsurance = "",
+            strMakemonth = "", strMakeyear = "", strRegmonth = "", strRegyear = "", strHrs = "", strInvoice = "", strLocation = "",
+            strRto = "", strRegno = "", strBodyMfg = "", strSeatMfg = "", strEmission = "", strHypo = "", strRc = "", strInsurance = "",
             strTaxvalid = "", strPermitvalid = "", strFitnessvalid = "", strInsuranceIdv = "", strInsuDate = "", strTaxDate = "",
             strFitnessDate = "", strPermitDate = "", strChasis = "", strEngine = "", strDrive = "", strTrans = "", strBustype = "", strAir = "",
             strApp = "", strImplementStr = "", strSeatcap = "", strTyreContext = "", strFuel = "", strHp = "", strJib = "", strBoon = "",
             strImages = "", strColor = "", strBodytype = "", strImplement = "", strMfgYr = "", strBrandName = "",
             strModelName = "", strVersionName = "";
+    double strKms;
+    int strOwner, strCategoryId;
 
     String myContact;
 
@@ -87,7 +89,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392");
 
-        strCategoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", "1");
+        //strCategoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", "1");
         strCategoryName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
         strSubcategoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_subCatId", "66");
         strSubcategoryName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_subCatName", null);
@@ -109,14 +111,14 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         strRegmonth = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_registerMonth", null);
         strRegyear = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_registerYear", null);
         strHrs = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Hrs", null);
-        strKms = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Kms", null);
+        //strKms = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Kms", null);
         strInvoice = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_invoice", null);
         strLocation = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Location", null);
         strRto = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Rto", null);
         strRegno = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_RegistNo", null);
         strBodyMfg = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_BodyManufacture", null);
         strSeatMfg = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_SeatManufacture", null);
-        strOwner = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_owner", null);
+        //strOwner = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_owner", null);
         strEmission = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_emission", null);
         strHypo = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_hypo", null);
         strRc = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_rc", null);
@@ -193,7 +195,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
     }
 
-    private void getPrice(String categoryId, String subCategoryId, String brandId, String modelId, String versionId, String mfgYear, String rtoCity) {
+    private void getPrice(int categoryId, String subCategoryId, String brandId, String modelId, String versionId, String mfgYear, String rtoCity) {
 
         apiCall.SuggestedPrice(categoryId, subCategoryId, brandId, modelId, versionId, mfgYear, rtoCity);
     }

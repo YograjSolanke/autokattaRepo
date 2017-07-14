@@ -130,7 +130,7 @@ public class FavouriteResponse {
             private String serviceId;
             @SerializedName("store_id")
             @Expose
-            private String storeId;
+            private int storeId;
             @SerializedName("group_id")
             @Expose
             private String groupId;
@@ -403,11 +403,11 @@ public class FavouriteResponse {
                 this.serviceId = serviceId;
             }
 
-            public String getStoreId() {
+            public int getStoreId() {
                 return storeId;
             }
 
-            public void setStoreId(String storeId) {
+            public void setStoreId(int storeId) {
                 this.storeId = storeId;
             }
 

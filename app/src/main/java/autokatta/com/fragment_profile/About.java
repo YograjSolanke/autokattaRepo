@@ -44,6 +44,7 @@ import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.ProfileAboutResponse;
+import me.gujun.android.taggroup.TagGroup;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -91,6 +92,31 @@ public class About extends Fragment implements RequestNotifier {
     Activity mActivity;
     LinearLayout mLinear;
     GenericFunctions mGenericFunctions;
+    private TagGroup mTagGroup;
+    String tags[] = {"Launch",
+            "Review",
+            "Demo",
+            "News",
+            "Buying",
+            "Selling",
+            "Spare Parts",
+            "Vehicles",
+            "Accessories",
+            "New Vehicle",
+            "Used Vehicle",
+            "Auction",
+            "Racing",
+            "Auto Sports",
+            "Information",
+            "Jobs",
+            "Car pool",
+            "Others",
+            "2 wheelers",
+            "3 wheelers",
+            "Cars",
+            "Trucks",
+            "Transport & Cargo",
+            "Construction Equipment"};
 
     @Override
     public void onAttach(Context context) {
@@ -323,6 +349,8 @@ public class About extends Fragment implements RequestNotifier {
             public void run() {
                 Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference),
                         MODE_PRIVATE).getString("loginContact", "");
+                mTagGroup = (TagGroup) mAbout.findViewById(R.id.tag_group);
+                mTagGroup.setTags(tags);
                 mContact = (TextView) mAbout.findViewById(R.id.contact_no);
                 mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
                 msubprofession= (TextView) mAbout.findViewById(R.id.subprofession);

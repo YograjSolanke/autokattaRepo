@@ -74,12 +74,12 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             rowInvoice, rowbustype, rowaircondition, rowbody, rowboattype, rowrvtype, rowcolor, rowrc, rowinsurance1,
             rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre;
 
-    String action = "", Scategory, Sbrand, Smodel, Sprice, Syear, Sid = "", Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
+    String action = "", Scategory, Sbrand, Smodel, Sprice, Syear, Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
     String vehicle_id, sub_category_id, position_brand_id, position_model_id;
-    String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, rc1, insurance1, kms1, kms2, hypo1, owner1, price1, price2;
+    String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, rc1, insurance1, kms1, kms2, hypo1, price1, price2;
     String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1;
     String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2, callPermission = "";
-    int count = 0;
+    int count = 0, owner1, Sid;
 
     List<String> fuals = new ArrayList<>();
     List<String> colors = new ArrayList<>();
@@ -244,7 +244,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                         Smodel = getIntent().getExtras().getString("modelSpinner");
                         Sprice = getIntent().getExtras().getString("price");
                         Syear = getIntent().getExtras().getString("year");
-                        Sid = getIntent().getExtras().getString("search_id");
+                        Sid = getIntent().getExtras().getInt("search_id");
                         System.out.println("Search Id....: " + Sid);
                     }
 
@@ -866,7 +866,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             hpcap1 = maxhpcapcityTxt.getText().toString();
             hpcap2 = maxhpcapcity.getText().toString();
 
-            owner1 = ownerSpinner.getSelectedItem().toString();
+            owner1 = Integer.parseInt(ownerSpinner.getSelectedItem().toString());
             price1 = pricefromTxt.getText().toString();
             price2 = pricetoTxt.getText().toString();
             city2 = autoRTO.getText().toString();
