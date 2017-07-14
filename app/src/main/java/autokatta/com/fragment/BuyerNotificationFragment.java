@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -101,6 +103,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     obj.setImage(obj.getImage());
                     obj.setInsuranceValid(obj.getInsuranceValid());
                     obj.setHpCapacity(obj.getHpCapacity());
+                    obj.setDate(obj.getDate());
 
                     for (BuyerResponse.Success.Found objectmatch : objsuccess.getFound()) {
 
@@ -172,6 +175,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     final ImageView muparrow = (ImageView) mLinearView.findViewById(R.id.postuparrow);
                     ViewFlipper mViewFlipperbuyer = (ViewFlipper) mLinearView.findViewById(R.id.buyervehicalimgflicker);
                     final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
+                    final TextView mUploadDate = (TextView) mLinearView.findViewById(R.id.uploaddate);
                     //final ImageView mImageArrowFirst=(ImageView)mLinearView.findViewById(R.id.imageFirstArrow);
                     mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
 
@@ -226,6 +230,25 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         muparrow.setVisibility(View.GONE);
                     }
 
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
+                                Locale.US);
+                        inputFormat.setTimeZone(utc);
+                        //format of date which want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.US);
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(mainList.get(i).getDate());
+                        String output = outputFormat.format(date);
+                        System.out.println("jjj" + output);
+                        mUploadDate.setText(output);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
 
                     final String imagenames = mainList.get(i).getImage().replaceAll(" ", "");
 
@@ -234,7 +257,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     if (!imagenames.equalsIgnoreCase("")) {
                         String[] imagenamecame = imagenames.split(",");
 
-                        if (imagenamecame.length != 0) {
+                        if (imagenamecame.length != 0 && !imagenamecame[0].equals("")) {
                             for (int z = 0; z < imagenamecame.length; z++) {
                                 iname.add(imagenamecame[z]);
                             }
@@ -387,6 +410,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         checkBox8.setText(itemModel);
                         checkBox9.setText(itemYear);
                         checkBox10.setText(itemrto_city);
+
                         if (itemrc.startsWith("-Select RC Available-") || itemrc.equalsIgnoreCase("") || itemrc.equalsIgnoreCase("-"))
                             checkBoxRcRight.setText("RC avl-NA");
                         else
@@ -477,6 +501,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                                     Bundle bundle = new Bundle();
                                     bundle.putString("contactOtherProfile", recieverContact);
+                                    bundle.putString("action", "otherProfile");
                                     Intent intent = new Intent(getActivity(), OtherProfile.class);
                                     intent.putExtras(bundle);
                                     getActivity().startActivity(intent);
@@ -493,6 +518,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                                     Bundle bundle = new Bundle();
                                     bundle.putString("contactOtherProfile", recieverContact);
+                                    bundle.putString("action", "otherProfile");
                                     Intent intent = new Intent(getActivity(), OtherProfile.class);
                                     intent.putExtras(bundle);
                                     getActivity().startActivity(intent);
@@ -511,10 +537,11 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String calldate = df.format(c.getTime());
 
-                                if (!recieverContact.equals(myContact))
+                                if (!recieverContact.equals(myContact)) {
                                     call(recieverContact);
 
-                                mApiCall.sendLastCallDate(myContact, recieverContact, calldate, "1");
+                                    mApiCall.sendLastCallDate(myContact, recieverContact, calldate, "1");
+                                }
                             }
                         });
 

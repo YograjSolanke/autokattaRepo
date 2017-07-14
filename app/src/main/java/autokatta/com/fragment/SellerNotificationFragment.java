@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -143,6 +145,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     obj.setRcAvailable(obj.getRcAvailable());
                     obj.setInsuranceValid(obj.getInsuranceValid());
                     obj.setHpcapacity(obj.getHpcapacity());
+                    obj.setDate(obj.getDate());
 
 
                     for (SellerResponse.Success.MatchedResult objectmatch : objsuccess.getMatchedResult()) {
@@ -166,6 +169,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             objectmatch.setInsuranceValid(objectmatch.getInsuranceValid());
                             objectmatch.setHpCapacity(objectmatch.getHpCapacity());
                             objectmatch.setTitle(objectmatch.getTitle());
+                            objectmatch.setLastcall(objectmatch.getLastcall());
 
                             Date d = null, d1 = null;
                             try {
@@ -217,6 +221,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     ImageView msellerdownarrow = (ImageView) mLinearView.findViewById(R.id.sellerdownarrow);
                     ImageView mselleruparrow = (ImageView) mLinearView.findViewById(R.id.selleruparrow);
                     final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
+                    final TextView mSearchDate = (TextView) mLinearView.findViewById(R.id.strsearchdate);
                     //final ImageView mImageArrowFirst=(ImageView)mLinearView.findViewById(R.id.imageFirstArrow);
                     mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
 
@@ -271,6 +276,25 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     mlocationname.setText(mainList.get(i).getLocationCity());
                     mregnoname.setText(mainList.get(i).getRegistrationNumber());
 
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
+                                Locale.US);
+                        inputFormat.setTimeZone(utc);
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.US);
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(mainList.get(i).getDate());
+                        String output = outputFormat.format(date);
+                        System.out.println("jjj" + output);
+                        mSearchDate.setText(output);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     if (!(mainList.get(i).getMatchedResult().size() == 0))
                         msellerMatchCount.setText(String.valueOf(mainList.get(i).getMatchedResult().size()));
                     else
@@ -287,7 +311,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     for (int j = 0; j < mainList.get(i).getMatchedResult().size(); j++) {
                         checkedvehicle_ids.add(0);
                     }
-
 
                     CheckBox checkBox[] = new CheckBox[mainList.get(i).getMatchedResult().size()];
 
@@ -335,10 +358,11 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         final String itemCaterogy = mainList.get(i).getMatchedResult().get(j).getCategory();
                         final String itemBrand = mainList.get(i).getMatchedResult().get(j).getManufacturer();
                         final String itemModel = mainList.get(i).getMatchedResult().get(j).getModel();
-                        final String itemYear = mainList.get(i).getMatchedResult().get(j).getYearOfManufacture();
+                        final String itemYearManu = mainList.get(i).getMatchedResult().get(j).getYearOfManufacture();
                         final String itemPrice = mainList.get(i).getMatchedResult().get(j).getPrice();
                         final String itemDate = mainList.get(i).getMatchedResult().get(j).getDate();
                         final String itemvehicleId = mainList.get(i).getMatchedResult().get(j).getVehicleId();
+                        final String itemRto = mainList.get(i).getMatchedResult().get(j).getRtoCity();
 
                         final String favStatus = mainList.get(i).getMatchedResult().get(j).getFavstatus();
                         final String search_idget = mainList.get(i).getMatchedResult().get(j).getSearchId();
@@ -371,7 +395,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             DateFormat date = new SimpleDateFormat(" MMM dd ");
                             DateFormat time = new SimpleDateFormat(" hh:mm a");
 
-                            mDateTime.setText("Uploadede On :" + date.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()) +
+                            mDateTime.setText("Uploaded On :" + date.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()) +
                                     time.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()));
 
                         } catch (Exception e) {
@@ -386,8 +410,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         checkBox1.setText(mainList.get(i).getCategory());
                         checkBox2.setText(mainList.get(i).getManufacturer());
                         checkBox3.setText(mainList.get(i).getModel());
-                        checkBox4.setText(mainList.get(i).getPrice());
-                        checkBox5.setText(mainList.get(i).getYearOfManufacture());
+                        checkBox4.setText(mainList.get(i).getYearOfManufacture());
+                        checkBox5.setText(mainList.get(i).getRtoCity());
 
                         if (mainList.get(i).getRcAvailable().startsWith("-Select RC Available-") ||
                                 mainList.get(i).getRcAvailable().equalsIgnoreCase("") || mainList.get(i).getRcAvailable().equalsIgnoreCase("-"))
@@ -412,8 +436,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         checkBox6.setText(itemCaterogy);
                         checkBox7.setText(itemBrand);
                         checkBox8.setText(itemModel);
-                        checkBox9.setText(itemYear);
-                        checkBox10.setText(itemPrice);
+                        checkBox9.setText(itemYearManu);
+                        checkBox10.setText(itemRto);
 
 
                         if (itemrc.startsWith("-Select RC Available-") || itemrc.equalsIgnoreCase("") || itemrc.equalsIgnoreCase("-"))
@@ -492,37 +516,34 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                         List<String> iname = new ArrayList<String>();
 
-                        if (!imagenames.equals("")) {
 
-                            String[] imagenamecame = imagenames.split(",");
+                        String[] imagenamecame = imagenames.split(",");
 
-                            if (imagenamecame.length != 0) {
-                                for (int z = 0; z < imagenamecame.length; z++) {
-                                    iname.add(imagenamecame[z]);
-                                }
-
-                                System.out.println("lis=" + iname);
-
-                                ImageView[] imageView = new ImageView[iname.size()];
-
-                                for (int l = 0; l < imageView.length; l++) {
-                                    imageView[l] = new ImageView(getActivity());
-                                    Glide.with(getActivity())
-                                            .load("http://autokatta.com/mobile/uploads/" + iname.get(l).replaceAll(" ", "%20"))
-                                            .into(imageView[l]);
-                                    mViewFlippersell.addView(imageView[l]);
-                                }
-                            } else {
-                                ImageView[] imageView = new ImageView[2];
-                                for (int l = 0; l < imageView.length; l++) {
-                                    imageView[l] = new ImageView(getActivity());
-                                    //  imageView[l].setBackgroundResource(R.drawable.vehiimg);
-                                    mViewFlippersell.addView(imageView[l]);
-                                }
-
+                        if (imagenamecame.length != 0 && !imagenamecame[0].equals("")) {
+                            for (int z = 0; z < imagenamecame.length; z++) {
+                                iname.add(imagenamecame[z]);
                             }
-                        } else
-                            mViewFlippersell.setBackgroundResource(R.drawable.vehiimg);
+
+                            System.out.println("lis=" + iname);
+
+                            ImageView[] imageView = new ImageView[iname.size()];
+
+                            for (int l = 0; l < imageView.length; l++) {
+                                imageView[l] = new ImageView(getActivity());
+                                Glide.with(getActivity())
+                                        .load("http://autokatta.com/mobile/uploads/" + iname.get(l).replaceAll(" ", "%20"))
+                                        .into(imageView[l]);
+                                mViewFlippersell.addView(imageView[l]);
+                            }
+                        } else {
+                            ImageView[] imageView = new ImageView[2];
+                            for (int l = 0; l < imageView.length; l++) {
+                                imageView[l] = new ImageView(getActivity());
+                                imageView[l].setBackgroundResource(R.drawable.vehiimg);
+                                mViewFlippersell.addView(imageView[l]);
+                            }
+
+                        }
 
 
                         int mFlippingsell = 0;
@@ -570,6 +591,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 if (!recieverContact.equals(myContact)) {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("contactOtherProfile", recieverContact);
+                                    bundle.putString("action", "otherProfile");
                                     Intent intent = new Intent(getActivity(), OtherProfile.class);
                                     intent.putExtras(bundle);
                                     getActivity().startActivity(intent);
@@ -588,12 +610,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 String calldate = df.format(c.getTime());
 
-                                if (!recieverContact.equals(myContact))
+                                if (!recieverContact.equals(myContact)) {
                                     call(recieverContact);
-                                /*Intent callIntent = new Intent(Intent.ACTION_CALL);
-                                callIntent.setData(Uri.parse(recieverContact));*/
-
-                                mApiCall.sendLastCallDate(myContact, recieverContact, calldate, "1");
+                                    mApiCall.sendLastCallDate(myContact, recieverContact, calldate, "1");
+                                }
                             }
                         });
 

@@ -234,13 +234,13 @@
 
 
             <TextView
-                android:id="@+id/searchdate"
+                android:id="@+id/uploaddate"
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/yreg"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Search Date :"
+                android:text="Uploaded Date :"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 

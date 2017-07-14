@@ -1181,6 +1181,8 @@ public class FavouriteAllResponse {
     private String vstartPrice;
     private String vreservePrice;
     private String vstatus;
+    private String vhpcapacity;
+
     private String sendername;
     private String senderPic;
     private String ssearchId;
@@ -1231,7 +1233,23 @@ public class FavouriteAllResponse {
     private String sairCondition;
     private String sfinanceReq;
     private String sinvoice;
+    private String shpcapacity;
 
+    public String getVhpcapacity() {
+        return vhpcapacity;
+    }
+
+    public void setVhpcapacity(String vhpcapacity) {
+        this.vhpcapacity = vhpcapacity;
+    }
+
+    public String getShpcapacity() {
+        return shpcapacity;
+    }
+
+    public void setShpcapacity(String shpcapacity) {
+        this.shpcapacity = shpcapacity;
+    }
 
     public String getVVersion() {
         return vVersion;

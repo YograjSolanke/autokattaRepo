@@ -27,7 +27,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -499,6 +503,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             checkBoxRcright = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxRcRight);
             checkBoxInsRight = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxInsRight);
             checkBoxHpRight = (CheckBox) sellerView.findViewById(R.id.sellcheckBoxHpRight);
+
+            sellertext = (TextView) sellerView.findViewById(R.id.sellertext);
         }
     }
 
@@ -831,13 +837,16 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mBuyerHolder.mBuyerLocation.setText(allResponseList.get(position).getVlocationCity());
 
                 mBuyerHolder.buyertext.setVisibility(View.VISIBLE);
-
+                mBuyerHolder.mItemNameCity.setVisibility(View.GONE);
 
                 mBuyerHolder.checkBox1.setText(allResponseList.get(position).getVcategory());
                 mBuyerHolder.checkBox2.setText(allResponseList.get(position).getVmanufacturer());
                 mBuyerHolder.checkBox3.setText(allResponseList.get(position).getVmodel());
                 mBuyerHolder.checkBox4.setText(allResponseList.get(position).getVyearOfManufacture());
                 mBuyerHolder.checkBox5.setText(allResponseList.get(position).getVrtoCity());
+                mBuyerHolder.checkBoxRc.setText(allResponseList.get(position).getVrcAvailable());
+                mBuyerHolder.checkBoxIns.setText(allResponseList.get(position).getVinsuranceValid());
+                mBuyerHolder.checkBoxHpcap.setText(allResponseList.get(position).getVhpcapacity());
 
 
                 mBuyerHolder.checkBox6.setText(allResponseList.get(position).getScategory());
@@ -845,6 +854,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mBuyerHolder.checkBox8.setText(allResponseList.get(position).getSmodel());
                 mBuyerHolder.checkBox9.setText(allResponseList.get(position).getSyearOfManufacture());
                 mBuyerHolder.checkBox10.setText(allResponseList.get(position).getSrtoCity());
+                mBuyerHolder.checkBoxRcRight.setText(allResponseList.get(position).getSrcAvailable());
+                mBuyerHolder.checkBoxINSRight.setText(allResponseList.get(position).getSinsuranceValid());
+                mBuyerHolder.checkBoxHPcapRight.setText(allResponseList.get(position).getShpcapacity());
 
                 mBuyerHolder.favouritebuyer.setVisibility(View.GONE);
                 mBuyerHolder.deleteFav.setVisibility(View.VISIBLE);
@@ -875,6 +887,21 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         mBuyerHolder.checkBox5.setChecked(true);
                         mBuyerHolder.checkBox10.setChecked(true);
                     }
+
+                    if (mBuyerHolder.checkBoxRc.getText().toString().equalsIgnoreCase(mBuyerHolder.checkBoxRcRight.getText().toString())) {
+                        mBuyerHolder.checkBoxRc.setChecked(true);
+                        mBuyerHolder.checkBoxRcRight.setChecked(true);
+                    }
+
+                    if (mBuyerHolder.checkBoxIns.getText().toString().equalsIgnoreCase(mBuyerHolder.checkBoxINSRight.getText().toString())) {
+                        mBuyerHolder.checkBoxIns.setChecked(true);
+                        mBuyerHolder.checkBoxINSRight.setChecked(true);
+                    }
+
+                    if (mBuyerHolder.checkBoxHpcap.getText().toString().equalsIgnoreCase(mBuyerHolder.checkBoxHPcapRight.getText().toString())) {
+                        mBuyerHolder.checkBoxHpcap.setChecked(true);
+                        mBuyerHolder.checkBoxHPcapRight.setChecked(true);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -885,12 +912,18 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mBuyerHolder.checkBox3.setEnabled(false);
                 mBuyerHolder.checkBox4.setEnabled(false);
                 mBuyerHolder.checkBox5.setEnabled(false);
+                mBuyerHolder.checkBoxRc.setEnabled(false);
+                mBuyerHolder.checkBoxIns.setEnabled(false);
+                mBuyerHolder.checkBoxHpcap.setEnabled(false);
 
                 mBuyerHolder.checkBox6.setEnabled(false);
                 mBuyerHolder.checkBox7.setEnabled(false);
                 mBuyerHolder.checkBox8.setEnabled(false);
                 mBuyerHolder.checkBox9.setEnabled(false);
                 mBuyerHolder.checkBox10.setEnabled(false);
+                mBuyerHolder.checkBoxRcRight.setEnabled(false);
+                mBuyerHolder.checkBoxINSRight.setEnabled(false);
+                mBuyerHolder.checkBoxHPcapRight.setEnabled(false);
 
 
                 if (allResponseList.get(position).getSenderPic().equals(""))
@@ -944,7 +977,17 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
                         String otherContact = allResponseList.get(mBuyerHolder.getAdapterPosition()).getVcontactNo();
-                        call(otherContact);
+                        Calendar c = Calendar.getInstance();
+                        System.out.println("Current time => " + c.getTime());
+
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String calldate = df.format(c.getTime());
+
+                        if (!otherContact.equals(mLoginContact)) {
+                            call(otherContact);
+
+                            mApiCall.sendLastCallDate(mLoginContact, otherContact, calldate, "1");
+                        }
                     }
                 });
 
@@ -988,23 +1031,41 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 // mSellerHolder.UploadedDate.setText("Uploaded On:-"+"\n"+Vdate.get(position).toString());
 
                 mSellerHolder.sellertext.setVisibility(View.VISIBLE);
+                mSellerHolder.lastcall.setVisibility(View.GONE);
 
                 //To set Date
-                try {
+                /*try {
 
                     DateFormat date1 = new SimpleDateFormat(" MMM dd ");
                     DateFormat time1 = new SimpleDateFormat(" hh:mm a");
-                    System.out.println("Date: " + date1.format(allResponseList.get(position).getVdate()));
-                    System.out.println("Time: " + time1.format(allResponseList.get(position).getVdate()));
+
 
                     mSellerHolder.mDateTime.setText("Uploaded On:-" + "\n" + date1.format(allResponseList.get(position).getVdate()) +
                             time1.format(allResponseList.get(position).getVdate()));
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                }*/
+                try {
+                    TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                    //format of date coming from services
+                    DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
+                            Locale.US);
+                    inputFormat.setTimeZone(utc);
+                    //format of date which want to show
+                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                            Locale.US);
+                    outputFormat.setTimeZone(utc);
+
+                    Date date = inputFormat.parse(allResponseList.get(position).getVdate());
+                    String output = outputFormat.format(date);
+                    System.out.println("jjj" + output);
+                    mSellerHolder.mDateTime.setText("Uploaded On:-" + "\n" + output);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                mSellerHolder.Title.setText(allResponseList.get(position).getVdate());
+                mSellerHolder.Title.setText(allResponseList.get(position).getVtitle());
                 // mSellerHolder.buyerlocation.setText(location_city.get(position).toString());
 
                 mSellerHolder.mFavimg.setVisibility(View.GONE);
@@ -1015,13 +1076,19 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mSellerHolder.checkBox3.setText(allResponseList.get(position).getSmodel());
                 mSellerHolder.checkBox4.setText(allResponseList.get(position).getSyearOfManufacture());
                 mSellerHolder.checkBox5.setText(allResponseList.get(position).getSrtoCity());
+                mSellerHolder.checkBoxRc.setText(allResponseList.get(position).getSrcAvailable());
+                mSellerHolder.checkBoxIns.setText(allResponseList.get(position).getSinsuranceValid());
+                mSellerHolder.checkBoxHp.setText(allResponseList.get(position).getShpcapacity());
 
 
                 mSellerHolder.checkBox6.setText(allResponseList.get(position).getVcategory());
-                mSellerHolder.checkBox7.setText(allResponseList.get(position).getVmonthOfManufacture());
+                mSellerHolder.checkBox7.setText(allResponseList.get(position).getVmanufacturer());
                 mSellerHolder.checkBox8.setText(allResponseList.get(position).getVmodel());
                 mSellerHolder.checkBox9.setText(allResponseList.get(position).getVyearOfManufacture());
                 mSellerHolder.checkBox10.setText(allResponseList.get(position).getVrtoCity());
+                mSellerHolder.checkBoxRcright.setText(allResponseList.get(position).getVrcAvailable());
+                mSellerHolder.checkBoxInsRight.setText(allResponseList.get(position).getVinsuranceValid());
+                mSellerHolder.checkBoxHpRight.setText(allResponseList.get(position).getVhpcapacity());
 
 
                 try {
@@ -1050,6 +1117,21 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         mSellerHolder.checkBox5.setChecked(true);
                         mSellerHolder.checkBox10.setChecked(true);
                     }
+
+                    if (mSellerHolder.checkBoxRc.getText().toString().equalsIgnoreCase(mSellerHolder.checkBoxRcright.getText().toString())) {
+                        mSellerHolder.checkBoxRc.setChecked(true);
+                        mSellerHolder.checkBoxRcright.setChecked(true);
+                    }
+
+                    if (mSellerHolder.checkBoxIns.getText().toString().equalsIgnoreCase(mSellerHolder.checkBoxInsRight.getText().toString())) {
+                        mSellerHolder.checkBoxIns.setChecked(true);
+                        mSellerHolder.checkBoxInsRight.setChecked(true);
+                    }
+
+                    if (mSellerHolder.checkBoxHp.getText().toString().equalsIgnoreCase(mSellerHolder.checkBoxHpRight.getText().toString())) {
+                        mSellerHolder.checkBoxHp.setChecked(true);
+                        mSellerHolder.checkBoxHpRight.setChecked(true);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1060,63 +1142,67 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mSellerHolder.checkBox3.setEnabled(false);
                 mSellerHolder.checkBox4.setEnabled(false);
                 mSellerHolder.checkBox5.setEnabled(false);
+                mSellerHolder.checkBoxRc.setEnabled(false);
+                mSellerHolder.checkBoxIns.setEnabled(false);
+                mSellerHolder.checkBoxHp.setEnabled(false);
 
                 mSellerHolder.checkBox6.setEnabled(false);
                 mSellerHolder.checkBox7.setEnabled(false);
                 mSellerHolder.checkBox8.setEnabled(false);
                 mSellerHolder.checkBox9.setEnabled(false);
                 mSellerHolder.checkBox10.setEnabled(false);
+                mSellerHolder.checkBoxRcright.setEnabled(false);
+                mSellerHolder.checkBoxInsRight.setEnabled(false);
+                mSellerHolder.checkBoxHpRight.setEnabled(false);
 
 
                 /*mSellerHolder.Compare.setVisibility(View.GONE);
-                mSellerHolder.Vehic_cnt.setVisibility(View.GONE);
                 mSellerHolder.chckbox.setVisibility(View.GONE);*/
+                mSellerHolder.mVehicleCount.setVisibility(View.GONE);
 
 
                 final String imagenames = allResponseList.get(position).getVimage();
-                ArrayList<String> iname = new ArrayList<String>();
+                List<String> iname = new ArrayList<String>();
 
-                try {
-                    String[] imagenamecame = imagenames.split(",");
 
-                    if (imagenamecame.length != 0) {
-                        for (int z = 0; z < imagenamecame.length; z++) {
-                            iname.add(imagenamecame[z]);
-                        }
+                String[] imagenamecame = imagenames.split(",");
 
-                        System.out.println("lis=" + iname);
-
-                        ImageView[] imageView = new ImageView[iname.size()];
-
-                        for (int l = 0; l < imageView.length; l++) {
-                            imageView[l] = new ImageView(mActivity);
-
-                            /****************
-                             Glide code for image uploading
-
-                             *****************/
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.com/mobile/uploads/" + iname.get(l).replaceAll(" ", "%20"))
-                                    //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                                    //.placeholder(R.drawable.logo) //To show image before loading an original image.
-                                    //.error(R.drawable.blocked) //To show error image if problem in loading.
-                                    .into(imageView[l]);
-
-                            mSellerHolder.mViewFlippersell.addView(imageView[l]);
-                        }
-                    } else {
-                        ImageView[] imageView = new ImageView[2];
-                        for (int l = 0; l < imageView.length; l++) {
-                            imageView[l] = new ImageView(mActivity);
-                            imageView[l].setBackgroundResource(R.drawable.vehiimg);
-                            mSellerHolder.mViewFlippersell.addView(imageView[l]);
-                        }
-
+                if (imagenamecame.length != 0 && !imagenamecame[0].equals("")) {
+                    for (int z = 0; z < imagenamecame.length; z++) {
+                        iname.add(imagenamecame[z]);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                    System.out.println("lis=" + iname);
+
+                    ImageView[] imageView = new ImageView[iname.size()];
+
+                    for (int l = 0; l < imageView.length; l++) {
+                        imageView[l] = new ImageView(mActivity);
+
+                        /****************
+                         Glide code for image uploading
+
+                         *****************/
+                        Glide.with(mActivity)
+                                .load("http://autokatta.com/mobile/uploads/" + iname.get(l).replaceAll(" ", "%20"))
+                                //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
+                                .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                                //.placeholder(R.drawable.logo) //To show image before loading an original image.
+                                //.error(R.drawable.blocked) //To show error image if problem in loading.
+                                .into(imageView[l]);
+
+                        mSellerHolder.mViewFlippersell.addView(imageView[l]);
+                    }
+                } else {
+                    ImageView[] imageView = new ImageView[2];
+                    for (int l = 0; l < imageView.length; l++) {
+                        imageView[l] = new ImageView(mActivity);
+                        imageView[l].setBackgroundResource(R.drawable.vehiimg);
+                        mSellerHolder.mViewFlippersell.addView(imageView[l]);
+                    }
+
                 }
+
 
                 int mFlippingsell = 0;
 
@@ -1150,7 +1236,16 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
                         String otherContact = allResponseList.get(mSellerHolder.getAdapterPosition()).getVcontactNo();
-                        call(otherContact);
+                        Calendar c = Calendar.getInstance();
+                        System.out.println("Current time => " + c.getTime());
+
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String calldate = df.format(c.getTime());
+
+                        if (!otherContact.equals(mLoginContact)) {
+                            call(otherContact);
+                            mApiCall.sendLastCallDate(mLoginContact, otherContact, calldate, "1");
+                        }
                     }
                 });
 

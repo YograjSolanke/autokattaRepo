@@ -27,9 +27,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/buttonback"
                     android:gravity="center"
-                    android:text="Buyer lead"
+                    android:text="Buyer leads"
                     android:textColor="@color/white"
                     android:visibility="gone" />
 

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -36,6 +37,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
     View mFavNotify;
     String nextCount = "0";
     Double strTime = 0.0;
+    TextView mNoData;
 
 
     public FavoriteNotificationFragment() {
@@ -46,6 +48,9 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFavNotify = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+
+        mNoData = (TextView) mFavNotify.findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
 
         mRecyclerView = (RecyclerView) mFavNotify.findViewById(R.id.recyclerMain);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mFavNotify.findViewById(R.id.swipeRefreshLayoutMain);
@@ -75,7 +80,8 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         /*mApiCall.FavouriteNotification(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "7841023392"), nextCount);*/
-        mApiCall.FavouriteNotification("8007855589", nextCount);
+        //mApiCall.FavouriteNotification("7841023392", nextCount);
+        mApiCall.FavouriteNotifications("7841023392");
     }
 
 
@@ -88,6 +94,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mNoData.setVisibility(View.GONE);
                 List<FavouriteAllResponse> mainList = new ArrayList<>();
                 mainList.clear();
                 nextCount = "0";
@@ -248,6 +255,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setVstatus(successBuyerSearch.getVstatus());
                         favouriteAllResponse.setSendername(successBuyerSearch.getSendername());
                         favouriteAllResponse.setSenderPic(successBuyerSearch.getSenderPic());
+                        favouriteAllResponse.setVhpcapacity(successBuyerSearch.getVhpCapacity());
 
                         favouriteAllResponse.setSsearchId(successBuyerSearch.getSsearchId());
                         favouriteAllResponse.setScontactNo(successBuyerSearch.getScontactNo());
@@ -300,6 +308,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSairCondition(successBuyerSearch.getSairCondition());
                         favouriteAllResponse.setSfinanceReq(successBuyerSearch.getSfinanceReq());
                         favouriteAllResponse.setSinvoice(successBuyerSearch.getSinvoice());
+                        favouriteAllResponse.setShpcapacity(successBuyerSearch.getShpCapacity());
 
                         mainList.add(favouriteAllResponse);
 
@@ -372,6 +381,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setVstatus(successSellerVehicle.getVstatus());
                         favouriteAllResponse.setSendername(successSellerVehicle.getSendername());
                         favouriteAllResponse.setSenderPic(successSellerVehicle.getSenderPic());
+                        favouriteAllResponse.setVhpcapacity(successSellerVehicle.getVhpCapacity());
 
                         favouriteAllResponse.setSsearchId(successSellerVehicle.getSsearchId());
                         favouriteAllResponse.setScontactNo(successSellerVehicle.getScontactNo());
@@ -424,6 +434,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSairCondition(successSellerVehicle.getSairCondition());
                         favouriteAllResponse.setSfinanceReq(successSellerVehicle.getSfinanceReq());
                         favouriteAllResponse.setSinvoice(successSellerVehicle.getSinvoice());
+                        favouriteAllResponse.setShpcapacity(successSellerVehicle.getShpCapacity());
 
                         mainList.add(favouriteAllResponse);
                     }
@@ -461,7 +472,8 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                 adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                mNoData.setVisibility(View.VISIBLE);
+                //CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
@@ -472,6 +484,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(),getString(R.string._404_));
         } else if (error instanceof NullPointerException) {

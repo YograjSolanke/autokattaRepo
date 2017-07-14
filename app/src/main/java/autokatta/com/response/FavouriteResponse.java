@@ -1228,6 +1228,47 @@ public class FavouriteResponse {
             @Expose
             private String senderPic;
 
+            public String getvVersion() {
+                return vVersion;
+            }
+
+            public void setvVersion(String vVersion) {
+                this.vVersion = vVersion;
+            }
+
+            public String getvHrsRunning() {
+                return vHrsRunning;
+            }
+
+            public void setvHrsRunning(String vHrsRunning) {
+                this.vHrsRunning = vHrsRunning;
+            }
+
+
+            @SerializedName("Vhpcapacity")
+            @Expose
+            private String vhpCapacity;
+
+            public String getVhpCapacity() {
+                return vhpCapacity;
+            }
+
+            public void setVhpCapacity(String vhpCapacity) {
+                this.vhpCapacity = vhpCapacity;
+            }
+
+            @SerializedName("Shpcapacity")
+            @Expose
+            private String shpCapacity;
+
+            public String getShpCapacity() {
+                return shpCapacity;
+            }
+
+            public void setShpCapacity(String shpCapacity) {
+                this.shpCapacity = shpCapacity;
+            }
+
             public String getFavid() {
                 return favid;
             }
@@ -2420,6 +2461,30 @@ public class FavouriteResponse {
             @SerializedName("Sinvoice")
             @Expose
             private String sinvoice;
+
+            @SerializedName("Vhpcapacity")
+            @Expose
+            private String vhpCapacity;
+
+            public String getVhpCapacity() {
+                return vhpCapacity;
+            }
+
+            public void setVhpCapacity(String vhpCapacity) {
+                this.vhpCapacity = vhpCapacity;
+            }
+
+            @SerializedName("Shpcapacity")
+            @Expose
+            private String shpCapacity;
+
+            public String getShpCapacity() {
+                return shpCapacity;
+            }
+
+            public void setShpCapacity(String shpCapacity) {
+                this.shpCapacity = shpCapacity;
+            }
 
             public String getFavid() {
                 return favid;
