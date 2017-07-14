@@ -24,7 +24,9 @@ import autokatta.com.request.CreateServiceMelaRequest;
 import autokatta.com.request.CreateStoreRequest;
 import autokatta.com.request.RegistrationCompanyBasedrequest;
 import autokatta.com.request.RegistrationRequest;
+import autokatta.com.request.SaveSearchRequest;
 import autokatta.com.request.UpdateMyVehicleRequest;
+import autokatta.com.request.UpdateStoreRequest;
 import autokatta.com.request.UploadUsedVehicleRequest;
 import autokatta.com.response.*;
 import okhttp3.OkHttpClient;
@@ -3391,7 +3393,7 @@ Upload Vehicle
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mFollowResponse = serviceApi._autokattaFollow(senderContact, receiverContact, layout);
+                Call<String> mFollowResponse = serviceApi._autokattaFollow(senderContact, receiverContact, layout,"","","","");
                 mFollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3431,7 +3433,7 @@ Upload Vehicle
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaUnfollow(senderContact, receiverContact, layout);
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnfollow(senderContact, receiverContact, layout,"","","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3467,7 +3469,7 @@ remove contact from blacklist contact
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi.removeContactFromBlacklist(myContact, contact, keyword);
+                Call<String> mUpdateRegistration = serviceApi.removeContactFromBlacklist(myContact,"", contact, keyword,"");
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -4549,7 +4551,7 @@ params.put("auction_id", bundleAuctionId);
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> delbgrp = serviceApi.deleteBroadcastGroup(keyword, groupid);
+                Call<String> delbgrp = serviceApi.deleteBroadcastGroup("","","",keyword, groupid);
                 delbgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -4746,7 +4748,7 @@ params.put("auction_id", bundleAuctionId);
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> createbrdcstgrp = serviceApi.createBroadcastGroup(title, owner, member, keyword);
+                Call<String> createbrdcstgrp = serviceApi.createBroadcastGroup(title, owner, member, keyword,"");
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5155,13 +5157,13 @@ Get uploaded Vehicle Buyer list
     //Save My Search
     public void saveMySearch(String myContact, String category, String subCategory, String brand1, String model1,
                              String version1, String color1, String mfgYear, String insurance1, String Kms, String Hrs,
-                             String hpCap, String owner1, String price, String tyre, String city1, String city11, String city12,
+                             String hpCap, int owner1, String price, String tyre, String city1, String city11, String city12,
                              String city13, String city14, String city2, String city21, String city22, String city23,
                              String city24, String rc1, String insurance11, String tax_validity1, String fitness_validity1,
                              String permit_validity1, String fual1, String seating1, String permit1, String hypo1,
                              String drive1, String finance1, String transmission1, String body1, String boat1, String rv1,
                              String use1, String implement1, String bus_type1, String air1, String invoice1, String action,
-                             String sid, String callPermission) {
+                             int sid, String callPermission) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5175,11 +5177,18 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> createbrdcstgrp = serviceApi._autokattaSaveMySearch(myContact, category, subCategory, brand1,
-                        model1, version1, color1, mfgYear, insurance1, Kms, Hrs, hpCap, owner1, price, tyre, city1, city11, city12,
-                        city13, city14, city2, city21, city22, city23, city24, rc1, insurance11, tax_validity1, fitness_validity1,
-                        permit_validity1, fual1, seating1, permit1, hypo1, drive1, finance1, transmission1, body1, boat1, rv1, use1,
-                        implement1, bus_type1, air1, invoice1, action, sid, callPermission);
+                SaveSearchRequest saveSearchRequest=new SaveSearchRequest( action,  sid,
+                        myContact,  category,  brand1,  model1,
+                        city2,  city1,"","" , /*locationState,  registrationYear,*/
+                        mfgYear,  color1,  rc1, insurance11,
+                        tax_validity1,  fitness_validity1,  permit_validity1, fual1,
+                        seating1,  permit1,  Kms,  Hrs, hpCap,
+                        owner1, hypo1,  price,  drive1, transmission1,
+                        body1, boat1,  rv1,  use1, city11, city12,
+                        city13, city14, city21,  city22, city23, city24,
+                        tyre, implement1, bus_type1, air1,  invoice1,
+                        finance1, version1, callPermission);
+                Call<String> createbrdcstgrp = serviceApi._autokattaSaveMySearch(saveSearchRequest);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5379,7 +5388,7 @@ Get saved search Seller list
     Get Store response.
      */
 
-    public void getStoreData(String contact, String store_id) {
+    public void getStoreData(String contact, int store_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -5711,7 +5720,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaLike(myContact, othercontact, layout);
+                Call<String> mUnfollowResponse = serviceApi._autokattaLike(myContact, othercontact, layout,"","","","","","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5751,7 +5760,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(myContact, othercontact, layout);
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(myContact, othercontact, layout,"","","","","","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6042,7 +6051,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> productReview = serviceApi.postProductReview(contact, storeId, productId, review);
+                Call<String> productReview = serviceApi.postProductReview(contact, storeId, productId, review,"");
                 productReview.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6082,7 +6091,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaVehicleLike(myContac, otherContact, layout, vehicleid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaVehicleLike(myContac, otherContact, layout,"","", vehicleid,"","","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6161,7 +6170,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaVehicleUnLike(myContac, otherContact, layout, vehicleid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaVehicleUnLike(myContac, otherContact, layout,"","", vehicleid,"","","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6263,7 +6272,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> like = serviceApi._autokattaProductView(myContac, otherContact, layout, productId);
+                Call<String> like = serviceApi._autokattaProductView(myContac, otherContact, layout, "","","",productId,"","","");
                 like.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6303,7 +6312,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> like = serviceApi._autokattaServiceView(myContac, otherContact, layout, serviceId);
+                Call<String> like = serviceApi._autokattaServiceView(myContac, otherContact, layout,"","","","", serviceId,"","");
                 like.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6342,7 +6351,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaProductViewUnlike(myContac, otherContact, layout, productID);
+                Call<String> mUnfollowResponse = serviceApi._autokattaProductViewUnlike(myContac, otherContact, layout, "","","",productID,"","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6381,7 +6390,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaServiceViewUnlike(myContac, otherContact, layout, ServiceId);
+                Call<String> mUnfollowResponse = serviceApi._autokattaServiceViewUnlike(myContac, otherContact, layout,"","","","", ServiceId,"","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6532,7 +6541,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaFollowStore(mycontact, otherContact, layout, storeid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaFollowStore(mycontact, otherContact, layout, storeid,"","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6571,7 +6580,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaUnfollowStore(mycontact, otherContact, layout, storeid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnfollowStore(mycontact, otherContact, layout, storeid,"","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6610,7 +6619,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaUnlikeStore(mycontact, otherContact, layout, storeid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnlikeStore(mycontact, otherContact, layout, storeid,"","","","","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6649,7 +6658,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaLikeStore(mycontact, otherContact, layout, storeid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaLikeStore(mycontact, otherContact, layout, storeid,"","","","","","");
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6960,7 +6969,7 @@ Get saved search Seller list
     update store
      */
 
-    public void updateStore(String storename, String store_id, String location, String website, String open, String close,
+    public void updateStore(String storename, int store_id, String location, String website, String open, String close,
                             String profile, String category, String working_days, String storeDescription, String storetype,
                             String address, String coverImage, String textbrand, String strBrandSpinner) {
 
@@ -6979,8 +6988,9 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi.updateStore(storename, store_id, location, website, open, close,
+                UpdateStoreRequest updateStoreRequest=new UpdateStoreRequest(storename, store_id, location, website, open, close,
                         profile, category, working_days, storeDescription, storetype, address, coverImage, textbrand, strBrandSpinner);
+                Call<String> mUnfollowResponse = serviceApi.updateStore(updateStoreRequest);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -7942,15 +7952,15 @@ get ExchangeMela Analytics Data
                                   String strMakeyear, String strColor, String strRegno, String strRc, String strInsurance,
                                   String strInsuranceIdv, String strTaxvalid, String strTaxDate, String strFitnessvalid,
                                   String strPermitvalid, String strPermit, String strFitnessvalid1, String strFuel,
-                                  String strSeatcap, String strPermitDate, String strFinancestatus, String strKms, String strHrs,
-                                  String strOwner, String strBodyMfg, String strSeatMfg, String strHypo, String strEngine,
+                                  String strSeatcap, String strPermitDate, String strFinancestatus, double strKms, String strHrs,
+                                  int strOwner, String strBodyMfg, String strSeatMfg, String strHypo, String strEngine,
                                   String strChasis, String s, String strImages, String strDrive, String strTrans,
                                   String strBodytype, String s1, String s2, String strApp, String strTyreContext,
                                   String strBustype, String strAir, String strInvoice, String strImplement, String strGroupprivacy,
                                   String strHp, String strJib, String strBoon, String strBrakename, String strPumpname,
                                   String strInsuDate, String strEmission, String strFinancestatus1, String strExhangestatus,
-                                  String strStearing, String strCategoryId, String strSubcategoryId, String strBrandId,
-                                  String strModelId, String strVersionId) {
+                                  String strStearing, int strCategoryId, int strSubcategoryId, int strBrandId,
+                                  int strModelId, int strVersionId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
