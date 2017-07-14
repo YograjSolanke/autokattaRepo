@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,8 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -40,7 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     CoordinatorLayout mLogin;
     String userName;
     String password;
-    KProgressHUD hud;
+    //KProgressHUD hud;
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +97,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mPassword.setError(getString(R.string.err_password));
         } else {
             ApiCall mApiCall = new ApiCall(LoginActivity.this, this);
-            hud = KProgressHUD.create(LoginActivity.this)
+            /*hud = KProgressHUD.create(LoginActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please wait")
                     .setMaxProgress(100)
-                    .show();
+                    .show();*/
+            pd = new ProgressDialog(LoginActivity.this, R.style.MyTheme);
+            pd.setCancelable(false);
+            pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+            pd.show();
             mApiCall.userLogin(userName, password);
         }
     }
@@ -110,7 +114,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                hud.dismiss();
+                //hud.dismiss();
+                pd.hide();
                 LoginResponse mLoginResponse = (LoginResponse) response.body();
                 String myContact = mUserName.getText().toString();
                 if (!mLoginResponse.getSuccess().isEmpty()) {
@@ -127,21 +132,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     finish();
                     startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
                 } else {
-                    Snackbar.make(mLogin, mLoginResponse.getError().get(0), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mLogin, "Username or Password is incorrect", Snackbar.LENGTH_SHORT).show();
                 }
             } else {
-                hud.dismiss();
+                //hud.dismiss();
+                pd.hide();
                 Snackbar.make(mLogin, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            hud.dismiss();
+            //hud.dismiss();
+            pd.hide();
             Snackbar.make(mLogin, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-        hud.dismiss();
+        //hud.dismiss();
+        pd.hide();
         if (error instanceof SocketTimeoutException) {
             Snackbar.make(mLogin, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
