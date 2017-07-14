@@ -2156,7 +2156,8 @@ Upload Vehicle
     /*
   Get Suggested Price
    */
-    public void SuggestedPrice(String categoryId, String subCategoryId, String brandId, String modelId, String versionId, String mfgYear, String rtoCity) {
+    public void SuggestedPrice(int categoryId, String subCategoryId, String brandId, String modelId, String versionId,
+                               String mfgYear, String rtoCity) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -3164,7 +3165,7 @@ Upload Vehicle
         Get a store admins
      */
 
-    public void StoreAdmin(String store_id) {
+    public void StoreAdmin(int store_id) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -3199,7 +3200,7 @@ Upload Vehicle
         Add new store admins
      */
 
-    public void newStoreAdmin(String storeId, String adminNos) {
+    public void newStoreAdmin(int storeId, String adminNos) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6524,7 +6525,7 @@ Get saved search Seller list
      other Store Follow
         */
 
-    public void otherStoreFollow(String mycontact, String otherContact, String layout, String storeid) {
+    public void otherStoreFollow(String mycontact, String otherContact, String layout, int storeid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6563,7 +6564,7 @@ Get saved search Seller list
      Other Store UNfollow
      */
 
-    public void otherStoreUnFollow(String mycontact, String otherContact, String layout, String storeid) {
+    public void otherStoreUnFollow(String mycontact, String otherContact, String layout, int storeid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6602,7 +6603,7 @@ Get saved search Seller list
      OtherStore unLike
      */
 
-    public void otherStoreUnlike(String mycontact, String otherContact, String layout, String storeid) {
+    public void otherStoreUnlike(String mycontact, String otherContact, String layout, int storeid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6641,7 +6642,7 @@ Get saved search Seller list
      store Like
      */
 
-    public void otherStoreLike(String mycontact, String otherContact, String layout, String storeid) {
+    public void otherStoreLike(String mycontact, String otherContact, String layout, int storeid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6683,7 +6684,7 @@ Get saved search Seller list
     send new rating
      */
 
-    public void sendNewrating(String contact, String store_id, String product_id, String service_id, String rate, String rate1,
+    public void sendNewrating(String contact, int store_id, String product_id, String service_id, String rate, String rate1,
                               String rate2, String rate3, String rate4, String rate5, String type) {
 
         try {
@@ -6726,7 +6727,7 @@ Get saved search Seller list
     send updated rating
      */
 
-    public void sendUpdatedrating(String contact, String store_id, String product_id, String service_id, String rate, String rate1,
+    public void sendUpdatedrating(String contact, int store_id, String product_id, String service_id, String rate, String rate1,
                                   String rate2, String rate3, String rate4, String rate5, String type) {
 
         try {
@@ -6770,7 +6771,7 @@ Get saved search Seller list
     recommend store
      */
 
-    public void recommendStore(String contact, String store_id) {
+    public void recommendStore(String contact, int store_id) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -7959,8 +7960,8 @@ get ExchangeMela Analytics Data
                                   String strBustype, String strAir, String strInvoice, String strImplement, String strGroupprivacy,
                                   String strHp, String strJib, String strBoon, String strBrakename, String strPumpname,
                                   String strInsuDate, String strEmission, String strFinancestatus1, String strExhangestatus,
-                                  String strStearing, int strCategoryId, int strSubcategoryId, int strBrandId,
-                                  int strModelId, int strVersionId) {
+                                  String strStearing, int strCategoryId, String strSubcategoryId, String strBrandId,
+                                  String strModelId, String strVersionId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {

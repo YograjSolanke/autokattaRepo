@@ -40,7 +40,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class StoreInfo extends Fragment implements RequestNotifier, View.OnClickListener {
     View mAbout;
-    String myContact, Store_id, StoreContact;
+    String myContact, StoreContact;
+    int Store_id;
     ImageView editStore, addEnquiry;
     boolean hasView;
     NestedScrollView scrollView;
@@ -61,7 +62,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
         return mAbout;
     }
 
-    private void getStoredata(String myContact, String store_id) {
+    private void getStoredata(String myContact, int store_id) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getStoreData(myContact, store_id);
@@ -78,7 +79,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
         switch (view.getId()) {
             case R.id.editStore:
                 Bundle bundle = new Bundle();
-                bundle.putString("store_id", Store_id);
+                bundle.putInt("store_id", Store_id);
                 bundle.putString("className", "StoreViewActivity");
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(getActivity(), MyStoreListActivity.class);
@@ -215,7 +216,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 adminContacts = (TextView) mAbout.findViewById(R.id.editAdminContact);
 
                 Bundle b = getArguments();
-                Store_id = b.getString("store_id");
+                Store_id = b.getInt("store_id");
                 getStoredata(myContact, Store_id);
 
                 scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {

@@ -31,7 +31,7 @@ public class SearchStoreResponse {
         private String contact;
         @SerializedName("store_id")
         @Expose
-        private String storeId;
+        private int storeId;
         @SerializedName("store_name")
         @Expose
         private String storeName;
@@ -92,11 +92,11 @@ public class SearchStoreResponse {
             this.contact = contact;
         }
 
-        public String getStoreId() {
+        public int getStoreId() {
             return storeId;
         }
 
-        public void setStoreId(String storeId) {
+        public void setStoreId(int storeId) {
             this.storeId = storeId;
         }
 

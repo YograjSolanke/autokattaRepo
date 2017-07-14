@@ -283,7 +283,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendproductrating() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.sendNewrating(contact, "", "", service_id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendNewrating(contact, 0, "", service_id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(tmrate), "", "", "service");
     }
 
@@ -292,7 +292,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendupdatedproductrating() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.sendUpdatedrating(contact, "", "", service_id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendUpdatedrating(contact, 0, "", service_id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(tmrate), "", "", "service");
     }
 

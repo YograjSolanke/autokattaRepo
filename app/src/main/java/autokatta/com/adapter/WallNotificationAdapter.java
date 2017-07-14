@@ -541,6 +541,16 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 ImageButton mGroupFavourite;
                 TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
                         mGroupNoOfServices;*/
+
+                ((GroupNotifications) holder).mActionName.setText(notificationList.get(position).getSenderName() + " " +
+                        notificationList.get(position).getAction() + "  you in " + notificationList.get(position).getGroupName()
+                        + " group");
+                ((GroupNotifications) holder).mGroupName.setText(notificationList.get(position).getGroupName());
+                ((GroupNotifications) holder).mActionTime.setText(notificationList.get(position).getDateTime());
+                ((GroupNotifications) holder).mGroupMembers.setText(notificationList.get(position).getGroupMembers());
+                ((GroupNotifications) holder).mGroupNoOfVehicles.setText(notificationList.get(position).getGroupVehicles());
+                //((GroupNotifications) holder).mGroupNoOfProducts.setText(notificationList.get(position));
+                //((GroupNotifications) holder).mGroupNoOfServices.setText(notificationList.get(position));
                 break;
 
             case 4:

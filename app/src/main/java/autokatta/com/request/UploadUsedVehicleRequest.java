@@ -15,19 +15,19 @@ public class UploadUsedVehicleRequest {
     private String contact;
     @SerializedName("CategoryID")
     @Expose
-    private Integer categoryID;
+    private int categoryID;
     @SerializedName("SubCategoryID")
     @Expose
-    private Integer subCategoryID;
+    private String subCategoryID;
     @SerializedName("BrandID")
     @Expose
-    private Integer brandID;
+    private String brandID;
     @SerializedName("ModelID")
     @Expose
-    private Integer modelID;
+    private String modelID;
     @SerializedName("VersionId")
     @Expose
-    private Integer versionId;
+    private String versionId;
     @SerializedName("Category")
     @Expose
     private String category;
@@ -220,43 +220,43 @@ public class UploadUsedVehicleRequest {
         this.contact = contact;
     }
 
-    public Integer getCategoryID() {
+    public int getCategoryID() {
         return categoryID;
     }
 
-    public void setCategoryID(Integer categoryID) {
+    public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
     }
 
-    public Integer getSubCategoryID() {
+    public String getSubCategoryID() {
         return subCategoryID;
     }
 
-    public void setSubCategoryID(Integer subCategoryID) {
+    public void setSubCategoryID(String subCategoryID) {
         this.subCategoryID = subCategoryID;
     }
 
-    public Integer getBrandID() {
+    public String getBrandID() {
         return brandID;
     }
 
-    public void setBrandID(Integer brandID) {
+    public void setBrandID(String brandID) {
         this.brandID = brandID;
     }
 
-    public Integer getModelID() {
+    public String getModelID() {
         return modelID;
     }
 
-    public void setModelID(Integer modelID) {
+    public void setModelID(String modelID) {
         this.modelID = modelID;
     }
 
-    public Integer getVersionId() {
+    public String getVersionId() {
         return versionId;
     }
 
-    public void setVersionId(Integer versionId) {
+    public void setVersionId(String versionId) {
         this.versionId = versionId;
     }
 
@@ -775,7 +775,7 @@ public class UploadUsedVehicleRequest {
                                     String invoice, String implementss, String privacy, String hp_capacity, String JIB,
                                     String Boon, String brakes, String pump, String insuranceDate, String emissionVersion,
                                     String financeStatus, String exchangeStatus, String steering,
-                                    int category_id, int sub_cat_id, int BrandID, int ModelID, int VersionId) {
+                                    int category_id, String sub_cat_id, String BrandID, String ModelID, String VersionId) {
         this.title = title;
         this.contact = myContact;
         this.category = category;

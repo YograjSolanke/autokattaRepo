@@ -27,7 +27,7 @@ public class BrowseStoreResponse {
 
         @SerializedName("store_id")
         @Expose
-        private String storeId;
+        private int storeId;
         @SerializedName("contact_no")
         @Expose
         private String contactNo;
@@ -88,11 +88,11 @@ public class BrowseStoreResponse {
 
         private boolean visibility;
 
-        public String getStoreId() {
+        public int getStoreId() {
             return storeId;
         }
 
-        public void setStoreId(String storeId) {
+        public void setStoreId(int storeId) {
             this.storeId = storeId;
         }
 

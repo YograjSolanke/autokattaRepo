@@ -66,11 +66,12 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     String isDealing = "";
     String myContact, storeAdmins = "";
     Activity mActivity;
-    String mOtherContact, mLoginContact, store_id, storeOtherContact, mFolllowstr, mLikestr, storeRating;
+    String mOtherContact, mLoginContact, storeOtherContact, mFolllowstr, mLikestr, storeRating;
     String storeName = "", storeImage = "", storeCoverImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
             storeLikeCount, storeFollowCount, strDetailsShare = "", productCount, serviceCount, vehicleCount;
     Double storelattitude;
     Double storelongitude;
+    int store_id;
     ApiCall mApiCall;
     private int likecountint, followcountint;
     private ProgressDialog dialog;
@@ -132,7 +133,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 mRatingBar = (RatingBar) mMyStoreHome.findViewById(R.id.store_rating);
 
                 Bundle b = getArguments();
-                store_id = b.getString("store_id");
+                store_id = b.getInt("store_id");
 
                 getOtherStore(myContact, store_id);
                 mRating.setOnClickListener(new View.OnClickListener() {
@@ -457,7 +458,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 if (mActivity != null)
                     CustomToast.customToast(getActivity(), "Rating Submitted");
                 Bundle bundle = new Bundle();
-                bundle.putString("store_id", store_id);
+                bundle.putInt("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
                 getActivity().finish();
                 Intent intent = new Intent(getActivity(), StoreViewActivity.class);
@@ -468,7 +469,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 //if (mActivity != null)
                 CustomToast.customToast(getActivity(), "Rating Updated");
                 Bundle bundle = new Bundle();
-                bundle.putString("store_id", store_id);
+                bundle.putInt("store_id", store_id);
                 bundle.putString("StoreContact", storeOtherContact);
                 getActivity().finish();
                 Intent intent = new Intent(getActivity(), StoreViewActivity.class);
@@ -696,7 +697,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         overallbar.setRating(count);
     }
 
-    private void getOtherStore(String contact, String store_id) {
+    private void getOtherStore(String contact, int store_id) {
         dialog.show();
         mApiCall.getStoreData(contact, store_id);
         mApiCall.StoreAdmin(store_id);

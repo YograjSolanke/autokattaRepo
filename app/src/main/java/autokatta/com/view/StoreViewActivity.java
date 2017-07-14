@@ -55,7 +55,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-    String mOtherContact, mLoginContact, store_id, storeOtherContact, mFolllowstr, mLikestr, storeRating, str;
+    String mOtherContact, mLoginContact, storeOtherContact, mFolllowstr, mLikestr, storeRating, str;
+    int store_id;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     RatingBar storerating;
@@ -140,14 +141,14 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                             .getString("loginContact", "");
 
                     if (getIntent().getExtras() != null) {
-                        store_id = getIntent().getExtras().getString("store_id");
+                        store_id = getIntent().getExtras().getInt("store_id");
                         storeOtherContact = getIntent().getExtras().getString("StoreContact");
                         str = getIntent().getExtras().getString("flow_tab_name");
                         Log.i("storeOtherContact", "->" + storeOtherContact);
                         getOtherStore(mLoginContact, store_id);
                     }
 
-                    mBundle.putString("store_id", store_id);
+                    mBundle.putInt("store_id", store_id);
                     if (viewPager != null) {
                         setupViewPager(viewPager);
                     }
@@ -471,7 +472,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         viewPager.setAdapter(adapter);
     }
 
-    private void getOtherStore(String contact, String store_id) {
+    private void getOtherStore(String contact, int store_id) {
         mApiCall.getStoreData(contact, store_id);
     }
 
@@ -559,7 +560,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", strDetailsShare).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_store_id", store_id).apply();
+                        putInt("Share_store_id", store_id).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "store").apply();
 
@@ -606,7 +607,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
             public void onClick(DialogInterface dialog, int which) {
                 String strName = arrayAdapter.getItem(which);
                 Bundle bundle = new Bundle();
-                bundle.putString("store_id", store_id);
+                bundle.putInt("store_id", store_id);
 
                 if (strName != null) {
                     if (strName.equals("Add Product")) {
