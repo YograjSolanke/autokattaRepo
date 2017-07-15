@@ -3,7 +3,7 @@
     <string name="search_hint">Search</string>
     <string name="no_data">No Data Found</string>
     <string name="action_settings">Settings</string>
-   <!-- <string name="base_url">http://autokatta.com/mobile/</string>-->
+    <!-- <string name="base_url">http://autokatta.com/mobile/</string>-->
     <string name="base_url">http://autokatta.acquiscent.com/api/AutoKattaWebService/</string>
     <string name="permission">Autokatta allows your permissions to access your data</string>
     <string name="specification_note">Note:-Standard Specification As Per Manufacturer</string>
@@ -77,6 +77,7 @@
     <string name="email">Email</string>
     <string name="website">WebSite</string>
     <string name="interest">Interest</string>
+    <string name="edit">Edit</string>
 
     <string name="group_alert"><font color='#FF0000'>1. IGNITION package of price is 750/- per month gives you unlimited uploads, Unlimited groups, unlimited stores. Payment options will be monthly, quarterly, half yearly and annually.</font></string>
     <!--User Profile-->
@@ -263,5 +264,6 @@
     <string name="title_activity_location">LocationActivity</string>
     <string name="title_activity_edit_profile">EditProfile</string>
     <string name="title_activity_manual_enquiry_vehicle_list">ManualEnquiryVehicleList</string>
+    <string name="title_activity_edit_tags">EditTags</string>
 
 </resources>

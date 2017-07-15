@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="autokatta.com.fragment_profile.EditTags"
+    tools:showIn="@layout/activity_edit_tags">
+
+    <me.gujun.android.taggroup.TagGroup
+        android:id="@+id/tag_group"
+        style="@style/TagGroup"
+        app:atg_isAppendMode="true"
+        android:layout_marginTop="@dimen/activity_half_margin"
+        android:layout_marginStart="@dimen/activity_half_margin" />
+
+</LinearLayout>

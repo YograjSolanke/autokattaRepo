@@ -95,7 +95,7 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Bundle b = new Bundle();
                 // b.putString("action", "main");
-                b.putString("store_id", mItemList.get(position).getStoreId());
+                b.putInt("store_id", mItemList.get(position).getStoreId());
 
                 Intent intent = new Intent(mActivity, StoreViewActivity.class);
                 intent.putExtras(b);

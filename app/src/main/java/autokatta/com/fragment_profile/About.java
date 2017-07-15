@@ -2,6 +2,7 @@ package autokatta.com.fragment_profile;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -60,7 +61,7 @@ public class About extends Fragment implements RequestNotifier {
     ImageView mDone;
     ImageView mEdit;
     EditText mWebsite, mEmail;
-    TextView mContact, mProfession,msubprofession;
+    TextView mContact, mProfession, msubprofession, mEditTags;
     AutoCompleteTextView mCompany, mDesignation, mCity;
     MultiAutoCompleteTextView mSkills;
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
@@ -352,6 +353,7 @@ public class About extends Fragment implements RequestNotifier {
                 mTagGroup = (TagGroup) mAbout.findViewById(R.id.tag_group);
                 mTagGroup.setTags(tags);
                 mContact = (TextView) mAbout.findViewById(R.id.contact_no);
+                mEditTags = (TextView) mAbout.findViewById(R.id.editTags);
                 mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
                 msubprofession= (TextView) mAbout.findViewById(R.id.subprofession);
                 mEmail = (EditText) mAbout.findViewById(R.id.email);
@@ -620,6 +622,15 @@ public class About extends Fragment implements RequestNotifier {
                                 mSkills.setFocusable(false);
                             }
                         }
+                    }
+                });
+
+                mEditTags.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), EditTags.class);
+                        intent.putExtra("stringArray", tags);
+                        startActivity(intent);
                     }
                 });
             }

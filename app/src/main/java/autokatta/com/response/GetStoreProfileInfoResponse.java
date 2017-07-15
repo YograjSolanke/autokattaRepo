@@ -27,7 +27,7 @@ public class GetStoreProfileInfoResponse {
 
         @SerializedName("Store_id")
         @Expose
-        private String storeId;
+        private int storeId;
         @SerializedName("Store_name")
         @Expose
         private String storeName;
@@ -41,11 +41,11 @@ public class GetStoreProfileInfoResponse {
         @Expose
         private String storeType;
 
-        public String getStoreId() {
+        public int getStoreId() {
             return storeId;
         }
 
-        public void setStoreId(String storeId) {
+        public void setStoreId(int storeId) {
             this.storeId = storeId;
         }
 
