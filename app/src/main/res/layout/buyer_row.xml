@@ -254,7 +254,6 @@
                 android:layout_toEndOf="@+id/yreg"
                 android:text="--"
                 android:textColor="#808080" />
-
         </RelativeLayout>
 
         <View

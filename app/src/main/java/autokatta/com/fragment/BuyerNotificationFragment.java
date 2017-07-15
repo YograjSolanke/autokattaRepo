@@ -466,6 +466,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 checkBoxHpcap.setChecked(true);
                                 checkBoxHPcapRight.setChecked(true);
                             }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

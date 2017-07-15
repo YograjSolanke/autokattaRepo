@@ -2486,6 +2486,7 @@ public class FavouriteResponse {
                 this.shpCapacity = shpCapacity;
             }
 
+
             public String getFavid() {
                 return favid;
             }

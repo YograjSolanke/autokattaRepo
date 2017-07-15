@@ -1204,7 +1204,6 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
                 }
 
-
                 int mFlippingsell = 0;
 
                 if (mFlippingsell == 0) {

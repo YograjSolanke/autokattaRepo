@@ -81,7 +81,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
         /*mApiCall.FavouriteNotification(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "7841023392"), nextCount);*/
         //mApiCall.FavouriteNotification("7841023392", nextCount);
-        mApiCall.FavouriteNotifications("7841023392");
+        //mApiCall.FavouriteNotifications("7841023392");
     }
 
 

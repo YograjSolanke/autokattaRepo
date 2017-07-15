@@ -494,6 +494,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 checkBoxHp.setChecked(true);
                                 checkBoxHpRight.setChecked(true);
                             }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

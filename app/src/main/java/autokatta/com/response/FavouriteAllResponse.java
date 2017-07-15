@@ -1183,6 +1183,7 @@ public class FavouriteAllResponse {
     private String vstatus;
     private String vhpcapacity;
 
+
     private String sendername;
     private String senderPic;
     private String ssearchId;
