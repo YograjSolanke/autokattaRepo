@@ -148,7 +148,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mLike.setVisibility(View.GONE);
                         mUnlike.setVisibility(View.VISIBLE);
-                        mApiCall.otherStoreUnlike(myContact, mOtherContact, "2", store_id);
+                        mApiCall.UnLike(myContact, mOtherContact, "2", store_id,"","","","","","");
                         likecountint = Integer.parseInt(likeUnlike.getCount());
                         likecountint = likecountint - 1;
                         mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
@@ -162,7 +162,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mLike.setVisibility(View.VISIBLE);
                         mUnlike.setVisibility(View.GONE);
-                        mApiCall.otherStoreLike(myContact, mOtherContact, "2", store_id);
+                        mApiCall.Like(myContact, mOtherContact, "2", store_id,"","","","","","");
                         likecountint = Integer.parseInt(likeUnlike.getCount());
                         likecountint = likecountint + 1;
                         mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
@@ -176,7 +176,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mFollow.setVisibility(View.GONE);
                         mUnFollow.setVisibility(View.VISIBLE);
-                        mApiCall.otherStoreFollow(myContact, mOtherContact, "2", store_id);
+                        mApiCall.Follow(myContact, mOtherContact, "2", store_id,"","","");
                         followcountint = Integer.parseInt(likeUnlike.getFollowCount());
                         followcountint = followcountint + 1;
                         mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
@@ -190,7 +190,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mFollow.setVisibility(View.VISIBLE);
                         mUnFollow.setVisibility(View.GONE);
-                        mApiCall.otherStoreUnFollow(myContact, mOtherContact, "2", store_id);
+                        mApiCall.UnFollow(myContact, mOtherContact, "2", store_id,"","","");
                         followcountint = Integer.parseInt(likeUnlike.getFollowCount());
                         followcountint--;
                         mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));

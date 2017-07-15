@@ -456,14 +456,14 @@ public interface ServiceApi {
     //Follow profile
     @POST("NewFollow")
     Call<String> _autokattaFollow(@Query("SenderContact") String senderContact, @Query("ReceiverContact") String receiverContact,
-                                  @Query("Layout") String layout,@Query("StoreID") String storeid,
+                                  @Query("Layout") String layout,@Query("StoreID") int storeid,
                                   @Query("VehicleID") String vehicleid, @Query("ProductID") String pid,
                                   @Query("ServiceID") String servid);
 
     //Un Follow
     @POST("NewUnfollow")
     Call<String> _autokattaUnfollow(@Query("SenderContact") String senderContact, @Query("ReceiverContact") String receiverContact,
-                                    @Query("Layout") String layout, @Query("StoreID") String storeid ,
+                                    @Query("Layout") String layout, @Query("StoreID") int storeid ,
                                     @Query("VehicleID") String vid,@Query("ProductID") String pid,@Query("ServiceID") String sid
                                     );
 
@@ -861,9 +861,9 @@ public interface ServiceApi {
     Like
      */
 
-    @GET("Newlikes")
+    @POST("Newlikes")
     Call<String> _autokattaLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
-                                @Query("Layout") String layout, @Query("StoreID") String store_id,
+                                @Query("Layout") String layout, @Query("StoreID") int store_id,
                                 @Query("GroupID") String gid ,@Query("VehicleID") String vid,
                                 @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                 @Query("StatusID") String statusid, @Query("SearchID") String searchid);
@@ -872,9 +872,9 @@ public interface ServiceApi {
     UnLike
      */
 
-    @GET("NewUnlikes")
+    @POST("NewUnlikes")
     Call<String> _autokattaUnLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
-                                  @Query("Layout") String layout, @Query("StoreID") String store_id,
+                                  @Query("Layout") String layout, @Query("StoreID") int store_id,
                                   @Query("GroupID") String gid ,@Query("VehicleID") String vid,
                                   @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                   @Query("StatusID") String statusid, @Query("SearchID") String searchid);
@@ -913,27 +913,27 @@ public interface ServiceApi {
     Call<String> postProductReview(@Query("Contact") String contact, @Query("StoreID") String storeId,
                                    @Query("ProductID") String productId, @Query("Review") String review,@Query("ServiceID") String serviceid);
 
-    //Likes in Vehicle details
+   /* //Likes in Vehicle details
     @POST("Newlikes")
     Call<String> _autokattaVehicleLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                        @Query("Layout") String layout, @Query("StoreID") String store_id,
                                        @Query("GroupID") String gid ,@Query("VehicleID") String vid,
                                        @Query("ProductID") String pid, @Query("ServiceID") String sid,
-                                       @Query("StatusID") String statusid, @Query("SearchID") String searchid);
+                                       @Query("StatusID") String statusid, @Query("SearchID") String searchid);*/
 
     //Calling in Vehicle details
     @POST("calling")
     Call<String> _autokattaVehicleCalling(@Query("VehicleID") String vehicle_id, @Query("Keyword") String keyword);
 
 
-    //UnLikes in Vehicle details
+   /* //UnLikes in Vehicle details
     @POST("NewUnlikes")
     Call<String> _autokattaVehicleUnLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                          @Query("Layout") String layout, @Query("StoreID") String store_id,
                                          @Query("GroupID") String gid ,@Query("VehicleID") String vid,
                                          @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                          @Query("StatusID") String statusid, @Query("SearchID") String searchid);
-
+*/
     //get tags
     @GET("GetTags")
     Call<GetTagsResponse> _autoGetTags(@Query("Type") String type);
@@ -941,6 +941,7 @@ public interface ServiceApi {
     //get tags
     @POST("AddOtherTags")
     Call<OtherTagAddedResponse> _autoAddTags(@Query("Tag") String tag, @Query("Type") String type);
+/*
 
     //Likes in Product View
     @POST("Newlikes")
@@ -949,33 +950,34 @@ public interface ServiceApi {
                                        @Query("GroupID") String gid ,@Query("VehicleID") String vid,
                                        @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                        @Query("StatusID") String statusid, @Query("SearchID") String searchid);
+*/
 
 
-    //Likes in service View
+   /* //Likes in service View
     @POST("Newlikes")
     Call<String> _autokattaServiceView(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                        @Query("Layout") String layout, @Query("StoreID") String store_id,
                                        @Query("GroupID") String gid ,@Query("VehicleID") String vid,
                                        @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                        @Query("StatusID") String statusid, @Query("SearchID") String searchid);
-
-    //UnLikes in Product unlike
+*/
+   /* //UnLikes in Product unlike
     @POST("NewUnlikes")
     Call<String> _autokattaProductViewUnlike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                              @Query("Layout") String layout, @Query("StoreID") String store_id,
                                              @Query("GroupID") String gid ,@Query("VehicleID") String vid,
                                              @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                              @Query("StatusID") String statusid, @Query("SearchID") String searchid);
+*/
 
-
-    //UnLikes in Service unlike
+   /* //UnLikes in Service unlike
     @POST("NewUnlikes")
     Call<String> _autokattaServiceViewUnlike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                              @Query("Layout") String layout, @Query("StoreID") String store_id,
                                              @Query("GroupID") String gid ,@Query("VehicleID") String vid,
                                              @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                              @Query("StatusID") String statusid, @Query("SearchID") String searchid);
-
+*/
     //Share data within app
     @POST("NewShare")
     Call<String> _autokattaShareData(@Query("SenderContact") String sender_contact, @Query("ReceiverContact") String receiver_contact,
@@ -997,15 +999,15 @@ public interface ServiceApi {
     Call<BrowseStoreResponse> searchStore(@Query("SearchKey") String key, @Query("MyContact") String contact);
 
 
-    //Likes in Otherstore
+   /* //Likes in Otherstore
     @POST("Newlikes")
     Call<String> _autokattaLikeStore(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                      @Query("Layout") String layout, @Query("StoreID") int store_id,
                                      @Query("GroupID") String gid , @Query("VehicleID") String vid,
                                      @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                      @Query("StatusID") String statusid, @Query("SearchID") String searchid);
-
-    //UnLikes in Otherstore
+*/
+  /*  //UnLikes in Otherstore
     @POST("NewUnlikes")
     Call<String> _autokattaUnlikeStore(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                        @Query("Layout") String layout, @Query("StoreID") int store_id,
@@ -1013,20 +1015,20 @@ public interface ServiceApi {
                                        @Query("ProductID") String pid, @Query("ServiceID") String sid,
                                        @Query("StatusID") String statusid, @Query("SearchID") String searchid);
 
-
-    //Follow Otherstore
+*/
+  /*  //Follow Otherstore
     @POST("NewFollow")
     Call<String> _autokattaFollowStore(@Query("SenderContact") String senderContact, @Query("ReceiverContact") String receiverContact,
                                        @Query("Layout") String layout, @Query("StoreID") int storeid,
                                        @Query("VehicleID") String vehicleid, @Query("ProductID") String pid, @Query("ServiceID") String servid);
-
-    //Un Follow Otherstore
+*/
+  /*  //Un Follow Otherstore
     @POST("NewUnfollow")
     Call<String> _autokattaUnfollowStore(@Query("SenderContact") String senderContact, @Query("ReceiverContact") String receiverContact,
                                          @Query("Layout") String layout, @Query("StoreID") int storeid,
                                          @Query("VehicleID") String vid, @Query("ProductID") String pid, @Query("ServiceID") String sid
     );
-
+*/
 
     //send new rating
     @POST("NewRating")
@@ -1074,14 +1076,14 @@ public interface ServiceApi {
     Call<String> addContactToGroup(@Query("GroupID") String groupid, @Query("Contacts") String contacts);
 
 
-    //Notification Like Group
+  /*  //Notification Like Group
     @POST("Newlikes")
     Call<String> notificationLikegroup(@Query("GroupID") String groupid, @Query("SenderContact") String mycontact, @Query("ReceiverContact") String OtherContact,
                                        @Query("Layout") String layout, @Query("StoreID") String StoreID,
                                        @Query("VehicleID") String VehicleID, @Query("ProductID") String ProductID,
                                        @Query("ServiceID") String ServiceID,@Query("StatusID")
                                                String StatusID,@Query("SearchID") String SearchID);
-
+*/
 
     //update a store...
     @POST("UpdateStore")

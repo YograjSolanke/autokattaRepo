@@ -309,10 +309,10 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 break;
             case R.id.like_l:
                 if (mLikestr.equalsIgnoreCase("no")) {
-                    mApiCall.vehicleLike(prefcontact, contact, "4", mVehicle_Id);
+                    mApiCall.Like(prefcontact, contact, "4",0,"", mVehicle_Id,"","","","");
                     mFab.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.vehicleUnLike(prefcontact, contact, "4", mVehicle_Id);
+                    mApiCall.UnLike(prefcontact, contact, "4", 0,"", mVehicle_Id,"","","","");
                     mFab.setClosedOnTouchOutside(true);
                 }
                 break;

@@ -94,7 +94,7 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
                 b.putString("enddate",mMainlist.get(position).getEndDate());
                 b.putString("endtime",mMainlist.get(position).getEndTime());
                 b.putString("location",mMainlist.get(position).getLocation());
-                b.putString("enddatetime",mMainlist.get(position).getEndDateTime());
+                b.putString("enddatetime",mMainlist.get(position).getEndDateTime().replace("T"," "));
                 b.putString("serviceid",mMainlist.get(position).getId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(mActivity, ActiveServiceMelaPreviewActivity.class);

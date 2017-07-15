@@ -741,7 +741,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             } else
                                 mOtherContact = objAllResponse.getStoreContact();
 
-                            mApiCall.otherStoreLike(mLoginContact, mOtherContact, "2", store_id);
+                            mApiCall.Like(mLoginContact, mOtherContact, "2", store_id,"","","","","","");
                             storelikecountint++;
 
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
@@ -765,7 +765,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             } else
                                 mOtherContact = objAllResponse.getStoreContact();
 
-                            mApiCall.otherStoreUnlike(mLoginContact, mOtherContact, "2", store_id);
+                            mApiCall.UnLike(mLoginContact, mOtherContact, "2", store_id,"","","","","","");
                             storelikecountint--;
 
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));

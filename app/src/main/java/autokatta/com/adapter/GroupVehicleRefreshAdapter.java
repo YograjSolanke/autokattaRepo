@@ -412,14 +412,14 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     Like
      */
     private void sendLike(String Rcontact, String vehicleId) {
-        mApiCall.vehicleLike(myContact, Rcontact, "4", vehicleId);
+        mApiCall.Like(myContact, Rcontact, "4",0,"", vehicleId,"","","","");
     }
 
     /*
     Unlike...
      */
     private void sendUnlike(String Rcontact, String vehicleId) {
-        mApiCall.vehicleUnLike(myContact, Rcontact, "4", vehicleId);
+        mApiCall.UnLike(myContact, Rcontact, "4",0,"", vehicleId,"","","","");
     }
 
 

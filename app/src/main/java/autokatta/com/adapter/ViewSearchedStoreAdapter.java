@@ -165,8 +165,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 likecountint = Integer.parseInt(likecountstr);
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
-                mApiCall.otherStoreLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), object.getContact(), "2", StoreId);
+                mApiCall.Like(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""), object.getContact(), "2", StoreId,"","","","","","");
 
                 holder.linearunlike.setVisibility(View.VISIBLE);
                 holder.linearlike.setVisibility(View.GONE);
@@ -186,8 +186,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
 
-                mApiCall.otherStoreUnlike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), StoreContact, "2", StoreId);
+                mApiCall.UnLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""), StoreContact, "2", StoreId,"","","","","","");
 
                 holder.linearunlike.setVisibility(View.GONE);
                 holder.linearlike.setVisibility(View.VISIBLE);
@@ -206,8 +206,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 followcountint = Integer.parseInt(followcountstr);
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
-                mApiCall.otherStoreFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), StoreContact, "2", StoreId);
+                mApiCall.Follow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""), StoreContact, "2", StoreId,"","","");
                 holder.linearfollow.setVisibility(View.GONE);
                 holder.linearunfollow.setVisibility(View.VISIBLE);
 
@@ -225,8 +225,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 followcountint = Integer.parseInt(followcountstr);
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
-                mApiCall.otherStoreUnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), StoreContact, "2", StoreId);
+                mApiCall.UnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""), StoreContact, "2", StoreId,"","","");
                 holder.linearfollow.setVisibility(View.VISIBLE);
                 holder.linearunfollow.setVisibility(View.GONE);
 

@@ -3377,7 +3377,7 @@ Upload Vehicle
        Follow
      */
 
-    public void Follow(String senderContact, String receiverContact, String layout) {
+    public void Follow(String mycontact, String otherContact, String layout, int storeid,String vehicleid,String pid,String servid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -3394,7 +3394,7 @@ Upload Vehicle
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mFollowResponse = serviceApi._autokattaFollow(senderContact, receiverContact, layout,"","","","");
+                Call<String> mFollowResponse = serviceApi._autokattaFollow(mycontact, otherContact, layout, storeid,vehicleid,pid,servid);
                 mFollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -3417,7 +3417,7 @@ Upload Vehicle
        Un Follow
      */
 
-    public void UnFollow(String senderContact, String receiverContact, String layout) {
+    public void UnFollow(String senderContact, String receiverContact, String layout,int storeid, String vid, String pid,String sid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -3434,7 +3434,7 @@ Upload Vehicle
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaUnfollow(senderContact, receiverContact, layout,"","","","");
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnfollow(senderContact, receiverContact, layout,storeid,vid,pid,sid);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5737,7 +5737,8 @@ Get saved search Seller list
        Like
      */
 
-    public void Like(String myContact, String othercontact, String layout) {
+    public void Like(String myContact, String othercontact, String layout,int store_id, String gid, String vid,String pid,
+                     String sid, String statusid,String searchid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5754,7 +5755,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaLike(myContact, othercontact, layout,"","","","","","","");
+                Call<String> mUnfollowResponse = serviceApi._autokattaLike(myContact, othercontact, layout,store_id,gid,vid,pid,sid,statusid,searchid);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5777,7 +5778,8 @@ Get saved search Seller list
       UnLike
      */
 
-    public void UnLike(String myContact, String othercontact, String layout) {
+    public void UnLike(String myContact, String othercontact, String layout, int store_id, String gid, String vid,
+    String pid,String sid,String statusid, String searchid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5794,7 +5796,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(myContact, othercontact, layout,"","","","","","","");
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(myContact, othercontact, layout,store_id,gid,vid,pid,sid,statusid,searchid);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6104,10 +6106,10 @@ Get saved search Seller list
         }
     }
 
-  /*
+/*  *//*
      Vehicle Like
-     */
-
+     *//*
+done
     public void vehicleLike(String myContac, String otherContact, String layout, String vehicleid) {
 
         try {
@@ -6142,7 +6144,7 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
       /*
     Calling in Vehicle Details
      */
@@ -6183,9 +6185,9 @@ Get saved search Seller list
         }
     }
 
-     /*
+  /*   *//*
      Vehicle UnLike
-     */
+     *//*
 
     public void vehicleUnLike(String myContac, String otherContact, String layout, String vehicleid) {
 
@@ -6222,7 +6224,7 @@ Get saved search Seller list
             e.printStackTrace();
         }
     }
-
+*/
     /*
      Get Tags
       */
@@ -6287,9 +6289,9 @@ Get saved search Seller list
         }
     }
 
-/*
+/*/*
      Product Like
-     */
+     *//*
 
     public void _autokattaProductView(String myContac, String otherContact, String layout, String productId) {
 
@@ -6323,13 +6325,13 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
 
     /*
      Service Like
-     */
+     *//*
 
     public void _autokattaServiceView(String myContac, String otherContact, String layout, String serviceId) {
 
@@ -6363,12 +6365,12 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
-    /*
+   /* *//*
     Product Unlike
-     */
+     *//*
     public void _autokattaProductViewUnlike(String myContac, String otherContact, String layout, String productID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6402,12 +6404,15 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
+/*
 
-    /*
-   Service Unlike
     */
+/*
+   Service Unlike
+    *//*
+
     public void _autokattaServiceViewUnlike(String myContac, String otherContact, String layout, String ServiceId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6442,6 +6447,7 @@ Get saved search Seller list
             e.printStackTrace();
         }
     }
+*/
 
 
     /*
@@ -6554,11 +6560,11 @@ Get saved search Seller list
         }
     }
 
-    /*
+ /*   *//*
      other Store Follow
-        */
+        *//*
 
-    public void otherStoreFollow(String mycontact, String otherContact, String layout, int storeid) {
+    public void otherStoreFollow(String mycontact, String otherContact, String layout, int storeid,String vehicleid,String pid,String servid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6575,7 +6581,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaFollowStore(mycontact, otherContact, layout, storeid,"","","");
+                Call<String> mUnfollowResponse = serviceApi._autokattaFollowStore(mycontact, otherContact, layout, storeid,vehicleid,pid,servid);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6592,10 +6598,10 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    /*
+    }*/
+ /*   *//*
      Other Store UNfollow
-     */
+     *//*
 
     public void otherStoreUnFollow(String mycontact, String otherContact, String layout, int storeid) {
 
@@ -6631,10 +6637,10 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    /*
+    }*/
+   /* *//*
      OtherStore unLike
-     */
+     *//*
 
     public void otherStoreUnlike(String mycontact, String otherContact, String layout, int storeid) {
 
@@ -6670,10 +6676,10 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    /*
+    }*/
+  /*  *//*
      store Like
-     */
+     *//*
 
     public void otherStoreLike(String mycontact, String otherContact, String layout, int storeid) {
 
@@ -6709,7 +6715,7 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
 
@@ -6953,9 +6959,9 @@ Get saved search Seller list
             e.printStackTrace();
         }
     }
-         /*
+      /*   *//*
     Notifiction in group like
-     */
+     *//*
 
     public void groupLikeNotification(String groupid, String mycontact, String othercontact, String layout,String StoreID,
                                       String VehicleID,String ProductID,String ServiceID, String StatusID,String SearchID) {
@@ -6993,7 +6999,7 @@ Get saved search Seller list
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
 

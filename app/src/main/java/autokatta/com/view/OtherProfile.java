@@ -236,7 +236,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
             case R.id.like_l:
                 if (mLikestr.equalsIgnoreCase("no")) {
-                    mApiCall.Like(mLoginContact, mOtherContact, "1");
+                    mApiCall.Like(mLoginContact, mOtherContact, "1",0,"","","","","","");
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
                     mApiCall.UnLike(mLoginContact, mOtherContact, "1");

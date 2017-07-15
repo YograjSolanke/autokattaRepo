@@ -300,7 +300,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendUnlike() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall._autokattaProductViewUnlike(contact, receiver_contact, "5", product_id);
+        mApiCall.UnLike(contact, receiver_contact, "5", 0,"","", product_id,"","","");
     }
 
     /*
@@ -308,7 +308,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendLike() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall._autokattaProductView(contact, receiver_contact, "5", product_id);
+        mApiCall.Like(contact, receiver_contact, "5", 0,"","", product_id,"","","");
     }
 
     /*

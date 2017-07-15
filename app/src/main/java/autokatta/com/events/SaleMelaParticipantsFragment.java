@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -137,7 +136,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
                 participantList.clear();
                 SaleMelaParticipantsResponse participantsResponse = (SaleMelaParticipantsResponse) response.body();
 
-                if (!participantsResponse.getSuccess().isEmpty()) {
+                if (participantsResponse.getSuccess()!=null) {
                     mNoData.setVisibility(View.GONE);
                     for (SaleMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
 
