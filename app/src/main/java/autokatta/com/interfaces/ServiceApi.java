@@ -606,7 +606,7 @@ public interface ServiceApi {
                                               @Query("EventType") String eventType);
 
     // Get Auction Analytics
-    @POST("GetAnalyticsCount")
+    @GET("GetAnalyticsCount")
     Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("AuctionID") String strAuctionId);
 
     //get Active Auction high bid
