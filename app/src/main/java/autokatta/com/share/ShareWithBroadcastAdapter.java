@@ -27,11 +27,12 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
     private Activity activity;
     private List<MyBroadcastGroupsResponse.Success> broadcastlist = new ArrayList<>();
     private LayoutInflater mInflater;
-    private String sharedata, groupid, contactnumber, number, store_id, vehicle_id, product_id, service_id, profile_contact,
+    private String sharedata, groupid, contactnumber, number,  vehicle_id, product_id, service_id, profile_contact,
             search_id, status_id, auction_id, loan_id, exchange_id, keyword, grouptab;
+    private int store_id;
 
     ShareWithBroadcastAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> alldata,
-                              String sharedata, String contactnumber, String store_id, String vehicle_id,
+                              String sharedata, String contactnumber, int store_id, String vehicle_id,
                               String product_id, String service_id, String profile_contact, String search_id,
                               String status_id, String auction_id, String loan_id, String exchange_id, String keyword) {
 
@@ -99,7 +100,7 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Bundle b = new Bundle();
                 b.putString("generic_list_view", sharedata);
-                b.putString("store_id", store_id);
+                b.putInt("store_id", store_id);
                 b.putString("vehicle_id", vehicle_id);
                 b.putString("product_id", product_id);
                 b.putString("service_id", service_id);

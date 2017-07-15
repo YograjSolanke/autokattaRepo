@@ -983,7 +983,7 @@ public interface ServiceApi {
     Call<String> _autokattaShareData(@Query("SenderContact") String sender_contact, @Query("ReceiverContact") String receiver_contact,
                                      @Query("GroupID") String group_id, @Query("BroadCastGroupID") String broadcastgroup_id,
                                      @Query("CaptionData") String caption_data, @Query("Layout") String layout,
-                                     @Query("ProfileID") String profile_id, @Query("StoreID") String store_id,
+                                     @Query("ProfileID") String profile_id, @Query("StoreID") int store_id,
                                      @Query("VehicleID") String vehicle_id, @Query("ProductID") String product_id,
                                      @Query("ServiceID") String service_id, @Query("StatusID") String status_id,
                                      @Query("SearchID") String search_id, @Query("AuctionID") String auction_id,

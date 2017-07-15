@@ -6454,7 +6454,7 @@ done
     To Share data
      */
     public void shareTaskInApp(String sender_contact, String receiver_contact, String group_id, String broadcastgroup_id,
-                               String caption_data, String layout, String profile_id, String store_id,
+                               String caption_data, String layout, String profile_id, int store_id,
                                String vehicle_id, String product_id, String service_id, String status_id,
                                String search_id, String auction_id, String loan_id, String exchange_id) {
 

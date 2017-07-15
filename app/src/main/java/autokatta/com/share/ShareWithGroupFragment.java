@@ -27,9 +27,10 @@ import retrofit2.Response;
  * Created by ak-005 on 18/6/16.
  */
 public class ShareWithGroupFragment extends Fragment implements RequestNotifier {
-    String contactnumber, storecontact, store_id, vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id,
+    String contactnumber, storecontact, vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id,
             exchange_id;
     String sharedata, keyword;
+    int store_id;
     ListView grouplist;
 
     public ShareWithGroupFragment() {
@@ -48,7 +49,7 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
         try {
             Bundle b = getArguments();
             sharedata = b.getString("generic_list_view");
-            store_id = b.getString("store_id");
+            store_id = b.getInt("store_id");
             vehicle_id = b.getString("vehicle_id");
             product_id = b.getString("product_id");
             service_id = b.getString("service_id");

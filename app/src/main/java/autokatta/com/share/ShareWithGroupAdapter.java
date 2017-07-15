@@ -37,12 +37,12 @@ public class ShareWithGroupAdapter extends BaseAdapter {
     private List<String> image_array = new ArrayList<>();
 
     private LayoutInflater mInflater;
-    private String sharedata, groupid, contactnumber, number, store_id, vehicle_id, product_id, service_id, profile_contact,
+    private String sharedata, groupid, contactnumber, number, vehicle_id, product_id, service_id, profile_contact,
             search_id, status_id, auction_id, loan_id, exchange_id, keyword, groupname;
-
+    private int store_id;
 
     ShareWithGroupAdapter(Activity activity, List<String> alldata,
-                          String sharedata, String contactnumber, String store_id, String vehicle_id,
+                          String sharedata, String contactnumber, int store_id, String vehicle_id,
                           String product_id, String service_id, String profile_contact, String search_id,
                           String status_id, String auction_id, String loan_id, String exchange_id, String keyword) {
 
@@ -131,7 +131,7 @@ public class ShareWithGroupAdapter extends BaseAdapter {
                 groupname = title_array.get(position);
                 Bundle b = new Bundle();
                 b.putString("generic_list_view", sharedata);
-                b.putString("store_id", store_id);
+                b.putInt("store_id", store_id);
                 b.putString("vehicle_id", vehicle_id);
                 b.putString("product_id", product_id);
                 b.putString("service_id", service_id);

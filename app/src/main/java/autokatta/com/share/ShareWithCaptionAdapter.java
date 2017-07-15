@@ -26,13 +26,13 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ShareWithCaptionAdapter extends BaseAdapter {
 
     private Activity activity;
-    private String sharedata, store_id, contactnumber, vehicle_id, product_id,
+    private String sharedata,  contactnumber, vehicle_id, product_id,
             service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword, contacttab;
-
+private int store_id;
     private LayoutInflater mInflater;
 
 
-    public ShareWithCaptionAdapter(Activity activity, String contactnumber, String sharedata, String store_id, String keyword, String product_id,
+    public ShareWithCaptionAdapter(Activity activity, String contactnumber, String sharedata, int store_id, String keyword, String product_id,
                                    String service_id, String vehicle_id, String search_id, String status_id, String profile_contact,
                                    String auction_id, String loan_id, String exchange_id) {
 

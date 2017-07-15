@@ -31,10 +31,10 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     TextView txtreceiver;
     ListView sharelist;
     String editdata = "";
-    String contactnumber, sharedata, storecontact, store_id, vehicle_id, product_id, service_id, profile_contact,
+    String contactnumber, sharedata, storecontact, vehicle_id, product_id, service_id, profile_contact,
             search_id, status_id, auction_id, loan_id, exchange_id, keyword, tab, groupid = "", broadcastgroupid = "",
             groupname, number, name, layoutNumber = "";
-
+    int store_id;
     Button sharebutton;
     ApiCall mApiCall;
 
@@ -56,7 +56,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         mApiCall = new ApiCall(getActivity(), this);
         Bundle b = getArguments();
         sharedata = b.getString("generic_list_view");
-        store_id = b.getString("store_id");
+        store_id = b.getInt("store_id");
         vehicle_id = b.getString("vehicle_id");
         product_id = b.getString("product_id");
         service_id = b.getString("service_id");
@@ -82,7 +82,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         if (!profile_contact.equals(""))
             layoutNumber = "1";
 
-        else if (!store_id.equals(""))
+        else if (store_id!=0)
             layoutNumber = "2";
 
         else if (!vehicle_id.equals(""))

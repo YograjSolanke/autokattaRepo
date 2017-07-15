@@ -32,9 +32,9 @@ public class ShareWithContactFragment extends Fragment {
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     public static final String MyContactPREFERENCES = "contact No";
 
-    String contactnumber, sharedata, storecontact, store_id, vehicle_id, product_id, service_id, profile_contact,
+    String contactnumber, sharedata, storecontact, vehicle_id, product_id, service_id, profile_contact,
             search_id, status_id, auction_id, loan_id, exchange_id;
-
+int store_id;
     String keyword = "";
     ListView contactlist;
 
@@ -49,7 +49,7 @@ public class ShareWithContactFragment extends Fragment {
         try {
             Bundle b = getArguments();
             sharedata = b.getString("generic_list_view");
-            store_id = b.getString("store_id");
+            store_id = b.getInt("store_id");
             vehicle_id = b.getString("vehicle_id");
             product_id = b.getString("product_id");
             service_id = b.getString("service_id");

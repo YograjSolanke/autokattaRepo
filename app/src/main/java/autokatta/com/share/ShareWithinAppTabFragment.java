@@ -23,8 +23,9 @@ public class ShareWithinAppTabFragment extends Fragment {
     ViewPager viewPager;
     SharedPreferences prefs;
     String contactnumber;
-    String sharedata, store_id, storecontact, vehicle_id, task_id, product_id, service_id, profile_contact,
+    String sharedata, storecontact, vehicle_id, task_id, product_id, service_id, profile_contact,
             search_id, status_id, auction_id, exchange_id, loan_id;
+    int store_id;
     String keyword;
 
     public ShareWithinAppTabFragment() {
@@ -36,7 +37,7 @@ public class ShareWithinAppTabFragment extends Fragment {
         View root = infl.inflate(R.layout.fragment_share_withinapp_tab, container, false);
         prefs = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE);
         contactnumber = prefs.getString("loginContact", "");
-        store_id = prefs.getString("Share_store_id", "");
+        store_id = prefs.getInt("Share_store_id", 0);
         sharedata = prefs.getString("Share_sharedata", "");
         vehicle_id = prefs.getString("Share_vehicle_id", "");
         product_id = prefs.getString("Share_product_id", "");
@@ -86,7 +87,7 @@ public class ShareWithinAppTabFragment extends Fragment {
         public Fragment getItem(int position) {
             Bundle b = new Bundle();
             b.putString("generic_list_view", sharedata);
-            b.putString("store_id", store_id);
+            b.putInt("store_id", store_id);
             b.putString("vehicle_id", vehicle_id);
             b.putString("product_id", product_id);
             b.putString("service_id", service_id);

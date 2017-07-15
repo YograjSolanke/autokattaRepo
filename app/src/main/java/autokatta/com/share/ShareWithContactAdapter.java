@@ -28,15 +28,15 @@ public class ShareWithContactAdapter extends BaseAdapter {
 
     private Activity activity;
     private ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
-    private String sharedata, store_id, storecontact, name, number, contactnumber, vehicle_id, product_id,
+    private String sharedata,  storecontact, name, number, contactnumber, vehicle_id, product_id,
             service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword, contacttab;
-
+private int store_id;
     private LayoutInflater mInflater;
 
 
     ShareWithContactAdapter(Activity activity,
                             ArrayList<Db_AutokattaContactResponse> data, String sharedata,
-                            String store_id, String contactnumber, String vehicle_id, String product_id,
+                            int store_id, String contactnumber, String vehicle_id, String product_id,
                             String service_id, String profile_contact, String search_id,
                             String status_id, String auction_id, String loan_id, String exchange_id, String keyword) {
 
@@ -128,7 +128,7 @@ public class ShareWithContactAdapter extends BaseAdapter {
 
                 Bundle b = new Bundle();
                 b.putString("generic_list_view", sharedata);
-                b.putString("store_id", store_id);
+                b.putInt("store_id", store_id);
                 b.putString("vehicle_id", vehicle_id);
                 b.putString("product_id", product_id);
                 b.putString("service_id", service_id);
