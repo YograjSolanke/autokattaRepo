@@ -418,7 +418,7 @@ public interface ServiceApi {
 
     //Delete a store...
     @POST("DeleteMyStore")
-    Call<String> _autokattaDeleteStore(@Query("StoreID") String storeId, @Query("keyword") String keyword);
+    Call<String> _autokattaDeleteStore(@Query("StoreID") int storeId, @Query("keyword") String keyword);
 
     //Create a store...
     @POST("CreateStore")
@@ -848,7 +848,7 @@ public interface ServiceApi {
      */
 
     @GET("GetProductByCategory")
-    Call<StoreInventoryResponse> getStoreInventory(@Query("StoreID") String store_id, @Query("MyContact") String mycontact);
+    Call<StoreInventoryResponse> getStoreInventory(@Query("StoreID") int store_id, @Query("MyContact") String mycontact);
 
      /*
     Get all products,service and vehicles related to single store

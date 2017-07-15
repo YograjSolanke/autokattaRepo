@@ -39,7 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mService;
-    String Sharedcontact, storeContact, store_id;
+    String Sharedcontact, storeContact;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     RelativeLayout filterToHide;
@@ -48,6 +48,7 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
     LinearLayoutManager mLayoutManager;
     StoreServiceAdapter adapter;
     boolean hasView = false;
+    int store_id;
     ConnectionDetector mTestConnection;
     Activity mActivity;
 
@@ -62,7 +63,7 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
         return mService;
     }
 
-    private void getStoreService(String store_id, String sharedcontact) {
+    private void getStoreService(int store_id, String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getStoreInventory(store_id, sharedcontact);
@@ -190,7 +191,7 @@ public class StoreServices extends Fragment implements SwipeRefreshLayout.OnRefr
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 Bundle bundle = getArguments();
-                store_id = bundle.getString("store_id");
+                store_id = bundle.getInt("store_id");
                 //getData();//Get Api...
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,

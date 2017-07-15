@@ -3087,7 +3087,7 @@ Upload Vehicle
         Delete a store
      */
 
-    public void DeleteStore(String storeId, String keyword) {
+    public void DeleteStore(int storeId, String keyword) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5668,7 +5668,7 @@ Get saved search Seller list
     Get all products,service and vehicles related to single store
      */
 
-    public void getStoreInventory(String store_id, String mycontact) {
+    public void getStoreInventory(int store_id, String mycontact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()

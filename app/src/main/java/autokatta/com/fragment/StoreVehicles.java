@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -43,7 +42,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mVehicle;
-    String Sharedcontact, storeContact, store_id;
+    String Sharedcontact, storeContact;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RelativeLayout filterToHide;
     RecyclerView mRecyclerView;
@@ -51,6 +50,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
     List<StoreInventoryResponse.Success.Vehicle> vehicleList;
     LinearLayoutManager mLayoutManager;
     StoreVehicleAdapter adapter;
+    int store_id;
     boolean hasMoreView = false;
     ConnectionDetector mTestConnection;
     Activity mActivity;
@@ -66,7 +66,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
         return mVehicle;
     }
 
-    private void getStoreVehicles(String store_id, String sharedcontact) {
+    private void getStoreVehicles(int store_id, String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getStoreInventory(store_id, sharedcontact);
@@ -212,7 +212,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 Bundle bundle = getArguments();
-                store_id = bundle.getString("store_id");
+                store_id = bundle.getInt("store_id");
                 //getData();//Get Api...
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,

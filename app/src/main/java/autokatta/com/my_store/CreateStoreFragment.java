@@ -844,7 +844,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 if (response.body() instanceof CreateStoreResponse) {
                     CreateStoreResponse createStoreResponse = (CreateStoreResponse) response.body();
                     if (createStoreResponse.getSuccess() != null) {
-                        String id = createStoreResponse.getSuccess().getStoreID().toString();
+                        int id = createStoreResponse.getSuccess().getStoreID();
                         Toast.makeText(getActivity(), "Store created", Toast.LENGTH_SHORT).show();
                         if (!lastWord.equals(""))
                         uploadImage(mediaPath);
@@ -852,7 +852,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         uploadImage(mediaPath1);
 
                         bundle = new Bundle();
-                        bundle.putString("store_id", id);
+                        bundle.putInt("store_id", id);
                         bundle.putString("call", callFrom);
 
                         AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
@@ -860,10 +860,11 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
-                        getActivity().finish();
+                        //getActivity().finish();
 
-                    } else
+                    } else {
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                    }
                 }
 
                 if (response.body() instanceof StoreResponse) {

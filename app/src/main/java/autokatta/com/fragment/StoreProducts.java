@@ -39,7 +39,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mProduct;
-    String Sharedcontact, storeContact, store_id;
+    String Sharedcontact, storeContact;
+    int store_id;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<StoreInventoryResponse.Success.Product> productList;
@@ -62,7 +63,7 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
         return mProduct;
     }
 
-    private void getStoreProducts(String store_id, String sharedcontact) {
+    private void getStoreProducts(int store_id, String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getStoreInventory(store_id, sharedcontact);
@@ -186,7 +187,7 @@ public class StoreProducts extends Fragment implements SwipeRefreshLayout.OnRefr
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 Bundle bundle = getArguments();
-                store_id = bundle.getString("store_id");
+                store_id = bundle.getInt("store_id");
                 //getData();//Get Api...
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,

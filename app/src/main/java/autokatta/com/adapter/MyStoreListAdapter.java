@@ -222,7 +222,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", strDetailsShare).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_store_id", mStoreList.get(position).getId()).apply();
+                        putInt("Share_store_id", mStoreList.get(position).getId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "store").apply();
 
@@ -284,7 +284,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             public void onClick(View view) {
                 Bundle b = new Bundle();
 
-                b.putString("store_id", mStoreList.get(holder.getAdapterPosition()).getId());
+                b.putInt("store_id", mStoreList.get(holder.getAdapterPosition()).getId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(mActivity, StoreViewActivity.class);
                 intent.putExtras(b);
@@ -309,7 +309,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         }
     }
 
-    private void deleteStore(String storeId) {
+    private void deleteStore(int storeId) {
         ApiCall apiCall = new ApiCall(mActivity, this);
         apiCall.DeleteStore(storeId, "delete");
     }
