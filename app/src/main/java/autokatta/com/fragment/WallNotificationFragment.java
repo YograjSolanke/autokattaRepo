@@ -230,6 +230,11 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setAuctionType(notification.getAuctionType());
                         notification.setGoingCount(notification.getGoingCount());
                         notification.setIgnoreCount(notification.getIgnoreCount());
+
+                        if (notification.getSenderName().equalsIgnoreCase("You"))
+                            notification.setLayoutType("MyAction");
+                        else
+                            notification.setLayoutType("MyNotification");
                         notificationList.add(notification);
                     }
                     adapter = new WallNotificationAdapter(getActivity(), notificationList);

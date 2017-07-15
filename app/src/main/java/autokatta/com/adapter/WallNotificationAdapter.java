@@ -1,6 +1,9 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,30 +16,44 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.OnLoadMoreListener;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
+import retrofit2.Response;
 
 /**
  * Created by ak-001 on 1/4/17.
  */
 
-public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
     private Activity mActivity;
     private List<WallResponse.Success.WallNotification> notificationList = new ArrayList<>();
     private int lastVisibleItem, totalItemCount;
     private boolean isLoading;
     private int visibleThreshold = 5;
     private OnLoadMoreListener mOnLoadMoreListener;
+    private String mLoginContact = "";
+    private ApiCall mApiCall;
+    private int profile_likecountint, profile_followcountint;
 
-    public WallNotificationAdapter(Activity mActivity, List<WallResponse.Success.WallNotification> notificationList) {
-        this.mActivity = mActivity;
+    public WallNotificationAdapter(Activity mActivity1, List<WallResponse.Success.WallNotification> notificationList) {
+        this.mActivity = mActivity1;
         this.notificationList = notificationList;
+        this.mApiCall = new ApiCall(mActivity, this);
+        mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
+                getString("loginContact", "");
     }
 
     public WallNotificationAdapter() {
@@ -68,8 +85,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
     private static class ProfileNotifications extends RecyclerView.ViewHolder {
         CardView mProfileCardView;
-        ImageView mProfilePic;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike;
+        ImageView mProfilePic, mProfileImage;
+        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mUnlike, mFav, mUnfav;
         TextView mProfileName, mProfileContact, mProfileTitle, mUserName, mProfileWorkAt, mProfileWebSite, mLocation,
                 mFollowCount, mLikes, mShares;
 
@@ -77,6 +94,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             super(profileView);
             mProfileCardView = (CardView) profileView.findViewById(R.id.profile_card_view);
             mProfilePic = (ImageView) profileView.findViewById(R.id.pro_pic);
+            mProfileImage = (ImageView) profileView.findViewById(R.id.profile_image);
             mProfileName = (TextView) profileView.findViewById(R.id.profile_name);
             mProfileContact = (TextView) profileView.findViewById(R.id.profile_time);
             mProfileTitle = (TextView) profileView.findViewById(R.id.profile_title);
@@ -91,6 +109,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mShareOther = (ImageButton) profileView.findViewById(R.id.share_other);
             mCall = (ImageButton) profileView.findViewById(R.id.call);
             mLike = (ImageButton) profileView.findViewById(R.id.like);
+            mUnlike = (ImageButton) profileView.findViewById(R.id.unlike);
+            mFav = (ImageButton) profileView.findViewById(R.id.profile_favourite);
+            mUnfav = (ImageButton) profileView.findViewById(R.id.profile_unfavourite);
         }
     }
 
@@ -512,19 +533,135 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.i("Wall", "Adapter->" + holder.getItemViewType());
+        Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
         switch (holder.getItemViewType()) {
             case 1:
-                ((ProfileNotifications) holder).mProfileName.setText(notificationList.get(position).getSenderName() + " "
+                final ProfileNotifications mProfileHolder = (ProfileNotifications) holder;
+                Log.i("Wall", "Profile-LayType ->" + notificationList.get(position).getLayoutType());
+
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction"))
+                    mProfileHolder.mCall.setVisibility(View.GONE);
+                else
+                    mProfileHolder.mCall.setVisibility(View.VISIBLE);
+
+                mProfileHolder.mProfileName.setText(notificationList.get(position).getSenderName() + " "
                         + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " " + "Profile");
 
-                ((ProfileNotifications) holder).mProfileContact.setText(notificationList.get(position).getDateTime());
-                ((ProfileNotifications) holder).mUserName.setText(notificationList.get(position).getSenderName());
-                ((ProfileNotifications) holder).mProfileWorkAt.setText(notificationList.get(position).getSenderProfession());
-                ((ProfileNotifications) holder).mProfileWebSite.setText(notificationList.get(position).getSenderWebsite());
-                ((ProfileNotifications) holder).mLocation.setText(notificationList.get(position).getSenderCity());
-                ((ProfileNotifications) holder).mFollowCount.setText("Followers(" + notificationList.get(position).getSenderFollowCount() + ")");
-                ((ProfileNotifications) holder).mLikes.setText("Likes(" + notificationList.get(position).getSenderLikeCount() + ")");
+                mProfileHolder.mProfileContact.setText(notificationList.get(position).getDateTime());
+                mProfileHolder.mUserName.setText(notificationList.get(position).getSenderName());
+                mProfileHolder.mProfileWorkAt.setText(notificationList.get(position).getSenderProfession());
+                mProfileHolder.mProfileWebSite.setText(notificationList.get(position).getSenderWebsite());
+                mProfileHolder.mLocation.setText(notificationList.get(position).getSenderCity());
+                mProfileHolder.mFollowCount.setText("Followers(" + notificationList.get(position).getSenderFollowCount() + ")");
+                mProfileHolder.mLikes.setText("Likes(" + notificationList.get(position).getSenderLikeCount() + ")");
+
+                if (notificationList.get(position).getSenderPicture() == null ||
+                        notificationList.get(position).getSenderPicture().equals("") ||
+                        notificationList.get(position).getSenderPicture().equals("null")) {
+                    mProfileHolder.mProfileImage.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProfileHolder.mProfileImage);*/
+                }
+
+                mProfileHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = notificationList.get(mProfileHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+
+     /* Like & Unlike Functionality */
+                if (notificationList.get(position).getSenderLikeStatus().equalsIgnoreCase("yes")) {
+                    mProfileHolder.mLike.setVisibility(View.VISIBLE);
+                    mProfileHolder.mUnlike.setVisibility(View.GONE);
+                } else {
+                    mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
+                    mProfileHolder.mLike.setVisibility(View.GONE);
+                }
+
+                mProfileHolder.mLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = notificationList.get(mProfileHolder.getAdapterPosition()).getSender();
+                        mProfileHolder.mLike.setVisibility(View.GONE);
+                        mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        profile_likecountint = Integer.parseInt(notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount());
+                        profile_likecountint = profile_likecountint - 1;
+                        mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
+                        /*storeLikeCount = String.valueOf(profile_likecountint);
+                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setSenderLikeCount(String.valueOf(profile_likecountint));
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setSenderLikeStatus("no");
+                    }
+                });
+
+                mProfileHolder.mUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = notificationList.get(mProfileHolder.getAdapterPosition()).getSender();
+                        mProfileHolder.mUnlike.setVisibility(View.GONE);
+                        mProfileHolder.mLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        profile_likecountint = Integer.parseInt(notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount());
+                        profile_likecountint = profile_likecountint + 1;
+                        mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
+                        /*storeLikeCount = String.valueOf(profile_likecountint);
+                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setSenderLikeCount(String.valueOf(profile_likecountint));
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setSenderLikeStatus("yes");
+                    }
+                });
+
+      /* Fav & Unfav Functionality */
+                if (notificationList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
+                    mProfileHolder.mFav.setVisibility(View.VISIBLE);
+                    mProfileHolder.mUnfav.setVisibility(View.GONE);
+                } else {
+                    mProfileHolder.mUnfav.setVisibility(View.VISIBLE);
+                    mProfileHolder.mFav.setVisibility(View.GONE);
+                }
+
+                mProfileHolder.mFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unfavorite web service
+                        String notiId = notificationList.get(mProfileHolder.getAdapterPosition()).getActionID();
+                        mProfileHolder.mFav.setVisibility(View.GONE);
+                        mProfileHolder.mUnfav.setVisibility(View.VISIBLE);
+                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
+                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mProfileHolder.mUnfav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Favorite web service
+                        String notiId = notificationList.get(mProfileHolder.getAdapterPosition()).getActionID();
+                        mProfileHolder.mUnfav.setVisibility(View.GONE);
+                        mProfileHolder.mFav.setVisibility(View.VISIBLE);
+                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
+                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mProfileHolder.mShareAutokatta.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+
                 break;
 
             case 2:
@@ -541,16 +678,17 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 ImageButton mGroupFavourite;
                 TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
                         mGroupNoOfServices;*/
+                final GroupNotifications mGroupHolder = (GroupNotifications) holder;
 
-                ((GroupNotifications) holder).mActionName.setText(notificationList.get(position).getSenderName() + " " +
+                mGroupHolder.mActionName.setText(notificationList.get(position).getSenderName() + " " +
                         notificationList.get(position).getAction() + "  you in " + notificationList.get(position).getGroupName()
                         + " group");
-                ((GroupNotifications) holder).mGroupName.setText(notificationList.get(position).getGroupName());
-                ((GroupNotifications) holder).mActionTime.setText(notificationList.get(position).getDateTime());
-                ((GroupNotifications) holder).mGroupMembers.setText(notificationList.get(position).getGroupMembers());
-                ((GroupNotifications) holder).mGroupNoOfVehicles.setText(notificationList.get(position).getGroupVehicles());
-                //((GroupNotifications) holder).mGroupNoOfProducts.setText(notificationList.get(position));
-                //((GroupNotifications) holder).mGroupNoOfServices.setText(notificationList.get(position));
+                mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
+                mGroupHolder.mActionTime.setText(notificationList.get(position).getDateTime());
+                mGroupHolder.mGroupMembers.setText(notificationList.get(position).getGroupMembers());
+                mGroupHolder.mGroupNoOfVehicles.setText(notificationList.get(position).getGroupVehicles());
+                //mGroupHolder.mGroupNoOfProducts.setText(notificationList.get(position));
+                //mGroupHolder.mGroupNoOfServices.setText(notificationList.get(position));
                 break;
 
             case 4:
@@ -616,6 +754,68 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
         }
     }
+
+    private void call(String otherContact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + otherContact));
+        try {
+            mActivity.startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+        }
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            if (str.equals("success_follow")) {
+                CustomToast.customToast(mActivity, "Following");
+                /*mFollow.setVisibility(View.GONE);
+                mUnFollow.setVisibility(View.VISIBLE);
+                mFolllowstr = "yes";*/
+            } else if (str.equals("success_unfollow")) {
+                CustomToast.customToast(mActivity, "UnFollowing");
+                /*mFollow.setVisibility(View.VISIBLE);
+                mUnFollow.setVisibility(View.GONE);
+                mFolllowstr = "no";*/
+            } else if (str.equals("success_like")) {
+                CustomToast.customToast(mActivity, "Liked");
+                /*mLike.setVisibility(View.VISIBLE);
+                mUnlike.setVisibility(View.GONE);*/
+                //mLikestr = "yes";
+            } else if (str.equals("success_unlike")) {
+                CustomToast.customToast(mActivity, "Unliked");
+                /*mLike.setVisibility(View.GONE);
+                mUnlike.setVisibility(View.VISIBLE);*/
+                //mLikestr = "no";
+            }
+        }
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "Wall Notification Adapter");
+            error.printStackTrace();
+        }
+    }
+
 
     @Override
     public int getItemCount() {

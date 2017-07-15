@@ -353,6 +353,16 @@ public class WallResponse {
             @Expose
             private String ignoreCount;
 
+            private String layoutType;
+
+            public String getLayoutType() {
+                return layoutType;
+            }
+
+            public void setLayoutType(String layoutType) {
+                this.layoutType = layoutType;
+            }
+
             public String getActionID() {
                 return actionID;
             }
