@@ -609,9 +609,9 @@ public interface ServiceApi {
     @GET("GetAnalyticsCount")
     Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("AuctionID") String strAuctionId);
 
-    // Get Auction Analytics
+    // Get Loan Analytics
     @GET("GetLoanAnalyticsCount")
-    Call<AuctionAnalyticsResponse> _autokattaGetLoanAnalytics(@Query("LoanMelaID") String loanid);
+    Call<LoanMelaAnalyticsResponse> _autokattaGetLoanAnalytics(@Query("LoanMelaID") String loanid);
 
     //get Active Auction high bid
     @POST("AuctionHighestBidding")
@@ -1169,7 +1169,7 @@ public interface ServiceApi {
 
     //get  Sale Mela analytics data
     @GET("GetSaleAnalyticsCount")
-    Call<SaleMelaAnalyticsResponse> _autokattagetanalytics_Sale( @Query("SaleMelaID") String sale_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetanalytics_Sale( @Query("SaleMelaID") String sale_id);
 
     //get  Service Mela Participants data
     @GET("GetConfirmedParticipantsService")
@@ -1177,7 +1177,7 @@ public interface ServiceApi {
 
     //get  Service Mela analytics data
     @GET("GetServiceAnalyticsCount")
-    Call<ServiceMelaAnalyticsResponse> _autokattagetServiceAnalytics( @Query("ServiceMelaID") String service_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetServiceAnalytics( @Query("ServiceMelaID") String service_id);
 
     //get Exchange Mela  Participantsdata
     @GET("GetConfirmedParticipantsExchange")
@@ -1185,7 +1185,7 @@ public interface ServiceApi {
 
     //get Exchange Mela  Analytics
     @GET("GetExchangeAnalyticsCount")
-    Call<ExchangeMelaAnalyticsResponse> _autokattagetExchangeAnalytics( @Query("ExchangeMelaID") String exchange_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetExchangeAnalytics( @Query("ExchangeMelaID") String exchange_id);
 
     //update product details
     @POST("UpdateStoreProduct")

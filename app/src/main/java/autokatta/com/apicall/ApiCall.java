@@ -4277,15 +4277,15 @@ params.put("auction_id", bundleAuctionId);
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<AuctionAnalyticsResponse> mAuctionAnalytics = serviceApi._autokattaGetLoanAnalytics(loanid);
-                mAuctionAnalytics.enqueue(new Callback<AuctionAnalyticsResponse>() {
+                Call<LoanMelaAnalyticsResponse> mAuctionAnalytics = serviceApi._autokattaGetLoanAnalytics(loanid);
+                mAuctionAnalytics.enqueue(new Callback<LoanMelaAnalyticsResponse>() {
                     @Override
-                    public void onResponse(Call<AuctionAnalyticsResponse> call, Response<AuctionAnalyticsResponse> response) {
+                    public void onResponse(Call<LoanMelaAnalyticsResponse> call, Response<LoanMelaAnalyticsResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<AuctionAnalyticsResponse> call, Throwable t) {
+                    public void onFailure(Call<LoanMelaAnalyticsResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -7549,15 +7549,15 @@ get SaleMela analytics Data*/
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<SaleMelaAnalyticsResponse> msaleMelaResponse = serviceApi._autokattagetanalytics_Sale( saleid);
-                msaleMelaResponse.enqueue(new Callback<SaleMelaAnalyticsResponse>() {
+                Call<LoanMelaAnalyticsResponse> msaleMelaResponse = serviceApi._autokattagetanalytics_Sale( saleid);
+                msaleMelaResponse.enqueue(new Callback<LoanMelaAnalyticsResponse>() {
                     @Override
-                    public void onResponse(Call<SaleMelaAnalyticsResponse> call, Response<SaleMelaAnalyticsResponse> response) {
+                    public void onResponse(Call<LoanMelaAnalyticsResponse> call, Response<LoanMelaAnalyticsResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<SaleMelaAnalyticsResponse> call, Throwable t) {
+                    public void onFailure(Call<LoanMelaAnalyticsResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -7615,15 +7615,15 @@ get Service Mela Participants Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ServiceMelaAnalyticsResponse> mServiceMelaResponse = serviceApi._autokattagetServiceAnalytics( Serviceid);
-                mServiceMelaResponse.enqueue(new Callback<ServiceMelaAnalyticsResponse>() {
+                Call<LoanMelaAnalyticsResponse> mServiceMelaResponse = serviceApi._autokattagetServiceAnalytics( Serviceid);
+                mServiceMelaResponse.enqueue(new Callback<LoanMelaAnalyticsResponse>() {
                     @Override
-                    public void onResponse(Call<ServiceMelaAnalyticsResponse> call, Response<ServiceMelaAnalyticsResponse> response) {
+                    public void onResponse(Call<LoanMelaAnalyticsResponse> call, Response<LoanMelaAnalyticsResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<ServiceMelaAnalyticsResponse> call, Throwable t) {
+                    public void onFailure(Call<LoanMelaAnalyticsResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -7682,15 +7682,15 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ExchangeMelaAnalyticsResponse> mServiceMelaResponse = serviceApi._autokattagetExchangeAnalytics( exchangeid);
-                mServiceMelaResponse.enqueue(new Callback<ExchangeMelaAnalyticsResponse>() {
+                Call<LoanMelaAnalyticsResponse> mServiceMelaResponse = serviceApi._autokattagetExchangeAnalytics( exchangeid);
+                mServiceMelaResponse.enqueue(new Callback<LoanMelaAnalyticsResponse>() {
                     @Override
-                    public void onResponse(Call<ExchangeMelaAnalyticsResponse> call, Response<ExchangeMelaAnalyticsResponse> response) {
+                    public void onResponse(Call<LoanMelaAnalyticsResponse> call, Response<LoanMelaAnalyticsResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<ExchangeMelaAnalyticsResponse> call, Throwable t) {
+                    public void onFailure(Call<LoanMelaAnalyticsResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

@@ -19,13 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.AuctionAnalyticsAdapter;
+import autokatta.com.adapter.LoanAnalyticsAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.AuctionAnalyticsResponse;
-import autokatta.com.response.AuctionAnalyticsResponse.Success;
+import autokatta.com.response.LoanMelaAnalyticsResponse;
 import retrofit2.Response;
 
 /**
@@ -39,7 +38,7 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     private String strSaleId = "";
-    List<Success> analyticsList = new ArrayList<>();
+    List<LoanMelaAnalyticsResponse.Success> analyticsList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
     ConnectionDetector mTestConnection;
@@ -136,17 +135,16 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
         if (response != null) {
             if (response.isSuccessful()) {
                 analyticsList.clear();
-                AuctionAnalyticsResponse analyticsResponse = (AuctionAnalyticsResponse) response.body();
+                LoanMelaAnalyticsResponse analyticsResponse = (LoanMelaAnalyticsResponse) response.body();
 
                 if (!analyticsResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
 
-                    for (AuctionAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
+                    for (LoanMelaAnalyticsResponse.Success success : analyticsResponse.getSuccess()) {
 
                         success.setReachedCount(success.getReachedCount());
                         success.setGoingCount(success.getGoingCount());
                         success.setIgnoreCount(success.getIgnoreCount());
-                        success.setSharedCount(success.getSharedCount());
                         success.setGoingStudent(success.getGoingStudent());
                         success.setGoingSelfStudent(success.getGoingSelfStudent());
                         success.setGoingEmployee(success.getGoingEmployee());
@@ -157,7 +155,7 @@ public class SaleMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                         analyticsList.add(success);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
-                    AuctionAnalyticsAdapter adapter = new AuctionAnalyticsAdapter(getActivity(), strSaleId, analyticsList);
+                    LoanAnalyticsAdapter adapter = new LoanAnalyticsAdapter(getActivity(), strSaleId, analyticsList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
