@@ -4277,7 +4277,7 @@ params.put("auction_id", bundleAuctionId);
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<AuctionAnalyticsResponse> mAuctionAnalytics = serviceApi._autokattaGetAuctionAnalytics(loanid);
+                Call<AuctionAnalyticsResponse> mAuctionAnalytics = serviceApi._autokattaGetLoanAnalytics(loanid);
                 mAuctionAnalytics.enqueue(new Callback<AuctionAnalyticsResponse>() {
                     @Override
                     public void onResponse(Call<AuctionAnalyticsResponse> call, Response<AuctionAnalyticsResponse> response) {
