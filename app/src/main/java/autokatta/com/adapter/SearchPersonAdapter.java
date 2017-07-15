@@ -204,9 +204,9 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
     private void sendFollowerUnfollower(String contact, String keyword) {
         if (keyword.equalsIgnoreCase("follow")) {
-            apicall.Follow(myContact, contact, "1");
+            apicall.Follow(myContact, contact, "1",0,"","","");
         } else {
-            apicall.UnFollow(myContact, contact, "1");
+            apicall.UnFollow(myContact, contact, "1",0,"","","");
         }
     }
 
