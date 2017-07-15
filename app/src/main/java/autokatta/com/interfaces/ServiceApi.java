@@ -609,6 +609,10 @@ public interface ServiceApi {
     @GET("GetAnalyticsCount")
     Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("AuctionID") String strAuctionId);
 
+    // Get Auction Analytics
+    @GET("GetLoanAnalyticsCount")
+    Call<AuctionAnalyticsResponse> _autokattaGetLoanAnalytics(@Query("LoanMelaID") String loanid);
+
     //get Active Auction high bid
     @POST("AuctionHighestBidding")
     Call<MyActiveAuctionHighBidResponse> _autokattaGetActiveAuctionHighBid(@Query("contact") String myContact,

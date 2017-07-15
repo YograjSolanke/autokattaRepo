@@ -4265,6 +4265,39 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
+ /*
+  Get Auction Analytics
+   */
+    public void LoanMelaAnalytics(String loanid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<AuctionAnalyticsResponse> mAuctionAnalytics = serviceApi._autokattaGetAuctionAnalytics(loanid);
+                mAuctionAnalytics.enqueue(new Callback<AuctionAnalyticsResponse>() {
+                    @Override
+                    public void onResponse(Call<AuctionAnalyticsResponse> call, Response<AuctionAnalyticsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<AuctionAnalyticsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /*
         Get Active Auction High Bid
     */

@@ -119,7 +119,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.AuctionAnalyticsData(strLoanId);
+            apiCall.LoanMelaAnalytics(strLoanId);
             //apiCall.AuctionAnalyticsData("1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
