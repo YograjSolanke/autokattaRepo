@@ -8,7 +8,7 @@ public class ModelLiveFragment {
     /*
     Live Events
      */
-    private String auctionId;
+    private int auctionId;
     private String actionTitle;
     private String auctionType;
     private String specialClauses;
@@ -40,7 +40,7 @@ public class ModelLiveFragment {
     /*
     Live Exchange Events
      */
-    private String exchange_id;
+    private int exchange_id;
     private String exchangeOwnerName;
 
     /*
@@ -71,11 +71,11 @@ public class ModelLiveFragment {
     private String ignoreGoingStatus;
     private String keyWord;
 
-    public String getAuctionId() {
+    public int getAuctionId() {
         return auctionId;
     }
 
-    public void setAuctionId(String auctionId) {
+    public void setAuctionId(int auctionId) {
         this.auctionId = auctionId;
     }
 
@@ -87,11 +87,11 @@ public class ModelLiveFragment {
         this.loan_id = loan_id;
     }
 
-    public String getExchange_id() {
+    public int getExchange_id() {
         return exchange_id;
     }
 
-    public void setExchange_id(String exchange_id) {
+    public void setExchange_id(int exchange_id) {
         this.exchange_id = exchange_id;
     }
 

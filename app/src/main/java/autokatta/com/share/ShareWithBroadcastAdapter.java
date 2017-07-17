@@ -27,14 +27,14 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
     private Activity activity;
     private List<MyBroadcastGroupsResponse.Success> broadcastlist = new ArrayList<>();
     private LayoutInflater mInflater;
-    private String sharedata, groupid, contactnumber, number,  vehicle_id, product_id, service_id, profile_contact,
-            search_id, status_id, auction_id, loan_id, exchange_id, keyword, grouptab;
-    private int store_id;
+    private String sharedata, groupid, contactnumber, number,  profile_contact, keyword, grouptab;
+    private int store_id,vehicle_id, product_id, service_id,
+    search_id, status_id, auction_id, loan_id, exchange_id;
 
     ShareWithBroadcastAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> alldata,
-                              String sharedata, String contactnumber, int store_id, String vehicle_id,
-                              String product_id, String service_id, String profile_contact, String search_id,
-                              String status_id, String auction_id, String loan_id, String exchange_id, String keyword) {
+                              String sharedata, String contactnumber, int store_id, int vehicle_id,
+                              int product_id, int service_id, String profile_contact, int search_id,
+                              int status_id, int auction_id, int loan_id, int exchange_id, String keyword) {
 
         this.activity = activity;
         this.broadcastlist = alldata;
@@ -101,19 +101,19 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
                 Bundle b = new Bundle();
                 b.putString("generic_list_view", sharedata);
                 b.putInt("store_id", store_id);
-                b.putString("vehicle_id", vehicle_id);
-                b.putString("product_id", product_id);
-                b.putString("service_id", service_id);
+                b.putInt("vehicle_id", vehicle_id);
+                b.putInt("product_id", product_id);
+                b.putInt("service_id", service_id);
                 b.putString("profile_contact", profile_contact);
-                b.putString("search_id", search_id);
-                b.putString("status_id", status_id);
-                b.putString("auction_id", auction_id);
-                b.putString("loan_id", loan_id);
-                b.putString("exchange_id", exchange_id);
+                b.putInt("search_id", search_id);
+                b.putInt("status_id", status_id);
+                b.putInt("auction_id", auction_id);
+                b.putInt("loan_id", loan_id);
+                b.putInt("exchange_id", exchange_id);
                 b.putString("number", number);
                 b.putString("keyword", keyword);
                 b.putString("groupname", obj.getGroupTitle());
-                b.putString("broadcastgroupid", obj.getGroupId());
+                b.putInt("broadcastgroupid", obj.getGroupId());
                 b.putString("tab", "broadcastgroup");
 
                 ShareWithCaptionFragment frag = new ShareWithCaptionFragment();

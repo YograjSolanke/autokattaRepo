@@ -148,7 +148,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mLike.setVisibility(View.GONE);
                         mUnlike.setVisibility(View.VISIBLE);
-                        mApiCall.UnLike(myContact, mOtherContact, "2", store_id,"","","","","","");
+                        mApiCall.UnLike(myContact, mOtherContact, "2", store_id,"",0,0,0,"","");
                         likecountint = Integer.parseInt(likeUnlike.getCount());
                         likecountint = likecountint - 1;
                         mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
@@ -162,7 +162,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mLike.setVisibility(View.VISIBLE);
                         mUnlike.setVisibility(View.GONE);
-                        mApiCall.Like(myContact, mOtherContact, "2", store_id,"","","","","","");
+                        mApiCall.Like(myContact, mOtherContact, "2", store_id,"",0,0,0,"","");
                         likecountint = Integer.parseInt(likeUnlike.getCount());
                         likecountint = likecountint + 1;
                         mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
@@ -589,7 +589,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 if (preoverall.equals("0")) {
 
                     if (count == 0.0f) {
-                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                        mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
                                 String.valueOf(precsrate),
                                 String.valueOf(preqwrate),
                                 String.valueOf(prefrrate),
@@ -598,7 +598,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                                 "store");
 
                     } else {
-                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
+                        mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(count),
                                 String.valueOf(csrate),
                                 String.valueOf(qwrate),
                                 String.valueOf(frrate),
@@ -608,7 +608,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     }
                 } else {
                     if (count == 0.0f) {
-                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                        mApiCall.sendUpdatedrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
                                 String.valueOf(precsrate),
                                 String.valueOf(preqwrate),
                                 String.valueOf(prefrrate),
@@ -617,7 +617,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                                 "store");
 
                     } else {
-                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
+                        mApiCall.sendUpdatedrating(myContact, store_id, 0, 0, String.valueOf(count),
                                 String.valueOf(csrate),
                                 String.valueOf(qwrate),
                                 String.valueOf(frrate),
@@ -638,7 +638,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 if (preoverall.equals("0")) {
 
                     if (count == 0.0f) {
-                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                        mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
                                 String.valueOf(precsrate),
                                 String.valueOf(preqwrate),
                                 String.valueOf(prefrrate),
@@ -647,7 +647,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                                 "store");
 
                     } else {
-                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
+                        mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(count),
                                 String.valueOf(csrate),
                                 String.valueOf(qwrate),
                                 String.valueOf(frrate),
@@ -657,7 +657,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     }
                 } else {
                     if (count == 0.0f) {
-                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                        mApiCall.sendUpdatedrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
                                 String.valueOf(precsrate),
                                 String.valueOf(preqwrate),
                                 String.valueOf(prefrrate),
@@ -666,7 +666,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                                 "store");
 
                     } else {
-                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
+                        mApiCall.sendUpdatedrating(myContact, store_id, 0, 0, String.valueOf(count),
                                 String.valueOf(csrate),
                                 String.valueOf(qwrate),
                                 String.valueOf(frrate),

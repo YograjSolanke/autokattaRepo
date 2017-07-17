@@ -30,7 +30,7 @@ public class GetSearchProductResponse {
         private String storeId;
         @SerializedName("product_id")
         @Expose
-        private String productId;
+        private int productId;
         @SerializedName("type")
         @Expose
         private String type;
@@ -101,11 +101,11 @@ public class GetSearchProductResponse {
             this.storeId = storeId;
         }
 
-        public String getProductId() {
+        public int getProductId() {
             return productId;
         }
 
-        public void setProductId(String productId) {
+        public void setProductId(int productId) {
             this.productId = productId;
         }
 

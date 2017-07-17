@@ -70,7 +70,7 @@ public class MyUpcomingAuctionResponse {
 
             @SerializedName("auction_id")
             @Expose
-            private String auctionId;
+            private int auctionId;
             @SerializedName("action_title")
             @Expose
             private String actionTitle;
@@ -130,11 +130,11 @@ public class MyUpcomingAuctionResponse {
                 this.auctionCategory = auctionCategory;
             }
 
-            public String getAuctionId() {
+            public int getAuctionId() {
                 return auctionId;
             }
 
-            public void setAuctionId(String auctionId) {
+            public void setAuctionId(int auctionId) {
                 this.auctionId = auctionId;
             }
 

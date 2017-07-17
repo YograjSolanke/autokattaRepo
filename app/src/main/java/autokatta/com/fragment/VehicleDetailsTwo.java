@@ -113,7 +113,7 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
                 getVehicleData(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                                 .getString("loginContact", ""),
                         getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-                        .getString("vehicle_id", ""));
+                        .getInt("vehicle_id", 0));
             }
         });
         return mVehicleTwo;
@@ -122,7 +122,7 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
     /*
     Vehicle Details...
      */
-    private void getVehicleData(String contact, String mVehicleId) {
+    private void getVehicleData(String contact, int mVehicleId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
@@ -445,7 +445,7 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
                         getVehicleData(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                                         .getString("loginContact", ""),
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-                                        .getString("vehicle_id", ""));
+                                        .getInt("vehicle_id", 0));
                         fitnessdetails.setVisibility(View.VISIBLE);
                         taxdetails.setVisibility(View.VISIBLE);
                         rtotext.setVisibility(View.VISIBLE);

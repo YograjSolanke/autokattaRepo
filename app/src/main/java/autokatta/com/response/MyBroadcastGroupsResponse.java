@@ -27,7 +27,7 @@ public class MyBroadcastGroupsResponse {
 
         @SerializedName("Group_id")
         @Expose
-        private String groupId;
+        private int groupId;
         @SerializedName("Group_title")
         @Expose
         private String groupTitle;
@@ -53,11 +53,11 @@ public class MyBroadcastGroupsResponse {
         @Expose
         private String deleteDate;
 
-        public String getGroupId() {
+        public int getGroupId() {
             return groupId;
         }
 
-        public void setGroupId(String groupId) {
+        public void setGroupId(int groupId) {
             this.groupId = groupId;
         }
 

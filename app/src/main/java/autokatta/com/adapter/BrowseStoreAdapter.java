@@ -166,7 +166,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     StoreId = success.getStoreId();
                     mApiCall.Like(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                            .getString("loginContact", ""), StoreContact, "2", StoreId,"","","","","","");
+                            .getString("loginContact", ""), StoreContact, "2", StoreId,"",0,0,0,"","");
                     //sendLike(StoreId, StoreContact);
 
                     holder.linearunlike.setVisibility(View.VISIBLE);
@@ -195,7 +195,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
 
                     StoreId = success.getStoreId();
                     mApiCall.UnLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                            .getString("loginContact", ""), StoreContact, "2", StoreId,"","","","","","");
+                            .getString("loginContact", ""), StoreContact, "2", StoreId,"",0,0,0,"","");
                     //    sendUnLike(StoreId, StoreContact);
 
                     holder.linearunlike.setVisibility(View.GONE);

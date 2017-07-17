@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -46,7 +45,7 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
     View mAuctionVehicles;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strAuctionId = "";
+    private int strAuctionId = 0;
     List<GetAuctionEventResponse.Vehicle> vehicles = new ArrayList<>();
     ConnectionDetector mTestConnection;
 
@@ -85,7 +84,7 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strAuctionId = bundle.getInt("auctionid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -113,7 +112,7 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
         getAuctionVehicle(strAuctionId);
     }
 
-    private void getAuctionVehicle(String strAuctionId) {
+    private void getAuctionVehicle(int strAuctionId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);

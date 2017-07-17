@@ -31,10 +31,10 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     TextView txtreceiver;
     ListView sharelist;
     String editdata = "";
-    String contactnumber, sharedata, storecontact, vehicle_id, product_id, service_id, profile_contact,
-            search_id, status_id, auction_id, loan_id, exchange_id, keyword, tab, groupid = "", broadcastgroupid = "",
-            groupname, number, name, layoutNumber = "";
-    int store_id;
+    String  sharedata, storecontact,  contactnumber,profile_contact,
+            keyword, tab, groupname, number, name;
+    int store_id,vehicle_id,product_id,service_id,broadcastgroupid=0,groupid=0,
+            layoutNumber, search_id, status_id, auction_id, loan_id, exchange_id;
     Button sharebutton;
     ApiCall mApiCall;
 
@@ -57,21 +57,21 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         Bundle b = getArguments();
         sharedata = b.getString("generic_list_view");
         store_id = b.getInt("store_id");
-        vehicle_id = b.getString("vehicle_id");
-        product_id = b.getString("product_id");
-        service_id = b.getString("service_id");
-        search_id = b.getString("search_id");
+        vehicle_id = b.getInt("vehicle_id");
+        product_id = b.getInt("product_id");
+        service_id = b.getInt("service_id");
+        search_id = b.getInt("search_id");
         profile_contact = b.getString("profile_contact");
-        status_id = b.getString("status_id");
-        auction_id = b.getString("auction_id");
-        loan_id = b.getString("loan_id");
-        exchange_id = b.getString("exchange_id");
+        status_id = b.getInt("status_id");
+        auction_id = b.getInt("auction_id");
+        loan_id = b.getInt("loan_id");
+        exchange_id = b.getInt("exchange_id");
         number = b.getString("number");
         name = b.getString("name");
         keyword = b.getString("keyword");
         tab = b.getString("tab");
-        groupid = b.getString("groupid");
-        broadcastgroupid = b.getString("broadcastgroupid");
+        groupid = b.getInt("groupid");
+        broadcastgroupid = b.getInt("broadcastgroupid");
         groupname = b.getString("groupname");
 
         System.out.println("Data in caption fragment" + "-" +
@@ -80,34 +80,34 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
                 "Exchange id =" + exchange_id);
 
         if (!profile_contact.equals(""))
-            layoutNumber = "1";
+            layoutNumber = 1;
 
         else if (store_id!=0)
-            layoutNumber = "2";
+            layoutNumber = 2;
 
-        else if (!vehicle_id.equals(""))
-            layoutNumber = "4";
+        else if (vehicle_id!=0)
+            layoutNumber = 4;
 
-        else if (!product_id.equals(""))
-            layoutNumber = "5";
+        else if (product_id!=0)
+            layoutNumber = 5;
 
-        else if (!service_id.equals(""))
-            layoutNumber = "6";
+        else if (service_id!=0)
+            layoutNumber = 6;
 
-        else if (!status_id.equals(""))
-            layoutNumber = "7";
+        else if (status_id!=0)
+            layoutNumber = 7;
 
-        else if (!search_id.equals(""))
-            layoutNumber = "8";
+        else if (search_id!=0)
+            layoutNumber = 8;
 
-        else if (!auction_id.equals(""))
-            layoutNumber = "9";
+        else if (auction_id!=0)
+            layoutNumber = 9;
 
-        else if (!loan_id.equals(""))
-            layoutNumber = "10";
+        else if (loan_id!=0)
+            layoutNumber = 10;
 
-        else if (!exchange_id.equals(""))
-            layoutNumber = "11";
+        else if (exchange_id!=0)
+            layoutNumber = 11;
 
 
         if (tab.equalsIgnoreCase("contact"))
@@ -132,7 +132,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     }
 
 
-    private void shareTask(String layoutNumber, String editdata) {
+    private void shareTask(int layoutNumber, String editdata) {
         mApiCall.shareTaskInApp(contactnumber, number, groupid, broadcastgroupid, editdata, layoutNumber, profile_contact,
                 store_id, vehicle_id, product_id, service_id, status_id, search_id, auction_id, loan_id, exchange_id);
     }

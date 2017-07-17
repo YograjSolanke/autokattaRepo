@@ -354,7 +354,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 if (preoverall.equals("0")) {
 
                     if (count == 0.0f) {
-                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                        mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
                                 String.valueOf(precsrate),
                                 String.valueOf(preqwrate),
                                 String.valueOf(prefrrate),
@@ -363,7 +363,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                 "store");
 
                     } else {
-                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
+                        mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(count),
                                 String.valueOf(csrate),
                                 String.valueOf(qwrate),
                                 String.valueOf(frrate),
@@ -373,7 +373,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     }
                 } else {
                     if (count == 0.0f) {
-                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                        mApiCall.sendUpdatedrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
                                 String.valueOf(precsrate),
                                 String.valueOf(preqwrate),
                                 String.valueOf(prefrrate),
@@ -382,7 +382,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                 "store");
 
                     } else {
-                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
+                        mApiCall.sendUpdatedrating(myContact, store_id, 0, 0, String.valueOf(count),
                                 String.valueOf(csrate),
                                 String.valueOf(qwrate),
                                 String.valueOf(frrate),
@@ -403,7 +403,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 if (preoverall.equals("0")) {
 
                     if (count == 0.0f) {
-                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                        mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
                                 String.valueOf(precsrate),
                                 String.valueOf(preqwrate),
                                 String.valueOf(prefrrate),
@@ -412,7 +412,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                 "store");
 
                     } else {
-                        mApiCall.sendNewrating(myContact, store_id, "", "", String.valueOf(count),
+                        mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(count),
                                 String.valueOf(csrate),
                                 String.valueOf(qwrate),
                                 String.valueOf(frrate),
@@ -422,7 +422,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     }
                 } else {
                     if (count == 0.0f) {
-                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(preoverall),
+                        mApiCall.sendUpdatedrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
                                 String.valueOf(precsrate),
                                 String.valueOf(preqwrate),
                                 String.valueOf(prefrrate),
@@ -431,7 +431,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                                 "store");
 
                     } else {
-                        mApiCall.sendUpdatedrating(myContact, store_id, "", "", String.valueOf(count),
+                        mApiCall.sendUpdatedrating(myContact, store_id, 0, 0, String.valueOf(count),
                                 String.valueOf(csrate),
                                 String.valueOf(qwrate),
                                 String.valueOf(frrate),

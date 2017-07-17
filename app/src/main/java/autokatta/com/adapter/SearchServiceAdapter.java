@@ -174,7 +174,7 @@ public class SearchServiceAdapter extends BaseAdapter implements RequestNotifier
             @Override
             public void onClick(View view) {
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                String proId = service.getId();
+                int proId = service.getId();
                 Intent intent = new Intent(activity, ServiceViewActivity.class);
                 intent.putExtra("service_id", proId);
                 activity.startActivity(intent, options.toBundle());
@@ -184,7 +184,7 @@ public class SearchServiceAdapter extends BaseAdapter implements RequestNotifier
         yoHolder.deleteproduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String product_id = service.getId();
+                final int product_id = service.getId();
                 if (!connectionDetector.isConnectedToInternet()) {
                     CustomToast.customToast(activity, activity.getString(R.string.no_internet));
                 } else {

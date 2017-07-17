@@ -90,7 +90,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     MultiAutoCompleteTextView producttags, multiautobrand;
     RelativeLayout relativerate;
     RatingBar pricebar, qualitybar, stockbar, overallbar, productrating, storerating;
-    String store_id, storecontact, storeowner;
+    String  storecontact, storeowner;
+    int store_id;
 
     //product updating variables
     String uptype, upname, upprice, updetails, uptags, upimgs, upcat;
@@ -98,7 +99,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     RelativeLayout spinnerlayout, relativewritereview;
     TextView photocount, no_of_enquiries;
     String tagpart = "", tagid = "";
-    String idlist = "", product_id;
+    String idlist = "";
+    int product_id;
     boolean tagflag = false;
     ConnectionDetector mConnectionDetector;
     ArrayList<String> imageslist = new ArrayList<>();
@@ -180,7 +182,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         linearshare.setOnClickListener(this);
         seellreview.setOnClickListener(this);
 
-        product_id = getIntent().getExtras().getString("product_id");
+        product_id = getIntent().getExtras().getInt("product_id");
 
 
         runOnUiThread(new Runnable() {
@@ -260,19 +262,19 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     }
 
-    private void getNoOfEnquiryCount(String product_id, String contact) {
+    private void getNoOfEnquiryCount(int product_id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
-        mApicall.getEnquiryCount(contact, product_id, "", "");
+        mApicall.getEnquiryCount(contact, product_id, 0, 0);
 
     }
 
-    private void getChatEnquiryStatus(String contact, String receiver_contact, String product_id) {
+    private void getChatEnquiryStatus(String contact, String receiver_contact, int product_id) {
 
         ApiCall mApicall = new ApiCall(this, this);
-        mApicall.getChatEnquiryStatus(contact, receiver_contact, product_id, "", "");
+        mApicall.getChatEnquiryStatus(contact, receiver_contact, product_id, 0, 0);
     }
 
-    private void getProductData(String id, String contact) {
+    private void getProductData(int id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
         mApicall.getProductDetails(id, contact);
     }
@@ -282,7 +284,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendupdatedproductrating() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.sendUpdatedrating(contact, 0, product_id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendUpdatedrating(contact, 0, product_id, 0, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(stockrate), "", "", "product");
     }
 
@@ -291,7 +293,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendproductrating() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.sendNewrating(contact, 0, product_id, "", String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendNewrating(contact, 0, product_id, 0, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(stockrate), "", "", "product");
     }
 
@@ -300,7 +302,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendUnlike() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.UnLike(contact, receiver_contact, "5", 0,"","", product_id,"","","");
+        mApiCall.UnLike(contact, receiver_contact, "5", 0,"",0, product_id,0,"","");
     }
 
     /*
@@ -308,7 +310,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendLike() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.Like(contact, receiver_contact, "5", 0,"","", product_id,"","","");
+        mApiCall.Like(contact, receiver_contact, "5", 0,"",0, product_id,0,"","");
     }
 
     /*
@@ -356,7 +358,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void reviewTask() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.postProductReview(contact, receiver_contact, product_id, reviewstring);
+        mApiCall.postProductReview(contact, receiver_contact, product_id, reviewstring,0);
     }
 
     /*
@@ -861,12 +863,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 if (btnchat.getText().toString().equalsIgnoreCase("send enquiry")) {
                     ApiCall mpApicall = new ApiCall(this, this);
                     mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", product_id,
-                            "", "");
+                            0, 0);
                 } else {
                     Bundle b = new Bundle();
                     b.putString("sender", storecontact);
                     b.putString("sendername", storeowner);
-                    b.putString("product_id", product_id);
+                    b.putInt("product_id", product_id);
                     b.putString("service_id", "");
                     b.putString("vehicle_id", "");
 
@@ -949,7 +951,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_product_id", product_id).apply();
+                        putInt("Share_product_id", product_id).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "product").apply();
 
@@ -1023,7 +1025,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             case R.id.btnseeall:
 
 
-                b.putString("product_id", product_id);
+                b.putInt("product_id", product_id);
                 b.putString("action", action);
                             /*SeeAllReviews frag = new SeeAllReviews();
                             frag.setArguments(b);
@@ -1040,7 +1042,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     }
 
-    private void updateProduct(String product_id, String upname, String upprice, String updetails, String uptags, String uptype, String upimgs, String upcat, String finalbrandtags) {
+    private void updateProduct(int product_id, String upname, String upprice, String updetails, String uptags, String uptype, String upimgs, String upcat, String finalbrandtags) {
 
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.updateProduct(product_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);

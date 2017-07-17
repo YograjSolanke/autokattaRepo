@@ -65,7 +65,7 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
             public void onClick(View v) {
 
                 Bundle b = new Bundle();
-                b.putString("auction_id", mMainlist.get(position).getAuctionId());
+                b.putInt("auction_id", mMainlist.get(position).getAuctionId());
                 b.putString("actiontitle", mMainlist.get(position).getActionTitle());
                 b.putString("auctionvehicle", mMainlist.get(position).getNoOfVehicle());
                 b.putString("auctionstartdate", mMainlist.get(position).getStartDate());
@@ -107,7 +107,7 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
+                        putInt("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", mAuction).apply();
 
@@ -138,7 +138,7 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
+                        putInt("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", mAuction).apply();
 

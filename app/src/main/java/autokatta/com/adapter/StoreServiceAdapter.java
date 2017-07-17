@@ -142,7 +142,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serviceId = service.getServiceId();
+                int serviceId = service.getServiceId();
                 Intent intent = new Intent(activity, ServiceViewActivity.class);
                 intent.putExtra("service_id", serviceId);
                 activity.startActivity(intent);
@@ -153,7 +153,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.deleteproduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String serviceId = service.getServiceId();
+                final int serviceId = service.getServiceId();
 
 
                 if (!connectionDetector.isConnectedToInternet()) {

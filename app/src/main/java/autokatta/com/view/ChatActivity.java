@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
     TextView addimagetext;
     AlertDialog alert;
     TextView msgFrom;
-    String service_id = "", product_id = "", vehicle_id = "";
+    int service_id = 0, product_id = 0, vehicle_id = 0;
     Uri selectedImage = null;
     Bitmap bitmapRotate;
     String fname;
@@ -128,14 +128,14 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
 
             Sendercontact = getIntent().getExtras().getString("sender");
             sendername = getIntent().getExtras().getString("sendername");
-            product_id = getIntent().getExtras().getString("product_id");
-            service_id = getIntent().getExtras().getString("service_id");
-            vehicle_id = getIntent().getExtras().getString("vehicle_id");
+            product_id = getIntent().getExtras().getInt("product_id");
+            service_id = getIntent().getExtras().getInt("service_id");
+            vehicle_id = getIntent().getExtras().getInt("vehicle_id");
 
             setTitle(sendername);
             chatwithtext.setText(sendername);
             apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);
-            if (product_id.equals("") && service_id.equals("") && vehicle_id.equals(""))
+            if (product_id==0 && service_id==0 && vehicle_id==0)
                 MainRel.setVisibility(View.GONE);
             else {
                 apiCall.getChatElementData(product_id, service_id, vehicle_id);

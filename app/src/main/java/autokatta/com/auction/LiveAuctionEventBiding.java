@@ -41,10 +41,11 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements Request
     OutBid mOutBid;
     WatchedItem mWatchedItem;
     YourBid mYourBid;
-    String auctioneername, AuctionId, action_title, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
+    String auctioneername,  action_title, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
             no_of_vehicles, auctioncontact, specialcluases, endDateTime, openClose, auctiontype, showPrice, ignoreGoing,
             startDateTime, blackListStatus, keyWord, strCategory, strLocation;
     Boolean isEMDPaid;
+    int AuctionId;
     TextView mLiveTitle, mLiveVehicles, mLiveAuctionType, mCategory, mEndDate, mEndTime, mLiveTimer;
     TextView mLimitForBid, mHighBidTotal, mTotalRemains;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
@@ -65,7 +66,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements Request
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         auctioneername = getIntent().getExtras().getString("auctioneer");
-        AuctionId = getIntent().getExtras().getString("auction_id");
+        AuctionId = getIntent().getExtras().getInt("auction_id");
         action_title = getIntent().getExtras().getString("action_title");
         auction_startdate = getIntent().getExtras().getString("auction_startdate");
         auction_starttime = getIntent().getExtras().getString("auction_starttime");
@@ -86,7 +87,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements Request
         strCategory = getIntent().getExtras().getString("category");
         strLocation = getIntent().getExtras().getString("location");
         b1 = new Bundle();
-        b1.putString("auction_id", AuctionId);
+        b1.putInt("auction_id", AuctionId);
         b1.putString("openClose", openClose);
         b1.putString("showPrice", showPrice);
 

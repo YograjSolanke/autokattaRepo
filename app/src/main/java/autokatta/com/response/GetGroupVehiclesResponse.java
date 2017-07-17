@@ -27,7 +27,7 @@ public class GetGroupVehiclesResponse {
 
         @SerializedName("vehicle_id")
         @Expose
-        private String vehicleId;
+        private int vehicleId;
         @SerializedName("Title")
         @Expose
         private String title;
@@ -169,11 +169,11 @@ public class GetGroupVehiclesResponse {
             AllImage = allImage;
         }
 
-        public String getVehicleId() {
+        public int getVehicleId() {
             return vehicleId;
         }
 
-        public void setVehicleId(String vehicleId) {
+        public void setVehicleId(int vehicleId) {
             this.vehicleId = vehicleId;
         }
 

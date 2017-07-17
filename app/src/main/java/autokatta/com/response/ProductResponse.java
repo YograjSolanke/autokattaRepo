@@ -27,10 +27,10 @@ public class ProductResponse {
 
         @SerializedName("product_id")
         @Expose
-        private String productId;
+        private int productId;
         @SerializedName("store_id")
         @Expose
-        private String storeId;
+        private int storeId;
         @SerializedName("product_type")
         @Expose
         private String productType;
@@ -116,19 +116,19 @@ public class ProductResponse {
         @Expose
         private String productTagNames;
 
-        public String getProductId() {
+        public int getProductId() {
             return productId;
         }
 
-        public void setProductId(String productId) {
+        public void setProductId(int productId) {
             this.productId = productId;
         }
 
-        public String getStoreId() {
+        public int getStoreId() {
             return storeId;
         }
 
-        public void setStoreId(String storeId) {
+        public void setStoreId(int storeId) {
             this.storeId = storeId;
         }
 

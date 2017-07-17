@@ -419,7 +419,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     b.putString("calltype", "update");
                     b.putString("groupname", mItemList.get(position).getGroupTitle());
                     b.putString("groupmembers", mItemList.get(position).getGroupMemberContacts());
-                    b.putString("group_id", mItemList.get(position).getGroupId());
+                    b.putInt("group_id", mItemList.get(position).getGroupId());
                     CreateBroadcastGroupFragment broadcastGroup = new CreateBroadcastGroupFragment();
                     broadcastGroup.setArguments(b);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -441,7 +441,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     } else {
                         holder.group_title.setChecked(true);
                         positionArray.set(position, true);
-                        grpidslist.set(position, mItemList.get(position).getGroupId());
+                        grpidslist.set(position, String.valueOf(mItemList.get(position).getGroupId()));
                     }
 
                     if (positionArray.contains(true)) {

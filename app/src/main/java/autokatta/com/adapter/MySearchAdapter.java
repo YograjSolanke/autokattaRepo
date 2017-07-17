@@ -44,7 +44,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.SearchHolder> implements RequestNotifier {
 
     Activity activity;
-    private String SearchId, keyword, allDetails;
+    private String  keyword, allDetails;
+    private int SearchId;
     List<MySearchResponse.Success> mMainlist;
     private int flag = 0;
     ApiCall apiCall;
@@ -131,7 +132,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 bundle.putString("model", holder.textmodel.getText().toString());
                 bundle.putString("price", holder.textprice.getText().toString());
                 bundle.putString("year", holder.textyear.getText().toString());
-                bundle.putString("search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId());
+                bundle.putInt("search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId());
 
                 //activity.finish();
                 Intent intent = new Intent(activity, SearchVehicleActivity.class);
@@ -267,7 +268,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
-                        putString("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
+                        putInt("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_keyword", "mysearch").apply();
 
@@ -314,7 +315,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
-                        putString("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
+                        putInt("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                         putString("Share_keyword", "mysearch").apply();
 
@@ -334,7 +335,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 } else {
                     SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
                     Bundle b = new Bundle();
-                    b.putString("search_id", SearchId);
+                    b.putInt("search_id", SearchId);
                     b.putString("category", holder.textcategory.getText().toString());
                     b.putString("brand", holder.textbrand.getText().toString());
                     b.putString("model", holder.textmodel.getText().toString());

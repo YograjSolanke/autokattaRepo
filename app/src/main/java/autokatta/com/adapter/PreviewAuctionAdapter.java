@@ -30,9 +30,10 @@ import autokatta.com.response.GetAuctionEventResponse;
 public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAdapter.MyViewHolder> {
     private Activity mActivity;
     private List<GetAuctionEventResponse.Vehicle> mItemList = new ArrayList<>();
-    private String auctionId, showPrice, contact;
+    private String  showPrice, contact;
+    private int auctionId;
 
-    public PreviewAuctionAdapter(Activity mActivity, List<GetAuctionEventResponse.Vehicle> mItemList, String auctionId
+    public PreviewAuctionAdapter(Activity mActivity, List<GetAuctionEventResponse.Vehicle> mItemList, int auctionId
             , String showPrice, String contact) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
@@ -134,7 +135,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
                 if (!mItemList.get(position).getVehicleId().startsWith("A ")) {
                     Bundle b = new Bundle();
                     b.putString("vehicle_id", mItemList.get(position).getVehicleId());
-                    b.putString("auction_id", auctionId);
+                    b.putInt("auction_id", auctionId);
 
                     Intent intent = new Intent(mActivity, MyAuctionVehicleDetails.class);
                     intent.putExtras(b);

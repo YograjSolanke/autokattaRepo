@@ -414,7 +414,7 @@ public interface ServiceApi {
 
     //Get Vehicle By Id...
     @GET("GetVehicleByID")
-    Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("Contact") String yourcontact, @Query("VehicleID") String vehicleId);
+    Call<GetVehicleByIdResponse> _autokattaGetVehicleById(@Query("Contact") String yourcontact, @Query("VehicleID") int vehicleId);
 
     //Delete a store...
     @POST("DeleteMyStore")
@@ -574,7 +574,7 @@ public interface ServiceApi {
 
     //delete my search item
     @GET("DeleteUpdateMySearch")
-    Call<String> deleteMySearch(@Query("SearchID") String search_id, @Query("Keyword") String keyword);
+    Call<String> deleteMySearch(@Query("SearchID") int search_id, @Query("Keyword") String keyword);
 
     //Update Auction
     @POST("UpdateAuctionCreation")
@@ -592,7 +592,7 @@ public interface ServiceApi {
 
     //Send Auction mail...
     @GET("email_v.php")
-    Call<String> _autokattaSendAuctionMail(@Query("contact") String myContact, @Query("auction_id") String strAuctionId);
+    Call<String> _autokattaSendAuctionMail(@Query("contact") String myContact, @Query("auction_id") int strAuctionId);
 
     //get Auction Participants
     @GET("GetAuctionConfirmedParticipants")
@@ -648,7 +648,7 @@ public interface ServiceApi {
 
     //Get Auction Preview By Id...
     @GET("GetAuctionEventDetails")
-    Call<GetAuctionEventResponse> getAuctionEvent(@Query("AuctionID") String auctionId);
+    Call<GetAuctionEventResponse> getAuctionEvent(@Query("AuctionID") int auctionId);
 
     // Create  BroadCast Group
 
@@ -710,26 +710,26 @@ public interface ServiceApi {
     //get Chat message
     @GET("GetChatMessage")
     Call<BroadcastMessageResponse> getChatMessageData(@Query("SenderContact") String sender_contact, @Query("ReceiverContact") String receiver_contact,
-                                                      @Query("ProductID") String product_id,
-                                                      @Query("ServiceID") String service_id, @Query("VehicleID") String vehicle_id);
+                                                      @Query("ProductID") int product_id,
+                                                      @Query("ServiceID") int service_id, @Query("VehicleID") int vehicle_id);
 
     //Get Ignore Going me...
     @POST("AddIgnoreGoingMe")
-    Call<String> addIgnoreGoingMe(@Query("Contact") String contact, @Query("AuctionID") String auctionId, @Query("LoanID") String loanId,
-                                  @Query("ExchangeID") String exchangeId, @Query("SaleID") String saleId, @Query("ServiceID") String serviceId,
+    Call<String> addIgnoreGoingMe(@Query("Contact") String contact, @Query("AuctionID") int auctionId, @Query("LoanID") String loanId,
+                                  @Query("ExchangeID") int exchangeId, @Query("SaleID") String saleId, @Query("ServiceID") String serviceId,
                                   @Query("Action") String action);
 
     //send Chat Message
     @POST("SaveChatMessage")
     Call<String> sendChatMessage(@Query("SenderContact") String sender_contact, @Query("ReceiverContact") String receiver_contact,
                                  @Query("Message") String message, @Query("Image") String image,
-                                 @Query("ProductID") String product_id, @Query("ServiceID") String service_id, @Query("VehicleID") String vehicle_id);
+                                 @Query("ProductID") int product_id, @Query("ServiceID") int service_id, @Query("VehicleID") int vehicle_id);
 
 
     //get Chat message elements details
     @GET("GetMyChatAllData")
-    Call<ChatElementDetails> getChatElementData(@Query("ProductID") String product_id, @Query("ServiceID") String service_id,
-                                                @Query("VehicleID") String vehicle_id);
+    Call<ChatElementDetails> getChatElementData(@Query("ProductID") int product_id, @Query("ServiceID") int service_id,
+                                                @Query("VehicleID") int vehicle_id);
 
 
     //get Uploaded vehicle buyer list
@@ -789,7 +789,7 @@ public interface ServiceApi {
     @POST("addRemooveMyFavourites.php")
     Call<String> addRemovefavouriteStatus(@Query("contact") String contact,
                                           @Query("buyer_vehicle_id") String buyer_vehicle_id,
-                                          @Query("search_id") String search_id,
+                                          @Query("search_id") int search_id,
                                           @Query("seller_vehicle_id") String seller_vehicle_id);
 
     //Save My Search
@@ -822,6 +822,7 @@ public interface ServiceApi {
     Call<GetVehicleForAuctionResponse> getVehicleAuction(@Query("AuctionID") String auctionId, @Query("VehicleID") String vehicleId,
                                                          @Query("Contact") String contact);
 
+    //contact not used
     @POST("AdminVehicleMoreDetails")
     Call<GetAdminVehicleResponse> getAdminAuction(@Query("VehicleID") String vehicleId, @Query("contact") String contact);
 
@@ -835,7 +836,7 @@ public interface ServiceApi {
 
     //update_tag_association.php
     @POST("UpdateTagAssociation")
-    Call<String> updateTagAssociation(@Query("ProductID") String product_id, @Query("ServiceID") String serviceId, @Query("TagID") String tagId);
+    Call<String> updateTagAssociation(@Query("ProductID") int product_id, @Query("ServiceID") String serviceId, @Query("TagID") String tagId);
 
 
     //tag_association.php
@@ -864,8 +865,8 @@ public interface ServiceApi {
     @POST("Newlikes")
     Call<String> _autokattaLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                 @Query("Layout") String layout, @Query("StoreID") int store_id,
-                                @Query("GroupID") String gid ,@Query("VehicleID") String vid,
-                                @Query("ProductID") String pid, @Query("ServiceID") String sid,
+                                @Query("GroupID") String gid ,@Query("VehicleID") int vid,
+                                @Query("ProductID") int pid, @Query("ServiceID") int sid,
                                 @Query("StatusID") String statusid, @Query("SearchID") String searchid);
 
       /*
@@ -875,18 +876,18 @@ public interface ServiceApi {
     @POST("NewUnlikes")
     Call<String> _autokattaUnLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                   @Query("Layout") String layout, @Query("StoreID") int store_id,
-                                  @Query("GroupID") String gid ,@Query("VehicleID") String vid,
-                                  @Query("ProductID") String pid, @Query("ServiceID") String sid,
+                                  @Query("GroupID") String gid ,@Query("VehicleID") int vid,
+                                  @Query("ProductID") int pid, @Query("ServiceID") int sid,
                                   @Query("StatusID") String statusid, @Query("SearchID") String searchid);
 
 
     //delete product
     @POST("DeleteMyProduct")
-    Call<String> deleteProduct(@Query("ProductID") String product_id, @Query("Keyword") String keyword);
+    Call<String> deleteProduct(@Query("ProductID") int product_id, @Query("Keyword") String keyword);
 
     //delete service
     @POST("DeleteMyService")
-    Call<String> deleteService(@Query("ServiceID") String service_id, @Query("Keyword") String keyword);
+    Call<String> deleteService(@Query("ServiceID") int service_id, @Query("Keyword") String keyword);
 
     //delete vehicle
     @POST("DeleteMyUploadedVehicles")
@@ -911,7 +912,7 @@ public interface ServiceApi {
     //Post Product Review...
     @POST("PostProductReview")
     Call<String> postProductReview(@Query("Contact") String contact, @Query("StoreID") String storeId,
-                                   @Query("ProductID") String productId, @Query("Review") String review,@Query("ServiceID") String serviceid);
+                                   @Query("ProductID") int productId, @Query("Review") String review,@Query("ServiceID") int serviceid);
 
    /* //Likes in Vehicle details
     @POST("Newlikes")
@@ -923,7 +924,7 @@ public interface ServiceApi {
 
     //Calling in Vehicle details
     @POST("calling")
-    Call<String> _autokattaVehicleCalling(@Query("VehicleID") String vehicle_id, @Query("Keyword") String keyword);
+    Call<String> _autokattaVehicleCalling(@Query("VehicleID") int vehicle_id, @Query("Keyword") String keyword);
 
 
    /* //UnLikes in Vehicle details
@@ -981,13 +982,13 @@ public interface ServiceApi {
     //Share data within app
     @POST("NewShare")
     Call<String> _autokattaShareData(@Query("SenderContact") String sender_contact, @Query("ReceiverContact") String receiver_contact,
-                                     @Query("GroupID") String group_id, @Query("BroadCastGroupID") String broadcastgroup_id,
-                                     @Query("CaptionData") String caption_data, @Query("Layout") String layout,
-                                     @Query("ProfileID") String profile_id, @Query("StoreID") int store_id,
-                                     @Query("VehicleID") String vehicle_id, @Query("ProductID") String product_id,
-                                     @Query("ServiceID") String service_id, @Query("StatusID") String status_id,
-                                     @Query("SearchID") String search_id, @Query("AuctionID") String auction_id,
-                                     @Query("LoadID") String loan_id, @Query("ExchangeID") String exchange_id);
+                                     @Query("GroupID") int group_id, @Query("BroadCastGroupID") int broadcastgroup_id,
+                                     @Query("CaptionData") String caption_data, @Query("Layout") int layout,
+                                     @Query("ProfileContact") String profile_id, @Query("StoreID") int store_id,
+                                     @Query("VehicleID") int vehicle_id, @Query("ProductID") int product_id,
+                                     @Query("ServiceID") int service_id, @Query("StatusID") int status_id,
+                                     @Query("SearchID") int search_id, @Query("AuctionID") int auction_id,
+                                     @Query("LoanID") int loan_id, @Query("ExchangeID") int exchange_id);
 
     //Search Service...
     @GET("GetServiceSearchData")
@@ -1034,8 +1035,8 @@ public interface ServiceApi {
     @POST("NewRating")
     Call<String> sendNewRating(@Query("Contact") String contact,
                                @Query("StoreID") int store_id,
-                               @Query("ProductID") String product_id,
-                               @Query("ServiceID") String service_id,
+                               @Query("ProductID") int product_id,
+                               @Query("ServiceID") int service_id,
                                @Query("Rate") String rate,
                                @Query("Rate1") String rate1,
                                @Query("Rate2") String rate2,
@@ -1049,8 +1050,8 @@ public interface ServiceApi {
     @POST("UpdateRatings")
     Call<String> sendupdatedRating(@Query("Contact") String contact,
                                    @Query("StoreID") int store_id,
-                                   @Query("ProductID") String product_id,
-                                   @Query("ServiceID") String service_id,
+                                   @Query("ProductID") int product_id,
+                                   @Query("ServiceID") int service_id,
                                    @Query("Rate") String rate,
                                    @Query("Rate1") String rate1,
                                    @Query("Rate2") String rate2,
@@ -1138,12 +1139,12 @@ public interface ServiceApi {
 
     //get product data
     @GET("GetProductDataById")
-    Call<ProductResponse> getProductDetails(@Query("ProductID") String product_id, @Query("MyContact") String mycontact);
+    Call<ProductResponse> getProductDetails(@Query("ProductID") int product_id, @Query("MyContact") String mycontact);
 
 
     //get Service data
     @GET("GetServiceDataById")
-    Call<ServiceResponse> getServiceDetails(@Query("ServiceID") String product_id, @Query("MyContact") String mycontact);
+    Call<ServiceResponse> getServiceDetails(@Query("ServiceID") int Serviceid, @Query("MyContact") String mycontact);
 
     //get Service Mela data
     @GET("GetAllMyServiceMela")
@@ -1191,7 +1192,7 @@ public interface ServiceApi {
 
     //update product details
     @POST("UpdateStoreProduct")
-    Call<String> updateProduct(@Query("ProductID") String product_id,
+    Call<String> updateProduct(@Query("ProductID") int product_id,
                                @Query("ProductName") String product_name,
                                @Query("Price") String price,
                                @Query("ProductDetails") String product_details,
@@ -1204,7 +1205,7 @@ public interface ServiceApi {
 
     //update Service details
     @POST("UpdateStoreService")
-    Call<String> updateService(@Query("ServiceID") String service_id,
+    Call<String> updateService(@Query("ServiceID") int service_id,
                                @Query("ServiceName") String service_name,
                                @Query("ServicePrice") String price,
                                @Query("ServiceDetails") String service_details,
@@ -1218,17 +1219,17 @@ public interface ServiceApi {
     //get chat enquiry status
     @GET("GetEnquiryChatStatus")
     Call<String> getChatEnquiryStatus(@Query("Sender") String sender, @Query("Receiver") String receiver,
-                                      @Query("ProductID") String product_id,
-                                      @Query("ServiceID") String service_id,
-                                      @Query("VehicleID") String vehicle_id);
+                                      @Query("ProductID") int product_id,
+                                      @Query("ServiceID") int service_id,
+                                      @Query("VehicleID") int vehicle_id);
 
 
     //get chat enquiry status
     @GET("GetEnquiryCount")
     Call<EnquiryCountResponse> getEnquiryCount(@Query("Sender") String sender,
-                                               @Query("ProductID") String product_id,
-                                               @Query("ServiceID") String service_id,
-                                               @Query("VehicleID") String vehicle_id);
+                                               @Query("ProductID") int product_id,
+                                               @Query("ServiceID") int service_id,
+                                               @Query("VehicleID") int vehicle_id);
 
     //Get Manual enquiry
     @GET("addEnquiryData.php")
