@@ -32,9 +32,9 @@ public class ShareWithContactFragment extends Fragment {
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     public static final String MyContactPREFERENCES = "contact No";
 
-    String contactnumber, sharedata, storecontact, vehicle_id, product_id, service_id, profile_contact,
-            search_id, status_id, auction_id, loan_id, exchange_id;
-int store_id;
+    String contactnumber, sharedata, storecontact,profile_contact ;
+int store_id,vehicle_id, product_id, service_id,
+        search_id, status_id, auction_id, loan_id, exchange_id;
     String keyword = "";
     ListView contactlist;
 
@@ -50,15 +50,15 @@ int store_id;
             Bundle b = getArguments();
             sharedata = b.getString("generic_list_view");
             store_id = b.getInt("store_id");
-            vehicle_id = b.getString("vehicle_id");
-            product_id = b.getString("product_id");
-            service_id = b.getString("service_id");
-            search_id = b.getString("search_id");
+            vehicle_id = b.getInt("vehicle_id");
+            product_id = b.getInt("product_id");
+            service_id = b.getInt("service_id");
+            search_id = b.getInt("search_id");
             profile_contact = b.getString("profile_contact");
-            status_id = b.getString("status_id");
-            auction_id = b.getString("auction_id");
-            loan_id = b.getString("loan_id");
-            exchange_id = b.getString("exchange_id");
+            status_id = b.getInt("status_id");
+            auction_id = b.getInt("auction_id");
+            loan_id = b.getInt("loan_id");
+            exchange_id = b.getInt("exchange_id");
 
             keyword = b.getString("keyword");
             Log.i("key", "->" + keyword);

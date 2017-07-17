@@ -61,27 +61,27 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
                 getVehicleData(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                                 .getString("loginContact", ""),
                         getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-                                .getString("vehicle_id", ""));
+                                .getInt("vehicle_id", 0));
 
                 getEnquiryCount(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
                                 .getString("loginContact", ""),
                         getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-                                .getString("vehicle_id", ""));
+                                .getInt("vehicle_id", 0));
             }
         });
 
         return mVehicleDetails;
     }
 
-    private void getEnquiryCount(String loginContact, String vehicle_id) {
+    private void getEnquiryCount(String loginContact, int vehicle_id) {
         ApiCall mApicall = new ApiCall(getActivity(), this);
-        mApicall.getEnquiryCount(loginContact, "", "", vehicle_id);
+        mApicall.getEnquiryCount(loginContact, 0, 0, vehicle_id);
     }
 
     /*
     Vehicle Details...
      */
-    private void getVehicleData(String contact, String mVehicleId) {
+    private void getVehicleData(String contact, int mVehicleId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);

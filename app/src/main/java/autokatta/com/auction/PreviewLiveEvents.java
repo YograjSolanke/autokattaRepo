@@ -66,7 +66,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
     TextView mLiveTimer, mStartDate, mStartTime, mEndDate, mEndTime, mAuctionText, mCloseOpenType, mCategory, mLocation;
     String allDetails = "", keyword;
 
-    String auction_id = "", whoseAuction = "";
+    String  whoseAuction = "";
+    int auction_id;
     String contact, auctioneername, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
             no_of_vehicles, auctioncontact, action_title, ignoreGoingStatus, startDateTime, endDateTime, specialcluases,
             blackListStatus, openClose, auctiontype, showPrice, strCategory, strLocation;
@@ -89,7 +90,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         auctioneername = getIntent().getExtras().getString("auctioneer");
-        auction_id = getIntent().getExtras().getString("auction_id");
+        auction_id = getIntent().getExtras().getInt("auction_id");
         action_title = getIntent().getExtras().getString("action_title");
         auction_startdate = getIntent().getExtras().getString("auction_startdate");
         auction_starttime = getIntent().getExtras().getString("auction_starttime");
@@ -344,7 +345,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 } else {
                     Bundle b1 = new Bundle();
                     b1.putString("auctioneer", auctioneername);
-                    b1.putString("auction_id", auction_id);
+                    b1.putInt("auction_id", auction_id);
                     b1.putString("action_title", action_title);
                     b1.putString("auction_startdate", auction_startdate);
                     b1.putString("auction_starttime", auction_starttime);
@@ -393,7 +394,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
 
                                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                                                 Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
-                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "going");
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", 0, "", "", "going");
                                                 add.enqueue(new Callback<String>() {
                                                     @Override
                                                     public void onResponse(Call<String> call, Response<String> response) {
@@ -446,7 +447,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
 
                                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                                                 Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
-                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "going");
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", 0, "", "", "going");
                                                 add.enqueue(new Callback<String>() {
                                                     @Override
                                                     public void onResponse(Call<String> call, Response<String> response) {
@@ -496,7 +497,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
 
                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                         Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
-                                Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", "", "", "", "ignore");
+                                Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", 0, "", "", "ignore");
                         add.enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
@@ -598,7 +599,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", auction_id).apply();
+                        putInt("Share_auction_id", auction_id).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", mAuction).apply();
 

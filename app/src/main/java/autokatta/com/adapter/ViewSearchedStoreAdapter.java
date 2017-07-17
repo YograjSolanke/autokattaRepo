@@ -166,7 +166,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.Like(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), object.getContact(), "2", StoreId,"","","","","","");
+                        .getString("loginContact", ""), object.getContact(), "2", StoreId,"",0,0,0,"","");
 
                 holder.linearunlike.setVisibility(View.VISIBLE);
                 holder.linearlike.setVisibility(View.GONE);
@@ -187,7 +187,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreId = object.getStoreId();
 
                 mApiCall.UnLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), StoreContact, "2", StoreId,"","","","","","");
+                        .getString("loginContact", ""), StoreContact, "2", StoreId,"",0,0,0,"","");
 
                 holder.linearunlike.setVisibility(View.GONE);
                 holder.linearlike.setVisibility(View.VISIBLE);

@@ -234,7 +234,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
+                        putInt("Share_auction_id", Integer.parseInt(auctionDetailsArrayList.get(position).getAuctionId())).apply();
                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", mAuction).apply();
 

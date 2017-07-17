@@ -23,9 +23,9 @@ public class ShareWithinAppTabFragment extends Fragment {
     ViewPager viewPager;
     SharedPreferences prefs;
     String contactnumber;
-    String sharedata, storecontact, vehicle_id, task_id, product_id, service_id, profile_contact,
-            search_id, status_id, auction_id, exchange_id, loan_id;
-    int store_id;
+    String sharedata, storecontact,task_id,profile_contact;
+    int store_id ,vehicle_id,  product_id, service_id,
+    search_id, status_id, auction_id, exchange_id, loan_id;
     String keyword;
 
     public ShareWithinAppTabFragment() {
@@ -39,15 +39,15 @@ public class ShareWithinAppTabFragment extends Fragment {
         contactnumber = prefs.getString("loginContact", "");
         store_id = prefs.getInt("Share_store_id", 0);
         sharedata = prefs.getString("Share_sharedata", "");
-        vehicle_id = prefs.getString("Share_vehicle_id", "");
-        product_id = prefs.getString("Share_product_id", "");
-        service_id = prefs.getString("Share_service_id", "");
+        vehicle_id = prefs.getInt("Share_vehicle_id", 0);
+        product_id = prefs.getInt("Share_product_id", 0);
+        service_id = prefs.getInt("Share_service_id", 0);
         profile_contact = prefs.getString("Share_profile_contact", "");
-        search_id = prefs.getString("Share_search_id", "");
-        status_id = prefs.getString("Share_status_id", "");
-        auction_id = prefs.getString("Share_auction_id", "");
-        loan_id = prefs.getString("Share_loan_id", "");
-        exchange_id = prefs.getString("Share_exchange_id", "");
+        search_id = prefs.getInt("Share_search_id", 0);
+        status_id = prefs.getInt("Share_status_id", 0);
+        auction_id = prefs.getInt("Share_auction_id", 0);
+        loan_id = prefs.getInt("Share_loan_id", 0);
+        exchange_id = prefs.getInt("Share_exchange_id", 0);
         keyword = prefs.getString("Share_keyword", "");
 
         System.out.println("Data in share Tab before" + "-" +
@@ -56,9 +56,9 @@ public class ShareWithinAppTabFragment extends Fragment {
                 "Exchange id =" + exchange_id);
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("Share_auction_id", "");
-        editor.putString("Share_loan_id", "");
-        editor.putString("Share_exchange_id", "");
+        editor.putInt("Share_auction_id", 0);
+        editor.putInt("Share_loan_id", 0);
+        editor.putInt("Share_exchange_id", 0);
         editor.apply();
 
         System.out.println("Data in share Tab after" + "\n" +
@@ -88,15 +88,15 @@ public class ShareWithinAppTabFragment extends Fragment {
             Bundle b = new Bundle();
             b.putString("generic_list_view", sharedata);
             b.putInt("store_id", store_id);
-            b.putString("vehicle_id", vehicle_id);
-            b.putString("product_id", product_id);
-            b.putString("service_id", service_id);
+            b.putInt("vehicle_id", vehicle_id);
+            b.putInt("product_id", product_id);
+            b.putInt("service_id", service_id);
             b.putString("profile_contact", profile_contact);
-            b.putString("search_id", search_id);
-            b.putString("status_id", status_id);
-            b.putString("auction_id", auction_id);
-            b.putString("loan_id", loan_id);
-            b.putString("exchange_id", exchange_id);
+            b.putInt("search_id", search_id);
+            b.putInt("status_id", status_id);
+            b.putInt("auction_id", auction_id);
+            b.putInt("loan_id", loan_id);
+            b.putInt("exchange_id", exchange_id);
             b.putString("keyword", keyword);
 
             getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()

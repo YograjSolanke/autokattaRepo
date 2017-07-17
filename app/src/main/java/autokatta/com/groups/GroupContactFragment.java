@@ -160,7 +160,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     for (int i = 0; i < parts.length; i++) {
                         receiver_contact = parts[i];
                         if (!receiver_contact.equalsIgnoreCase(mContact)) {
-                             mApiCall.Like( mContact,receiver_contact, "3",0,mGroup_id,"","","","","");
+                             mApiCall.Like( mContact,receiver_contact, "3",0,mGroup_id,0,0,0,"","");
                         }
                     }
                 }

@@ -62,7 +62,7 @@ public class ApiCall {
 
     public static Retrofit getRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl("http://autokatta.com/mobile/")
+                .baseUrl("http://autokatta.acquiscent.com/api/AutoKattaWebService/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(initLogs().build())
                 .build();
@@ -3054,7 +3054,7 @@ Upload Vehicle
     /*
     Get Vehicle By Id...
      */
-    public void getVehicleById(String contact, String vehicleId) {
+    public void getVehicleById(String contact, int vehicleId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4002,7 +4002,7 @@ get All Vehicles for auction
        Follow
      */
 
-    public void deleteMySearch(String search_id, String keyword) {
+    public void deleteMySearch(int search_id, String keyword) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4126,7 +4126,7 @@ params.put("auction_id", bundleAuctionId);
 
     //Add start and reserved price
 
-    public void SendAuctionMail(String loginContact, String strAuctionId) {
+    public void SendAuctionMail(String loginContact, int strAuctionId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4535,7 +4535,7 @@ params.put("auction_id", bundleAuctionId);
     /*
     Get Auction Event
      */
-    public void getAuctionEvent(String auctionId) {
+    public void getAuctionEvent(int auctionId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4939,8 +4939,8 @@ params.put("auction_id", bundleAuctionId);
     /*
   Get getChatMessageData
    */
-    public void getChatMessageData(String sender_contact, String receiver_contact, String product_id, String service_id,
-                                   String vehicle_id) {
+    public void getChatMessageData(String sender_contact, String receiver_contact, int product_id, int service_id,
+                                   int vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4974,8 +4974,8 @@ params.put("auction_id", bundleAuctionId);
 
     //Update Broadcast Group
     public void sendChatMessage(String sender_contact, String receiver_contact,
-                                String message, String image, String product_id,
-                                String service_id, String vehicle_id) {
+                                String message, String image, int product_id,
+                                int service_id, int vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5014,7 +5014,7 @@ params.put("auction_id", bundleAuctionId);
     /*
 Get ChatElementData
  */
-    public void getChatElementData(String product_id, String service_id, String vehicle_id) {
+    public void getChatElementData(int product_id, int service_id, int vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -5279,7 +5279,7 @@ Get uploaded Vehicle Buyer list
 
 
     //add remove favourite status
-    public void addRemovefavouriteStatus(String contact, String buyer_vehicle_id, String search_id, String seller_vehicle_id) {
+    public void addRemovefavouriteStatus(String contact, String buyer_vehicle_id, int search_id, String seller_vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5590,7 +5590,7 @@ Get saved search Seller list
     /*
  updateTagAssociation
   */
-    public void updateTagAssociation(String product_id, String serviceId, String tagId) {
+    public void updateTagAssociation(int product_id, String serviceId, String tagId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5737,8 +5737,8 @@ Get saved search Seller list
        Like
      */
 
-    public void Like(String myContact, String othercontact, String layout,int store_id, String gid, String vid,String pid,
-                     String sid, String statusid,String searchid) {
+    public void Like(String myContact, String othercontact, String layout,int store_id, String gid, int vid,int pid,
+                     int sid, String statusid,String searchid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5778,8 +5778,8 @@ Get saved search Seller list
       UnLike
      */
 
-    public void UnLike(String myContact, String othercontact, String layout, int store_id, String gid, String vid,
-    String pid,String sid,String statusid, String searchid) {
+    public void UnLike(String myContact, String othercontact, String layout, int store_id, String gid, int vid,
+                       int pid,int sid,String statusid, String searchid) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5820,7 +5820,7 @@ Get saved search Seller list
      Delete product
      */
 
-    public void deleteProduct(String product_id, String keyword) {
+    public void deleteProduct(int product_id, String keyword) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5863,7 +5863,7 @@ Get saved search Seller list
      Delete Service
      */
 
-    public void deleteService(String service_id, String keyword) {
+    public void deleteService(int service_id, String keyword) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6077,7 +6077,7 @@ Get saved search Seller list
     /*
      post product Review...
      */
-    public void postProductReview(String contact, String storeId, String productId, String review) {
+    public void postProductReview(String contact, String storeId, int productId, String review,int servicesid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -6087,7 +6087,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> productReview = serviceApi.postProductReview(contact, storeId, productId, review,"");
+                Call<String> productReview = serviceApi.postProductReview(contact, storeId, productId, review,servicesid);
                 productReview.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -6149,7 +6149,7 @@ done
     Calling in Vehicle Details
      */
 
-    public void callingVehicleDetails(String vehicle_id, String keyword) {
+    public void callingVehicleDetails(int vehicle_id, String keyword) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6453,10 +6453,10 @@ done
     /*
     To Share data
      */
-    public void shareTaskInApp(String sender_contact, String receiver_contact, String group_id, String broadcastgroup_id,
-                               String caption_data, String layout, String profile_id, int store_id,
-                               String vehicle_id, String product_id, String service_id, String status_id,
-                               String search_id, String auction_id, String loan_id, String exchange_id) {
+    public void shareTaskInApp(String sender_contact, String receiver_contact, int group_id, int broadcastgroup_id,
+                               String caption_data, int layout, String profile_id, int store_id,
+                               int vehicle_id, int product_id, int service_id, int status_id,
+                               int search_id, int auction_id, int loan_id, int exchange_id) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -6723,7 +6723,7 @@ done
     send new rating
      */
 
-    public void sendNewrating(String contact, int store_id, String product_id, String service_id, String rate, String rate1,
+    public void sendNewrating(String contact, int store_id, int product_id, int service_id, String rate, String rate1,
                               String rate2, String rate3, String rate4, String rate5, String type) {
 
         try {
@@ -6766,7 +6766,7 @@ done
     send updated rating
      */
 
-    public void sendUpdatedrating(String contact, int store_id, String product_id, String service_id, String rate, String rate1,
+    public void sendUpdatedrating(String contact, int store_id, int product_id, int service_id, String rate, String rate1,
                                   String rate2, String rate3, String rate4, String rate5, String type) {
 
         try {
@@ -7171,7 +7171,7 @@ Add service
     /*
 get product data
 */
-    public void getProductDetails(String product_id, String contact) {
+    public void getProductDetails(int product_id, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7205,7 +7205,7 @@ get product data
     /*
 get product data
 */
-    public void getServiceDetails(String service_id, String contact) {
+    public void getServiceDetails(int service_id, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7312,7 +7312,7 @@ get ServiceMela Data
     update product
      */
 
-    public void updateProduct(String product_id,
+    public void updateProduct(int product_id,
                               String product_name,
                               String price,
                               String product_details,
@@ -7364,7 +7364,7 @@ get ServiceMela Data
     update Service
      */
 
-    public void updateService(String service_id,
+    public void updateService(int service_id,
                               String service_name,
                               String price,
                               String service_details,
@@ -7782,7 +7782,7 @@ get ExchangeMela Analytics Data
      get chat enquiry status
      */
 
-    public void getChatEnquiryStatus(String sender, String receiver, String product_id, String service_id, String vehicle_id) {
+    public void getChatEnquiryStatus(String sender, String receiver, int product_id, int service_id, int vehicle_id) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -7822,7 +7822,7 @@ get ExchangeMela Analytics Data
     /*
      Get Enquiry count of product,service,vehicle
     */
-    public void getEnquiryCount(String contact, String product_id, String service_id, String vehicle_id) {
+    public void getEnquiryCount(String contact, int product_id, int service_id, int vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 

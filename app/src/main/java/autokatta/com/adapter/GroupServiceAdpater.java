@@ -141,7 +141,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serviceId = service.getServiceId();
+                int serviceId = service.getServiceId();
                 Intent intent = new Intent(activity, ServiceViewActivity.class);
                 intent.putExtra("service_id", serviceId);
                 activity.startActivity(intent);
@@ -152,7 +152,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         holder.deleteproduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String serviceId = service.getServiceId();
+                final int serviceId = service.getServiceId();
 
 
                 if (!connectionDetector.isConnectedToInternet()) {

@@ -95,7 +95,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
                 b.putString("endtime",mMainlist.get(position).getEndTime());
                 b.putString("location",mMainlist.get(position).getLocation());
                 b.putString("enddatetime",mMainlist.get(position).getEndDateTime().replace("T"," "));
-                b.putString("saleid",mMainlist.get(position).getId());
+                b.putInt("saleid",mMainlist.get(position).getId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(mActivity, ActiveSaleMelaPreviewActivity.class);
                 i.putExtras(b);
@@ -124,7 +124,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sale_id", mMainlist.get(position).getId()).apply();
+                        putInt("Share_sale_id", mMainlist.get(position).getId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "salemela").apply();
 

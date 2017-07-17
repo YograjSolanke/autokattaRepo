@@ -98,7 +98,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     final ArrayList<String> brandTags = new ArrayList<>();
 
     String tagpart = "", tagid = "";
-    String idlist = "", service_id;
+    String idlist = "";
+    int service_id;
     boolean tagflag = false;
     ConnectionDetector mConnectionDetector;
     ApiCall mApiCall;
@@ -173,7 +174,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         linearshare.setOnClickListener(this);
 
 
-        service_id = getIntent().getExtras().getString("service_id");
+        service_id = getIntent().getExtras().getInt("service_id");
         //service_id="115";
 
 
@@ -259,13 +260,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     }
 
-    private void getNoOfEnquiryCount(String service_id, String contact) {
+    private void getNoOfEnquiryCount(int service_id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
-        mApicall.getEnquiryCount(contact, "", service_id, "");
+        mApicall.getEnquiryCount(contact, 0, service_id, 0);
 
     }
 
-    private void getServiceData(String service_id, String contact) {
+    private void getServiceData(int service_id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
         mApicall.getServiceDetails(service_id, contact);
     }
@@ -283,7 +284,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendproductrating() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.sendNewrating(contact, 0, "", service_id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendNewrating(contact, 0, 0, service_id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(tmrate), "", "", "service");
     }
 
@@ -292,7 +293,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendupdatedproductrating() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.sendUpdatedrating(contact, 0, "", service_id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
+        mApiCall.sendUpdatedrating(contact, 0, 0, service_id, String.valueOf(count), String.valueOf(pricerate), String.valueOf(qualityrate)
                 , String.valueOf(tmrate), "", "", "service");
     }
 
@@ -301,7 +302,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void reviewTask() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.postProductReview(contact, receiver_contact, service_id, reviewstring);
+        mApiCall.postProductReview(contact, receiver_contact, 0, reviewstring,service_id);
     }
 
     /*
@@ -379,7 +380,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendUnlike() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.UnLike(contact, receiver_contact, "6", 0,"","","", service_id,"","");
+        mApiCall.UnLike(contact, receiver_contact, "6", 0,"",0,0, service_id,"","");
     }
 
     /*
@@ -387,7 +388,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendLike() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.Like(contact, receiver_contact, "6",0,"","","", service_id,"","");
+        mApiCall.Like(contact, receiver_contact, "6",0,"",0,0, service_id,"","");
     }
 
     @Override
@@ -635,10 +636,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     }
 
 
-    private void getChatEnquiryStatus(String contact, String receiver_contact, String service_id) {
+    private void getChatEnquiryStatus(String contact, String receiver_contact, int service_id) {
 
         ApiCall mApicall = new ApiCall(this, this);
-        mApicall.getChatEnquiryStatus(contact, receiver_contact, "", service_id, "");
+        mApicall.getChatEnquiryStatus(contact, receiver_contact, 0, service_id, 0);
     }
 
     /*
@@ -647,7 +648,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     private void updatetagids() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.updateTagAssociation("", id, idlist);
+        mApiCall.updateTagAssociation(0, id, idlist);
     }
 
     @Override
@@ -828,15 +829,15 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             case R.id.btnchat:
                 if (btnchat.getText().toString().equalsIgnoreCase("send enquiry")) {
                     ApiCall mpApicall = new ApiCall(this, this);
-                    mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", "",
-                            service_id, "");
+                    mpApicall.sendChatMessage(contact, receiver_contact, "Please send information About this", "", 0,
+                            service_id, 0);
                 } else {
 
                     Bundle b = new Bundle();
                     b.putString("sender", storecontact);
                     b.putString("sendername", storeowner);
                     b.putString("product_id", "");
-                    b.putString("service_id", service_id);
+                    b.putInt("service_id", service_id);
                     b.putString("vehicle_id", "");
 
                     Intent intent = new Intent(ServiceViewActivity.this, ChatActivity.class);
@@ -902,7 +903,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_service_id", service_id).apply();
+                        putInt("Share_service_id", service_id).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "service").apply();
 
@@ -961,7 +962,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     }
 
 
-    private void updateService(String service_id, String upname, String upprice, String updetails, String uptags,
+    private void updateService(int service_id, String upname, String upprice, String updetails, String uptags,
                                String uptype, String upimgs, String upcat, String finalbrandtags) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);

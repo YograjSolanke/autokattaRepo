@@ -52,9 +52,10 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     String name;
     FloatingActionMenu mFab;
     FloatingActionButton mLike, mCall, mAutoshare, mShare, mChat;
-    String mVehicle_Id, Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
+    String  Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     String contact, mLikestr, prefcontact, allDetails;
     ApiCall mApiCall;
+    int mVehicle_Id;
     SliderLayout sliderLayout;
     HashMap<String, String> Hash_file_maps;
 
@@ -92,7 +93,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                      */
                     getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit()
                             .putString("vehicle_id", getIntent().getExtras().getString("vehicle_id")).apply();
-                    mVehicle_Id = getIntent().getExtras().getString("vehicle_id");
+                    mVehicle_Id = getIntent().getExtras().getInt("vehicle_id");
 
                     prefcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                     getVehicleData(mVehicle_Id);
@@ -149,7 +150,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     /*
     Vehicle Details...
      */
-    private void getVehicleData(String mVehicleId) {
+    private void getVehicleData(int mVehicleId) {
         mApiCall.getVehicleById(prefcontact, mVehicleId);
     }
 
@@ -257,9 +258,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         }
     }
 
-    private void getChatEnquiryStatus(String prefcontact, String contact, String mVehicle_id) {
+    private void getChatEnquiryStatus(String prefcontact, String contact, int mVehicle_id) {
         ApiCall mApicall = new ApiCall(this, this);
-        mApicall.getChatEnquiryStatus(prefcontact, contact, "", "", mVehicle_id);
+        mApicall.getChatEnquiryStatus(prefcontact, contact, 0, 0, mVehicle_id);
     }
 
     @Override
@@ -309,25 +310,25 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 break;
             case R.id.like_l:
                 if (mLikestr.equalsIgnoreCase("no")) {
-                    mApiCall.Like(prefcontact, contact, "4",0,"", mVehicle_Id,"","","","");
+                    mApiCall.Like(prefcontact, contact, "4",0,"", mVehicle_Id,0,0,"","");
                     mFab.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.UnLike(prefcontact, contact, "4", 0,"", mVehicle_Id,"","","","");
+                    mApiCall.UnLike(prefcontact, contact, "4", 0,"", mVehicle_Id,0,0,"","");
                     mFab.setClosedOnTouchOutside(true);
                 }
                 break;
             case R.id.chat_c:
                 if (mChat.getLabelText().equalsIgnoreCase("send enquiry")) {
                     ApiCall mpApicall = new ApiCall(this, this);
-                    mpApicall.sendChatMessage(prefcontact, contact, "Please send information About this", "", "",
-                            "", mVehicle_Id);
+                    mpApicall.sendChatMessage(prefcontact, contact, "Please send information About this", "", 0,
+                            0, mVehicle_Id);
                 } else {
                     Bundle b = new Bundle();
                     b.putString("sender", contact);
                     b.putString("sendername", name);
                     b.putString("product_id", "");
                     b.putString("service_id", "");
-                    b.putString("vehicle_id", mVehicle_Id);
+                    b.putInt("vehicle_id", mVehicle_Id);
                     Intent intent = new Intent(VehicleDetails.this, ChatActivity.class);
                     intent.putExtras(b);
                     startActivity(intent);
@@ -380,7 +381,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_vehicle_id", mVehicle_Id).apply();
+                        putInt("Share_vehicle_id", mVehicle_Id).apply();
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "vehicle").apply();
 

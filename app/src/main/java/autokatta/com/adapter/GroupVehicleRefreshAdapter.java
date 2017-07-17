@@ -223,7 +223,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allDetails).apply();
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_vehicle_id", mItemList.get(position).getVehicleId()).apply();
+                                        putInt("Share_vehicle_id", mItemList.get(position).getVehicleId()).apply();
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_keyword", "vehicle").apply();
 
@@ -252,7 +252,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allDetails).apply();
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_vehicle_id", mItemList.get(position).getVehicleId()).apply();
+                                        putInt("Share_vehicle_id", mItemList.get(position).getVehicleId()).apply();
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_keyword", "vehicle").apply();
 
@@ -367,7 +367,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             @Override
             public void onClick(View v) {
                 Bundle mBundle = new Bundle();
-                mBundle.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                mBundle.putInt("vehicle_id", mItemList.get(position).getVehicleId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent mVehicleDetails = new Intent(mActivity, VehicleDetails.class);
                 mVehicleDetails.putExtras(mBundle);
@@ -411,15 +411,15 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     /*
     Like
      */
-    private void sendLike(String Rcontact, String vehicleId) {
-        mApiCall.Like(myContact, Rcontact, "4",0,"", vehicleId,"","","","");
+    private void sendLike(String Rcontact, int vehicleId) {
+        mApiCall.Like(myContact, Rcontact, "4",0,"", vehicleId,0,0,"","");
     }
 
     /*
     Unlike...
      */
-    private void sendUnlike(String Rcontact, String vehicleId) {
-        mApiCall.UnLike(myContact, Rcontact, "4",0,"", vehicleId,"","","","");
+    private void sendUnlike(String Rcontact, int vehicleId) {
+        mApiCall.UnLike(myContact, Rcontact, "4",0,"", vehicleId,0,0,"","");
     }
 
 

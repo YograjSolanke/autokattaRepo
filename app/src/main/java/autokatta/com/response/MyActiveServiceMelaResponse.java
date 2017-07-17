@@ -27,7 +27,7 @@ public class MyActiveServiceMelaResponse {
 
         @SerializedName("Id")
         @Expose
-        private String id;
+        private int id;
         @SerializedName("contact")
         @Expose
         private String contact;
@@ -72,11 +72,11 @@ public class MyActiveServiceMelaResponse {
         @Expose
         private String goingcount;
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 

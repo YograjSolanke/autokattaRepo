@@ -70,8 +70,9 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
     Activity mActivity;
     private List<ModelLiveFragment> mItemList = new ArrayList<>();
-    private String auctionType, whoseAuction = "", special_clause, auction_id = "", loan_id = "", exchange_id = "",
+    private String auctionType, whoseAuction = "", special_clause, loan_id = "",
             sale_id = "", service_id = "";
+    private int  auction_id = 0,exchange_id = 0;
     private String allDetails, mContact;
     private HashMap<TextView, CountDownTimer> counters;
     private ConnectionDetector mConnectionDetector;
@@ -352,7 +353,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             @Override
             public void onClick(View v) {
                 bundle.putString("auctioneer", mItemList.get(position).getUsername());
-                bundle.putString("auction_id", mItemList.get(position).getAuctionId());
+                bundle.putInt("auction_id", mItemList.get(position).getAuctionId());
                 bundle.putString("action_title", mItemList.get(position).getName());
                 bundle.putString("auction_startdate", mItemList.get(position).getStartDate());
                 bundle.putString("auction_starttime", mItemList.get(position).getStartTime());
@@ -555,7 +556,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                             putString("Share_sharedata", allDetails).apply();
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                            putString("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
+                            putInt("Share_auction_id", mItemList.get(position).getAuctionId()).apply();
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                             putString("Share_keyword", mAuction).apply();
                 }
@@ -616,7 +617,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                             putString("Share_sharedata", allDetails).apply();
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                            putString("Share_exchange_id", mItemList.get(position).getExchange_id()).apply();
+                            putInt("Share_exchange_id", mItemList.get(position).getExchange_id()).apply();
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                             putString("Share_keyword", mAuction).apply();
                 }
