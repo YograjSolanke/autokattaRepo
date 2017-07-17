@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
@@ -51,6 +52,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private List<FavouriteAllResponse> allResponseList = new ArrayList<>();
     private int storelikecountint;
     private String mLoginContact = "";
+    private int profile_likecountint, profile_followcountint;
     private ApiCall mApiCall;
 
     public FavouriteNotificationAdapter(Activity mActivity, List<FavouriteAllResponse> responseList) {
@@ -66,8 +68,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class ProfileNotifications extends RecyclerView.ViewHolder {
         CardView mProfileCardView;
-        ImageView mProfilePic;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike;
+        ImageView mProfilePic, delete;
+        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mUnlike;
         TextView mProfileName, mProfileContact, mProfileTitle, mUserName, mProfileWorkAt, mProfileWebSite, mLocation,
                 mFollowCount, mLikes, mShares;
 
@@ -89,6 +91,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mShareOther = (ImageButton) profileView.findViewById(R.id.share_other);
             mCall = (ImageButton) profileView.findViewById(R.id.call);
             mLike = (ImageButton) profileView.findViewById(R.id.like);
+            mUnlike = (ImageButton) profileView.findViewById(R.id.unlike);
+            delete = (ImageButton) profileView.findViewById(R.id.profile_favourite);
         }
     }
 
@@ -624,7 +628,119 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         switch (holder.getItemViewType()) {
 
             case 1:
-                ProfileNotifications mProfileHolder = (ProfileNotifications) holder;
+//                ProfileNotifications mProfileHolder = (ProfileNotifications) holder;
+                final ProfileNotifications mProfileHolder = (ProfileNotifications) holder;
+//                Log.i("Wall", "Profile-LayType ->" + allResponseList.get(position).getLayoutType());
+//
+//                if (allResponseList.get(position).getLayoutType().equalsIgnoreCase("MyAction"))
+//                    mProfileHolder.mCall.setVisibility(View.GONE);
+//                else
+//                    mProfileHolder.mCall.setVisibility(View.VISIBLE);
+
+                mProfileHolder.mProfileName.setText(allResponseList.get(position).getSendername() + " "
+                        + allResponseList.get(position).getAction() + " " + allResponseList.get(position).getReceivername() + " " + "Profile");
+
+                mProfileHolder.mProfileContact.setText(allResponseList.get(position).getDatetime());
+                mProfileHolder.mUserName.setText(allResponseList.get(position).getSendername());
+                mProfileHolder.mProfileWorkAt.setText(allResponseList.get(position).getSenderprofession());
+                mProfileHolder.mProfileWebSite.setText(allResponseList.get(position).getSenderwebsite());
+                mProfileHolder.mLocation.setText(allResponseList.get(position).getSendercity());
+                mProfileHolder.mFollowCount.setText("Followers(" + allResponseList.get(position).getSenderfollowcount() + ")");
+                mProfileHolder.mLikes.setText("Likes(" + allResponseList.get(position).getSenderlikecount() + ")");
+
+                if (allResponseList.get(position).getSenderPic() == null ||
+                        allResponseList.get(position).getSenderPic().equals("") ||
+                        allResponseList.get(position).getSenderPic().equals("null")) {
+                    mProfileHolder.mProfilePic.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProfileHolder.mProfileImage);*/
+                }
+
+                mProfileHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = allResponseList.get(mProfileHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+
+     /* Like & Unlike Functionality */
+                if (allResponseList.get(position).getSenderlikestatus().equalsIgnoreCase("yes")) {
+                    mProfileHolder.mLike.setVisibility(View.VISIBLE);
+                    mProfileHolder.mUnlike.setVisibility(View.GONE);
+                } else {
+                    mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
+                    mProfileHolder.mLike.setVisibility(View.GONE);
+                }
+
+                mProfileHolder.mLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = allResponseList.get(mProfileHolder.getAdapterPosition()).getSender();
+                        mProfileHolder.mLike.setVisibility(View.GONE);
+                        mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        profile_likecountint = Integer.parseInt(allResponseList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount());
+                        profile_likecountint = profile_likecountint - 1;
+                        mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
+                        /*storeLikeCount = String.valueOf(profile_likecountint);
+                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
+                        allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikecount(String.valueOf(profile_likecountint));
+                        allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikestatus("no");
+                    }
+                });
+
+                mProfileHolder.mUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = allResponseList.get(mProfileHolder.getAdapterPosition()).getSender();
+                        mProfileHolder.mUnlike.setVisibility(View.GONE);
+                        mProfileHolder.mLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        profile_likecountint = Integer.parseInt(allResponseList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount());
+                        profile_likecountint = profile_likecountint + 1;
+                        mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
+                        /*storeLikeCount = String.valueOf(profile_likecountint);
+                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
+                        allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikecount(String.valueOf(profile_likecountint));
+                        allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikestatus("yes");
+                    }
+                });
+
+      /* Fav & Unfav Functionality */
+//                if (allResponseList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
+//                    mProfileHolder.mFav.setVisibility(View.VISIBLE);
+//                    mProfileHolder.mUnfav.setVisibility(View.GONE);
+//                } else {
+//                    mProfileHolder.mUnfav.setVisibility(View.VISIBLE);
+//                    mProfileHolder.mFav.setVisibility(View.GONE);
+//                }
+
+
+                mProfileHolder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unfavorite web service
+                        String notiId = allResponseList.get(mProfileHolder.getAdapterPosition()).getFavid();
+
+                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
+                        Toast.makeText(mActivity, "deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+                mProfileHolder.mShareAutokatta.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
 
                 break;
             case 2:
