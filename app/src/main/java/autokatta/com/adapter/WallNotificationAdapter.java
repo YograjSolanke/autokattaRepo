@@ -1,9 +1,12 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,6 +23,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -31,6 +37,7 @@ import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
+import autokatta.com.view.ShareWithinAppActivity;
 import retrofit2.Response;
 
 /**
@@ -160,7 +167,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class GroupNotifications extends RecyclerView.ViewHolder {
         CardView mGroupCardView;
         ImageView mUserPic, mGroupImage;
-        ImageButton mGroupFavourite;
+        ImageButton mGroupFavourite, mGroupUnFav;
         TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
                 mGroupNoOfServices;
 
@@ -173,6 +180,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             mGroupImage = (ImageView) groupView.findViewById(R.id.group_image);
             mGroupFavourite = (ImageButton) groupView.findViewById(R.id.group_favourite);
+            mGroupUnFav = (ImageButton) groupView.findViewById(R.id.group_unfavourite);
             mGroupName = (TextView) groupView.findViewById(R.id.group_name);
             mGroupMembers = (TextView) groupView.findViewById(R.id.group_no_of_members);
             mGroupNoOfVehicles = (TextView) groupView.findViewById(R.id.group_no_of_vehicles);
@@ -655,9 +663,102 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 });
 
                 mProfileHolder.mShareAutokatta.setOnClickListener(new View.OnClickListener() {
+                    String imageFilePath = "", imagename;
+                    Intent intent = new Intent(Intent.ACTION_SEND);
                     @Override
                     public void onClick(View v) {
+                        //shareProfileData();
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+                        alert.setTitle("Share");
+                        alert.setMessage("with Autokatta or to other?");
+                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
 
+                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String allProfileDetails = mProfileHolder.mUserName.getText().toString() + "=" +
+                                        mProfileHolder.mProfileWorkAt.getText().toString() + "=" +
+                                        mProfileHolder.mProfileWebSite.getText().toString() + "=" +
+                                        mProfileHolder.mLocation.getText().toString() + "=" +
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture() + "=" +
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "=" +
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount();
+
+                                System.out.println("all sender detailssss======Auto " + allProfileDetails);
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allProfileDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_profile_contact", notificationList.get(mProfileHolder.getAdapterPosition()).getSender()).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "profile").apply();
+
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase("") ||
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase(null) ||
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase("null")) {
+                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                } else {
+                                    imagename = "http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture();
+                                }
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Log.e("TAG", "img URL: " + imagename);
+
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
+
+                                String allProfileDetails = "Username : " + mProfileHolder.mUserName.getText().toString() + "\n" +
+                                        "Working at : " + mProfileHolder.mProfileWorkAt.getText().toString() + "\n" +
+                                        "Website : " + mProfileHolder.mProfileWebSite.getText().toString() + "\n" +
+                                        "Address : " + mProfileHolder.mLocation.getText().toString() /*+ "\n" +
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*/;
+
+                                System.out.println("all sender detailssss======Other " + allProfileDetails);
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/profile/other/" + notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture());
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allProfileDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);
+
+                                dialog.dismiss();
+                            }
+
+                        });
+                        alert.create();
+                        alert.show();
                     }
                 });
 
@@ -681,14 +782,74 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 final GroupNotifications mGroupHolder = (GroupNotifications) holder;
 
                 mGroupHolder.mActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + "  you in " + notificationList.get(position).getGroupName()
+                        notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() +
+                        " in " + notificationList.get(position).getGroupName()
                         + " group");
                 mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
                 mGroupHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mGroupHolder.mGroupMembers.setText(notificationList.get(position).getGroupMembers());
                 mGroupHolder.mGroupNoOfVehicles.setText(notificationList.get(position).getGroupVehicles());
-                //mGroupHolder.mGroupNoOfProducts.setText(notificationList.get(position));
-                //mGroupHolder.mGroupNoOfServices.setText(notificationList.get(position));
+               /* mGroupHolder.mGroupNoOfProducts.setText(notificationList.get(position));
+                mGroupHolder.mGroupNoOfServices.setText(notificationList.get(position));*/
+
+               /* Profile pic */
+                if (notificationList.get(position).getSenderPicture() == null ||
+                        notificationList.get(position).getSenderPicture().equals("") ||
+                        notificationList.get(position).getSenderPicture().equals("null")) {
+                    mGroupHolder.mUserPic.setBackgroundResource(R.mipmap.profile);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mGroupHolder.mUserPic);*/
+                }
+
+               /* Group pic */
+                if (notificationList.get(position).getGroupImage() == null ||
+                        notificationList.get(position).getGroupImage().equals("") ||
+                        notificationList.get(position).getGroupImage().equals("null")) {
+                    mGroupHolder.mGroupImage.setBackgroundResource(R.drawable.group);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getGroupImage())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mGroupHolder.mGroupImage);*/
+                }
+
+                /* Fav & Unfav Functionality */
+                if (notificationList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
+                    mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
+                    mGroupHolder.mGroupUnFav.setVisibility(View.GONE);
+                } else {
+                    mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);
+                    mGroupHolder.mGroupFavourite.setVisibility(View.GONE);
+                }
+
+                mGroupHolder.mGroupFavourite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unfavorite web service
+                        String notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
+                        mGroupHolder.mGroupFavourite.setVisibility(View.GONE);
+                        mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);
+                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
+                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mGroupHolder.mGroupUnFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Favorite web service
+                        String notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
+                        mGroupHolder.mGroupUnFav.setVisibility(View.GONE);
+                        mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
+                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
+                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
 
             case 4:
@@ -754,6 +915,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
         }
     }
+
 
     private void call(String otherContact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + otherContact));

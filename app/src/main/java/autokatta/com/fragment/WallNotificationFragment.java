@@ -1,5 +1,6 @@
 package autokatta.com.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     boolean _hasLoadedOnce = false;
     List<WallResponse.Success.WallNotification> notificationList = new ArrayList<>();
     WallNotificationAdapter adapter;
+    private String mLoginContact = "";
 
     public WallNotificationFragment(){
         //Empty Constructor...
@@ -74,6 +76,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
+                        getString("loginContact", "");
                 mNoData = (TextView) mWallNotify.findViewById(R.id.no_category);
                 mRecyclerView = (RecyclerView) mWallNotify.findViewById(R.id.wall_recycler_view);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mWallNotify.findViewById(R.id.wall_swipe_refresh_layout);
@@ -82,7 +86,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                 mLayoutManager.setReverseLayout(true);
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
-                getData();//Get Api...
+                //getData();//Get Api...
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
@@ -108,7 +112,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
     private void getData() {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.wallNotifications("2020202020", "2020202020", "");
+        apiCall.wallNotifications(mLoginContact, "2020202020", "");
     }
 
     @Override
@@ -240,6 +244,9 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                     adapter = new WallNotificationAdapter(getActivity(), notificationList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -263,7 +270,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
-            Log.i("Check Class-", " Registration");
+            Log.i("Check Class-", "Wall Notification Fragment");
             error.printStackTrace();
         }
     }
