@@ -113,12 +113,6 @@ public class BackgroundService extends Service {
                     public void run() {
                         try {
                             getAutokattaContacts();
-                            operation = new DbOperation(getApplicationContext());
-                            operation.OPEN();
-                            operation.deleteAutokattaContacts();
-                            operation.createAutokattaContactTable();
-                            operation.addMyAutokattaContact("Ruturaj", "",
-                                    String.valueOf("8007855589"), "Not Found", "no");
                             Log.i("Background", "call webservice");
                         } catch (Exception e) {
                             Log.e("background", e.getMessage());
@@ -167,17 +161,17 @@ public class BackgroundService extends Service {
                         operation.deleteAutokattaContacts();
                         operation.createAutokattaContactTable();
                         GetAutokattaContactResponse mContactResponse = response.body();
-                        //for (GetAutokattaContactResponse success : mContactResponse) {
-                        mContactResponse.setUserName(mContactResponse.getUserName());
-                        mContactResponse.setProfilePic(mContactResponse.getProfilePic());
-                        mContactResponse.setContact(mContactResponse.getContact());
-                        mContactResponse.setFollowStatus(mContactResponse.getFollowStatus());
-                        mContactResponse.setMystatus(mContactResponse.getMystatus());
-                        Log.i("asdfd", "asdf" + mContactResponse.getUserName());
+                        for (GetAutokattaContactResponse.Success success : mContactResponse.getSuccess()) {
+                            success.setUserName(success.getUserName());
+                            success.setProfilePic(success.getProfilePic());
+                            success.setContact(success.getContact());
+                            success.setFollowStatus(success.getFollowStatus());
+                            success.setMystatus(success.getMystatus());
+                            Log.i("asdfd", "asdf" + success.getUserName());
 
-                        result = operation.addMyAutokattaContact(mContactResponse.getUserName(), mContactResponse.getProfilePic(),
-                                String.valueOf(mContactResponse.getContact()), mContactResponse.getFollowStatus(), mContactResponse.getMystatus());
-                        //}
+                            result = operation.addMyAutokattaContact(success.getUserName(), success.getProfilePic(),
+                                    String.valueOf(success.getContact()), success.getFollowStatus(), success.getMystatus());
+                        }
                         if (result > 0) {
                             Log.i("TAG", "Record Inserted Successfully");
                         }
