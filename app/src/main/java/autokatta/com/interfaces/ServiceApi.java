@@ -1111,7 +1111,7 @@ public interface ServiceApi {
 
     //add service into store...
     @POST("AddStoreNewServices")
-    Call<ServiceAddedResponse> addService(@Query("StoreID") String store_id,
+    Call<ServiceAddedResponse> addService(@Query("StoreID") int store_id,
                                           @Query("ServiceName") String service_name,
                                           @Query("Price") String price,
                                           @Query("ServiceDetails") String service_details,
