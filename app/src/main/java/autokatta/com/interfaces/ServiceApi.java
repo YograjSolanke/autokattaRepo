@@ -1097,7 +1097,7 @@ public interface ServiceApi {
 
     //add product into store...
     @POST("AddStoreProduct")
-    Call<ProductAddedResponse> addProduct(@Query("StoreID") String store_id,
+    Call<ProductAddedResponse> addProduct(@Query("StoreID") int store_id,
                                           @Query("ProductName") String product_name,
                                           @Query("Price") String price,
                                           @Query("ProductDetails") String product_details,

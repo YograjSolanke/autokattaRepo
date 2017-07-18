@@ -7086,7 +7086,7 @@ done
     /*
  Add product
   */
-    public void addProduct(String store_id,
+    public void addProduct(int store_id,
                            String product_name,
                            String price,
                            String product_details,
@@ -7128,7 +7128,7 @@ done
     /*
 Add service
  */
-    public void addService(String store_id,
+    public void addService(int store_id,
                            String service_name,
                            String price,
                            String service_details,

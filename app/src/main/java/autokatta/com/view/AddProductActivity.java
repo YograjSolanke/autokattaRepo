@@ -53,7 +53,8 @@ import retrofit2.Response;
 public class AddProductActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
 
-    String store_id, myContact;
+    String myContact;
+    int store_id;
     EditText productname, productprice, productdetails, producttype;
     MultiAutoCompleteTextView multiautotext, autoCategory, multiautobrand;
     Button save, addphotos;
@@ -84,7 +85,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
-        store_id = getIntent().getExtras().getString("store_id");
+        store_id = getIntent().getExtras().getInt("store_id");
 
 
         productname = (EditText) findViewById(R.id.editproductname);
@@ -351,7 +352,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
     }
 
-    private void createProduct(String store_id,
+    private void createProduct(int store_id,
                                String product_name,
                                String price,
                                String product_details,
@@ -426,7 +427,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     uploadImage(allimgpath);
 
                     Bundle b = new Bundle();
-                    b.putString("store_id", store_id);
+                    b.putInt("store_id", store_id);
                     b.putString("flow_tab_name", "FromProduct");
                     Intent intent = new Intent(AddProductActivity.this, StoreViewActivity.class);
                     intent.putExtras(b);

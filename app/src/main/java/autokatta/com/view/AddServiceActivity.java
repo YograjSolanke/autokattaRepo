@@ -53,7 +53,8 @@ import retrofit2.Response;
 public class AddServiceActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
 
-    String myContact, store_id;
+    String myContact;
+    int store_id;
     EditText servicename, serviceprice, servicedetails, servicetype;
     MultiAutoCompleteTextView multiautotext, autoCategory, multiautobrand;
     Button save, addphotos;
@@ -83,7 +84,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         setSupportActionBar(toolbar);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
-        store_id = getIntent().getExtras().getString("store_id");
+        store_id = getIntent().getExtras().getInt("store_id");
 
 
         servicename = (EditText) findViewById(R.id.editservicename);
@@ -365,7 +366,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
     }
 
-    private void createService(String store_id,
+    private void createService(int store_id,
                                String service_name,
                                String price,
                                String service_details,
@@ -440,7 +441,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     uploadImage(allimgpath);
 
                     Bundle b = new Bundle();
-                    b.putString("store_id", store_id);
+                    b.putInt("store_id", store_id);
                     b.putString("flow_tab_name", "FromService");
                     Intent intent = new Intent(AddServiceActivity.this, StoreViewActivity.class);
                     intent.putExtras(b);
