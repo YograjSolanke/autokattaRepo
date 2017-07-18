@@ -49,6 +49,7 @@ import autokatta.com.fragment.SocialFragment;
 import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.PostStatus;
 import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
 import autokatta.com.register.RegistrationContinue;
@@ -236,8 +237,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(getApplicationContext(), PostStatus.class));
             }
         });
 
