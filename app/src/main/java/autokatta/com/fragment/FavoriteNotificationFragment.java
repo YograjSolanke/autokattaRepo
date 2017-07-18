@@ -1,5 +1,6 @@
 package autokatta.com.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
     String nextCount = "0";
     Double strTime = 0.0;
     TextView mNoData;
+    private String mLoginContact = "";
 
 
     public FavoriteNotificationFragment() {
@@ -48,39 +50,57 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFavNotify = inflater.inflate(R.layout.fragment_simple_listview, container, false);
+        return mFavNotify;
+    }
 
-        mNoData = (TextView) mFavNotify.findViewById(R.id.no_category);
-        mNoData.setVisibility(View.GONE);
-
-        mRecyclerView = (RecyclerView) mFavNotify.findViewById(R.id.recyclerMain);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mFavNotify.findViewById(R.id.swipeRefreshLayoutMain);
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new Runnable() {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                getFavouriteData();
+                mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
+                        getString("loginContact", "");
+                mNoData = (TextView) mFavNotify.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
+
+                mRecyclerView = (RecyclerView) mFavNotify.findViewById(R.id.recyclerMain);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) mFavNotify.findViewById(R.id.swipeRefreshLayoutMain);
+                mRecyclerView.setHasFixedSize(true);
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                mLayoutManager.setReverseLayout(true);
+                mLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+
+                mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        getFavouriteData();
+                    }
+                });
+
             }
         });
-
-        return mFavNotify;
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        /*adapter = new WallNotificationAdapter();
+        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                Log.i("Loaded", "->");
+            }
+        });*/
     }
 
     private void getFavouriteData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         /*mApiCall.FavouriteNotification(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "7841023392"), nextCount);*/
-        //mApiCall.FavouriteNotification("7841023392", nextCount);
+        mApiCall.FavouriteNotification(mLoginContact);
         //mApiCall.FavouriteNotifications("7841023392");
     }
 

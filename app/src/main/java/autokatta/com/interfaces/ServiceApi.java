@@ -1065,8 +1065,8 @@ public interface ServiceApi {
     Call<String> recommendStore(@Query("Contact") String contact, @Query("StoreID") int Store_id);
 
     //getting Favourite data
-    @POST("api/getMyFavourites")
-    Call<FavouriteResponse> getMyFavourites(@Body SampleResponse sampleResponse);
+    @POST("GetMyFavourites")
+    Call<FavouriteResponse> autokatta_getMyFavourites(@Query("Contact") String contact);
 
     //Create Groups
     @POST("CreateGroup")

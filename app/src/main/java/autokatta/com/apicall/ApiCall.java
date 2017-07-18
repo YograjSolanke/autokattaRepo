@@ -6849,7 +6849,7 @@ done
     /*
     get Favourite Notification
      */
-    public void FavouriteNotification(String loginContact, String next) {
+    public void FavouriteNotification(String loginContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -6860,8 +6860,7 @@ done
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                SampleResponse sampleResponse = new SampleResponse(loginContact, next);
-                Call<FavouriteResponse> mUnfollowResponse = serviceApi.getMyFavourites(sampleResponse);
+                Call<FavouriteResponse> mUnfollowResponse = serviceApi.autokatta_getMyFavourites(loginContact);
                 mUnfollowResponse.enqueue(new Callback<FavouriteResponse>() {
                     @Override
                     public void onResponse(Call<FavouriteResponse> call, Response<FavouriteResponse> response) {
