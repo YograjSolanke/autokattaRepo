@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     finish();
                     startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
                 } else {
-                    Snackbar.make(mLogin, mLoginResponse.getError().get(0), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mLogin, "mobile number or password is incorrect", Snackbar.LENGTH_SHORT).show();
                 }
             } else {
                 hud.dismiss();
