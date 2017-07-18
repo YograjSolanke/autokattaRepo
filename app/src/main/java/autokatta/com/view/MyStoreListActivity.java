@@ -32,7 +32,7 @@ public class MyStoreListActivity extends AppCompatActivity {
                     if (getIntent().getExtras() != null) {
                         Bundle bundle = new Bundle();
                         bundle.putString("className", getIntent().getExtras().getString("className"));
-                        bundle.putString("store_id", getIntent().getExtras().getString("store_id"));
+                        bundle.putInt("store_id", getIntent().getExtras().getInt("store_id"));
                         CreateStoreFragment fragment = new CreateStoreFragment();
                         fragment.setArguments(bundle);
 
