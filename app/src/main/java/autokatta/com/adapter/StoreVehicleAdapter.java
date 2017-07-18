@@ -149,7 +149,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String vehicle_id = obj.getVehicleId();
+                final int vehicle_id = obj.getVehicleId();
 
                 if (!connectionDetector.isConnectedToInternet()) {
                     Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
@@ -188,7 +188,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             @Override
             public void onClick(View view) {
                 Bundle b = new Bundle();
-                b.putString("vehicle_id", obj.getVehicleId());
+                b.putInt("vehicle_id", obj.getVehicleId());
                 Intent intent = new Intent(activity, VehicleDetails.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);

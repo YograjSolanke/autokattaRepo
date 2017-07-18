@@ -5906,7 +5906,7 @@ Get saved search Seller list
      Delete Vehicle
      */
 
-    public void deleteVehicle(String vehicle_id, String keyword) {
+    public void deleteVehicle(int vehicle_id, String keyword) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {

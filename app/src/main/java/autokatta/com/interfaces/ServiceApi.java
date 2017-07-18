@@ -891,7 +891,7 @@ public interface ServiceApi {
 
     //delete vehicle
     @POST("DeleteMyUploadedVehicles")
-    Call<String> deleteVehicle(@Query("VehicleID") String vehicle_id, @Query("Keyword") String keyword);
+    Call<String> deleteVehicle(@Query("VehicleID") int vehicle_id, @Query("Keyword") String keyword);
 
     //Search Product...
     @GET("GetProductSearchData")

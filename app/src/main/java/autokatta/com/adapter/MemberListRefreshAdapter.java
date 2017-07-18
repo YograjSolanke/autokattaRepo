@@ -112,7 +112,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         holder.mServicecnt.setText(String.valueOf(mItemList.get(position).getServicecount()));
 
         //Set Profile Photo
-        if (mItemList.get(position).getDp().equalsIgnoreCase("") || mItemList.get(position).getDp().equalsIgnoreCase(null)
+        if (mItemList.get(position).getDp() == null || mItemList.get(position).getDp().equalsIgnoreCase("") || mItemList.get(position).getDp().equalsIgnoreCase(null)
                 || mItemList.get(position).getDp().equalsIgnoreCase("null")) {
             holder.mProfilePic.setBackgroundResource(R.drawable.hdlogo);
         } else {

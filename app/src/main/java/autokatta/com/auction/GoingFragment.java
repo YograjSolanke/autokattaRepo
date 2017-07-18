@@ -103,10 +103,10 @@ public class GoingFragment extends Fragment implements RequestNotifier {
             public void run() {
                 try {
                     getAuctionEvent();
-                    getLoanMela();
-                    getExchangeEvent();
-                    getServiceEvent();
-                    getSaleEvent();
+                    //getLoanMela();
+                    //getExchangeEvent();
+                    //getServiceEvent();
+                    //getSaleEvent();
 
                     mAuctionEvent.setOnClickListener(new View.OnClickListener() {
                         @Override

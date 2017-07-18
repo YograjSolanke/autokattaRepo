@@ -92,8 +92,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     get Vehicle Data...
                      */
                     getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit()
-                            .putString("vehicle_id", getIntent().getExtras().getString("vehicle_id")).apply();
+                            .putInt("vehicle_id", getIntent().getExtras().getInt("vehicle_id")).apply();
                     mVehicle_Id = getIntent().getExtras().getInt("vehicle_id");
+                    Log.i("vehicle_id", "->" + mVehicle_Id);
 
                     prefcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                     getVehicleData(mVehicle_Id);

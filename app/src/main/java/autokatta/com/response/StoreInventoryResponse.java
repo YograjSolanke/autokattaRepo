@@ -611,7 +611,7 @@ public class StoreInventoryResponse {
 
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private int vehicleId;
             @SerializedName("title")
             @Expose
             private String title;
@@ -661,11 +661,11 @@ public class StoreInventoryResponse {
             @Expose
             private String buyerLeads;
 
-            public String getVehicleId() {
+            public int getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(int vehicleId) {
                 this.vehicleId = vehicleId;
             }
 

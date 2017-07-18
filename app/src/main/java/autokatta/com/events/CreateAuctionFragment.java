@@ -523,15 +523,23 @@ public class CreateAuctionFragment extends Fragment
                 else if (response.body() instanceof AllStatesResponse) {
                     Log.e("GetAllStates", "->");
                     final List<String> mStateList = new ArrayList<>();
-                    mStateList.clear();
+                    /*mStateList.clear();
 
                     AllStatesResponse getStateResponse = (AllStatesResponse) response.body();
                     for (AllStatesResponse.Success success : getStateResponse.getSuccess()) {
                         success.setCountryId(success.getCountryId());
                         success.setStateId(success.getStateId());
                         success.setStateName(success.getStateName());
+
+                        success.setCountryId("1");
+                        success.setStateId("1");
+                        success.setStateName("Maharashtra");
                         mStateList.add(success.getStateName());
-                    }
+                    }*/
+                    mStateList.add("Maharashtra");
+                    mStateList.add("GOA");
+                    mStateList.add("Andhra Pradesh");
+                    mStateList.add("Tamilnadu");
                     Log.i("ListState", "->" + mStateList);
 
                     stockLocationSpinner.setItems(mStateList, "-Select State-", CreateAuctionFragment.this);

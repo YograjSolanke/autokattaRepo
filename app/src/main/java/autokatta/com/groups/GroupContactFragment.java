@@ -268,7 +268,9 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 intent.putExtra("className", "GroupContactFragment");
                 intent.putExtra("bundle_GroupId", mGroup_id);
                 getActivity().startActivity(intent);*/
-                getActivity().getSupportFragmentManager().popBackStack();
+                if (isAdded()) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
             } else {
                 CustomToast.customToast(getActivity(), "Error");
             }
