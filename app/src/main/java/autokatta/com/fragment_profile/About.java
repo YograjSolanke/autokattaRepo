@@ -536,7 +536,7 @@ public class About extends Fragment implements RequestNotifier {
                             mCompany.clearFocus();
                             newcompanyname = mCompany.getText().toString();
                             try {
-                                if (!mCompanyList.contains(newcompanyname)) {
+                                if (!mCompanyList.contains(newcompanyname)&& !newcompanyname.equalsIgnoreCase("")) {
                                     mApiCall.addNewCompany(newcompanyname);
                                 }
                             } catch (Exception e) {
@@ -553,7 +553,7 @@ public class About extends Fragment implements RequestNotifier {
                             mDesignation.clearFocus();
                             newdesignation = mDesignation.getText().toString();
                             try {
-                                if (!mDesignationList.contains(newdesignation)) {
+                                if (!mDesignationList.contains(newdesignation)&& !newdesignation.equalsIgnoreCase("")) {
                                     mApiCall.addNewDesignation(newdesignation);
                                 }
                             } catch (Exception e) {

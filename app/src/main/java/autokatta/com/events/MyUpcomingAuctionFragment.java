@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -123,9 +122,9 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
                         successAuction.setAuctionId(successAuction.getAuctionId());
                         successAuction.setActionTitle(successAuction.getActionTitle());
                         successAuction.setNoOfVehicle(successAuction.getNoOfVehicle());
-                        successAuction.setEndDate(successAuction.getEndDate());
+                        successAuction.setEndDate(successAuction.getEndDate().replace("T00:00:00",""));
                         successAuction.setEndTime(successAuction.getEndTime());
-                        successAuction.setStartDate(successAuction.getStartDate());
+                        successAuction.setStartDate(successAuction.getStartDate().replace("T00:00:00",""));
                         successAuction.setStartTime(successAuction.getStartTime());
                         successAuction.setSpecialClauses(successAuction.getSpecialClauses());
                         successAuction.setGoingcount(successAuction.getGoingcount());

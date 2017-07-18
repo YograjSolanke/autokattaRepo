@@ -85,9 +85,9 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
             public void onClick(View view) {
                 Bundle b=new Bundle();
                 b.putString("title",mMainlist.get(position).getName());
-                b.putString("startdate",mMainlist.get(position).getStartDate());
+                b.putString("startdate",mMainlist.get(position).getStartDate().replace("T00:00:00",""));
                 b.putString("starttime",mMainlist.get(position).getStartTime());
-                b.putString("enddate",mMainlist.get(position).getEndDate());
+                b.putString("enddate",mMainlist.get(position).getEndDate().replace("T00:00:00",""));
                 b.putString("endtime",mMainlist.get(position).getEndTime());
                 b.putString("location",mMainlist.get(position).getLocation());
                 b.putString("enddatetime",mMainlist.get(position).getEndDateTime().replace("T"," "));

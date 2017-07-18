@@ -33,7 +33,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     String editdata = "";
     String  sharedata, storecontact,  contactnumber,profile_contact,
             keyword, tab, groupname, number, name;
-    int store_id,vehicle_id,product_id,service_id,broadcastgroupid=0,groupid=0,
+    Integer store_id,vehicle_id,product_id,service_id,broadcastgroupid=0,groupid=0,
             layoutNumber, search_id, status_id, auction_id, loan_id, exchange_id;
     Button sharebutton;
     ApiCall mApiCall;
@@ -82,7 +82,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         if (!profile_contact.equals(""))
             layoutNumber = 1;
 
-        else if (store_id!=0)
+        else if (store_id!=null)
             layoutNumber = 2;
 
         else if (vehicle_id!=0)

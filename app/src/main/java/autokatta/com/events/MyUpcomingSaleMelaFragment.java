@@ -119,9 +119,9 @@ public class MyUpcomingSaleMelaFragment extends Fragment implements SwipeRefresh
                         successExchange.setName(successExchange.getName());
                         successExchange.setLocation(successExchange.getLocation());
                         successExchange.setAddress(successExchange.getAddress());
-                        successExchange.setStartDate(successExchange.getStartDate());
+                        successExchange.setStartDate(successExchange.getStartDate().replace("T00:00:00",""));
                         successExchange.setStartTime(successExchange.getStartTime());
-                        successExchange.setEndDate(successExchange.getEndDate());
+                        successExchange.setEndDate(successExchange.getEndDate().replace("T00:00:00",""));
                         successExchange.setEndTime(successExchange.getEndTime());
                         successExchange.setImage(successExchange.getImage());
                         successExchange.setDetails(successExchange.getDetails());

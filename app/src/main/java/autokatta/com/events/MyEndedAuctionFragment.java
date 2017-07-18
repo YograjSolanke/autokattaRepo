@@ -126,9 +126,9 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
                         auctionSuccess.setAuctionId(auctionSuccess.getAuctionId());
                         auctionSuccess.setActionTitle(auctionSuccess.getActionTitle());
                         auctionSuccess.setNoOfVehicle(auctionSuccess.getNoOfVehicle());
-                        auctionSuccess.setEndDate(auctionSuccess.getEndDate());
+                        auctionSuccess.setEndDate(auctionSuccess.getEndDate().replace("T00:00:00",""));
                         auctionSuccess.setEndTime(auctionSuccess.getEndTime());
-                        auctionSuccess.setStartDate(auctionSuccess.getStartDate());
+                        auctionSuccess.setStartDate(auctionSuccess.getStartDate().replace("T00:00:00",""));
                         auctionSuccess.setStartTime(auctionSuccess.getStartTime());
                         auctionSuccess.setSpecialClauses(auctionSuccess.getSpecialClauses());
                         auctionSuccess.setAuctionType(auctionSuccess.getAuctionType());

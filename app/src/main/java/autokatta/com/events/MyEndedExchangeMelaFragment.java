@@ -124,9 +124,9 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
                         ExchangeSuccess.setName(ExchangeSuccess.getName());
                         ExchangeSuccess.setLocation(ExchangeSuccess.getLocation());
                         ExchangeSuccess.setAddress(ExchangeSuccess.getAddress());
-                        ExchangeSuccess.setStartDate(ExchangeSuccess.getStartDate());
+                        ExchangeSuccess.setStartDate(ExchangeSuccess.getStartDate().replace("T00:00:00",""));
                         ExchangeSuccess.setStartTime(ExchangeSuccess.getStartTime());
-                        ExchangeSuccess.setEndDate(ExchangeSuccess.getEndDate());
+                        ExchangeSuccess.setEndDate(ExchangeSuccess.getEndDate().replace("T00:00:00",""));
                         ExchangeSuccess.setEndTime(ExchangeSuccess.getEndTime());
                         ExchangeSuccess.setImage(ExchangeSuccess.getImage());
                         ExchangeSuccess.setDetails(ExchangeSuccess.getDetails());

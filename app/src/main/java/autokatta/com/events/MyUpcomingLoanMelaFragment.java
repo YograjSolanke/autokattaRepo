@@ -109,9 +109,9 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
                         successLoan.setName(successLoan.getName());
                         successLoan.setLocation(successLoan.getLocation());
                         successLoan.setAddress(successLoan.getAddress());
-                        successLoan.setStartDate(successLoan.getStartDate());
+                        successLoan.setStartDate(successLoan.getStartDate().replace("T00:00:00",""));
                         successLoan.setStartTime(successLoan.getStartTime());
-                        successLoan.setEndDate(successLoan.getEndDate());
+                        successLoan.setEndDate(successLoan.getEndDate().replace("T00:00:00",""));
                         successLoan.setEndTime(successLoan.getEndTime());
                         successLoan.setImage(successLoan.getImage());
                         successLoan.setDetails(successLoan.getDetails());
