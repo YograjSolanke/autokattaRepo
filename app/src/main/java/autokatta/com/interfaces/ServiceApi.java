@@ -118,7 +118,7 @@ public interface ServiceApi {
 
     //get My Active Events
     @GET("GetAuctionEvents")
-    Call<MyActiveAuctionResponse> _autokattaGetMyActiveAuction(@Query("Contact") String myContact, @Query("Status") String status,@Query("timestamp") int timestamp);
+    Call<MyActiveAuctionResponse> _autokattaGetMyActiveAuction(@Query("Contact") String myContact, @Query("Status") String status, @Query("timestamp") int timestamp);
 
     //get My Active Loan Mela
     @GET("GetAllLoanMela")
@@ -456,16 +456,16 @@ public interface ServiceApi {
     //Follow profile
     @POST("NewFollow")
     Call<String> _autokattaFollow(@Query("SenderContact") String senderContact, @Query("ReceiverContact") String receiverContact,
-                                  @Query("Layout") String layout,@Query("StoreID") int storeid,
+                                  @Query("Layout") String layout, @Query("StoreID") int storeid,
                                   @Query("VehicleID") String vehicleid, @Query("ProductID") String pid,
                                   @Query("ServiceID") String servid);
 
     //Un Follow
     @POST("NewUnfollow")
     Call<String> _autokattaUnfollow(@Query("SenderContact") String senderContact, @Query("ReceiverContact") String receiverContact,
-                                    @Query("Layout") String layout, @Query("StoreID") int storeid ,
-                                    @Query("VehicleID") String vid,@Query("ProductID") String pid,@Query("ServiceID") String sid
-                                    );
+                                    @Query("Layout") String layout, @Query("StoreID") int storeid,
+                                    @Query("VehicleID") String vid, @Query("ProductID") String pid, @Query("ServiceID") String sid
+    );
 
 
     //remove Contact From blacklist
@@ -865,7 +865,7 @@ public interface ServiceApi {
     @POST("Newlikes")
     Call<String> _autokattaLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                 @Query("Layout") String layout, @Query("StoreID") int store_id,
-                                @Query("GroupID") String gid ,@Query("VehicleID") int vid,
+                                @Query("GroupID") String gid, @Query("VehicleID") int vid,
                                 @Query("ProductID") int pid, @Query("ServiceID") int sid,
                                 @Query("StatusID") String statusid, @Query("SearchID") String searchid);
 
@@ -876,7 +876,7 @@ public interface ServiceApi {
     @POST("NewUnlikes")
     Call<String> _autokattaUnLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                   @Query("Layout") String layout, @Query("StoreID") int store_id,
-                                  @Query("GroupID") String gid ,@Query("VehicleID") int vid,
+                                  @Query("GroupID") String gid, @Query("VehicleID") int vid,
                                   @Query("ProductID") int pid, @Query("ServiceID") int sid,
                                   @Query("StatusID") String statusid, @Query("SearchID") String searchid);
 
@@ -912,7 +912,7 @@ public interface ServiceApi {
     //Post Product Review...
     @POST("PostProductReview")
     Call<String> postProductReview(@Query("Contact") String contact, @Query("StoreID") String storeId,
-                                   @Query("ProductID") int productId, @Query("Review") String review,@Query("ServiceID") int serviceid);
+                                   @Query("ProductID") int productId, @Query("Review") String review, @Query("ServiceID") int serviceid);
 
    /* //Likes in Vehicle details
     @POST("Newlikes")
@@ -927,14 +927,14 @@ public interface ServiceApi {
     Call<String> _autokattaVehicleCalling(@Query("VehicleID") int vehicle_id, @Query("Keyword") String keyword);
 
 
-   /* //UnLikes in Vehicle details
-    @POST("NewUnlikes")
-    Call<String> _autokattaVehicleUnLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
-                                         @Query("Layout") String layout, @Query("StoreID") String store_id,
-                                         @Query("GroupID") String gid ,@Query("VehicleID") String vid,
-                                         @Query("ProductID") String pid, @Query("ServiceID") String sid,
-                                         @Query("StatusID") String statusid, @Query("SearchID") String searchid);
-*/
+    /* //UnLikes in Vehicle details
+     @POST("NewUnlikes")
+     Call<String> _autokattaVehicleUnLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
+                                          @Query("Layout") String layout, @Query("StoreID") String store_id,
+                                          @Query("GroupID") String gid ,@Query("VehicleID") String vid,
+                                          @Query("ProductID") String pid, @Query("ServiceID") String sid,
+                                          @Query("StatusID") String statusid, @Query("SearchID") String searchid);
+ */
     //get tags
     @GET("GetTags")
     Call<GetTagsResponse> _autoGetTags(@Query("Type") String type);
@@ -971,14 +971,14 @@ public interface ServiceApi {
                                              @Query("StatusID") String statusid, @Query("SearchID") String searchid);
 */
 
-   /* //UnLikes in Service unlike
-    @POST("NewUnlikes")
-    Call<String> _autokattaServiceViewUnlike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
-                                             @Query("Layout") String layout, @Query("StoreID") String store_id,
-                                             @Query("GroupID") String gid ,@Query("VehicleID") String vid,
-                                             @Query("ProductID") String pid, @Query("ServiceID") String sid,
-                                             @Query("StatusID") String statusid, @Query("SearchID") String searchid);
-*/
+    /* //UnLikes in Service unlike
+     @POST("NewUnlikes")
+     Call<String> _autokattaServiceViewUnlike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
+                                              @Query("Layout") String layout, @Query("StoreID") String store_id,
+                                              @Query("GroupID") String gid ,@Query("VehicleID") String vid,
+                                              @Query("ProductID") String pid, @Query("ServiceID") String sid,
+                                              @Query("StatusID") String statusid, @Query("SearchID") String searchid);
+ */
     //Share data within app
     @POST("NewShare")
     Call<String> _autokattaShareData(@Query("SenderContact") String sender_contact, @Query("ReceiverContact") String receiver_contact,
@@ -1065,7 +1065,7 @@ public interface ServiceApi {
     Call<String> recommendStore(@Query("Contact") String contact, @Query("StoreID") int Store_id);
 
     //getting Favourite data
-    @POST("GetMyFavourites")
+    @GET("GetMyFavourites")
     Call<FavouriteResponse> autokatta_getMyFavourites(@Query("Contact") String contact);
 
     //Create Groups
@@ -1172,7 +1172,7 @@ public interface ServiceApi {
 
     //get  Sale Mela analytics data
     @GET("GetSaleAnalyticsCount")
-    Call<LoanMelaAnalyticsResponse> _autokattagetanalytics_Sale( @Query("SaleMelaID") String sale_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetanalytics_Sale(@Query("SaleMelaID") String sale_id);
 
     //get  Service Mela Participants data
     @GET("GetConfirmedParticipantsService")
@@ -1180,7 +1180,7 @@ public interface ServiceApi {
 
     //get  Service Mela analytics data
     @GET("GetServiceAnalyticsCount")
-    Call<LoanMelaAnalyticsResponse> _autokattagetServiceAnalytics( @Query("ServiceMelaID") String service_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetServiceAnalytics(@Query("ServiceMelaID") String service_id);
 
     //get Exchange Mela  Participantsdata
     @GET("GetConfirmedParticipantsExchange")
@@ -1188,7 +1188,7 @@ public interface ServiceApi {
 
     //get Exchange Mela  Analytics
     @GET("GetExchangeAnalyticsCount")
-    Call<LoanMelaAnalyticsResponse> _autokattagetExchangeAnalytics( @Query("ExchangeMelaID") String exchange_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetExchangeAnalytics(@Query("ExchangeMelaID") String exchange_id);
 
     //update product details
     @POST("UpdateStoreProduct")
