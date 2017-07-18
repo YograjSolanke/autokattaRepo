@@ -427,6 +427,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             ptags = success.getProductTagNames();
                             ptype = success.getProductType();
                             pimages = success.getImages();
+                            if (pimages == null)
+                                pimages = "";
                             prating = success.getProductrating();
                             pcategory = success.getCategory();
                             plikestatus = success.getProductlikestatus();

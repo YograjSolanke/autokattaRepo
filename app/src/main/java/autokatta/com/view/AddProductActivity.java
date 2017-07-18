@@ -422,7 +422,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     CustomToast.customToast(AddProductActivity.this, "Product added successfully");
 
                     ProductAddedResponse productAddedResponse = (ProductAddedResponse) response.body();
-                    String product_id = productAddedResponse.getSuccess().getProductId().toString();
+                    int product_id = productAddedResponse.getSuccess().getProductId();
                     sendTags(product_id);
                     uploadImage(allimgpath);
 
@@ -565,9 +565,9 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
     }
 
-    private void sendTags(String product_id) {
+    private void sendTags(int product_id) {
         ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
-        mApiCall.TagAssociation(product_id, "", idlist);
+        mApiCall.TagAssociation(product_id, 0, idlist);
     }
 
     /*

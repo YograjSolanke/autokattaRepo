@@ -22,79 +22,108 @@ public class MyStoreResponse {
         this.success = success;
     }
 
-
     public class Success {
-
         @SerializedName("id")
         @Expose
-        private int id;
-        @SerializedName("contact")
+        private Integer id;
+        @SerializedName("Description")
         @Expose
-        private String contact;
-        @SerializedName("name")
+        private String description;
+        @SerializedName("Address")
         @Expose
-        private String name;
+        private String address;
         @SerializedName("location")
         @Expose
         private String location;
+        @SerializedName("Brands")
+        @Expose
+        private String brands;
+        @SerializedName("BrandTags")
+        @Expose
+        private String brandTags;
+        @SerializedName("category")
+        @Expose
+        private String category;
+        @SerializedName("contact")
+        @Expose
+        private String contact;
+        @SerializedName("coverImage")
+        @Expose
+        private String coverImage;
+        @SerializedName("CreationDate")
+        @Expose
+        private String creationDate;
+        @SerializedName("Latitude")
+        @Expose
+        private String latitude;
+        @SerializedName("Longitude")
+        @Expose
+        private String longitude;
+        @SerializedName("ModifiedDate")
+        @Expose
+        private String modifiedDate;
+        @SerializedName("rating")
+        @Expose
+        private Object rating;
+        @SerializedName("Status")
+        @Expose
+        private Object status;
         @SerializedName("store_image")
         @Expose
         private String storeImage;
-        @SerializedName("store_type")
+        @SerializedName("name")
         @Expose
-        private String storeType;
-        @SerializedName("website")
-        @Expose
-        private String website;
+        private String name;
         @SerializedName("store_open_time")
         @Expose
         private String storeOpenTime;
         @SerializedName("store_close_time")
         @Expose
         private String storeCloseTime;
+        @SerializedName("store_type")
+        @Expose
+        private Object storeType;
+        @SerializedName("VehicleID")
+        @Expose
+        private Object vehicleID;
+        @SerializedName("website")
+        @Expose
+        private String website;
         @SerializedName("working_days")
         @Expose
         private String workingDays;
-        @SerializedName("category")
+        @SerializedName("AverageRate")
         @Expose
-        private String category;
-        @SerializedName("coverImage")
-        @Expose
-        private String coverImage;
-        @SerializedName("rating")
-        @Expose
-        private String rating;
+        private String averageRate;
         @SerializedName("likecount")
         @Expose
-        private String likecount;
+        private Integer likecount;
         @SerializedName("followcount")
         @Expose
-        private String followcount;
-        public boolean visibility;
+        private Integer followcount;
 
-
-        public int getId() {
+        public Integer getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Integer id) {
             this.id = id;
         }
 
-        public String getContact() {
-            return contact;
+        public String getDescription() {
+            return description;
         }
 
-        public void setContact(String contact) {
-            this.contact = contact;
+        public void setDescription(String description) {
+            this.description = description;
         }
 
-        public String getName() {
-            return name;
+        public String getAddress() {
+            return address;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setAddress(String address) {
+            this.address = address;
         }
 
         public String getLocation() {
@@ -105,28 +134,108 @@ public class MyStoreResponse {
             this.location = location;
         }
 
+        public String getBrands() {
+            return brands;
+        }
+
+        public void setBrands(String brands) {
+            this.brands = brands;
+        }
+
+        public String getBrandTags() {
+            return brandTags;
+        }
+
+        public void setBrandTags(String brandTags) {
+            this.brandTags = brandTags;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public String getContact() {
+            return contact;
+        }
+
+        public void setContact(String contact) {
+            this.contact = contact;
+        }
+
+        public String getCoverImage() {
+            return coverImage;
+        }
+
+        public void setCoverImage(String coverImage) {
+            this.coverImage = coverImage;
+        }
+
+        public String getCreationDate() {
+            return creationDate;
+        }
+
+        public void setCreationDate(String creationDate) {
+            this.creationDate = creationDate;
+        }
+
+        public String getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(String latitude) {
+            this.latitude = latitude;
+        }
+
+        public String getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(String longitude) {
+            this.longitude = longitude;
+        }
+
+        public String getModifiedDate() {
+            return modifiedDate;
+        }
+
+        public void setModifiedDate(String modifiedDate) {
+            this.modifiedDate = modifiedDate;
+        }
+
+        public Object getRating() {
+            return rating;
+        }
+
+        public void setRating(Object rating) {
+            this.rating = rating;
+        }
+
+        public Object getStatus() {
+            return status;
+        }
+
+        public void setStatus(Object status) {
+            this.status = status;
+        }
+
         public String getStoreImage() {
             return storeImage;
         }
 
         public void setStoreImage(String storeImage) {
             this.storeImage = storeImage;
+    }
+
+        public String getName() {
+            return name;
         }
 
-        public String getStoreType() {
-            return storeType;
-        }
-
-        public void setStoreType(String storeType) {
-            this.storeType = storeType;
-        }
-
-        public String getWebsite() {
-            return website;
-        }
-
-        public void setWebsite(String website) {
-            this.website = website;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getStoreOpenTime() {
@@ -145,6 +254,30 @@ public class MyStoreResponse {
             this.storeCloseTime = storeCloseTime;
         }
 
+        public Object getStoreType() {
+            return storeType;
+        }
+
+        public void setStoreType(Object storeType) {
+            this.storeType = storeType;
+        }
+
+        public Object getVehicleID() {
+            return vehicleID;
+        }
+
+        public void setVehicleID(Object vehicleID) {
+            this.vehicleID = vehicleID;
+        }
+
+        public String getWebsite() {
+            return website;
+        }
+
+        public void setWebsite(String website) {
+            this.website = website;
+        }
+
         public String getWorkingDays() {
             return workingDays;
         }
@@ -153,44 +286,29 @@ public class MyStoreResponse {
             this.workingDays = workingDays;
         }
 
-        public String getCategory() {
-            return category;
+        public String getAverageRate() {
+            return averageRate;
         }
 
-        public void setCategory(String category) {
-            this.category = category;
+        public void setAverageRate(String averageRate) {
+            this.averageRate = averageRate;
         }
 
-        public String getCoverImage() {
-            return coverImage;
-        }
-
-        public void setCoverImage(String coverImage) {
-            this.coverImage = coverImage;
-        }
-
-        public String getRating() {
-            return rating;
-        }
-
-        public void setRating(String rating) {
-            this.rating = rating;
-        }
-
-        public String getLikecount() {
+        public Integer getLikecount() {
             return likecount;
         }
 
-        public void setLikecount(String likecount) {
+        public void setLikecount(Integer likecount) {
             this.likecount = likecount;
         }
 
-        public String getFollowcount() {
+        public Integer getFollowcount() {
             return followcount;
         }
 
-        public void setFollowcount(String followcount) {
+        public void setFollowcount(Integer followcount) {
             this.followcount = followcount;
         }
+
     }
 }

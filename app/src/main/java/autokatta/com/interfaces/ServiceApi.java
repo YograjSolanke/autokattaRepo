@@ -841,7 +841,7 @@ public interface ServiceApi {
 
     //tag_association.php
     @POST("TagAssociation")
-    Call<String> tagAssociation(@Query("ProductID") String product_id, @Query("ServiceID") String serviceId, @Query("TagID") String tagId);
+    Call<String> tagAssociation(@Query("ProductID") int product_id, @Query("ServiceID") int serviceId, @Query("TagID") String tagId);
 
 
        /*

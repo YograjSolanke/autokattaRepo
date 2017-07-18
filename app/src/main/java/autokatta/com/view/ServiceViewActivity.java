@@ -448,6 +448,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             stags = success.getServicetags();
                             stype = success.getType();
                             simages = success.getImages();
+                            if (simages == null)
+                                simages = "";
                             srating = success.getServicerating();
                             scategory = success.getCategory();
 

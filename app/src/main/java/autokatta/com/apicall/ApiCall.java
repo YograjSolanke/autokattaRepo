@@ -5629,7 +5629,7 @@ Get saved search Seller list
     /*
   updateTagAssociation
    */
-    public void TagAssociation(String product_id, String serviceId, String tagId) {
+    public void TagAssociation(int product_id, int serviceId, String tagId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion

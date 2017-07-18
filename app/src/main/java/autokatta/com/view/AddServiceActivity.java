@@ -435,7 +435,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                 } else if (response.body() instanceof ServiceAddedResponse) {
                     CustomToast.customToast(AddServiceActivity.this, "Service added successfully");
                     ServiceAddedResponse productAddedResponse = (ServiceAddedResponse) response.body();
-                    String service_id = productAddedResponse.getSuccess().getServiceId().toString();
+                    int service_id = productAddedResponse.getSuccess().getServiceId();
                     sendTags(service_id);
 
                     uploadImage(allimgpath);
@@ -562,9 +562,9 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     }
 
 
-    private void sendTags(String service_id) {
+    private void sendTags(int service_id) {
         ApiCall mApiCall = new ApiCall(AddServiceActivity.this, this);
-        mApiCall.TagAssociation("", service_id, idlist);
+        mApiCall.TagAssociation(0, service_id, idlist);
     }
 
     /*

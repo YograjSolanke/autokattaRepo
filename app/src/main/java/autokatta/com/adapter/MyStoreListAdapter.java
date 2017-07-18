@@ -131,7 +131,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.stworkdays.setText(mStoreList.get(position).getWorkingDays());
         holder.storerating.setEnabled(false);
         if (!(mStoreList.get(position).getRating() == null) && !mStoreList.get(position).getRating().equals("null"))
-            holder.storerating.setRating(Float.parseFloat(mStoreList.get(position).getRating()));
+            holder.storerating.setRating((Float) mStoreList.get(position).getRating());
 
 
         if (mStoreList.get(position).getWebsite() == null || mStoreList.get(position).getWebsite().isEmpty() ||
