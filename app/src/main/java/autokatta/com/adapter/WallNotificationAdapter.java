@@ -53,7 +53,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private OnLoadMoreListener mOnLoadMoreListener;
     private String mLoginContact = "";
     private ApiCall mApiCall;
-    private int profile_likecountint, profile_followcountint;
+    private int profile_likecountint, profile_followcountint, product_likecountint;
 
     public WallNotificationAdapter(Activity mActivity1, List<WallResponse.Success.WallNotification> notificationList) {
         this.mActivity = mActivity1;
@@ -232,22 +232,23 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
     private static class ProductNotifications extends RecyclerView.ViewHolder {
         CardView mProductCardView;
-        ImageView mProductPic, mProductImage;
-        ImageButton mProductAutokatta, mProductOther, mCall, mLike, mVehicleFavourite;
+        ImageView mUserPic, mProductImage;
+        ImageButton mProductAutokattaShare, mProductOtherShare, mProductCall, mProductLike, mProductFav, mProductUnfav,
+                mProductUnlike;
         RatingBar mProductRating;
         TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;
 
         private ProductNotifications(View productView) {
             super(productView);
             mProductCardView = (CardView) productView.findViewById(R.id.product_card_view);
-            mProductPic = (ImageView) productView.findViewById(R.id.product_pro_pic);
+            mUserPic = (ImageView) productView.findViewById(R.id.product_pro_pic);
             mProductImage = (ImageView) productView.findViewById(R.id.product_image);
 
-            mProductAutokatta = (ImageButton) productView.findViewById(R.id.share_autokatta);
-            mProductOther = (ImageButton) productView.findViewById(R.id.share_other);
-            mCall = (ImageButton) productView.findViewById(R.id.call);
-            mLike = (ImageButton) productView.findViewById(R.id.like);
-            mVehicleFavourite = (ImageButton) productView.findViewById(R.id.vehicle_favourite);
+            mProductAutokattaShare = (ImageButton) productView.findViewById(R.id.share_autokatta);
+            mProductOtherShare = (ImageButton) productView.findViewById(R.id.share_other);
+            mProductCall = (ImageButton) productView.findViewById(R.id.call);
+            mProductLike = (ImageButton) productView.findViewById(R.id.like);
+            mProductUnlike = (ImageButton) productView.findViewById(R.id.unlike);
             mProductRating = (RatingBar) productView.findViewById(R.id.product_rating);
 
             mProductActionName = (TextView) productView.findViewById(R.id.product_action_names);
@@ -257,6 +258,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mProductType = (TextView) productView.findViewById(R.id.product_type);
             mLikes = (TextView) productView.findViewById(R.id.likes);
             mShares = (TextView) productView.findViewById(R.id.share);
+            mProductFav = (ImageButton) productView.findViewById(R.id.product_favourite);
+            mProductUnfav = (ImageButton) productView.findViewById(R.id.product_unfavourite);
         }
     }
 
@@ -547,10 +550,15 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 final ProfileNotifications mProfileHolder = (ProfileNotifications) holder;
                 Log.i("Wall", "Profile-LayType ->" + notificationList.get(position).getLayoutType());
 
-                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction"))
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     mProfileHolder.mCall.setVisibility(View.GONE);
-                else
+                    //mProfileHolder.mLike.setVisibility(View.GONE);
+                    //mProfileHolder.mUnlike.setVisibility(View.GONE);
+                } else {
                     mProfileHolder.mCall.setVisibility(View.VISIBLE);
+                    //mProfileHolder.mLike.setVisibility(View.VISIBLE);
+                    //mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
+                }
 
                 mProfileHolder.mProfileName.setText(notificationList.get(position).getSenderName() + " "
                         + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " " + "Profile");
@@ -665,6 +673,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mProfileHolder.mShareAutokatta.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
+
                     @Override
                     public void onClick(View v) {
                         //shareProfileData();
@@ -731,7 +740,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 System.out.println("ImageFilePath:" + imageFilePath);
 
                                 String allProfileDetails = "Username : " + mProfileHolder.mUserName.getText().toString() + "\n" +
-                                        "Working at : " + mProfileHolder.mProfileWorkAt.getText().toString() + "\n" +
+                                        "Profession : " + mProfileHolder.mProfileWorkAt.getText().toString() + "\n" +
                                         "Website : " + mProfileHolder.mProfileWebSite.getText().toString() + "\n" +
                                         "Address : " + mProfileHolder.mLocation.getText().toString() /*+ "\n" +
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
@@ -741,7 +750,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/profile/other/" + notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture());
+                                        + "\n" + "http://autokatta.com/profile/other/" + imagename);
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
@@ -860,10 +869,252 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 5:
-                /*ImageView mProductPic, mProductImage;
-                ImageButton mProductAutokatta, mProductOther, mCall, mLike, mVehicleFavourite;
-                RatingBar mProductRating;
-                TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;*/
+                /*CardView mProductCardView;
+                    ImageView mUserPic, mProductImage;
+                    ImageButton mProductAutokattaShare, mProductOtherShare, mCall, mLike, mProductFav, mProductUnfav;
+                    RatingBar mProductRating;
+                    TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;*/
+                final ProductNotifications mProductHolder = (ProductNotifications) holder;
+                Log.i("Wall", "Product-LayType ->" + notificationList.get(position).getLayoutType());
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                    mProductHolder.mProductCall.setVisibility(View.GONE);
+                    //mProductHolder.mProductLike.setVisibility(View.GONE);
+                    //mProductHolder.mProductUnlike.setVisibility(View.GONE);
+                } else {
+                    mProductHolder.mProductCall.setVisibility(View.VISIBLE);
+                    //mProductHolder.mProductLike.setVisibility(View.VISIBLE);
+                    // mProductHolder.mProductUnlike.setVisibility(View.VISIBLE);
+                }
+
+                mProductHolder.mProductActionName.setText(notificationList.get(position).getSenderName() + " " +
+                        notificationList.get(position).getAction() + " " +
+                        notificationList.get(position).getProductName()
+                        + " product");
+
+                mProductHolder.mProductActionTime.setText(notificationList.get(position).getDateTime());
+                mProductHolder.mProductName.setText(notificationList.get(position).getProductName());
+                mProductHolder.mProductTitle.setText(notificationList.get(position).getProductName());
+                mProductHolder.mProductType.setText(notificationList.get(position).getProductType());
+                mProductHolder.mLikes.setText("Likes(" + notificationList.get(position).getProductLikeCount() + ")");
+                //mProductHolder.mShares.setText("Share(" + notificationList.get(position).getProduct + ")");
+                //mProductHolder.mProductRating.setRating(notificationList.get(position).productr);
+
+                mProductHolder.mProductCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = notificationList.get(mProductHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+
+                /* User profile pic */
+                if (notificationList.get(position).getSenderPicture() == null ||
+                        notificationList.get(position).getSenderPicture().equals("") ||
+                        notificationList.get(position).getSenderPicture().equals("null")) {
+                    mProductHolder.mUserPic.setBackgroundResource(R.drawable.profile);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProductHolder.mUserPic);*/
+                }
+
+                /* Product pic */
+                if (notificationList.get(position).getProductImage() == null ||
+                        notificationList.get(position).getProductImage().equals("") ||
+                        notificationList.get(position).getProductImage().equals("null")) {
+                    mProductHolder.mProductImage.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getProductImage())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProductHolder.mProductImage);*/
+                }
+
+                /* Like & Unlike Functionality */
+                if (notificationList.get(position).getProductLikeStatus().equalsIgnoreCase("yes")) {
+                    mProductHolder.mProductLike.setVisibility(View.VISIBLE);
+                    mProductHolder.mProductUnlike.setVisibility(View.GONE);
+                } else {
+                    mProductHolder.mProductUnlike.setVisibility(View.VISIBLE);
+                    mProductHolder.mProductLike.setVisibility(View.GONE);
+                }
+
+                mProductHolder.mProductLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = notificationList.get(mProductHolder.getAdapterPosition()).getSender();
+                        mProductHolder.mProductLike.setVisibility(View.GONE);
+                        mProductHolder.mProductUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "5", 0, "", 0,
+                                Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductID()), 0, "", "");
+
+                        product_likecountint = Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount());
+                        product_likecountint = product_likecountint - 1;
+                        mProductHolder.mLikes.setText(String.valueOf("Likes(" + product_likecountint + ")"));
+                        /*storeLikeCount = String.valueOf(profile_likecountint);
+                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
+                        notificationList.get(mProductHolder.getAdapterPosition()).setProductLikeCount(String.valueOf(product_likecountint));
+                        notificationList.get(mProductHolder.getAdapterPosition()).setProductLikeStatus("no");
+                    }
+                });
+
+                mProductHolder.mProductUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = notificationList.get(mProductHolder.getAdapterPosition()).getSender();
+                        mProductHolder.mProductUnlike.setVisibility(View.GONE);
+                        mProductHolder.mProductLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "5", 0, "", 0,
+                                Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductID()), 0, "", "");
+
+                        product_likecountint = Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount());
+                        product_likecountint = product_likecountint + 1;
+                        mProductHolder.mLikes.setText(String.valueOf("Likes(" + product_likecountint + ")"));
+                        /*storeLikeCount = String.valueOf(profile_likecountint);
+                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
+                        notificationList.get(mProductHolder.getAdapterPosition()).setProductLikeCount(String.valueOf(product_likecountint));
+                        notificationList.get(mProductHolder.getAdapterPosition()).setProductLikeStatus("yes");
+                    }
+                });
+                
+                /* Fav & Unfav Functionality */
+                if (notificationList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
+                    mProductHolder.mProductFav.setVisibility(View.VISIBLE);
+                    mProductHolder.mProductUnfav.setVisibility(View.GONE);
+                } else {
+                    mProductHolder.mProductUnfav.setVisibility(View.VISIBLE);
+                    mProductHolder.mProductFav.setVisibility(View.GONE);
+                }
+
+                mProductHolder.mProductFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unfavorite web service
+                        String notiId = notificationList.get(mProductHolder.getAdapterPosition()).getActionID();
+                        mProductHolder.mProductFav.setVisibility(View.GONE);
+                        mProductHolder.mProductUnfav.setVisibility(View.VISIBLE);
+                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
+                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mProductHolder.mProductUnfav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Favorite web service
+                        String notiId = notificationList.get(mProductHolder.getAdapterPosition()).getActionID();
+                        mProductHolder.mProductUnfav.setVisibility(View.GONE);
+                        mProductHolder.mProductFav.setVisibility(View.VISIBLE);
+                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
+                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mProductHolder.mProductAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                    String imageFilePath = "", imagename;
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    @Override
+                    public void onClick(View v) {
+                        //shareProfileData();
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+                        alert.setTitle("Share");
+                        alert.setMessage("with Autokatta or to other?");
+                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String allProductDetails = mProductHolder.mProductName.getText().toString() + "=" +
+                                        mProductHolder.mProductType.getText().toString() + "=" +
+                                        mProductHolder.mProductRating.getRating() + "=" +
+                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount() + "=" +
+                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductImage();
+
+                                System.out.println("all product detailssss======Auto " + allProductDetails);
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allProductDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_product_id", Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductID())).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "product").apply();
+
+
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("") ||
+                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase(null) ||
+                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("null")) {
+                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                } else {
+                                    imagename = "http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(mProductHolder.getAdapterPosition()).getProductImage();
+                                }
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Log.e("TAG", "img URL: " + imagename);
+
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
+
+                                String allProductDetails = "Product name : " + mProductHolder.mProductName.getText().toString() + "\n" +
+                                        "Product type : " + mProductHolder.mProductType.getText().toString() + "\n" +
+                                        "Rating : " + mProductHolder.mProductRating.getRating() + "\n" +
+                                        "Likes : " + notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount() /*+ "\n" +
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*/;
+
+                                System.out.println("all product detailssss======Other " + allProductDetails);
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/profile/other/" + imagename);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allProductDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);
+
+                                dialog.dismiss();
+                            }
+
+                        });
+                        alert.create();
+                        alert.show();
+                    }
+                });
+
                 break;
 
             case 6:

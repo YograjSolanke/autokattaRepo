@@ -156,7 +156,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setUpVehicleFollowCount(notification.getUpVehicleFollowCount());
                         notification.setUpVehicleContact(notification.getUpVehicleContact());
                         notification.setUpVehicleContact(notification.getUpVehicleTitle());
-                        notification.setUpVehicleImage(notification.getUpVehicleImage());
+                        //notification.setUpVehicleImage(notification.getUpVehicleImage());
                         notification.setUpVehiclePrice(notification.getUpVehiclePrice());
                         notification.setUpVehicleModel(notification.getUpVehicleModel());
                         notification.setUpVehicleBrand(notification.getUpVehicleBrand());
@@ -166,6 +166,16 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setUpVehicleHrsRun(notification.getUpVehicleHrsRun());
                         notification.setUpVehicleRtoCity(notification.getUpVehicleRtoCity());
                         notification.setUpVehicleLocationCity(notification.getUpVehicleLocationCity());
+                        String vehicleImage = notification.getUpVehicleImage();
+                        if (vehicleImage.contains(",")) {
+                            String[] items = vehicleImage.split(",");
+                            notification.setUpVehicleImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setUpVehicleImage(item);
+                            }*/
+                        } else {
+                            notification.setUpVehicleImage(vehicleImage);
+                        }
 
                         notification.setSearchLikeStatus(notification.getSearchLikeStatus());
                         notification.setSearchCategory(notification.getSearchCategory());
@@ -215,7 +225,18 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setProductFollowCount(notification.getProductFollowCount());
                         notification.setProductName(notification.getProductName());
                         notification.setProductType(notification.getProductType());
-                        notification.setProductImage(notification.getProductImage());
+                        //notification.setProductImage(notification.getProductImage());
+                        String proImage = notification.getProductImage();
+                        if (proImage.contains(",")) {
+                            String[] items = proImage.split(",");
+                            notification.setProductImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setProductImage(item);
+                            }*/
+                        } else {
+                            notification.setProductImage(proImage);
+                        }
+
 
                         notification.setServiceLikeStatus(notification.getServiceLikeStatus());
                         notification.setServiceFollowStatus(notification.getServiceFollowStatus());
@@ -224,7 +245,17 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setServiceFollowCount(notification.getServiceFollowCount());
                         notification.setServiceName(notification.getServiceName());
                         notification.setServiceType(notification.getServiceType());
-                        notification.setServiceImage(notification.getServiceImage());
+                        //notification.setServiceImage(notification.getServiceImage());
+                        String serviceImage = notification.getServiceImage();
+                        if (serviceImage.contains(",")) {
+                            String[] items = serviceImage.split(",");
+                            notification.setServiceImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setServiceImage(item);
+                            }*/
+                        } else {
+                            notification.setServiceImage(serviceImage);
+                        }
 
                         notification.setAuctionID(notification.getAuctionID());
                         notification.setActionTitle(notification.getActionTitle());
