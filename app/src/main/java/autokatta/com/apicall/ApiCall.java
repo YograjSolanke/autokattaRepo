@@ -25,6 +25,7 @@ import autokatta.com.request.RegistrationCompanyBasedrequest;
 import autokatta.com.request.RegistrationRequest;
 import autokatta.com.request.SaveSearchRequest;
 import autokatta.com.request.UpdateMyVehicleRequest;
+import autokatta.com.request.UpdateProfileRequest;
 import autokatta.com.request.UpdateStoreRequest;
 import autokatta.com.request.UploadUsedVehicleRequest;
 import autokatta.com.response.*;
@@ -5079,7 +5080,7 @@ Get uploaded Vehicle Buyer list
        Update Profile
      */
 
-    public void updateProfile(String email, String website, String profesion, String company, String designation, String skills, String city, String subprofesion, String regid) {
+    public void updateProfile(int regID, String emialID, String city, String profession, String subProfession, String website, String companyName, String designation, String skills) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5096,7 +5097,8 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(email, website, profesion, company, designation, skills, city, subprofesion, regid);
+                UpdateProfileRequest updateProfileRequest=new UpdateProfileRequest( regID,  emialID,  city,  profession,  subProfession,  website,  companyName,  designation,  skills);
+                Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(updateProfileRequest);
                 setVehiclePrivacy.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5119,7 +5121,7 @@ Get uploaded Vehicle Buyer list
        Update UserName and Profile pic
      */
 
-    public void updateUsername(String username, String image, String regid) {
+    public void updateUsername(int regID, String profilePicture, String userName) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5136,7 +5138,8 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateUserName(username, image, regid);
+                UpdateProfileRequest updateProfileRequest=new UpdateProfileRequest(regID, profilePicture, userName);
+                Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateUserName(updateProfileRequest);
                 setVehiclePrivacy.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

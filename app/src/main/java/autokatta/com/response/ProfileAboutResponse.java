@@ -70,7 +70,7 @@ public class ProfileAboutResponse {
         private String city;
         @SerializedName("reg_id")
         @Expose
-        private String regId;
+        private int regId;
         @SerializedName("password")
         @Expose
         private String password;
@@ -210,11 +210,11 @@ public class ProfileAboutResponse {
             this.city = city;
         }
 
-        public String getRegId() {
+        public int getRegId() {
             return regId;
         }
 
-        public void setRegId(String regId) {
+        public void setRegId(int regId) {
             this.regId = regId;
         }
 

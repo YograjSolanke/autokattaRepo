@@ -85,7 +85,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     File file;
     ViewPager viewPager;
     String dp;
-    String RegID, updatedUsername;
+    String  updatedUsername;
+    int RegID;
     ImageView img;
     CoordinatorLayout mUserParent;
     private ProgressDialog dialog;
@@ -336,9 +337,9 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     private void updateProfile() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
         if (lastWord != "") {
-            mApiCall.updateUsername(updatedUsername, lastWord, RegID);
+            mApiCall.updateUsername(RegID, lastWord, updatedUsername);
         } else
-            mApiCall.updateUsername(updatedUsername, dp, RegID);
+            mApiCall.updateUsername(RegID,dp,updatedUsername);
     }
 
     /*

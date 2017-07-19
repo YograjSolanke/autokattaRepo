@@ -11,6 +11,7 @@ import autokatta.com.request.RegistrationCompanyBasedrequest;
 import autokatta.com.request.RegistrationRequest;
 import autokatta.com.request.SaveSearchRequest;
 import autokatta.com.request.UpdateMyVehicleRequest;
+import autokatta.com.request.UpdateProfileRequest;
 import autokatta.com.request.UpdateStoreRequest;
 import autokatta.com.request.UploadUsedVehicleRequest;
 import autokatta.com.response.*;
@@ -735,16 +736,13 @@ public interface ServiceApi {
     Call<BuyerResponse> getUploadedVehicleBuyerlist(@Query("Contact") String contact);
 
     //Update Profile
-    @GET("update_profile.php")
-    Call<String> _autokattaUpdateProfile(@Query("email") String email, @Query("website") String website, @Query("profession") String profession,
-                                         @Query("companyNames") String companyNames, @Query("designation") String designation,
-                                         @Query("skills") String skills, @Query("city") String city,
-                                         @Query("sub_profession") String sub_profession, @Query("reg_id") String reg_id);
+    @POST("UpdateProfile")
+    Call<String> _autokattaUpdateProfile(UpdateProfileRequest updateProfileRequest);
 
 
     //Update Profile Username And Image
-    @GET("update_profile.php")
-    Call<String> _autokattaUpdateUserName(@Query("username") String username, @Query("profile_pic") String profile_pic, @Query("reg_id") String reg_id);
+    @POST("UpdateProfile")
+    Call<String> _autokattaUpdateUserName(UpdateProfileRequest updateProfileRequest);
 
     //Update Profile
     @GET("GetColors")
@@ -784,7 +782,7 @@ public interface ServiceApi {
 
 
     //add remove favourite status
-    @POST("addRemooveMyFavourites.php")
+    @POST("AddRemoveMyFavourites")
     Call<String> addRemovefavouriteStatus(@Query("contact") String contact,
                                           @Query("buyer_vehicle_id") String buyer_vehicle_id,
                                           @Query("search_id") int search_id,

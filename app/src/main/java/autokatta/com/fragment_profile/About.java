@@ -85,7 +85,8 @@ public class About extends Fragment implements RequestNotifier {
     Spinner spinner;
     RadioGroup usertype;
     RadioButton student, employee, selfemployee;
-    String Sharedcontact, RegId;
+    String Sharedcontact ;
+    int RegId;
     String spinnervalue = "";
     ApiCall mApiCall;
     String[] parts;
@@ -176,7 +177,7 @@ public class About extends Fragment implements RequestNotifier {
 
 
                         mContact.setText(contact);
-                        Log.i("Profession-->","   --->"+profession);
+                        Log.i("RegId-->","   --->"+RegId);
                         Log.i("SUBProfession-->","   --->"+subProfession);
                         if (!subProfession.equalsIgnoreCase("Select Category")) {
                             msubprofession.setText("Sub Profession- "+subProfession);
@@ -604,7 +605,7 @@ public class About extends Fragment implements RequestNotifier {
                                 mSkills.setError("Enter Skills Name");
                                 mSkills.requestFocus();
                             } else {
-                                mApiCall.updateProfile(mUpdatedEmail, mUpdatedWebsite, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1, mUpdatedCity, spinnervalue, RegId);
+                                mApiCall.updateProfile(RegId,mUpdatedEmail,mUpdatedCity,mUpdatedProfession,spinnervalue, mUpdatedWebsite, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1 );
                                 mDone.setVisibility(View.GONE);
                                 mEdit.setVisibility(View.VISIBLE);
 
