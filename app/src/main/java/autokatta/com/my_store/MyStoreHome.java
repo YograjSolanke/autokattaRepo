@@ -330,7 +330,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         preqwrate = success.getRate2();
                         prefrrate = success.getRate3();
                         preprrate = success.getRate4();
-                        pretmrate = 0;
+                        pretmrate = success.getRate5();
                         storelattitude = success.getLatitude();
                         storelongitude = success.getLongitude();
                         isDealing = success.getDealingWith();

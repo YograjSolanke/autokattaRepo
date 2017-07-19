@@ -97,6 +97,10 @@ public class StoreResponse {
         @SerializedName("rate4")
         @Expose
         private int rate4;
+
+        @SerializedName("rate5")
+        @Expose
+        private int rate5;
         @SerializedName("rate")
         @Expose
         private int rate;
@@ -298,8 +302,16 @@ public class StoreResponse {
             return rate4;
         }
 
+        public int getRate5() {
+            return rate5;
+        }
+
         public void setRate4(int rate4) {
             this.rate4 = rate4;
+        }
+
+        public void setRate5(int rate5) {
+            this.rate4 = rate5;
         }
 
         public int getRate() {
