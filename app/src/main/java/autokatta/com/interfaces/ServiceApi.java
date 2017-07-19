@@ -1,6 +1,5 @@
 package autokatta.com.interfaces;
 
-import autokatta.com.request.AddManualEnquiryRequest;
 import autokatta.com.request.AddOwnVehicle;
 import autokatta.com.request.CreateAuctionRequest;
 import autokatta.com.request.CreateExchangeMelaRequest;
@@ -1232,16 +1231,25 @@ public interface ServiceApi {
                                                @Query("VehicleID") int vehicle_id);
 
     //Get Manual enquiry
-    @GET("addEnquiryData.php")
-    Call<ManualEnquiryResponse> getManualEnquiry(@Query("myContact") String myContact);
+    @GET("AddEnquiryData")
+    Call<ManualEnquiryResponse> getManualEnquiry(@Query("MyContact") String myContact, @Query("custName") String custName,
+                                                 @Query("custContact") String custContact, @Query("custAddress") String custAddress
+                                                 , @Query("custFullAddress") String custFullAddress, @Query("custInventoryType") String custInventoryType,
+                                                 @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
+                                                 @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList);
 
     //Get Manual enquiry
     @GET("GetEnquiredPersonsData")
     Call<GetPersonDataResponse> getPersonData(@Query("idsList") String id, @Query("Keyword") String keyword);
 
     //Post Manual enquiry
-    @POST("addEnquiryData.php")
-    Call<AddManualEnquiryResponse> _autokattaAddManualEnquiry(@Body AddManualEnquiryRequest addManualEnquiryRequest);
+    @POST("AddEnquiryData")
+    Call<AddManualEnquiryResponse> _autokattaAddManualEnquiry(@Query("MyContact") String myContact, @Query("custName") String custName,
+                                                              @Query("custContact") String custContact, @Query("custAddress") String custAddress
+                                                               ,@Query("custFullAddress") String custFullAddress,
+                                                              @Query("custInventoryType") String custInventoryType,
+                                                              @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
+                                                              @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList);
 
     //Get Inventory Data...
     @GET("GetMyInventoryData")

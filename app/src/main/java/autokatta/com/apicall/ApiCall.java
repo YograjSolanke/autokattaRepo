@@ -14,7 +14,6 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.request.AddManualEnquiryRequest;
 import autokatta.com.request.AddOwnVehicle;
 import autokatta.com.request.CreateAuctionRequest;
 import autokatta.com.request.CreateExchangeMelaRequest;
@@ -7864,7 +7863,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact);
+                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact,"null","null","null","null","null","null","null","null","null");
                 mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
@@ -7928,10 +7927,10 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest(myContact, custName, custContact, custAddress,
-                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList);
+          //      AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest();
 
-                Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(addManualEnquiryRequest);
+                Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(myContact, custName, custContact, custAddress,
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList);
                 mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<AddManualEnquiryResponse> call, Response<AddManualEnquiryResponse> response) {
