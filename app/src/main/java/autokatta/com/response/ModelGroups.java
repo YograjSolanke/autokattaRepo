@@ -6,14 +6,14 @@ package autokatta.com.response;
 
 public class ModelGroups {
 
-    private String id, title, image, adminVehicleCount;
-    private Integer vehicleCount, groupCount;
+    private String title, image, adminVehicleCount;
+    private int vehicleCount, groupCount, id;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

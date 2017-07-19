@@ -380,7 +380,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendUnlike() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.UnLike(contact, receiver_contact, "6", 0,"",0,0, service_id,"","");
+        mApiCall.UnLike(contact, receiver_contact, "6", 0, 0, 0, 0, service_id, 0, 0);
     }
 
     /*
@@ -388,7 +388,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendLike() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.Like(contact, receiver_contact, "6",0,"",0,0, service_id,"","");
+        mApiCall.Like(contact, receiver_contact, "6", 0, 0, 0, 0, service_id, 0, 0);
     }
 
     @Override

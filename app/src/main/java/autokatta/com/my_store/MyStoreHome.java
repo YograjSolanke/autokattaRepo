@@ -165,7 +165,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mLike.setVisibility(View.GONE);
                         mUnlike.setVisibility(View.VISIBLE);
-                        mApiCall.UnLike(myContact, mOtherContact, "2", store_id,"",0,0,0,"","");
+                        mApiCall.UnLike(myContact, mOtherContact, "2", store_id, 0, 0, 0, 0, 0, 0);
                         likecountint = likeUnlike.getCount();
                         likecountint = likecountint - 1;
                         mLikeCount.setText(String.valueOf("Likes(" + String.valueOf(likecountint) + ")"));
@@ -179,7 +179,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mLike.setVisibility(View.VISIBLE);
                         mUnlike.setVisibility(View.GONE);
-                        mApiCall.Like(myContact, mOtherContact, "2", store_id,"",0,0,0,"","");
+                        mApiCall.Like(myContact, mOtherContact, "2", store_id, 0, 0, 0, 0, 0, 0);
                         likecountint = likeUnlike.getCount();
                         likecountint = likecountint + 1;
                         mLikeCount.setText(String.valueOf("Likes(" + String.valueOf(likecountint) + ")"));
@@ -193,7 +193,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mFollow.setVisibility(View.GONE);
                         mUnFollow.setVisibility(View.VISIBLE);
-                        mApiCall.Follow(myContact, mOtherContact, "2", store_id,"","","");
+                        mApiCall.Follow(myContact, mOtherContact, "2", store_id, 0, 0, 0);
                         followcountint = likeUnlike.getFollowCount();
                         followcountint = followcountint + 1;
                         mFollowCount.setText(String.valueOf("Followers(" + String.valueOf(followcountint) + ")"));
@@ -207,7 +207,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     public void onClick(View v) {
                         mFollow.setVisibility(View.VISIBLE);
                         mUnFollow.setVisibility(View.GONE);
-                        mApiCall.UnFollow(myContact, mOtherContact, "2", store_id,"","","");
+                        mApiCall.UnFollow(myContact, mOtherContact, "2", store_id, 0, 0, 0);
                         followcountint = likeUnlike.getFollowCount();
                         followcountint--;
                         mFollowCount.setText(String.valueOf("Followers(" + String.valueOf(followcountint) + ")"));
@@ -304,91 +304,91 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     StoreResponse storeResponse = (StoreResponse) response.body();
                     mLinear.setVisibility(View.VISIBLE);
                     for (StoreResponse.Success success : storeResponse.getSuccess()) {
-                    storeName = success.getName();
-                    storeImage = success.getStoreImage();
-                    storeOtherContact = success.getContact();
-                    storeCoverImage = success.getCoverImage();
-                    storeWebsite = success.getWebsite();
-                    storeTiming = success.getStoreOpenTime() + " " + success.getStoreCloseTime();
-                    storeLocation = success.getLocation();
-                    storeWorkingDays = success.getWorkingDays();
-                    storeType = success.getStoreType();
-                    storeLikeCount = success.getLikecount();
-                    likeUnlike.setCount(success.getLikecount());
-                    storeFollowCount = success.getFollowcount();
-                    likeUnlike.setFollowCount(success.getFollowcount());
-                    mCategory.setText(success.getCategory());
+                        storeName = success.getName();
+                        storeImage = success.getStoreImage();
+                        storeOtherContact = success.getContact();
+                        storeCoverImage = success.getCoverImage();
+                        storeWebsite = success.getWebsite();
+                        storeTiming = success.getStoreOpenTime() + " " + success.getStoreCloseTime();
+                        storeLocation = success.getLocation();
+                        storeWorkingDays = success.getWorkingDays();
+                        storeType = success.getStoreType();
+                        storeLikeCount = success.getLikecount();
+                        likeUnlike.setCount(success.getLikecount());
+                        storeFollowCount = success.getFollowcount();
+                        likeUnlike.setFollowCount(success.getFollowcount());
+                        mCategory.setText(success.getCategory());
 
-                    mOtherContact = success.getContact();
-                    Log.i("dsafdsafdas", "->" + mOtherContact);
-                    storeRating = success.getRating();
+                        mOtherContact = success.getContact();
+                        Log.i("dsafdsafdas", "->" + mOtherContact);
+                        storeRating = success.getRating();
 
-                    mLikestr = success.getLikestatus();
-                    mFolllowstr = success.getFollowstatus();
-                    preoverall = success.getRate();
-                    precsrate = success.getRate1();
-                    preqwrate = success.getRate2();
-                    prefrrate = success.getRate3();
-                    preprrate = success.getRate4();
+                        mLikestr = success.getLikestatus();
+                        mFolllowstr = success.getFollowstatus();
+                        preoverall = success.getRate();
+                        precsrate = success.getRate1();
+                        preqwrate = success.getRate2();
+                        prefrrate = success.getRate3();
+                        preprrate = success.getRate4();
                         pretmrate = 0;
-                    storelattitude = success.getLatitude();
-                    storelongitude = success.getLongitude();
+                        storelattitude = success.getLatitude();
+                        storelongitude = success.getLongitude();
                         isDealing = success.getDealingWith();
 
-                    getActivity().setTitle(storeName + " Store");
-                }
+                        getActivity().setTitle(storeName + " Store");
+                    }
 
-                if (mOtherContact.contains(myContact)) {
-                    otherViewLayout.setVisibility(View.GONE);
-                }
+                    if (mOtherContact.contains(myContact)) {
+                        otherViewLayout.setVisibility(View.GONE);
+                    }
 
                     mRatingBar.setRating(storeRating);
-                //  mBundle.putString("StoreContact", mOtherContact);
+                    //  mBundle.putString("StoreContact", mOtherContact);
 
-                if (!storeImage.equals("")) {
-                    String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
-                    Glide.with(this)
-                            .load(dp_path)
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.logo)
-                            .into(mStoreImage);
-                } else {
-                    mStoreImage.setImageResource(R.drawable.logo);
-                }
-                if (!storeCoverImage.equals("")) {
-                    String dp_paths = "http://autokatta.com/mobile/store_profiles/" + storeCoverImage;
-                    Glide.with(this)
-                            .load(dp_paths)
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.logo)
-                            .into(mBannerImage);
-                } else {
-                    mBannerImage.setImageResource(R.drawable.logo);
-                }
+                    if (!storeImage.equals("")) {
+                        String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
+                        Glide.with(this)
+                                .load(dp_path)
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.logo)
+                                .into(mStoreImage);
+                    } else {
+                        mStoreImage.setImageResource(R.drawable.logo);
+                    }
+                    if (!storeCoverImage.equals("")) {
+                        String dp_paths = "http://autokatta.com/mobile/store_profiles/" + storeCoverImage;
+                        Glide.with(this)
+                                .load(dp_paths)
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.logo)
+                                .into(mBannerImage);
+                    } else {
+                        mBannerImage.setImageResource(R.drawable.logo);
+                    }
 
-                mStoreName.setText(storeName);
-                mLocation.setText(storeLocation);
-                mWebSite.setText(storeWebsite);
+                    mStoreName.setText(storeName);
+                    mLocation.setText(storeLocation);
+                    mWebSite.setText(storeWebsite);
                     mFollowCount.setText("Followers(" + String.valueOf(storeFollowCount) + ")");
                     mLikeCount.setText("Likes(" + String.valueOf(storeLikeCount) + ")");
 
 
-                if (mLikestr.equalsIgnoreCase("no")) {
-                    mLike.setVisibility(View.GONE);
-                    mUnlike.setVisibility(View.VISIBLE);
-                } else {
-                    mLike.setVisibility(View.VISIBLE);
-                    mUnlike.setVisibility(View.GONE);
-                }
-                if (mFolllowstr.equalsIgnoreCase("no")) {
-                    mFollow.setVisibility(View.VISIBLE);
-                    mUnFollow.setVisibility(View.GONE);
-                } else {
-                    mFollow.setVisibility(View.GONE);
-                    mUnFollow.setVisibility(View.VISIBLE);
-                }
+                    if (mLikestr.equalsIgnoreCase("no")) {
+                        mLike.setVisibility(View.GONE);
+                        mUnlike.setVisibility(View.VISIBLE);
+                    } else {
+                        mLike.setVisibility(View.VISIBLE);
+                        mUnlike.setVisibility(View.GONE);
+                    }
+                    if (mFolllowstr.equalsIgnoreCase("no")) {
+                        mFollow.setVisibility(View.VISIBLE);
+                        mUnFollow.setVisibility(View.GONE);
+                    } else {
+                        mFollow.setVisibility(View.GONE);
+                        mUnFollow.setVisibility(View.VISIBLE);
+                    }
                 } else if (response.body() instanceof StoreOldAdminResponse) {
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
                     if (!adminResponse.getSuccess().isEmpty()) {

@@ -49,7 +49,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     private Activity mActivity;
     private Context mContext;
     private List<ModelGroups> mItemList = new ArrayList<>();
-    private String GroupType, keyword, mGroupid, mGroupName, mGroupImage;
+    private String GroupType, keyword, mGroupName, mGroupImage;
+    int mGroupid;
     private MyViewHolder view;
 
     // Provide a reference to the views for each data item
@@ -113,7 +114,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
                 GroupEditFragment frag = new GroupEditFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("bundle_GroupId", mGroupid);
+                bundle.putInt("bundle_GroupId", mGroupid);
                 bundle.putString("bundle_name", mGroupName);
                 bundle.putString("bundle_image", mGroupImage);
                 frag.setArguments(bundle);

@@ -307,8 +307,9 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void notifyString(String str) {
+        int id = Integer.parseInt(str);
         if (str != null) {
-            getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("group_id", str).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("group_id", id).apply();
             if (!mediaPath.equals("")) {
                 uploadImage(mediaPath);
             }
@@ -317,7 +318,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             if (b1 != null) {
                 classname = b1.getString("classname");
             }
-            b.putString("bundle_GroupId", str);
+            b.putInt("bundle_GroupId", id);
             b.putString("call", "newGroup");
             mGroupTitle.getText().clear();
             GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment

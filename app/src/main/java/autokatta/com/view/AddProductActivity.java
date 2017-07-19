@@ -62,18 +62,19 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     String idlist = "", product_id;
     boolean tagflag = false;
     String allimg = "";
-    final ArrayList<String> id = new ArrayList<String>();
-    final ArrayList<String> tagname = new ArrayList<String>();
-    final ArrayList<String> brandtagId = new ArrayList<>();
-    final ArrayList<String> brandTags = new ArrayList<>();
-    ArrayList<String> groupId = new ArrayList<>();
-    ArrayList<String> groupTitle = new ArrayList<>();
+    final List<String> id = new ArrayList<String>();
+    final List<String> tagname = new ArrayList<String>();
+    final List<String> brandtagId = new ArrayList<>();
+    final List<String> brandTags = new ArrayList<>();
+    List<Integer> groupId = new ArrayList<>();
+    List<String> groupTitle = new ArrayList<>();
     String[] stringTitles = new String[0], stringIds = new String[0];
     AlertDialog alertDialog;
     String allimgpath = "";
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
-    String stringgroupids = "";
+    int stringgroupids;
+    String str_groupids = "";
     String name, price, details, type, name1, category;
 
     @Override
@@ -652,7 +653,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
         final ArrayList<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
-        stringgroupids = "";
+        str_groupids = "";
 
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddProductActivity.this);
         // set the dialog title
@@ -683,10 +684,10 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                             for (int i = 0; i < mSelectedItems.size(); i++) {
                                 for (int j = 0; j < stringTitles.length; j++) {
                                     if (mSelectedItems.get(i).equals(stringTitles[j])) {
-                                        if (stringgroupids.equals("")) {
+                                        if (stringgroupids == 0) {
                                             stringgroupids = groupId.get(j);
                                         } else {
-                                            stringgroupids = stringgroupids + "," + groupId.get(j);
+                                            str_groupids = stringgroupids + "," + groupId.get(j);
 
                                         }
                                     }
@@ -696,7 +697,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
 
                             System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
-                            createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
+                            createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, str_groupids);
                         } else {
                             CustomToast.customToast(AddProductActivity.this, "Please Select Atleast One Group");
                             android.app.AlertDialog alert = builder.create();
@@ -712,7 +713,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     public void onClick(DialogInterface dialog, int id) {
                         // removes the AlertDialog in the screen
 
-                        stringgroupids = "";
+                        str_groupids = "";
                         System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
                         createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
 

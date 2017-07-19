@@ -694,7 +694,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         String otherContact = allResponseList.get(mProfileHolder.getAdapterPosition()).getSender();
                         mProfileHolder.mLike.setVisibility(View.GONE);
                         mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
-                        mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", 0, 0, 0, "", "");
+                        mApiCall.UnLike(mLoginContact, otherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                         profile_likecountint = Integer.parseInt(allResponseList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount());
                         profile_likecountint = profile_likecountint - 1;
                         mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
@@ -712,7 +712,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         String otherContact = allResponseList.get(mProfileHolder.getAdapterPosition()).getSender();
                         mProfileHolder.mUnlike.setVisibility(View.GONE);
                         mProfileHolder.mLike.setVisibility(View.VISIBLE);
-                        mApiCall.Like(mLoginContact, otherContact, "1", 0, "", 0, 0, 0, "", "");
+                        mApiCall.Like(mLoginContact, otherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                         profile_likecountint = Integer.parseInt(allResponseList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount());
                         profile_likecountint = profile_likecountint + 1;
                         mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
@@ -868,7 +868,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             } else
                                 mOtherContact = objAllResponse.getStoreContact();
 
-                            mApiCall.Like(mLoginContact, mOtherContact, "2", store_id, "", 0, 0, 0, "", "");
+                            mApiCall.Like(mLoginContact, mOtherContact, "2", store_id, 0, 0, 0, 0, 0, 0);
                             storelikecountint++;
 
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
@@ -892,7 +892,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             } else
                                 mOtherContact = objAllResponse.getStoreContact();
 
-                            mApiCall.UnLike(mLoginContact, mOtherContact, "2", store_id, "", 0, 0, 0, "", "");
+                            mApiCall.UnLike(mLoginContact, mOtherContact, "2", store_id, 0, 0, 0, 0, 0, 0);
                             storelikecountint--;
 
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));

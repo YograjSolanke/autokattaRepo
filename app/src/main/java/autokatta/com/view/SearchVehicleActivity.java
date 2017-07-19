@@ -1117,7 +1117,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
                         parsedData.addAll(mCategoryId);
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
-                       // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         allcategorySpinner.setAdapter(adapter);
                         allcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -1136,7 +1136,6 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                                     count = 0;
 
                                     getSubCategoryTask(vehicle_id);
-
 
 
                                     if (Category.equals("Tractor") || Category.equals("Cranes") || Category.equalsIgnoreCase(" Construction Equipment ")) {

@@ -52,7 +52,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     String name;
     FloatingActionMenu mFab;
     FloatingActionButton mLike, mCall, mAutoshare, mShare, mChat;
-    String  Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
+    String Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     String contact, mLikestr, prefcontact, allDetails;
     ApiCall mApiCall;
     int mVehicle_Id;
@@ -159,7 +159,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
         adapter.addFragment(new VehicleDetails_Details(), "DETAILS");
         adapter.addFragment(new VehicleDetailsTwo(), "VEHICLE DETAILS");
-    //    adapter.addFragment(new VehicleDetailsSpecifications(), "SPECIFICATION");
+        //    adapter.addFragment(new VehicleDetailsSpecifications(), "SPECIFICATION");
         viewPager.setAdapter(adapter);
     }
 
@@ -315,10 +315,10 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 break;
             case R.id.like_l:
                 if (mLikestr.equalsIgnoreCase("no")) {
-                    mApiCall.Like(prefcontact, contact, "4",0,"", mVehicle_Id,0,0,"","");
+                    mApiCall.Like(prefcontact, contact, "4", 0, 0, mVehicle_Id, 0, 0, 0, 0);
                     mFab.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.UnLike(prefcontact, contact, "4", 0,"", mVehicle_Id,0,0,"","");
+                    mApiCall.UnLike(prefcontact, contact, "4", 0, 0, mVehicle_Id, 0, 0, 0, 0);
                     mFab.setClosedOnTouchOutside(true);
                 }
                 break;

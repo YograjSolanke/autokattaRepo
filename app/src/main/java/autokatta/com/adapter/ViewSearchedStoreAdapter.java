@@ -51,6 +51,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     private String imagename = "", allDetails;
     ApiCall mApiCall;
     private String callText;
+
     public ViewSearchedStoreAdapter(Activity activity, List<SearchStoreResponse.Success> successList) {
         this.activity = activity;
         this.mMainList = successList;
@@ -70,7 +71,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         final SearchStoreResponse.Success object = mMainList.get(position);
         final String image;
 
-        callText=object.getContact();
+        callText = object.getContact();
         if (object.getLikestatus().equals("yes")) {
             holder.linearunlike.setVisibility(View.VISIBLE);
             holder.linearlike.setVisibility(View.GONE);
@@ -166,7 +167,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.Like(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), object.getContact(), "2", StoreId,"",0,0,0,"","");
+                        .getString("loginContact", ""), object.getContact(), "2", StoreId, 0, 0, 0, 0, 0, 0);
 
                 holder.linearunlike.setVisibility(View.VISIBLE);
                 holder.linearlike.setVisibility(View.GONE);
@@ -187,7 +188,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreId = object.getStoreId();
 
                 mApiCall.UnLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), StoreContact, "2", StoreId,"",0,0,0,"","");
+                        .getString("loginContact", ""), StoreContact, "2", StoreId, 0, 0, 0, 0, 0, 0);
 
                 holder.linearunlike.setVisibility(View.GONE);
                 holder.linearlike.setVisibility(View.VISIBLE);
@@ -207,7 +208,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.Follow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), StoreContact, "2", StoreId,"","","");
+                        .getString("loginContact", ""), StoreContact, "2", StoreId, 0, 0, 0);
                 holder.linearfollow.setVisibility(View.GONE);
                 holder.linearunfollow.setVisibility(View.VISIBLE);
 
@@ -226,7 +227,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.UnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""), StoreContact, "2", StoreId,"","","");
+                        .getString("loginContact", ""), StoreContact, "2", StoreId, 0, 0, 0);
                 holder.linearfollow.setVisibility(View.VISIBLE);
                 holder.linearunfollow.setVisibility(View.GONE);
 
@@ -370,8 +371,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             linearunlike = (LinearLayout) itemView.findViewById(R.id.linearunlike);
             linearfollow = (LinearLayout) itemView.findViewById(R.id.linearfollow);
             linearunfollow = (LinearLayout) itemView.findViewById(R.id.linearunfollow);
-         //   detailrel = (RelativeLayout) itemView.findViewById(R.id.rel);
-           // btndetail = (TextView) itemView.findViewById(R.id.details);
+            //   detailrel = (RelativeLayout) itemView.findViewById(R.id.rel);
+            // btndetail = (TextView) itemView.findViewById(R.id.details);
         }
     }
 }

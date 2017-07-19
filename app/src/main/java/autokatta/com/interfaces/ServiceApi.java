@@ -320,7 +320,7 @@ public interface ServiceApi {
 
     //Get Group Contacts...
     @GET("GetGroupContacts")
-    Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("GroupID") String groupId);
+    Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("GroupID") int groupId);
 
     //Get Group Products...
     @GET("GetGroupProducts")
@@ -332,13 +332,13 @@ public interface ServiceApi {
 
     //delete group members...
     @POST("DeleteMyGroupMembers")
-    Call<String> _autokattaDeleteGroupMembers(@Query("GroupID") String group_id, @Query("GroupType") String grouptype,
+    Call<String> _autokattaDeleteGroupMembers(@Query("GroupID") int group_id, @Query("GroupType") String grouptype,
                                               @Query("Contact") String contact, @Query("MyContact") String mycontact,
                                               @Query("Next") String next, @Query("MemberCount") String membercount);
 
     //make group admin
     @POST("MakeAdmin")
-    Call<String> _autokattaMakeGroupAdmin(@Query("GroupID") String mGroupId, @Query("Contact") String contact,
+    Call<String> _autokattaMakeGroupAdmin(@Query("GroupID") int mGroupId, @Query("Contact") String contact,
                                           @Query("Action") String action);
 
     //Create an Auction
@@ -408,7 +408,7 @@ public interface ServiceApi {
 
     //set vehicle privacy
     @POST("VehicleGroupStoreRef")
-    Call<String> _autokattaSetVehiclePrivacy(@Query("Contact") String myContact, @Query("VehicleID") String vehicleid,
+    Call<String> _autokattaSetVehiclePrivacy(@Query("Contact") String myContact, @Query("VehicleID") int vehicleid,
                                              @Query("GroupIDs") String groupIds, @Query("StoreID") String storeIds);
 
     //Get Vehicle By Id...
@@ -456,15 +456,14 @@ public interface ServiceApi {
     @POST("NewFollow")
     Call<String> _autokattaFollow(@Query("SenderContact") String senderContact, @Query("ReceiverContact") String receiverContact,
                                   @Query("Layout") String layout, @Query("StoreID") int storeid,
-                                  @Query("VehicleID") String vehicleid, @Query("ProductID") String pid,
-                                  @Query("ServiceID") String servid);
+                                  @Query("VehicleID") int vehicleid, @Query("ProductID") int pid,
+                                  @Query("ServiceID") int servid);
 
     //Un Follow
     @POST("NewUnfollow")
     Call<String> _autokattaUnfollow(@Query("SenderContact") String senderContact, @Query("ReceiverContact") String receiverContact,
                                     @Query("Layout") String layout, @Query("StoreID") int storeid,
-                                    @Query("VehicleID") String vid, @Query("ProductID") String pid, @Query("ServiceID") String sid
-    );
+                                    @Query("VehicleID") int vid, @Query("ProductID") int pid, @Query("ServiceID") int sid);
 
 
     //remove Contact From blacklist
@@ -509,7 +508,7 @@ public interface ServiceApi {
 
     //Delete Group
     @GET("DeleteMyGroups")
-    Call<String> deleteGroup(@Query("GroupID") String group_id, @Query("Keyword") String keyword, @Query("Mycontact") String contact);
+    Call<String> deleteGroup(@Query("GroupID") int group_id, @Query("Keyword") String keyword, @Query("Mycontact") String contact);
 
     //All Live Events
     @POST("getAllLiveEvents.php")
@@ -864,9 +863,9 @@ public interface ServiceApi {
     @POST("Newlikes")
     Call<String> _autokattaLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                 @Query("Layout") String layout, @Query("StoreID") int store_id,
-                                @Query("GroupID") String gid, @Query("VehicleID") int vid,
+                                @Query("GroupID") int gid, @Query("VehicleID") int vid,
                                 @Query("ProductID") int pid, @Query("ServiceID") int sid,
-                                @Query("StatusID") String statusid, @Query("SearchID") String searchid);
+                                @Query("StatusID") int statusid, @Query("SearchID") int searchid);
 
       /*
     UnLike
@@ -875,9 +874,9 @@ public interface ServiceApi {
     @POST("NewUnlikes")
     Call<String> _autokattaUnLike(@Query("SenderContact") String myContact, @Query("ReceiverContact") String othercontact,
                                   @Query("Layout") String layout, @Query("StoreID") int store_id,
-                                  @Query("GroupID") String gid, @Query("VehicleID") int vid,
+                                  @Query("GroupID") int gid, @Query("VehicleID") int vid,
                                   @Query("ProductID") int pid, @Query("ServiceID") int sid,
-                                  @Query("StatusID") String statusid, @Query("SearchID") String searchid);
+                                  @Query("StatusID") int statusid, @Query("SearchID") int searchid);
 
 
     //delete product
@@ -1073,7 +1072,7 @@ public interface ServiceApi {
 
     //Add contacts to  Groups
     @POST("AddContacts")
-    Call<String> addContactToGroup(@Query("GroupID") String groupid, @Query("Contacts") String contacts);
+    Call<String> addContactToGroup(@Query("GroupID") int groupid, @Query("Contacts") String contacts);
 
 
   /*  //Notification Like Group
@@ -1234,7 +1233,7 @@ public interface ServiceApi {
     @GET("AddEnquiryData")
     Call<ManualEnquiryResponse> getManualEnquiry(@Query("MyContact") String myContact, @Query("custName") String custName,
                                                  @Query("custContact") String custContact, @Query("custAddress") String custAddress
-                                                 , @Query("custFullAddress") String custFullAddress, @Query("custInventoryType") String custInventoryType,
+            , @Query("custFullAddress") String custFullAddress, @Query("custInventoryType") String custInventoryType,
                                                  @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
                                                  @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList);
 
@@ -1246,7 +1245,7 @@ public interface ServiceApi {
     @POST("AddEnquiryData")
     Call<AddManualEnquiryResponse> _autokattaAddManualEnquiry(@Query("MyContact") String myContact, @Query("custName") String custName,
                                                               @Query("custContact") String custContact, @Query("custAddress") String custAddress
-                                                               ,@Query("custFullAddress") String custFullAddress,
+            , @Query("custFullAddress") String custFullAddress,
                                                               @Query("custInventoryType") String custInventoryType,
                                                               @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
                                                               @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList);

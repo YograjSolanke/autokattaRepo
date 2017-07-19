@@ -226,20 +226,20 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                 break;
             case R.id.follow_f:
                 if (mFolllowstr.equalsIgnoreCase("no")) {
-                    mApiCall.Follow(mLoginContact, mOtherContact, "1",0,"","","");
+                    mApiCall.Follow(mLoginContact, mOtherContact, "1", 0, 0, 0, 0);
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.UnFollow(mLoginContact, mOtherContact, "1",0,"","","");
+                    mApiCall.UnFollow(mLoginContact, mOtherContact, "1", 0, 0, 0, 0);
                     menuRed.setClosedOnTouchOutside(true);
                 }
                 break;
 
             case R.id.like_l:
                 if (mLikestr.equalsIgnoreCase("no")) {
-                    mApiCall.Like(mLoginContact, mOtherContact, "1",0,"",0,0,0,"","");
+                    mApiCall.Like(mLoginContact, mOtherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                     menuRed.setClosedOnTouchOutside(true);
                 } else {
-                    mApiCall.UnLike(mLoginContact, mOtherContact, "1",0,"",0,0,0,"","");
+                    mApiCall.UnLike(mLoginContact, mOtherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                     menuRed.setClosedOnTouchOutside(true);
                 }
                 break;

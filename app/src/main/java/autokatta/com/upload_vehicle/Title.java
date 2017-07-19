@@ -585,9 +585,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 if (mSelectedItems.get(i).equals(storetitlearray[j])) {
                                     if (stringstoreids.equals("")) {
                                         stringstoreids = list1.get(i);
+                                        Log.i("IF-stringstoreids", "->" + stringstoreids);
                                         stringstorename = storetitlearray[j];
                                     } else {
                                         stringstoreids = stringstoreids + "," + list1.get(i);
+                                        Log.i("ELSE-stringstoreids", "->" + stringstoreids);
                                         stringstorename = stringstorename + "," + storetitlearray[j];
                                     }
                                 }

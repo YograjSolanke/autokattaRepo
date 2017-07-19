@@ -89,7 +89,7 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
                     modelGroups.setGroupCount(myGroup.getGroupcount());
                     modelGroups.setVehicleCount(myGroup.getVehiclecount());
 
-                    String id = myGroup.getId();
+                    int id = myGroup.getId();
                     String title = myGroup.getTitle();
                     String image = myGroup.getImage();
                     if (image.equals(null) || image.equals("null") || image.equals(""))
@@ -106,7 +106,7 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
                     modelGroups.setGroupCount(joinedGroup.getGroupcount());
                     modelGroups.setVehicleCount(joinedGroup.getVehiclecount());
 
-                    String id = joinedGroup.getId();
+                    int id = joinedGroup.getId();
                     String title = joinedGroup.getTitle();
                     String image = joinedGroup.getImage();
 

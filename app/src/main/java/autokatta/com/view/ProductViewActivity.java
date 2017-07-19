@@ -90,7 +90,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     MultiAutoCompleteTextView producttags, multiautobrand;
     RelativeLayout relativerate;
     RatingBar pricebar, qualitybar, stockbar, overallbar, productrating, storerating;
-    String  storecontact, storeowner;
+    String storecontact, storeowner;
     int store_id;
 
     //product updating variables
@@ -302,7 +302,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendUnlike() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.UnLike(contact, receiver_contact, "5", 0,"",0, product_id,0,"","");
+        mApiCall.UnLike(contact, receiver_contact, "5", 0, 0, 0, product_id, 0, 0, 0);
     }
 
     /*
@@ -310,7 +310,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void sendLike() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.Like(contact, receiver_contact, "5", 0,"",0, product_id,0,"","");
+        mApiCall.Like(contact, receiver_contact, "5", 0, 0, 0, product_id, 0, 0, 0);
     }
 
     /*
@@ -358,7 +358,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void reviewTask() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.postProductReview(contact, receiver_contact, product_id, reviewstring,0);
+        mApiCall.postProductReview(contact, receiver_contact, product_id, reviewstring, 0);
     }
 
     /*
@@ -454,7 +454,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 callme.setVisibility(View.GONE);
                                 relativerate.setVisibility(View.GONE);
                                 relativewritereview.setVisibility(View.GONE);
-                              //  linearlike.setEnabled(false);
+                                //  linearlike.setEnabled(false);
                                 linearreview.setEnabled(false);
                             } else {
                                 callme.setVisibility(View.VISIBLE);
@@ -916,8 +916,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
             case R.id.linearlike:
                 if (storecontact.contains(contact)) {
-                CustomToast.customToast(getApplicationContext(),"You can't Like Your Own Product");
-                }else {
+                    CustomToast.customToast(getApplicationContext(), "You can't Like Your Own Product");
+                } else {
                     linearlike.setVisibility(View.GONE);
                     linearunlike.setVisibility(View.VISIBLE);
                     sendLike();
@@ -927,8 +927,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 break;
             case R.id.linearunlike:
                 if (storecontact.contains(contact)) {
-                    CustomToast.customToast(getApplicationContext(),"You can't UnLike Your Own Product");
-                }else {
+                    CustomToast.customToast(getApplicationContext(), "You can't UnLike Your Own Product");
+                } else {
                     linearlike.setVisibility(View.VISIBLE);
                     linearunlike.setVisibility(View.GONE);
                     sendUnlike();

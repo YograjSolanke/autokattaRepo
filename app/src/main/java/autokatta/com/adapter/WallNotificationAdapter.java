@@ -608,7 +608,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         String otherContact = notificationList.get(mProfileHolder.getAdapterPosition()).getSender();
                         mProfileHolder.mLike.setVisibility(View.GONE);
                         mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
-                        mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", 0, 0, 0, "", "");
+                        mApiCall.UnLike(mLoginContact, otherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                         profile_likecountint = Integer.parseInt(notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount());
                         profile_likecountint = profile_likecountint - 1;
                         mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
@@ -626,7 +626,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         String otherContact = notificationList.get(mProfileHolder.getAdapterPosition()).getSender();
                         mProfileHolder.mUnlike.setVisibility(View.GONE);
                         mProfileHolder.mLike.setVisibility(View.VISIBLE);
-                        mApiCall.Like(mLoginContact, otherContact, "1", 0, "", 0, 0, 0, "", "");
+                        mApiCall.Like(mLoginContact, otherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                         profile_likecountint = Integer.parseInt(notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount());
                         profile_likecountint = profile_likecountint + 1;
                         mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
@@ -951,8 +951,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         String otherContact = notificationList.get(mProductHolder.getAdapterPosition()).getSender();
                         mProductHolder.mProductLike.setVisibility(View.GONE);
                         mProductHolder.mProductUnlike.setVisibility(View.VISIBLE);
-                        mApiCall.UnLike(mLoginContact, otherContact, "5", 0, "", 0,
-                                Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductID()), 0, "", "");
+                        mApiCall.UnLike(mLoginContact, otherContact, "5", 0, 0, 0,
+                                Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductID()), 0, 0, 0);
 
                         product_likecountint = Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount());
                         product_likecountint = product_likecountint - 1;
@@ -971,8 +971,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         String otherContact = notificationList.get(mProductHolder.getAdapterPosition()).getSender();
                         mProductHolder.mProductUnlike.setVisibility(View.GONE);
                         mProductHolder.mProductLike.setVisibility(View.VISIBLE);
-                        mApiCall.Like(mLoginContact, otherContact, "5", 0, "", 0,
-                                Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductID()), 0, "", "");
+                        mApiCall.Like(mLoginContact, otherContact, "5", 0, 0, 0,
+                                Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductID()), 0, 0, 0);
 
                         product_likecountint = Integer.parseInt(notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount());
                         product_likecountint = product_likecountint + 1;
@@ -1202,8 +1202,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         String otherContact = notificationList.get(mServiceHolder.getAdapterPosition()).getSender();
                         mServiceHolder.mServiceLike.setVisibility(View.GONE);
                         mServiceHolder.mServiceUnlike.setVisibility(View.VISIBLE);
-                        mApiCall.UnLike(mLoginContact, otherContact, "6", 0, "", 0, 0,
-                                Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()), "", "");
+                        mApiCall.UnLike(mLoginContact, otherContact, "6", 0, 0, 0, 0,
+                                Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()), 0, 0);
 
                         service_likecountint = Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount());
                         service_likecountint = service_likecountint - 1;
@@ -1222,8 +1222,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         String otherContact = notificationList.get(mServiceHolder.getAdapterPosition()).getSender();
                         mServiceHolder.mServiceUnlike.setVisibility(View.GONE);
                         mServiceHolder.mServiceLike.setVisibility(View.VISIBLE);
-                        mApiCall.Like(mLoginContact, otherContact, "6", 0, "", 0, 0,
-                                Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()), "", "");
+                        mApiCall.Like(mLoginContact, otherContact, "6", 0, 0, 0, 0,
+                                Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()), 0, 0);
 
                         service_likecountint = Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount());
                         service_likecountint = service_likecountint + 1;

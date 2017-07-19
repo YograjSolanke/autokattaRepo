@@ -29,7 +29,7 @@ public class ProfileGroupResponse {
 
         @SerializedName("id")
         @Expose
-        private String id;
+        private int id;
         @SerializedName("title")
         @Expose
         private String title;
@@ -46,11 +46,11 @@ public class ProfileGroupResponse {
         @Expose
         private Integer vehiclecount;
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 
@@ -100,7 +100,7 @@ public class ProfileGroupResponse {
 
         @SerializedName("id")
         @Expose
-        private String id;
+        private int id;
         @SerializedName("title")
         @Expose
         private String title;
@@ -123,11 +123,11 @@ public class ProfileGroupResponse {
         @Expose
         private String adminVehicleCount;
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 

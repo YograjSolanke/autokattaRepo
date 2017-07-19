@@ -54,7 +54,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     AutoCompleteTextView autoCompany, autoDesignation;
     MultiAutoCompleteTextView autoSkills, autoDeals;
     Button Next, Cancel;
-    Integer RegiId,page = 2;
+    Integer RegiId, page = 2;
     String strCompany, strDesignation, updatecompany, updatedesignation, skillpart = "", skillid = "",
             dealpart = "", dealid = "", Skidlist = "", Deidlist = "", Skills = "", Deals = "";
     boolean skillflag = false, dealflag = false;
@@ -150,7 +150,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 mCompanyBased = (RelativeLayout) findViewById(R.id.company_based);
 
                 prefs = getApplicationContext().getSharedPreferences(MyloginPREFERENCES, Context.MODE_PRIVATE);
-                RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid",0);
+                RegiId = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid", 0);
 
                 mApiCall.getCompany();
                 mApiCall.getDeals();
@@ -532,7 +532,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edbrand = input.getText().toString();
                                                 if (edbrand.equals(""))
-                                                    CustomToast.customToast(getApplicationContext(),"Please enter brand");
+                                                    CustomToast.customToast(getApplicationContext(), "Please enter brand");
                                                 else
                                                     AddBrand("Brand", edbrand, categoryId, subCategoryId);
 
@@ -565,15 +565,15 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Company Based Registration");
             error.printStackTrace();
@@ -589,7 +589,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     break;
 
                 case "success_brand_add":
-                    CustomToast.customToast(getApplicationContext(),"Brand Added");
+                    CustomToast.customToast(getApplicationContext(), "Brand Added");
                     getBrand(categoryId, subCategoryId);
                     Log.i("msg", "Brand added successfully");
                     break;
@@ -599,7 +599,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     break;
             }
         } else {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
 
@@ -917,6 +917,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         // show it
         alertDialog.show();
     }
+
     @Override
     public void onItemsSelected(boolean[] selected) {
 

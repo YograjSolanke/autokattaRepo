@@ -51,13 +51,13 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private String mCallFrom;
     private String bundle_GroupName;
     private String myContact;
-    private String mGroupId;
+    private int mGroupId;
     private ApiCall mApiCall;
     private MyViewHolder mView;
     private ConnectionDetector mTestConnection;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView mName, mContact, mVehicleCount, mAdmin,mproductcnt,mServicecnt;
+        TextView mName, mContact, mVehicleCount, mAdmin, mproductcnt, mServicecnt;
         ImageView mCall, mProfilePic;
         Button mOption;
         RelativeLayout mRelativeLayout;
@@ -72,12 +72,12 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             mProfilePic = (ImageView) itemView.findViewById(R.id.pro_pic);
             mOption = (Button) itemView.findViewById(R.id.delete_member);
             mRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.relative);
-            mproductcnt= (TextView) itemView.findViewById(R.id.edtproductcnt);
-            mServicecnt= (TextView) itemView.findViewById(R.id.edtservicecnt);
+            mproductcnt = (TextView) itemView.findViewById(R.id.edtproductcnt);
+            mServicecnt = (TextView) itemView.findViewById(R.id.edtservicecnt);
         }
     }
 
-    public MemberListRefreshAdapter(Activity mActivity1, String GroupId,
+    public MemberListRefreshAdapter(Activity mActivity1, int GroupId,
                                     List<GetGroupContactsResponse.Success> mItemList, String mCallfrom, String bundle_GroupName) {
         this.mActivity = mActivity1;
         mGroupId = GroupId;
@@ -223,7 +223,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 bundle.putString("Rcontact", holder.mContact.getText().toString());
                 bundle.putString("grouptype", mCallFrom);
                 bundle.putString("className", "MemberListRefreshAdapter");
-                bundle.putString("bundle_GroupId", mGroupId);
+                bundle.putInt("bundle_GroupId", mGroupId);
                 bundle.putString("bundle_UserName", mItemList.get(position).getUsername());
 
                 MemberDetailTabs memberDetailTabs = new MemberDetailTabs();

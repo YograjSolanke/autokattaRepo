@@ -42,7 +42,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GroupContactFragment extends Fragment implements RequestNotifier {
     View mGcontact;
-    String mContact, mGroup_id, call,bundle_GroupName;
+    String mContact, call, bundle_GroupName;
+    int mGroup_id;
     ListView lv;
     ApiCall mApiCall;
     String receiver_contact;
@@ -81,11 +82,11 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getRegisteredContacts(mContact);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             // errorMessage(getActivity(), getString(R.string.no_internet));
         }
 
-        mGroup_id = args.getString("bundle_GroupId", "");
+        mGroup_id = args.getInt("bundle_GroupId", 0);
         bundle_GroupName = args.getString("bundle_GroupName", "");
         call = args.getString("call", "");
         AddContacts.setEnabled(false);
@@ -110,11 +111,11 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
                 if (allcontacts.equalsIgnoreCase("")) {
                     //  showMessage(getActivity(), "Please add atleast one contact");
-                    CustomToast.customToast(getActivity(),"Please add atleast one contact");
+                    CustomToast.customToast(getActivity(), "Please add atleast one contact");
                     flag = false;
 
                 } else if (allcontacts.contains(mContact)) {
-                    CustomToast.customToast(getActivity(),"Please check the number");
+                    CustomToast.customToast(getActivity(), "Please check the number");
                     // showMessage(getActivity(), "Please check the number");
                     flag = false;
                 }
@@ -133,7 +134,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             String[] parts = allcontacts.split(",");
                             for (int j = 0; j < parts.length; j++) {
                                 if (parts[j].contains(no)) {
-                                    CustomToast.customToast(getActivity(),"Sorry..No Is Already added in Group");
+                                    CustomToast.customToast(getActivity(), "Sorry..No Is Already added in Group");
                                     // showMessage(getActivity(),  "Sorry..No Is Already added in Group");
 
                                     flag = false;
@@ -160,7 +161,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     for (int i = 0; i < parts.length; i++) {
                         receiver_contact = parts[i];
                         if (!receiver_contact.equalsIgnoreCase(mContact)) {
-                             mApiCall.Like( mContact,receiver_contact, "3",0,mGroup_id,0,0,0,"","");
+                            mApiCall.Like(mContact, receiver_contact, "3", 0, mGroup_id, 0, 0, 0, 0, 0);
                         }
                     }
                 }
@@ -236,21 +237,21 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }else {
+        } else {
             Log.i("Check Class-"
                     , "groupcontact");
             error.printStackTrace();
@@ -261,14 +262,14 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (str != null) {
             if (str.startsWith("success")) {
-                CustomToast.customToast(getActivity(), "Contact Added Successfully");
-                Log.i("Notification send","success add group member");
+                if (isAdded()) {
+                    CustomToast.customToast(getActivity(), "Contact Added Successfully");
+                    Log.i("Notification send", "success add group member");
                 /*Intent intent = new Intent(getActivity(), GroupsActivity.class);
                 intent.putExtra("grouptype", "MyGroup");
                 intent.putExtra("className", "GroupContactFragment");
                 intent.putExtra("bundle_GroupId", mGroup_id);
                 getActivity().startActivity(intent);*/
-                if (isAdded()) {
                     getActivity().getSupportFragmentManager().popBackStack();
                 }
             } else {

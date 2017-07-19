@@ -30,7 +30,7 @@ public class GroupsActivity extends AppCompatActivity {
         if (grouptype != null) {
             b.putString("grouptype", i.getStringExtra("grouptype"));
             b.putString("className", i.getStringExtra("className"));
-            b.putString("bundle_GroupId", i.getStringExtra("bundle_GroupId"));
+            b.putInt("bundle_GroupId", i.getIntExtra("bundle_GroupId", 0));
             b.putString("bundle_GroupName", i.getStringExtra("bundle_GroupName"));
             b.putString("tabIndex", i.getStringExtra("tabIndex"));
             b.putString("bundle_Contact", i.getStringExtra("bundle_Contact"));

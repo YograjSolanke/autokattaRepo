@@ -333,7 +333,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                 if (edtvehicleno.equals("")) {
                     edtvehicleno.setError("Enter Vehicle Number");
                     edtvehicleno.requestFocus();
-                    flag=0;
+                    flag = 0;
                 }
 
                 if (flag == 1 && !action.equalsIgnoreCase("MyVehicles")) {
@@ -346,11 +346,11 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     /*Response is success*/
                     mApicall.uploadVehicle(ids, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                             taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
-                    CustomToast.customToast(getApplicationContext(),"Vehicle Uploaded Successfully!!!");
+                    CustomToast.customToast(getApplicationContext(), "Vehicle Uploaded Successfully!!!");
 
 
                 } else {
-                    CustomToast.customToast(getApplicationContext(),"Error please provide all details Correct!!!");
+                    CustomToast.customToast(getApplicationContext(), "Error please provide all details Correct!!!");
                 }
 
 
@@ -674,8 +674,8 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                         mSubTypeList1.put(subTypeResponse.getName(), subTypeResponse.getId());
                     }
                     parsedData.addAll(mSubTypeList);
-                    ArrayAdapter<String> adapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_item,parsedData);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, parsedData);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerSubType.setAdapter(adapter);
                     mSpinnerSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -752,7 +752,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                                 String edbrand = input.getText().toString();
 
                                                 if (edbrand.equals(""))
-                                                  CustomToast.customToast(getApplicationContext(), "Please enter brand");
+                                                    CustomToast.customToast(getApplicationContext(), "Please enter brand");
                                                 else
                                                     AddBrand("Brand", edbrand, vehicle_idD, subcategoryId);
 
@@ -963,8 +963,8 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     finish();
                 } else if (action.equals("MyVehicles")) ;
                 {
-                    CustomToast.customToast(getApplication(),"updated Successfully");
-                  //  Toast.makeText(getApplicationContext(), "updated Successfully", Toast.LENGTH_LONG).show();
+                    CustomToast.customToast(getApplication(), "updated Successfully");
+                    //  Toast.makeText(getApplicationContext(), "updated Successfully", Toast.LENGTH_LONG).show();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
 

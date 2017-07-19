@@ -49,7 +49,8 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     String call;
     Bundle bundle = new Bundle();
     //String group_id;
-    String mCallfrom = "", mGroupId = "",bundle_GroupName="";
+    String mCallfrom = "", bundle_GroupName = "";
+    int mGroupId;
     TextView mNoData;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
@@ -69,12 +70,12 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     /*
     Get Group Contact...
      */
-    private void getGroupContact(String group_id) {
+    private void getGroupContact(int group_id) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getGroupContacts(group_id);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(activity, getString(R.string.no_internet));
         }
     }
@@ -104,7 +105,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         success.setVehiclecount(success.getVehiclecount());
                         success.setProductcount(success.getProductcount());
                         success.setServicecount(success.getServicecount());
-                        if (success.getStatus()==null)
+                        if (success.getStatus() == null)
                             success.setStatus("No Status");
 
                         success.setContact(success.getContact().replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "").
@@ -161,12 +162,12 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(),getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
                 //showMessage(activity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //showMessage(activity, getString(R.string.no_response));
         }
     }
@@ -189,16 +190,16 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
@@ -253,7 +254,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 Bundle bundle = getArguments();
                 if (bundle != null) {
                     mCallfrom = bundle.getString("grouptype");
-                    mGroupId = bundle.getString("bundle_GroupId");
+                    mGroupId = bundle.getInt("bundle_GroupId");
                     bundle_GroupName = bundle.getString("bundle_GroupName");
                     Log.i("Other", "->" + mCallfrom);
                     Log.i("GroupId", "MemberList->" + mGroupId);
@@ -287,7 +288,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     public void onClick(View v) {
                         GroupContactFragment fragment = new GroupContactFragment();
                         Bundle b = new Bundle();
-                        b.putString("bundle_GroupId", mGroupId);
+                        b.putInt("bundle_GroupId", mGroupId);
                         b.putString("bundle_GroupName", bundle_GroupName);
                         b.putStringArrayList("list", (ArrayList<String>) ContactNoList);
                         b.putString("call", "existGroup");

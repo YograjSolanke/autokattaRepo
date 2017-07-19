@@ -38,7 +38,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class VehiclePrivacy extends Fragment implements View.OnClickListener, RequestNotifier {
 
-    String myContact, vehicle_id, GroupIds = "", StoreIds = "", GroupName = "", StoreName = "";
+    String myContact, GroupIds = "", StoreIds = "", GroupName = "", StoreName = "";
+    int vehicle_id;
     View mVehiclePrivacy;
     ListView storelistView, grouplistView;
     Button ok, cancel;
@@ -60,7 +61,7 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392");
 
         Bundle b = getArguments();
-        vehicle_id = b.getString("vehicle_id");
+        vehicle_id = b.getInt("vehicle_id");
 
 
         GroupIds = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_GroupIds", null);
