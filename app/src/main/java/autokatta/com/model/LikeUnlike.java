@@ -5,22 +5,22 @@ package autokatta.com.model;
  */
 
 public class LikeUnlike {
-    public String count;
-    public String followCount;
+    public int count;
+    public int followCount;
 
-    public String getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(int count) {
         this.count = count;
     }
 
-    public String getFollowCount() {
+    public int getFollowCount() {
         return followCount;
     }
 
-    public void setFollowCount(String followCount) {
+    public void setFollowCount(int followCount) {
         this.followCount = followCount;
     }
 }

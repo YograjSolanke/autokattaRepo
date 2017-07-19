@@ -57,20 +57,37 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     boolean hasLoadedOnce = false;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
-    String precsrate = "";
-    String preqwrate = "";
-    String prefrrate = "";
-    String preprrate = "";
-    String pretmrate = "";
-    String preoverall = "";
+    int precsrate = 0;
+    int preqwrate = 0;
+    int prefrrate = 0;
+    int preprrate = 0;
+    int pretmrate = 0;
+    int preoverall = 0;
     String isDealing = "";
     String myContact, storeAdmins = "";
     Activity mActivity;
-    String mOtherContact, mLoginContact, storeOtherContact, mFolllowstr, mLikestr, storeRating;
-    String storeName = "", storeImage = "", storeCoverImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
-            storeLikeCount, storeFollowCount, strDetailsShare = "", productCount, serviceCount, vehicleCount;
-    Double storelattitude;
-    Double storelongitude;
+    String mOtherContact;
+    String mLoginContact;
+    String storeOtherContact;
+    String mFolllowstr;
+    String mLikestr;
+    int storeRating;
+    String storeName = "";
+    String storeImage = "";
+    String storeCoverImage = "";
+    String storeType = "";
+    String storeWebsite = "";
+    String storeTiming = "";
+    String storeLocation = "";
+    String storeWorkingDays = "";
+    int storeLikeCount;
+    int storeFollowCount;
+    String strDetailsShare = "";
+    String productCount;
+    String serviceCount;
+    String vehicleCount;
+    String storelattitude;
+    String storelongitude;
     int store_id;
     ApiCall mApiCall;
     private int likecountint, followcountint;
@@ -149,11 +166,11 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         mLike.setVisibility(View.GONE);
                         mUnlike.setVisibility(View.VISIBLE);
                         mApiCall.UnLike(myContact, mOtherContact, "2", store_id,"",0,0,0,"","");
-                        likecountint = Integer.parseInt(likeUnlike.getCount());
+                        likecountint = likeUnlike.getCount();
                         likecountint = likecountint - 1;
-                        mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
-                        storeLikeCount = String.valueOf(likecountint);
-                        likeUnlike.setCount(String.valueOf(likecountint));
+                        mLikeCount.setText(String.valueOf("Likes(" + String.valueOf(likecountint) + ")"));
+                        storeLikeCount = likecountint;
+                        likeUnlike.setCount(likecountint);
                     }
                 });
 
@@ -163,11 +180,11 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         mLike.setVisibility(View.VISIBLE);
                         mUnlike.setVisibility(View.GONE);
                         mApiCall.Like(myContact, mOtherContact, "2", store_id,"",0,0,0,"","");
-                        likecountint = Integer.parseInt(likeUnlike.getCount());
+                        likecountint = likeUnlike.getCount();
                         likecountint = likecountint + 1;
-                        mLikeCount.setText(String.valueOf("Likes(" + likecountint + ")"));
-                        storeLikeCount = String.valueOf(likecountint);
-                        likeUnlike.setCount(String.valueOf(likecountint));
+                        mLikeCount.setText(String.valueOf("Likes(" + String.valueOf(likecountint) + ")"));
+                        storeLikeCount = likecountint;
+                        likeUnlike.setCount(likecountint);
                     }
                 });
 
@@ -177,11 +194,11 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         mFollow.setVisibility(View.GONE);
                         mUnFollow.setVisibility(View.VISIBLE);
                         mApiCall.Follow(myContact, mOtherContact, "2", store_id,"","","");
-                        followcountint = Integer.parseInt(likeUnlike.getFollowCount());
+                        followcountint = likeUnlike.getFollowCount();
                         followcountint = followcountint + 1;
-                        mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
-                        storeFollowCount = String.valueOf(followcountint);
-                        likeUnlike.setFollowCount(String.valueOf(followcountint));
+                        mFollowCount.setText(String.valueOf("Followers(" + String.valueOf(followcountint) + ")"));
+                        storeFollowCount = followcountint;
+                        likeUnlike.setFollowCount(followcountint);
                     }
                 });
 
@@ -191,10 +208,10 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         mFollow.setVisibility(View.VISIBLE);
                         mUnFollow.setVisibility(View.GONE);
                         mApiCall.UnFollow(myContact, mOtherContact, "2", store_id,"","","");
-                        followcountint = Integer.parseInt(likeUnlike.getFollowCount());
+                        followcountint = likeUnlike.getFollowCount();
                         followcountint--;
-                        mFollowCount.setText(String.valueOf("Followers(" + followcountint + ")"));
-                        likeUnlike.setFollowCount(String.valueOf(followcountint));
+                        mFollowCount.setText(String.valueOf("Followers(" + String.valueOf(followcountint) + ")"));
+                        likeUnlike.setFollowCount(followcountint);
                     }
                 });
 
@@ -313,10 +330,10 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     preqwrate = success.getRate2();
                     prefrrate = success.getRate3();
                     preprrate = success.getRate4();
-                    pretmrate = success.getRate5();
+                        pretmrate = 0;
                     storelattitude = success.getLatitude();
                     storelongitude = success.getLongitude();
-                    isDealing = success.getIsDealing();
+                        isDealing = success.getDealingWith();
 
                     getActivity().setTitle(storeName + " Store");
                 }
@@ -325,7 +342,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     otherViewLayout.setVisibility(View.GONE);
                 }
 
-                mRatingBar.setRating(Float.parseFloat(storeRating));
+                    mRatingBar.setRating(storeRating);
                 //  mBundle.putString("StoreContact", mOtherContact);
 
                 if (!storeImage.equals("")) {
@@ -354,8 +371,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 mStoreName.setText(storeName);
                 mLocation.setText(storeLocation);
                 mWebSite.setText(storeWebsite);
-                mFollowCount.setText("Followers(" + storeFollowCount + ")");
-                mLikeCount.setText("Likes(" + storeLikeCount + ")");
+                    mFollowCount.setText("Followers(" + String.valueOf(storeFollowCount) + ")");
+                    mLikeCount.setText("Likes(" + String.valueOf(storeLikeCount) + ")");
 
 
                 if (mLikestr.equalsIgnoreCase("no")) {
@@ -519,29 +536,31 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         tmbar = (RatingBar) convertView.findViewById(R.id.tm_rating);
         overallbar = (RatingBar) convertView.findViewById(R.id.overall_rating);
 
-        if (!precsrate.equals("")) {
-            csbar.setRating(Float.parseFloat(precsrate));
-            csrate = Float.parseFloat(precsrate);
+
+        if ((precsrate != 0)) {
+            csbar.setRating(precsrate);
+            csrate = Float.parseFloat(String.valueOf(precsrate));
         }
-        if (!preqwrate.equals("")) {
-            qwbar.setRating(Float.parseFloat(preqwrate));
-            qwrate = Float.parseFloat(preqwrate);
+        if (preqwrate != 0) {
+            qwbar.setRating(preqwrate);
+            qwrate = Float.parseFloat(String.valueOf(preqwrate));
         }
-        if (!prefrrate.equals("")) {
-            frbar.setRating(Float.parseFloat(prefrrate));
-            frrate = Float.parseFloat(prefrrate);
+        if (prefrrate != 0) {
+            frbar.setRating(prefrrate);
+            frrate = Float.parseFloat(String.valueOf(prefrrate));
         }
-        if (!preprrate.equals("")) {
-            prbar.setRating(Float.parseFloat(preprrate));
-            prrate = Float.parseFloat(preprrate);
+        if (preprrate != 0) {
+            prbar.setRating(preprrate);
+            prrate = Float.parseFloat(String.valueOf(preprrate));
         }
-        if (!pretmrate.equals("")) {
-            tmbar.setRating(Float.parseFloat(pretmrate));
-            tmrate = Float.parseFloat(pretmrate);
+        if (pretmrate != 0) {
+            tmbar.setRating(pretmrate);
+            tmrate = Float.parseFloat(String.valueOf(pretmrate));
         }
-        if (!preoverall.equals("")) {
-            overallbar.setRating(Float.parseFloat(preoverall));
+        if (preoverall != 0) {
+            overallbar.setRating(preoverall);
         }
+
 
         csbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -586,7 +605,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (preoverall.equals("0")) {
+                if (preoverall == 0) {
 
                     if (count == 0.0f) {
                         mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
@@ -635,7 +654,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (preoverall.equals("0")) {
+                if (preoverall == 0) {
 
                     if (count == 0.0f) {
                         mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
@@ -703,9 +722,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         mApiCall.StoreAdmin(store_id);
     }
 
-    private void drawMap(Double storelattitude, Double storelongitude) {
-        double destinationLatitude = storelattitude;
-        double destinationLongitude = storelongitude;
+    private void drawMap(String storelattitude, String storelongitude) {
+        double destinationLatitude = Double.parseDouble(storelattitude);
+        double destinationLongitude = Double.parseDouble(storelongitude);
 
         String url = "http://maps.google.com/maps?f=d&daddr=" + destinationLatitude + "," + destinationLongitude + "&dirflg=d&layer=t";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

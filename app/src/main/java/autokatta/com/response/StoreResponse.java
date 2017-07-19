@@ -23,12 +23,11 @@ public class StoreResponse {
         this.success = success;
     }
 
-
     public class Success {
 
         @SerializedName("id")
         @Expose
-        private String id;
+        private int id;
         @SerializedName("contact")
         @Expose
         private String contact;
@@ -73,10 +72,10 @@ public class StoreResponse {
         private String coverImage;
         @SerializedName("likecount")
         @Expose
-        private String likecount;
+        private int likecount;
         @SerializedName("followcount")
         @Expose
-        private String followcount;
+        private int followcount;
         @SerializedName("likestatus")
         @Expose
         private String likestatus;
@@ -85,50 +84,37 @@ public class StoreResponse {
         private String followstatus;
         @SerializedName("rating")
         @Expose
-        private String rating;
+        private int rating;
         @SerializedName("rate1")
         @Expose
-        private String rate1;
+        private int rate1;
         @SerializedName("rate2")
         @Expose
-        private String rate2;
+        private int rate2;
         @SerializedName("rate3")
         @Expose
-        private String rate3;
+        private int rate3;
         @SerializedName("rate4")
         @Expose
-        private String rate4;
-        @SerializedName("rate5")
-        @Expose
-        private String rate5;
+        private int rate4;
         @SerializedName("rate")
         @Expose
-        private String rate;
+        private int rate;
         @SerializedName("latitude")
         @Expose
-        private Double latitude;
+        private String latitude;
         @SerializedName("longitude")
         @Expose
-        private Double longitude;
-
-        @SerializedName("isDealing")
+        private String longitude;
+        @SerializedName("dealingWith")
         @Expose
-        private String isDealing;
+        private String dealingWith;
 
-
-        public String getIsDealing() {
-            return isDealing;
-        }
-
-        public void setIsDealing(String isDealing) {
-            this.isDealing = isDealing;
-        }
-
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 
@@ -244,19 +230,19 @@ public class StoreResponse {
             this.coverImage = coverImage;
         }
 
-        public String getLikecount() {
+        public int getLikecount() {
             return likecount;
         }
 
-        public void setLikecount(String likecount) {
+        public void setLikecount(int likecount) {
             this.likecount = likecount;
         }
 
-        public String getFollowcount() {
+        public int getFollowcount() {
             return followcount;
         }
 
-        public void setFollowcount(String followcount) {
+        public void setFollowcount(int followcount) {
             this.followcount = followcount;
         }
 
@@ -276,76 +262,76 @@ public class StoreResponse {
             this.followstatus = followstatus;
         }
 
-        public String getRating() {
+        public int getRating() {
             return rating;
         }
 
-        public void setRating(String rating) {
+        public void setRating(int rating) {
             this.rating = rating;
         }
 
-        public String getRate1() {
+        public int getRate1() {
             return rate1;
         }
 
-        public void setRate1(String rate1) {
+        public void setRate1(int rate1) {
             this.rate1 = rate1;
         }
 
-        public String getRate2() {
+        public int getRate2() {
             return rate2;
         }
 
-        public void setRate2(String rate2) {
+        public void setRate2(int rate2) {
             this.rate2 = rate2;
         }
 
-        public String getRate3() {
+        public int getRate3() {
             return rate3;
         }
 
-        public void setRate3(String rate3) {
+        public void setRate3(int rate3) {
             this.rate3 = rate3;
         }
 
-        public String getRate4() {
+        public int getRate4() {
             return rate4;
         }
 
-        public void setRate4(String rate4) {
+        public void setRate4(int rate4) {
             this.rate4 = rate4;
         }
 
-        public String getRate5() {
-            return rate5;
-        }
-
-        public void setRate5(String rate5) {
-            this.rate5 = rate5;
-        }
-
-        public String getRate() {
+        public int getRate() {
             return rate;
         }
 
-        public void setRate(String rate) {
+        public void setRate(int rate) {
             this.rate = rate;
         }
 
-        public Double getLatitude() {
+        public String getLatitude() {
             return latitude;
         }
 
-        public void setLatitude(Double latitude) {
+        public void setLatitude(String latitude) {
             this.latitude = latitude;
         }
 
-        public Double getLongitude() {
+        public String getLongitude() {
             return longitude;
         }
 
-        public void setLongitude(Double longitude) {
+        public void setLongitude(String longitude) {
             this.longitude = longitude;
+        }
+
+        public String getDealingWith() {
+            return dealingWith;
+        }
+
+        public void setDealingWith(String dealingWith) {
+            this.dealingWith = dealingWith;
         }
 
     }

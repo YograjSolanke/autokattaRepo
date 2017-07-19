@@ -55,21 +55,27 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     ImageView mOtherPicture;
     CollapsingToolbarLayout collapsingToolbar;
-    String mOtherContact, mLoginContact, storeOtherContact, mFolllowstr, mLikestr, storeRating, str;
+    String mOtherContact;
+    String mLoginContact;
+    String storeOtherContact;
+    String mFolllowstr;
+    String mLikestr;
+    int storeRating;
+    String str;
     int store_id;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     RatingBar storerating;
     String myContact;
-    String precsrate = "";
-    String preqwrate = "";
-    String prefrrate = "";
-    String preprrate = "";
-    String pretmrate = "";
-    String preoverall = "";
+    int preqwrate = 0;
+    int prefrrate = 0;
+    int preprrate = 0;
+    int pretmrate = 0;
+    int precsrate = 0;
+    int preoverall = 0;
     String isDealing = "";
-    Double storelattitude;
-    Double storelongitude;
+    String storelattitude;
+    String storelongitude;
     ViewPager viewPager;
     TabLayout tabLayout;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
@@ -82,8 +88,16 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     StoreVehicles storeVehicles;
     ApiCall mApiCall;
     CoordinatorLayout mLayout;
-    String storeName = "", storeImage = "", storeType = "", storeWebsite = "", storeTiming = "", storeLocation = "", storeWorkingDays = "",
-            storeLikeCount, storeFollowCount, strDetailsShare = "";
+    String storeName = "";
+    String storeImage = "";
+    String storeType = "";
+    String storeWebsite = "";
+    String storeTiming = "";
+    String storeLocation = "";
+    String storeWorkingDays = "";
+    int storeLikeCount;
+    int storeFollowCount;
+    String strDetailsShare = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,23 +303,23 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         tmbar = (RatingBar) convertView.findViewById(R.id.tm_rating);
         overallbar = (RatingBar) convertView.findViewById(R.id.overall_rating);
 
-        if (!precsrate.equals("0")) {
-            csbar.setRating(Float.parseFloat(precsrate));
+        if ((precsrate != 0)) {
+            csbar.setRating(precsrate);
         }
-        if (!preqwrate.equals("0")) {
-            qwbar.setRating(Float.parseFloat(preqwrate));
+        if (preqwrate != 0) {
+            qwbar.setRating(preqwrate);
         }
-        if (!prefrrate.equals("0")) {
-            frbar.setRating(Float.parseFloat(prefrrate));
+        if (prefrrate != 0) {
+            frbar.setRating(prefrrate);
         }
-        if (!preprrate.equals("0")) {
-            prbar.setRating(Float.parseFloat(preprrate));
+        if (preprrate != 0) {
+            prbar.setRating(preprrate);
         }
-        if (!pretmrate.equals("0")) {
-            tmbar.setRating(Float.parseFloat(pretmrate));
+        if (pretmrate != 0) {
+            tmbar.setRating(pretmrate);
         }
-        if (!preoverall.equals("0")) {
-            overallbar.setRating(Float.parseFloat(preoverall));
+        if (preoverall != 0) {
+            overallbar.setRating(preoverall);
         }
 
         csbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -351,7 +365,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (preoverall.equals("0")) {
+                if (preoverall == 0) {
 
                     if (count == 0.0f) {
                         mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
@@ -400,7 +414,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (preoverall.equals("0")) {
+                if (preoverall == 0) {
 
                     if (count == 0.0f) {
                         mApiCall.sendNewrating(myContact, store_id, 0, 0, String.valueOf(preoverall),
@@ -554,7 +568,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 strDetailsShare = storeName + "=" + storeWebsite + "="
                         + storeTiming + "=" + storeWorkingDays + "="
                         + storeType + "=" + storeLocation + "="
-                        + storeImage + "=" + storeRating + "="
+                        + storeImage + "=" + String.valueOf(storeRating) + "="
                         + storeLikeCount + "=" + storeFollowCount;
 
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
@@ -682,9 +696,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         builderSingle.show();
     }
 
-    private void drawMap(Double storelattitude, Double storelongitude) {
-        double destinationLatitude = storelattitude;
-        double destinationLongitude = storelongitude;
+    private void drawMap(String storelattitude, String storelongitude) {
+        double destinationLatitude = Double.parseDouble(storelattitude);
+        double destinationLongitude = Double.parseDouble(storelongitude);
 
         String url = "http://maps.google.com/maps?f=d&daddr=" + destinationLatitude + "," + destinationLongitude + "&dirflg=d&layer=t";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -718,10 +732,10 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     preqwrate = success.getRate2();
                     prefrrate = success.getRate3();
                     preprrate = success.getRate4();
-                    pretmrate = success.getRate5();
+                    // pretmrate = success.getR();
                     storelattitude = success.getLatitude();
                     storelongitude = success.getLongitude();
-                    isDealing = success.getIsDealing();
+                    isDealing = success.getDealingWith();
                 }
 
                 if (mOtherContact.equals(mLoginContact)) {
@@ -732,7 +746,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mAdd.setVisibility(View.VISIBLE);
                 }
 
-                storerating.setRating(Float.parseFloat(storeRating));
+                storerating.setRating(storeRating);
                 //  mBundle.putString("StoreContact", mOtherContact);
 
                 String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
