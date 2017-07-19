@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
@@ -68,12 +69,13 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     final List<String> brandTags = new ArrayList<>();
     List<Integer> groupId = new ArrayList<>();
     List<String> groupTitle = new ArrayList<>();
-    String[] stringTitles = new String[0], stringIds = new String[0];
+    String[] stringTitles = new String[0];
+    Integer[] stringIds = new Integer[0];
     AlertDialog alertDialog;
     String allimgpath = "";
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
-    int stringgroupids;
+    String stringgroupids = "";
     String str_groupids;
     String name, price, details, type, category;
 
@@ -456,7 +458,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     }
 
                     stringTitles = groupTitle.toArray(new String[groupTitle.size()]);
-                    stringIds = groupId.toArray(new String[groupId.size()]);
+                    stringIds = groupId.toArray(new Integer[groupId.size()]);
                 }
             } else {
                 CustomToast.customToast(AddServiceActivity.this, getString(R.string._404));
@@ -649,7 +651,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
         final ArrayList<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
-        str_groupids = "";
+        stringgroupids = "";
 
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AddServiceActivity.this);
 
@@ -675,24 +677,27 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-
+                        List<Integer> idList = new ArrayList<>();
                         if (!(mSelectedItems.size() == 0)) {
                             for (int i = 0; i < mSelectedItems.size(); i++) {
                                 for (int j = 0; j < stringTitles.length; j++) {
                                     if (mSelectedItems.get(i).equals(stringTitles[j])) {
-                                        if (stringgroupids == 0) {
+                                        idList.add(groupId.get(j));
+                                        Gson gson = new Gson();
+                                        str_groupids = gson.toJson(idList);
+                                        /*if (stringgroupids.equals("")) {
                                             stringgroupids = groupId.get(j);
                                         } else {
-                                            str_groupids = stringgroupids + "," + groupId.get(j);
+                                            stringgroupids = stringgroupids + "," + groupId.get(j);
 
-                                        }
+                                        }*/
                                     }
                                 }
 
                             }
 
 
-                            System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+                            System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + str_groupids);
                             createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, str_groupids);
                         } else {
                             CustomToast.customToast(AddServiceActivity.this, "Please Select Atleast One Group");
@@ -709,7 +714,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     public void onClick(DialogInterface dialog, int id) {
                         // removes the AlertDialog in the screen
 
-                        str_groupids = "";
+                        stringgroupids = "";
                         System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
                         createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
 

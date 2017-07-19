@@ -37,7 +37,7 @@ import retrofit2.Response;
 public class MemberServicesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
     View mService;
-    String mGroupId;
+    int mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<Service> serviceList = new ArrayList<>();
@@ -56,7 +56,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         return mService;
     }
 
-    private void getServices(String GroupId) {
+    private void getServices(int GroupId) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getGroupService(GroupId, mBundleContact);
@@ -184,7 +184,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                 mRecyclerView.setLayoutManager(mLayoutManager);
 
                 Bundle getBundle = getArguments();
-                mGroupId = getBundle.getString("bundle_GroupId");
+                mGroupId = getBundle.getInt("bundle_GroupId");
                 mBundleContact = getBundle.getString("Rcontact");
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,

@@ -39,7 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class GroupServicesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mService;
     String myContact, mGroupType;
-    String mGroupId;
+    int mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<StoreInventoryResponse.Success.Service> serviceList = new ArrayList<>();
@@ -62,7 +62,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
         return mService;
     }
 
-    private void getServices(String GroupId) {
+    private void getServices(int GroupId) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getGroupService(GroupId, myContact);
@@ -194,7 +194,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                 Bundle bundle = getArguments();
                 if (bundle != null) {
                     mGroupType = bundle.getString("grouptype");
-                    mGroupId = bundle.getString("bundle_GroupId");
+                    mGroupId = bundle.getInt("bundle_GroupId");
                     if (bundle.getString("bundle_Contact") != null) {
                         myContact = bundle.getString("bundle_Contact");
                     }

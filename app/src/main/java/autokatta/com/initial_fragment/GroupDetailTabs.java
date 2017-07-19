@@ -43,7 +43,7 @@ public class GroupDetailTabs extends Fragment {
             getActivity().setTitle(b1.getString("bundle_GroupName"));
             b.putString("grouptype", b1.getString("grouptype"));
             b.putString("className", b1.getString("className"));
-            b.putString("bundle_GroupId", b1.getString("bundle_GroupId"));
+            b.putInt("bundle_GroupId", b1.getInt("bundle_GroupId"));
             b.putString("bundle_GroupName", b1.getString("bundle_GroupName"));
             b.putString("bundle_Contact", b1.getString("bundle_Contact"));
             tabAt = b1.getString("tabIndex");

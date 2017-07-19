@@ -2479,7 +2479,7 @@ Upload Vehicle
     Get Group Services
      */
 
-    public void getGroupService(String groupId, String myContact) {
+    public void getGroupService(int groupId, String myContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()

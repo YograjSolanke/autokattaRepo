@@ -329,7 +329,7 @@ public interface ServiceApi {
 
     //Get Group Services...
     @GET("GetGroupServices")
-    Call<StoreInventoryResponse> _autokattaGetGroupServices(@Query("GroupID") String groupId, @Query("MyContact") String myContact);
+    Call<StoreInventoryResponse> _autokattaGetGroupServices(@Query("GroupID") int groupId, @Query("MyContact") String myContact);
 
     //delete group members...
     @POST("DeleteMyGroupMembers")
