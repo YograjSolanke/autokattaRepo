@@ -91,7 +91,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
 
             mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
             mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.vehicle_call);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
 

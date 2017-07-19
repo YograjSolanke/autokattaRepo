@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,9 +94,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class ProfileNotifications extends RecyclerView.ViewHolder {
         CardView mProfileCardView;
         ImageView mProfilePic, mProfileImage;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mUnlike, mFav, mUnfav;
+        ImageButton mShareAutokatta, mCall, mLike, mUnlike, mFav, mUnfav;
         TextView mProfileName, mProfileContact, mProfileTitle, mUserName, mProfileWorkAt, mProfileWebSite, mLocation,
                 mFollowCount, mLikes, mShares;
+        RelativeLayout mRelativeLike;
 
         private ProfileNotifications(View profileView) {
             super(profileView);
@@ -113,12 +115,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mLikes = (TextView) profileView.findViewById(R.id.likes);
             mShares = (TextView) profileView.findViewById(R.id.share);
             mShareAutokatta = (ImageButton) profileView.findViewById(R.id.share_autokatta);
-            mShareOther = (ImageButton) profileView.findViewById(R.id.share_other);
             mCall = (ImageButton) profileView.findViewById(R.id.call);
             mLike = (ImageButton) profileView.findViewById(R.id.like);
             mUnlike = (ImageButton) profileView.findViewById(R.id.unlike);
             mFav = (ImageButton) profileView.findViewById(R.id.profile_favourite);
             mUnfav = (ImageButton) profileView.findViewById(R.id.profile_unfavourite);
+            mRelativeLike = (RelativeLayout) profileView.findViewById(R.id.rlLike);
         }
     }
 
@@ -208,7 +210,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
             mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.vehicle_call);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
 
@@ -237,6 +239,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mProductUnlike;
         RatingBar mProductRating;
         TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;
+        RelativeLayout mRelativeLike;
 
         private ProductNotifications(View productView) {
             super(productView);
@@ -260,6 +263,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mShares = (TextView) productView.findViewById(R.id.share);
             mProductFav = (ImageButton) productView.findViewById(R.id.product_favourite);
             mProductUnfav = (ImageButton) productView.findViewById(R.id.product_unfavourite);
+            mRelativeLike = (RelativeLayout) productView.findViewById(R.id.rlLike);
         }
     }
 
@@ -391,7 +395,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
             mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.vehicle_call);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
 
@@ -552,12 +556,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     mProfileHolder.mCall.setVisibility(View.GONE);
-                    //mProfileHolder.mLike.setVisibility(View.GONE);
-                    //mProfileHolder.mUnlike.setVisibility(View.GONE);
+                    mProfileHolder.mRelativeLike.setVisibility(View.GONE);
+
                 } else {
                     mProfileHolder.mCall.setVisibility(View.VISIBLE);
-                    //mProfileHolder.mLike.setVisibility(View.VISIBLE);
-                    //mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
+                    mProfileHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
                 mProfileHolder.mProfileName.setText(notificationList.get(position).getSenderName() + " "
@@ -880,10 +883,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mProductHolder.mProductCall.setVisibility(View.GONE);
                     //mProductHolder.mProductLike.setVisibility(View.GONE);
                     //mProductHolder.mProductUnlike.setVisibility(View.GONE);
+                    mProductHolder.mRelativeLike.setVisibility(View.GONE);
                 } else {
                     mProductHolder.mProductCall.setVisibility(View.VISIBLE);
                     //mProductHolder.mProductLike.setVisibility(View.VISIBLE);
                     // mProductHolder.mProductUnlike.setVisibility(View.VISIBLE);
+                    mProductHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
                 mProductHolder.mProductActionName.setText(notificationList.get(position).getSenderName() + " " +

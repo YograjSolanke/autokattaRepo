@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -68,15 +69,17 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class ProfileNotifications extends RecyclerView.ViewHolder {
         CardView mProfileCardView;
-        ImageView mProfilePic, delete;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mUnlike;
+        ImageView mProfilePic, mProfileImage;
+        ImageButton mShareAutokatta, mCall, mLike, mUnlike, mDelete, mFav;
         TextView mProfileName, mProfileContact, mProfileTitle, mUserName, mProfileWorkAt, mProfileWebSite, mLocation,
                 mFollowCount, mLikes, mShares;
+        RelativeLayout mRelativeLike;
 
         private ProfileNotifications(View profileView) {
             super(profileView);
             mProfileCardView = (CardView) profileView.findViewById(R.id.profile_card_view);
             mProfilePic = (ImageView) profileView.findViewById(R.id.pro_pic);
+            mProfileImage = (ImageView) profileView.findViewById(R.id.profile_image);
             mProfileName = (TextView) profileView.findViewById(R.id.profile_name);
             mProfileContact = (TextView) profileView.findViewById(R.id.profile_time);
             mProfileTitle = (TextView) profileView.findViewById(R.id.profile_title);
@@ -88,11 +91,12 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mLikes = (TextView) profileView.findViewById(R.id.likes);
             mShares = (TextView) profileView.findViewById(R.id.share);
             mShareAutokatta = (ImageButton) profileView.findViewById(R.id.share_autokatta);
-            mShareOther = (ImageButton) profileView.findViewById(R.id.share_other);
             mCall = (ImageButton) profileView.findViewById(R.id.call);
             mLike = (ImageButton) profileView.findViewById(R.id.like);
             mUnlike = (ImageButton) profileView.findViewById(R.id.unlike);
-            delete = (ImageButton) profileView.findViewById(R.id.profile_favourite);
+            mFav = (ImageButton) profileView.findViewById(R.id.profile_favourite);
+            mDelete = (ImageButton) profileView.findViewById(R.id.profile_unfavourite);
+            mRelativeLike = (RelativeLayout) profileView.findViewById(R.id.rlLike);
         }
     }
 
@@ -141,7 +145,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class GroupNotifications extends RecyclerView.ViewHolder {
         CardView mGroupCardView;
         ImageView mUserPic, mGroupImage;
-        ImageButton mGroupFavourite;
+        ImageButton mGroupFavourite, mGroupUnFav;
         TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
                 mGroupNoOfServices;
 
@@ -154,6 +158,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
             mGroupImage = (ImageView) groupView.findViewById(R.id.group_image);
             mGroupFavourite = (ImageButton) groupView.findViewById(R.id.group_favourite);
+            mGroupUnFav = (ImageButton) groupView.findViewById(R.id.group_unfavourite);
             mGroupName = (TextView) groupView.findViewById(R.id.group_name);
             mGroupMembers = (TextView) groupView.findViewById(R.id.group_no_of_members);
             mGroupNoOfVehicles = (TextView) groupView.findViewById(R.id.group_no_of_vehicles);
@@ -181,7 +186,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
             mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
             mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.vehicle_call);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
 
@@ -205,22 +210,24 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class ProductNotifications extends RecyclerView.ViewHolder {
         CardView mProductCardView;
-        ImageView mProductPic, mProductImage;
-        ImageButton mProductAutokatta, mProductOther, mCall, mLike, mVehicleFavourite;
+        ImageView mUserPic, mProductImage;
+        ImageButton mProductAutokattaShare, mProductOtherShare, mProductCall, mProductLike, mProductFav, mProductUnfav,
+                mProductUnlike;
         RatingBar mProductRating;
         TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;
+        RelativeLayout mRelativeLike;
 
         private ProductNotifications(View productView) {
             super(productView);
             mProductCardView = (CardView) productView.findViewById(R.id.product_card_view);
-            mProductPic = (ImageView) productView.findViewById(R.id.product_pro_pic);
+            mUserPic = (ImageView) productView.findViewById(R.id.product_pro_pic);
             mProductImage = (ImageView) productView.findViewById(R.id.product_image);
 
-            mProductAutokatta = (ImageButton) productView.findViewById(R.id.share_autokatta);
-            mProductOther = (ImageButton) productView.findViewById(R.id.share_other);
-            mCall = (ImageButton) productView.findViewById(R.id.call);
-            mLike = (ImageButton) productView.findViewById(R.id.like);
-            mVehicleFavourite = (ImageButton) productView.findViewById(R.id.vehicle_favourite);
+            mProductAutokattaShare = (ImageButton) productView.findViewById(R.id.share_autokatta);
+            mProductOtherShare = (ImageButton) productView.findViewById(R.id.share_other);
+            mProductCall = (ImageButton) productView.findViewById(R.id.call);
+            mProductLike = (ImageButton) productView.findViewById(R.id.like);
+            mProductUnlike = (ImageButton) productView.findViewById(R.id.unlike);
             mProductRating = (RatingBar) productView.findViewById(R.id.product_rating);
 
             mProductActionName = (TextView) productView.findViewById(R.id.product_action_names);
@@ -230,6 +237,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mProductType = (TextView) productView.findViewById(R.id.product_type);
             mLikes = (TextView) productView.findViewById(R.id.likes);
             mShares = (TextView) productView.findViewById(R.id.share);
+            mProductFav = (ImageButton) productView.findViewById(R.id.product_favourite);
+            mProductUnfav = (ImageButton) productView.findViewById(R.id.product_unfavourite);
+            mRelativeLike = (RelativeLayout) productView.findViewById(R.id.rlLike);
         }
     }
 
@@ -328,7 +338,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
             mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
             mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.vehicle_call);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
 
@@ -636,6 +646,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 //                    mProfileHolder.mCall.setVisibility(View.GONE);
 //                else
 //                    mProfileHolder.mCall.setVisibility(View.VISIBLE);
+                mProfileHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
 
                 mProfileHolder.mProfileName.setText(allResponseList.get(position).getSendername() + " "
                         + allResponseList.get(position).getAction() + " " + allResponseList.get(position).getReceivername() + " " + "Profile");
@@ -722,7 +733,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 //                }
 
 
-                mProfileHolder.delete.setOnClickListener(new View.OnClickListener() {
+                mProfileHolder.mDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Unfavorite web service
@@ -857,7 +868,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             } else
                                 mOtherContact = objAllResponse.getStoreContact();
 
-                            mApiCall.Like(mLoginContact, mOtherContact, "2", store_id,"",0,0,0,"","");
+                            mApiCall.Like(mLoginContact, mOtherContact, "2", store_id, "", 0, 0, 0, "", "");
                             storelikecountint++;
 
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
@@ -881,7 +892,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             } else
                                 mOtherContact = objAllResponse.getStoreContact();
 
-                            mApiCall.UnLike(mLoginContact, mOtherContact, "2", store_id,"",0,0,0,"","");
+                            mApiCall.UnLike(mLoginContact, mOtherContact, "2", store_id, "", 0, 0, 0, "", "");
                             storelikecountint--;
 
                             objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
