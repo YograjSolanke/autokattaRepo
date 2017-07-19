@@ -54,7 +54,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private OnLoadMoreListener mOnLoadMoreListener;
     private String mLoginContact = "";
     private ApiCall mApiCall;
-    private int profile_likecountint, profile_followcountint, product_likecountint;
+    private int profile_likecountint, profile_followcountint, product_likecountint, service_likecountint;
 
     public WallNotificationAdapter(Activity mActivity1, List<WallResponse.Success.WallNotification> notificationList) {
         this.mActivity = mActivity1;
@@ -142,7 +142,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mStoreImage = (ImageView) storeView.findViewById(R.id.store_image);
 
             mShareAutokatta = (ImageButton) storeView.findViewById(R.id.share_autokatta);
-            mShareOther = (ImageButton) storeView.findViewById(R.id.share_other);
             mCall = (ImageButton) storeView.findViewById(R.id.call);
             mLike = (ImageButton) storeView.findViewById(R.id.like);
             mFollow = (ImageButton) storeView.findViewById(R.id.follow_store);
@@ -197,7 +196,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class VehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mVehicleFavourite;
+        ImageButton mShareAutokatta, mCall, mLike, mVehicleFavourite;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                 mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;
 
@@ -209,7 +208,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
 
             mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
-            mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
             mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
@@ -235,7 +233,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class ProductNotifications extends RecyclerView.ViewHolder {
         CardView mProductCardView;
         ImageView mUserPic, mProductImage;
-        ImageButton mProductAutokattaShare, mProductOtherShare, mProductCall, mProductLike, mProductFav, mProductUnfav,
+        ImageButton mProductAutokattaShare, mProductCall, mProductLike, mProductFav, mProductUnfav,
                 mProductUnlike;
         RatingBar mProductRating;
         TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;
@@ -248,7 +246,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mProductImage = (ImageView) productView.findViewById(R.id.product_image);
 
             mProductAutokattaShare = (ImageButton) productView.findViewById(R.id.share_autokatta);
-            mProductOtherShare = (ImageButton) productView.findViewById(R.id.share_other);
             mProductCall = (ImageButton) productView.findViewById(R.id.call);
             mProductLike = (ImageButton) productView.findViewById(R.id.like);
             mProductUnlike = (ImageButton) productView.findViewById(R.id.unlike);
@@ -272,22 +269,22 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
     private static class ServiceNotifications extends RecyclerView.ViewHolder {
         CardView mServiceCardView;
-        ImageView mServicePic, mServiceImage;
-        ImageButton mServiceAutokatta, mServiceOther, mCall, mLike, mServiceFavourite;
+        ImageView mUserPic, mServiceImage;
+        ImageButton mServiceAutokattaShare, mServiceCall, mServiceLike, mServiceUnlike, mServiceFavourite, mServiceUnfav;
         RatingBar mServiceRating;
         TextView mServiceActionName, mServiceActionTime, mServiceTitle, mServiceName, mServiceType, mLikes, mShares;
+        RelativeLayout mRelativeLike;
 
         private ServiceNotifications(View serviceView) {
             super(serviceView);
             mServiceCardView = (CardView) serviceView.findViewById(R.id.service_card_view);
-            mServicePic = (ImageView) serviceView.findViewById(R.id.service_pro_pic);
+            mUserPic = (ImageView) serviceView.findViewById(R.id.service_pro_pic);
             mServiceImage = (ImageView) serviceView.findViewById(R.id.service_image);
 
-            mServiceAutokatta = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
-            mServiceOther = (ImageButton) serviceView.findViewById(R.id.share_other);
-            mCall = (ImageButton) serviceView.findViewById(R.id.call);
-            mLike = (ImageButton) serviceView.findViewById(R.id.like);
-            mServiceFavourite = (ImageButton) serviceView.findViewById(R.id.service_favourite);
+            mServiceAutokattaShare = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
+            mServiceCall = (ImageButton) serviceView.findViewById(R.id.call);
+            mServiceLike = (ImageButton) serviceView.findViewById(R.id.like);
+            mServiceUnlike = (ImageButton) serviceView.findViewById(R.id.unlike);
             mServiceRating = (RatingBar) serviceView.findViewById(R.id.service_rating);
 
             mServiceActionName = (TextView) serviceView.findViewById(R.id.service_action_names);
@@ -297,6 +294,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mServiceType = (TextView) serviceView.findViewById(R.id.service_type);
             mLikes = (TextView) serviceView.findViewById(R.id.likes);
             mShares = (TextView) serviceView.findViewById(R.id.share);
+            mServiceFavourite = (ImageButton) serviceView.findViewById(R.id.service_favourite);
+            mServiceUnfav = (ImageButton) serviceView.findViewById(R.id.service_unfavourite);
+            mRelativeLike = (RelativeLayout) serviceView.findViewById(R.id.rlLike);
         }
     }
 
@@ -382,7 +382,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class UpVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mVehicleFavourite;
+        ImageButton mShareAutokatta, mCall, mLike, mVehicleFavourite;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                 mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;
 
@@ -394,7 +394,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
 
             mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
-            mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
             mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
@@ -1090,7 +1089,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 String allProductDetails = "Product name : " + mProductHolder.mProductName.getText().toString() + "\n" +
                                         "Product type : " + mProductHolder.mProductType.getText().toString() + "\n" +
-                                        "Rating : " + mProductHolder.mProductRating.getRating() + "\n" +
+                                        "Ratings : " + mProductHolder.mProductRating.getRating() + "\n" +
                                         "Likes : " + notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount() /*+ "\n" +
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*/;
@@ -1127,6 +1126,250 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 ImageButton mServiceAutokatta, mServiceOther, mCall, mLike, mServiceFavourite;
                 RatingBar mServiceRating;
                 TextView mServiceActionName, mServiceActionTime, mServiceTitle, mServiceName, mServiceType, mLikes, mShares;*/
+                final ServiceNotifications mServiceHolder = (ServiceNotifications) holder;
+
+                Log.i("Wall", "Service-LayType ->" + notificationList.get(position).getLayoutType());
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                    mServiceHolder.mServiceCall.setVisibility(View.GONE);
+                    //mServiceHolder.mServiceLike.setVisibility(View.GONE);
+                    //mServiceHolder.mServiceUnlike.setVisibility(View.GONE);
+                    mServiceHolder.mRelativeLike.setVisibility(View.GONE);
+                } else {
+                    mServiceHolder.mServiceCall.setVisibility(View.VISIBLE);
+                    //mServiceHolder.mServiceLike.setVisibility(View.VISIBLE);
+                    // mServiceHolder.mServiceUnlike.setVisibility(View.VISIBLE);
+                    mServiceHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                }
+
+                mServiceHolder.mServiceActionName.setText(notificationList.get(position).getSenderName() + " " +
+                        notificationList.get(position).getAction() + " " +
+                        notificationList.get(position).getServiceName()
+                        + " service");
+
+                mServiceHolder.mServiceActionTime.setText(notificationList.get(position).getDateTime());
+                mServiceHolder.mServiceName.setText(notificationList.get(position).getServiceName());
+                mServiceHolder.mServiceTitle.setText(notificationList.get(position).getServiceName());
+                mServiceHolder.mServiceType.setText(notificationList.get(position).getServiceType());
+                mServiceHolder.mLikes.setText("Likes(" + notificationList.get(position).getServiceLikeCount() + ")");
+                //mServiceHolder.mShares.setText("Share(" + notificationList.get(position).getProduct + ")");
+                //mServiceHolder.mServiceRating.setRating(notificationList.get(position).productr);
+
+                mServiceHolder.mServiceCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = notificationList.get(mServiceHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+
+                /* User profile pic */
+                if (notificationList.get(position).getSenderPicture() == null ||
+                        notificationList.get(position).getSenderPicture().equals("") ||
+                        notificationList.get(position).getSenderPicture().equals("null")) {
+                    mServiceHolder.mUserPic.setBackgroundResource(R.drawable.profile);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mServiceHolder.mUserPic);*/
+                }
+
+                /* Product pic */
+                if (notificationList.get(position).getServiceImage() == null ||
+                        notificationList.get(position).getServiceImage().equals("") ||
+                        notificationList.get(position).getServiceImage().equals("null")) {
+                    mServiceHolder.mServiceImage.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getServiceImage())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mServiceHolder.mServiceImage);*/
+                }
+
+                /* Like & Unlike Functionality */
+                if (notificationList.get(position).getServiceLikeStatus().equalsIgnoreCase("yes")) {
+                    mServiceHolder.mServiceLike.setVisibility(View.VISIBLE);
+                    mServiceHolder.mServiceUnlike.setVisibility(View.GONE);
+                } else {
+                    mServiceHolder.mServiceUnlike.setVisibility(View.VISIBLE);
+                    mServiceHolder.mServiceLike.setVisibility(View.GONE);
+                }
+
+                mServiceHolder.mServiceLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = notificationList.get(mServiceHolder.getAdapterPosition()).getSender();
+                        mServiceHolder.mServiceLike.setVisibility(View.GONE);
+                        mServiceHolder.mServiceUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "6", 0, "", 0, 0,
+                                Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()), "", "");
+
+                        service_likecountint = Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount());
+                        service_likecountint = service_likecountint - 1;
+                        mServiceHolder.mLikes.setText(String.valueOf("Likes(" + service_likecountint + ")"));
+                        /*storeLikeCount = String.valueOf(profile_likecountint);
+                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
+                        notificationList.get(mServiceHolder.getAdapterPosition()).setServiceLikeCount(String.valueOf(service_likecountint));
+                        notificationList.get(mServiceHolder.getAdapterPosition()).setServiceLikeStatus("no");
+                    }
+                });
+
+                mServiceHolder.mServiceUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = notificationList.get(mServiceHolder.getAdapterPosition()).getSender();
+                        mServiceHolder.mServiceUnlike.setVisibility(View.GONE);
+                        mServiceHolder.mServiceLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "6", 0, "", 0, 0,
+                                Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()), "", "");
+
+                        service_likecountint = Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount());
+                        service_likecountint = service_likecountint + 1;
+                        mServiceHolder.mLikes.setText(String.valueOf("Likes(" + service_likecountint + ")"));
+                        /*storeLikeCount = String.valueOf(profile_likecountint);
+                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
+                        notificationList.get(mServiceHolder.getAdapterPosition()).setServiceLikeCount(String.valueOf(service_likecountint));
+                        notificationList.get(mServiceHolder.getAdapterPosition()).setServiceLikeStatus("yes");
+                    }
+                });
+                
+                /* Fav & Unfav Functionality */
+                if (notificationList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
+                    mServiceHolder.mServiceFavourite.setVisibility(View.VISIBLE);
+                    mServiceHolder.mServiceUnfav.setVisibility(View.GONE);
+                } else {
+                    mServiceHolder.mServiceUnfav.setVisibility(View.VISIBLE);
+                    mServiceHolder.mServiceFavourite.setVisibility(View.GONE);
+                }
+
+                mServiceHolder.mServiceFavourite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unfavorite web service
+                        String notiId = notificationList.get(mServiceHolder.getAdapterPosition()).getActionID();
+                        mServiceHolder.mServiceFavourite.setVisibility(View.GONE);
+                        mServiceHolder.mServiceUnfav.setVisibility(View.VISIBLE);
+                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
+                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mServiceHolder.mServiceUnfav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Favorite web service
+                        String notiId = notificationList.get(mServiceHolder.getAdapterPosition()).getActionID();
+                        mServiceHolder.mServiceUnfav.setVisibility(View.GONE);
+                        mServiceHolder.mServiceFavourite.setVisibility(View.VISIBLE);
+                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
+                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mServiceHolder.mServiceAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                    String imageFilePath = "", imagename;
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    @Override
+                    public void onClick(View v) {
+                        //shareProfileData();
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+                        alert.setTitle("Share");
+                        alert.setMessage("with Autokatta or to other?");
+                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String allServiceDetails = mServiceHolder.mServiceName.getText().toString() + "=" +
+                                        mServiceHolder.mServiceType.getText().toString() + "=" +
+                                        mServiceHolder.mServiceRating.getRating() + "=" +
+                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount() + "=" +
+                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage();
+
+                                System.out.println("all service detailssss======Auto " + allServiceDetails);
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allServiceDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_service_id", Integer.parseInt(notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID())).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "service").apply();
+
+
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if (notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase("") ||
+                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase(null) ||
+                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase("null")) {
+                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                } else {
+                                    imagename = "http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage();
+                                }
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Log.e("TAG", "img URL: " + imagename);
+
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
+
+                                String allServiceDetails = "Service name : " + mServiceHolder.mServiceName.getText().toString() + "\n" +
+                                        "Service type : " + mServiceHolder.mServiceType.getText().toString() + "\n" +
+                                        "Ratings : " + mServiceHolder.mServiceRating.getRating() + "\n" +
+                                        "Likes : " + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount() /*+ "\n" +
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
+                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*/;
+
+                                System.out.println("all service detailssss======Other " + allServiceDetails);
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/profile/other/" + imagename);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allServiceDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);
+
+                                dialog.dismiss();
+                            }
+
+                        });
+                        alert.create();
+                        alert.show();
+                    }
+                });
                 break;
 
             case 7:

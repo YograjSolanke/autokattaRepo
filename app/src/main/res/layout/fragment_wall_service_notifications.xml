@@ -67,9 +67,10 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rating_layout"
+                    android:id="@+id/fav_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@+id/relContact">
 
                     <ImageButton
@@ -78,11 +79,33 @@
                         android:layout_width="@dimen/cards_button_width"
                         android:layout_height="@dimen/card_title_height"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/text_margin_top"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="gone"
+                        app:srcCompat="@mipmap/heart_liked" />
+
+                    <ImageButton
+                        android:id="@+id/service_unfavourite"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/card_title_height"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/text_margin_top"
                         android:contentDescription="@string/app_name"
                         android:tint="@color/button_grey"
+                        android:visibility="visible"
                         app:srcCompat="@mipmap/ic_heart_like" />
 
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rating_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fav_layout"
+                    android:layout_toEndOf="@+id/relContact">
 
                     <RatingBar
                         android:id="@+id/service_rating"
@@ -90,11 +113,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/service_favourite"
                         android:numStars="5"
-                        android:stepSize="1.0"
+                        android:stepSize="1"
                         android:theme="@style/RatingBar" />
-
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -228,7 +249,8 @@
                     android:layout_toEndOf="@+id/dot"
                     android:text="Share"
                     android:textColor="#808080"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
