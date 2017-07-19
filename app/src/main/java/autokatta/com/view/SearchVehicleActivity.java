@@ -1184,7 +1184,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     parsedData.addAll(mSubTypeList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                  //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     subcategorySpinner.setAdapter(adapter);
                     brandSpinner.setAdapter(null);
                     subcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -1239,7 +1239,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     Log.i("ListBrand", "->" + mBrandList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                  //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     brandSpinner.setAdapter(adapter);
                     modelSpinner.setAdapter(null);
                     brandSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -1282,7 +1282,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     Log.i("ListModel", "->" + mModelList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                //    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     modelSpinner.setAdapter(adapter);
                     versionSpinner.setAdapter(null);
                     modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -1325,7 +1325,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     Log.i("ListVersion", "->" + mVersionIdList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, versionData);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                   // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     versionSpinner.setAdapter(adapter);
                     versionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
