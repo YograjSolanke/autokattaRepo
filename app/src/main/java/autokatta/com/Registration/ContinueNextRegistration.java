@@ -61,7 +61,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     RelativeLayout relavite3;
     String whichclick = "", subcategoryId, subcategoryName;
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
-    HashMap<String, String> mVehicleTypeList1 = new HashMap<>();
+    HashMap<String, Integer> mVehicleTypeList1 = new HashMap<>();
     List<String> parsedData1 = new ArrayList<>();
     //SubType
     List<String> mSubTypeList = new ArrayList<>();
@@ -81,8 +81,9 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     HashMap<String, String> mVersionList1 = new HashMap<>();
 
     Bundle bundle = new Bundle();
-    String vehicle_idD, brandId, brandName, modelId, modelName, versionId, versionName;
+    String brandId, brandName, modelId, modelName, versionId, versionName;
     ApiCall mApicall;
+    int vehicle_idD;
 
     String action = "", vehiType = "", vehiYear = "", vehiBrand = "", vehiModel = "", vehiVersion = "", vehiSubcat = "", ids = "", vehino = "",
             vehitaxValidity = "", vehifitnessValidity = "", vehipermitValidity = "", vehiinsurance = "", vehipuc = "", vehilastServicedate = "",
@@ -1069,7 +1070,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Get Brand
      */
-    private void getBrand(String categoryId, String subcategoryId) {
+    private void getBrand(int categoryId, String subcategoryId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getBrand(categoryId, subcategoryId);
     }
@@ -1077,7 +1078,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Get Model...
      */
-    private void getModel(String categoryId, String subCategoryId, String brandId) {
+    private void getModel(int categoryId, String subCategoryId, String brandId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
@@ -1085,7 +1086,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Get Version...
      */
-    private void getVersion(String categoryId, String subCategoryId, String brandId, String modelId) {
+    private void getVersion(int categoryId, String subCategoryId, String brandId, String modelId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
     }
@@ -1094,7 +1095,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Add Brand
      */
-    private void AddBrand(String keyword, String title, String categoryId, String subCatID) {
+    private void AddBrand(String keyword, String title, int categoryId, String subCatID) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addBrand(keyword, title, categoryId, subCatID);
     }
@@ -1102,7 +1103,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Add Model
      */
-    private void AddModel(String keyword, String title, String categoryId, String subCatID, String brandId) {
+    private void AddModel(String keyword, String title, int categoryId, String subCatID, String brandId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addModel(keyword, title, categoryId, subCatID, brandId);
     }
@@ -1110,7 +1111,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Add Version
      */
-    private void AddVersion(String keyword, String title, String categoryId, String subCatID, String brandId, String modelId) {
+    private void AddVersion(String keyword, String title, int categoryId, String subCatID, String brandId, String modelId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addVersion(keyword, title, categoryId, subCatID, brandId, modelId);
     }

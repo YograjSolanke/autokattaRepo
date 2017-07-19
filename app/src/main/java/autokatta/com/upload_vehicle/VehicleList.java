@@ -46,10 +46,10 @@ public class VehicleList extends Fragment implements RequestNotifier {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String s = mGetVehicle.get(position).getName();
-                String subTypeId = mGetVehicle.get(position).getId();
+                int subTypeId = mGetVehicle.get(position).getId();
                 if (s != null) {
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryName", s).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryId", subTypeId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_categoryId", subTypeId).apply();
                     /*FragmentManager manager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = manager.beginTransaction();
                     fragmentTransaction.replace(R.id.vehicle_upload_container, new Title()).addToBackStack("vehicle_list").commit();*/

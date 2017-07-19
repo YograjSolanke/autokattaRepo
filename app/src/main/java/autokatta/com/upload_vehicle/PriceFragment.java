@@ -53,10 +53,10 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     ApiCall apiCall;
 
     public PriceFragment() {
-        //empty comstructor
+        //empty constructor
     }
 
-    String vehicle_id = "", strCategoryName = "", strSubcategoryId = "", strSubcategoryName = "", strBrandId = "", strModelId = "", strVersionId = "",
+    String strCategoryName = "", strSubcategoryId = "", strSubcategoryName = "", strBrandId = "", strModelId = "", strVersionId = "",
             strStearing = "", strBrakename = "", strPumpname = "", strTitle = "", strGroupprivacy = "", strGroupids = "", strGroupnames = "",
             strStoreprivacy = "", strStoreids = "", strStorenames = "", strFinancestatus = "", strExhangestatus = "", strPermit = "",
             strMakemonth = "", strMakeyear = "", strRegmonth = "", strRegyear = "", strHrs = "", strInvoice = "", strLocation = "",
@@ -67,7 +67,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
             strImages = "", strColor = "", strBodytype = "", strImplement = "", strMfgYr = "", strBrandName = "",
             strModelName = "", strVersionName = "";
     double strKms;
-    int strOwner, strCategoryId;
+    int strOwner, strCategoryId, vehicle_id;
 
     String myContact;
 
@@ -89,7 +89,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392");
 
-        //strCategoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", "1");
+        strCategoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("upload_categoryId", 0);
         strCategoryName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
         strSubcategoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_subCatId", "66");
         strSubcategoryName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_subCatName", null);
@@ -298,14 +298,14 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                 } else if (response.body() instanceof UploadUsedVehicleResponse) {
                     UploadUsedVehicleResponse vehicleResponse = (UploadUsedVehicleResponse) response.body();
                     if (vehicleResponse.getSuccess() != null) {
-                        vehicle_id = vehicleResponse.getSuccess().getVehicleID().toString();
+                        vehicle_id = vehicleResponse.getSuccess().getVehicleID();
 
                         uploadImage(strImages);
 
                         if (!strGroupids.equals("") || !strStoreids.equals("")) {
 
                             Bundle b = new Bundle();
-                            b.putString("vehicle_id", vehicle_id);
+                            b.putInt("vehicle_id", vehicle_id);
                             VehiclePrivacy frag = new VehiclePrivacy();
                             frag.setArguments(b);
 

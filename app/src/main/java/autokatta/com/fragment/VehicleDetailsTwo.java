@@ -142,181 +142,181 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
 
                     registrationdetails.setText(datum.getYearOfRegistration());
 
-                    if (datum.getInsuranceIdv().equalsIgnoreCase("")) {
+                    if (datum.getInsuranceIdv() == null || datum.getInsuranceIdv().equalsIgnoreCase("")) {
                         insurencedetails.setText(getString(R.string.not_mentioned));
                     } else {
                         insurencedetails.setText(datum.getInsuranceIdv());
                     }
 
-                    if (datum.getNoOfOwners().equalsIgnoreCase("")) {
+                    if (datum.getNoOfOwners() == null || datum.getNoOfOwners().equalsIgnoreCase("")) {
                         ownerdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         ownerdetails.setText(datum.getNoOfOwners());
                     }
 
-                    if (datum.getFualType().equalsIgnoreCase("")) {
+                    if (datum.getFualType() == null || datum.getFualType().equalsIgnoreCase("")) {
                         fueldetails.setText(getString(R.string.not_mentioned));
                     } else {
                         fueldetails.setText(datum.getFualType());
                     }
 
-                    if (datum.getColor().equalsIgnoreCase("")) {
+                    if (datum.getColor() == null || datum.getColor().equalsIgnoreCase("")) {
                         colordetails.setText(getString(R.string.not_mentioned));
                     } else {
                         colordetails.setText(datum.getColor());
                     }
 
-                    if (datum.getKmsRunning().equalsIgnoreCase("")) {
+                    if (datum.getKmsRunning() == null || datum.getKmsRunning().equalsIgnoreCase("")) {
                         kmsdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         kmsdetails.setText(datum.getKmsRunning());
                     }
 
-                    if (datum.getRTOCity().equalsIgnoreCase("")) {
+                    if (datum.getRTOCity() == null || datum.getRTOCity().equalsIgnoreCase("")) {
                         rtodetails.setText(getString(R.string.not_mentioned));
                     } else {
                         rtodetails.setText(datum.getRTOCity());
                     }
 
-                    if (datum.getRcAvailable().equalsIgnoreCase("")) {
+                    if (datum.getRcAvailable() == null || datum.getRcAvailable().equalsIgnoreCase("")) {
                         rcdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         rcdetails.setText(datum.getRcAvailable());
                     }
 
-                    if (datum.getInsuranceValid().equalsIgnoreCase("")) {
+                    if (datum.getInsuranceValid() == null || datum.getInsuranceValid().equalsIgnoreCase("")) {
                         insvaldetails.setText(getString(R.string.not_mentioned));
                     } else {
                         insvaldetails.setText(datum.getInsuranceValid());
                     }
 
-                    if (datum.getTaxValidity().equalsIgnoreCase("")) {
+                    if (datum.getTaxValidity() == null || datum.getTaxValidity().equalsIgnoreCase("")) {
                         taxdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         taxdetails.setText(datum.getTaxValidity());
                     }
 
-                    if (datum.getFitnessValidity().equalsIgnoreCase("")) {
+                    if (datum.getFitnessValidity() == null || datum.getFitnessValidity().equalsIgnoreCase("")) {
                         fitnessdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         fitnessdetails.setText(datum.getFitnessValidity());
                     }
 
-                    if (datum.getPermitValidity().equalsIgnoreCase("")) {
+                    if (datum.getPermitValidity() == null || datum.getPermitValidity().equalsIgnoreCase("")) {
                         permitvaldetails.setText(getString(R.string.not_mentioned));
                     } else {
                         permitvaldetails.setText(datum.getPermitValidity());
                     }
 
-                    if (datum.getPermit().equalsIgnoreCase("")) {
+                    if (datum.getPermit() == null || datum.getPermit().equalsIgnoreCase("")) {
                         permitdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         permitdetails.setText(datum.getPermit());
                     }
 
-                    if (datum.getSeatingCapacity().equalsIgnoreCase("")) {
+                    if (datum.getSeatingCapacity() == null || datum.getSeatingCapacity().equalsIgnoreCase("")) {
                         seatingdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         seatingdetails.setText(datum.getSeatingCapacity());
                     }
 
-                    if (datum.getHypothication().equalsIgnoreCase("")) {
+                    if (datum.getHypothication() == null || datum.getHypothication().equalsIgnoreCase("")) {
                         hypodetails.setText(getString(R.string.not_mentioned));
                     } else {
                         hypodetails.setText(datum.getHypothication());
                     }
 
-                    if (datum.getDrive().equalsIgnoreCase("")) {
+                    if (datum.getDrive() == null || datum.getDrive().equalsIgnoreCase("")) {
                         drivedetails.setText(getString(R.string.not_mentioned));
                     } else {
                         drivedetails.setText(datum.getDrive());
                     }
 
-                    if (datum.getTransmission().equalsIgnoreCase("")) {
+                    if (datum.getTransmission() == null || datum.getTransmission().equalsIgnoreCase("")) {
                         transmissiondetails.setText(getString(R.string.not_mentioned));
                     } else {
                         transmissiondetails.setText(datum.getTransmission());
                     }
 
-                    if (datum.getBodyType().equalsIgnoreCase("")) {
+                    if (datum.getBodyType() == null || datum.getBodyType().equalsIgnoreCase("")) {
                         bodydetails.setText(getString(R.string.not_mentioned));
                     } else {
                         bodydetails.setText(datum.getBodyType());
                     }
 
-                    if (datum.getBoatType().equalsIgnoreCase("")) {
+                    if (datum.getBoatType() == null || datum.getBoatType().equalsIgnoreCase("")) {
                         boatdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         boatdetails.setText(datum.getBoatType());
                     }
 
-                    if (datum.getRvType().equalsIgnoreCase("")) {
+                    if (datum.getRvType() == null || datum.getRvType().equalsIgnoreCase("")) {
                         rvdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         rvdetails.setText(datum.getRvType());
                     }
 
-                    if (datum.getApplication().equalsIgnoreCase("")) {
+                    if (datum.getApplication() == null || datum.getApplication().equalsIgnoreCase("")) {
                         applicationdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         applicationdetails.setText(datum.getApplication());
                     }
 
-                    if (datum.getTyreCondition().equalsIgnoreCase("")) {
+                    if (datum.getTyreCondition() == null || datum.getTyreCondition().equalsIgnoreCase("")) {
                         tyredetails.setText(getString(R.string.not_mentioned));
                     } else {
                         tyredetails.setText(datum.getTyreCondition());
                     }
 
-                    if (datum.getBusType().equalsIgnoreCase("")) {
+                    if (datum.getBusType() == null || datum.getBusType().equalsIgnoreCase("")) {
                         bustypedetails.setText(getString(R.string.not_mentioned));
                     } else {
                         bustypedetails.setText(datum.getBusType());
                     }
 
-                    if (datum.getImplements().equalsIgnoreCase("")) {
+                    if (datum.getImplements() == null || datum.getImplements().equalsIgnoreCase("")) {
                         impldetails.setText(getString(R.string.not_mentioned));
                     } else {
                         impldetails.setText(datum.getImplements());
                     }
 
-                    if (datum.getAirCondition().equalsIgnoreCase("")) {
+                    if (datum.getAirCondition() == null || datum.getAirCondition().equalsIgnoreCase("")) {
                         airdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         airdetails.setText(datum.getAirCondition());
                     }
 
-                    if (datum.getInvoice().equalsIgnoreCase("")) {
+                    if (datum.getInvoice() == null || datum.getInvoice().equalsIgnoreCase("")) {
                         invoicedetails.setText(getString(R.string.not_mentioned));
                     } else {
                         invoicedetails.setText(datum.getInvoice());
                     }
 
-                    if (datum.getRegistrationNumber().equalsIgnoreCase("")) {
+                    if (datum.getRegistrationNumber() == null || datum.getRegistrationNumber().equalsIgnoreCase("")) {
                         registrationdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         registrationdetails.setText(datum.getRegistrationNumber());
                     }
 
-                    if (datum.getEngineNo().equalsIgnoreCase("")) {
+                    if (datum.getEngineNo() == null || datum.getEngineNo().equalsIgnoreCase("")) {
                         enginedetails.setText(getString(R.string.not_mentioned));
                     } else {
                         enginedetails.setText(datum.getEngineNo());
                     }
 
-                    if (datum.getChassisNo().equalsIgnoreCase("")) {
+                    if (datum.getChassisNo() == null || datum.getChassisNo().equalsIgnoreCase("")) {
                         chassicdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         chassicdetails.setText(datum.getChassisNo());
                     }
 
-                    if (datum.getBodyManufacturer().equalsIgnoreCase("")) {
+                    if (datum.getBodyManufacturer() == null || datum.getBodyManufacturer().equalsIgnoreCase("")) {
                         bodymfgdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         bodymfgdetails.setText(datum.getBodyManufacturer());
                     }
 
-                    if (datum.getSeatManufacturer().equalsIgnoreCase("")) {
+                    if (datum.getSeatManufacturer() == null || datum.getSeatManufacturer().equalsIgnoreCase("")) {
                         seatmfgdetails.setText(getString(R.string.not_mentioned));
                     } else {
                         seatmfgdetails.setText(datum.getSeatManufacturer());

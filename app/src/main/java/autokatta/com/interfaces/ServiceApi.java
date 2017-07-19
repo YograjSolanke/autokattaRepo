@@ -158,7 +158,7 @@ public interface ServiceApi {
 
     //get Vehicle Sub Types...
     @GET("GetVehicleSubType")
-    Call<GetVehicleSubTypeResponse> _autokattaGetVehicleSubType(@Query("CategoryID") String vehicleId);
+    Call<GetVehicleSubTypeResponse> _autokattaGetVehicleSubType(@Query("CategoryID") int vehicleId);
 
     //get Blacklisted contacts
     @GET("GetMyBlacklistedContact")
@@ -174,18 +174,18 @@ public interface ServiceApi {
     //Add Brand
     @POST("AddYourOptions")
     Call<String> _autokattaAddBrand(@Query("Keyword") String keyword, @Query("Title") String title,
-                                    @Query("CategoryID") String categoryId, @Query("SubCategoryID") String subCatID);
+                                    @Query("CategoryID") int categoryId, @Query("SubCategoryID") String subCatID);
 
     //Add Model
     @POST("AddYourOptions")
     Call<String> _autokattaAddModel(@Query("Keyword") String keyword, @Query("Title") String title,
-                                    @Query("CategoryID") String categoryId, @Query("SubCategoryID") String subCatID,
+                                    @Query("CategoryID") int categoryId, @Query("SubCategoryID") String subCatID,
                                     @Query("BrandID") String brandId);
 
     //Add Version
     @POST("AddYourOptions")
     Call<String> _autokattaAddVersion(@Query("Keyword") String keyword, @Query("Title") String title,
-                                      @Query("CategoryID") String categoryId, @Query("SubCategoryID") String subCatID,
+                                      @Query("CategoryID") int categoryId, @Query("SubCategoryID") String subCatID,
                                       @Query("BrandID") String brandId, @Query("ModelID") String modleId);
 
     //Add Break..
@@ -211,16 +211,16 @@ public interface ServiceApi {
 
     //Get Brand
     @GET("GetVehicleBrands")
-    Call<GetVehicleBrandResponse> _autokattaGetBrand(@Query("CategoryID") String category, @Query("SubCategoryID") String subCategory);
+    Call<GetVehicleBrandResponse> _autokattaGetBrand(@Query("CategoryID") int category, @Query("SubCategoryID") String subCategory);
 
     //Get Model
     @GET("GetVehicleModel")
-    Call<GetVehicleModelResponse> _autokattaGetModel(@Query("CategoryID") String category, @Query("SubCategoryID") String subCategory,
+    Call<GetVehicleModelResponse> _autokattaGetModel(@Query("CategoryID") int category, @Query("SubCategoryID") String subCategory,
                                                      @Query("BrandID") String brandId);
 
     //Get Version
     @GET("GetVehicleVersion")
-    Call<GetVehicleVersionResponse> _autokattaGetVersion(@Query("CategoryID") String category, @Query("SubCategoryID") String subCategory,
+    Call<GetVehicleVersionResponse> _autokattaGetVersion(@Query("CategoryID") int category, @Query("SubCategoryID") String subCategory,
                                                          @Query("BrandID") String brandId, @Query("ModelID") String modelId);
 
     //Get Breaks

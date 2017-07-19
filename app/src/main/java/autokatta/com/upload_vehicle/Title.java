@@ -94,9 +94,10 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     HashMap<String, String> mPumpList1 = new HashMap<>();
     //Staring
     List<String> mStaringList = new ArrayList<>();
-    String category, categoryId, subcategoryId, brandId, modelId, versionId, brandName = "", modelName = "", versionName = "",
+    String category, subcategoryId, brandId, modelId, versionId, brandName = "", modelName = "", versionName = "",
             subcategoryName, brakeId, brakeName, pumpId, pumpName, uploadauctioncat;
 
+    int categoryId;
     /*
     Year Fragment...
      */
@@ -203,7 +204,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mKms = (EditText) mTitle.findViewById(R.id.kmstext1);
 
         category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
-        categoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryId", null);
+        categoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("upload_categoryId", 0);
         uploadauctioncat = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_auction_categoryName", null);
 
         mCategory.setText(category + "->" + uploadauctioncat);
@@ -408,7 +409,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Get Brand
      */
-    private void getBrand(String categoryId, String subcategoryId) {
+    private void getBrand(int categoryId, String subcategoryId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getBrand(categoryId, subcategoryId);
     }
@@ -416,7 +417,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Get Model...
      */
-    private void getModel(String categoryId, String subCategoryId, String brandId) {
+    private void getModel(int categoryId, String subCategoryId, String brandId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
@@ -424,7 +425,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Get Version...
      */
-    private void getVersion(String categoryId, String subCategoryId, String brandId, String modelId) {
+    private void getVersion(int categoryId, String subCategoryId, String brandId, String modelId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
     }
@@ -433,7 +434,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Add Brand
      */
-    private void AddBrand(String keyword, String title, String categoryId, String subCatID) {
+    private void AddBrand(String keyword, String title, int categoryId, String subCatID) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.addBrand(keyword, title, categoryId, subCatID);
     }
@@ -441,7 +442,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Add Model
      */
-    private void AddModel(String keyword, String title, String categoryId, String subCatID, String brandId) {
+    private void AddModel(String keyword, String title, int categoryId, String subCatID, String brandId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.addModel(keyword, title, categoryId, subCatID, brandId);
     }
@@ -449,7 +450,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Add Version
      */
-    private void AddVersion(String keyword, String title, String categoryId, String subCatID, String brandId, String modelId) {
+    private void AddVersion(String keyword, String title, int categoryId, String subCatID, String brandId, String modelId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.addVersion(keyword, title, categoryId, subCatID, brandId, modelId);
     }

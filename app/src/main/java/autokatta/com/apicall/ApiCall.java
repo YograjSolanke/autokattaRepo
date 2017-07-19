@@ -1130,7 +1130,7 @@ public class ApiCall {
     Get Vehicle Type Response...
      */
 
-    public void getVehicleSubtype(String vehicleId) {
+    public void getVehicleSubtype(int vehicleId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -1240,7 +1240,7 @@ public class ApiCall {
     /*
     Add Brand
      */
-    public void addBrand(String keyword, String title, String categoryId, String subCatID) {
+    public void addBrand(String keyword, String title, int categoryId, String subCatID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -1279,7 +1279,7 @@ public class ApiCall {
     /*
     Add Model
      */
-    public void addModel(String keyword, String title, String categoryId, String subCatID, String brandId) {
+    public void addModel(String keyword, String title, int categoryId, String subCatID, String brandId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -1318,7 +1318,7 @@ public class ApiCall {
     /*
     Add Version
      */
-    public void addVersion(String keyword, String title, String categoryId, String subCatID, String brandId,
+    public void addVersion(String keyword, String title, int categoryId, String subCatID, String brandId,
                            String modleId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -1514,7 +1514,7 @@ public class ApiCall {
     /*
     Get Brand
      */
-    public void getBrand(String category, String subCategory) {
+    public void getBrand(int category, String subCategory) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1547,7 +1547,7 @@ public class ApiCall {
     /*
     Get Model
      */
-    public void getModel(String category, String subCategory, String brandId) {
+    public void getModel(int category, String subCategory, String brandId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1580,7 +1580,7 @@ public class ApiCall {
     /*
     Get Version
      */
-    public void getVersion(String category, String subCategory, String brandId, String modelId) {
+    public void getVersion(int category, String subCategory, String brandId, String modelId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()

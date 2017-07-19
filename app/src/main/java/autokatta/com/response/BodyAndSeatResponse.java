@@ -14,6 +14,9 @@ public class BodyAndSeatResponse {
     @SerializedName("Success")
     @Expose
     private Success success;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public Success getSuccess() {
         return success;
@@ -23,46 +26,54 @@ public class BodyAndSeatResponse {
         this.success = success;
     }
 
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
     public class Success {
 
-        @SerializedName("BodyManufacturers")
+        @SerializedName("bodyManufac")
         @Expose
-        private List<BodyManufacturer> bodyManufacturers = null;
-        @SerializedName("SeatManufacturers")
+        private List<BodyManufac> bodyManufac = null;
+        @SerializedName("seatManufac")
         @Expose
-        private List<SeatManufacturer> seatManufacturers = null;
+        private List<SeatManufac> seatManufac = null;
 
-        public List<BodyManufacturer> getBodyManufacturers() {
-            return bodyManufacturers;
+        public List<BodyManufac> getBodyManufac() {
+            return bodyManufac;
         }
 
-        public void setBodyManufacturers(List<BodyManufacturer> bodyManufacturers) {
-            this.bodyManufacturers = bodyManufacturers;
+        public void setBodyManufac(List<BodyManufac> bodyManufac) {
+            this.bodyManufac = bodyManufac;
         }
 
-        public List<SeatManufacturer> getSeatManufacturers() {
-            return seatManufacturers;
+        public List<SeatManufac> getSeatManufac() {
+            return seatManufac;
         }
 
-        public void setSeatManufacturers(List<SeatManufacturer> seatManufacturers) {
-            this.seatManufacturers = seatManufacturers;
+        public void setSeatManufac(List<SeatManufac> seatManufac) {
+            this.seatManufac = seatManufac;
         }
 
 
-        public class SeatManufacturer {
+        public class SeatManufac {
 
             @SerializedName("seatManufacturerId")
             @Expose
-            private String seatManufacturerId;
+            private Integer seatManufacturerId;
             @SerializedName("seatManufacturerName")
             @Expose
             private String seatManufacturerName;
 
-            public String getSeatManufacturerId() {
+            public Integer getSeatManufacturerId() {
                 return seatManufacturerId;
             }
 
-            public void setSeatManufacturerId(String seatManufacturerId) {
+            public void setSeatManufacturerId(Integer seatManufacturerId) {
                 this.seatManufacturerId = seatManufacturerId;
             }
 
@@ -76,20 +87,20 @@ public class BodyAndSeatResponse {
 
         }
 
-        public class BodyManufacturer {
+        public class BodyManufac {
 
             @SerializedName("bodyManufacturerId")
             @Expose
-            private String bodyManufacturerId;
+            private Integer bodyManufacturerId;
             @SerializedName("bodyManufacturerName")
             @Expose
             private String bodyManufacturerName;
 
-            public String getBodyManufacturerId() {
+            public Integer getBodyManufacturerId() {
                 return bodyManufacturerId;
             }
 
-            public void setBodyManufacturerId(String bodyManufacturerId) {
+            public void setBodyManufacturerId(Integer bodyManufacturerId) {
                 this.bodyManufacturerId = bodyManufacturerId;
             }
 

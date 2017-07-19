@@ -75,11 +75,11 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre;
 
     String action = "", Scategory, Sbrand, Smodel, Sprice, Syear, Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
-    String vehicle_id, sub_category_id, position_brand_id, position_model_id;
+    String sub_category_id, position_brand_id, position_model_id;
     String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, rc1, insurance1, kms1, kms2, hypo1, price1, price2;
     String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1;
     String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2, callPermission = "";
-    int count = 0, owner1, Sid;
+    int count = 0, owner1, Sid, vehicle_id;
 
     List<String> fuals = new ArrayList<>();
     List<String> colors = new ArrayList<>();
@@ -1028,28 +1028,28 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
     /*
     Sub Category...
      */
-    private void getSubCategoryTask(String vehicle_id) {
+    private void getSubCategoryTask(int vehicle_id) {
         mApiCall.getVehicleSubtype(vehicle_id);
     }
 
     /*
     Get brandSpinner
      */
-    private void getBrand(String categoryId, String subcategoryId) {
+    private void getBrand(int categoryId, String subcategoryId) {
         mApiCall.getBrand(categoryId, subcategoryId);
     }
 
     /*
     Get modelSpinner...
      */
-    private void getModel(String categoryId, String subCategoryId, String brandId) {
+    private void getModel(int categoryId, String subCategoryId, String brandId) {
         mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
 
     /*
     Get Version...
      */
-    private void getVersion(String categoryId, String subCategoryId, String brandId, String modelId) {
+    private void getVersion(int categoryId, String subCategoryId, String brandId, String modelId) {
         mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
     }
 
@@ -1101,7 +1101,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     //Category
                     List<String> mCategoryId = new ArrayList<>();
                     final List<String> parsedData = new ArrayList<>();
-                    final HashMap<String, String> mCategoryMap = new HashMap<>();
+                    final HashMap<String, Integer> mCategoryMap = new HashMap<>();
 
                     mCategoryId.add("Select Category");
                     if (!mGetVehicleListResponse.getSuccess().isEmpty()) {

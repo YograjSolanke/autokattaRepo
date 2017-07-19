@@ -172,7 +172,11 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     String dp = datum.getImage();
                     name = datum.getUsername();
                     contact = datum.getContact();
-                    mLikestr = datum.getStatus();
+                    if (datum.getStatus() == null) {
+                        mLikestr = "no";
+                    } else {
+                        mLikestr = datum.getStatus();
+                    }
                     Title = datum.getTitle();
                     mAddress = (String) datum.getLocationCity();
                     mRegistration = datum.getRegistrationNumber();

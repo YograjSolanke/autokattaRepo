@@ -981,26 +981,30 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     bodyManufacturerlist.clear();
                     seatManufacturerlist.clear();
                     BodyAndSeatResponse bodyAndSeatResponse = (BodyAndSeatResponse) response.body();
-                    for (BodyAndSeatResponse.Success.BodyManufacturer bodySuccess : bodyAndSeatResponse.getSuccess().getBodyManufacturers()) {
-                        bodySuccess.setBodyManufacturerId(bodySuccess.getBodyManufacturerId());
-                        bodySuccess.setBodyManufacturerName(bodySuccess.getBodyManufacturerName());
-                        bodyManufacturerlist.add(bodySuccess.getBodyManufacturerName());
-                    }
-                    if (getActivity() != null) {
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
-                                android.R.layout.simple_spinner_item, bodyManufacturerlist);
-                        autoBodymanufacturer.setAdapter(dataAdapter);
+                    if (!bodyAndSeatResponse.getSuccess().getBodyManufac().isEmpty()) {
+                        for (BodyAndSeatResponse.Success.BodyManufac bodySuccess : bodyAndSeatResponse.getSuccess().getBodyManufac()) {
+                            bodySuccess.setBodyManufacturerId(bodySuccess.getBodyManufacturerId());
+                            bodySuccess.setBodyManufacturerName(bodySuccess.getBodyManufacturerName());
+                            bodyManufacturerlist.add(bodySuccess.getBodyManufacturerName());
+                        }
+                        if (getActivity() != null) {
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_spinner_item, bodyManufacturerlist);
+                            autoBodymanufacturer.setAdapter(dataAdapter);
+                        }
                     }
 
-                    for (BodyAndSeatResponse.Success.SeatManufacturer seatSuccess : bodyAndSeatResponse.getSuccess().getSeatManufacturers()) {
-                        seatSuccess.setSeatManufacturerId(seatSuccess.getSeatManufacturerId());
-                        seatSuccess.setSeatManufacturerName(seatSuccess.getSeatManufacturerName());
-                        seatManufacturerlist.add(seatSuccess.getSeatManufacturerName());
-                    }
-                    if (getActivity() != null) {
-                        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(getActivity(),
-                                android.R.layout.simple_spinner_item, seatManufacturerlist);
-                        autoSeatmanufacturer.setAdapter(dataAdapter1);
+                    if (!bodyAndSeatResponse.getSuccess().getSeatManufac().isEmpty()) {
+                        for (BodyAndSeatResponse.Success.SeatManufac seatSuccess : bodyAndSeatResponse.getSuccess().getSeatManufac()) {
+                            seatSuccess.setSeatManufacturerId(seatSuccess.getSeatManufacturerId());
+                            seatSuccess.setSeatManufacturerName(seatSuccess.getSeatManufacturerName());
+                            seatManufacturerlist.add(seatSuccess.getSeatManufacturerName());
+                        }
+                        if (getActivity() != null) {
+                            ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_spinner_item, seatManufacturerlist);
+                            autoSeatmanufacturer.setAdapter(dataAdapter1);
+                        }
                     }
                 }
             } else {
