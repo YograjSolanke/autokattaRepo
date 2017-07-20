@@ -157,7 +157,7 @@ public class SearchService extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 GetServiceSearchResponse productResponse = (GetServiceSearchResponse) response.body();
-                if (!productResponse.getSuccess().isEmpty()) {
+                if (productResponse.getSuccess()!=null) {
                     mNoData.setVisibility(View.GONE);
                     filterImg.setVisibility(View.VISIBLE);
                     mList.clear();

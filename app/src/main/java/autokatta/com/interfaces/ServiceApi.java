@@ -113,7 +113,7 @@ public interface ServiceApi {
     Call<String> _autokattanewpassword(@Query("Contact") String contact, @Query("newPassword") String newPass);
 
     //get My Uploaded vehicles
-    @POST("GetUploadedvehicles")
+    @GET("GetUploadedvehicles")
     Call<MyUploadedVehiclesResponse> _autokattaGetMyUploadedVehicles(@Query("Contact") String myContact);
 
     //get My Active Events
@@ -277,7 +277,7 @@ public interface ServiceApi {
 
     //Upload Vehicle
     @POST("UpdateMyVehicle")
-    Call<String> _autokattaUploadVehicle(UpdateMyVehicleRequest updateMyVehicleRequest);
+    Call<String> _autokattaUploadVehicle(@Body UpdateMyVehicleRequest updateMyVehicleRequest);
 
 
     //ADD own Vehicle

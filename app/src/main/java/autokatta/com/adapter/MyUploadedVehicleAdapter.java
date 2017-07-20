@@ -114,7 +114,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             e.printStackTrace();
         }
 
-        if (mMainList.get(position).getNotificationstatus().equalsIgnoreCase("stop")) {
+        if (mMainList.get(position).getNotificationstatus()==null || mMainList.get(position).getNotificationstatus().equalsIgnoreCase("stop")) {
             holder.btnnotify.setText("Start Notification");
             holder.btnnotify.setBackgroundResource(R.color.orange);
         } else {

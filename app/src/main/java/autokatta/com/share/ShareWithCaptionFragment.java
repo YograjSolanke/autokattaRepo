@@ -193,7 +193,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equalsIgnoreCase("success")) {
+            if (str.equalsIgnoreCase("success_share")) {
                 CustomToast.customToast(getActivity(), "Shared successfully");
                 getActivity().finish();
                 /*startActivity(new Intent(getActivity(), AutokattaMainActivity.class));*/

@@ -153,14 +153,14 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
                         success.setVersion(success.getVersion());
                         success.setSubcategory(success.getSubcategory());
                         success.setVehiNo(success.getVehiNo());
-                        success.setTaxValidity(success.getTaxValidity());
-                        success.setPermitValidity(success.getPermitValidity());
-                        success.setFitnessValidity(success.getFitnessValidity());
-                        success.setInsurance(success.getInsurance());
-                        success.setPuc(success.getPuc());
-                        success.setLastServiceDate(success.getLastServiceDate());
-                        success.setNextServiceDate(success.getNextServiceDate());
-                        success.setUploaddate(success.getUploaddate());
+                        success.setTaxValidity(success.getTaxValidity().replace("T00:00:00",""));
+                        success.setPermitValidity(success.getPermitValidity().replace("T00:00:00",""));
+                        success.setFitnessValidity(success.getFitnessValidity().replace("T00:00:00",""));
+                        success.setInsurance(success.getInsurance().replace("T00:00:00",""));
+                        success.setPuc(success.getPuc().replace("T00:00:00",""));
+                        success.setLastServiceDate(success.getLastServiceDate().replace("T00:00:00",""));
+                        success.setNextServiceDate(success.getNextServiceDate().replace("T00:00:00",""));
+                        success.setUploaddate(success.getUploaddate().replace("T00:00:00",""));
                         mGetOwnVehiclesResponse.add(success);
                     }
                     adapter = new MyVehiclesAdapter(getActivity(), mGetOwnVehiclesResponse);
@@ -218,9 +218,14 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getOwnVehicles();
 
+    }
 
-  /*  public void showMessage(Activity activity, String message) {
+/*  public void showMessage(Activity activity, String message) {
         Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);
         TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);

@@ -136,7 +136,7 @@ public class SearchPerson extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchPersonResponse contactResponse = (SearchPersonResponse) response.body();
-                if (!contactResponse.getSuccess().isEmpty()) {
+                if (contactResponse.getSuccess()!=null) {
                     mNoData.setVisibility(View.GONE);
                     allSearchDataArrayList.clear();
                     filterImg.setVisibility(View.VISIBLE);
