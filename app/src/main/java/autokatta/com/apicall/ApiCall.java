@@ -2193,8 +2193,8 @@ Upload Vehicle
     /*
     Get Group Vehicles...
      */
-    public void getGroupVehicles(String groupId, String brand, String model, String version, String city, String rtoCity,
-                                 String price, String regYear, String mgfYear, String kms, String owners) {
+    public void getGroupVehicles(int groupId, String brand, String model, String version, String city, String rtoCity,
+                                 String price, String regYear, String mgfYear, String kms, int owners) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2446,7 +2446,7 @@ Upload Vehicle
     Get Group Products
      */
 
-    public void getGroupProducts(String groupId, String myContact) {
+    public void getGroupProducts(int groupId, String myContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()

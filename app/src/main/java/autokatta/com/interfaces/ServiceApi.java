@@ -298,12 +298,12 @@ public interface ServiceApi {
 
     //Get Group Vehicles
     @GET("GetGroupVehicles")
-    Call<GetGroupVehiclesResponse> _autokattaGetGroupVehicles(@Query("GroupID") String groupId, @Query("Brand") String brand,
+    Call<GetGroupVehiclesResponse> _autokattaGetGroupVehicles(@Query("GroupID") int groupId, @Query("Brand") String brand,
                                                               @Query("Model") String model, @Query("Version") String version,
                                                               @Query("City") String city, @Query("RTOcity") String rtoCity,
                                                               @Query("Price") String price, @Query("RegistrationYear") String regYear,
                                                               @Query("ManufactureYear") String mgfYear, @Query("Kms") String kms,
-                                                              @Query("Owners") String owners);
+                                                              @Query("Owners") int owners);
 
     //Get My Uploaded Vehicle...
     @GET("GetMyUploadedVehicles")
@@ -325,7 +325,7 @@ public interface ServiceApi {
 
     //Get Group Products...
     @GET("GetGroupProducts")
-    Call<StoreInventoryResponse> _autokattaGetGroupProducts(@Query("GroupID") String groupId, @Query("MyContact") String myContact);
+    Call<StoreInventoryResponse> _autokattaGetGroupProducts(@Query("GroupID") int groupId, @Query("MyContact") String myContact);
 
     //Get Group Services...
     @GET("GetGroupServices")
@@ -1085,7 +1085,7 @@ public interface ServiceApi {
 
     //update a store...
     @POST("UpdateStore")
-    Call<String> updateStore(UpdateStoreRequest updateStoreRequest);
+    Call<String> updateStore(@Body UpdateStoreRequest updateStoreRequest);
 
     //Device Registration...
     @POST("DeviceRegistration")

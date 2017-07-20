@@ -178,7 +178,7 @@ public class StoreInventoryResponse {
             private String prate3;
             @SerializedName("productrating")
             @Expose
-            private String productrating;
+            private Float productrating;
             @SerializedName("product_tags")
             @Expose
             private String productTags;
@@ -331,11 +331,11 @@ public class StoreInventoryResponse {
                 this.prate3 = prate3;
             }
 
-            public String getProductrating() {
+            public Float getProductrating() {
                 return productrating;
             }
 
-            public void setProductrating(String productrating) {
+            public void setProductrating(Float productrating) {
                 this.productrating = productrating;
             }
 

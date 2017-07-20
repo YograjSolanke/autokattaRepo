@@ -46,7 +46,7 @@ import retrofit2.Response;
 public class MemberVehicleListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mGroupVehicleList;
     String brand = "", model = "", version = "", city = "", RTOcity = "", reg_year = "",
-            mgf_year = "", price = "", kmsrunning = "", no_of_owner = "";
+            mgf_year = "", price = "", kmsrunning = "";
     EditText editbrand, editmodel, editversion, editcity, editregyr, editmgfyr, editprice, editkms, editowner;
     AutoCompleteTextView editRTOcity;
     ImageView filterimg;
@@ -58,7 +58,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
     LinearLayoutManager mLayoutManager;
     // on scroll
     ApiCall mApiCall;
-    String mGroupId = "";
+    int mGroupId = 0,no_of_owner = 0;
     String className = "";
     Button goSearch;
     Bundle getBundle;
@@ -131,7 +131,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                         try {
                             getBundle = getArguments();
                             className = getBundle.getString("className");
-                            mGroupId = getBundle.getString("bundle_GroupId");
+                            mGroupId = getBundle.getInt("bundle_GroupId");
                             if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
                                 getGroupVehicles();
                             } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
@@ -188,11 +188,11 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                         reg_year = editregyr.getText().toString();
                         mgf_year = editmgfyr.getText().toString();
                         kmsrunning = editkms.getText().toString();
-                        no_of_owner = editowner.getText().toString();
+                        no_of_owner =Integer.parseInt(editowner.getText().toString());
 
                         if (brand.equals("") && model.equals("") && version.equals("") && city.equals("") && RTOcity.equals("")
                                 && price.equals("") && reg_year.equals("") && mgf_year.equals("") && kmsrunning.equals("")
-                                && no_of_owner.equals("")) {
+                                && no_of_owner==0) {
                             Snackbar.make(v, "Enter value to search", Snackbar.LENGTH_SHORT).show();
                         } else {
                             getGroupVehicles();

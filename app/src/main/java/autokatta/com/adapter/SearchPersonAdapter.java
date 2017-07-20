@@ -98,10 +98,10 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
 
-        if (!contactdata.get(position).getMystatus().equals("null"))
-            holder.mTextStatus.setText(contactdata.get(position).getMystatus());
-        else
+        if (contactdata.get(position).getMystatus()==null)
             holder.mTextStatus.setText("No Status");
+        else
+        holder.mTextStatus.setText(contactdata.get(position).getMystatus());
 
         if (contactdata.get(position).getStatus().equals("yes")) {
             holder.btnUnfollow.setVisibility(VISIBLE);

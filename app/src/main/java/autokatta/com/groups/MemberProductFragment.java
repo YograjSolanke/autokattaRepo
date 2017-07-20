@@ -40,7 +40,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
 
     View mProduct;
     String myContact;
-    String mGroupId;
+    int mGroupId;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<Product> productList = new ArrayList<>();
@@ -65,7 +65,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
         apiCall.getGroupProducts(GroupId, mBundleContact);
     }*/
 
-    private void getProducts(String GroupId) {
+    private void getProducts(int GroupId) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getGroupProducts(GroupId, mBundleContact);
@@ -193,7 +193,7 @@ public class MemberProductFragment extends Fragment implements SwipeRefreshLayou
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 Bundle getBundle = getArguments();
-                mGroupId = getBundle.getString("bundle_GroupId");
+                mGroupId = getBundle.getInt("bundle_GroupId");
                 mBundleContact = getBundle.getString("Rcontact");
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,

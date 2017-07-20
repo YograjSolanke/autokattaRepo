@@ -117,8 +117,8 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (!product.getProductrating().equals("null")) {
-            holder.productrating.setRating(Float.parseFloat(product.getProductrating()));
+        if (product.getProductrating() != null) {
+            holder.productrating.setRating(product.getProductrating());
         } else {
 
         }
