@@ -11,59 +11,72 @@ import java.util.List;
 
 public class ServiceResponse {
 
+
     @SerializedName("Success")
-    @Expose
+        @Expose
     private List<Success> success = null;
+    @SerializedName("Error")
+        @Expose
+    private Object error;
 
     public List<Success> getSuccess() {
         return success;
-    }
+        }
 
     public void setSuccess(List<Success> success) {
         this.success = success;
-    }
+        }
+
+    public Object getError() {
+        return error;
+        }
+
+    public void setError(Object error) {
+        this.error = error;
+        }
+
 
     public class Success {
 
-        @SerializedName("id")
+        @SerializedName("brandtags")
         @Expose
-        private String id;
-        @SerializedName("store_id")
-        @Expose
-        private String storeId;
-        @SerializedName("status")
-        @Expose
-        private String status;
+        private String brandtags;
         @SerializedName("category")
         @Expose
         private String category;
-        @SerializedName("type")
+        @SerializedName("created_date")
         @Expose
-        private String type;
+        private String createdDate;
+        @SerializedName("details")
+        @Expose
+        private String details;
+        @SerializedName("group_id")
+        @Expose
+        private int groupId;
+        @SerializedName("id")
+        @Expose
+        private int id;
+        @SerializedName("images")
+        @Expose
+        private String images;
         @SerializedName("name")
         @Expose
         private String name;
         @SerializedName("price")
         @Expose
-        private String price;
-        @SerializedName("details")
+        private int price;
+        @SerializedName("status")
         @Expose
-        private String details;
+        private String status;
+        @SerializedName("store_id")
+        @Expose
+        private int storeId;
         @SerializedName("tags")
         @Expose
         private String tags;
-        @SerializedName("images")
+        @SerializedName("type")
         @Expose
-        private String images;
-        @SerializedName("brandtags")
-        @Expose
-        private String brandtags;
-        @SerializedName("created_date")
-        @Expose
-        private String createdDate;
-        @SerializedName("group_id")
-        @Expose
-        private String groupId;
+        private String type;
         @SerializedName("storeName")
         @Expose
         private String storeName;
@@ -73,59 +86,43 @@ public class ServiceResponse {
         @SerializedName("storeWebsite")
         @Expose
         private String storeWebsite;
+        @SerializedName("storeOwner")
+        @Expose
+        private String storeOwner;
         @SerializedName("storeRating")
         @Expose
-        private String storeRating;
+        private int storeRating;
         @SerializedName("servicelikecount")
         @Expose
-        private String servicelikecount;
+        private int servicelikecount;
         @SerializedName("servicelikestatus")
         @Expose
         private String servicelikestatus;
         @SerializedName("srate")
         @Expose
-        private String srate;
+        private int srate;
         @SerializedName("srate1")
         @Expose
-        private String srate1;
+        private int srate1;
         @SerializedName("srate2")
         @Expose
-        private String srate2;
+        private int srate2;
         @SerializedName("srate3")
         @Expose
-        private String srate3;
+        private int srate3;
         @SerializedName("servicerating")
         @Expose
-        private String servicerating;
+        private int servicerating;
         @SerializedName("servicetags")
         @Expose
         private String servicetags;
-        @SerializedName("storeOwner")
-        @Expose
-        private String storeOwner;
 
-        public String getId() {
-            return id;
+        public String getBrandtags() {
+            return brandtags;
         }
 
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getStoreId() {
-            return storeId;
-        }
-
-        public void setStoreId(String storeId) {
-            this.storeId = storeId;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
+        public void setBrandtags(String brandtags) {
+            this.brandtags = brandtags;
         }
 
         public String getCategory() {
@@ -136,28 +133,12 @@ public class ServiceResponse {
             this.category = category;
         }
 
-        public String getType() {
-            return type;
+        public String getCreatedDate() {
+            return createdDate;
         }
 
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
+        public void setCreatedDate(String createdDate) {
+            this.createdDate = createdDate;
         }
 
         public String getDetails() {
@@ -168,12 +149,20 @@ public class ServiceResponse {
             this.details = details;
         }
 
-        public String getTags() {
-            return tags;
+        public Object getGroupId() {
+            return groupId;
         }
 
-        public void setTags(String tags) {
-            this.tags = tags;
+        public void setGroupId(int groupId) {
+            this.groupId = groupId;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
         }
 
         public String getImages() {
@@ -184,28 +173,52 @@ public class ServiceResponse {
             this.images = images;
         }
 
-        public String getBrandtags() {
-            return brandtags;
+        public String getName() {
+            return name;
         }
 
-        public void setBrandtags(String brandtags) {
-            this.brandtags = brandtags;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public String getCreatedDate() {
-            return createdDate;
+        public int getPrice() {
+            return price;
         }
 
-        public void setCreatedDate(String createdDate) {
-            this.createdDate = createdDate;
+        public void setPrice(int price) {
+            this.price = price;
         }
 
-        public String getGroupId() {
-            return groupId;
+        public String getStatus() {
+            return status;
         }
 
-        public void setGroupId(String groupId) {
-            this.groupId = groupId;
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public int getStoreId() {
+            return storeId;
+        }
+
+        public void setStoreId(int storeId) {
+            this.storeId = storeId;
+        }
+
+        public String getTags() {
+            return tags;
+        }
+
+        public void setTags(String tags) {
+            this.tags = tags;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getStoreName() {
@@ -232,19 +245,27 @@ public class ServiceResponse {
             this.storeWebsite = storeWebsite;
         }
 
-        public String getStoreRating() {
+        public String getStoreOwner() {
+            return storeOwner;
+        }
+
+        public void setStoreOwner(String storeOwner) {
+            this.storeOwner = storeOwner;
+        }
+
+        public int getStoreRating() {
             return storeRating;
         }
 
-        public void setStoreRating(String storeRating) {
+        public void setStoreRating(int storeRating) {
             this.storeRating = storeRating;
         }
 
-        public String getServicelikecount() {
+        public int getServicelikecount() {
             return servicelikecount;
         }
 
-        public void setServicelikecount(String servicelikecount) {
+        public void setServicelikecount(int servicelikecount) {
             this.servicelikecount = servicelikecount;
         }
 
@@ -256,43 +277,43 @@ public class ServiceResponse {
             this.servicelikestatus = servicelikestatus;
         }
 
-        public String getSrate() {
+        public int getSrate() {
             return srate;
         }
 
-        public void setSrate(String srate) {
+        public void setSrate(int srate) {
             this.srate = srate;
         }
 
-        public String getSrate1() {
+        public int getSrate1() {
             return srate1;
         }
 
-        public void setSrate1(String srate1) {
+        public void setSrate1(int srate1) {
             this.srate1 = srate1;
         }
 
-        public String getSrate2() {
+        public int getSrate2() {
             return srate2;
         }
 
-        public void setSrate2(String srate2) {
+        public void setSrate2(int srate2) {
             this.srate2 = srate2;
         }
 
-        public String getSrate3() {
+        public int getSrate3() {
             return srate3;
         }
 
-        public void setSrate3(String srate3) {
+        public void setSrate3(int srate3) {
             this.srate3 = srate3;
         }
 
-        public String getServicerating() {
+        public int getServicerating() {
             return servicerating;
         }
 
-        public void setServicerating(String servicerating) {
+        public void setServicerating(int servicerating) {
             this.servicerating = servicerating;
         }
 
@@ -304,12 +325,5 @@ public class ServiceResponse {
             this.servicetags = servicetags;
         }
 
-        public String getStoreOwner() {
-            return storeOwner;
-        }
-
-        public void setStoreOwner(String storeOwner) {
-            this.storeOwner = storeOwner;
         }
     }
-}

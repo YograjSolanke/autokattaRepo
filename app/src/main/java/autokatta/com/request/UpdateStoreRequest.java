@@ -48,6 +48,18 @@ public class UpdateStoreRequest {
     @Expose
     private String coverImage;
 
+    @SerializedName("BrandTags")
+    @Expose
+    private String BrandTags;
+
+    public String getBrandTags() {
+        return BrandTags;
+    }
+
+    public void setBrandTags(String brandTags) {
+        BrandTags = brandTags;
+    }
+
     public Integer getStoreID() {
         return storeID;
     }
@@ -153,7 +165,7 @@ public class UpdateStoreRequest {
     }
 public UpdateStoreRequest(String storename, int store_id, String location, String website, String open, String close,
                           String profile, String category, String working_days, String storeDescription, String storetype,
-                          String address, String coverImage, String textbrand, String strBrandSpinner){
+                          String address, String coverImage, String brandTags, String strBrandSpinner) {
   this.storeName=storename;
   this.storeID=store_id;
   this.location=location;
@@ -167,5 +179,6 @@ public UpdateStoreRequest(String storename, int store_id, String location, Strin
   this.storeType=storetype;
   this.address=address;
   this.coverImage=coverImage;
+    this.BrandTags = brandTags;
 }
 }

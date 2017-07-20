@@ -63,8 +63,30 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     String contact;
     Bundle b = new Bundle();
-    String id, action, name, web, rating, receiver_contact, sname, sprice, sdetails, storeowner,
-            stags, stype, scategory, slikecnt, slikestatus, simages, srating, srate, srate1, srate2, srate3, store_id, storecontact, brandtags_list;
+    String id;
+    String action;
+    String name;
+    String web;
+    Integer rating;
+    String receiver_contact;
+    String sname;
+    Integer sprice;
+    String sdetails;
+    String storeowner;
+    String stags;
+    String stype;
+    String scategory;
+    int slikecnt;
+    String slikestatus;
+    String simages;
+    int srating;
+    int srate;
+    int srate1;
+    int srate2;
+    int srate3;
+    int store_id;
+    String storecontact;
+    String brandtags_list;
     TextView storename, website, textlike, textshare;
     EditText servicename, servicetype, serviceprice, servicedetails, writereview;
     ImageView check, edit, callme, deleteservice;
@@ -495,7 +517,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             storename.setText(name);
                             website.setText(web);
                             servicename.setText(sname);
-                            serviceprice.setText(sprice);
+                            serviceprice.setText(String.valueOf(sprice));
                             servicedetails.setText(sdetails);
                             servicetags.setText(stags);
                             servicetype.setText(stype);
@@ -551,32 +573,32 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             }
 
                             //***************************setting previous rating*******************************
-                            if (!srate.equals("0")) {
-                                overallbar.setRating(Float.parseFloat(srate));
+                            if (srate != 0) {
+                                overallbar.setRating(srate);
                             }
-                            if (!srate1.equals("0")) {
-                                pricebar.setRating(Float.parseFloat(srate1));
-                                pricerate = Float.parseFloat(srate1);
+                            if (srate1 != 0) {
+                                pricebar.setRating(srate1);
+                                pricerate = Float.parseFloat(String.valueOf(srate1));
                             }
-                            if (!srate2.equals("0")) {
-                                qualitybar.setRating(Float.parseFloat(srate2));
-                                qualityrate = Float.parseFloat(srate2);
+                            if (srate2 != 0) {
+                                qualitybar.setRating(srate2);
+                                qualityrate = Float.parseFloat(String.valueOf(srate2));
                             }
-                            if (!srate3.equals("0")) {
-                                tmbar.setRating(Float.parseFloat(srate3));
-                                tmrate = Float.parseFloat(srate3);
+                            if (srate3 != 0) {
+                                tmbar.setRating(srate3);
+                                tmrate = Float.parseFloat(String.valueOf(srate3));
                             }
 
-                            if (!rating.equals("null")) {
-                                storerating.setRating(Float.parseFloat(rating));
+                            if (rating != 0) {
+                                storerating.setRating(rating);
                             }
 
                             //rating conditions for service
-                            if (!srating.equals("null")) {
-                                servicerating.setRating(Float.parseFloat(srating));
+                            if (srating != 0) {
+                                servicerating.setRating(srating);
                             }
                             //like code
-                            lcnt = Integer.parseInt(slikecnt);
+                            lcnt = slikecnt;
                         }
                     }
                 } else if (response.body() instanceof EnquiryCountResponse) {
@@ -953,10 +975,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 break;
 
             case R.id.btnfeedback:
-                if (srate.equals("0")) {
+                if (srate == 0) {
                     sendproductrating();
                 }
-                if (!srate.equals("0")) {
+                if (srate != 0) {
                     sendupdatedproductrating();
                 }
                 break;

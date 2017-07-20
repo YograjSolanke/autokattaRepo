@@ -14,6 +14,9 @@ public class StoreResponse {
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public List<Success> getSuccess() {
         return success;
@@ -23,11 +26,20 @@ public class StoreResponse {
         this.success = success;
     }
 
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
+
     public class Success {
 
         @SerializedName("id")
         @Expose
-        private int id;
+        private Integer id;
         @SerializedName("contact")
         @Expose
         private String contact;
@@ -67,15 +79,18 @@ public class StoreResponse {
         @SerializedName("address")
         @Expose
         private String address;
+        @SerializedName("brandtags")
+        @Expose
+        private String brandtags;
         @SerializedName("coverImage")
         @Expose
         private String coverImage;
         @SerializedName("likecount")
         @Expose
-        private int likecount;
+        private Integer likecount;
         @SerializedName("followcount")
         @Expose
-        private int followcount;
+        private Integer followcount;
         @SerializedName("likestatus")
         @Expose
         private String likestatus;
@@ -84,26 +99,25 @@ public class StoreResponse {
         private String followstatus;
         @SerializedName("rating")
         @Expose
-        private int rating;
+        private Integer rating;
         @SerializedName("rate1")
         @Expose
-        private int rate1;
+        private Integer rate1;
         @SerializedName("rate2")
         @Expose
-        private int rate2;
+        private Integer rate2;
         @SerializedName("rate3")
         @Expose
-        private int rate3;
+        private Integer rate3;
         @SerializedName("rate4")
         @Expose
-        private int rate4;
-
+        private Integer rate4;
         @SerializedName("rate5")
         @Expose
-        private int rate5;
+        private Integer rate5;
         @SerializedName("rate")
         @Expose
-        private int rate;
+        private Integer rate;
         @SerializedName("latitude")
         @Expose
         private String latitude;
@@ -114,11 +128,11 @@ public class StoreResponse {
         @Expose
         private String dealingWith;
 
-        public int getId() {
+        public Integer getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Integer id) {
             this.id = id;
         }
 
@@ -226,6 +240,14 @@ public class StoreResponse {
             this.address = address;
         }
 
+        public String getBrandtags() {
+            return brandtags;
+        }
+
+        public void setBrandtags(String brandtags) {
+            this.brandtags = brandtags;
+        }
+
         public String getCoverImage() {
             return coverImage;
         }
@@ -234,19 +256,19 @@ public class StoreResponse {
             this.coverImage = coverImage;
         }
 
-        public int getLikecount() {
+        public Integer getLikecount() {
             return likecount;
         }
 
-        public void setLikecount(int likecount) {
+        public void setLikecount(Integer likecount) {
             this.likecount = likecount;
         }
 
-        public int getFollowcount() {
+        public Integer getFollowcount() {
             return followcount;
         }
 
-        public void setFollowcount(int followcount) {
+        public void setFollowcount(Integer followcount) {
             this.followcount = followcount;
         }
 
@@ -266,59 +288,59 @@ public class StoreResponse {
             this.followstatus = followstatus;
         }
 
-        public int getRating() {
+        public Integer getRating() {
             return rating;
         }
 
-        public void setRating(int rating) {
+        public void setRating(Integer rating) {
             this.rating = rating;
         }
 
-        public int getRate1() {
+        public Integer getRate1() {
             return rate1;
         }
 
-        public void setRate1(int rate1) {
+        public void setRate1(Integer rate1) {
             this.rate1 = rate1;
         }
 
-        public int getRate2() {
+        public Integer getRate2() {
             return rate2;
         }
 
-        public void setRate2(int rate2) {
+        public void setRate2(Integer rate2) {
             this.rate2 = rate2;
         }
 
-        public int getRate3() {
+        public Integer getRate3() {
             return rate3;
         }
 
-        public void setRate3(int rate3) {
+        public void setRate3(Integer rate3) {
             this.rate3 = rate3;
         }
 
-        public int getRate4() {
+        public Integer getRate4() {
             return rate4;
         }
 
-        public int getRate5() {
-            return rate5;
-        }
-
-        public void setRate4(int rate4) {
+        public void setRate4(Integer rate4) {
             this.rate4 = rate4;
         }
 
-        public void setRate5(int rate5) {
-            this.rate4 = rate5;
+        public Integer getRate5() {
+            return rate5;
         }
 
-        public int getRate() {
+        public void setRate5(Integer rate5) {
+            this.rate5 = rate5;
+        }
+
+        public Integer getRate() {
             return rate;
         }
 
-        public void setRate(int rate) {
+        public void setRate(Integer rate) {
             this.rate = rate;
         }
 
@@ -332,7 +354,7 @@ public class StoreResponse {
 
         public String getLongitude() {
             return longitude;
-        }
+    }
 
         public void setLongitude(String longitude) {
             this.longitude = longitude;

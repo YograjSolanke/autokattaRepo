@@ -46,7 +46,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     boolean hasView;
     NestedScrollView scrollView;
     RelativeLayout mRel;
-    TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen,
+    TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen, editbrandtags,
             storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData, adminContacts;
     ConnectionDetector mTestConnection;
     Activity mActivity;
@@ -116,6 +116,8 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                         storeDescription.setText(success.getStoreDescription());
                         storeType.setText(success.getStoreType());
                         storeServiceOffered.setText(success.getCategory());
+                        editbrandtags.setText(success.getBrandtags());
+
                         if (StoreContact.contains(myContact)) {
                             editStore.setVisibility(View.VISIBLE);
                             addEnquiry.setVisibility(View.VISIBLE);
@@ -214,6 +216,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 storeServiceOffered = (TextView) mAbout.findViewById(R.id.autoservices);
                 scrollView = (NestedScrollView) mAbout.findViewById(R.id.mainScroll);
                 adminContacts = (TextView) mAbout.findViewById(R.id.editAdminContact);
+                editbrandtags = (TextView) mAbout.findViewById(R.id.editbrandtags);
 
                 Bundle b = getArguments();
                 Store_id = b.getInt("store_id");

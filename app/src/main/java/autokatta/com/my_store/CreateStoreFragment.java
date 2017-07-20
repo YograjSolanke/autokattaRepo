@@ -880,6 +880,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             closetime.setText(success.getStoreCloseTime());
                             storeaddress.setText(success.getAddress());
                             edtStoreDesc.setText(success.getStoreDescription());
+                            multiautobrand.setText(success.getBrandtags());
                             multiautotext.setText(success.getCategory());
                             preLastWord = success.getStoreImage();
                             preCoverLastWord = success.getCoverImage();
