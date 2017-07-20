@@ -52,8 +52,6 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         this.storeContact = storeContact;
         connectionDetector = new ConnectionDetector(activity);
         apiCall = new ApiCall(activity, this);
-
-
     }
 
     @Override
@@ -64,28 +62,19 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
 
     @Override
     public void onBindViewHolder(final StoreServiceAdapter.ServiceHolder holder, final int position) {
-
         ArrayList<String> images = new ArrayList<String>();
-
         final StoreInventoryResponse.Success.Service service = mMainList.get(position);
-
         holder.pname.setText(service.getServiceName());
-
         holder.pprice.setText(service.getServicePrice());
-
         holder.pdetails.setText(service.getServiceDetails());
-
         holder.ptags.setText(service.getServicetags());
-
         holder.ptype.setText(service.getServiceType());
-
         holder.pCategory.setText(service.getServicecategory());
         holder.productrating.setEnabled(false);
 
         if (myContact.equals(service.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
         }
-
 
         holder.pname.setEnabled(false);
         holder.pprice.setEnabled(false);
@@ -94,16 +83,11 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.ptype.setEnabled(false);
         holder.pCategory.setEnabled(false);
 
-
         try {
-
-            if (service.getServiceImages().equals("") || service.getServiceImages().equals("null") ||
-                    service.getServiceImages().equals("")) {
-
+            if (service.getServiceImages() == null) {
                 holder.image.setBackgroundResource(R.drawable.logo);
             } else {
                 String[] parts = service.getServiceImages().split(",");
-
                 for (int l = 0; l < parts.length; l++) {
                     images.add(parts[l]);
                     System.out.println(parts[l]);
@@ -113,31 +97,22 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                 pimagename = "http://autokatta.com/mobile/Service_pics/" + images.get(0);
                 pimagename = pimagename.replaceAll(" ", "%20");
                 try {
-
                     Glide.with(activity)
                             .load(pimagename)
                             .bitmapTransform(new CropCircleTransformation(activity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.logo)
                             .into(holder.image);
-
-
                 } catch (Exception e) {
                     System.out.println("Error in uploading images");
                 }
             }
-
         } catch (Exception e) {
-
             e.printStackTrace();
         }
-        if (!service.getServicerating().equals("null")) {
-
-            holder.productrating.setRating(Float.parseFloat(service.getServicerating()));
-        } else {
-
+        if (service.getServicerating() != null) {
+            holder.productrating.setRating(service.getServicerating());
         }
-
 
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +121,6 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                 Intent intent = new Intent(activity, ServiceViewActivity.class);
                 intent.putExtra("service_id", serviceId);
                 activity.startActivity(intent);
-
             }
         });
 
@@ -154,29 +128,21 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             @Override
             public void onClick(View view) {
                 final int serviceId = service.getServiceId();
-
-
                 if (!connectionDetector.isConnectedToInternet()) {
                     CustomToast.customToast(activity, "Please try later");
                    // Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
-
                 } else {
-
                     new android.support.v7.app.AlertDialog.Builder(activity)
                             .setTitle("Delete?")
                             .setMessage("Are You Sure You Want To Delete This Service?")
-
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     apiCall.deleteService(serviceId, "delete");
                                     mMainList.remove(position);
                                     notifyItemRemoved(position);
                                     notifyItemRangeChanged(position, mMainList.size());
-
                                 }
                             })
-
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -184,10 +150,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
-
-
                 }
-
             }
         });
 
@@ -221,16 +184,11 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
             if (str.equals("success")) {
-
                 CustomToast.customToast(activity, "Service Deleted");
-
             }
-
         }
-
     }
 
     class ServiceHolder extends RecyclerView.ViewHolder {
@@ -240,11 +198,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         RatingBar productrating;
         CardView viewdetails;
 
-
         ServiceHolder(View itemView) {
             super(itemView);
-
-
             pname = (TextView) itemView.findViewById(R.id.edittxt);
             pprice = (TextView) itemView.findViewById(R.id.priceedit);
             pdetails = (TextView) itemView.findViewById(R.id.editdetails);

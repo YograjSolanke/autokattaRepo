@@ -189,15 +189,25 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded()) {
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
+            }
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded()) {
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded()) {
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded()) {
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            }
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded()) {
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            }
         } else {
             Log.i("Check Class-", "My Vehicles");
         }

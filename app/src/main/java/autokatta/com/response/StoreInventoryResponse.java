@@ -419,7 +419,7 @@ public class StoreInventoryResponse {
             private String srate3;
             @SerializedName("servicerating")
             @Expose
-            private String servicerating;
+            private Float servicerating;
             @SerializedName("servicetags")
             @Expose
             private String servicetags;
@@ -580,11 +580,11 @@ public class StoreInventoryResponse {
                 this.srate3 = srate3;
             }
 
-            public String getServicerating() {
+            public Float getServicerating() {
                 return servicerating;
             }
 
-            public void setServicerating(String servicerating) {
+            public void setServicerating(Float servicerating) {
                 this.servicerating = servicerating;
             }
 

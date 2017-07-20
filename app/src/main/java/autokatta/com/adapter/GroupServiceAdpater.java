@@ -51,8 +51,6 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         this.mGroupType = mGroupType;
         connectionDetector = new ConnectionDetector(activity);
         apiCall = new ApiCall(activity, this);
-
-
     }
 
     @Override
@@ -63,29 +61,18 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
 
     @Override
     public void onBindViewHolder(final GroupServiceAdpater.ServiceHolder holder, final int position) {
-
         List<String> images = new ArrayList<String>();
-
         final StoreInventoryResponse.Success.Service service = mMainList.get(position);
-
         holder.pname.setText(service.getServiceName());
-
         holder.pprice.setText(service.getServicePrice());
-
         holder.pdetails.setText(service.getServiceDetails());
-
         holder.ptags.setText(service.getServicetags());
-
         holder.ptype.setText(service.getServiceType());
-
         holder.pCategory.setText(service.getServicecategory());
         holder.productrating.setEnabled(false);
-
         if (myContact.equals(service.getStorecontact()) && mGroupType.startsWith("MyGroup")) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
         }
-
-
         holder.pname.setEnabled(false);
         holder.pprice.setEnabled(false);
         holder.pdetails.setEnabled(false);
@@ -93,12 +80,8 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         holder.ptype.setEnabled(false);
         holder.pCategory.setEnabled(false);
 
-
         try {
-
-            if (service.getServiceImages().equals("") || service.getServiceImages().equals("null") ||
-                    service.getServiceImages().equals("")) {
-
+            if (service.getServiceImages() == null) {
                 holder.image.setBackgroundResource(R.drawable.logo);
             } else {
                 String[] parts = service.getServiceImages().split(",");
@@ -119,8 +102,6 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.logo)
                             .into(holder.image);
-
-
                 } catch (Exception e) {
                     System.out.println("Error in uploading images");
                 }
@@ -131,9 +112,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
             e.printStackTrace();
         }
         if (service.getServicerating()!=null) {
-            holder.productrating.setRating(Float.parseFloat(service.getServicerating()));
-        } else {
-
+            holder.productrating.setRating(service.getServicerating());
         }
 
 
@@ -152,24 +131,18 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
             @Override
             public void onClick(View view) {
                 final int serviceId = service.getServiceId();
-
-
                 if (!connectionDetector.isConnectedToInternet()) {
                     CustomToast.customToast(activity, "Please try later");
                 } else {
-
                     new android.support.v7.app.AlertDialog.Builder(activity)
                             .setTitle("Delete?")
                             .setMessage("Are You Sure You Want To Delete This Service?")
-
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     apiCall.deleteService(serviceId, "delete");
                                     mMainList.remove(position);
                                     notifyItemRemoved(position);
                                     notifyItemRangeChanged(position, mMainList.size());
-
                                 }
                             })
 
@@ -180,10 +153,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
-
-
                 }
-
             }
         });
 
@@ -217,16 +187,11 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
             if (str.equals("success")) {
-
                 CustomToast.customToast(activity, "Service Deleted");
-
             }
-
         }
-
     }
 
     class ServiceHolder extends RecyclerView.ViewHolder {
@@ -236,11 +201,8 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         RatingBar productrating;
         CardView viewdetails;
 
-
         ServiceHolder(View itemView) {
             super(itemView);
-
-
             pname = (TextView) itemView.findViewById(R.id.edittxt);
             pprice = (TextView) itemView.findViewById(R.id.priceedit);
             pdetails = (TextView) itemView.findViewById(R.id.editdetails);
@@ -253,6 +215,5 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
         }
-
     }
 }

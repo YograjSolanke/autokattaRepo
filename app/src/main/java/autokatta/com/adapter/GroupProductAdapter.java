@@ -89,8 +89,7 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
         holder.pCategoey.setEnabled(false);
 
         try {
-            if (product.getProductImage().equals("") || product.getProductImage().equals("null") ||
-                    product.getProductImage().equals("")) {
+            if (product.getProductImage() == null) {
                 holder.image.setBackgroundResource(R.drawable.logo);
             } else {
                 String[] parts = product.getProductImage().split(",");

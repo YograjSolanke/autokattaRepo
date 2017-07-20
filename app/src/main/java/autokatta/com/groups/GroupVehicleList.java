@@ -44,8 +44,8 @@ import retrofit2.Response;
 public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     View mGroupVehicleList;
     String brand = "", model = "", version = "", city = "", RTOcity = "", reg_year = "",
-            mgf_year = "", price = "",kmsrunning = "";
-          int  no_of_owner = 0;
+            mgf_year = "", price = "", kmsrunning = "";
+    int no_of_owner = 0;
     EditText editbrand, editmodel, editversion, editcity, editregyr, editmgfyr, editprice, editkms, editowner;
     AutoCompleteTextView editRTOcity;
     ImageView filterimg;
@@ -56,7 +56,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     GroupVehicleRefreshAdapter mGroupVehicleRefreshAdapter;
     LinearLayoutManager mLayoutManager;
     ApiCall mApiCall;
-    int  mGroupId = 0;
+    int mGroupId = 0;
     String className = "";
     Button goSearch;
     TextView mNoData;
@@ -98,11 +98,14 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     Group Vehicle List...
      */
     private void getGroupVehicles() {
-
-        if (mTestConnection.isConnectedToInternet()) {
-            mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
-        } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        try {
+            if (mTestConnection.isConnectedToInternet()) {
+                mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -178,8 +181,8 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                             mRecyclerView.setAdapter(mGroupVehicleRefreshAdapter);
                             mGroupVehicleRefreshAdapter.notifyDataSetChanged();
                         }
-                            mSwipeRefreshLayout.setVisibility(View.VISIBLE);
-                            relativefilter.setVisibility(View.GONE);
+                        mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+                        relativefilter.setVisibility(View.GONE);
 
                     } else {
                         mNoData.setVisibility(View.VISIBLE);
@@ -390,7 +393,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                         no_of_owner = Integer.parseInt(editowner.getText().toString());
                         if (brand.equals("") && model.equals("") && version.equals("") && city.equals("") && RTOcity.equals("")
                                 && price.equals("") && reg_year.equals("") && mgf_year.equals("") && kmsrunning.equals("")
-                                && no_of_owner==0) {
+                                && no_of_owner == 0) {
                             CustomToast.customToast(getActivity(), "Enter value to search");
                         } else {
                             getGroupVehicles();
