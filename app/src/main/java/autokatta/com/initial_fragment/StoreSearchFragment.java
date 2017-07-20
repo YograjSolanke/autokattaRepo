@@ -324,19 +324,14 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
         switch (v.getId()) {
-
-
             case R.id.brand_tags:
                 getBrandTags();
                 break;
-
-
         }
         return false;
     }
 
     private void getBrandTags() {
-
         apiCall.getBrandTags("1,2");
     }
 }

@@ -237,7 +237,9 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.filterimg):
-                filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
+                if (categoryHashSet != null) {
+                    filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
+                }
                 break;
         }
     }

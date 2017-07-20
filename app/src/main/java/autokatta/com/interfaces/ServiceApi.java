@@ -824,7 +824,7 @@ public interface ServiceApi {
     Call<GetAdminVehicleResponse> getAdminAuction(@Query("VehicleID") String vehicleId, @Query("contact") String contact);
 
     //get tags For Brand
-    @GET("get_brandTags.php")
+    @GET("GetBrandTag")
     Call<BrandsTagResponse> autokattaGetBrandTags(@Query("type") String type);
 
     //add other Brand tags
