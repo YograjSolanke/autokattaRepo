@@ -63,26 +63,34 @@ public class BackgroundService extends Service {
                     ContactsContract.CommonDataKinds.Phone.NUMBER};
             Cursor people = getApplicationContext().getContentResolver().query(uri, projection, null, null, null);
 
-            int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            if (people != null) {
+                int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
 
-            people.moveToFirst();
-            do {
-                String name = people.getString(indexName);
-                String number = people.getString(indexNumber);
+                int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-                number = number.replaceAll("-", "");
-                number = number.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
+                people.moveToFirst();
+                do {
+                    Log.i("cursor", "countBackground- " + people.getCount());
+                    if (people.getCount() != 0) {
+                        String name = people.getString(indexName);
+                        String number = people.getString(indexNumber);
 
-                if (number.length() > 10)
-                    number = number.substring(number.length() - 10);
+                        number = number.replaceAll("-", "");
+                        number = number.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
 
-                if (!number.equalsIgnoreCase(getApplicationContext().getSharedPreferences(getString(R.string.my_preference)
-                        , MODE_PRIVATE).getString("loginContact", ""))) {
-                    names.add(name);
-                    numbers.add(number);
-                }
-            } while (people.moveToNext());
+                        if (number.length() > 10)
+                            number = number.substring(number.length() - 10);
+
+                        if (!number.equalsIgnoreCase(getApplicationContext().getSharedPreferences(getString(R.string.my_preference)
+                                , MODE_PRIVATE).getString("loginContact", ""))) {
+                            names.add(name);
+                            numbers.add(number);
+                        }
+                    }
+                } while (people.moveToNext());
+                people.close();
+            }
+
             if (!(numbers.size() == 0)) {
                 for (int i = 0; i < numbers.size(); i++) {
                     if (i == 0 && numberstring.equalsIgnoreCase("") && namestring.equalsIgnoreCase("")) {

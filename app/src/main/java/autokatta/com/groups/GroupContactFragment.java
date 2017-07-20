@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -198,10 +199,6 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
             String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                     ContactsContract.CommonDataKinds.Phone.NUMBER};
 
-            Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
-            int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
             GetRegisteredContactsResponse mGetRegisteredContactsResponse = (GetRegisteredContactsResponse) response.body();
             for (GetRegisteredContactsResponse.Success contactRegistered : mGetRegisteredContactsResponse.getSuccess()) {
                 contactRegistered.setContact(contactRegistered.getContact());
@@ -210,27 +207,38 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 if (contact.length() > 10)
                     contact = contact.substring(contact.length() - 10);
 
-                people.moveToFirst();
-                do {
-                    String name = people.getString(indexName);
-                    String number = people.getString(indexNumber);
+                Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
+                if (people != null) {
+                    int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
 
-                    number = number.replaceAll("-", "").replace("(", "").replace(")", "").replaceAll(" ", "");
+                    int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    people.moveToFirst();
+                    do {
+                        if (people.getCount() != 0) {
+                            String name = people.getString(indexName);
+                            String number = people.getString(indexNumber);
 
-                    if (number.length() > 10)
-                        number = number.substring(number.length() - 10);
+                            number = number.replaceAll("-", "").replace("(", "").replace(")", "").replaceAll(" ", "");
 
-                    if (contact.equalsIgnoreCase(number) && !contact.equals(mContact)) {
-                        contactRegistered.setContact(number);
-                        contactRegistered.setUsername(name);
-                        cntlist.add(contactRegistered);
-                    }
-                } while (people.moveToNext());
+                            if (number.length() > 10)
+                                number = number.substring(number.length() - 10);
+
+                            if (contact.equalsIgnoreCase(number) && !contact.equals(mContact)) {
+                                contactRegistered.setContact(number);
+                                contactRegistered.setUsername(name);
+                                cntlist.add(contactRegistered);
+                            }
+                        }
+                    } while (people.moveToNext());
+                    people.close();
+                }
             }
-            CntctListadapter = new GroupContactListAdapter(getActivity(), cntlist);
-            lv.setAdapter(CntctListadapter);
-            CntctListadapter.notifyDataSetChanged();
-
+            if (cntlist.size() != 0) {
+                CntctListadapter = new GroupContactListAdapter(getActivity(), cntlist);
+                lv.setAdapter(CntctListadapter);
+                CntctListadapter.notifyDataSetChanged();
+            } else
+                Toast.makeText(getActivity(), "no contacts found", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -238,19 +246,14 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "groupcontact");

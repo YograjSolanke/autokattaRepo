@@ -80,17 +80,20 @@ public class InviteContactFragment extends Fragment {
 
             people.moveToFirst();
             do {
-                String name = people.getString(indexName);
-                String number = people.getString(indexNumber);
+                Log.i("cursor", "countInviteContact- " + people.getCount());
+                if (people.getCount() != 0) {
+                    String name = people.getString(indexName);
+                    String number = people.getString(indexNumber);
 
-                number = number.replaceAll("-", "");
-                number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
+                    number = number.replaceAll("-", "");
+                    number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
 
-                if (number.length() > 10)
-                    number = number.substring(number.length() - 10);
+                    if (number.length() > 10)
+                        number = number.substring(number.length() - 10);
 
-                names.add(name + "=" + number);
-                numbers.add(number);
+                    names.add(name + "=" + number);
+                    numbers.add(number);
+                }
 
             } while (people.moveToNext());
             people.close();
