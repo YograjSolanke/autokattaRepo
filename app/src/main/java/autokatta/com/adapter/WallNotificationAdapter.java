@@ -669,8 +669,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         String notiId = notificationList.get(mProfileHolder.getAdapterPosition()).getActionID();
                         mProfileHolder.mUnfav.setVisibility(View.GONE);
                         mProfileHolder.mFav.setVisibility(View.VISIBLE);
-                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
-                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
+                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");
                         Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
                     }
                 });

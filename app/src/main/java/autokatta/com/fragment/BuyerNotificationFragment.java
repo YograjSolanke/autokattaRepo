@@ -560,7 +560,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 String searchid = mainList.get(finalI).getFound().get(finalJ).getSearchId();
                                 String BuyerId = mainList.get(finalI).getFound().get(finalJ).getVehicleId()
                                         + "," + searchid;
-                                mApiCall.addRemovefavouriteStatus(myContact, BuyerId, 0, "");
+                                mApiCall.addToFavorite(myContact, BuyerId, 0, "", "");
                                 favouritebuyer.setImageResource(R.drawable.fav2);
 
                                 mainList.get(finalI).getFound().get(finalJ).setFavstatus("yes");

@@ -5281,7 +5281,8 @@ Get uploaded Vehicle Buyer list
 
 
     //add remove favourite status
-    public void addRemovefavouriteStatus(String contact, String buyer_vehicle_id, int search_id, String seller_vehicle_id) {
+    public void addToFavorite(String contact, String buyer_vehicle_id, int search_id, String seller_vehicle_id,
+                              String notification_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5295,7 +5296,8 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> createbrdcstgrp = serviceApi.addRemovefavouriteStatus(contact, buyer_vehicle_id, search_id, seller_vehicle_id);
+                Call<String> createbrdcstgrp = serviceApi.autokatta_AddToFavorite(contact, buyer_vehicle_id, search_id,
+                        seller_vehicle_id, notification_id);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

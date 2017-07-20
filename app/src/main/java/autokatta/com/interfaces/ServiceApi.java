@@ -781,12 +781,13 @@ public interface ServiceApi {
                                   @Query("CallCount") String callcount);
 
 
-    //add remove favourite status
-    @POST("AddRemoveMyFavourites")
-    Call<String> addRemovefavouriteStatus(@Query("contact") String contact,
-                                          @Query("buyer_vehicle_id") String buyer_vehicle_id,
-                                          @Query("search_id") int search_id,
-                                          @Query("seller_vehicle_id") String seller_vehicle_id);
+    //add to favourite
+    @POST("AddMyFavourites")
+    Call<String> autokatta_AddToFavorite(@Query("Contact") String contact,
+                                         @Query("BuyerVehicleID") String buyer_vehicle_id,
+                                         @Query("SearchID") int search_id,
+                                         @Query("SellerVehicleID") String seller_vehicle_id,
+                                         @Query("NotificationID") String noti_id);
 
     //Save My Search
     @POST("SaveSearch")

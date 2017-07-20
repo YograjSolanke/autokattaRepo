@@ -177,7 +177,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
-                apiCall.addRemovefavouriteStatus(myContact, "", SearchId, "");
+                apiCall.addToFavorite(myContact, "", SearchId, "", "");
                 holder.favImg.setVisibility(View.INVISIBLE);
                 holder.unfavImg.setVisibility(View.VISIBLE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");

@@ -229,7 +229,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
 
                 srchid = object.getSearchId();
                 BuyerId = vehicle_id + "," + srchid;
-                apicall.addRemovefavouriteStatus(myContact, BuyerId, 0, "");
+                apicall.addToFavorite(myContact, BuyerId, 0, "", "");
                 holder.favoritebuyer.setImageResource(R.drawable.fav2);
 
                 object.setFavstatus("yes");
