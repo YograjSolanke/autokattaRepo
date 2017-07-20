@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -59,10 +60,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     EditText title;
     TextView mCategory;
     Button mSubmit;
-    List<String> list = new ArrayList<>();
-    List<String> list1 = new ArrayList<>();
-    String[] stringTitles = new String[0];
-    String[] storetitlearray = new String[0];
+    List<String> groupIdList = new ArrayList<>();
+    List<String> groupTitleList = new ArrayList<>();
+    List<String> storeIdList = new ArrayList<>();
+    List<String> storeTitleList = new ArrayList<>();
+    String[] groupTitleArray = new String[0];
+    String[] groupIdArray = new String[0];
+    String[] storeTitleArray = new String[0];
+    String[] storeIdArray = new String[0];
     String stringgroupids = "", stringstoreids = "", stringstorename = "", stringgroupname = "";
     String financests = null, exchangests = null;
     Spinner mSubType;
@@ -225,7 +230,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     radioButton1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (stringTitles.length == 0) {
+                            if (groupTitleArray.length == 0) {
                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("No Group Found");
                                 alertDialog.setMessage("Do you want to create Group...");
@@ -252,7 +257,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 });
                                 alertDialog.show();
                             } else {
-                                alertBoxToSelectExcelSheet(stringTitles);
+                                alertBoxToSelectExcelSheet(groupTitleArray);
                             }
                         }
                     });
@@ -276,7 +281,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     storeradioyes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            alertBoxToSelectStore(storetitlearray);
+                            alertBoxToSelectStore(storeTitleArray);
                         }
                     });
 
@@ -490,7 +495,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Alert Dialog
      */
-    private void alertBoxToSelectExcelSheet(final String[] stringTitles) {
+    private void alertBoxToSelectExcelSheet(final String[] groupTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
         stringgroupids = "";
@@ -501,13 +506,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         // set the dialog title
         builder.setTitle("Select Groups From Following")
                 .setCancelable(true)
-                .setMultiChoiceItems(stringTitles, null, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(groupTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
-                            mSelectedItems.add(stringTitles[which]);
-                        } else if (mSelectedItems.contains(stringTitles[which])) {
-                            mSelectedItems.remove(stringTitles[which]);
+                            mSelectedItems.add(groupTitleArray[which]);
+                        } else if (mSelectedItems.contains(groupTitleArray[which])) {
+                            mSelectedItems.remove(groupTitleArray[which]);
                         }
                     }
                 })
@@ -516,19 +521,23 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        stringgroupids = "";
+                        stringgroupname = "";
                         for (int i = 0; i < mSelectedItems.size(); i++) {
-                            for (int j = 0; j < stringTitles.length; j++) {
-                                if (mSelectedItems.get(i).equals(stringTitles[j])) {
+                            for (int j = 0; j < groupTitleArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(groupTitleArray[j])) {
                                     if (stringgroupids.equals("")) {
-                                        stringgroupids = list.get(j);
-                                        stringgroupname = stringTitles[j];
+                                        stringgroupids = groupIdList.get(j);
+                                        stringgroupname = groupTitleArray[j];
                                     } else {
-                                        stringgroupids = stringgroupids + "," + list.get(j);
-                                        stringgroupname = stringgroupname + "," + stringTitles[j];
+                                        stringgroupids = stringgroupids + "," + groupIdList.get(j);
+                                        stringgroupname = stringgroupname + "," + groupTitleArray[j];
                                     }
                                 }
                             }
                         }
+
+
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(getActivity(), "No Group Was Selected");
                             radioButton1.setChecked(false);
@@ -580,17 +589,20 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        stringstoreids = "";
+                        stringstorename = "";
+
                         for (int i = 0; i < mSelectedItems.size(); i++) {
-                            for (int j = 0; j < storetitlearray.length; j++) {
-                                if (mSelectedItems.get(i).equals(storetitlearray[j])) {
+                            for (int j = 0; j < storeTitleArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(storeTitleArray[j])) {
                                     if (stringstoreids.equals("")) {
-                                        stringstoreids = list1.get(i);
+                                        stringstoreids = storeIdList.get(j);
                                         Log.i("IF-stringstoreids", "->" + stringstoreids);
-                                        stringstorename = storetitlearray[j];
+                                        stringstorename = storeTitleArray[j];
                                     } else {
-                                        stringstoreids = stringstoreids + "," + list1.get(i);
+                                        stringstoreids = stringstoreids + "," + storeIdList.get(j);
                                         Log.i("ELSE-stringstoreids", "->" + stringstoreids);
-                                        stringstorename = stringstorename + "," + storetitlearray[j];
+                                        stringstorename = stringstorename + "," + storeTitleArray[j];
                                     }
                                 }
                             }
@@ -629,20 +641,25 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
             if (response.isSuccessful()) {
                 if (response.body() instanceof ProfileGroupResponse) {
                     Log.e("ProfileGroupResponse", "->");
-                    list.clear();
+                    groupIdList.clear();
                     ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
                     for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
-                        list.add(success.getTitle());
+                        groupIdList.add(String.valueOf(success.getId()));
+                        groupTitleList.add(success.getTitle());
                     }
-                    stringTitles = list.toArray(new String[list.size()]);
+                    groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
+                    groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
                 } else if (response.body() instanceof MyStoreResponse) {
                     Log.e("MyStoreResponse", "->");
-                    list1.clear();
+                    storeIdList.clear();
                     MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
                     for (MyStoreResponse.Success success : myStoreResponse.getSuccess()) {
-                        list1.add(success.getName());
+                        storeIdList.add(String.valueOf(success.getId()));
+                        storeTitleList.add(success.getName());
                     }
-                    storetitlearray = list1.toArray(new String[list1.size()]);
+                    Log.i("Data", "storIds -" + storeIdList);
+                    storeTitleArray = storeTitleList.toArray(new String[storeTitleList.size()]);
+                    storeIdArray = storeIdList.toArray(new String[storeIdList.size()]);
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
                     Log.e("GetVehicleTypes", "->");
                     mSubTypeList.clear();
@@ -1227,6 +1244,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     CustomToast.customToast(getActivity(), "Brand and Model are compulsory");
                 } else {
 
+                    Log.i("Data", "GroupIds" + stringgroupids);
+                    Log.i("Data", "GroupNames" + stringgroupname);
+                    Log.i("Data", "StoreIds" + stringstoreids);
+                    Log.i("Data", "StoreNames" + stringstorename);
+
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brandId", brandId).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brandName", brandstr).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_modelId", modelId).apply();
@@ -1265,9 +1287,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Kms", strKms).apply();
 
 
-                    /*FragmentManager manager = getFragmentManager();
+                    FragmentManager manager = getFragmentManager();
                     FragmentTransaction mTransaction = manager.beginTransaction();
-                    mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();*/
+                    mTransaction.replace(R.id.vehicle_upload_container, new SubTypeFragment()).addToBackStack("title").commit();
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.vehicle_upload_container, new SubTypeFragment(), "title")
                             .addToBackStack("title")
