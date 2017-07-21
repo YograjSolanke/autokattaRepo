@@ -1,15 +1,9 @@
 package autokatta.com.app_info;
 
-import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.Nullable;
 
-import com.codemybrainsout.onboarder.AhoyOnboarderActivity;
-import com.codemybrainsout.onboarder.AhoyOnboarderCard;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.github.paolorotolo.appintro.AppIntro;
 
 import autokatta.com.R;
 
@@ -17,7 +11,47 @@ import autokatta.com.R;
  * Created by ak-001 on 5/7/17.
  */
 
-public class UploadVehicleAppIntro extends AhoyOnboarderActivity {
+public class UploadVehicleAppIntro extends AppIntro {
+    @Override
+    public void init(@Nullable Bundle savedInstanceState) {
+//adding the three slides for introduction app you can ad as many you needed
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_one));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_one));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_one));
+
+        // Show and Hide Skip and Done buttons
+        showStatusBar(false);
+        showSkipButton(false);
+
+        // Turn vibration on and set intensity
+        // You will need to add VIBRATE permission in Manifest file
+        setVibrate(true);
+        setVibrateIntensity(30);
+
+        //Add animation to the intro slider
+        setDepthAnimation();
+    }
+
+    @Override
+    public void onSkipPressed() {
+
+    }
+
+    @Override
+    public void onNextPressed() {
+
+    }
+
+    @Override
+    public void onDonePressed() {
+        finish();
+    }
+
+    @Override
+    public void onSlideChanged() {
+
+    }
+/* extends AhoyOnboarderActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,5 +98,5 @@ public class UploadVehicleAppIntro extends AhoyOnboarderActivity {
         //Toast.makeText(this, "Finish Pressed", Toast.LENGTH_SHORT).show();
         finish();
         //startActivity(new Intent(getApplicationContext(), SolidBackgroundExampleActivity.class));
-    }
+    }*/
 }
