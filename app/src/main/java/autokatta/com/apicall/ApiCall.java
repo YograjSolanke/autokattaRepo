@@ -5097,7 +5097,7 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                UpdateProfileRequest updateProfileRequest=new UpdateProfileRequest( regID,  emialID,  city,  profession,  subProfession,  website,  companyName,  designation,  skills);
+                UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(regID, emialID, city, profession, subProfession, website, companyName, designation, skills);
                 Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(updateProfileRequest);
                 setVehiclePrivacy.enqueue(new Callback<String>() {
                     @Override
@@ -5138,7 +5138,7 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                UpdateProfileRequest updateProfileRequest=new UpdateProfileRequest(regID, profilePicture, userName);
+                UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(regID, profilePicture, userName);
                 Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateUserName(updateProfileRequest);
                 setVehiclePrivacy.enqueue(new Callback<String>() {
                     @Override
@@ -5280,7 +5280,7 @@ Get uploaded Vehicle Buyer list
     }
 
 
-    //add remove favourite status
+    //add to favourite
     public void addToFavorite(String contact, String buyer_vehicle_id, int search_id, String seller_vehicle_id,
                               int notification_id) {
         try {
@@ -5297,6 +5297,43 @@ Get uploaded Vehicle Buyer list
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> createbrdcstgrp = serviceApi.autokatta_AddToFavorite(contact, buyer_vehicle_id, search_id,
+                        seller_vehicle_id, notification_id);
+                createbrdcstgrp.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Remove from favourite
+    public void removeFromFavorite(String contact, String buyer_vehicle_id, int search_id, String seller_vehicle_id,
+                                   int notification_id) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> createbrdcstgrp = serviceApi.autokatta_RemoveFromFavorite(contact, buyer_vehicle_id, search_id,
                         seller_vehicle_id, notification_id);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override

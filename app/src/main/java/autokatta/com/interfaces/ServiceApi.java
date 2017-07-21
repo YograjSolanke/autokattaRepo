@@ -737,12 +737,12 @@ public interface ServiceApi {
 
     //Update Profile
     @POST("UpdateProfile")
-    Call<String> _autokattaUpdateProfile(UpdateProfileRequest updateProfileRequest);
+    Call<String> _autokattaUpdateProfile(@Body UpdateProfileRequest updateProfileRequest);
 
 
     //Update Profile Username And Image
     @POST("UpdateProfile")
-    Call<String> _autokattaUpdateUserName(UpdateProfileRequest updateProfileRequest);
+    Call<String> _autokattaUpdateUserName(@Body UpdateProfileRequest updateProfileRequest);
 
     //Update Profile
     @GET("GetColors")
@@ -788,6 +788,14 @@ public interface ServiceApi {
                                          @Query("SearchID") int search_id,
                                          @Query("SellerVehicleID") String seller_vehicle_id,
                                          @Query("NotificationID") int noti_id);
+
+    //Remove to favourite
+    @POST("RemoveMyFavourites")
+    Call<String> autokatta_RemoveFromFavorite(@Query("Contact") String contact,
+                                              @Query("BuyerVehicleID") String buyer_vehicle_id,
+                                              @Query("SearchID") int search_id,
+                                              @Query("SellerVehicleID") String seller_vehicle_id,
+                                              @Query("NotificationID") int noti_id);
 
     //Save My Search
     @POST("SaveSearch")
