@@ -188,14 +188,15 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 builder1.setIcon(R.drawable.hdlogo);
                 builder1.setView(mViewDialogOtp);
 
-                if (!dp.equals("")) {
+                if (dp==null || dp=="null") {
+                    img.setBackgroundResource(R.drawable.hdlogo);
+
+                } else {
                     Glide.with(UserProfile.this)
                             .load(dp_path)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(img);
-                } else {
-                    img.setBackgroundResource(R.drawable.hdlogo);
                 }
                 img.setOnClickListener(new OnClickListener() {
                     @Override

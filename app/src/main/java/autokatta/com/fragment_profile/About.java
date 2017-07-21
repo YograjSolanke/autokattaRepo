@@ -179,11 +179,14 @@ public class About extends Fragment implements RequestNotifier {
                         mContact.setText(contact);
                         Log.i("RegId-->","   --->"+RegId);
                         Log.i("SUBProfession-->","   --->"+subProfession);
-                        if (!subProfession.equalsIgnoreCase("Select Category")) {
+                        if (subProfession==null || subProfession.equalsIgnoreCase("Select Category")) {
+                            msubprofession.setText("NA");
+                        }else
+                        {
                             msubprofession.setText("Sub Profession- "+subProfession);
                         }
                         mProfession.setText(profession);
-                        if (!profession.equalsIgnoreCase("Student"))
+                        if (profession!="Student" || !profession.equalsIgnoreCase("Student"))
                         {
                             msubprofession.setVisibility(View.VISIBLE);
                         }else
@@ -315,7 +318,7 @@ public class About extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (!str.equals("")) {
-            if (str.equals("Success_update_profile")) {
+            if (str.equals("success_update")) {
                 CustomToast.customToast(getActivity(), "Profile Updated");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
              /*   mCity.setEnabled(false);
