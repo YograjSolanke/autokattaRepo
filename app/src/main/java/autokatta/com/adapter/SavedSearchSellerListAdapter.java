@@ -286,7 +286,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
                 VehiId = object.getVehicleId();
                 SellerId = search_id + "," + VehiId;
 
-                apiCall.addToFavorite(myContact, "", 0, SellerId, "");
+                apiCall.addToFavorite(myContact, "", 0, SellerId, 0);
                 holder.favSeller.setImageResource(R.drawable.fav2);
 
                 object.setFavstatus("yes");

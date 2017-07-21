@@ -5282,7 +5282,7 @@ Get uploaded Vehicle Buyer list
 
     //add remove favourite status
     public void addToFavorite(String contact, String buyer_vehicle_id, int search_id, String seller_vehicle_id,
-                              String notification_id) {
+                              int notification_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion

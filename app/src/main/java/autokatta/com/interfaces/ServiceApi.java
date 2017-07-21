@@ -787,7 +787,7 @@ public interface ServiceApi {
                                          @Query("BuyerVehicleID") String buyer_vehicle_id,
                                          @Query("SearchID") int search_id,
                                          @Query("SellerVehicleID") String seller_vehicle_id,
-                                         @Query("NotificationID") String noti_id);
+                                         @Query("NotificationID") int noti_id);
 
     //Save My Search
     @POST("SaveSearch")

@@ -633,7 +633,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 String SellerId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId()
                                         + "," + VehiId;
 
-                                mApiCall.addToFavorite(myContact, "", 0, SellerId, "");
+                                mApiCall.addToFavorite(myContact, "", 0, SellerId, 0);
                                 mFavimg.setImageResource(R.drawable.fav2);
 
                                 mainList.get(finalI).getMatchedResult().get(finalJ).setFavstatus("yes");

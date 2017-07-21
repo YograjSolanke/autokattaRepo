@@ -51,10 +51,19 @@ public class WallResponse {
 
 
         public class WallNotification {
+            private String layoutType;
+
+            public String getLayoutType() {
+                return layoutType;
+            }
+
+            public void setLayoutType(String layoutType) {
+                this.layoutType = layoutType;
+            }
 
             @SerializedName("ActionID")
             @Expose
-            private String actionID;
+            private int actionID;
             @SerializedName("Layout")
             @Expose
             private String layout;
@@ -96,10 +105,10 @@ public class WallResponse {
             private String receiverCity;
             @SerializedName("ReceiverLikeCount")
             @Expose
-            private String receiverLikeCount;
+            private int receiverLikeCount;
             @SerializedName("ReceiverFollowCount")
             @Expose
-            private String receiverFollowCount;
+            private int receiverFollowCount;
             @SerializedName("ReceiverLikeStatus")
             @Expose
             private String receiverLikeStatus;
@@ -108,7 +117,7 @@ public class WallResponse {
             private String receiverFollowStatus;
             @SerializedName("StatusID")
             @Expose
-            private String statusID;
+            private int statusID;
             @SerializedName("StatusLikeStatus")
             @Expose
             private String statusLikeStatus;
@@ -126,13 +135,13 @@ public class WallResponse {
             private String upVehicleFollowStatus;
             @SerializedName("UploadVehicleID")
             @Expose
-            private String uploadVehicleID;
+            private int uploadVehicleID;
             @SerializedName("UpVehicleLikeCount")
             @Expose
-            private String upVehicleLikeCount;
+            private int upVehicleLikeCount;
             @SerializedName("UpVehicleFollowCount")
             @Expose
-            private String upVehicleFollowCount;
+            private int upVehicleFollowCount;
             @SerializedName("UpVehicleContact")
             @Expose
             private String upVehicleContact;
@@ -213,10 +222,10 @@ public class WallResponse {
             private String senderCity;
             @SerializedName("SenderLikeCount")
             @Expose
-            private String senderLikeCount;
+            private int senderLikeCount;
             @SerializedName("SenderFollowCount")
             @Expose
-            private String senderFollowCount;
+            private int senderFollowCount;
             @SerializedName("SenderLikeStatus")
             @Expose
             private String senderLikeStatus;
@@ -231,16 +240,16 @@ public class WallResponse {
             private String storeFollowStatus;
             @SerializedName("StoreRating")
             @Expose
-            private String storeRating;
+            private int storeRating;
             @SerializedName("StoreID")
             @Expose
-            private String storeID;
+            private int storeID;
             @SerializedName("StoreLikeCount")
             @Expose
-            private String storeLikeCount;
+            private int storeLikeCount;
             @SerializedName("StoreFollowCount")
             @Expose
-            private String storeFollowCount;
+            private int storeFollowCount;
             @SerializedName("StoreContact")
             @Expose
             private String storeContact;
@@ -270,7 +279,7 @@ public class WallResponse {
             private String groupVehicles;
             @SerializedName("GroupID")
             @Expose
-            private String groupID;
+            private int groupID;
             @SerializedName("GroupName")
             @Expose
             private String groupName;
@@ -288,13 +297,13 @@ public class WallResponse {
             private String productFollowStatus;
             @SerializedName("ProductID")
             @Expose
-            private String productID;
+            private int productID;
             @SerializedName("ProductLikeCount")
             @Expose
-            private String productLikeCount;
+            private int productLikeCount;
             @SerializedName("ProductFollowCount")
             @Expose
-            private String productFollowCount;
+            private int productFollowCount;
             @SerializedName("ProductName")
             @Expose
             private String productName;
@@ -312,13 +321,13 @@ public class WallResponse {
             private String serviceFollowStatus;
             @SerializedName("ServiceID")
             @Expose
-            private String serviceID;
+            private int serviceID;
             @SerializedName("ServiceLikeCount")
             @Expose
-            private String serviceLikeCount;
+            private int serviceLikeCount;
             @SerializedName("ServiceFollowCount")
             @Expose
-            private String serviceFollowCount;
+            private int serviceFollowCount;
             @SerializedName("ServiceName")
             @Expose
             private String serviceName;
@@ -330,7 +339,7 @@ public class WallResponse {
             private String serviceImage;
             @SerializedName("AuctionID")
             @Expose
-            private String auctionID;
+            private int auctionID;
             @SerializedName("ActionTitle")
             @Expose
             private String actionTitle;
@@ -348,26 +357,16 @@ public class WallResponse {
             private String auctionType;
             @SerializedName("GoingCount")
             @Expose
-            private String goingCount;
+            private int goingCount;
             @SerializedName("IgnoreCount")
             @Expose
-            private String ignoreCount;
+            private int ignoreCount;
 
-            private String layoutType;
-
-            public String getLayoutType() {
-                return layoutType;
-            }
-
-            public void setLayoutType(String layoutType) {
-                this.layoutType = layoutType;
-            }
-
-            public String getActionID() {
+            public int getActionID() {
                 return actionID;
             }
 
-            public void setActionID(String actionID) {
+            public void setActionID(int actionID) {
                 this.actionID = actionID;
             }
 
@@ -475,19 +474,19 @@ public class WallResponse {
                 this.receiverCity = receiverCity;
             }
 
-            public String getReceiverLikeCount() {
+            public int getReceiverLikeCount() {
                 return receiverLikeCount;
             }
 
-            public void setReceiverLikeCount(String receiverLikeCount) {
+            public void setReceiverLikeCount(int receiverLikeCount) {
                 this.receiverLikeCount = receiverLikeCount;
             }
 
-            public String getReceiverFollowCount() {
+            public int getReceiverFollowCount() {
                 return receiverFollowCount;
             }
 
-            public void setReceiverFollowCount(String receiverFollowCount) {
+            public void setReceiverFollowCount(int receiverFollowCount) {
                 this.receiverFollowCount = receiverFollowCount;
             }
 
@@ -507,11 +506,11 @@ public class WallResponse {
                 this.receiverFollowStatus = receiverFollowStatus;
             }
 
-            public String getStatusID() {
+            public int getStatusID() {
                 return statusID;
             }
 
-            public void setStatusID(String statusID) {
+            public void setStatusID(int statusID) {
                 this.statusID = statusID;
             }
 
@@ -555,27 +554,27 @@ public class WallResponse {
                 this.upVehicleFollowStatus = upVehicleFollowStatus;
             }
 
-            public String getUploadVehicleID() {
+            public int getUploadVehicleID() {
                 return uploadVehicleID;
             }
 
-            public void setUploadVehicleID(String uploadVehicleID) {
+            public void setUploadVehicleID(int uploadVehicleID) {
                 this.uploadVehicleID = uploadVehicleID;
             }
 
-            public String getUpVehicleLikeCount() {
+            public int getUpVehicleLikeCount() {
                 return upVehicleLikeCount;
             }
 
-            public void setUpVehicleLikeCount(String upVehicleLikeCount) {
+            public void setUpVehicleLikeCount(int upVehicleLikeCount) {
                 this.upVehicleLikeCount = upVehicleLikeCount;
             }
 
-            public String getUpVehicleFollowCount() {
+            public int getUpVehicleFollowCount() {
                 return upVehicleFollowCount;
             }
 
-            public void setUpVehicleFollowCount(String upVehicleFollowCount) {
+            public void setUpVehicleFollowCount(int upVehicleFollowCount) {
                 this.upVehicleFollowCount = upVehicleFollowCount;
             }
 
@@ -787,19 +786,19 @@ public class WallResponse {
                 this.senderCity = senderCity;
             }
 
-            public String getSenderLikeCount() {
+            public int getSenderLikeCount() {
                 return senderLikeCount;
             }
 
-            public void setSenderLikeCount(String senderLikeCount) {
+            public void setSenderLikeCount(int senderLikeCount) {
                 this.senderLikeCount = senderLikeCount;
             }
 
-            public String getSenderFollowCount() {
+            public int getSenderFollowCount() {
                 return senderFollowCount;
             }
 
-            public void setSenderFollowCount(String senderFollowCount) {
+            public void setSenderFollowCount(int senderFollowCount) {
                 this.senderFollowCount = senderFollowCount;
             }
 
@@ -835,35 +834,35 @@ public class WallResponse {
                 this.storeFollowStatus = storeFollowStatus;
             }
 
-            public String getStoreRating() {
+            public int getStoreRating() {
                 return storeRating;
             }
 
-            public void setStoreRating(String storeRating) {
+            public void setStoreRating(int storeRating) {
                 this.storeRating = storeRating;
             }
 
-            public String getStoreID() {
+            public int getStoreID() {
                 return storeID;
             }
 
-            public void setStoreID(String storeID) {
+            public void setStoreID(int storeID) {
                 this.storeID = storeID;
             }
 
-            public String getStoreLikeCount() {
+            public int getStoreLikeCount() {
                 return storeLikeCount;
             }
 
-            public void setStoreLikeCount(String storeLikeCount) {
+            public void setStoreLikeCount(int storeLikeCount) {
                 this.storeLikeCount = storeLikeCount;
             }
 
-            public String getStoreFollowCount() {
+            public int getStoreFollowCount() {
                 return storeFollowCount;
             }
 
-            public void setStoreFollowCount(String storeFollowCount) {
+            public void setStoreFollowCount(int storeFollowCount) {
                 this.storeFollowCount = storeFollowCount;
             }
 
@@ -939,11 +938,11 @@ public class WallResponse {
                 this.groupVehicles = groupVehicles;
             }
 
-            public String getGroupID() {
+            public int getGroupID() {
                 return groupID;
             }
 
-            public void setGroupID(String groupID) {
+            public void setGroupID(int groupID) {
                 this.groupID = groupID;
             }
 
@@ -987,27 +986,27 @@ public class WallResponse {
                 this.productFollowStatus = productFollowStatus;
             }
 
-            public String getProductID() {
+            public int getProductID() {
                 return productID;
             }
 
-            public void setProductID(String productID) {
+            public void setProductID(int productID) {
                 this.productID = productID;
             }
 
-            public String getProductLikeCount() {
+            public int getProductLikeCount() {
                 return productLikeCount;
             }
 
-            public void setProductLikeCount(String productLikeCount) {
+            public void setProductLikeCount(int productLikeCount) {
                 this.productLikeCount = productLikeCount;
             }
 
-            public String getProductFollowCount() {
+            public int getProductFollowCount() {
                 return productFollowCount;
             }
 
-            public void setProductFollowCount(String productFollowCount) {
+            public void setProductFollowCount(int productFollowCount) {
                 this.productFollowCount = productFollowCount;
             }
 
@@ -1051,27 +1050,27 @@ public class WallResponse {
                 this.serviceFollowStatus = serviceFollowStatus;
             }
 
-            public String getServiceID() {
+            public int getServiceID() {
                 return serviceID;
             }
 
-            public void setServiceID(String serviceID) {
+            public void setServiceID(int serviceID) {
                 this.serviceID = serviceID;
             }
 
-            public String getServiceLikeCount() {
+            public int getServiceLikeCount() {
                 return serviceLikeCount;
             }
 
-            public void setServiceLikeCount(String serviceLikeCount) {
+            public void setServiceLikeCount(int serviceLikeCount) {
                 this.serviceLikeCount = serviceLikeCount;
             }
 
-            public String getServiceFollowCount() {
+            public int getServiceFollowCount() {
                 return serviceFollowCount;
             }
 
-            public void setServiceFollowCount(String serviceFollowCount) {
+            public void setServiceFollowCount(int serviceFollowCount) {
                 this.serviceFollowCount = serviceFollowCount;
             }
 
@@ -1099,11 +1098,11 @@ public class WallResponse {
                 this.serviceImage = serviceImage;
             }
 
-            public String getAuctionID() {
+            public int getAuctionID() {
                 return auctionID;
             }
 
-            public void setAuctionID(String auctionID) {
+            public void setAuctionID(int auctionID) {
                 this.auctionID = auctionID;
             }
 
@@ -1147,19 +1146,19 @@ public class WallResponse {
                 this.auctionType = auctionType;
             }
 
-            public String getGoingCount() {
+            public int getGoingCount() {
                 return goingCount;
             }
 
-            public void setGoingCount(String goingCount) {
+            public void setGoingCount(int goingCount) {
                 this.goingCount = goingCount;
             }
 
-            public String getIgnoreCount() {
+            public int getIgnoreCount() {
                 return ignoreCount;
             }
 
-            public void setIgnoreCount(String ignoreCount) {
+            public void setIgnoreCount(int ignoreCount) {
                 this.ignoreCount = ignoreCount;
             }
     /*@SerializedName("Success")

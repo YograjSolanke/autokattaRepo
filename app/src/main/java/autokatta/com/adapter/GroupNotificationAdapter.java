@@ -185,7 +185,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                     @Override
                     public void onClick(View v) {
                         //Unfavorite web service
-                        String notiId = groupNotiList.get(mGroupHolder.getAdapterPosition()).getActionID();
+                        int notiId = groupNotiList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupFavourite.setVisibility(View.GONE);
                         mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);
                         /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
@@ -198,7 +198,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                     @Override
                     public void onClick(View v) {
                         //Favorite web service
-                        String notiId = groupNotiList.get(mGroupHolder.getAdapterPosition()).getActionID();
+                        int notiId = groupNotiList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupUnFav.setVisibility(View.GONE);
                         mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
                         /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
