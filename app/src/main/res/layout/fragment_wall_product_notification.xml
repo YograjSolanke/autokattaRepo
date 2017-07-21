@@ -104,8 +104,7 @@
                     android:id="@+id/rating_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/fav_layout"
-                    android:layout_toEndOf="@+id/relContact">
+                    android:layout_below="@+id/relContact">
 
                     <RatingBar
                         android:id="@+id/product_rating"

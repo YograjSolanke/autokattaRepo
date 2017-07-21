@@ -61,7 +61,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         allResponseList = responseList;
         mApiCall = new ApiCall(mActivity, this);
         mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "7841023392");
+                getString("loginContact", "");
     }
 
     /*
@@ -567,7 +567,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         // Just as an example, return 0 or 2 depending on position
         // Note that unlike in ListView adapters, types don't have to be contiguous
         //return position % 2 * 2;
-        return allResponseList.get(position).getLayoutNo();
+        return Integer.parseInt(allResponseList.get(position).getLayoutNo());
     }
 
     @Override
@@ -701,12 +701,12 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         mProfileHolder.mLike.setVisibility(View.GONE);
                         mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
                         mApiCall.UnLike(mLoginContact, otherContact, "1", 0, 0, 0, 0, 0, 0, 0);
-                        profile_likecountint = Integer.parseInt(allResponseList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount());
+                        profile_likecountint = allResponseList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount();
                         profile_likecountint = profile_likecountint - 1;
-                        mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
+                        mProfileHolder.mLikes.setText("Likes(" + profile_likecountint + ")");
                         /*storeLikeCount = String.valueOf(profile_likecountint);
                         likeUnlike.setCount(String.valueOf(profile_likecountint));*/
-                        allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikecount(String.valueOf(profile_likecountint));
+                        allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikecount(profile_likecountint);
                         allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikestatus("no");
                     }
                 });
@@ -719,12 +719,12 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         mProfileHolder.mUnlike.setVisibility(View.GONE);
                         mProfileHolder.mLike.setVisibility(View.VISIBLE);
                         mApiCall.Like(mLoginContact, otherContact, "1", 0, 0, 0, 0, 0, 0, 0);
-                        profile_likecountint = Integer.parseInt(allResponseList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount());
+                        profile_likecountint = allResponseList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount();
                         profile_likecountint = profile_likecountint + 1;
-                        mProfileHolder.mLikes.setText(String.valueOf("Likes(" + profile_likecountint + ")"));
+                        mProfileHolder.mLikes.setText("Likes(" + profile_likecountint + ")");
                         /*storeLikeCount = String.valueOf(profile_likecountint);
                         likeUnlike.setCount(String.valueOf(profile_likecountint));*/
-                        allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikecount(String.valueOf(profile_likecountint));
+                        allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikecount(profile_likecountint);
                         allResponseList.get(mProfileHolder.getAdapterPosition()).setSenderlikestatus("yes");
                     }
                 });
@@ -743,7 +743,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
                         //Unfavorite web service
-                        String notiId = allResponseList.get(mProfileHolder.getAdapterPosition()).getFavid();
+                        int notiId = allResponseList.get(mProfileHolder.getAdapterPosition()).getFavid();
 
                         /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
                         notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
@@ -861,8 +861,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         if (objAllResponse.getStorelikestatus().equalsIgnoreCase("no")) {
 
 
-                            String storelikecountstr = objAllResponse.getStorelikecount();
-                            storelikecountint = Integer.parseInt(storelikecountstr);
+                            int storelikecountstr = objAllResponse.getStorelikecount();
+                            storelikecountint = storelikecountstr;
 
                             mStoreHolder.mLike.setColorFilter(R.color.black); // black Tint
 
@@ -877,7 +877,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             mApiCall.Like(mLoginContact, mOtherContact, "2", store_id, 0, 0, 0, 0, 0, 0);
                             storelikecountint++;
 
-                            objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
+                            objAllResponse.setStorelikecount(storelikecountint);
 
                             mStoreHolder.mLikes.setText("Likes(" + storelikecountint + ")");
                             // allResponseList.get(position).storelikestatusld.toString();
@@ -885,8 +885,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             objAllResponse.setStorelikestatus("yes");
                             allResponseList.set(mStoreHolder.getAdapterPosition(), objAllResponse);
                         } else {
-                            String storelikecountstr = objAllResponse.getStorelikecount();
-                            storelikecountint = Integer.parseInt(storelikecountstr);
+                            int storelikecountstr = objAllResponse.getStorelikecount();
+                            storelikecountint = storelikecountstr;
 
                             mStoreHolder.mLike.setColorFilter(R.color.button_grey); // black Tint
 
@@ -901,7 +901,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                             mApiCall.UnLike(mLoginContact, mOtherContact, "2", store_id, 0, 0, 0, 0, 0, 0);
                             storelikecountint--;
 
-                            objAllResponse.setStorelikecount(String.valueOf(storelikecountint));
+                            objAllResponse.setStorelikecount(storelikecountint);
 
                             mStoreHolder.mLikes.setText("Likes(" + storelikecountint + ")");
                             // allResponseList.get(position).storelikestatusld.toString();

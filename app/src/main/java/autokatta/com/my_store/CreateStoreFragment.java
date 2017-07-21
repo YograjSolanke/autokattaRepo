@@ -177,7 +177,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         if (callFrom.equals("StoreViewActivity")) {
             store_id = bundle.getInt("store_id");
-            create.setText("update");
+            //create.setText("update");
             getActivity().setTitle("Update Store");
             // textstore.setText("Update Store");
 

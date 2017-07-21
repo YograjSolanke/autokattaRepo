@@ -122,8 +122,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
 
 
                 FavouriteResponse favouriteResponse = (FavouriteResponse) response.body();
-                nextCount = favouriteResponse.getSuccess().getNext();
-                strTime = favouriteResponse.getSuccess().getTime();
 
                 //Wall Notification
                 //successNotifiList.clear();
@@ -132,7 +130,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
 
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
 
-                        favouriteAllResponse.setLayoutNo(Integer.parseInt(successNotification.getLayout()));
+                        favouriteAllResponse.setLayoutNo(successNotification.getLayout());
                         favouriteAllResponse.setSender(successNotification.getSender());
                         favouriteAllResponse.setAction(successNotification.getAction());
                         favouriteAllResponse.setReceiver(successNotification.getReceiver());
@@ -143,6 +141,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setStoreId(successNotification.getStoreId());
                         favouriteAllResponse.setGroupId(successNotification.getGroupId());
 
+                        favouriteAllResponse.setSendername(successNotification.getSendername());
                         favouriteAllResponse.setSenderprofession(successNotification.getSenderprofession());
                         favouriteAllResponse.setSenderwebsite(successNotification.getSenderwebsite());
                         favouriteAllResponse.setSendercity(successNotification.getSendercity());
@@ -192,7 +191,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setServicefollowstatus(successNotification.getServicefollowstatus());
                         favouriteAllResponse.setServicelikecount(successNotification.getServicelikecount());
                         favouriteAllResponse.setServicefollowcount(successNotification.getServicefollowcount());
-                        favouriteAllResponse.setServiceName(successNotification.getServiceName());
+                        favouriteAllResponse.setServiceName(successNotification.getSeriveName());
                         favouriteAllResponse.setServiceType(successNotification.getServiceType());
                         favouriteAllResponse.setServiceimages(successNotification.getServiceimages());
 
@@ -215,7 +214,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                     for (FavouriteResponse.Success.BuyerSearch successBuyerSearch : favouriteResponse.getSuccess().getBuyerSearch()) {
 
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
-                        favouriteAllResponse.setLayoutNo(111);
+                        favouriteAllResponse.setLayoutNo("111");
                         favouriteAllResponse.setFavid(successBuyerSearch.getFavid());
                         favouriteAllResponse.setVvehicleId(successBuyerSearch.getVvehicleId());
                         favouriteAllResponse.setVtitle(successBuyerSearch.getVtitle());
@@ -340,7 +339,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                     for (FavouriteResponse.Success.SellerVehicle successSellerVehicle : favouriteResponse.getSuccess().getSellerVehicle()) {
 
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
-                        favouriteAllResponse.setLayoutNo(112);
+                        favouriteAllResponse.setLayoutNo("112");
 
                         favouriteAllResponse.setFavid(successSellerVehicle.getFavid());
                         favouriteAllResponse.setVvehicleId(successSellerVehicle.getVvehicleId());
@@ -465,7 +464,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                     for (FavouriteResponse.Success.Search successSearch : favouriteResponse.getSuccess().getSearch()) {
 
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
-                        favouriteAllResponse.setLayoutNo(113);
+                        favouriteAllResponse.setLayoutNo("113");
 
                         favouriteAllResponse.setSearchId(successSearch.getSearchId());
                         favouriteAllResponse.setDate(successSearch.getDate());
@@ -506,15 +505,15 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class", "Favourite Notification");
             error.printStackTrace();

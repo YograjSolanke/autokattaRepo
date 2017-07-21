@@ -15,6 +15,10 @@ public class FavouriteResponse {
     @Expose
     private Success success;
 
+    @SerializedName("Error")
+    @Expose
+    private Object error;
+
     public Success getSuccess() {
         return success;
     }
@@ -23,34 +27,31 @@ public class FavouriteResponse {
         this.success = success;
     }
 
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
     public class Success {
 
-        @SerializedName("next")
-        @Expose
-        private String next;
         @SerializedName("Notification")
         @Expose
         private List<Notification> notification = null;
+
         @SerializedName("Search")
         @Expose
         private List<Search> search = null;
+
         @SerializedName("SellerVehicle")
         @Expose
         private List<SellerVehicle> sellerVehicle = null;
+
         @SerializedName("BuyerSearch")
         @Expose
         private List<BuyerSearch> buyerSearch = null;
-        @SerializedName("time")
-        @Expose
-        private Double time;
-
-        public String getNext() {
-            return next;
-        }
-
-        public void setNext(String next) {
-            this.next = next;
-        }
 
         public List<Notification> getNotification() {
             return notification;
@@ -84,29 +85,20 @@ public class FavouriteResponse {
             this.buyerSearch = buyerSearch;
         }
 
-        public Double getTime() {
-            return time;
-        }
-
-        public void setTime(Double time) {
-            this.time = time;
-        }
-
-
         public class Notification {
 
-            @SerializedName("favid")
-            @Expose
-            private String favid;
             @SerializedName("id")
             @Expose
-            private String id;
-            @SerializedName("layout")
+            private int id;
+            @SerializedName("favid")
             @Expose
-            private String layout;
+            private int favid;
             @SerializedName("date")
             @Expose
             private String date;
+            @SerializedName("layout")
+            @Expose
+            private String layout;
             @SerializedName("datetime")
             @Expose
             private String datetime;
@@ -121,19 +113,22 @@ public class FavouriteResponse {
             private String receiver;
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private int vehicleId;
             @SerializedName("product_id")
             @Expose
-            private String productId;
+            private int productId;
             @SerializedName("service_id")
             @Expose
-            private String serviceId;
+            private int serviceId;
             @SerializedName("store_id")
             @Expose
             private int storeId;
             @SerializedName("group_id")
             @Expose
-            private String groupId;
+            private int groupId;
+            @SerializedName("actionDate")
+            @Expose
+            private String actionDate;
             @SerializedName("sendername")
             @Expose
             private String sendername;
@@ -151,10 +146,10 @@ public class FavouriteResponse {
             private String sendercity;
             @SerializedName("senderlikecount")
             @Expose
-            private String senderlikecount;
+            private int senderlikecount;
             @SerializedName("senderfollowcount")
             @Expose
-            private String senderfollowcount;
+            private int senderfollowcount;
             @SerializedName("senderlikestatus")
             @Expose
             private String senderlikestatus;
@@ -178,10 +173,10 @@ public class FavouriteResponse {
             private String receivercity;
             @SerializedName("receiverlikecount")
             @Expose
-            private String receiverlikecount;
+            private int receiverlikecount;
             @SerializedName("receiverfollowcount")
             @Expose
-            private String receiverfollowcount;
+            private int receiverfollowcount;
             @SerializedName("receiverlikestatus")
             @Expose
             private String receiverlikestatus;
@@ -196,16 +191,13 @@ public class FavouriteResponse {
             private String storefollowstatus;
             @SerializedName("storerating")
             @Expose
-            private String storerating;
+            private int storerating;
             @SerializedName("storelikecount")
             @Expose
-            private String storelikecount;
+            private int storelikecount;
             @SerializedName("storefollowcount")
             @Expose
-            private String storefollowcount;
-            @SerializedName("storetiming")
-            @Expose
-            private String storetiming;
+            private int storefollowcount;
             @SerializedName("store_contact")
             @Expose
             private String storeContact;
@@ -227,9 +219,12 @@ public class FavouriteResponse {
             @SerializedName("store_location")
             @Expose
             private String storeLocation;
+            @SerializedName("storetiming")
+            @Expose
+            private String storetiming;
             @SerializedName("group_vehicles")
             @Expose
-            private String groupVehicles;
+            private int groupVehicles;
             @SerializedName("group_name")
             @Expose
             private String groupName;
@@ -238,7 +233,7 @@ public class FavouriteResponse {
             private String groupImage;
             @SerializedName("group_members")
             @Expose
-            private String groupMembers;
+            private int groupMembers;
             @SerializedName("productlikestatus")
             @Expose
             private String productlikestatus;
@@ -247,10 +242,10 @@ public class FavouriteResponse {
             private String productfollowstatus;
             @SerializedName("productlikecount")
             @Expose
-            private String productlikecount;
+            private int productlikecount;
             @SerializedName("productfollowcount")
             @Expose
-            private String productfollowcount;
+            private int productfollowcount;
             @SerializedName("product_name")
             @Expose
             private String productName;
@@ -268,13 +263,13 @@ public class FavouriteResponse {
             private String servicefollowstatus;
             @SerializedName("servicelikecount")
             @Expose
-            private String servicelikecount;
+            private int servicelikecount;
             @SerializedName("servicefollowcount")
             @Expose
-            private String servicefollowcount;
+            private int servicefollowcount;
             @SerializedName("serive_name")
             @Expose
-            private String serviceName;
+            private String seriveName;
             @SerializedName("service_type")
             @Expose
             private String serviceType;
@@ -289,10 +284,10 @@ public class FavouriteResponse {
             private String vehiclefollowstatus;
             @SerializedName("vehiclelikecount")
             @Expose
-            private String vehiclelikecount;
+            private int vehiclelikecount;
             @SerializedName("vehiclefollowcount")
             @Expose
-            private String vehiclefollowcount;
+            private int vehiclefollowcount;
             @SerializedName("VehicleContact")
             @Expose
             private String vehicleContact;
@@ -315,28 +310,20 @@ public class FavouriteResponse {
             @Expose
             private String year;
 
-            public String getFavid() {
-                return favid;
-            }
-
-            public void setFavid(String favid) {
-                this.favid = favid;
-            }
-
-            public String getId() {
+            public int getId() {
                 return id;
             }
 
-            public void setId(String id) {
+            public void setId(int id) {
                 this.id = id;
             }
 
-            public String getLayout() {
-                return layout;
+            public int getFavid() {
+                return favid;
             }
 
-            public void setLayout(String layout) {
-                this.layout = layout;
+            public void setFavid(int favid) {
+                this.favid = favid;
             }
 
             public String getDate() {
@@ -345,6 +332,14 @@ public class FavouriteResponse {
 
             public void setDate(String date) {
                 this.date = date;
+            }
+
+            public String getLayout() {
+                return layout;
+            }
+
+            public void setLayout(String layout) {
+                this.layout = layout;
             }
 
             public String getDatetime() {
@@ -379,27 +374,27 @@ public class FavouriteResponse {
                 this.receiver = receiver;
             }
 
-            public String getVehicleId() {
+            public int getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(int vehicleId) {
                 this.vehicleId = vehicleId;
             }
 
-            public String getProductId() {
+            public int getProductId() {
                 return productId;
             }
 
-            public void setProductId(String productId) {
+            public void setProductId(int productId) {
                 this.productId = productId;
             }
 
-            public String getServiceId() {
+            public int getServiceId() {
                 return serviceId;
             }
 
-            public void setServiceId(String serviceId) {
+            public void setServiceId(int serviceId) {
                 this.serviceId = serviceId;
             }
 
@@ -411,12 +406,20 @@ public class FavouriteResponse {
                 this.storeId = storeId;
             }
 
-            public String getGroupId() {
+            public int getGroupId() {
                 return groupId;
             }
 
-            public void setGroupId(String groupId) {
+            public void setGroupId(int groupId) {
                 this.groupId = groupId;
+            }
+
+            public String getActionDate() {
+                return actionDate;
+            }
+
+            public void setActionDate(String actionDate) {
+                this.actionDate = actionDate;
             }
 
             public String getSendername() {
@@ -459,19 +462,19 @@ public class FavouriteResponse {
                 this.sendercity = sendercity;
             }
 
-            public String getSenderlikecount() {
+            public int getSenderlikecount() {
                 return senderlikecount;
             }
 
-            public void setSenderlikecount(String senderlikecount) {
+            public void setSenderlikecount(int senderlikecount) {
                 this.senderlikecount = senderlikecount;
             }
 
-            public String getSenderfollowcount() {
+            public int getSenderfollowcount() {
                 return senderfollowcount;
             }
 
-            public void setSenderfollowcount(String senderfollowcount) {
+            public void setSenderfollowcount(int senderfollowcount) {
                 this.senderfollowcount = senderfollowcount;
             }
 
@@ -531,19 +534,19 @@ public class FavouriteResponse {
                 this.receivercity = receivercity;
             }
 
-            public String getReceiverlikecount() {
+            public int getReceiverlikecount() {
                 return receiverlikecount;
             }
 
-            public void setReceiverlikecount(String receiverlikecount) {
+            public void setReceiverlikecount(int receiverlikecount) {
                 this.receiverlikecount = receiverlikecount;
             }
 
-            public String getReceiverfollowcount() {
+            public int getReceiverfollowcount() {
                 return receiverfollowcount;
             }
 
-            public void setReceiverfollowcount(String receiverfollowcount) {
+            public void setReceiverfollowcount(int receiverfollowcount) {
                 this.receiverfollowcount = receiverfollowcount;
             }
 
@@ -579,36 +582,28 @@ public class FavouriteResponse {
                 this.storefollowstatus = storefollowstatus;
             }
 
-            public String getStorerating() {
+            public int getStorerating() {
                 return storerating;
             }
 
-            public void setStorerating(String storerating) {
+            public void setStorerating(int storerating) {
                 this.storerating = storerating;
             }
 
-            public String getStorelikecount() {
+            public int getStorelikecount() {
                 return storelikecount;
             }
 
-            public void setStorelikecount(String storelikecount) {
+            public void setStorelikecount(int storelikecount) {
                 this.storelikecount = storelikecount;
             }
 
-            public String getStorefollowcount() {
+            public int getStorefollowcount() {
                 return storefollowcount;
             }
 
-            public void setStorefollowcount(String storefollowcount) {
+            public void setStorefollowcount(int storefollowcount) {
                 this.storefollowcount = storefollowcount;
-            }
-
-            public String getStoretiming() {
-                return storetiming;
-            }
-
-            public void setStoretiming(String storetiming) {
-                this.storetiming = storetiming;
             }
 
             public String getStoreContact() {
@@ -667,11 +662,19 @@ public class FavouriteResponse {
                 this.storeLocation = storeLocation;
             }
 
-            public String getGroupVehicles() {
+            public String getStoretiming() {
+                return storetiming;
+            }
+
+            public void setStoretiming(String storetiming) {
+                this.storetiming = storetiming;
+            }
+
+            public int getGroupVehicles() {
                 return groupVehicles;
             }
 
-            public void setGroupVehicles(String groupVehicles) {
+            public void setGroupVehicles(int groupVehicles) {
                 this.groupVehicles = groupVehicles;
             }
 
@@ -691,11 +694,11 @@ public class FavouriteResponse {
                 this.groupImage = groupImage;
             }
 
-            public String getGroupMembers() {
+            public int getGroupMembers() {
                 return groupMembers;
             }
 
-            public void setGroupMembers(String groupMembers) {
+            public void setGroupMembers(int groupMembers) {
                 this.groupMembers = groupMembers;
             }
 
@@ -715,19 +718,19 @@ public class FavouriteResponse {
                 this.productfollowstatus = productfollowstatus;
             }
 
-            public String getProductlikecount() {
+            public int getProductlikecount() {
                 return productlikecount;
             }
 
-            public void setProductlikecount(String productlikecount) {
+            public void setProductlikecount(int productlikecount) {
                 this.productlikecount = productlikecount;
             }
 
-            public String getProductfollowcount() {
+            public int getProductfollowcount() {
                 return productfollowcount;
             }
 
-            public void setProductfollowcount(String productfollowcount) {
+            public void setProductfollowcount(int productfollowcount) {
                 this.productfollowcount = productfollowcount;
             }
 
@@ -771,28 +774,28 @@ public class FavouriteResponse {
                 this.servicefollowstatus = servicefollowstatus;
             }
 
-            public String getServicelikecount() {
+            public int getServicelikecount() {
                 return servicelikecount;
             }
 
-            public void setServicelikecount(String servicelikecount) {
+            public void setServicelikecount(int servicelikecount) {
                 this.servicelikecount = servicelikecount;
             }
 
-            public String getServicefollowcount() {
+            public int getServicefollowcount() {
                 return servicefollowcount;
             }
 
-            public void setServicefollowcount(String servicefollowcount) {
+            public void setServicefollowcount(int servicefollowcount) {
                 this.servicefollowcount = servicefollowcount;
             }
 
-            public String getServiceName() {
-                return serviceName;
+            public String getSeriveName() {
+                return seriveName;
             }
 
-            public void setServiceName(String serviceName) {
-                this.serviceName = serviceName;
+            public void setSeriveName(String seriveName) {
+                this.seriveName = seriveName;
             }
 
             public String getServiceType() {
@@ -827,19 +830,19 @@ public class FavouriteResponse {
                 this.vehiclefollowstatus = vehiclefollowstatus;
             }
 
-            public String getVehiclelikecount() {
+            public int getVehiclelikecount() {
                 return vehiclelikecount;
             }
 
-            public void setVehiclelikecount(String vehiclelikecount) {
+            public void setVehiclelikecount(int vehiclelikecount) {
                 this.vehiclelikecount = vehiclelikecount;
             }
 
-            public String getVehiclefollowcount() {
+            public int getVehiclefollowcount() {
                 return vehiclefollowcount;
             }
 
-            public void setVehiclefollowcount(String vehiclefollowcount) {
+            public void setVehiclefollowcount(int vehiclefollowcount) {
                 this.vehiclefollowcount = vehiclefollowcount;
             }
 
@@ -905,13 +908,13 @@ public class FavouriteResponse {
 
             @SerializedName("favid")
             @Expose
-            private String favid;
+            private int favid;
             @SerializedName("date")
             @Expose
             private String date;
             @SerializedName("Ssearch_id")
             @Expose
-            private String ssearchId;
+            private int ssearchId;
             @SerializedName("Scontact_no")
             @Expose
             private String scontactNo;
@@ -1001,7 +1004,7 @@ public class FavouriteResponse {
             private String skmsRunning;
             @SerializedName("Sno_of_owners")
             @Expose
-            private String snoOfOwners;
+            private int snoOfOwners;
             @SerializedName("Shypothication")
             @Expose
             private String shypothication;
@@ -1055,7 +1058,7 @@ public class FavouriteResponse {
             private String sinvoice;
             @SerializedName("Vvehicle_id")
             @Expose
-            private String vvehicleId;
+            private int vvehicleId;
             @SerializedName("Vtitle")
             @Expose
             private String vtitle;
@@ -1148,7 +1151,7 @@ public class FavouriteResponse {
             private String vHrsRunning;
             @SerializedName("Vno_of_owners")
             @Expose
-            private String vnoOfOwners;
+            private int vnoOfOwners;
             @SerializedName("Vhypothication")
             @Expose
             private String vhypothication;
@@ -1269,11 +1272,11 @@ public class FavouriteResponse {
                 this.shpCapacity = shpCapacity;
             }
 
-            public String getFavid() {
+            public int getFavid() {
                 return favid;
             }
 
-            public void setFavid(String favid) {
+            public void setFavid(int favid) {
                 this.favid = favid;
             }
 
@@ -1285,11 +1288,11 @@ public class FavouriteResponse {
                 this.date = date;
             }
 
-            public String getSsearchId() {
+            public int getSsearchId() {
                 return ssearchId;
             }
 
-            public void setSsearchId(String ssearchId) {
+            public void setSsearchId(int ssearchId) {
                 this.ssearchId = ssearchId;
             }
 
@@ -1525,11 +1528,11 @@ public class FavouriteResponse {
                 this.skmsRunning = skmsRunning;
             }
 
-            public String getSnoOfOwners() {
+            public int getSnoOfOwners() {
                 return snoOfOwners;
             }
 
-            public void setSnoOfOwners(String snoOfOwners) {
+            public void setSnoOfOwners(int snoOfOwners) {
                 this.snoOfOwners = snoOfOwners;
             }
 
@@ -1669,11 +1672,11 @@ public class FavouriteResponse {
                 this.sinvoice = sinvoice;
             }
 
-            public String getVvehicleId() {
+            public int getVvehicleId() {
                 return vvehicleId;
             }
 
-            public void setVvehicleId(String vvehicleId) {
+            public void setVvehicleId(int vvehicleId) {
                 this.vvehicleId = vvehicleId;
             }
 
@@ -1917,11 +1920,11 @@ public class FavouriteResponse {
                 this.vHrsRunning = vHrsRunning;
             }
 
-            public String getVnoOfOwners() {
+            public int getVnoOfOwners() {
                 return vnoOfOwners;
             }
 
-            public void setVnoOfOwners(String vnoOfOwners) {
+            public void setVnoOfOwners(int vnoOfOwners) {
                 this.vnoOfOwners = vnoOfOwners;
             }
 
@@ -2139,13 +2142,13 @@ public class FavouriteResponse {
 
             @SerializedName("favid")
             @Expose
-            private String favid;
+            private int favid;
             @SerializedName("date")
             @Expose
             private String date;
             @SerializedName("Vvehicle_id")
             @Expose
-            private String vvehicleId;
+            private int vvehicleId;
             @SerializedName("Vtitle")
             @Expose
             private String vtitle;
@@ -2238,7 +2241,7 @@ public class FavouriteResponse {
             private String vHrsRunning;
             @SerializedName("Vno_of_owners")
             @Expose
-            private String vnoOfOwners;
+            private int vnoOfOwners;
             @SerializedName("Vhypothication")
             @Expose
             private String vhypothication;
@@ -2319,7 +2322,7 @@ public class FavouriteResponse {
             private String senderPic;
             @SerializedName("Ssearch_id")
             @Expose
-            private String ssearchId;
+            private int ssearchId;
             @SerializedName("Scontact_no")
             @Expose
             private String scontactNo;
@@ -2409,7 +2412,7 @@ public class FavouriteResponse {
             private String skmsRunning;
             @SerializedName("Sno_of_owners")
             @Expose
-            private String snoOfOwners;
+            private int snoOfOwners;
             @SerializedName("Shypothication")
             @Expose
             private String shypothication;
@@ -2487,11 +2490,11 @@ public class FavouriteResponse {
             }
 
 
-            public String getFavid() {
+            public int getFavid() {
                 return favid;
             }
 
-            public void setFavid(String favid) {
+            public void setFavid(int favid) {
                 this.favid = favid;
             }
 
@@ -2503,11 +2506,11 @@ public class FavouriteResponse {
                 this.date = date;
             }
 
-            public String getVvehicleId() {
+            public int getVvehicleId() {
                 return vvehicleId;
             }
 
-            public void setVvehicleId(String vvehicleId) {
+            public void setVvehicleId(int vvehicleId) {
                 this.vvehicleId = vvehicleId;
             }
 
@@ -2751,11 +2754,11 @@ public class FavouriteResponse {
                 this.vHrsRunning = vHrsRunning;
             }
 
-            public String getVnoOfOwners() {
+            public int getVnoOfOwners() {
                 return vnoOfOwners;
             }
 
-            public void setVnoOfOwners(String vnoOfOwners) {
+            public void setVnoOfOwners(int vnoOfOwners) {
                 this.vnoOfOwners = vnoOfOwners;
             }
 
@@ -2967,11 +2970,11 @@ public class FavouriteResponse {
                 this.senderPic = senderPic;
             }
 
-            public String getSsearchId() {
+            public int getSsearchId() {
                 return ssearchId;
             }
 
-            public void setSsearchId(String ssearchId) {
+            public void setSsearchId(int ssearchId) {
                 this.ssearchId = ssearchId;
             }
 
@@ -3207,11 +3210,11 @@ public class FavouriteResponse {
                 this.skmsRunning = skmsRunning;
             }
 
-            public String getSnoOfOwners() {
+            public int getSnoOfOwners() {
                 return snoOfOwners;
             }
 
-            public void setSnoOfOwners(String snoOfOwners) {
+            public void setSnoOfOwners(int snoOfOwners) {
                 this.snoOfOwners = snoOfOwners;
             }
 
@@ -3357,7 +3360,7 @@ public class FavouriteResponse {
 
             @SerializedName("search_id")
             @Expose
-            private String searchId;
+            private int searchId;
             @SerializedName("date")
             @Expose
             private String date;
@@ -3390,16 +3393,16 @@ public class FavouriteResponse {
             private String yearOfManufactur;
             @SerializedName("favid")
             @Expose
-            private String favid;
+            private int favid;
             @SerializedName("images")
             @Expose
             private String images;
 
-            public String getSearchId() {
+            public int getSearchId() {
                 return searchId;
             }
 
-            public void setSearchId(String searchId) {
+            public void setSearchId(int searchId) {
                 this.searchId = searchId;
             }
 
@@ -3483,11 +3486,11 @@ public class FavouriteResponse {
                 this.yearOfManufactur = yearOfManufactur;
             }
 
-            public String getFavid() {
+            public int getFavid() {
                 return favid;
             }
 
-            public void setFavid(String favid) {
+            public void setFavid(int favid) {
                 this.favid = favid;
             }
 

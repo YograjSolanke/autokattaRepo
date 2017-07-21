@@ -615,8 +615,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         profile_likecountint = notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount();
                         profile_likecountint = profile_likecountint - 1;
                         mProfileHolder.mLikes.setText("Likes(" + profile_likecountint + ")");
-                        /*storeLikeCount = String.valueOf(profile_likecountint);
-                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
                         notificationList.get(mProfileHolder.getAdapterPosition()).setSenderLikeCount(profile_likecountint);
                         notificationList.get(mProfileHolder.getAdapterPosition()).setSenderLikeStatus("no");
                     }
@@ -633,8 +631,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         profile_likecountint = notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount();
                         profile_likecountint = profile_likecountint + 1;
                         mProfileHolder.mLikes.setText("Likes(" + profile_likecountint + ")");
-                        /*storeLikeCount = String.valueOf(profile_likecountint);
-                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
                         notificationList.get(mProfileHolder.getAdapterPosition()).setSenderLikeCount(profile_likecountint);
                         notificationList.get(mProfileHolder.getAdapterPosition()).setSenderLikeStatus("yes");
                     }
@@ -656,7 +652,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mProfileHolder.getAdapterPosition()).getActionID();
                         mProfileHolder.mFav.setVisibility(View.GONE);
                         mProfileHolder.mUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");
                         Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
                     }
@@ -846,8 +842,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupFavourite.setVisibility(View.GONE);
                         mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);
-                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
-                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
+                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
                         Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -859,8 +855,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupUnFav.setVisibility(View.GONE);
                         mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
-                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
-                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
+                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("yes");
                         Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -960,8 +956,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         product_likecountint = notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount();
                         product_likecountint = product_likecountint - 1;
                         mProductHolder.mLikes.setText("Likes(" + product_likecountint + ")");
-                        /*storeLikeCount = String.valueOf(profile_likecountint);
-                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
                         notificationList.get(mProductHolder.getAdapterPosition()).setProductLikeCount(product_likecountint);
                         notificationList.get(mProductHolder.getAdapterPosition()).setProductLikeStatus("no");
                     }
@@ -980,8 +974,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         product_likecountint = notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount();
                         product_likecountint = product_likecountint + 1;
                         mProductHolder.mLikes.setText("Likes(" + product_likecountint + ")");
-                        /*storeLikeCount = String.valueOf(profile_likecountint);
-                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
                         notificationList.get(mProductHolder.getAdapterPosition()).setProductLikeCount(product_likecountint);
                         notificationList.get(mProductHolder.getAdapterPosition()).setProductLikeStatus("yes");
                     }
@@ -1003,8 +995,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mProductHolder.getAdapterPosition()).getActionID();
                         mProductHolder.mProductFav.setVisibility(View.GONE);
                         mProductHolder.mProductUnfav.setVisibility(View.VISIBLE);
-                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
-                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
+                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mProductHolder.getAdapterPosition()).setMyFavStatus("no");
                         Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -1016,8 +1008,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mProductHolder.getAdapterPosition()).getActionID();
                         mProductHolder.mProductUnfav.setVisibility(View.GONE);
                         mProductHolder.mProductFav.setVisibility(View.VISIBLE);
-                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
-                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
+                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mProductHolder.getAdapterPosition()).setMyFavStatus("yes");
                         Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -1211,8 +1203,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         service_likecountint = notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount();
                         service_likecountint = service_likecountint - 1;
                         mServiceHolder.mLikes.setText("Likes(" + service_likecountint + ")");
-                        /*storeLikeCount = String.valueOf(profile_likecountint);
-                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
                         notificationList.get(mServiceHolder.getAdapterPosition()).setServiceLikeCount(service_likecountint);
                         notificationList.get(mServiceHolder.getAdapterPosition()).setServiceLikeStatus("no");
                     }
@@ -1231,8 +1221,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         service_likecountint = notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount();
                         service_likecountint = service_likecountint + 1;
                         mServiceHolder.mLikes.setText("Likes(" + service_likecountint + ")");
-                        /*storeLikeCount = String.valueOf(profile_likecountint);
-                        likeUnlike.setCount(String.valueOf(profile_likecountint));*/
                         notificationList.get(mServiceHolder.getAdapterPosition()).setServiceLikeCount(service_likecountint);
                         notificationList.get(mServiceHolder.getAdapterPosition()).setServiceLikeStatus("yes");
                     }
@@ -1254,8 +1242,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mServiceHolder.getAdapterPosition()).getActionID();
                         mServiceHolder.mServiceFavourite.setVisibility(View.GONE);
                         mServiceHolder.mServiceUnfav.setVisibility(View.VISIBLE);
-                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
-                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
+                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mServiceHolder.getAdapterPosition()).setMyFavStatus("no");
                         Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -1267,8 +1255,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mServiceHolder.getAdapterPosition()).getActionID();
                         mServiceHolder.mServiceUnfav.setVisibility(View.GONE);
                         mServiceHolder.mServiceFavourite.setVisibility(View.VISIBLE);
-                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
-                        notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
+                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mServiceHolder.getAdapterPosition()).setMyFavStatus("yes");
                         Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -1453,6 +1441,16 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 //mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
                 CustomToast.customToast(mActivity, "Unliked");
+                /*mLike.setVisibility(View.GONE);
+                mUnlike.setVisibility(View.VISIBLE);*/
+                //mLikestr = "no";
+            } else if (str.equals("success_favourite")) {
+                CustomToast.customToast(mActivity, "Favorite");
+                /*mLike.setVisibility(View.GONE);
+                mUnlike.setVisibility(View.VISIBLE);*/
+                //mLikestr = "no";
+            } else if (str.equals("success_remove")) {
+                CustomToast.customToast(mActivity, "Unfavorite");
                 /*mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);*/
                 //mLikestr = "no";

@@ -9,31 +9,31 @@ public class FavouriteAllResponse {
     /*
         Notification Array variables
      */
-    private String id;
+    private int id;
     private String layout;
 
-    public int getLayoutNo() {
+    public String getLayoutNo() {
         return layoutNo;
     }
 
-    public void setLayoutNo(int layoutNo) {
+    public void setLayoutNo(String layoutNo) {
         this.layoutNo = layoutNo;
     }
 
-    private int layoutNo;
+    private String layoutNo;
     private String sender;
     private String action;
     private String receiver;
-    private String vehicleId;
-    private String productId;
-    private String serviceId;
+    private int vehicleId;
+    private int productId;
+    private int serviceId;
     private int storeId;
-    private String groupId;
+    private int groupId;
     private String senderprofession;
     private String senderwebsite;
     private String sendercity;
-    private String senderlikecount;
-    private String senderfollowcount;
+    private int senderlikecount;
+    private int senderfollowcount;
     private String senderlikestatus;
     private String senderfollowstatus;
     private String receivername;
@@ -41,15 +41,15 @@ public class FavouriteAllResponse {
     private String receiverprofession;
     private String receiverwebsite;
     private String receivercity;
-    private String receiverlikecount;
-    private String receiverfollowcount;
+    private int receiverlikecount;
+    private int receiverfollowcount;
     private String receiverlikestatus;
     private String receiverfollowstatus;
     private String storelikestatus;
     private String storefollowstatus;
-    private String storerating;
-    private String storelikecount;
-    private String storefollowcount;
+    private int storerating;
+    private int storelikecount;
+    private int storefollowcount;
     private String storetiming;
     private String storeContact;
     private String storeName;
@@ -58,46 +58,46 @@ public class FavouriteAllResponse {
     private String storeWebsite;
     private String workingDays;
     private String storeLocation;
-    private String groupVehicles;
+    private int groupVehicles;
     private String groupName;
     private String groupImage;
-    private String groupMembers;
+    private int groupMembers;
     private String productlikestatus;
     private String productfollowstatus;
-    private String productlikecount;
-    private String productfollowcount;
+    private int productlikecount;
+    private int productfollowcount;
     private String productName;
     private String productType;
     private String productimages;
     private String servicelikestatus;
     private String servicefollowstatus;
-    private String servicelikecount;
-    private String servicefollowcount;
+    private int servicelikecount;
+    private int servicefollowcount;
     private String serviceName;
     private String serviceType;
     private String serviceimages;
     private String vehiclelikestatus;
     private String vehiclefollowstatus;
-    private String vehiclelikecount;
-    private String vehiclefollowcount;
+    private int vehiclelikecount;
+    private int vehiclefollowcount;
     private String vehicleContact;
     private String title;
     private String image;
     private String year;
 
-    public String getFavid() {
+    public int getFavid() {
         return favid;
     }
 
-    public void setFavid(String favid) {
+    public void setFavid(int favid) {
         this.favid = favid;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -149,27 +149,27 @@ public class FavouriteAllResponse {
         this.receiver = receiver;
     }
 
-    public String getVehicleId() {
+    public int getVehicleId() {
         return vehicleId;
     }
 
-    public void setVehicleId(String vehicleId) {
+    public void setVehicleId(int vehicleId) {
         this.vehicleId = vehicleId;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public String getServiceId() {
+    public int getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(String serviceId) {
+    public void setServiceId(int serviceId) {
         this.serviceId = serviceId;
     }
 
@@ -181,11 +181,11 @@ public class FavouriteAllResponse {
         this.storeId = storeId;
     }
 
-    public String getGroupId() {
+    public int getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(String groupId) {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 
@@ -229,19 +229,19 @@ public class FavouriteAllResponse {
         this.sendercity = sendercity;
     }
 
-    public String getSenderlikecount() {
+    public int getSenderlikecount() {
         return senderlikecount;
     }
 
-    public void setSenderlikecount(String senderlikecount) {
+    public void setSenderlikecount(int senderlikecount) {
         this.senderlikecount = senderlikecount;
     }
 
-    public String getSenderfollowcount() {
+    public int getSenderfollowcount() {
         return senderfollowcount;
     }
 
-    public void setSenderfollowcount(String senderfollowcount) {
+    public void setSenderfollowcount(int senderfollowcount) {
         this.senderfollowcount = senderfollowcount;
     }
 
@@ -301,19 +301,19 @@ public class FavouriteAllResponse {
         this.receivercity = receivercity;
     }
 
-    public String getReceiverlikecount() {
+    public int getReceiverlikecount() {
         return receiverlikecount;
     }
 
-    public void setReceiverlikecount(String receiverlikecount) {
+    public void setReceiverlikecount(int receiverlikecount) {
         this.receiverlikecount = receiverlikecount;
     }
 
-    public String getReceiverfollowcount() {
+    public int getReceiverfollowcount() {
         return receiverfollowcount;
     }
 
-    public void setReceiverfollowcount(String receiverfollowcount) {
+    public void setReceiverfollowcount(int receiverfollowcount) {
         this.receiverfollowcount = receiverfollowcount;
     }
 
@@ -349,27 +349,27 @@ public class FavouriteAllResponse {
         this.storefollowstatus = storefollowstatus;
     }
 
-    public String getStorerating() {
+    public int getStorerating() {
         return storerating;
     }
 
-    public void setStorerating(String storerating) {
+    public void setStorerating(int storerating) {
         this.storerating = storerating;
     }
 
-    public String getStorelikecount() {
+    public int getStorelikecount() {
         return storelikecount;
     }
 
-    public void setStorelikecount(String storelikecount) {
+    public void setStorelikecount(int storelikecount) {
         this.storelikecount = storelikecount;
     }
 
-    public String getStorefollowcount() {
+    public int getStorefollowcount() {
         return storefollowcount;
     }
 
-    public void setStorefollowcount(String storefollowcount) {
+    public void setStorefollowcount(int storefollowcount) {
         this.storefollowcount = storefollowcount;
     }
 
@@ -437,11 +437,11 @@ public class FavouriteAllResponse {
         this.storeLocation = storeLocation;
     }
 
-    public String getGroupVehicles() {
+    public int getGroupVehicles() {
         return groupVehicles;
     }
 
-    public void setGroupVehicles(String groupVehicles) {
+    public void setGroupVehicles(int groupVehicles) {
         this.groupVehicles = groupVehicles;
     }
 
@@ -461,11 +461,11 @@ public class FavouriteAllResponse {
         this.groupImage = groupImage;
     }
 
-    public String getGroupMembers() {
+    public int getGroupMembers() {
         return groupMembers;
     }
 
-    public void setGroupMembers(String groupMembers) {
+    public void setGroupMembers(int groupMembers) {
         this.groupMembers = groupMembers;
     }
 
@@ -485,19 +485,19 @@ public class FavouriteAllResponse {
         this.productfollowstatus = productfollowstatus;
     }
 
-    public String getProductlikecount() {
+    public int getProductlikecount() {
         return productlikecount;
     }
 
-    public void setProductlikecount(String productlikecount) {
+    public void setProductlikecount(int productlikecount) {
         this.productlikecount = productlikecount;
     }
 
-    public String getProductfollowcount() {
+    public int getProductfollowcount() {
         return productfollowcount;
     }
 
-    public void setProductfollowcount(String productfollowcount) {
+    public void setProductfollowcount(int productfollowcount) {
         this.productfollowcount = productfollowcount;
     }
 
@@ -541,19 +541,19 @@ public class FavouriteAllResponse {
         this.servicefollowstatus = servicefollowstatus;
     }
 
-    public String getServicelikecount() {
+    public int getServicelikecount() {
         return servicelikecount;
     }
 
-    public void setServicelikecount(String servicelikecount) {
+    public void setServicelikecount(int servicelikecount) {
         this.servicelikecount = servicelikecount;
     }
 
-    public String getServicefollowcount() {
+    public int getServicefollowcount() {
         return servicefollowcount;
     }
 
-    public void setServicefollowcount(String servicefollowcount) {
+    public void setServicefollowcount(int servicefollowcount) {
         this.servicefollowcount = servicefollowcount;
     }
 
@@ -597,19 +597,19 @@ public class FavouriteAllResponse {
         this.vehiclefollowstatus = vehiclefollowstatus;
     }
 
-    public String getVehiclelikecount() {
+    public int getVehiclelikecount() {
         return vehiclelikecount;
     }
 
-    public void setVehiclelikecount(String vehiclelikecount) {
+    public void setVehiclelikecount(int vehiclelikecount) {
         this.vehiclelikecount = vehiclelikecount;
     }
 
-    public String getVehiclefollowcount() {
+    public int getVehiclefollowcount() {
         return vehiclefollowcount;
     }
 
-    public void setVehiclefollowcount(String vehiclefollowcount) {
+    public void setVehiclefollowcount(int vehiclefollowcount) {
         this.vehiclefollowcount = vehiclefollowcount;
     }
 
@@ -673,11 +673,11 @@ public class FavouriteAllResponse {
     Buyer Search
      */
 
-    public String getVvehicleId() {
+    public int getVvehicleId() {
         return vvehicleId;
     }
 
-    public void setVvehicleId(String vvehicleId) {
+    public void setVvehicleId(int vvehicleId) {
         this.vvehicleId = vvehicleId;
     }
 
@@ -921,11 +921,11 @@ public class FavouriteAllResponse {
         this.vHrsRunning = vHrsRunning;
     }
 
-    public String getVnoOfOwners() {
+    public int getVnoOfOwners() {
         return vnoOfOwners;
     }
 
-    public void setVnoOfOwners(String vnoOfOwners) {
+    public void setVnoOfOwners(int vnoOfOwners) {
         this.vnoOfOwners = vnoOfOwners;
     }
 
@@ -1125,7 +1125,7 @@ public class FavouriteAllResponse {
     Seller
      */
 
-    private String vvehicleId;
+    private int vvehicleId;
     private String vtitle;
     private String vcontactNo;
     private String vcategory;
@@ -1156,7 +1156,7 @@ public class FavouriteAllResponse {
     private String vpermit;
     private String vkmsRunning;
     private String vHrsRunning;
-    private String vnoOfOwners;
+    private int vnoOfOwners;
     private String vhypothication;
     private String vengineNo;
     private String vchassisNo;
@@ -1186,7 +1186,7 @@ public class FavouriteAllResponse {
 
     private String sendername;
     private String senderPic;
-    private String ssearchId;
+    private int ssearchId;
     private String scontactNo;
     private String sstatus;
     private String scategory;
@@ -1216,7 +1216,7 @@ public class FavouriteAllResponse {
     private String sseatingCapacity;
     private String spermit;
     private String skmsRunning;
-    private String snoOfOwners;
+    private int snoOfOwners;
     private String shypothication;
     private String sprice;
     private String sdrive;
@@ -1261,11 +1261,11 @@ public class FavouriteAllResponse {
     }
 
 
-    public String getSsearchId() {
+    public int getSsearchId() {
         return ssearchId;
     }
 
-    public void setSsearchId(String ssearchId) {
+    public void setSsearchId(int ssearchId) {
         this.ssearchId = ssearchId;
     }
 
@@ -1501,11 +1501,11 @@ public class FavouriteAllResponse {
         this.skmsRunning = skmsRunning;
     }
 
-    public String getSnoOfOwners() {
+    public int getSnoOfOwners() {
         return snoOfOwners;
     }
 
-    public void setSnoOfOwners(String snoOfOwners) {
+    public void setSnoOfOwners(int snoOfOwners) {
         this.snoOfOwners = snoOfOwners;
     }
 
@@ -1650,7 +1650,7 @@ Search
  */
 
 
-    private String searchId;
+    private int searchId;
     private String date;
     private String datetime;
     private String category;
@@ -1661,14 +1661,14 @@ Search
     private String color;
     private String price;
     private String yearOfManufactur;
-    private String favid;
+    private int favid;
     private String images;
 
-    public String getSearchId() {
+    public int getSearchId() {
         return searchId;
     }
 
-    public void setSearchId(String searchId) {
+    public void setSearchId(int searchId) {
         this.searchId = searchId;
     }
 
