@@ -362,6 +362,16 @@ public class WallResponse {
             @Expose
             private int ignoreCount;
 
+            private String shareSubData;
+
+            public String getShareSubData() {
+                return shareSubData;
+            }
+
+            public void setShareSubData(String shareSubData) {
+                this.shareSubData = shareSubData;
+            }
+
             public int getActionID() {
                 return actionID;
             }

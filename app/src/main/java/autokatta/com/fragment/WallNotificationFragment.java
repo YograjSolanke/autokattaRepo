@@ -131,7 +131,23 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setSender(notification.getSender());
                         notification.setAction(notification.getAction());
                         notification.setReceiver(notification.getReceiver());
-                        notification.setSubLayout(notification.getSubLayout());
+                        String sublayout = notification.getSubLayout();
+                        if (sublayout.contains("=")) {
+                            String arr[] = sublayout.split("=", 2);
+
+                            notification.setSubLayout(arr[0]);
+                            if (!arr[1].equals(""))
+                                notification.setShareSubData(arr[1]);
+                            else
+                                notification.setShareSubData("No data");
+
+                            //arr[1].equals("") ? notification.setShareSubData(arr[1]) : notification.setShareSubData("No data");
+
+                        } else {
+
+                            notification.setSubLayout(sublayout);
+                            notification.setShareSubData(sublayout);
+                        }
                         notification.setSenderName(notification.getSenderName());
                         notification.setSenderPicture(notification.getSenderPicture());
                         notification.setReceiverName(notification.getReceiverName());

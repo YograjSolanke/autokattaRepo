@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/auction_pro_pic"
+                        android:id="@+id/user_pro_pic"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -69,17 +69,32 @@
                     android:id="@+id/rating_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@+id/relContact">
 
                     <ImageButton
-                        android:id="@+id/auction_favourite"
+                        android:id="@+id/active_favourite"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="@dimen/cards_button_width"
                         android:layout_height="@dimen/card_title_height"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/text_margin_top"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="gone"
+                        app:srcCompat="@mipmap/heart_liked" />
+
+                    <ImageButton
+                        android:id="@+id/active_unfavourite"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/card_title_height"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/text_margin_top"
                         android:contentDescription="@string/app_name"
                         android:tint="@color/button_grey"
+                        android:visibility="visible"
                         app:srcCompat="@mipmap/ic_heart_like" />
 
                 </RelativeLayout>
@@ -99,8 +114,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view1"
                 android:layout_marginTop="@dimen/card_margin"
-                android:padding="@dimen/margin_small"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/margin_small">
 
                 <RelativeLayout
                     android:id="@+id/profilenamerel"
@@ -271,6 +286,14 @@
                 </RelativeLayout>
             </LinearLayout>
 
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/linear_card"
+                android:layout_marginTop="5dp"
+                android:background="#cccccc" />
+
             <ImageButton
                 android:id="@+id/share_autokatta"
                 style="?android:attr/borderlessButtonStyle"
@@ -280,41 +303,36 @@
                 android:layout_below="@+id/linear_card"
                 android:layout_marginEnd="@dimen/text_margin_top"
                 android:contentDescription="@string/app_name"
-                android:tint="@color/button_grey"
-                app:srcCompat="@android:drawable/ic_menu_share" />
+                app:srcCompat="@drawable/autoshare" />
 
-            <ImageButton
-                android:id="@+id/share_other"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="@dimen/cards_button_width"
-                android:layout_height="@dimen/cards_button_height"
-                android:layout_below="@+id/linear_card"
-                android:layout_marginEnd="@dimen/text_margin_top"
-                android:layout_toStartOf="@id/share_autokatta"
-                android:contentDescription="@string/app_name"
-                android:tint="@color/button_grey"
-                app:srcCompat="@android:drawable/ic_menu_share" />
 
             <Button
                 android:id="@+id/btn_ignore"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/cards_button_height"
                 android:layout_below="@+id/linear_card"
-                android:layout_toStartOf="@id/share_other"
-                style="?android:attr/borderlessButtonStyle"
-                android:textColor="?attr/colorPrimary"
-                android:text="Ignore" />
+                android:layout_toStartOf="@id/share_autokatta"
+                android:text="Ignore"
+                android:textColor="?attr/colorPrimary" />
 
             <Button
                 android:id="@+id/btn_going"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linear_card"
                 android:layout_toStartOf="@id/btn_ignore"
-                style="?android:attr/borderlessButtonStyle"
-                android:textColor="?attr/colorPrimary"
-                android:text="Going" />
+                android:text="Going"
+                android:textColor="?attr/colorPrimary" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+    <View
+        android:id="@+id/vieww"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/auction_card_view"
+        android:background="@color/grey" />
 </RelativeLayout>

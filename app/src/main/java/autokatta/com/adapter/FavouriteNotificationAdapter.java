@@ -294,8 +294,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class ActiveNotifications extends RecyclerView.ViewHolder {
         CardView mAuctionCardView;
-        ImageView mAuctionPic;
-        ImageButton mAuctionAutokatta, mAuctionOther, mAuctionFavourite;
+        ImageView mUserPic;
+        ImageButton mAuctionAutokattaShare, mAuctionFavourite, mAuctionUnfav;
         Button mAuctionGoing, mAuctionIgnore;
         TextView mAuctionActionName, mAuctionActionTime, mAuctionTitle, mAuctionNoOfVehicles, mAuctionEndDate, mAuctionEndTime,
                 mAuctionType, mAuctionGoingCount, mAuctionIgnoreCount;
@@ -303,11 +303,11 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         private ActiveNotifications(View activeView) {
             super(activeView);
             mAuctionCardView = (CardView) activeView.findViewById(R.id.auction_card_view);
-            mAuctionPic = (ImageView) activeView.findViewById(R.id.auction_pro_pic);
+            mUserPic = (ImageView) activeView.findViewById(R.id.user_pro_pic);
 
-            mAuctionAutokatta = (ImageButton) activeView.findViewById(R.id.share_autokatta);
-            mAuctionOther = (ImageButton) activeView.findViewById(R.id.share_other);
-            mAuctionFavourite = (ImageButton) activeView.findViewById(R.id.auction_favourite);
+            mAuctionAutokattaShare = (ImageButton) activeView.findViewById(R.id.share_autokatta);
+            mAuctionFavourite = (ImageButton) activeView.findViewById(R.id.active_favourite);
+            mAuctionUnfav = (ImageButton) activeView.findViewById(R.id.active_unfavourite);
             mAuctionGoing = (Button) activeView.findViewById(R.id.btn_going);
             mAuctionIgnore = (Button) activeView.findViewById(R.id.btn_ignore);
 
@@ -329,7 +329,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class UpVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mDelete;
+        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                 mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;
 
@@ -346,7 +346,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mVehicleLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
-            mDelete = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
+            mVehicleUnfav = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
 
 
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
@@ -368,10 +368,10 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class ShareNotifications extends RecyclerView.ViewHolder {
         CardView mShareCardView;
-        ImageView mSharePic;
-        ImageButton mShareFavourite;
+        ImageView mUserPic;
+        ImageButton mShareFavourite, mShareUnfav;
         TextView mShareActionName, mShareActionTime, mShareProfileName, mShareProfileLocation, mShareProfileWorkAt,
-                mShareProfileWebSite;
+                mShareProfileWebSite, mCaptionData;
         TextView mShareStoreName, mShareType, mShareLocation, mShareWebSite, mShareTiming, mShareWorkingDay;
         TextView mShareProductName, mShareProductType, mShareServiceName, mShareServiceType;
         TextView mShareTitle, mSharePrice, mShareBrand, mShareModel, mShareYear, mShareKmsHrs, mShareRto, mShareRegistrationNo, mShareVehicleLocation;
@@ -380,20 +380,29 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         TextView mShareAuctionName, mShareAuctionNoOfVehicles, mShareAuctionEndDate, mShareAuctionEndTime, mShareAuctionType,
                 mShareAuctionGoingCount, mShareAuctionIgnoreCount;
         TextView mShareStatus;
+        RelativeLayout mProfileRelative, mStoreRelative, mProductRelative, mServiceRelative, mVehicleRelative,
+                mMySearchRelative, mAuctionRelative;
 
         private ShareNotifications(View shareView) {
             super(shareView);
             mShareCardView = (CardView) shareView.findViewById(R.id.share_card_view);
-            mSharePic = (ImageView) shareView.findViewById(R.id.share_pro_pic);
+            mUserPic = (ImageView) shareView.findViewById(R.id.user_pro_pic);
             mShareFavourite = (ImageButton) shareView.findViewById(R.id.share_favourite);
+            mShareUnfav = (ImageButton) shareView.findViewById(R.id.share_unfavourite);
 
             mShareActionName = (TextView) shareView.findViewById(R.id.share_action_names);
             mShareActionTime = (TextView) shareView.findViewById(R.id.share_action_time);
+            mCaptionData = (TextView) shareView.findViewById(R.id.sharedataview);
+
+    /* profile notification layout*/
+            mProfileRelative = (RelativeLayout) shareView.findViewById(R.id.profilerel);
             mShareProfileName = (TextView) shareView.findViewById(R.id.share_profile_name);
             mShareProfileLocation = (TextView) shareView.findViewById(R.id.share_profilelocation);
             mShareProfileWorkAt = (TextView) shareView.findViewById(R.id.share_profileworkat);
             mShareProfileWebSite = (TextView) shareView.findViewById(R.id.share_profilewebsite);
 
+    /* store notification layout*/
+            mStoreRelative = (RelativeLayout) shareView.findViewById(R.id.storerel);
             mShareStoreName = (TextView) shareView.findViewById(R.id.share_storename);
             mShareType = (TextView) shareView.findViewById(R.id.share_storetype);
             mShareLocation = (TextView) shareView.findViewById(R.id.share_location);
@@ -401,12 +410,18 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mShareTiming = (TextView) shareView.findViewById(R.id.share_timing);
             mShareWorkingDay = (TextView) shareView.findViewById(R.id.share_workday);
 
+    /* product notification layout*/
+            mProductRelative = (RelativeLayout) shareView.findViewById(R.id.productrel);
             mShareProductName = (TextView) shareView.findViewById(R.id.share_productname);
             mShareProductType = (TextView) shareView.findViewById(R.id.share_producttype);
 
+     /* service notification layout*/
+            mServiceRelative = (RelativeLayout) shareView.findViewById(R.id.servicerel);
             mShareServiceName = (TextView) shareView.findViewById(R.id.share_servicename);
             mShareServiceType = (TextView) shareView.findViewById(R.id.share_servicetype);
 
+    /* vehicle notification layout*/
+            mVehicleRelative = (RelativeLayout) shareView.findViewById(R.id.vehiclerel);
             mShareTitle = (TextView) shareView.findViewById(R.id.share_title);
             mSharePrice = (TextView) shareView.findViewById(R.id.share_price);
             mShareBrand = (TextView) shareView.findViewById(R.id.share_brand);
@@ -417,6 +432,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mShareRegistrationNo = (TextView) shareView.findViewById(R.id.share_registrationNo);
             mShareVehicleLocation = (TextView) shareView.findViewById(R.id.share_vehilocation);
 
+    /* mySearch notification layout*/
+            mMySearchRelative = (RelativeLayout) shareView.findViewById(R.id.searchrel);
             mShareMySearchCategory = (TextView) shareView.findViewById(R.id.share_mysearch_category);
             mShareMySearchBrand = (TextView) shareView.findViewById(R.id.share_mysearch_brand);
             mShareMySearchModel = (TextView) shareView.findViewById(R.id.share_mysearch_model);
@@ -425,6 +442,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mShareDateOfSearch = (TextView) shareView.findViewById(R.id.share_searchdate);
             mShareMySearchLeads = (TextView) shareView.findViewById(R.id.share_buyerleads);
 
+    /* auction notification layout*/
+            mAuctionRelative = (RelativeLayout) shareView.findViewById(R.id.auctionrel);
             mShareAuctionName = (TextView) shareView.findViewById(R.id.share_auc_name);
             mShareAuctionNoOfVehicles = (TextView) shareView.findViewById(R.id.share_auc_noofvehicle);
             mShareAuctionEndDate = (TextView) shareView.findViewById(R.id.share_auc_enddate);
@@ -433,6 +452,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mShareAuctionGoingCount = (TextView) shareView.findViewById(R.id.share_going_cnt);
             mShareAuctionIgnoreCount = (TextView) shareView.findViewById(R.id.share_ignore_cnt);
 
+    /* status notification layout*/
+            mAuctionRelative = (RelativeLayout) shareView.findViewById(R.id.auctionrel);
             mShareStatus = (TextView) shareView.findViewById(R.id.share_statustxt);
         }
     }
@@ -533,20 +554,22 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      */
     private static class SearchNotifications extends RecyclerView.ViewHolder {
         CardView mSearchCardView;
-        ImageView mSearchPic;
-        ImageButton mSearchAutokatta, mSearchOther, mCall, mLike;
+        ImageView mUserPic;
+        ImageButton mSearchAutokattaShare, mCall, mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
         TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
                 mSearchDate, mSearchLeads;
 
         private SearchNotifications(View serviceView) {
             super(serviceView);
             mSearchCardView = (CardView) serviceView.findViewById(R.id.search_card_view);
-            mSearchPic = (ImageView) serviceView.findViewById(R.id.search_pro_pic);
+            mUserPic = (ImageView) serviceView.findViewById(R.id.profile_pro_pic);
 
-            mSearchAutokatta = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
-            mSearchOther = (ImageButton) serviceView.findViewById(R.id.share_other);
+            mSearchAutokattaShare = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
             mCall = (ImageButton) serviceView.findViewById(R.id.call);
-            mLike = (ImageButton) serviceView.findViewById(R.id.like);
+            mSearchLike = (ImageButton) serviceView.findViewById(R.id.like);
+            mSearchUnlike = (ImageButton) serviceView.findViewById(R.id.unlike);
+            mSearchFavorite = (ImageButton) serviceView.findViewById(R.id.search_favourite);
+            mSearchUnfav = (ImageButton) serviceView.findViewById(R.id.search_unfavourite);
 
             mSearchActionName = (TextView) serviceView.findViewById(R.id.search_action_names);
             mSearchActionTime = (TextView) serviceView.findViewById(R.id.search_action_time);
@@ -961,7 +984,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             case 10:
                 UpVehicleNotifications mUpVehicleHolder = (UpVehicleNotifications) holder;
 
-                mUpVehicleHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
+                //mUpVehicleHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
 
                 break;
 

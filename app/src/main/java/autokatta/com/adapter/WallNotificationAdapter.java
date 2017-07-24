@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.net.ConnectException;
@@ -317,20 +316,22 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
     private static class SearchNotifications extends RecyclerView.ViewHolder {
         CardView mSearchCardView;
-        ImageView mSearchPic;
-        ImageButton mSearchAutokatta, mSearchOther, mCall, mLike;
+        ImageView mUserPic;
+        ImageButton mSearchAutokattaShare, mCall, mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
         TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
                 mSearchDate, mSearchLeads;
 
         private SearchNotifications(View serviceView) {
             super(serviceView);
             mSearchCardView = (CardView) serviceView.findViewById(R.id.search_card_view);
-            mSearchPic = (ImageView) serviceView.findViewById(R.id.search_pro_pic);
+            mUserPic = (ImageView) serviceView.findViewById(R.id.profile_pro_pic);
 
-            mSearchAutokatta = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
-            mSearchOther = (ImageButton) serviceView.findViewById(R.id.share_other);
+            mSearchAutokattaShare = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
             mCall = (ImageButton) serviceView.findViewById(R.id.call);
-            mLike = (ImageButton) serviceView.findViewById(R.id.like);
+            mSearchLike = (ImageButton) serviceView.findViewById(R.id.like);
+            mSearchUnlike = (ImageButton) serviceView.findViewById(R.id.unlike);
+            mSearchFavorite = (ImageButton) serviceView.findViewById(R.id.search_favourite);
+            mSearchUnfav = (ImageButton) serviceView.findViewById(R.id.search_unfavourite);
 
             mSearchActionName = (TextView) serviceView.findViewById(R.id.search_action_names);
             mSearchActionTime = (TextView) serviceView.findViewById(R.id.search_action_time);
@@ -350,8 +351,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
     private static class ActiveNotifications extends RecyclerView.ViewHolder {
         CardView mAuctionCardView;
-        ImageView mAuctionPic;
-        ImageButton mAuctionAutokatta, mAuctionOther, mAuctionFavourite;
+        ImageView mUserPic;
+        ImageButton mAuctionAutokattaShare, mAuctionFavourite, mAuctionUnfav;
         Button mAuctionGoing, mAuctionIgnore;
         TextView mAuctionActionName, mAuctionActionTime, mAuctionTitle, mAuctionNoOfVehicles, mAuctionEndDate, mAuctionEndTime,
                 mAuctionType, mAuctionGoingCount, mAuctionIgnoreCount;
@@ -359,11 +360,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         private ActiveNotifications(View activeView) {
             super(activeView);
             mAuctionCardView = (CardView) activeView.findViewById(R.id.auction_card_view);
-            mAuctionPic = (ImageView) activeView.findViewById(R.id.auction_pro_pic);
+            mUserPic = (ImageView) activeView.findViewById(R.id.user_pro_pic);
 
-            mAuctionAutokatta = (ImageButton) activeView.findViewById(R.id.share_autokatta);
-            mAuctionOther = (ImageButton) activeView.findViewById(R.id.share_other);
-            mAuctionFavourite = (ImageButton) activeView.findViewById(R.id.auction_favourite);
+            mAuctionAutokattaShare = (ImageButton) activeView.findViewById(R.id.share_autokatta);
+            mAuctionFavourite = (ImageButton) activeView.findViewById(R.id.active_favourite);
+            mAuctionUnfav = (ImageButton) activeView.findViewById(R.id.active_unfavourite);
             mAuctionGoing = (Button) activeView.findViewById(R.id.btn_going);
             mAuctionIgnore = (Button) activeView.findViewById(R.id.btn_ignore);
 
@@ -385,9 +386,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class UpVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mShareAutokatta, mCall, mLike, mVehicleFavourite;
+        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
-                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;
+                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;
 
         private UpVehicleNotifications(View upVehicleView) {
             super(upVehicleView);
@@ -395,13 +396,16 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mUserPic = (ImageView) upVehicleView.findViewById(R.id.profile_pic);
             mActionTime = (TextView) upVehicleView.findViewById(R.id.action_time);
             mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
-
-            mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
-            mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
-            mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
-
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
+
+            mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
+            mVehicleLike = (ImageButton) upVehicleView.findViewById(R.id.like);
+            mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
+            mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
+            mVehicleUnfav = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
+
+
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
             mVehicleName = (TextView) upVehicleView.findViewById(R.id.vehicle_name);
             mVehiclePrice = (TextView) upVehicleView.findViewById(R.id.vehicle_price);
@@ -411,8 +415,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mVehicleKmsHrs = (TextView) upVehicleView.findViewById(R.id.vehicle_kms_hrs);
             mVehicleLocation = (TextView) upVehicleView.findViewById(R.id.vehicle_locations);
             mRtoCity = (TextView) upVehicleView.findViewById(R.id.vehicle_rto_city);
-            mLikesTxt = (TextView) upVehicleView.findViewById(R.id.likes);
-            mSharesTxt = (TextView) upVehicleView.findViewById(R.id.share);
+            mLikes = (TextView) upVehicleView.findViewById(R.id.likes);
+            mShares = (TextView) upVehicleView.findViewById(R.id.share);
         }
     }
 
@@ -421,10 +425,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
     private static class ShareNotifications extends RecyclerView.ViewHolder {
         CardView mShareCardView;
-        ImageView mSharePic;
-        ImageButton mShareFavourite;
+        ImageView mUserPic;
+        ImageButton mShareFavourite, mShareUnfav;
         TextView mShareActionName, mShareActionTime, mShareProfileName, mShareProfileLocation, mShareProfileWorkAt,
-                mShareProfileWebSite;
+                mShareProfileWebSite, mCaptionData;
         TextView mShareStoreName, mShareType, mShareLocation, mShareWebSite, mShareTiming, mShareWorkingDay;
         TextView mShareProductName, mShareProductType, mShareServiceName, mShareServiceType;
         TextView mShareTitle, mSharePrice, mShareBrand, mShareModel, mShareYear, mShareKmsHrs, mShareRto, mShareRegistrationNo, mShareVehicleLocation;
@@ -433,20 +437,29 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView mShareAuctionName, mShareAuctionNoOfVehicles, mShareAuctionEndDate, mShareAuctionEndTime, mShareAuctionType,
                 mShareAuctionGoingCount, mShareAuctionIgnoreCount;
         TextView mShareStatus;
+        RelativeLayout mProfileRelative, mStoreRelative, mProductRelative, mServiceRelative, mVehicleRelative,
+                mMySearchRelative, mAuctionRelative;
 
         private ShareNotifications(View shareView) {
             super(shareView);
             mShareCardView = (CardView) shareView.findViewById(R.id.share_card_view);
-            mSharePic = (ImageView) shareView.findViewById(R.id.share_pro_pic);
+            mUserPic = (ImageView) shareView.findViewById(R.id.user_pro_pic);
             mShareFavourite = (ImageButton) shareView.findViewById(R.id.share_favourite);
+            mShareUnfav = (ImageButton) shareView.findViewById(R.id.share_unfavourite);
 
             mShareActionName = (TextView) shareView.findViewById(R.id.share_action_names);
             mShareActionTime = (TextView) shareView.findViewById(R.id.share_action_time);
+            mCaptionData = (TextView) shareView.findViewById(R.id.sharedataview);
+
+    /* profile notification layout*/
+            mProfileRelative = (RelativeLayout) shareView.findViewById(R.id.profilerel);
             mShareProfileName = (TextView) shareView.findViewById(R.id.share_profile_name);
             mShareProfileLocation = (TextView) shareView.findViewById(R.id.share_profilelocation);
             mShareProfileWorkAt = (TextView) shareView.findViewById(R.id.share_profileworkat);
             mShareProfileWebSite = (TextView) shareView.findViewById(R.id.share_profilewebsite);
 
+    /* store notification layout*/
+            mStoreRelative = (RelativeLayout) shareView.findViewById(R.id.storerel);
             mShareStoreName = (TextView) shareView.findViewById(R.id.share_storename);
             mShareType = (TextView) shareView.findViewById(R.id.share_storetype);
             mShareLocation = (TextView) shareView.findViewById(R.id.share_location);
@@ -454,12 +467,18 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mShareTiming = (TextView) shareView.findViewById(R.id.share_timing);
             mShareWorkingDay = (TextView) shareView.findViewById(R.id.share_workday);
 
+    /* product notification layout*/
+            mProductRelative = (RelativeLayout) shareView.findViewById(R.id.productrel);
             mShareProductName = (TextView) shareView.findViewById(R.id.share_productname);
             mShareProductType = (TextView) shareView.findViewById(R.id.share_producttype);
 
+     /* service notification layout*/
+            mServiceRelative = (RelativeLayout) shareView.findViewById(R.id.servicerel);
             mShareServiceName = (TextView) shareView.findViewById(R.id.share_servicename);
             mShareServiceType = (TextView) shareView.findViewById(R.id.share_servicetype);
 
+    /* vehicle notification layout*/
+            mVehicleRelative = (RelativeLayout) shareView.findViewById(R.id.vehiclerel);
             mShareTitle = (TextView) shareView.findViewById(R.id.share_title);
             mSharePrice = (TextView) shareView.findViewById(R.id.share_price);
             mShareBrand = (TextView) shareView.findViewById(R.id.share_brand);
@@ -470,6 +489,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mShareRegistrationNo = (TextView) shareView.findViewById(R.id.share_registrationNo);
             mShareVehicleLocation = (TextView) shareView.findViewById(R.id.share_vehilocation);
 
+    /* mySearch notification layout*/
+            mMySearchRelative = (RelativeLayout) shareView.findViewById(R.id.searchrel);
             mShareMySearchCategory = (TextView) shareView.findViewById(R.id.share_mysearch_category);
             mShareMySearchBrand = (TextView) shareView.findViewById(R.id.share_mysearch_brand);
             mShareMySearchModel = (TextView) shareView.findViewById(R.id.share_mysearch_model);
@@ -478,6 +499,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mShareDateOfSearch = (TextView) shareView.findViewById(R.id.share_searchdate);
             mShareMySearchLeads = (TextView) shareView.findViewById(R.id.share_buyerleads);
 
+    /* auction notification layout*/
+            mAuctionRelative = (RelativeLayout) shareView.findViewById(R.id.auctionrel);
             mShareAuctionName = (TextView) shareView.findViewById(R.id.share_auc_name);
             mShareAuctionNoOfVehicles = (TextView) shareView.findViewById(R.id.share_auc_noofvehicle);
             mShareAuctionEndDate = (TextView) shareView.findViewById(R.id.share_auc_enddate);
@@ -486,6 +509,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mShareAuctionGoingCount = (TextView) shareView.findViewById(R.id.share_going_cnt);
             mShareAuctionIgnoreCount = (TextView) shareView.findViewById(R.id.share_ignore_cnt);
 
+    /* status notification layout*/
+            mAuctionRelative = (RelativeLayout) shareView.findViewById(R.id.auctionrel);
             mShareStatus = (TextView) shareView.findViewById(R.id.share_statustxt);
         }
     }
@@ -654,7 +679,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mProfileHolder.mUnfav.setVisibility(View.VISIBLE);
                         mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");
-                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -667,7 +691,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mProfileHolder.mFav.setVisibility(View.VISIBLE);
                         mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");
-                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -844,7 +867,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);
                         mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
-                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -857,7 +879,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
                         mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("yes");
-                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
@@ -997,7 +1018,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mProductHolder.mProductUnfav.setVisibility(View.VISIBLE);
                         mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mProductHolder.getAdapterPosition()).setMyFavStatus("no");
-                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -1010,7 +1030,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mProductHolder.mProductFav.setVisibility(View.VISIBLE);
                         mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mProductHolder.getAdapterPosition()).setMyFavStatus("yes");
-                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -1244,7 +1263,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mServiceHolder.mServiceUnfav.setVisibility(View.VISIBLE);
                         mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mServiceHolder.getAdapterPosition()).setMyFavStatus("no");
-                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -1257,7 +1275,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mServiceHolder.mServiceFavourite.setVisibility(View.VISIBLE);
                         mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
                         notificationList.get(mServiceHolder.getAdapterPosition()).setMyFavStatus("yes");
-                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -1390,18 +1407,39 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 11:
-                ImageView mSharePic;
-                ImageButton mShareFavourite;
-                TextView mShareActionName, mShareActionTime, mShareProfileName, mShareProfileLocation, mShareProfileWorkAt,
-                        mShareProfileWebSite;
-                TextView mShareStoreName, mShareType, mShareLocation, mShareWebSite, mShareTiming, mShareWorkingDay;
-                TextView mShareProductName, mShareProductType, mShareServiceName, mShareServiceType;
-                TextView mShareTitle, mSharePrice, mShareBrand, mShareModel, mShareYear, mShareKmsHrs, mShareRto, mShareRegistrationNo, mShareVehicleLocation;
-                TextView mShareMySearchCategory, mShareMySearchBrand, mShareMySearchModel, mShareMySearchPrice, mShareMySearchYear,
-                        mShareDateOfSearch, mShareMySearchLeads;
-                TextView mShareAuctionName, mShareAuctionNoOfVehicles, mShareAuctionEndDate, mShareAuctionEndTime, mShareAuctionType,
-                        mShareAuctionGoingCount, mShareAuctionIgnoreCount;
-                TextView mShareStatus;
+                final ShareNotifications mShareolder = (ShareNotifications) holder;
+
+                mShareolder.mCaptionData.setText(notificationList.get(position).getShareSubData());
+                int sublayout = Integer.parseInt(notificationList.get(position).getSubLayout());
+                Log.i("oooo", "subId" + String.valueOf(sublayout));
+                Log.i("oooo", "subData" + notificationList.get(position).getShareSubData());
+
+                switch (sublayout) {
+                    case 1:
+                        break;
+
+                    case 2:
+                        break;
+
+                    case 4:
+                        break;
+
+                    case 5:
+                        break;
+
+                    case 6:
+                        break;
+
+                    case 7:
+                        break;
+
+                    case 8:
+                        break;
+
+                    case 9:
+                        break;
+
+                }
                 break;
         }
     }
