@@ -92,6 +92,9 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         modelGroups.setGroupCount(success.getGroupcount());
                         modelGroups.setVehicleCount(success.getVehiclecount());
                         modelGroups.setAdminVehicleCount(success.getAdminVehicleCount());
+                        modelGroups.setProductcount(success.getProductcount());
+                        modelGroups.setServicecount(success.getServicecount());
+
                         mMyGroupsList.add(modelGroups);
                     }
                     mMyAdapter = new MyAdapter(getActivity(), mMyGroupsList, "MyGroups");

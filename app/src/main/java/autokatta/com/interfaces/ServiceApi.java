@@ -67,7 +67,7 @@ public interface ServiceApi {
     Call<CategoryResponse> _autokattaGetCategories(@Query("type") String type);
 
     //Forgot Password
-    @POST("GetContactForgotPassword")
+    @GET("GetContactForgotPassword")
     Call<String> _autokattaForgotPassword(@Query("Contact") String contact);
 
     //SearchStore Result
@@ -96,8 +96,8 @@ public interface ServiceApi {
     Call<String> addOtherIndustry(@Query("newIndustry") String industryname);
 
     // get OTP
-    @POST("otp.php")
-    Call<String> _autokattagetOTP(@Query("number") String contact);
+    @POST("GenerateOTP")
+    Call<String> _autokattagetOTP(@Query("MobileNo") String contact);
 
 
     // After OTP Registration
@@ -590,8 +590,8 @@ public interface ServiceApi {
                                                   @Query("StartPrice") String startPrice, @Query("ReservedPrice") String reservedPrice);
 
     //Send Auction mail...
-    @GET("email_v.php")
-    Call<String> _autokattaSendAuctionMail(@Query("contact") String myContact, @Query("auction_id") int strAuctionId);
+    @POST("SendAuctionDetailsEmail")
+    Call<String> _autokattaSendAuctionMail(@Query("Contact") String myContact, @Query("AuctionID") int strAuctionId);
 
     //get Auction Participants
     @GET("GetAuctionConfirmedParticipants")

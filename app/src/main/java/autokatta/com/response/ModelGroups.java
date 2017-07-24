@@ -7,7 +7,28 @@ package autokatta.com.response;
 public class ModelGroups {
 
     private String title, image, adminVehicleCount;
-    private int vehicleCount, groupCount, id;
+    private int vehicleCount;
+    private int groupCount;
+    private int id;
+    private int productcount;
+
+    public int getProductcount() {
+        return productcount;
+    }
+
+    public void setProductcount(int productcount) {
+        this.productcount = productcount;
+    }
+
+    public int getServicecount() {
+        return servicecount;
+    }
+
+    public void setServicecount(int servicecount) {
+        this.servicecount = servicecount;
+    }
+
+    private int servicecount;
 
     public int getId() {
         return id;

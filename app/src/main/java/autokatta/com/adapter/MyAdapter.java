@@ -58,7 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     // you provide access to all the views for a data item in a view holder
     static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
-        TextView mGroupTitleID, mMemberCount, mEditMemberCount, mVehicleCount, mEditVehicleCount;
+        TextView mGroupTitleID, mMemberCount, mEditMemberCount, mVehicleCount, mEditVehicleCount,mProductcount,mServicecount;
         ImageView mGroupIcon, mGroupEdit, mGroupDelete;
 
         MyViewHolder(View itemView) {
@@ -72,7 +72,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             mGroupIcon = (ImageView) itemView.findViewById(R.id.group_icon);
             mGroupEdit = (ImageView) itemView.findViewById(R.id.group_edit);
             mGroupDelete = (ImageView) itemView.findViewById(R.id.group_delete);
-
+            mProductcount= (TextView) itemView.findViewById(R.id.edit_product_count);
+            mServicecount= (TextView) itemView.findViewById(R.id.edit_service_count);
         }
     }
 
@@ -104,6 +105,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         holder.mGroupTitleID.setText(mItemList.get(position).getTitle());
         holder.mEditMemberCount.setText(String.valueOf(mItemList.get(position).getGroupCount()));
         holder.mEditVehicleCount.setText(String.valueOf(mItemList.get(position).getVehicleCount()));
+        holder.mServicecount.setText(String.valueOf(mItemList.get(position).getServicecount()));
+        holder.mProductcount.setText(String.valueOf(mItemList.get(position).getProductcount()));
 
         holder.mGroupEdit.setOnClickListener(new OnClickListener() {
             @Override

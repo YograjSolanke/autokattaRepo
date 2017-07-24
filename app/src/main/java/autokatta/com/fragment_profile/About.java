@@ -442,11 +442,11 @@ public class About extends Fragment implements RequestNotifier {
                     public void onClick(View view) {
                         mDone.setVisibility(View.VISIBLE);
                         mEdit.setVisibility(View.GONE);
-                        if (profession.startsWith("Student")) {
+                        if (profession=="Student") {
                             student.setChecked(true);
-                        } else if (profession.startsWith("Employee")) {
+                        } else if (profession=="Employee") {
                             employee.setChecked(true);
-                        } else if (profession.startsWith("Self Employee")) {
+                        } else if (profession=="Self Employee") {
                             selfemployee.setChecked(true);
                         }
                         if (student.isChecked()) {

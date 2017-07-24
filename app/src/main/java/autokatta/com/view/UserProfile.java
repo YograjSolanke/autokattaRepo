@@ -446,7 +446,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     @Override
     public void notifyString(String str) {
         if (!str.equals("")) {
-            if (str.equals("Success_update_profile")) {
+            if (str.equals("success_update")) {
                 Snackbar.make(mUserParent, "Profile Updated Successfuly", Snackbar.LENGTH_SHORT).show();
                 getProfileData();
                 mProfilePicture.setEnabled(false);

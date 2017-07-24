@@ -53,6 +53,8 @@ public class UpdateProfileRequest {
         this.companyName = companyName;
         this.designation = designation;
         this.skills = skills;
+        this.userName=null;
+        this.profilePicture=null;
     }
 
     @SerializedName("ProfilePicture")
