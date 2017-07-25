@@ -19,10 +19,8 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import autokatta.com.R;
@@ -123,13 +121,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                         success.setRto(success.getRto());
                         success.setKms(success.getKms());
                         success.setImages(success.getImages());
-                        Date d = null;
-                        try {
-                            d = f.parse(success.getDate());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        success.setVehicleDate(d);
+                        success.setDate(success.getDate().replaceAll("T", " "));
                         vehicleList.add(success);
                     }
                     adapter = new StoreVehicleAdapter(getActivity(), vehicleList, Sharedcontact, storeContact);

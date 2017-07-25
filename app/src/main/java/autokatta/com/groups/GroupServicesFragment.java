@@ -83,7 +83,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 serviceList.clear();
-                String storeContact = null;
+                String storeContact = "";
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getService().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
@@ -104,7 +104,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
                         success.setSrate1(success.getSrate1());
                         success.setSrate2(success.getSrate2());
                         success.setSrate3(success.getSrate3());
-                        success.setSrate3(success.getStorecontact());
+                        success.setStorecontact(success.getStorecontact());
                         storeContact = success.getStorecontact();
                         serviceList.add(success);
                     }

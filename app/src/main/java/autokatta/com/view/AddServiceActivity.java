@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
@@ -682,23 +681,23 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                             for (int i = 0; i < mSelectedItems.size(); i++) {
                                 for (int j = 0; j < stringTitles.length; j++) {
                                     if (mSelectedItems.get(i).equals(stringTitles[j])) {
-                                        idList.add(groupId.get(j));
-                                        Gson gson = new Gson();
-                                        str_groupids = gson.toJson(idList);
-                                        /*if (stringgroupids.equals("")) {
-                                            stringgroupids = groupId.get(j);
+//                                        idList.add(groupId.get(j));
+//                                        Gson gson = new Gson();
+//                                        str_groupids = gson.toJson(idList);
+                                        if (stringgroupids.equals("")) {
+                                            stringgroupids = String.valueOf(groupId.get(j));
                                         } else {
-                                            stringgroupids = stringgroupids + "," + groupId.get(j);
+                                            stringgroupids = stringgroupids + "," + String.valueOf(groupId.get(j));
 
-                                        }*/
+                                        }
                                     }
                                 }
 
                             }
 
 
-                            System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + str_groupids);
-                            createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, str_groupids);
+                            System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+                            createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
                         } else {
                             CustomToast.customToast(AddServiceActivity.this, "Please Select Atleast One Group");
                             android.app.AlertDialog alert = builder.create();

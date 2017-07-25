@@ -112,7 +112,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
             e.printStackTrace();
         }
         if (service.getServicerating()!=null) {
-            holder.productrating.setRating(service.getServicerating());
+            holder.productrating.setRating(Float.parseFloat(service.getServicerating()));
         }
 
 

@@ -111,7 +111,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                         success.setSrate1(success.getSrate1());
                         success.setSrate2(success.getSrate2());
                         success.setSrate3(success.getSrate3());
-                        success.setSrate3(success.getStorecontact());
+                        success.setStorecontact(success.getStorecontact());
                         storeContact = success.getStorecontact();
                         serviceList.add(success);
                     }

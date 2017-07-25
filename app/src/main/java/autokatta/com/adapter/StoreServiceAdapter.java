@@ -111,7 +111,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             e.printStackTrace();
         }
         if (service.getServicerating() != null) {
-            holder.productrating.setRating(service.getServicerating());
+            holder.productrating.setRating(Float.parseFloat(service.getServicerating()));
         }
 
         holder.viewdetails.setOnClickListener(new View.OnClickListener() {

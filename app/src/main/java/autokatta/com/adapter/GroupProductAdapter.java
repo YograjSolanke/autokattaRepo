@@ -116,7 +116,7 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
             e.printStackTrace();
         }
         if (product.getProductrating()!=null) {
-            holder.productrating.setRating(product.getProductrating());
+            holder.productrating.setRating(Float.parseFloat(product.getProductrating()));
         } else {
 
         }

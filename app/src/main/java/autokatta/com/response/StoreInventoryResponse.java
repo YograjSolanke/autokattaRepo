@@ -3,7 +3,6 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +14,9 @@ public class StoreInventoryResponse {
     @SerializedName("Success")
     @Expose
     private Success success;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public Success getSuccess() {
         return success;
@@ -22,6 +24,14 @@ public class StoreInventoryResponse {
 
     public void setSuccess(Success success) {
         this.success = success;
+    }
+
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
     }
 
 
@@ -73,6 +83,7 @@ public class StoreInventoryResponse {
         }
 
 
+
         public class Category {
 
             @SerializedName("module_name")
@@ -83,7 +94,7 @@ public class StoreInventoryResponse {
             private String type;
             @SerializedName("id")
             @Expose
-            private String id;
+            private Integer id;
 
             public String getModuleName() {
                 return moduleName;
@@ -101,18 +112,17 @@ public class StoreInventoryResponse {
                 this.type = type;
             }
 
-            public String getId() {
+            public Integer getId() {
                 return id;
             }
 
-            public void setId(String id) {
+            public void setId(Integer id) {
                 this.id = id;
             }
-
         }
 
-
         public class Product {
+
 
 
             public boolean isVisibility() {
@@ -125,12 +135,25 @@ public class StoreInventoryResponse {
 
             private boolean visibility;
 
+            public String getStorecontact() {
+                return storecontact;
+            }
+
+            public void setStorecontact(String storecontact) {
+                this.storecontact = storecontact;
+            }
+
+            @SerializedName("storecontact")
+            @Expose
+
+            private String storecontact;
+
             @SerializedName("store_id")
             @Expose
-            private String storeId;
+            private Integer storeId;
             @SerializedName("product_id")
             @Expose
-            private int productId;
+            private Integer productId;
             @SerializedName("type")
             @Expose
             private String type;
@@ -157,7 +180,7 @@ public class StoreInventoryResponse {
             private String productDetails;
             @SerializedName("productlikecount")
             @Expose
-            private String productlikecount;
+            private Integer productlikecount;
             @SerializedName("productlikestatus")
             @Expose
             private String productlikestatus;
@@ -166,48 +189,36 @@ public class StoreInventoryResponse {
             private String productfollowstatus;
             @SerializedName("prate")
             @Expose
-            private String prate;
+            private Double prate;
             @SerializedName("prate1")
             @Expose
-            private String prate1;
+            private Double prate1;
             @SerializedName("prate2")
             @Expose
-            private String prate2;
+            private Double prate2;
             @SerializedName("prate3")
             @Expose
-            private String prate3;
+            private Double prate3;
             @SerializedName("productrating")
             @Expose
-            private Float productrating;
+            private String productrating;
             @SerializedName("product_tags")
             @Expose
             private String productTags;
 
-            @SerializedName("storecontact")
-            @Expose
-            private String storecontact;
-
-            public String getStorecontact() {
-                return storecontact;
-            }
-
-            public void setStorecontact(String storecontact) {
-                this.storecontact = storecontact;
-            }
-
-            public String getStoreId() {
+            public Integer getStoreId() {
                 return storeId;
             }
 
-            public void setStoreId(String storeId) {
+            public void setStoreId(Integer storeId) {
                 this.storeId = storeId;
             }
 
-            public int getProductId() {
+            public Integer getProductId() {
                 return productId;
             }
 
-            public void setProductId(int productId) {
+            public void setProductId(Integer productId) {
                 this.productId = productId;
             }
 
@@ -275,11 +286,11 @@ public class StoreInventoryResponse {
                 this.productDetails = productDetails;
             }
 
-            public String getProductlikecount() {
+            public Integer getProductlikecount() {
                 return productlikecount;
             }
 
-            public void setProductlikecount(String productlikecount) {
+            public void setProductlikecount(Integer productlikecount) {
                 this.productlikecount = productlikecount;
             }
 
@@ -299,43 +310,43 @@ public class StoreInventoryResponse {
                 this.productfollowstatus = productfollowstatus;
             }
 
-            public String getPrate() {
+            public Double getPrate() {
                 return prate;
             }
 
-            public void setPrate(String prate) {
+            public void setPrate(Double prate) {
                 this.prate = prate;
             }
 
-            public String getPrate1() {
+            public Double getPrate1() {
                 return prate1;
             }
 
-            public void setPrate1(String prate1) {
+            public void setPrate1(Double prate1) {
                 this.prate1 = prate1;
             }
 
-            public String getPrate2() {
+            public Double getPrate2() {
                 return prate2;
             }
 
-            public void setPrate2(String prate2) {
+            public void setPrate2(Double prate2) {
                 this.prate2 = prate2;
             }
 
-            public String getPrate3() {
+            public Double getPrate3() {
                 return prate3;
             }
 
-            public void setPrate3(String prate3) {
+            public void setPrate3(Double prate3) {
                 this.prate3 = prate3;
             }
 
-            public Float getProductrating() {
+            public String getProductrating() {
                 return productrating;
             }
 
-            public void setProductrating(Float productrating) {
+            public void setProductrating(String productrating) {
                 this.productrating = productrating;
             }
 
@@ -352,6 +363,7 @@ public class StoreInventoryResponse {
 
         public class Service {
 
+
             public boolean isVisibility() {
                 return visibility;
             }
@@ -362,16 +374,25 @@ public class StoreInventoryResponse {
 
             private boolean visibility;
 
+            public String getStorecontact() {
+                return storecontact;
+            }
+
+            public void setStorecontact(String storecontact) {
+                this.storecontact = storecontact;
+            }
+
+            @SerializedName("storecontact")
+            @Expose
+
+            private String storecontact;
 
             @SerializedName("service_name")
             @Expose
             private String serviceName;
             @SerializedName("service_id")
             @Expose
-            private int serviceId;
-            @SerializedName("store_id")
-            @Expose
-            private String storeId;
+            private Integer serviceId;
             @SerializedName("servicecategory")
             @Expose
             private String servicecategory;
@@ -398,7 +419,7 @@ public class StoreInventoryResponse {
             private String createdDate;
             @SerializedName("servicelikecount")
             @Expose
-            private String servicelikecount;
+            private Integer servicelikecount;
             @SerializedName("servicelikestatus")
             @Expose
             private String servicelikestatus;
@@ -407,34 +428,22 @@ public class StoreInventoryResponse {
             private String servicefollowstatus;
             @SerializedName("srate")
             @Expose
-            private String srate;
+            private Double srate;
             @SerializedName("srate1")
             @Expose
-            private String srate1;
+            private Double srate1;
             @SerializedName("srate2")
             @Expose
-            private String srate2;
+            private Double srate2;
             @SerializedName("srate3")
             @Expose
-            private String srate3;
+            private Double srate3;
             @SerializedName("servicerating")
             @Expose
-            private Float servicerating;
+            private String servicerating;
             @SerializedName("servicetags")
             @Expose
             private String servicetags;
-
-            @SerializedName("storecontact")
-            @Expose
-            private String storecontact;
-
-            public String getStorecontact() {
-                return storecontact;
-            }
-
-            public void setStorecontact(String storecontact) {
-                this.storecontact = storecontact;
-            }
 
             public String getServiceName() {
                 return serviceName;
@@ -444,20 +453,12 @@ public class StoreInventoryResponse {
                 this.serviceName = serviceName;
             }
 
-            public int getServiceId() {
+            public Integer getServiceId() {
                 return serviceId;
             }
 
-            public void setServiceId(int serviceId) {
+            public void setServiceId(Integer serviceId) {
                 this.serviceId = serviceId;
-            }
-
-            public String getStoreId() {
-                return storeId;
-            }
-
-            public void setStoreId(String storeId) {
-                this.storeId = storeId;
             }
 
             public String getServicecategory() {
@@ -524,11 +525,11 @@ public class StoreInventoryResponse {
                 this.createdDate = createdDate;
             }
 
-            public String getServicelikecount() {
+            public Integer getServicelikecount() {
                 return servicelikecount;
             }
 
-            public void setServicelikecount(String servicelikecount) {
+            public void setServicelikecount(Integer servicelikecount) {
                 this.servicelikecount = servicelikecount;
             }
 
@@ -548,43 +549,43 @@ public class StoreInventoryResponse {
                 this.servicefollowstatus = servicefollowstatus;
             }
 
-            public String getSrate() {
+            public Double getSrate() {
                 return srate;
             }
 
-            public void setSrate(String srate) {
+            public void setSrate(Double srate) {
                 this.srate = srate;
             }
 
-            public String getSrate1() {
+            public Double getSrate1() {
                 return srate1;
             }
 
-            public void setSrate1(String srate1) {
+            public void setSrate1(Double srate1) {
                 this.srate1 = srate1;
             }
 
-            public String getSrate2() {
+            public Double getSrate2() {
                 return srate2;
             }
 
-            public void setSrate2(String srate2) {
+            public void setSrate2(Double srate2) {
                 this.srate2 = srate2;
             }
 
-            public String getSrate3() {
+            public Double getSrate3() {
                 return srate3;
             }
 
-            public void setSrate3(String srate3) {
+            public void setSrate3(Double srate3) {
                 this.srate3 = srate3;
             }
 
-            public Float getServicerating() {
+            public String getServicerating() {
                 return servicerating;
             }
 
-            public void setServicerating(Float servicerating) {
+            public void setServicerating(String servicerating) {
                 this.servicerating = servicerating;
             }
 
@@ -595,23 +596,26 @@ public class StoreInventoryResponse {
             public void setServicetags(String servicetags) {
                 this.servicetags = servicetags;
             }
-
         }
 
         public class Vehicle {
-            public Date getVehicleDate() {
-                return vehicleDate;
+
+            public String getStorecontact() {
+                return storecontact;
             }
 
-            public void setVehicleDate(Date vehicleDate) {
-                this.vehicleDate = vehicleDate;
+            public void setStorecontact(String storecontact) {
+                this.storecontact = storecontact;
             }
 
-            private Date vehicleDate;
+            @SerializedName("storecontact")
+            @Expose
+
+            private String storecontact;
 
             @SerializedName("vehicle_id")
             @Expose
-            private int vehicleId;
+            private Integer vehicleId;
             @SerializedName("title")
             @Expose
             private String title;
@@ -661,11 +665,11 @@ public class StoreInventoryResponse {
             @Expose
             private String buyerLeads;
 
-            public int getVehicleId() {
+            public Integer getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(int vehicleId) {
+            public void setVehicleId(Integer vehicleId) {
                 this.vehicleId = vehicleId;
             }
 
@@ -800,6 +804,5 @@ public class StoreInventoryResponse {
         }
 
     }
-
 
 }

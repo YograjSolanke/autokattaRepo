@@ -68,12 +68,13 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     final List<String> brandTags = new ArrayList<>();
     List<Integer> groupId = new ArrayList<>();
     List<String> groupTitle = new ArrayList<>();
-    String[] stringTitles = new String[0], stringIds = new String[0];
+    String[] stringTitles = new String[0];
+    Integer[] stringIds = new Integer[0];
     AlertDialog alertDialog;
     String allimgpath = "";
     ArrayList<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
-    int stringgroupids;
+    String stringgroupids = "";
     String str_groupids = "";
     String name, price, details, type, name1, category;
 
@@ -442,7 +443,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     }
 
                     stringTitles = groupTitle.toArray(new String[groupTitle.size()]);
-                    stringIds = groupId.toArray(new String[groupId.size()]);
+                    stringIds = groupId.toArray(new Integer[groupId.size()]);
                 }
             } else {
                 CustomToast.customToast(AddProductActivity.this, getString(R.string._404));
@@ -679,15 +680,19 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-
+                        List<Integer> idList = new ArrayList<>();
                         if (!(mSelectedItems.size() == 0)) {
                             for (int i = 0; i < mSelectedItems.size(); i++) {
                                 for (int j = 0; j < stringTitles.length; j++) {
                                     if (mSelectedItems.get(i).equals(stringTitles[j])) {
-                                        if (stringgroupids == 0) {
-                                            stringgroupids = groupId.get(j);
+
+//                                        idList.add(groupId.get(j));
+//                                        Gson gson = new Gson();
+//                                        str_groupids = gson.toJson(idList);
+                                        if (stringgroupids.equals("")) {
+                                            stringgroupids = String.valueOf(groupId.get(j));
                                         } else {
-                                            str_groupids = stringgroupids + "," + groupId.get(j);
+                                            stringgroupids = stringgroupids + "," + String.valueOf(groupId.get(j));
 
                                         }
                                     }
@@ -697,7 +702,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
 
                             System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
-                            createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, str_groupids);
+                            createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
                         } else {
                             CustomToast.customToast(AddProductActivity.this, "Please Select Atleast One Group");
                             android.app.AlertDialog alert = builder.create();
@@ -713,7 +718,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     public void onClick(DialogInterface dialog, int id) {
                         // removes the AlertDialog in the screen
 
-                        str_groupids = "";
+                        stringgroupids = "";
                         System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
                         createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
 

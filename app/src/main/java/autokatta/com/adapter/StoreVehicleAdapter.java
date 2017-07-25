@@ -21,7 +21,10 @@ import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -91,17 +94,26 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         }
 
         //To set Date
+
+
         try {
+            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+            //format of date coming from services
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
+                    Locale.US);
+            inputFormat.setTimeZone(utc);
+            //format of date which want to show
+            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                    Locale.US);
+            outputFormat.setTimeZone(utc);
 
-            DateFormat date = new SimpleDateFormat(" MMM dd ");
-            DateFormat time = new SimpleDateFormat(" hh:mm a");
-
-            holder.edituploadedon.setText(date.format(obj.getVehicleDate()) + time.format(obj.getVehicleDate()));
-
+            Date date = inputFormat.parse(obj.getDate());
+            String output = outputFormat.format(date);
+            System.out.println("jjj" + output);
+            holder.edituploadedon.setText(output);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         holder.edittitles.setEnabled(false);
         holder.editprices.setEnabled(false);
