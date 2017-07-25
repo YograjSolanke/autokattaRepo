@@ -5637,7 +5637,7 @@ Get saved search Seller list
     /*
  updateTagAssociation
   */
-    public void updateTagAssociation(int product_id, String serviceId, String tagId) {
+    public void updateTagAssociation(int product_id, int serviceId, String tagId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion

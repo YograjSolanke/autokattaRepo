@@ -63,7 +63,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     String contact;
     Bundle b = new Bundle();
-    String id;
+    int id;
     String action;
     String name;
     String web;
@@ -672,7 +672,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     private void updatetagids() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.updateTagAssociation(0, id, idlist);
+        mApiCall.updateTagAssociation(0, service_id, idlist);
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -87,6 +88,12 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
         store_id = getIntent().getExtras().getInt("store_id");
+
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
 
         servicename = (EditText) findViewById(R.id.editservicename);
@@ -213,10 +220,9 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     String text = multiautotext.getText().toString();
                     ArrayList<String> images = new ArrayList<String>();
                     ArrayList<String> othertag = new ArrayList<String>();
-                    if (text.endsWith(","))
-                        text = text.substring(0, text.length() - 1);
-                    System.out.println("txttttt=" + text);
                     text = text.trim();
+                    text = text.replaceAll(",$", "");
+                    System.out.println("txttttt=" + text);
 
 
                     String[] parts = text.split(",");
@@ -274,6 +280,10 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
 
                     String textbrand = multiautobrand.getText().toString();
+
+                    textbrand = textbrand.trim();
+                    textbrand = textbrand.replaceAll(",$", "");
+                    System.out.println("txttttt=" + textbrand);
 
                     if (textbrand.endsWith(","))
                         textbrand = textbrand.substring(0, textbrand.length() - 1);
@@ -724,5 +734,23 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
                 .show();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

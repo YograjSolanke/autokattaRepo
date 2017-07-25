@@ -650,7 +650,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     private void updatetagids() {
         ApiCall mApiCall = new ApiCall(ProductViewActivity.this, this);
-        mApiCall.updateTagAssociation(product_id, "", idlist);
+        mApiCall.updateTagAssociation(product_id, 0, idlist);
     }
 
     /*
