@@ -505,7 +505,7 @@ public interface ServiceApi {
 
     //Edit Group
     @POST("UpdateGroupProfile")
-    Call<String> editGroup(@Query("GroupName") String groupname, @Query("GroupID") String group_id, @Query("ProfilePicture") String profile);
+    Call<String> editGroup(@Query("GroupName") String groupname, @Query("GroupID") int group_id, @Query("ProfilePicture") String profile);
 
     //Delete Group
     @GET("DeleteMyGroups")
@@ -665,7 +665,7 @@ public interface ServiceApi {
     // Update BroadCast Group
     @POST("CreateBroadCastGroups")
     Call<String> updateBroadcastGroup(@Query("Title") String title, @Query("Owner") String owner, @Query("Members") String members
-            , @Query("Keyword") String keyword, @Query("GroupID") String groupid);
+            , @Query("Keyword") String keyword, @Query("GroupID") int groupid);
 
     //Get Your Bid Response
     @GET("userYourBid.php")
@@ -799,7 +799,7 @@ public interface ServiceApi {
 
     //Save My Search
     @POST("SaveSearch")
-    Call<String> _autokattaSaveMySearch(SaveSearchRequest saveSearchRequest);
+    Call<String> _autokattaSaveMySearch(@Body SaveSearchRequest saveSearchRequest);
 
 
     //get Uploaded vehicle buyer list

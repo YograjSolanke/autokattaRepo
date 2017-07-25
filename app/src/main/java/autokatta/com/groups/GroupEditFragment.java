@@ -64,7 +64,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     Button BtnUpdateGroup;
     ApiCall mApiCall;
     String group_name_update;
-    String bundle_id;
+    int bundle_id;
     ImageUpload mImageUpload;
     String mediaPath = "", mContact;
     Uri selectedImage = null;
@@ -89,7 +89,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         mApiCall = new ApiCall(getActivity(), this);
         Bundle bundle = getArguments();
         //get the values out by key
-        bundle_id = bundle.getString("bundle_GroupId");
+        bundle_id = bundle.getInt("bundle_GroupId");
         String bundle_name = bundle.getString("bundle_name");
         bundle_image = bundle.getString("bundle_image");
         bundle_image = bundle_image.replaceAll(" ", "%20");

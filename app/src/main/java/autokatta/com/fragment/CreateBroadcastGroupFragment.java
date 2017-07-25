@@ -45,8 +45,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class CreateBroadcastGroupFragment extends Fragment implements RequestNotifier {
     FragmentActivity ctx;
     String editgroupname = "", editgrpmembers = "", calltype;
-    String Mycontact, group_id = "", finalContacts = "", groupTitle;
+    String Mycontact, finalContacts = "", groupTitle;
     View root;
+    int  group_id = 0;
     Button create_broadcast;
     EditText edittitle;
     ArrayList<String> incomingList = new ArrayList<>();
@@ -76,7 +77,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
             calltype = b.getString("calltype");
             editgroupname = b.getString("groupname");
             editgrpmembers = b.getString("groupmembers");
-            group_id = b.getString("group_id");
+            group_id = b.getInt("group_id");
             System.out.println("group id ala=" + group_id);
 
         } catch (Exception e) {

@@ -204,9 +204,15 @@ public class ApiCall {
     public void getVehicleCount(String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
                 Retrofit mRetrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(gson))
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
@@ -3740,7 +3746,7 @@ get All Vehicles for auction
     /*
      Edit Group
     */
-    public void editGroup(String groupname, String group_id, String profile) {
+    public void editGroup(String groupname, int group_id, String profile) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -4803,7 +4809,7 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //Update Broadcast Group
-    public void updateBroadcastgroup(String title, String owner, String member, String keyword, String groupid) {
+    public void updateBroadcastgroup(String title, String owner, String member, String keyword, int groupid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion

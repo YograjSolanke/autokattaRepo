@@ -223,7 +223,7 @@
                     android:background="@drawable/buttonback"
                     android:text="Add to blacklist"
                     android:textColor="@color/white"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/removeblacklist"
