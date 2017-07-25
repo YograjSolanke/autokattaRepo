@@ -499,8 +499,8 @@ public interface ServiceApi {
 
 
     //send notification of upload vehicle
-    @POST("uploaded_vehicle_notification.php")
-    Call<String> sendNotificationOfUploadedVehicle(@Query("vehicle_id") String vehicle_id, @Query("keyword") String keyword);
+    @POST("UploadedVehicleNotification")
+    Call<String> sendNotificationOfUploadedVehicle(@Query("VehicleID") String vehicle_id, @Query("Keyword") String keyword);
 
 
     //Edit Group
