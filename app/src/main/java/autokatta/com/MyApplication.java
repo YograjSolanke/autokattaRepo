@@ -1,6 +1,6 @@
 package autokatta.com;
 
-import android.app.Application;
+import android.support.multidex.MultiDex;
 
 import autokatta.com.broadcastreceiver.ConnectionReceiver;
 
@@ -8,7 +8,7 @@ import autokatta.com.broadcastreceiver.ConnectionReceiver;
  * Created by ak-001 on 6/6/17.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends android.support.multidex.MultiDexApplication {
     private static MyApplication mInstance;
 
     @Override
@@ -16,6 +16,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         mInstance = this;
+        MultiDex.install(this); //for device installation error
     }
 
     public static synchronized MyApplication getInstance() {

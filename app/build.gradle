@@ -33,6 +33,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    //for device installation error
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g" //specify the heap size for the dex process
+    }
 }
 
 dependencies {
@@ -91,5 +97,7 @@ dependencies {
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'com.github.paolorotolo:appintro:3.3.0'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:multidex:1.0.1' //for device installation error
 }
 apply plugin: 'com.google.gms.google-services'
