@@ -18,10 +18,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,20 +34,30 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.UploadedVehicleBuyerList;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyUploadedVehiclesResponse;
+import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.view.ManualEnquiry;
 import autokatta.com.view.MyBroadcastGroupsActivity;
 import autokatta.com.view.VehicleDetails;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -56,15 +69,23 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
     Activity activity;
     List<MyUploadedVehiclesResponse.Success> mMainList;
-    private ConnectionDetector connectionDetector;
+  //  private ConnectionDetector connectionDetector;
     ApiCall apiCall;
     private String prefcontact;
+    int groupid;
+    String groupname;
+    //SubType
+    List<String> mGrouplist = new ArrayList<>();
+    List<String> parsedData = new ArrayList<>();
+    HashMap<String, Integer> mGrouplist1 = new HashMap<>();
+    private ConnectionDetector mConnectionDetector;
 
-    public MyUploadedVehicleAdapter(Activity activity, List<MyUploadedVehiclesResponse.Success> successList) {
 
-        this.activity = activity;
+    public MyUploadedVehicleAdapter(Activity activity1, List<MyUploadedVehiclesResponse.Success> successList) {
+
+        this.activity = activity1;
         this.mMainList = successList;
-        connectionDetector = new ConnectionDetector(this.activity);
+        mConnectionDetector = new ConnectionDetector(activity);
         apiCall = new ApiCall(this.activity, this);
     }
 
@@ -114,7 +135,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             e.printStackTrace();
         }
 
-        if (mMainList.get(position).getNotificationstatus()==null || mMainList.get(position).getNotificationstatus().equalsIgnoreCase("stop")) {
+        if (mMainList.get(position).getNotificationstatus() == null || mMainList.get(position).getNotificationstatus().equalsIgnoreCase("stop")) {
             holder.btnnotify.setText("Start Notification");
             holder.btnnotify.setBackgroundResource(R.color.orange);
         } else {
@@ -187,7 +208,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((!connectionDetector.isConnectedToInternet())) {
+                if ((!mConnectionDetector.isConnectedToInternet())) {
                     Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -224,7 +245,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             @Override
             public void onClick(View view) {
 
-                if (!connectionDetector.isConnectedToInternet()) {
+                if (!mConnectionDetector.isConnectedToInternet()) {
                     CustomToast.customToast(activity, activity.getString(R.string.no_internet));
 
                 } else {
@@ -338,7 +359,78 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 final TextView titleText = (TextView) openDialog.findViewById(R.id.txtTitle);
                 final EditText edtResPrice = (EditText) openDialog.findViewById(R.id.edtReservedPrice);
                 final EditText edtDate = (EditText) openDialog.findViewById(R.id.edtDate);
+                final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
+
                 Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
+
+                /*Spinner to get groups*/
+
+                try {
+                    if (mConnectionDetector.isConnectedToInternet()) {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(activity.getString(R.string.base_url))
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .client(initLog().build())
+                                .build();
+
+                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                        Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+                        add.enqueue(new Callback<ProfileGroupResponse>() {
+                            @Override
+                            public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                                if (response.isSuccessful()) {
+                                    mGrouplist.clear();
+                                    mGrouplist1.clear();
+                                    parsedData.clear();
+                                    mGrouplist.add("Select Group");
+                                    ProfileGroupResponse mProfilegroup = (ProfileGroupResponse) response.body();
+                                    for (ProfileGroupResponse.MyGroup groupresponse : mProfilegroup.getSuccess().getMyGroups()) {
+                                        groupresponse.setId(groupresponse.getId());
+                                        groupresponse.setTitle(groupresponse.getTitle());
+                                        mGrouplist.add(groupresponse.getTitle());
+                                        mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
+                                    }
+                                    parsedData.addAll(mGrouplist);
+                                    if (activity != null) {
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, parsedData);
+                                        //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                        mGroupsSpinner.setAdapter(adapter);
+                                    }
+                                    mGroupsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                            if (position != 0) {
+                                                groupid = mGrouplist1.get(parsedData.get(position));
+                                                groupname = parsedData.get(position);
+
+                                                System.out.println("group id::" + groupid);
+                                                System.out.println("group name::" + groupname);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                } else {
+                                    CustomToast.customToast(activity, activity.getString(R.string._404));
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+
+                            }
+
+                        });
+                    } else
+                        CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
                 titleText.setText(mMainList.get(holder.getAdapterPosition()).getTitle() + " of Category "
                         + mMainList.get(holder.getAdapterPosition()).getCategory());
@@ -410,6 +502,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         CardView mcardView;
         RelativeLayout mBroadcast;
 
+
         VehicleHolder(View itemView) {
             super(itemView);
 
@@ -434,8 +527,23 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             mcardView = (CardView) itemView.findViewById(R.id.card_view);
             mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
 
+
             mQuotation = (Button) itemView.findViewById(R.id.quotation);
 
         }
+    }
+
+    /***
+     * Retrofit Logs
+     ***/
+    private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
     }
 }

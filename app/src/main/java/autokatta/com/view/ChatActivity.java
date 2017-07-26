@@ -185,7 +185,9 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                             message.setImage(message.getImage());
                             Date d = null;
                             try {
-                                d = f.parse(message.getDate());
+                                d = f.parse(message.getDate().replace("T00:00:00",""));
+                                Log.i("dateeeeeeeeeeeee",message.getDate());
+                                System.out.println("asdfghjklllllllllll"+d);
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
