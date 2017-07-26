@@ -694,8 +694,8 @@ public interface ServiceApi {
 
     //get broadcast recievers
     @GET("GetReplySenders")
-    Call<BroadcastReceivedResponse> getBroadcastReceivers(@Query("MyContact") String myContact, @Query("ProductID") String product_id,
-                                                          @Query("ServiceID") String service_id, @Query("VehicleID") String vehicle_id);
+    Call<BroadcastReceivedResponse> getBroadcastReceivers(@Query("MyContact") String myContact, @Query("ProductID") int product_id,
+                                                          @Query("ServiceID") int service_id, @Query("VehicleID") int vehicle_id);
 
 
     //Get  broadcast senders

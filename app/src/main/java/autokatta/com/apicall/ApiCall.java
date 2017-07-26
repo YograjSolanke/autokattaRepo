@@ -4846,7 +4846,7 @@ params.put("auction_id", bundleAuctionId);
     /*
    Get getBroadcastReceivers data
     */
-    public void getBroadcastReceivers(String myContact, String product_id, String service_id, String vehicle_id) {
+    public void getBroadcastReceivers(String myContact, int product_id, int service_id, int vehicle_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
