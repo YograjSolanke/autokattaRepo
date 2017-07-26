@@ -90,6 +90,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     TextView storename, website, textlike, textshare;
     EditText servicename, servicetype, serviceprice, servicedetails, writereview;
     ImageView check, edit, callme, deleteservice;
+    RelativeLayout mainlayout;
 
 
     Button submitfeedback;
@@ -176,6 +177,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         servicerating = (RatingBar) findViewById(R.id.servicerating);
         storerating = (RatingBar) findViewById(R.id.storerating);
         submitfeedback = (Button) findViewById(R.id.btnfeedback);
+        mainlayout = (RelativeLayout) findViewById(R.id.mainlayout);
+        mainlayout.setVisibility(View.GONE);
 
         overallbar.setEnabled(false);
         storerating.setEnabled(false);
@@ -417,6 +420,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mainlayout.setVisibility(View.VISIBLE);
                 if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
                     final List<String> module = new ArrayList<String>();

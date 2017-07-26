@@ -35,6 +35,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     Button post, btnchat;
     Spinner spinCategory;
+    RelativeLayout mainlayout;
     TextView storename, website, txtlike, txtshare, txtreview;
     EditText productname, productprice, productdetails, producttype, writereview;
     Bundle b = new Bundle();
@@ -107,6 +109,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     ApiCall mApiCall;
     SliderLayout sliderLayout;
     HashMap<String, String> Hash_file_maps;
+    KProgressHUD hud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +165,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         photocount = (TextView) findViewById(R.id.no_of_photos);
         no_of_enquiries = (TextView) findViewById(R.id.no_of_enquiries);
         multiautobrand = (MultiAutoCompleteTextView) findViewById(R.id.txtbrandptags);
+        mainlayout = (RelativeLayout) findViewById(R.id.mainlayout);
 
+        mainlayout.setVisibility(View.GONE);
         overallbar.setEnabled(false);
         storerating.setEnabled(false);
         productrating.setEnabled(false);
@@ -193,6 +198,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     getSupportActionBar().setDisplayShowHomeEnabled(true);
                 }
+
+
+                hud = KProgressHUD.create(ProductViewActivity.this)
+                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                        .setLabel("Please wait")
+                        .setMaxProgress(100)
+                        .show();
 
                 getCategory();
                 getProductData(product_id, contact);
@@ -373,6 +385,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mainlayout.setVisibility(View.VISIBLE);
+                hud.dismiss();
                 if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
                     final List<String> module = new ArrayList<String>();
@@ -602,9 +616,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 }
 
             } else {
+                hud.dismiss();
                 CustomToast.customToast(ProductViewActivity.this, getString(R.string._404));
             }
         } else {
+            hud.dismiss();
+
             CustomToast.customToast(ProductViewActivity.this, getString(R.string.no_response));
         }
     }
