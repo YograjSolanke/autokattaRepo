@@ -73,7 +73,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.getBroadcastReceivers(myContact, "", "", "");
+                apiCall.getBroadcastReceivers(myContact, 0, 0, 0);
             }
         });
         return root;
@@ -123,7 +123,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
 
     @Override
     public void notifyString(String str) {
-        apiCall.getBroadcastReceivers(myContact, "", "", "");
+        apiCall.getBroadcastReceivers(myContact, 0, 0, 0);
     }
 
 

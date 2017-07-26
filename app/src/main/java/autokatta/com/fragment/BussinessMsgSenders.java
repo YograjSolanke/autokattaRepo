@@ -43,7 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     String mContact;
-    String product_id = "", service_id = "", vehicle_id = "";
+    int product_id = 0, service_id = 0, vehicle_id = 0;
      View root;
     BussinessMsgSendersAdapter mMsgReplyAdapter;
     RecyclerView mRecyclerView;
@@ -107,9 +107,9 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
 
                 try {
                     Bundle b = getArguments();
-                    product_id = b.getString("product_id");
-                    service_id = b.getString("service_id");
-                    vehicle_id = b.getString("vehicle_id");
+                    product_id = b.getInt("product_id");
+                    service_id = b.getInt("service_id");
+                    vehicle_id = b.getInt("vehicle_id");
                     Keyword.setText(b.getString("keyword"));
                     Title.setText(b.getString("title"));
                     price.setText(b.getString("price"));
@@ -178,9 +178,9 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
     public void onRefresh() {
         try {
             Bundle b = getArguments();
-            product_id = b.getString("product_id");
-            service_id = b.getString("service_id");
-            vehicle_id = b.getString("vehicle_id");
+            product_id = b.getInt("product_id");
+            service_id = b.getInt("service_id");
+            vehicle_id = b.getInt("vehicle_id");
 
             mApiCall.getBroadcastReceivers(mContact,product_id,service_id,vehicle_id);
         } catch (Exception e) {

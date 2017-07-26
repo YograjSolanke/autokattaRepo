@@ -30,7 +30,7 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
     private Activity mActivity;
     private List<BroadcastReceivedResponse.Success> mItemList = new ArrayList<>();
     private String msender, msendername;
-    private String product_id = "", service_id = "", vehicle_id = "";
+    private int product_id = 0, service_id = 0, vehicle_id = 0;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView msgFrom, msgFromCnt, lastMsg, lastMsgTime;
@@ -51,7 +51,7 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
 
     }
 
-    public BussinessMsgSendersAdapter(Activity mActivity, List<BroadcastReceivedResponse.Success> mItemList, String product_id, String service_id, String vehicle_id) {
+    public BussinessMsgSendersAdapter(Activity mActivity, List<BroadcastReceivedResponse.Success> mItemList, int product_id, int service_id, int vehicle_id) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
         this.product_id = product_id;
@@ -82,9 +82,9 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
                 Bundle b = new Bundle();
                 b.putString("sender", msender);
                 b.putString("sendername", msendername);
-                b.putString("product_id", product_id);
-                b.putString("service_id", service_id);
-                b.putString("vehicle_id", vehicle_id);
+                b.putInt("product_id", product_id);
+                b.putInt("service_id", service_id);
+                b.putInt("vehicle_id", vehicle_id);
 
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(mActivity, ChatActivity.class);

@@ -287,7 +287,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 Locale.US);
                         outputFormat.setTimeZone(utc);
 
-                        Date date = inputFormat.parse(mainList.get(i).getDate());
+                        Date date = inputFormat.parse(mainList.get(i).getDate().replace("T"," "));
                         String output = outputFormat.format(date);
                         System.out.println("jjj" + output);
                         mSearchDate.setText(output);

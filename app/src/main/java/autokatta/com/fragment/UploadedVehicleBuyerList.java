@@ -184,10 +184,10 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
             if (response.isSuccessful()) {
                 //mSwipeRefreshLayout.setRefreshing(false);
                 myUploadedVehiclesResponseList = new ArrayList<>();
-                BuyerResponse buyerResponse = (BuyerResponse) response.body();
+                BuyerResponse.Success buyerResponse = (BuyerResponse.Success) response.body();
 
-                if (!buyerResponse.getSuccess().getFound().isEmpty()) {
-                    for (BuyerResponse.Success.Found found : buyerResponse.getSuccess().getFound()) {
+                if (!buyerResponse.getFound().isEmpty()) {
+                    for (BuyerResponse.Success.Found found : buyerResponse.getFound()) {
 
                         if (found.getVehicleId().equals(vehicle_id)) {
 
