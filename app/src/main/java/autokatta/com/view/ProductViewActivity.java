@@ -189,6 +189,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
         product_id = getIntent().getExtras().getInt("product_id");
 
+        System.out.println("hiiiiiii=" + product_id);
+
 
         runOnUiThread(new Runnable() {
             @Override
