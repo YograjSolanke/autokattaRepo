@@ -53,7 +53,7 @@ public class BroadcastMessageResponse {
         private String serviceId;
         @SerializedName("vehicle_id")
         @Expose
-        private String vehicleId;
+        private int vehicleId;
         @SerializedName("date")
         @Expose
         private String date;
@@ -132,11 +132,11 @@ public class BroadcastMessageResponse {
             this.serviceId = serviceId;
         }
 
-        public String getVehicleId() {
+        public int getVehicleId() {
             return vehicleId;
         }
 
-        public void setVehicleId(String vehicleId) {
+        public void setVehicleId(int vehicleId) {
             this.vehicleId = vehicleId;
         }
 

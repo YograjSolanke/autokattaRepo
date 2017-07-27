@@ -158,7 +158,7 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
 
 
         //Glide code for image downloading
-        if (chatMessageObj.getImage().equals("") || chatMessageObj.getImage().equals("null") || chatMessageObj.getImage().equals("")) {
+        if (chatMessageObj.getImage()==null || chatMessageObj.getImage().isEmpty()) {
             //yoHolder.productImage.setBackgroundResource(R.drawable.store);
             imagelayout.setVisibility(View.GONE);
         } else {
