@@ -82,10 +82,6 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     String storeWorkingDays = "";
     int storeLikeCount;
     int storeFollowCount;
-    String strDetailsShare = "";
-    String productCount;
-    String serviceCount;
-    String vehicleCount;
     String storelattitude;
     String storelongitude;
     int store_id;

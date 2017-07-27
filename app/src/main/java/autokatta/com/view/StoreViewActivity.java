@@ -141,6 +141,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mShare = (FloatingActionButton) findViewById(R.id.share);
 
                     mMyStoreHome = new MyStoreHome();
+
                     mMyStoreHome.setArguments(mBundle);
                     storeInfo = new StoreInfo();
                     storeInfo.setArguments(mBundle);
@@ -628,13 +629,13 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         Intent intent = new Intent(StoreViewActivity.this, AddProductActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        finish();
+                        //finish();
 
                     } else if (strName.equals("Add Service")) {
                         Intent intent = new Intent(StoreViewActivity.this, AddServiceActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        finish();
+                        //finish();
 
                     } else if (strName.equals("Add Vehicle")) {
                         if (isDealing.equalsIgnoreCase("false")) {
