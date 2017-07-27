@@ -173,6 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/exchange"
+                    android:layout_gravity="center"
                     android:textStyle="bold" />
 
                 <RadioGroup
@@ -194,6 +195,138 @@
 
             </LinearLayout>
 
+            <!--<RelativeLayout
+                android:id="@+id/spnlayout1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/spnlayout2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/sub_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/spnlayout3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/spnlayout4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/model"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>-->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -205,6 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/finance"
+                    android:layout_gravity="center"
                     android:textStyle="bold" />
 
                 <RadioGroup

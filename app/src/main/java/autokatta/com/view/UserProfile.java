@@ -51,10 +51,14 @@ import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.fragment_profile.AboutStore;
+import autokatta.com.fragment_profile.Blog;
 import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
+import autokatta.com.fragment_profile.Images;
 import autokatta.com.fragment_profile.Modules;
 import autokatta.com.fragment_profile.MyVehicles;
+import autokatta.com.fragment_profile.MyVideos;
+import autokatta.com.fragment_profile.Post;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
@@ -356,6 +360,10 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         adapter.addFragment(new Modules(), "MODULE");
         adapter.addFragment(new Follow(), "FOLLOW");
         adapter.addFragment(new MyVehicles(), "MY VEHICLES");
+        adapter.addFragment(new MyVideos(), "MY VIDEO");
+        adapter.addFragment(new Blog(), "BLOG");
+        adapter.addFragment(new Post(), "POST");
+        adapter.addFragment(new Images(), "IMAGES");
         viewPager.setAdapter(adapter);
     }
 
