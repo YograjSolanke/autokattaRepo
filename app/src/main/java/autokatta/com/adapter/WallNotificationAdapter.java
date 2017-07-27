@@ -822,8 +822,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mGroupHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mGroupHolder.mGroupMembers.setText(notificationList.get(position).getGroupMembers());
                 mGroupHolder.mGroupNoOfVehicles.setText(notificationList.get(position).getGroupVehicles());
-               /* mGroupHolder.mGroupNoOfProducts.setText(notificationList.get(position));
-                mGroupHolder.mGroupNoOfServices.setText(notificationList.get(position));*/
+                mGroupHolder.mGroupNoOfProducts.setText(notificationList.get(position).getGroupProductCount());
+                mGroupHolder.mGroupNoOfServices.setText(notificationList.get(position).getGroupServiceCount());
 
                /* Profile pic */
                 if (notificationList.get(position).getSenderPicture() == null ||
@@ -921,7 +921,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mProductHolder.mProductType.setText(notificationList.get(position).getProductType());
                 mProductHolder.mLikes.setText("Likes(" + notificationList.get(position).getProductLikeCount() + ")");
                 //mProductHolder.mShares.setText("Share(" + notificationList.get(position).getProduct + ")");
-                //mProductHolder.mProductRating.setRating(notificationList.get(position).productr);
+                mProductHolder.mProductRating.setRating(notificationList.get(position).getProductRating());
 
                 mProductHolder.mProductCall.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1166,7 +1166,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mServiceHolder.mServiceType.setText(notificationList.get(position).getServiceType());
                 mServiceHolder.mLikes.setText("Likes(" + notificationList.get(position).getServiceLikeCount() + ")");
                 //mServiceHolder.mShares.setText("Share(" + notificationList.get(position).getProduct + ")");
-                //mServiceHolder.mServiceRating.setRating(notificationList.get(position).productr);
+                mServiceHolder.mServiceRating.setRating(notificationList.get(position).getServiceRating());
 
                 mServiceHolder.mServiceCall.setOnClickListener(new View.OnClickListener() {
                     @Override

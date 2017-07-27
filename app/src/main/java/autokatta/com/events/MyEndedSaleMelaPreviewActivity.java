@@ -22,7 +22,8 @@ public class MyEndedSaleMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime,strSaleid;
+    String strEndDateTime;
+    private int strSaleid = 0;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
 
@@ -61,7 +62,7 @@ public class MyEndedSaleMelaPreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
-        strSaleid=getIntent().getExtras().getString("saleid");
+        strSaleid = getIntent().getExtras().getInt("saleid");
 
 
         runOnUiThread(new Runnable() {
@@ -76,7 +77,7 @@ public class MyEndedSaleMelaPreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
-                b.putString("saleid",strSaleid);
+                b.putInt("saleid", strSaleid);
                 saleMelaAnalyticsFragment.setArguments(b);
                 saleMelaParticipantsFragment.setArguments(b);
 

@@ -39,10 +39,10 @@ public class AuctionConfirmRecycler extends RecyclerView.Adapter<AuctionConfirmR
     private List<AuctionAllVehicleData> finalVehiclesData;
     private List<Boolean> positionArray;
     private List<AuctionAllVehicleData> checkedVehicleData;
-    private String auctionId;
-    public static ArrayList<Boolean> isSave;
+    private int auctionId = 0;
+    private static ArrayList<Boolean> isSave;
 
-    public AuctionConfirmRecycler(Activity activity, String bundleAuctionId, ArrayList<AuctionAllVehicleData> finalVehiclesData1) {
+    public AuctionConfirmRecycler(Activity activity, int bundleAuctionId, ArrayList<AuctionAllVehicleData> finalVehiclesData1) {
         mActivity = activity;
         this.finalVehiclesData = finalVehiclesData1;
         auctionId = bundleAuctionId;

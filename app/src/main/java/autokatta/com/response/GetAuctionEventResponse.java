@@ -279,7 +279,7 @@ public class GetAuctionEventResponse {
 
         @SerializedName("auction_id")
         @Expose
-        private String auctionId;
+        private int auctionId;
         @SerializedName("contact")
         @Expose
         private String contact;
@@ -321,7 +321,7 @@ public class GetAuctionEventResponse {
         private String lotNo;
         @SerializedName("goingcount")
         @Expose
-        private String goingcount;
+        private int goingcount;
         @SerializedName("special_clauses")
         @Expose
         private String specialClauses;
@@ -338,11 +338,11 @@ public class GetAuctionEventResponse {
             this.stockLocation = stockLocation;
         }
 
-        public String getAuctionId() {
+        public int getAuctionId() {
             return auctionId;
         }
 
-        public void setAuctionId(String auctionId) {
+        public void setAuctionId(int auctionId) {
             this.auctionId = auctionId;
         }
 
@@ -450,11 +450,11 @@ public class GetAuctionEventResponse {
             this.lotNo = lotNo;
         }
 
-        public String getGoingcount() {
+        public int getGoingcount() {
             return goingcount;
         }
 
-        public void setGoingcount(String goingcount) {
+        public void setGoingcount(int goingcount) {
             this.goingcount = goingcount;
         }
 

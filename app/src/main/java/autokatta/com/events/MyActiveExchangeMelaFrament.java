@@ -98,7 +98,6 @@ public class MyActiveExchangeMelaFrament extends Fragment implements SwipeRefres
             apiCall.MyActiveExchangeMela(loginContact);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -130,6 +129,8 @@ public class MyActiveExchangeMelaFrament extends Fragment implements SwipeRefres
                         ExchangeSuccess.setImage(ExchangeSuccess.getImage());
                         ExchangeSuccess.setDetails(ExchangeSuccess.getDetails());
                         ExchangeSuccess.setContact(ExchangeSuccess.getContact());
+                        ExchangeSuccess.setStartDateTime(ExchangeSuccess.getStartDateTime().replace("T", " "));
+                        ExchangeSuccess.setEndDateTime(ExchangeSuccess.getEndDateTime().replace("T", " "));
 
                         activeExchangeMelaList.add(ExchangeSuccess);
                     }
@@ -155,19 +156,14 @@ public class MyActiveExchangeMelaFrament extends Fragment implements SwipeRefres
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-          //  showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-         //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-           // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-        //    errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "My Active Exchange Mela Fragment");
             error.printStackTrace();

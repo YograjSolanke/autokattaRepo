@@ -20,7 +20,7 @@ import autokatta.com.adapter.TabAdapterName;
 
 public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity {
 
-    Bundle b=new Bundle();
+    Bundle b = new Bundle();
     TextView mStartdate, mStartTime, mEndTime, mEndDate, mLocation, mtitle;
     String strTitle;
     String strStartdate;
@@ -28,128 +28,129 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime,strExchangeID;
+    String strEndDateTime;
+    private int strExchangeID = 0;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
 
-    ExchangeMelaParticipantsFragment exchangeMelaParticipantsFragment=new ExchangeMelaParticipantsFragment();
-    ExchangeMelaAnalyticsFragment exchangeMelaAnalyticsFragment =new ExchangeMelaAnalyticsFragment();
+    ExchangeMelaParticipantsFragment exchangeMelaParticipantsFragment = new ExchangeMelaParticipantsFragment();
+    ExchangeMelaAnalyticsFragment exchangeMelaAnalyticsFragment = new ExchangeMelaAnalyticsFragment();
 
-        ViewPager mViewPager;
-        TabLayout mTabLayout;
+    ViewPager mViewPager;
+    TabLayout mTabLayout;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_active_exchange_mela_preview);
-            mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
-            mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_active_exchange_mela_preview);
+        mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
+        mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setHomeButtonEnabled(true);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            }
-
-            mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-            mStartdate = (TextView) findViewById(R.id.start_date);
-            mStartTime = (TextView) findViewById(R.id.start_time);
-            mEndTime = (TextView) findViewById(R.id.end_time);
-            mEndDate = (TextView) findViewById(R.id.end_date);
-            mLocation = (TextView) findViewById(R.id.location);
-            txtTimer = (TextView) findViewById(R.id.live_timer);
-            mtitle = (TextView) findViewById(R.id.loan_text);
-
-            //get Data from Adapter
-            strTitle = getIntent().getExtras().getString("title");
-            strStartdate = getIntent().getExtras().getString("startdate");
-            strStarttime = getIntent().getExtras().getString("starttime");
-            strEnddate = getIntent().getExtras().getString("enddate");
-            strEndTime = getIntent().getExtras().getString("endtime");
-            strLocation = getIntent().getExtras().getString("location");
-            strEndDateTime = getIntent().getExtras().getString("enddatetime");
-            strExchangeID = getIntent().getExtras().getString("exchangeid");
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //Set Data
-                    mtitle.setText("Exchange Mela");
-                    mCollapsingToolbar.setTitle("Title: " + strTitle);
-                    mStartTime.setText(strStarttime);
-                    mStartdate.setText(strStartdate);
-                    mEndDate.setText(strEnddate);
-                    mEndTime.setText(strEndTime);
-                    mLocation.setText(strLocation);
-                    b.putString("exchangeid",strExchangeID);
-                    exchangeMelaAnalyticsFragment.setArguments(b);
-                    exchangeMelaParticipantsFragment.setArguments(b);
-                    if (mViewPager != null) {
-                        setupViewPager(mViewPager);
-                    }
-                    mTabLayout.setupWithViewPager(mViewPager);
-
-                    //Live timer
-                    final TextView tv = txtTimer;
-                    cdt = counters.get(txtTimer);
-                    if (cdt != null) {
-                        cdt.cancel();
-                        cdt = null;
-                    }
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    try {
-                        Date futureDate = dateFormat.parse(strEndDateTime);
-                        Date currentDate = dateFormat.parse(strEndDateTime);
-                        Date now = new Date();
-                        long difference = futureDate.getTime() - currentDate.getTime();
-                        long diff = futureDate.getTime() - now.getTime();
-                        long abc = difference - diff;
-                        cdt = new CountDownTimer(diff, 1000) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
-                                int days = 0;
-                                int hours = 0;
-                                int minutes = 0;
-                                int seconds = 0;
-                                String sDate = "";
-                                if (millisUntilFinished > DateUtils.DAY_IN_MILLIS) {
-                                    days = (int) (millisUntilFinished / DateUtils.DAY_IN_MILLIS);
-                                    sDate += days + "d";
-                                }
-                                millisUntilFinished -= (days * DateUtils.DAY_IN_MILLIS);
-                                if (millisUntilFinished > DateUtils.HOUR_IN_MILLIS) {
-                                    hours = (int) (millisUntilFinished / DateUtils.HOUR_IN_MILLIS);
-                                }
-                                millisUntilFinished -= (hours * DateUtils.HOUR_IN_MILLIS);
-                                if (millisUntilFinished > DateUtils.MINUTE_IN_MILLIS) {
-                                    minutes = (int) (millisUntilFinished / DateUtils.MINUTE_IN_MILLIS);
-                                }
-                                millisUntilFinished -= (minutes * DateUtils.MINUTE_IN_MILLIS);
-                                if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
-                                    seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
-                                }
-                                sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
-                                tv.setText(sDate.trim());
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                tv.setText("Finished");
-                            }
-                        };
-                        counters.put(tv, cdt);
-                        cdt.start();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mStartdate = (TextView) findViewById(R.id.start_date);
+        mStartTime = (TextView) findViewById(R.id.start_time);
+        mEndTime = (TextView) findViewById(R.id.end_time);
+        mEndDate = (TextView) findViewById(R.id.end_date);
+        mLocation = (TextView) findViewById(R.id.location);
+        txtTimer = (TextView) findViewById(R.id.live_timer);
+        mtitle = (TextView) findViewById(R.id.loan_text);
+
+        //get Data from Adapter
+        strTitle = getIntent().getExtras().getString("title");
+        strStartdate = getIntent().getExtras().getString("startdate");
+        strStarttime = getIntent().getExtras().getString("starttime");
+        strEnddate = getIntent().getExtras().getString("enddate");
+        strEndTime = getIntent().getExtras().getString("endtime");
+        strLocation = getIntent().getExtras().getString("location");
+        strEndDateTime = getIntent().getExtras().getString("enddatetime");
+        strExchangeID = getIntent().getExtras().getInt("exchangeid");
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //Set Data
+                mtitle.setText("Exchange Mela");
+                mCollapsingToolbar.setTitle("Title: " + strTitle);
+                mStartTime.setText(strStarttime);
+                mStartdate.setText(strStartdate);
+                mEndDate.setText(strEnddate);
+                mEndTime.setText(strEndTime);
+                mLocation.setText(strLocation);
+                b.putInt("exchangeid", strExchangeID);
+                exchangeMelaAnalyticsFragment.setArguments(b);
+                exchangeMelaParticipantsFragment.setArguments(b);
+                if (mViewPager != null) {
+                    setupViewPager(mViewPager);
+                }
+                mTabLayout.setupWithViewPager(mViewPager);
+
+                //Live timer
+                final TextView tv = txtTimer;
+                cdt = counters.get(txtTimer);
+                if (cdt != null) {
+                    cdt.cancel();
+                    cdt = null;
+                }
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    Date futureDate = dateFormat.parse(strEndDateTime);
+                    Date currentDate = dateFormat.parse(strEndDateTime);
+                    Date now = new Date();
+                    long difference = futureDate.getTime() - currentDate.getTime();
+                    long diff = futureDate.getTime() - now.getTime();
+                    long abc = difference - diff;
+                    cdt = new CountDownTimer(diff, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            int days = 0;
+                            int hours = 0;
+                            int minutes = 0;
+                            int seconds = 0;
+                            String sDate = "";
+                            if (millisUntilFinished > DateUtils.DAY_IN_MILLIS) {
+                                days = (int) (millisUntilFinished / DateUtils.DAY_IN_MILLIS);
+                                sDate += days + "d";
+                            }
+                            millisUntilFinished -= (days * DateUtils.DAY_IN_MILLIS);
+                            if (millisUntilFinished > DateUtils.HOUR_IN_MILLIS) {
+                                hours = (int) (millisUntilFinished / DateUtils.HOUR_IN_MILLIS);
+                            }
+                            millisUntilFinished -= (hours * DateUtils.HOUR_IN_MILLIS);
+                            if (millisUntilFinished > DateUtils.MINUTE_IN_MILLIS) {
+                                minutes = (int) (millisUntilFinished / DateUtils.MINUTE_IN_MILLIS);
+                            }
+                            millisUntilFinished -= (minutes * DateUtils.MINUTE_IN_MILLIS);
+                            if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
+                                seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
+                            }
+                            sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                            tv.setText(sDate.trim());
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            tv.setText("Finished");
+                        }
+                    };
+                    counters.put(tv, cdt);
+                    cdt.start();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 
     private void setupViewPager(ViewPager viewPager) {

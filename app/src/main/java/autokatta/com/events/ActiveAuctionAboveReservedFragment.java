@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -49,7 +48,7 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
     }
 
     private LinearLayout mLinearLayout;
-    private String mAuctionId = "";
+    private int mAuctionId = 0;
     private String myContact = "";
     private String VehiId = "";
     private String RContact = "";
@@ -92,9 +91,8 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
             public void run() {
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
-                    mAuctionId = bundle.getString("auctionid");
-                    //mApiCall.ActiveAuctionAboveReservedPrice(myContact, "1047");
-                    //mApiCall.ActiveAuctionAboveReservedPrice(myContact, mAuctionId);
+                    mAuctionId = bundle.getInt("auctionid");
+
                     getAboveReservedVehicle(myContact, mAuctionId);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -115,14 +113,13 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
         }
     }
 
-    private void getAboveReservedVehicle(String myContact, String strAuctionId) {
+    private void getAboveReservedVehicle(String myContact, int strAuctionId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionAboveReservedPrice(myContact, strAuctionId);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -282,7 +279,7 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
                                 if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
                                     Bundle b = new Bundle();
                                     b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
-                                    b.putString("auction_id", mAuctionId);
+                                    b.putInt("auction_id", mAuctionId);
 
                                     Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
                                     intent.putExtras(b);
@@ -394,11 +391,9 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Active Auction AboveReservedBid Fragment");
             error.printStackTrace();

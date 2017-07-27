@@ -135,6 +135,8 @@ public class MyActiveSaleMelaFragment extends Fragment implements SwipeRefreshLa
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
                         loanSuccess.setGoingcount(loanSuccess.getGoingcount());
+                        loanSuccess.setStartDateTime(loanSuccess.getStartDateTime().replace("T", " "));
+                        loanSuccess.setEndDateTime(loanSuccess.getEndDateTime().replace("T", " "));
 
                         activeSaleMelaResponseList.add(loanSuccess);
                     }

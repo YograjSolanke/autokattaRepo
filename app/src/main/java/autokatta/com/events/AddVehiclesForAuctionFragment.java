@@ -62,7 +62,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     }
 
     TextView mNoData;
-    String contactnumber, str, singleAuctionId, UserId, sheet = "", ExcelsheetName = "";
+    String contactnumber, str, UserId, sheet = "", ExcelsheetName = "";
     public static EditText editNoOfVehicles;
     public static int IntVehicleNo;
     EditText auctionTitle, startDate, startTime, endDate, endTime;
@@ -71,7 +71,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     Button btnbyteam, btnbyself, btnbyadmin, btnbyreauction, buttonnext;
     ListView byteam_listview, byself_listview, byadmin_listview, byreauction_listview;
     Spinner selectAuctionsSpinner;
-    String className, auction_id, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate,
+    String className, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate,
             bundleAuctionEndTime, bundleIds, bundleClause, bundleCategory, bundleLocation;
     boolean bundlepositionArray[];
     String auctionTitleUpdate, startDateUpdate, startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesUpdate, specialClausesIDUpdate;
@@ -89,6 +89,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     TextView txtSheets;
     ApiCall mApiCall;
     CollapsingToolbarLayout collapsingToolbar;
+    private int auction_id = 0, singleAuctionId = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,11 +97,11 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
         final View root = inflater.inflate(R.layout.fragment_addvehicles_auction, container, false);
 
-        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
+        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         mApiCall = new ApiCall(getActivity(), this);
         Bundle b = getArguments();
 
-        auction_id = b.getString("auction_id");
+        auction_id = b.getInt("auction_id");
         className = b.getString("className");
         bundleAuctionTitle = b.getString("title");
         bundleAuctionStartDate = b.getString("startdate");
@@ -121,7 +122,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         startDate = (EditText) root.findViewById(R.id.startdate);
         startTime = (EditText) root.findViewById(R.id.starttime);
         endDate = (EditText) root.findViewById(R.id.enddate);
-         IntVehicleNo= Integer.parseInt(b.getString("noofvehicles"));
+        IntVehicleNo = Integer.parseInt(b.getString("noofvehicles"));
         endTime = (EditText) root.findViewById(R.id.endtime);
         btnspecial_clauses = (Button) root.findViewById(R.id.btnspecial_clauses);
 
@@ -195,12 +196,13 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
         selectAuctionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int count = 0;
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                singleAuctionId = String.valueOf(auctionIds.get(position));
+                singleAuctionId = auctionIds.get(position);
                 if (count != 0) {
-                    if (singleAuctionId.equals("0"))
-                        singleAuctionId = "";
+                    if (singleAuctionId == 0)
+                        singleAuctionId = 0;
                     getReauctionedData(singleAuctionId);
                 }
                 count++;
@@ -456,56 +458,56 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 if (donecheck.getVisibility() == View.VISIBLE) {
                     CustomToast.customToast(getActivity(), "Please Confirm Auction Details");
                 } else {
-                List<AuctionAllVehicleData> finalVehiclesData = new ArrayList<>();
-                List<AuctionAllVehicleData> byselfVehiclesData = new ArrayList<>();
-                List<AuctionAllVehicleData> reauctionVehiclesData = new ArrayList<>();
-                List<AuctionAllVehicleData> adminVehiclesData = new ArrayList<>();
-                byselfVehiclesData = selfadapter.checkboxVehicleData();
-                reauctionVehiclesData = reauctionadapter.checkboxVehicleData();
-                adminVehiclesData = adminadapter.checkboxVehicleData();
-                for (int i = 0; i < byselfVehiclesData.size(); i++) {
-                    finalVehiclesData.add(byselfVehiclesData.get(i));
-                }
-                for (int i = 0; i < reauctionVehiclesData.size(); i++) {
-                    finalVehiclesData.add(reauctionVehiclesData.get(i));
-                }
-                for (int i = 0; i < adminVehiclesData.size(); i++) {
-                    finalVehiclesData.add(adminVehiclesData.get(i));
-                }
-
-                if (finalVehiclesData.size() == 0)
-                    CustomToast.customToast(getActivity(), "Please select vehicle(s)");
-                else {
-                    CustomToast.customToast(getActivity(), "Please confirm vehicles that you selected now");
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("finalVehiclesData", (Serializable) finalVehiclesData);
-                    bundle.putString("auction_id", auction_id);
-                    bundle.putString("title", auctionTitle.getText().toString());
-                    bundle.putString("startdate", startDate.getText().toString());
-                    bundle.putString("starttime", startTime.getText().toString());
-                    bundle.putString("enddate", endDate.getText().toString());
-                    bundle.putString("endtime", endTime.getText().toString());
-                    bundle.putString("vehiclecount", editNoOfVehicles.getText().toString());
-                    bundle.putString("specialClauses", specialClausesUpdate);
-
-                    if (className.equals("SavedAuction")) {
-                        CreateAuctionConfirmFragment frag = new CreateAuctionConfirmFragment();
-                        frag.setArguments(bundle);
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.saved_auctionFrame, frag);
-                        fragmentTransaction.addToBackStack("AuctionCreateConfirm");
-                        fragmentTransaction.commit();
-                    } else {
-                        CreateAuctionConfirmFragment frag = new CreateAuctionConfirmFragment();
-                        frag.setArguments(bundle);
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.createEventFrame, frag);
-                        fragmentTransaction.addToBackStack("AuctionCreateConfirm");
-                        fragmentTransaction.commit();
+                    List<AuctionAllVehicleData> finalVehiclesData = new ArrayList<>();
+                    List<AuctionAllVehicleData> byselfVehiclesData = new ArrayList<>();
+                    List<AuctionAllVehicleData> reauctionVehiclesData = new ArrayList<>();
+                    List<AuctionAllVehicleData> adminVehiclesData = new ArrayList<>();
+                    byselfVehiclesData = selfadapter.checkboxVehicleData();
+                    reauctionVehiclesData = reauctionadapter.checkboxVehicleData();
+                    adminVehiclesData = adminadapter.checkboxVehicleData();
+                    for (int i = 0; i < byselfVehiclesData.size(); i++) {
+                        finalVehiclesData.add(byselfVehiclesData.get(i));
                     }
-                }
+                    for (int i = 0; i < reauctionVehiclesData.size(); i++) {
+                        finalVehiclesData.add(reauctionVehiclesData.get(i));
+                    }
+                    for (int i = 0; i < adminVehiclesData.size(); i++) {
+                        finalVehiclesData.add(adminVehiclesData.get(i));
+                    }
+
+                    if (finalVehiclesData.size() == 0)
+                        CustomToast.customToast(getActivity(), "Please select vehicle(s)");
+                    else {
+                        CustomToast.customToast(getActivity(), "Please confirm vehicles that you selected now");
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("finalVehiclesData", (Serializable) finalVehiclesData);
+                        bundle.putInt("auction_id", auction_id);
+                        bundle.putString("title", auctionTitle.getText().toString());
+                        bundle.putString("startdate", startDate.getText().toString());
+                        bundle.putString("starttime", startTime.getText().toString());
+                        bundle.putString("enddate", endDate.getText().toString());
+                        bundle.putString("endtime", endTime.getText().toString());
+                        bundle.putString("vehiclecount", editNoOfVehicles.getText().toString());
+                        bundle.putString("specialClauses", specialClausesUpdate);
+
+                        if (className.equals("SavedAuction")) {
+                            CreateAuctionConfirmFragment frag = new CreateAuctionConfirmFragment();
+                            frag.setArguments(bundle);
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.saved_auctionFrame, frag);
+                            fragmentTransaction.addToBackStack("AuctionCreateConfirm");
+                            fragmentTransaction.commit();
+                        } else {
+                            CreateAuctionConfirmFragment frag = new CreateAuctionConfirmFragment();
+                            frag.setArguments(bundle);
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.createEventFrame, frag);
+                            fragmentTransaction.addToBackStack("AuctionCreateConfirm");
+                            fragmentTransaction.commit();
+                        }
+                    }
                 }
                 break;
 
@@ -554,7 +556,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             dialog.dismiss();
                             //Toast.makeText(getActivity(), "Web Service call to get vehicles", Toast.LENGTH_SHORT).show();
                         } else {
-                            CustomToast.customToast(getActivity(),"Please select checkbox");
+                            CustomToast.customToast(getActivity(), "Please select checkbox");
                         }
 
                     }
@@ -587,12 +589,12 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     }
 
 
-    private void getReauctionedData(final String singleAuctionId) {
+    private void getReauctionedData(final int singleAuctionId) {
         mApiCall.ReauctionedVehicles(contactnumber, singleAuctionId);
     }
 
     private void getClause() {
-        mApiCall.getSpecialClauses("getClause","");
+        mApiCall.getSpecialClauses("getClause", "");
     }
 
     @Override
@@ -687,7 +689,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         adminVehicleData.clear();
                         for (AuctionAllVehicleResponse.Success.AdminVehicle adminSuccess : auctionAllVehicleResponse.getSuccess().getAdminVehicles()) {
                             AuctionAllVehicleData auctionAllVehicleData = new AuctionAllVehicleData();
-                            auctionAllVehicleData.setVehicleId("A " + adminSuccess.getVehicleId());
+                            auctionAllVehicleData.setVehicleId(("A " + adminSuccess.getVehicleId()));
                             auctionAllVehicleData.setVehicleContact(adminSuccess.getContactNo());
                             auctionAllVehicleData.setVehicleLotNo(adminSuccess.getLotNo());
                             auctionAllVehicleData.setVehicleRepodate(adminSuccess.getRepoDate());
@@ -724,7 +726,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         auctionIds.add(0);
                         auctionTitles.add("Select auction here");
                         for (AuctionAllVehicleResponse.Success.Auction auctionSuccess : auctionAllVehicleResponse.getSuccess().getAuctions()) {
-                            auctionIds.add(Integer.valueOf(auctionSuccess.getAuctionId()));
+                            auctionIds.add(auctionSuccess.getAuctionId());
                             auctionTitles.add(auctionSuccess.getActionTitle() + " " + "Vehicles:" + auctionSuccess.getReauctionvehiCount());
 
                         }
@@ -914,7 +916,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
         if (str != null) {
             if (str.startsWith("Success")) {
-                CustomToast.customToast(getActivity(),  "Update Successfull");
+                CustomToast.customToast(getActivity(), "Update Successfull");
                 auctionTitle.setEnabled(false);
                 startDate.setEnabled(false);
                 startTime.setEnabled(false);

@@ -39,101 +39,101 @@ public class Success {
 
     @SerializedName("ReachedCount")
     @Expose
-    private Integer reachedCount;
+    private int reachedCount;
     @SerializedName("GoingCount")
     @Expose
-    private Integer goingCount;
+    private int goingCount;
     @SerializedName("GoingStudent")
     @Expose
-    private Integer goingStudent;
+    private int goingStudent;
     @SerializedName("GoingSelfStudent")
     @Expose
-    private Integer goingSelfStudent;
+    private int goingSelfStudent;
     @SerializedName("GoingEmployee")
     @Expose
-    private Integer goingEmployee;
+    private int goingEmployee;
     @SerializedName("IgnoreCount")
     @Expose
-    private Integer ignoreCount;
+    private int ignoreCount;
     @SerializedName("IgnoreStudent")
     @Expose
-    private Integer ignoreStudent;
+    private int ignoreStudent;
     @SerializedName("IgnoreSelfStudent")
     @Expose
-    private Integer ignoreSelfStudent;
+    private int ignoreSelfStudent;
     @SerializedName("IgnoreEmployee")
     @Expose
-    private Integer ignoreEmployee;
+    private int ignoreEmployee;
 
-    public Integer getReachedCount() {
+    public int getReachedCount() {
         return reachedCount;
     }
 
-    public void setReachedCount(Integer reachedCount) {
+    public void setReachedCount(int reachedCount) {
         this.reachedCount = reachedCount;
     }
 
-    public Integer getGoingCount() {
+    public int getGoingCount() {
         return goingCount;
     }
 
-    public void setGoingCount(Integer goingCount) {
+    public void setGoingCount(int goingCount) {
         this.goingCount = goingCount;
     }
 
-    public Integer getGoingStudent() {
+    public int getGoingStudent() {
         return goingStudent;
     }
 
-    public void setGoingStudent(Integer goingStudent) {
+    public void setGoingStudent(int goingStudent) {
         this.goingStudent = goingStudent;
     }
 
-    public Integer getGoingSelfStudent() {
+    public int getGoingSelfStudent() {
         return goingSelfStudent;
     }
 
-    public void setGoingSelfStudent(Integer goingSelfStudent) {
+    public void setGoingSelfStudent(int goingSelfStudent) {
         this.goingSelfStudent = goingSelfStudent;
     }
 
-    public Integer getGoingEmployee() {
+    public int getGoingEmployee() {
         return goingEmployee;
     }
 
-    public void setGoingEmployee(Integer goingEmployee) {
+    public void setGoingEmployee(int goingEmployee) {
         this.goingEmployee = goingEmployee;
     }
 
-    public Integer getIgnoreCount() {
+    public int getIgnoreCount() {
         return ignoreCount;
     }
 
-    public void setIgnoreCount(Integer ignoreCount) {
+    public void setIgnoreCount(int ignoreCount) {
         this.ignoreCount = ignoreCount;
     }
 
-    public Integer getIgnoreStudent() {
+    public int getIgnoreStudent() {
         return ignoreStudent;
     }
 
-    public void setIgnoreStudent(Integer ignoreStudent) {
+    public void setIgnoreStudent(int ignoreStudent) {
         this.ignoreStudent = ignoreStudent;
     }
 
-    public Integer getIgnoreSelfStudent() {
+    public int getIgnoreSelfStudent() {
         return ignoreSelfStudent;
     }
 
-    public void setIgnoreSelfStudent(Integer ignoreSelfStudent) {
+    public void setIgnoreSelfStudent(int ignoreSelfStudent) {
         this.ignoreSelfStudent = ignoreSelfStudent;
     }
 
-    public Integer getIgnoreEmployee() {
+    public int getIgnoreEmployee() {
         return ignoreEmployee;
     }
 
-    public void setIgnoreEmployee(Integer ignoreEmployee) {
+    public void setIgnoreEmployee(int ignoreEmployee) {
         this.ignoreEmployee = ignoreEmployee;
     }
 

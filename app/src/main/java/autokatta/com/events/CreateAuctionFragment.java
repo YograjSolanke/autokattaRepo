@@ -452,11 +452,11 @@ public class CreateAuctionFragment extends Fragment
                 } else if (response.body() instanceof AuctionCreateResponse) {
                     AuctionCreateResponse createResponse = (AuctionCreateResponse) response.body();
                     if (createResponse.getSuccess() != null) {
-                        final String Aucid = createResponse.getSuccess().getAuctionID().toString();
+                        final int Aucid = createResponse.getSuccess().getAuctionID();
                         Log.i("AuctId", "->" + Aucid);
                         CustomToast.customToast(getActivity(), "Auction Created Successfully");
 
-                        if (!Aucid.equals("")) {
+                        if (Aucid != 0) {
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                                     getActivity());
 
@@ -468,7 +468,7 @@ public class CreateAuctionFragment extends Fragment
 
                                             Bundle b = new Bundle();
 
-                                            b.putString("auction_id", Aucid);
+                                            b.putInt("auction_id", Aucid);
                                             b.putString("title", name);
                                             b.putString("startdate", stdate);
                                             b.putString("starttime", sttime);

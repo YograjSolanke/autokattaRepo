@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -40,7 +39,7 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
     View mServiceParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strServiceId = "";
+    private int strServiceId = 0;
     List<ServiceMelaParticipantsResponse.Success> participantList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
@@ -78,7 +77,7 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strServiceId = bundle.getString("serviceid");
+                    strServiceId = bundle.getInt("serviceid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -116,16 +115,14 @@ public class ServiceParticipantsFragment extends Fragment implements SwipeRefres
         getServiceParticipant(strServiceId);
     }
 
-    private void getServiceParticipant(String strServiceId) {
+    private void getServiceParticipant(int strServiceId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getServiceMelaParticipants(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                     .getString("loginContact", ""), strServiceId);
-            // apiCall.AuctionParticipantData("9890950817", "1047");
         } else {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 

@@ -276,7 +276,7 @@ public class WallResponse {
             private String storeTiming;
             @SerializedName("GroupVehicles")
             @Expose
-            private String groupVehicles;
+            private int groupVehicles;
             @SerializedName("GroupID")
             @Expose
             private int groupID;
@@ -288,13 +288,22 @@ public class WallResponse {
             private String groupImage;
             @SerializedName("GroupMembers")
             @Expose
-            private String groupMembers;
+            private int groupMembers;
+            @SerializedName("GroupProductCount")
+            @Expose
+            private int groupProductCount;
+            @SerializedName("GroupServiceCount")
+            @Expose
+            private int groupServiceCount;
             @SerializedName("ProductLikeStatus")
             @Expose
             private String productLikeStatus;
             @SerializedName("ProductFollowStatus")
             @Expose
             private String productFollowStatus;
+            @SerializedName("ProductRating")
+            @Expose
+            private int productRating;
             @SerializedName("ProductID")
             @Expose
             private int productID;
@@ -319,6 +328,9 @@ public class WallResponse {
             @SerializedName("ServiceFollowStatus")
             @Expose
             private String serviceFollowStatus;
+            @SerializedName("ServiceRating")
+            @Expose
+            private int serviceRating;
             @SerializedName("ServiceID")
             @Expose
             private int serviceID;
@@ -370,6 +382,38 @@ public class WallResponse {
 
             public void setShareSubData(String shareSubData) {
                 this.shareSubData = shareSubData;
+            }
+
+            public int getGroupProductCount() {
+                return groupProductCount;
+            }
+
+            public void setGroupProductCount(int groupProductCount) {
+                this.groupProductCount = groupProductCount;
+            }
+
+            public int getGroupServiceCount() {
+                return groupServiceCount;
+            }
+
+            public void setGroupServiceCount(int groupServiceCount) {
+                this.groupServiceCount = groupServiceCount;
+            }
+
+            public int getProductRating() {
+                return productRating;
+            }
+
+            public void setProductRating(int productRating) {
+                this.productRating = productRating;
+            }
+
+            public int getServiceRating() {
+                return serviceRating;
+            }
+
+            public void setServiceRating(int serviceRating) {
+                this.serviceRating = serviceRating;
             }
 
             public int getActionID() {
@@ -940,11 +984,11 @@ public class WallResponse {
                 this.storeTiming = storeTiming;
             }
 
-            public String getGroupVehicles() {
+            public int getGroupVehicles() {
                 return groupVehicles;
             }
 
-            public void setGroupVehicles(String groupVehicles) {
+            public void setGroupVehicles(int groupVehicles) {
                 this.groupVehicles = groupVehicles;
             }
 
@@ -972,11 +1016,11 @@ public class WallResponse {
                 this.groupImage = groupImage;
             }
 
-            public String getGroupMembers() {
+            public int getGroupMembers() {
                 return groupMembers;
             }
 
-            public void setGroupMembers(String groupMembers) {
+            public void setGroupMembers(int groupMembers) {
                 this.groupMembers = groupMembers;
             }
 

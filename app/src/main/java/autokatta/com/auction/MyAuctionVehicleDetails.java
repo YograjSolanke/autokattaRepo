@@ -26,7 +26,8 @@ import retrofit2.Response;
 
 public class MyAuctionVehicleDetails extends AppCompatActivity implements RequestNotifier, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
-    String contactnumber, auction_id, vehicle_id;
+    String contactnumber, vehicle_id;
+    int auction_id = 0;
     //String aauction_id, action_title, auctioncontact, start_date, start_time, end_date, end_time, auction_type, location, special_clauses, no_of_vehicles, endDateTime, highbid;
     //String vvehicle_id, title, contact_no, category, sub_category, model, manufacturer, Version, rto_city, location_city, year_of_registration, year_of_manufacture, colorr, registration_number, rc_available, kms_running, Hrs_running, no_of_owners, fual_type, seating_capacity, hypothication, engine_no, chassis_no, price, image, body_type, boat_type, bus_type, implementsd, finance_req, hp_capacity, JIB, Boon, tyre_condition, insurance_valid, insurance_idv, fitness_validity, permit_validity, air_condition, rv_type, transmission, tax_validity, application, permit_yesno, drive, lotNostr;
     //String CurrentBid_price;
@@ -133,7 +134,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
         sliderLayout = (SliderLayout) findViewById(R.id.auctionimage);
 
         vehicle_id = getIntent().getExtras().getString("vehicle_id");
-        auction_id = getIntent().getExtras().getString("auction_id");
+        auction_id = getIntent().getExtras().getInt("auction_id");
 
         startpricetxt.setVisibility(View.GONE);
         startprice.setVisibility(View.GONE);

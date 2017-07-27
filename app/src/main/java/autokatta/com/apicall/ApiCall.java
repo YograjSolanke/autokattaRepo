@@ -3639,7 +3639,7 @@ get All Vehicles for auction
     /*
      get Reauctioned Vehicles for auction
     */
-    public void ReauctionedVehicles(String myContact, String AuctionId) {
+    public void ReauctionedVehicles(String myContact, int AuctionId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4054,7 +4054,7 @@ params.put("auction_id", bundleAuctionId);
                 params.put("ShowHide", ShowHide);
                 params.put("NoVehicle", stringNoofVehicle);
  */
-    public void UpdateAuction(String auction_id, String auctionTitleUpdate, String startDateUpdate, String startTimeUpdate,
+    public void UpdateAuction(int auction_id, String auctionTitleUpdate, String startDateUpdate, String startTimeUpdate,
                               String endDateUpdate, String endTimeUpdate, String specialClausesIDUpdate, String vehicle_ids,
                               String status, String ShowHide, String NoVehicle) {
         //JSON to Gson conversion
@@ -4093,7 +4093,7 @@ params.put("auction_id", bundleAuctionId);
 
     //Add start and reserved price
 
-    public void Start_ReservedPrice(String auctionId, String vehicleId, String startPrice, String reservedPrice) {
+    public void Start_ReservedPrice(int auctionId, String vehicleId, String startPrice, String reservedPrice) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4171,7 +4171,7 @@ params.put("auction_id", bundleAuctionId);
     /*
    Get Auction Participants
     */
-    public void AuctionParticipantData(String myContact, String strAuctionId) {
+    public void AuctionParticipantData(String myContact, int strAuctionId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4202,7 +4202,8 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //Add remove a blacklist contact in auction
-    public void Add_RemoveBlacklistContact(String myContact, String strAuctionId, String rContact, String keyword, String eventType) {
+    public void Add_RemoveBlacklistContact(String myContact, int strAuctionId, String rContact, String keyword,
+                                           String eventType) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4241,7 +4242,7 @@ params.put("auction_id", bundleAuctionId);
     /*
   Get Auction Analytics
    */
-    public void AuctionAnalyticsData(String strAuctionId) {
+    public void AuctionAnalyticsData(int strAuctionId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4274,7 +4275,7 @@ params.put("auction_id", bundleAuctionId);
     /*
      Get Auction Analytics
       */
-    public void LoanMelaAnalytics(String loanid) {
+    public void LoanMelaAnalytics(int loanid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4307,7 +4308,7 @@ params.put("auction_id", bundleAuctionId);
     /*
         Get Active Auction High Bid
     */
-    public void ActiveAuctionHighBid(String myContact, String mAuctionId) {
+    public void ActiveAuctionHighBid(String myContact, int mAuctionId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4340,7 +4341,7 @@ params.put("auction_id", bundleAuctionId);
     /*
        Get Active Auction Above reserved price Bid
    */
-    public void ActiveAuctionAboveReservedPrice(String myContact, String mAuctionId) {
+    public void ActiveAuctionAboveReservedPrice(String myContact, int mAuctionId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4373,7 +4374,7 @@ params.put("auction_id", bundleAuctionId);
     /*
        Get Active Auction No bid Bid
    */
-    public void ActiveAuctionNoBid(String mAuctionId) {
+    public void ActiveAuctionNoBid(int mAuctionId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4406,7 +4407,7 @@ params.put("auction_id", bundleAuctionId);
     /*
    Get Approved vehicle Bid data
     */
-    public void EndedAuctionApprovedVehi(String myContact, String mAuctionId) {
+    public void EndedAuctionApprovedVehi(String myContact, int mAuctionId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4436,7 +4437,7 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //Add vehicle in reauction
-    public void addToReauction(String vehicleid, String mAuctionId) {
+    public void addToReauction(String vehicleid, int mAuctionId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4473,7 +4474,7 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //approve auction vehicle with bid
-    public void ApproveVehicle(String mAuctionId, String keyword1, String vehicleid, String bidderContact, String bidPrice) {
+    public void ApproveVehicle(int mAuctionId, String keyword1, String vehicleid, String bidderContact, String bidPrice) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5503,7 +5504,7 @@ Get saved search Seller list
     Get Vehicle Auction response.
      */
 
-    public void getVehicleAuction(String auctionId, String vehicleId, String contact) {
+    public void getVehicleAuction(int auctionId, String vehicleId, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -7525,7 +7526,7 @@ get Ended Service Mela Data
 
     /*
 get LoanMela Participants Data*/
-    public void getLoanMelaParticipants(String contact, String loanid) {
+    public void getLoanMelaParticipants(String contact, int loanid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7558,7 +7559,7 @@ get LoanMela Participants Data*/
 
     /*
 get SaleMela Participants Data*/
-    public void getSaleMelaParticipants(String contact, String saleid) {
+    public void getSaleMelaParticipants(String contact, int saleid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7590,7 +7591,7 @@ get SaleMela Participants Data*/
 
     /*
 get SaleMela analytics Data*/
-    public void getSaleMelaanalytics(String saleid) {
+    public void getSaleMelaanalytics(int saleid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7624,7 +7625,7 @@ get SaleMela analytics Data*/
     /*
 get Service Mela Participants Data
 */
-    public void getServiceMelaParticipants(String contact, String Serviceid) {
+    public void getServiceMelaParticipants(String contact, int Serviceid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7657,7 +7658,7 @@ get Service Mela Participants Data
     /*
 get Service Mela Participants Data
 */
-    public void getServiceMelaAnalytics(String Serviceid) {
+    public void getServiceMelaAnalytics(int Serviceid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7691,7 +7692,7 @@ get Service Mela Participants Data
     /*
 get ExchangeMela Participants Data
 */
-    public void getExchangeMelaParticipants(String mycontact, String exchangeid) {
+    public void getExchangeMelaParticipants(String mycontact, int exchangeid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -7724,7 +7725,7 @@ get ExchangeMela Participants Data
     /*
 get ExchangeMela Analytics Data
 */
-    public void getExchangeMelaAnalytics(String exchangeid) {
+    public void getExchangeMelaAnalytics(int exchangeid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 

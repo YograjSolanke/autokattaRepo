@@ -31,12 +31,13 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime,strloanid;
+    String strEndDateTime;
+    private int strloanid = 0;
     TextView txtTimer;
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
-    LoanMelaAnalyticsFragment loanMelaAnalyticsFragment= new LoanMelaAnalyticsFragment();
-    LoanMelaParticipantsFragment loanMelaParticipantsFragment= new LoanMelaParticipantsFragment();
+    LoanMelaAnalyticsFragment loanMelaAnalyticsFragment = new LoanMelaAnalyticsFragment();
+    LoanMelaParticipantsFragment loanMelaParticipantsFragment = new LoanMelaParticipantsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
 
         //get Data from Adapter
         strTitle = getIntent().getExtras().getString("title");
-        strloanid = getIntent().getExtras().getString("loanid");
+        strloanid = getIntent().getExtras().getInt("loanid");
         strStartdate = getIntent().getExtras().getString("startdate");
         strStarttime = getIntent().getExtras().getString("starttime");
         strEnddate = getIntent().getExtras().getString("enddate");
@@ -82,7 +83,7 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
-                b.putString("loanid",strloanid);
+                b.putInt("loanid", strloanid);
                 loanMelaAnalyticsFragment.setArguments(b);
                 loanMelaParticipantsFragment.setArguments(b);
                 if (mViewPager != null) {

@@ -495,7 +495,7 @@ public interface ServiceApi {
     //get All vehicles for Auction
     @GET("getReauctionVehicleByNameAndContact.php")
     Call<AuctionReauctionVehicleResponse> _autokattaGetReauctionedVehicle(@Query("contact") String contact,
-                                                                          @Query("auctionID") String auctionID);
+                                                                          @Query("auctionID") int auctionID);
 
 
     //send notification of upload vehicle
@@ -577,7 +577,7 @@ public interface ServiceApi {
 
     //Update Auction
     @POST("UpdateAuctionCreation")
-    Call<String> _autokattaUpdateAuctionCreation(@Query("AuctionID") String auction_id, @Query("Title") String title,
+    Call<String> _autokattaUpdateAuctionCreation(@Query("AuctionID") int auction_id, @Query("Title") String title,
                                                  @Query("StartDate") String start_date, @Query("StartTime") String start_time,
                                                  @Query("EndDate") String end_date, @Query("EndTime") String end_time,
                                                  @Query("SpecialClauses") String special_clauses, @Query("VehicleIDs") String vehicle_ids,
@@ -586,7 +586,7 @@ public interface ServiceApi {
 
     //Addstart and reserved price
     @POST("AddStartReservedPrice")
-    Call<String> _autokattaAddStart_ReservedPrice(@Query("AuctionID") String auctionId, @Query("VehicleID") String vehicleId,
+    Call<String> _autokattaAddStart_ReservedPrice(@Query("AuctionID") int auctionId, @Query("VehicleID") String vehicleId,
                                                   @Query("StartPrice") String startPrice, @Query("ReservedPrice") String reservedPrice);
 
     //Send Auction mail...
@@ -596,48 +596,48 @@ public interface ServiceApi {
     //get Auction Participants
     @GET("GetAuctionConfirmedParticipants")
     Call<AuctionParticipantsResponse> _autokattaGetAuctionParticipants(@Query("MyContact") String myContact, @Query("AuctionID")
-            String strAuctionId);
+            int strAuctionId);
 
     //Add/remove blacklist contact
     @POST("AddRemoveToBlacklist")
-    Call<String> _autokattaAddRemoveBlacklist(@Query("MyContact") String myContact, @Query("AuctionID") String strAuctionId,
+    Call<String> _autokattaAddRemoveBlacklist(@Query("MyContact") String myContact, @Query("AuctionID") int strAuctionId,
                                               @Query("Contact") String rContact, @Query("Keyword") String keyword,
                                               @Query("EventType") String eventType);
 
     // Get Auction Analytics
     @GET("GetAnalyticsCount")
-    Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("AuctionID") String strAuctionId);
+    Call<AuctionAnalyticsResponse> _autokattaGetAuctionAnalytics(@Query("AuctionID") int strAuctionId);
 
     // Get Loan Analytics
     @GET("GetLoanAnalyticsCount")
-    Call<LoanMelaAnalyticsResponse> _autokattaGetLoanAnalytics(@Query("LoanMelaID") String loanid);
+    Call<LoanMelaAnalyticsResponse> _autokattaGetLoanAnalytics(@Query("LoanMelaID") int loanid);
 
     //get Active Auction high bid
     @POST("AuctionHighestBidding")
     Call<MyActiveAuctionHighBidResponse> _autokattaGetActiveAuctionHighBid(@Query("contact") String myContact,
-                                                                           @Query("AuctionID") String mAuctionId);
+                                                                           @Query("AuctionID") int mAuctionId);
 
     //get Active Auction Above reserved price bid
     @POST("auctionReservedPrice.php")
     Call<MyActiveAuctionAboveReservedResponse> _autokattaGetActiveAuctionAboveReservedPrice(@Query("contact") String myContact,
-                                                                                            @Query("auctionid") String mAuctionId);
+                                                                                            @Query("auctionid") int mAuctionId);
 
     //get Active Auction No bid
     @POST("AuctionNoBidding")
-    Call<MyActiveAuctionNoBidResponse> _autokattaGetActiveAuctionNoBid(@Query("AuctionID") String mAuctionId);
+    Call<MyActiveAuctionNoBidResponse> _autokattaGetActiveAuctionNoBid(@Query("AuctionID") int mAuctionId);
 
     //Get Approve vehicle
     @POST("AuctionApprovedVehicles")
     Call<EndedAuctionApprovedVehiResponse> _autokattaGetEndedApproveVehi(@Query("contact") String myContact,
-                                                                         @Query("AuctionID") String mAuctionId);
+                                                                         @Query("AuctionID") int mAuctionId);
 
     //add vehicle for reauction
     @POST("AddToReauction")
-    Call<String> _autokattaAddVehicleToReauction(@Query("VehicleId") String vehicleid, @Query("AuctionID") String mAuctionId);
+    Call<String> _autokattaAddVehicleToReauction(@Query("VehicleId") String vehicleid, @Query("AuctionID") int mAuctionId);
 
     //Approve an vehicle
     @POST("AddToApprovedVehicles")
-    Call<ApprovedVehicleResponse> _autokattaApproveAnVehiclewithBid(@Query("AuctionID") String mAuctionId, @Query("Keyword") String keyword1,
+    Call<ApprovedVehicleResponse> _autokattaApproveAnVehiclewithBid(@Query("AuctionID") int mAuctionId, @Query("Keyword") String keyword1,
                                                                     @Query("VehicleID") String vehicleid, @Query("BidderContact") String bidderContact,
                                                                     @Query("BidAmount") String bidPrice);
 
@@ -824,7 +824,7 @@ public interface ServiceApi {
     Call<StoreResponse> getStoreData(@Query("MyContact") String contact, @Query("StoreID") int store_id);
 
     @GET("GetVehicleForAuction")
-    Call<GetVehicleForAuctionResponse> getVehicleAuction(@Query("AuctionID") String auctionId, @Query("VehicleID") String vehicleId,
+    Call<GetVehicleForAuctionResponse> getVehicleAuction(@Query("AuctionID") int auctionId, @Query("VehicleID") String vehicleId,
                                                          @Query("Contact") String contact);
 
     //contact not used
@@ -1169,31 +1169,31 @@ public interface ServiceApi {
 
     //get Loan Mela Participants data
     @GET("GetConfirmedParticipantsLoan")
-    Call<LoanMelaParticipantsResponse> _autokattagetConfirmedParticipants_Loan(@Query("MyContact") String mycontact, @Query("LoanID") String loan_id);
+    Call<LoanMelaParticipantsResponse> _autokattagetConfirmedParticipants_Loan(@Query("MyContact") String mycontact, @Query("LoanID") int loan_id);
 
     //get  Sale Mela Participants data
     @GET("GetConfirmedParticipantsSale")
-    Call<SaleMelaParticipantsResponse> _autokattagetConfirmedParticipants_Sale(@Query("MyContact") String mycontact, @Query("SaleID") String sale_id);
+    Call<SaleMelaParticipantsResponse> _autokattagetConfirmedParticipants_Sale(@Query("MyContact") String mycontact, @Query("SaleID") int sale_id);
 
     //get  Sale Mela analytics data
     @GET("GetSaleAnalyticsCount")
-    Call<LoanMelaAnalyticsResponse> _autokattagetanalytics_Sale(@Query("SaleMelaID") String sale_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetanalytics_Sale(@Query("SaleMelaID") int sale_id);
 
     //get  Service Mela Participants data
     @GET("GetConfirmedParticipantsService")
-    Call<ServiceMelaParticipantsResponse> _autokattagetConfirmedParticipants_Service(@Query("MyContact") String mycontact, @Query("ServiceID") String service_id);
+    Call<ServiceMelaParticipantsResponse> _autokattagetConfirmedParticipants_Service(@Query("MyContact") String mycontact, @Query("ServiceID") int service_id);
 
     //get  Service Mela analytics data
     @GET("GetServiceAnalyticsCount")
-    Call<LoanMelaAnalyticsResponse> _autokattagetServiceAnalytics(@Query("ServiceMelaID") String service_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetServiceAnalytics(@Query("ServiceMelaID") int service_id);
 
     //get Exchange Mela  Participantsdata
     @GET("GetConfirmedParticipantsExchange")
-    Call<ExchangeMelaParticipantsResponse> _autokattagetConfirmedParticipants_Exchange(@Query("MyContact") String mycontact, @Query("ExchangeID") String exchange_id);
+    Call<ExchangeMelaParticipantsResponse> _autokattagetConfirmedParticipants_Exchange(@Query("MyContact") String mycontact, @Query("ExchangeID") int exchange_id);
 
     //get Exchange Mela  Analytics
     @GET("GetExchangeAnalyticsCount")
-    Call<LoanMelaAnalyticsResponse> _autokattagetExchangeAnalytics(@Query("ExchangeMelaID") String exchange_id);
+    Call<LoanMelaAnalyticsResponse> _autokattagetExchangeAnalytics(@Query("ExchangeMelaID") int exchange_id);
 
     //update product details
     @POST("UpdateStoreProduct")

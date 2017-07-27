@@ -43,9 +43,9 @@ import retrofit2.Response;
 public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements View.OnClickListener, RequestNotifier {
 
     private String strAuctionTitle = "", strVehicleCount = "", strStartDate = "", strStartTime = "",
-            strEndDate = "", strEndTime = "", strSpecialClauses = "", strStartdatetime = "", strEnddatetime = "", strParticipantcount = "",
+            strEndDate = "", strEndTime = "", strSpecialClauses = "", strStartdatetime = "", strEnddatetime = "",
             strSpecialClause = "", strCategory = "", strLocation = "";
-int strAuctionId = 0;
+    private int strAuctionId = 0, strParticipantcount = 0;
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
     CollapsingToolbarLayout mCollapsingToolbar;
@@ -81,7 +81,7 @@ int strAuctionId = 0;
         strSpecialClauses = getIntent().getExtras().getString("specialclauses");
         strStartdatetime = getIntent().getExtras().getString("startdatetime");
         strEnddatetime = getIntent().getExtras().getString("enddatetime");
-        strParticipantcount = getIntent().getExtras().getString("participant_count");
+        strParticipantcount = getIntent().getExtras().getInt("participant_count");
         strCategory = getIntent().getExtras().getString("category");
         strLocation = getIntent().getExtras().getString("location");
 
@@ -243,7 +243,6 @@ int strAuctionId = 0;
                 alertDialog.setView(input);
 
 
-
                 alertDialog.setNeutralButton("cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -270,7 +269,7 @@ int strAuctionId = 0;
                 b.putString("specialclauses", strSpecialClauses);
                 b.putString("enddatetime", strEnddatetime);
                 b.putString("startdatetime", strStartdatetime);
-                b.putString("participant_count", strParticipantcount);
+                b.putInt("participant_count", strParticipantcount);
                 b.putString("category", strCategory);
                 b.putString("location", strLocation);
 
@@ -297,19 +296,19 @@ int strAuctionId = 0;
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Preview My Active Auction Activity");
@@ -322,9 +321,9 @@ int strAuctionId = 0;
 
         if (str != null) {
             if (str.startsWith("1"))
-                CustomToast.customToast(getApplicationContext(),"Mail Sent Successfully");
+                CustomToast.customToast(getApplicationContext(), "Mail Sent Successfully");
             else
-            CustomToast.customToast(getApplicationContext(),"Problem in sending mail");
+                CustomToast.customToast(getApplicationContext(), "Problem in sending mail");
 
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));

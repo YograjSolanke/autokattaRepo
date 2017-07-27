@@ -67,7 +67,7 @@ public class MyActiveAuctionResponse {
 
             @SerializedName("auction_id")
             @Expose
-            private String auctionId;
+            private int auctionId;
             @SerializedName("action_title")
             @Expose
             private String actionTitle;
@@ -107,7 +107,7 @@ public class MyActiveAuctionResponse {
             private String endDateTime;
             @SerializedName("goingcount")
             @Expose
-            private String goingcount;
+            private int goingcount;
 
             @SerializedName("auction_category")
             @Expose
@@ -133,11 +133,11 @@ public class MyActiveAuctionResponse {
                 this.auctionCategory = auctionCategory;
             }
 
-            public String getAuctionId() {
+            public int getAuctionId() {
                 return auctionId;
             }
 
-            public void setAuctionId(String auctionId) {
+            public void setAuctionId(int auctionId) {
                 this.auctionId = auctionId;
             }
 
@@ -238,11 +238,11 @@ public class MyActiveAuctionResponse {
                 this.endDateTime = endDateTime;
             }
 
-            public String getGoingcount() {
+            public int getGoingcount() {
                 return goingcount;
             }
 
-            public void setGoingcount(String goingcount) {
+            public void setGoingcount(int goingcount) {
                 this.goingcount = goingcount;
             }
         }
@@ -251,10 +251,10 @@ public class MyActiveAuctionResponse {
 
             @SerializedName("auction_id")
             @Expose
-            private String auctionId;
+            private int auctionId;
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private int vehicleId;
             @SerializedName("title")
             @Expose
             private String title;
@@ -277,19 +277,19 @@ public class MyActiveAuctionResponse {
             @Expose
             private String reservePrice;
 
-            public String getAuctionId() {
+            public int getAuctionId() {
                 return auctionId;
             }
 
-            public void setAuctionId(String auctionId) {
+            public void setAuctionId(int auctionId) {
                 this.auctionId = auctionId;
             }
 
-            public String getVehicleId() {
+            public int getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(int vehicleId) {
                 this.vehicleId = vehicleId;
             }
 

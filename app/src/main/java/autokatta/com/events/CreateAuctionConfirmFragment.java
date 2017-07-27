@@ -48,8 +48,8 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
     RadioGroup rgshowhide;
 
     String contactnumber;
-    String bundleAuctionId, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate, bundleAuctionEndTime, bundleSpecialClauses;
-
+    String bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate, bundleAuctionEndTime, bundleSpecialClauses;
+    private int bundleAuctionId = 0;
     public static EditText editvehicle;
     public static Integer noOfVehicles;
 
@@ -94,7 +94,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
 
         Bundle b = getArguments();
 
-        bundleAuctionId = b.getString("auction_id");
+        bundleAuctionId = b.getInt("auction_id");
         bundleAuctionTitle = b.getString("title");
         bundleAuctionStartDate = b.getString("startdate");
         bundleAuctionStartTime = b.getString("starttime");

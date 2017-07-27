@@ -150,7 +150,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putString("auctionid", mMainList.get(position).getAuctionId());
+                b.putInt("auctionid", mMainList.get(position).getAuctionId());
                 b.putString("auctiontitle", mMainList.get(position).getActionTitle());
                 b.putString("vehicle_count", mMainList.get(position).getNoOfVehicle());
                 b.putString("auctionstartdate", mMainList.get(position).getStartDate());
@@ -160,7 +160,7 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
                 b.putString("specialclauses", mMainList.get(position).getSpecialClauses());
                 b.putString("enddatetime", mMainList.get(position).getEndDateTime());
                 b.putString("startdatetime", mMainList.get(position).getStartDateTime());
-                b.putString("participant_count", mMainList.get(position).getGoingcount());
+                b.putInt("participant_count", mMainList.get(position).getGoingcount());
                 b.putString("category", mMainList.get(position).getAuctioncategory());
                 b.putString("location", mMainList.get(position).getStockLocation());
 

@@ -31,7 +31,7 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
     private Activity mActivity;
     private List<GetAuctionEventResponse.Vehicle> mItemList = new ArrayList<>();
     private String  showPrice, contact;
-    private int auctionId;
+    private int auctionId = 0;
 
     public PreviewAuctionAdapter(Activity mActivity, List<GetAuctionEventResponse.Vehicle> mItemList, int auctionId
             , String showPrice, String contact) {

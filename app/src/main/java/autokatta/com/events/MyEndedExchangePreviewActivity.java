@@ -25,7 +25,8 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime,strExchangeID;
+    String strEndDateTime;
+    private int strExchangeID = 0;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
     CountDownTimer cdt;
@@ -56,12 +57,12 @@ public class MyEndedExchangePreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
-        strExchangeID = getIntent().getExtras().getString("exchangeid");
+        strExchangeID = getIntent().getExtras().getInt("exchangeid");
 
         mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
 
-        b.putString("exchangeid", strExchangeID);
+        b.putInt("exchangeid", strExchangeID);
         exchangeMelaParticipantsFragment = new ExchangeMelaParticipantsFragment();
         exchangeMelaParticipantsFragment.setArguments(b);
         exchangeMelaAnalyticsFragment = new ExchangeMelaAnalyticsFragment();

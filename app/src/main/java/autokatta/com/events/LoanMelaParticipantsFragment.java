@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -40,7 +39,7 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
     View mLoanParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strLoanId = "";
+    private int strLoanId = 0;
     List<LoanMelaParticipantsResponse.Success> participantList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
@@ -78,7 +77,7 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strLoanId = bundle.getString("loanid");
+                    strLoanId = bundle.getInt("loanid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -116,16 +115,14 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
         getLoanParticipant(strLoanId);
     }
 
-    private void getLoanParticipant(String strLoanId) {
+    private void getLoanParticipant(int strLoanId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getLoanMelaParticipants(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                     .getString("loginContact", ""), strLoanId);
-            // apiCall.AuctionParticipantData("9890950817", "1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -177,10 +174,8 @@ public class LoanMelaParticipantsFragment extends Fragment implements SwipeRefre
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-        //    errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Loan Participants Fragment");
             error.printStackTrace();

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -44,7 +43,7 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
     View mAuctionParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strAuctionId = "";
+    private int strAuctionId = 0;
     List<AuctionParticipantsResponse.Success> participantList = new ArrayList<>();
     ConnectionDetector mTestConnection;
 
@@ -81,7 +80,7 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strAuctionId = bundle.getInt("auctionid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -108,7 +107,7 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void getAuctionParticipant(String strAuctionId) {
+    private void getAuctionParticipant(int strAuctionId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
@@ -117,7 +116,6 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
             // apiCall.AuctionParticipantData("9890950817", "1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -177,19 +175,14 @@ public class AuctionParticipantsFragment extends Fragment implements SwipeRefres
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-           // showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-           // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-           // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Auction Participants Fragment");
             error.printStackTrace();

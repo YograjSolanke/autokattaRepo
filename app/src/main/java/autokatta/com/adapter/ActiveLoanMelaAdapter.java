@@ -51,8 +51,7 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.active_loan_adapter, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        LoanHolder vh = new LoanHolder(v);
-        return vh;
+        return new LoanHolder(v);
     }
 
     @Override
@@ -83,17 +82,17 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
         holder.mPreview.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle b=new Bundle();
-                b.putString("title",mMainlist.get(position).getName());
-                b.putString("startdate",mMainlist.get(position).getStartDate().replace("T00:00:00",""));
-                b.putString("starttime",mMainlist.get(position).getStartTime());
-                b.putString("enddate",mMainlist.get(position).getEndDate().replace("T00:00:00",""));
-                b.putString("endtime",mMainlist.get(position).getEndTime());
-                b.putString("location",mMainlist.get(position).getLocation());
-                b.putString("enddatetime",mMainlist.get(position).getEndDateTime().replace("T"," "));
-                b.putString("loanid",mMainlist.get(position).getId());
+                Bundle b = new Bundle();
+                b.putString("title", mMainlist.get(position).getName());
+                b.putString("startdate", mMainlist.get(position).getStartDate().replace("T00:00:00", ""));
+                b.putString("starttime", mMainlist.get(position).getStartTime());
+                b.putString("enddate", mMainlist.get(position).getEndDate().replace("T00:00:00", ""));
+                b.putString("endtime", mMainlist.get(position).getEndTime());
+                b.putString("location", mMainlist.get(position).getLocation());
+                b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
+                b.putInt("loanid", mMainlist.get(position).getId());
                 //mActivity.finish();
-                Intent i=new Intent(mActivity, ActiveLoanmelaPreviewActivity.class);
+                Intent i = new Intent(mActivity, ActiveLoanmelaPreviewActivity.class);
                 i.putExtras(b);
                 mActivity.startActivity(i);
 
@@ -176,8 +175,9 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
 
         TextView title, enddate, endtime, startdate, starttime, location, address, details;
         ImageView image;
-        Button mPreview,mShare;
+        Button mPreview, mShare;
         RelativeLayout relativeshare;
+
         public LoanHolder(View itemView) {
             super(itemView);
 
@@ -190,8 +190,8 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
             endtime = (TextView) itemView.findViewById(R.id.editText);
             image = (ImageView) itemView.findViewById(R.id.loanmelaimg);
             details = (TextView) itemView.findViewById(R.id.typeofauction2);
-            mPreview= (Button) itemView.findViewById(R.id.button);
-            mShare= (Button) itemView.findViewById(R.id.share);
+            mPreview = (Button) itemView.findViewById(R.id.button);
+            mShare = (Button) itemView.findViewById(R.id.share);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
 
         }

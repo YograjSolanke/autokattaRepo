@@ -36,10 +36,9 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     View mFavNotify;
-    String nextCount = "0";
-    Double strTime = 0.0;
     TextView mNoData;
     private String mLoginContact = "";
+    boolean _hasLoadedOnce = false;
 
 
     public FavoriteNotificationFragment() {
@@ -98,16 +97,24 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
 
     private void getFavouriteData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        /*mApiCall.FavouriteNotification(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "7841023392"), nextCount);*/
         mApiCall.FavouriteNotification(mLoginContact);
-        //mApiCall.FavouriteNotifications("7841023392");
     }
 
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        getFavouriteData();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                getFavouriteData();
+                _hasLoadedOnce = true;
+            }
+        }
     }
 
     @Override
@@ -117,18 +124,16 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                 mNoData.setVisibility(View.GONE);
                 List<FavouriteAllResponse> mainList = new ArrayList<>();
                 mainList.clear();
-                nextCount = "0";
-                strTime = 0.0;
-
 
                 FavouriteResponse favouriteResponse = (FavouriteResponse) response.body();
 
                 //Wall Notification
-                //successNotifiList.clear();
                 if (!favouriteResponse.getSuccess().getNotification().isEmpty()) {
                     for (FavouriteResponse.Success.Notification successNotification : favouriteResponse.getSuccess().getNotification()) {
 
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
+
+                        favouriteAllResponse.setId(successNotification.getId());
 
                         favouriteAllResponse.setLayoutNo(successNotification.getLayout());
                         favouriteAllResponse.setSender(successNotification.getSender());
@@ -185,7 +190,17 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setProductfollowcount(successNotification.getProductfollowcount());
                         favouriteAllResponse.setProductName(successNotification.getProductName());
                         favouriteAllResponse.setProductType(successNotification.getProductType());
-                        favouriteAllResponse.setProductimages(successNotification.getProductimages());
+                        //favouriteAllResponse.setProductimages(successNotification.getProductimages());
+                        String proImage = successNotification.getProductimages();
+                        if (proImage.contains(",")) {
+                            String[] items = proImage.split(",");
+                            favouriteAllResponse.setProductimages(items[0]);
+                            /*for (String item : items) {
+                                notification.setProductImage(item);
+                            }*/
+                        } else {
+                            favouriteAllResponse.setProductimages(proImage);
+                        }
 
                         favouriteAllResponse.setServicelikestatus(successNotification.getServicelikestatus());
                         favouriteAllResponse.setServicefollowstatus(successNotification.getServicefollowstatus());
@@ -193,7 +208,17 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setServicefollowcount(successNotification.getServicefollowcount());
                         favouriteAllResponse.setServiceName(successNotification.getSeriveName());
                         favouriteAllResponse.setServiceType(successNotification.getServiceType());
-                        favouriteAllResponse.setServiceimages(successNotification.getServiceimages());
+                        //favouriteAllResponse.setServiceimages(successNotification.getServiceimages());
+                        String serviceImage = successNotification.getServiceimages();
+                        if (serviceImage.contains(",")) {
+                            String[] items = serviceImage.split(",");
+                            favouriteAllResponse.setServiceimages(items[0]);
+                            /*for (String item : items) {
+                                notification.setServiceImage(item);
+                            }*/
+                        } else {
+                            favouriteAllResponse.setServiceimages(serviceImage);
+                        }
 
                         favouriteAllResponse.setVehiclelikestatus(successNotification.getVehiclelikestatus());
                         favouriteAllResponse.setVehiclefollowstatus(successNotification.getVehiclefollowstatus());
@@ -203,6 +228,17 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setTitle(successNotification.getTitle());
                         favouriteAllResponse.setImage(successNotification.getImage());
                         favouriteAllResponse.setYear(successNotification.getYear());
+
+                        String vehicleImage = successNotification.getImage();
+                        if (vehicleImage.contains(",")) {
+                            String[] items = vehicleImage.split(",");
+                            favouriteAllResponse.setImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setServiceImage(item);
+                            }*/
+                        } else {
+                            favouriteAllResponse.setImage(vehicleImage);
+                        }
 
 
                         mainList.add(favouriteAllResponse);
@@ -484,7 +520,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                     }
                 }
 
-
+                Log.i("FavList", "Count->" + mainList.size());
                 mSwipeRefreshLayout.setRefreshing(false);
                 FavouriteNotificationAdapter adapter = new FavouriteNotificationAdapter(getActivity(), mainList);
                 mRecyclerView.setAdapter(adapter);

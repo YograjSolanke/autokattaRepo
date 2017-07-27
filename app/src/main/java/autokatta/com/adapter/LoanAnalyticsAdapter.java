@@ -20,12 +20,12 @@ import autokatta.com.response.LoanMelaAnalyticsResponse;
 
 public class LoanAnalyticsAdapter extends RecyclerView.Adapter<LoanAnalyticsAdapter.LoanHolder> {
     Activity mActivity;
-    private String strAuctionId;
+    private int strId = 0;
     private List<LoanMelaAnalyticsResponse.Success> mAnalyticsList;
 
-    public LoanAnalyticsAdapter(FragmentActivity activity, String strAuctionid, List<LoanMelaAnalyticsResponse.Success> analyticsList) {
+    public LoanAnalyticsAdapter(FragmentActivity activity, int strid, List<LoanMelaAnalyticsResponse.Success> analyticsList) {
         mActivity = activity;
-        strAuctionId = strAuctionid;
+        strId = strid;
         mAnalyticsList = analyticsList;
     }
 

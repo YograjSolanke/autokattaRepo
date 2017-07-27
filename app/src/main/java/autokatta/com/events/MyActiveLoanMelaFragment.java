@@ -88,7 +88,7 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getLoanData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                getLoanData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
             }
         });
@@ -101,14 +101,13 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
             apiCall.MyActiveLoanMela(loginContact);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
 
     @Override
     public void onRefresh() {
-        getLoanData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+        getLoanData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
     }
 
     @Override
@@ -128,13 +127,15 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
                         loanSuccess.setName(loanSuccess.getName());
                         loanSuccess.setLocation(loanSuccess.getLocation());
                         loanSuccess.setAddress(loanSuccess.getAddress());
-                        loanSuccess.setStartDate(loanSuccess.getStartDate().replace("T00:00:00",""));
+                        loanSuccess.setStartDate(loanSuccess.getStartDate().replace("T00:00:00", ""));
                         loanSuccess.setStartTime(loanSuccess.getStartTime());
-                        loanSuccess.setEndDate(loanSuccess.getEndDate().replace("T00:00:00",""));
+                        loanSuccess.setEndDate(loanSuccess.getEndDate().replace("T00:00:00", ""));
                         loanSuccess.setEndTime(loanSuccess.getEndTime());
                         loanSuccess.setImage(loanSuccess.getImage());
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
+                        loanSuccess.setStartDateTime(loanSuccess.getStartDateTime().replace("T", " "));
+                        loanSuccess.setEndDateTime(loanSuccess.getEndDateTime().replace("T", " "));
 
                         activeLoanMelaResponseList.add(loanSuccess);
                     }
@@ -162,19 +163,14 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string._404_));
-           // showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-           // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-           // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "My Active Loan Mela Fragment");
             error.printStackTrace();
@@ -187,7 +183,7 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
 
-                getLoanData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                getLoanData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                 hasViewCreated = true;
             }
         }

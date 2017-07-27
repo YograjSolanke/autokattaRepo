@@ -38,7 +38,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
     View mLoanAnalytics;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strLoanId = "";
+    private int strLoanId = 0;
     List<LoanMelaAnalyticsResponse.Success> analyticsList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
@@ -78,7 +78,7 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strLoanId = bundle.getString("loanid");
+                    strLoanId = bundle.getInt("loanid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -114,15 +114,13 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
         getLoanAnalytics(strLoanId);
     }
 
-    private void getLoanAnalytics(String strLoanId) {
+    private void getLoanAnalytics(int strLoanId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.LoanMelaAnalytics(strLoanId);
-            //apiCall.AuctionAnalyticsData("1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -177,10 +175,8 @@ public class LoanMelaAnalyticsFragment extends Fragment implements SwipeRefreshL
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Loan Analytics Fragment");
             error.printStackTrace();

@@ -24,9 +24,11 @@ import autokatta.com.adapter.TabAdapterName;
 public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private String strAuctionId = "", strAuctionTitle = "", strVehicleCount = "", strStartDate = "", strStartTime = "",
+    private String strAuctionTitle = "", strVehicleCount = "", strStartDate = "", strStartTime = "",
             strEndDate = "", strEndTime = "", strSpecialClauses = "", strStartdatetime = "", strEnddatetime = "",
-            strParticipantcount = "", strSpecialClause = "", strCategory = "", strLocation = "";
+            strSpecialClause = "", strCategory = "", strLocation = "";
+
+    private int strAuctionId = 0, strParticipantcount = 0;
 
     CollapsingToolbarLayout mCollapsingToolbar;
 
@@ -52,7 +54,7 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        strAuctionId = getIntent().getExtras().getString("auctionid");
+        strAuctionId = getIntent().getExtras().getInt("auctionid");
         strAuctionTitle = getIntent().getExtras().getString("auctiontitle");
         strVehicleCount = getIntent().getExtras().getString("vehicle_count");
         strStartDate = getIntent().getExtras().getString("auctionstartdate");
@@ -62,7 +64,7 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
         strSpecialClauses = getIntent().getExtras().getString("specialclauses");
         strStartdatetime = getIntent().getExtras().getString("startdatetime");
         strEnddatetime = getIntent().getExtras().getString("enddatetime");
-        strParticipantcount = getIntent().getExtras().getString("participant_count");
+        strParticipantcount = getIntent().getExtras().getInt("participant_count");
         strCategory = getIntent().getExtras().getString("category");
         strLocation = getIntent().getExtras().getString("location");
 
@@ -108,7 +110,7 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
                     txtCategory.setText(strCategory);
                     txtLocation.setText(strLocation);
                     //mAuctionText.setText(getString(R.string.live_auction));
-                    mBundle.putString("auctionid", strAuctionId);
+                    mBundle.putInt("auctionid", strAuctionId);
 
                     if (mViewPager != null) {
                         setupViewPager(mViewPager);
@@ -172,7 +174,7 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
 
             case R.id.gotoauction:
                 Bundle b = new Bundle();
-                b.putString("auctionid", strAuctionId);
+                b.putInt("auctionid", strAuctionId);
                 b.putString("auctiontitle", strAuctionTitle);
                 b.putString("vehicle_count", strVehicleCount);
                 b.putString("auctionstartdate", strStartDate);
@@ -182,7 +184,7 @@ public class MyEndedAuctionPreviewActivity extends AppCompatActivity implements 
                 b.putString("specialclauses", strSpecialClauses);
                 b.putString("enddatetime", strEnddatetime);
                 b.putString("startdatetime", strStartdatetime);
-                b.putString("participant_count", strParticipantcount);
+                b.putInt("participant_count", strParticipantcount);
                 b.putString("category", strCategory);
                 b.putString("location", strLocation);
 

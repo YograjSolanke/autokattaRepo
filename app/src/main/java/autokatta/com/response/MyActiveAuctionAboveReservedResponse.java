@@ -68,7 +68,7 @@ public class MyActiveAuctionAboveReservedResponse {
 
         @SerializedName("auctionid")
         @Expose
-        private String auctionid;
+        private int auctionid;
         @SerializedName("vehicleid")
         @Expose
         private String vehicleid;
@@ -124,11 +124,11 @@ public class MyActiveAuctionAboveReservedResponse {
         @Expose
         private String bidReceived;
 
-        public String getAuctionid() {
+        public int getAuctionid() {
             return auctionid;
         }
 
-        public void setAuctionid(String auctionid) {
+        public void setAuctionid(int auctionid) {
             this.auctionid = auctionid;
         }
 
@@ -282,7 +282,7 @@ public class MyActiveAuctionAboveReservedResponse {
 
         @SerializedName("auctionid")
         @Expose
-        private String auctionid;
+        private int auctionid;
         @SerializedName("vehicleid")
         @Expose
         private String vehicleid;
@@ -309,10 +309,10 @@ public class MyActiveAuctionAboveReservedResponse {
         private String rejectStatus;
         @SerializedName("counter")
         @Expose
-        private Integer counter;
+        private int counter;
         @SerializedName("reservedPrice")
         @Expose
-        private Integer reservedPrice;
+        private int reservedPrice;
         @SerializedName("blackList")
         @Expose
         private String blackList;
@@ -320,11 +320,11 @@ public class MyActiveAuctionAboveReservedResponse {
         @Expose
         private String noOfBids;
 
-        public String getAuctionid() {
+        public int getAuctionid() {
             return auctionid;
         }
 
-        public void setAuctionid(String auctionid) {
+        public void setAuctionid(int auctionid) {
             this.auctionid = auctionid;
         }
 
@@ -392,19 +392,19 @@ public class MyActiveAuctionAboveReservedResponse {
             this.rejectStatus = rejectStatus;
         }
 
-        public Integer getCounter() {
+        public int getCounter() {
             return counter;
         }
 
-        public void setCounter(Integer counter) {
+        public void setCounter(int counter) {
             this.counter = counter;
         }
 
-        public Integer getReservedPrice() {
+        public int getReservedPrice() {
             return reservedPrice;
         }
 
-        public void setReservedPrice(Integer reservedPrice) {
+        public void setReservedPrice(int reservedPrice) {
             this.reservedPrice = reservedPrice;
         }
 

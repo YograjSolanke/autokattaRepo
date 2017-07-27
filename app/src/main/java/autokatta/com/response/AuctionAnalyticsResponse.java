@@ -27,112 +27,112 @@ public class AuctionAnalyticsResponse {
 
         @SerializedName("reached_count")
         @Expose
-        private String reachedCount;
+        private int reachedCount;
         @SerializedName("going_count")
         @Expose
-        private String goingCount;
+        private int goingCount;
         @SerializedName("going_student")
         @Expose
-        private String goingStudent;
+        private int goingStudent;
         @SerializedName("going_self_student")
         @Expose
-        private String goingSelfStudent;
+        private int goingSelfStudent;
         @SerializedName("going_employee")
         @Expose
-        private String goingEmployee;
+        private int goingEmployee;
         @SerializedName("ignore_count")
         @Expose
-        private String ignoreCount;
+        private int ignoreCount;
         @SerializedName("ignore_student")
         @Expose
-        private String ignoreStudent;
+        private int ignoreStudent;
         @SerializedName("ignore_self_student")
         @Expose
-        private String ignoreSelfStudent;
+        private int ignoreSelfStudent;
         @SerializedName("ignore_employee")
         @Expose
-        private String ignoreEmployee;
+        private int ignoreEmployee;
         @SerializedName("shared_count")
         @Expose
-        private String sharedCount;
+        private int sharedCount;
 
-        public String getReachedCount() {
+        public int getReachedCount() {
             return reachedCount;
         }
 
-        public void setReachedCount(String reachedCount) {
+        public void setReachedCount(int reachedCount) {
             this.reachedCount = reachedCount;
         }
 
-        public String getGoingCount() {
+        public int getGoingCount() {
             return goingCount;
         }
 
-        public void setGoingCount(String goingCount) {
+        public void setGoingCount(int goingCount) {
             this.goingCount = goingCount;
         }
 
-        public String getGoingStudent() {
+        public int getGoingStudent() {
             return goingStudent;
         }
 
-        public void setGoingStudent(String goingStudent) {
+        public void setGoingStudent(int goingStudent) {
             this.goingStudent = goingStudent;
         }
 
-        public String getGoingSelfStudent() {
+        public int getGoingSelfStudent() {
             return goingSelfStudent;
         }
 
-        public void setGoingSelfStudent(String goingSelfStudent) {
+        public void setGoingSelfStudent(int goingSelfStudent) {
             this.goingSelfStudent = goingSelfStudent;
         }
 
-        public String getGoingEmployee() {
+        public int getGoingEmployee() {
             return goingEmployee;
         }
 
-        public void setGoingEmployee(String goingEmployee) {
+        public void setGoingEmployee(int goingEmployee) {
             this.goingEmployee = goingEmployee;
         }
 
-        public String getIgnoreCount() {
+        public int getIgnoreCount() {
             return ignoreCount;
         }
 
-        public void setIgnoreCount(String ignoreCount) {
+        public void setIgnoreCount(int ignoreCount) {
             this.ignoreCount = ignoreCount;
         }
 
-        public String getIgnoreStudent() {
+        public int getIgnoreStudent() {
             return ignoreStudent;
         }
 
-        public void setIgnoreStudent(String ignoreStudent) {
+        public void setIgnoreStudent(int ignoreStudent) {
             this.ignoreStudent = ignoreStudent;
         }
 
-        public String getIgnoreSelfStudent() {
+        public int getIgnoreSelfStudent() {
             return ignoreSelfStudent;
         }
 
-        public void setIgnoreSelfStudent(String ignoreSelfStudent) {
+        public void setIgnoreSelfStudent(int ignoreSelfStudent) {
             this.ignoreSelfStudent = ignoreSelfStudent;
         }
 
-        public String getIgnoreEmployee() {
+        public int getIgnoreEmployee() {
             return ignoreEmployee;
         }
 
-        public void setIgnoreEmployee(String ignoreEmployee) {
+        public void setIgnoreEmployee(int ignoreEmployee) {
             this.ignoreEmployee = ignoreEmployee;
         }
 
-        public String getSharedCount() {
+        public int getSharedCount() {
             return sharedCount;
         }
 
-        public void setSharedCount(String sharedCount) {
+        public void setSharedCount(int sharedCount) {
             this.sharedCount = sharedCount;
         }
 

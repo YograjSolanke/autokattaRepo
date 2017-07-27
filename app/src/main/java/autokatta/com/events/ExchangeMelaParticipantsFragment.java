@@ -38,7 +38,7 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
     View mExchangeParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strExchangeId = "";
+    private int strExchangeId = 0;
     List<ExchangeMelaParticipantsResponse.Success> participantList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
@@ -75,7 +75,7 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strExchangeId = bundle.getString("exchangeid");
+                    strExchangeId = bundle.getInt("exchangeid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -111,16 +111,14 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
         getExchangeParticipant(strExchangeId);
     }
 
-    private void getExchangeParticipant(String strExchangeId) {
+    private void getExchangeParticipant(int strExchangeId) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-        /*to do new  webservice*/
+
             apiCall.getExchangeMelaParticipants(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                     .getString("loginContact", ""), strExchangeId);
-            // apiCall.AuctionParticipantData("9890950817", "1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -173,10 +171,8 @@ public class ExchangeMelaParticipantsFragment extends Fragment implements SwipeR
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Exchange Participants Fragment");
             error.printStackTrace();

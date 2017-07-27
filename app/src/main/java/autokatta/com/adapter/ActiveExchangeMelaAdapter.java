@@ -40,7 +40,6 @@ public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchan
 
         this.mActivity = activity;
         this.mMainlist = itemlist;
-
     }
 
     @Override
@@ -49,8 +48,7 @@ public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchan
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.active_loan_adapter, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        ExchangeHolder vh = new ExchangeHolder(v);
-        return vh;
+        return new ExchangeHolder(v);
     }
 
     @Override
@@ -90,8 +88,9 @@ public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchan
                 b.putString("enddate", mMainlist.get(position).getEndDate());
                 b.putString("endtime", mMainlist.get(position).getEndTime());
                 b.putString("location", mMainlist.get(position).getLocation());
-                b.putString("enddatetime", mMainlist.get(position).getEndDateTime().replace("T"," "));
-                b.putString("exchangeid", mMainlist.get(position).getId());
+                b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
+                b.putInt("exchangeid", mMainlist.get(position).getId());
+
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(mActivity, ActiveExchangeMelaPreviewActivity.class);
                 i.putExtras(b);
@@ -170,7 +169,7 @@ public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchan
 
     static class ExchangeHolder extends RecyclerView.ViewHolder {
 
-        TextView title, enddate, endtime, startdate, starttime, location, address, details,mtitle;
+        TextView title, enddate, endtime, startdate, starttime, location, address, details, mtitle;
         ImageView image;
         Button mPreview, mShare;
         RelativeLayout relativeshare;
@@ -189,7 +188,7 @@ public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchan
             details = (TextView) itemView.findViewById(R.id.typeofauction2);
             mPreview = (Button) itemView.findViewById(R.id.button);
             mShare = (Button) itemView.findViewById(R.id.share);
-            mtitle= (TextView) itemView.findViewById(R.id.title2);
+            mtitle = (TextView) itemView.findViewById(R.id.title2);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
 
 

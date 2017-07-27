@@ -41,7 +41,7 @@ public class MyActiveAuctionNoBidResponse {
 
             @SerializedName("auctionid")
             @Expose
-            private String auctionid;
+            private int auctionid;
             @SerializedName("vehicleid")
             @Expose
             private String vehicleid;
@@ -103,11 +103,11 @@ public class MyActiveAuctionNoBidResponse {
             @Expose
             private String bidReceived;
 
-            public String getAuctionid() {
+            public int getAuctionid() {
                 return auctionid;
             }
 
-            public void setAuctionid(String auctionid) {
+            public void setAuctionid(int auctionid) {
                 this.auctionid = auctionid;
             }
 

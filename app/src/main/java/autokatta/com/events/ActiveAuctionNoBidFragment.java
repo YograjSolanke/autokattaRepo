@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -48,7 +47,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    String strAuctionId = "";
+    private int strAuctionId = 0;
     boolean hasViewCreated = false;
     TextView mNoData;
     ConnectionDetector mTestConnection;
@@ -84,7 +83,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strAuctionId = bundle.getInt("auctionid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -110,14 +109,13 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void getNoBidVehicle(String strAuctionId) {
+    private void getNoBidVehicle(int strAuctionId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionNoBid(strAuctionId);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -137,7 +135,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                ArrayList<AuctionAllVehicleData> auctionAllVehicleList = new ArrayList<>();
+                List<AuctionAllVehicleData> auctionAllVehicleList = new ArrayList<>();
 
                 MyActiveAuctionNoBidResponse noBidResponse = (MyActiveAuctionNoBidResponse) response.body();
 
@@ -212,11 +210,9 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-            //errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            Toast.makeText(getActivity(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Active Auction NoBid Fragment");
             error.printStackTrace();
@@ -259,9 +255,9 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
     private class ActiveAuctionNoBidAdapter extends RecyclerView.Adapter<ActiveAuctionNoBidAdapter.MyViewHolder> {
         private Activity mActivity;
         private List<AuctionAllVehicleData> mItemList = new ArrayList<>();
-        private String mAuctionId = "";
+        private int mAuctionId = 0;
 
-        ActiveAuctionNoBidAdapter(Activity mActivity, String auctionId, List<AuctionAllVehicleData> mItemList) {
+        ActiveAuctionNoBidAdapter(Activity mActivity, int auctionId, List<AuctionAllVehicleData> mItemList) {
             this.mActivity = mActivity;
             this.mItemList = mItemList;
             mAuctionId = auctionId;
@@ -332,7 +328,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
                     if (!mItemList.get(position).getVehicleId().startsWith("A ")) {
                         Bundle b = new Bundle();
                         b.putString("vehicle_id", mItemList.get(position).getVehicleId());
-                        b.putString("auction_id", strAuctionId);
+                        b.putInt("auction_id", mAuctionId);
 
                         Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
                         intent.putExtras(b);

@@ -11,17 +11,17 @@ import java.util.List;
 
 public class MyActiveServiceMelaResponse {
 
-        @SerializedName("Success")
-        @Expose
-        private List<Success> success = null;
+    @SerializedName("Success")
+    @Expose
+    private List<Success> success = null;
 
-        public List<Success> getSuccess() {
-            return success;
-        }
+    public List<Success> getSuccess() {
+        return success;
+    }
 
-        public void setSuccess(List<Success> success) {
-            this.success = success;
-        }
+    public void setSuccess(List<Success> success) {
+        this.success = success;
+    }
 
     public class Success {
 
@@ -68,7 +68,7 @@ public class MyActiveServiceMelaResponse {
         @Expose
         private String details;
 
-         @SerializedName("goingcount")
+        @SerializedName("goingcount")
         @Expose
         private String goingcount;
 

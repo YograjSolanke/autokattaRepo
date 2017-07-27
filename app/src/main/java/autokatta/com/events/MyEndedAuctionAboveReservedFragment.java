@@ -50,7 +50,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
     private LinearLayout mLinearLayout;
     private String keyword = "";
     private String keyword1 = "";
-    private String mAuctionId = "";
+    private int mAuctionId = 0;
     private String mSpecialClauses = "";
     private String myContact = "";
     private String VehiId = "";
@@ -93,12 +93,9 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
 
-                    mAuctionId = bundle.getString("auctionid");
+                    mAuctionId = bundle.getInt("auctionid");
                     mSpecialClauses = bundle.getString("specialclauses");
 
-
-                    // mApiCall.ActiveAuctionAboveReservedPrice(myContact, mAuctionId);
-                    //mApiCall.ActiveAuctionAboveReservedPrice(myContact, "1047");
                     getEndedAboveReservedVehicle(myContact, mAuctionId);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -107,14 +104,13 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
         });
     }
 
-    private void getEndedAboveReservedVehicle(String myContact, String strAuctionId) {
+    private void getEndedAboveReservedVehicle(String myContact, int strAuctionId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionAboveReservedPrice(myContact, strAuctionId);
         } else {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -313,7 +309,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
                                     if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
                                         Bundle b = new Bundle();
                                         b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
-                                        b.putString("auction_id", mAuctionId);
+                                        b.putInt("auction_id", mAuctionId);
 
                                         Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
                                         intent.putExtras(b);
@@ -388,7 +384,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
                                     public void onClick(View v) {
 
                                         if (mVehicleLists.get(finalI).getBiddersList().get(finalJ1).getContact().equals(myContact)) {
-                                         CustomToast.customToast(getActivity(),"You can't call yourself");
+                                            CustomToast.customToast(getActivity(), "You can't call yourself");
                                         } else {
 //                                    action = "call";
 //                                    //vehicle_id = v_ids[position];
@@ -415,7 +411,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
                                 approve.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        CustomToast.customToast(getActivity(),"Approve");
+                                        CustomToast.customToast(getActivity(), "Approve");
                                         keyword1 = "approve";
                                         approvedvehicle(bidprice.getText().toString(), keyword1, mVehicleLists.get(finalI).getBiddersList().get(finalJ1).getContact(),
                                                 mVehicleLists.get(finalI).getVehicleid());
@@ -513,41 +509,32 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
 
                         if (keyword1.equals("approve")) {
 
-                            String id = approvedVehicleResponse.getSuccess().getDate();
-                            Log.i("ApproveDate", "->" + id);
-                            ApproveDate.setText(id);
+                            String datee = approvedVehicleResponse.getSuccess().getDate();
+                            Log.i("ApproveDate", "->" + datee);
+                            ApproveDate.setText(datee);
                         }
 
                     }
                 }
 
-
             } else
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else
-            CustomToast.customToast(
-
-                    getActivity(), getString(R.string.no_internet));
-
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-         //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-           // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            //showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Ended Auction Above Resreved Fragment");
             error.printStackTrace();
@@ -571,7 +558,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
             else if (str.equals("success_reauction"))
                 CustomToast.customToast(getActivity(), "Vehicle added to reauction");
             else
-            CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction");
+                CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction");
         } else
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
     }
@@ -581,10 +568,8 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
 
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.ApproveVehicle(mAuctionId, keyword1, vehicleid, bidderContact, bidPrice);
-            //mApiCall.ApproveVehicle("1047", keyword1, vehicleid, bidderContact, bidPrice);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -592,10 +577,8 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
 
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.addToReauction(vehicleid, mAuctionId);
-            //mApiCall.addToReauction(vehicleid, "1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -603,10 +586,8 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
 
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
-            //mApiCall.Add_RemoveBlacklistContact(myContact, "1047", rContact, keyword);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 

@@ -50,7 +50,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
     private LinearLayout mLinearLayout;
     private String keyword = "";
     private String keyword1 = "";
-    private String mAuctionId = "";
+    private int mAuctionId = 0;
     private String mSpecialClauses = "";
     private String myContact = "";
     private String VehiId = "";
@@ -95,12 +95,9 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
 
-                    mAuctionId = bundle.getString("auctionid");
+                    mAuctionId = bundle.getInt("auctionid");
                     mSpecialClauses = bundle.getString("specialclauses");
 
-
-                    //mApiCall.ActiveAuctionHighBid(myContact, mAuctionId);
-                    //mApiCall.ActiveAuctionHighBid(myContact, "1047");
                     getEndedHighVehicle(myContact, mAuctionId);
 
                 } catch (Exception e) {
@@ -110,14 +107,13 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
         });
     }
 
-    private void getEndedHighVehicle(String myContact, String strAuctionId) {
+    private void getEndedHighVehicle(String myContact, int strAuctionId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionHighBid(myContact, strAuctionId);
         } else {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -316,7 +312,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
                                     if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
                                         Bundle b = new Bundle();
                                         b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
-                                        b.putString("auction_id", mAuctionId);
+                                        b.putInt("auction_id", mAuctionId);
 
                                         Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
                                         intent.putExtras(b);
@@ -532,19 +528,14 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-         //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-       //     showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-        //    showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Ended Auction HighesBid Fragment");
             error.printStackTrace();
@@ -568,9 +559,9 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
 
             //Reauction
             else if (str.equals("success_reauction"))
-                CustomToast.customToast(getActivity(),"Vehicle added to reauction !!!");
+                CustomToast.customToast(getActivity(), "Vehicle added to reauction !!!");
             else
-            CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction Try Later!!!");
+                CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction Try Later!!!");
         } else
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
     }
@@ -580,10 +571,8 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
 
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.ApproveVehicle(mAuctionId, keyword1, vehicleid, bidderContact, bidPrice);
-            //mApiCall.ApproveVehicle("1047", keyword1, vehicleid, bidderContact, bidPrice);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -591,10 +580,8 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
 
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.addToReauction(vehicleid, mAuctionId);
-            //mApiCall.addToReauction(vehicleid, "1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -602,10 +589,8 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
 
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
-            //mApiCall.Add_RemoveBlacklistContact(myContact, "1047", rContact, keyword);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 

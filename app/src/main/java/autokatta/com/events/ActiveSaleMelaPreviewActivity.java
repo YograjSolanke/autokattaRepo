@@ -31,18 +31,20 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime,strSaleid;
+    String strEndDateTime;
+    private int strSaleid = 0;
     TextView txtTimer;
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
-    SaleMelaParticipantsFragment saleMelaParticipantsFragment=new SaleMelaParticipantsFragment();
-    SaleMelaAnalyticsFragment saleMelaAnalyticsFragment=new SaleMelaAnalyticsFragment();
+    SaleMelaParticipantsFragment saleMelaParticipantsFragment = new SaleMelaParticipantsFragment();
+    SaleMelaAnalyticsFragment saleMelaAnalyticsFragment = new SaleMelaAnalyticsFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_sale_mela_preview);
-     //   setContentView(R.layout.activity_active_loanmela_preview);
+
         mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,7 +71,7 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
-        strSaleid=getIntent().getExtras().getString("saleid");
+        strSaleid = getIntent().getExtras().getInt("saleid");
 
         runOnUiThread(new Runnable() {
             @Override
@@ -82,7 +84,8 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
-                b.putString("saleid",strSaleid);
+                b.putInt("saleid", strSaleid);
+
                 saleMelaAnalyticsFragment.setArguments(b);
                 saleMelaParticipantsFragment.setArguments(b);
 
@@ -159,8 +162,7 @@ public class ActiveSaleMelaPreviewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;

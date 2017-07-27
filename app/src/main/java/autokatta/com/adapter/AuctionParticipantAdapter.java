@@ -40,9 +40,10 @@ public class AuctionParticipantAdapter extends RecyclerView.Adapter<AuctionParti
 
     Activity mActivity;
     private List<AuctionParticipantsResponse.Success> mParticipantList;
-    private String strAuctionId, keyword = "";
+    private String keyword = "";
+    private int strAuctionId = 0;
 
-    public AuctionParticipantAdapter(Activity activity, String strAuctionId, List<AuctionParticipantsResponse.Success> participantList) {
+    public AuctionParticipantAdapter(Activity activity, int strAuctionId, List<AuctionParticipantsResponse.Success> participantList) {
         mActivity = activity;
         mParticipantList = participantList;
         this.strAuctionId = strAuctionId;

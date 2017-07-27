@@ -115,7 +115,7 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putString("auction_id", mMainlist.get(position).getAuctionId());
+                b.putInt("auction_id", mMainlist.get(position).getAuctionId());
                 b.putString("title", mMainlist.get(position).getActionTitle());
                 b.putString("startdate", mMainlist.get(position).getStartDate());
                 b.putString("starttime", mMainlist.get(position).getStartTime());

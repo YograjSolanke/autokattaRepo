@@ -41,7 +41,7 @@ public class AuctionAnalyticsFragment extends Fragment implements SwipeRefreshLa
     View mAuctionAnalytics;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strAuctionId = "";
+    private int strAuctionId = 0;
     List<AuctionAnalyticsResponse.Success> analyticsList = new ArrayList<>();
     ConnectionDetector mTestConnection;
 
@@ -79,7 +79,7 @@ public class AuctionAnalyticsFragment extends Fragment implements SwipeRefreshLa
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strAuctionId = bundle.getString("auctionid");
+                    strAuctionId = bundle.getInt("auctionid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -106,7 +106,7 @@ public class AuctionAnalyticsFragment extends Fragment implements SwipeRefreshLa
         getAuctionAnalytics(strAuctionId);
     }
 
-    private void getAuctionAnalytics(String strAuctionId) {
+    private void getAuctionAnalytics(int strAuctionId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
@@ -114,7 +114,6 @@ public class AuctionAnalyticsFragment extends Fragment implements SwipeRefreshLa
             //apiCall.AuctionAnalyticsData("1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -167,19 +166,14 @@ public class AuctionAnalyticsFragment extends Fragment implements SwipeRefreshLa
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-          //  showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-           // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-          // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Auction Analytics Fragment");
             error.printStackTrace();

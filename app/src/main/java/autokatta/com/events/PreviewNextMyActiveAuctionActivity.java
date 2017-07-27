@@ -33,9 +33,11 @@ import autokatta.com.adapter.TabAdapterName;
 
 public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String strAuctionId = "", strAuctionTitle = "", strVehicleCount = "", strStartDate = "", strStartTime = "",
+    private String strAuctionTitle = "", strVehicleCount = "", strStartDate = "", strStartTime = "",
             strEndDate = "", strEndTime = "", strSpecialClauses = "", strStartdatetime = "", strEnddatetime = "",
-            strParticipantcount = "", strSpecialClause = "", strCategory = "", strLocation = "";
+            strSpecialClause = "", strCategory = "", strLocation = "";
+
+    private int strAuctionId = 0, strParticipantcount = 0;
 
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
@@ -63,7 +65,7 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        strAuctionId = getIntent().getExtras().getString("auctionid");
+        strAuctionId = getIntent().getExtras().getInt("auctionid");
         strAuctionTitle = getIntent().getExtras().getString("auctiontitle");
         strVehicleCount = getIntent().getExtras().getString("vehicle_count");
         strStartDate = getIntent().getExtras().getString("auctionstartdate");
@@ -73,7 +75,7 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
         strSpecialClauses = getIntent().getExtras().getString("specialclauses");
         strStartdatetime = getIntent().getExtras().getString("startdatetime");
         strEnddatetime = getIntent().getExtras().getString("enddatetime");
-        strParticipantcount = getIntent().getExtras().getString("participant_count");
+        strParticipantcount = getIntent().getExtras().getInt("participant_count");
         strCategory = getIntent().getExtras().getString("category");
         strLocation = getIntent().getExtras().getString("location");
 
@@ -123,7 +125,7 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
                     txtCategory.setText("Category: " + strCategory);
                     txtLocation.setText(strLocation);
                     //mAuctionText.setText(getString(R.string.live_auction));
-                    mBundle.putString("auctionid", strAuctionId);
+                    mBundle.putInt("auctionid", strAuctionId);
 
                     if (mViewPager != null) {
                         setupViewPager(mViewPager);

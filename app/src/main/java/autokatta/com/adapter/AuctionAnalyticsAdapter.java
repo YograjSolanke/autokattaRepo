@@ -21,12 +21,12 @@ import autokatta.com.response.AuctionAnalyticsResponse;
 public class AuctionAnalyticsAdapter extends RecyclerView.Adapter<AuctionAnalyticsAdapter.AuctionHolder> {
 
     Activity mActivity;
-    private String strAuctionId;
+    private int strAuctionId = 0;
     private List<AuctionAnalyticsResponse.Success> mAnalyticsList;
 
-    public AuctionAnalyticsAdapter(FragmentActivity activity, String strAuctionid, List<AuctionAnalyticsResponse.Success> analyticsList) {
+    public AuctionAnalyticsAdapter(FragmentActivity activity, int strAuctionid1, List<AuctionAnalyticsResponse.Success> analyticsList) {
         mActivity = activity;
-        strAuctionId = strAuctionid;
+        strAuctionId = strAuctionid1;
         mAnalyticsList = analyticsList;
     }
 

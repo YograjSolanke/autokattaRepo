@@ -39,7 +39,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
     View mSaleParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strSaleId = "";
+    private int strSaleId = 0;
     List<SaleMelaParticipantsResponse.Success> participantList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
@@ -77,7 +77,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strSaleId = bundle.getString("saleid");
+                    strSaleId = bundle.getInt("saleid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -115,16 +115,14 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
         getSaleParticipant(strSaleId);
     }
 
-    private void getSaleParticipant(String strSaleId) {
+    private void getSaleParticipant(int strSaleId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getSaleMelaParticipants(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                     .getString("loginContact", ""), strSaleId);
-            // apiCall.AuctionParticipantData("9890950817", "1047");
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -136,7 +134,7 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
                 participantList.clear();
                 SaleMelaParticipantsResponse participantsResponse = (SaleMelaParticipantsResponse) response.body();
 
-                if (participantsResponse.getSuccess()!=null) {
+                if (participantsResponse.getSuccess() != null) {
                     mNoData.setVisibility(View.GONE);
                     for (SaleMelaParticipantsResponse.Success success : participantsResponse.getSuccess()) {
 
@@ -170,22 +168,17 @@ public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefre
 
     @Override
     public void notifyError(Throwable error) {
-       mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Sale mela Participants Fragment");
             error.printStackTrace();

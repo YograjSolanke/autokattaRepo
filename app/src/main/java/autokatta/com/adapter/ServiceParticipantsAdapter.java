@@ -38,9 +38,10 @@ public class ServiceParticipantsAdapter extends RecyclerView.Adapter<ServicePart
 
     Activity mActivity;
     private List<ServiceMelaParticipantsResponse.Success> mParticipantList;
-    private String strServiceId, keyword = "";
+    private String keyword = "";
+    private int strServiceId = 0;
 
-    public ServiceParticipantsAdapter(Activity activity, String strServiceId, List<ServiceMelaParticipantsResponse.Success> participantList) {
+    public ServiceParticipantsAdapter(Activity activity, int strServiceId, List<ServiceMelaParticipantsResponse.Success> participantList) {
         mActivity = activity;
         mParticipantList = participantList;
         this.strServiceId = strServiceId;

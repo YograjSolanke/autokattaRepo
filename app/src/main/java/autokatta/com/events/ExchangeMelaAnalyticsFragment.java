@@ -36,7 +36,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
     View mExchangeAnalytics;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strExchangeId = "";
+    private int strExchangeId = 0;
     List<LoanMelaAnalyticsResponse.Success> analyticsList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
@@ -74,7 +74,7 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strExchangeId = bundle.getString("exchangeid");
+                    strExchangeId = bundle.getInt("exchangeid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -110,16 +110,13 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
         getExchangeAnalytics(strExchangeId);
     }
 
-    private void getExchangeAnalytics(String strExchangeId) {
+    private void getExchangeAnalytics(int strExchangeId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-      /*to do new webservice*/
             apiCall.getExchangeMelaAnalytics(strExchangeId);
-            //apiCall.AuctionAnalyticsData("1047");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -175,10 +172,8 @@ public class ExchangeMelaAnalyticsFragment extends Fragment implements SwipeRefr
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Exchange Analytics Fragment");
             error.printStackTrace();

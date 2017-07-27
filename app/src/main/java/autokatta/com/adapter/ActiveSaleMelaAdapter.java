@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,7 +45,6 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
 
         this.mActivity = activity;
         this.mMainlist = itemlist;
-
     }
 
     @Override
@@ -53,8 +53,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.active_loan_adapter, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        LoanHolder vh = new LoanHolder(v);
-        return vh;
+        return new LoanHolder(v);
     }
 
     @Override
@@ -94,8 +93,10 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
                 b.putString("enddate",mMainlist.get(position).getEndDate());
                 b.putString("endtime",mMainlist.get(position).getEndTime());
                 b.putString("location",mMainlist.get(position).getLocation());
-                b.putString("enddatetime",mMainlist.get(position).getEndDateTime().replace("T"," "));
+                b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
                 b.putInt("saleid",mMainlist.get(position).getId());
+
+                Log.i("hhhhhhhjjj", mMainlist.get(position).getEndDateTime());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(mActivity, ActiveSaleMelaPreviewActivity.class);
                 i.putExtras(b);

@@ -42,10 +42,10 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
     private List<AuctionAllVehicleData> finalVehiclesData;
     private List<Boolean> positionArray;
     private List<AuctionAllVehicleData> checkedVehicleData;
-    private String auctionId;
+    private int auctionId = 0;
     public static ArrayList<Boolean> isSave;
 
-    public AuctionConfirmAdapter(Activity activity, String bundleAuctionId, List<AuctionAllVehicleData> finalVehiclesData) {
+    public AuctionConfirmAdapter(Activity activity, int bundleAuctionId, List<AuctionAllVehicleData> finalVehiclesData) {
 
         this.activity = activity;
         this.finalVehiclesData = finalVehiclesData;

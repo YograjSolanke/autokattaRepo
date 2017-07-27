@@ -38,9 +38,10 @@ public class LoanParticipantAdapter extends RecyclerView.Adapter<LoanParticipant
 
     Activity mActivity;
     private List<LoanMelaParticipantsResponse.Success> mParticipantList;
-    private String strLoanId, keyword = "";
+    private String keyword = "";
+    private int strLoanId = 0;
 
-    public LoanParticipantAdapter(Activity activity, String strLoanId, List<LoanMelaParticipantsResponse.Success> participantList) {
+    public LoanParticipantAdapter(Activity activity, int strLoanId, List<LoanMelaParticipantsResponse.Success> participantList) {
         mActivity = activity;
         mParticipantList = participantList;
         this.strLoanId = strLoanId;

@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import autokatta.com.R;
@@ -37,9 +39,10 @@ import static android.content.Context.MODE_PRIVATE;
 public class ExchangeParticipantsAdapter extends RecyclerView.Adapter<ExchangeParticipantsAdapter.ExchangeAdapter> implements RequestNotifier {
     Activity mActivity;
     private List<ExchangeMelaParticipantsResponse.Success> mParticipantList;
-    private String strExchangeId, keyword = "";
+    private String keyword = "";
+    private int strExchangeId = 0;
 
-    public ExchangeParticipantsAdapter(Activity activity, String strExchangeId, List<ExchangeMelaParticipantsResponse.Success> participantList) {
+    public ExchangeParticipantsAdapter(Activity activity, int strExchangeId, List<ExchangeMelaParticipantsResponse.Success> participantList) {
         mActivity = activity;
         mParticipantList = participantList;
         this.strExchangeId = strExchangeId;
@@ -192,12 +195,18 @@ public class ExchangeParticipantsAdapter extends RecyclerView.Adapter<ExchangePa
 
     @Override
     public void notifyError(Throwable error) {
+
+        //mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Exchange Participants Adapter");
             error.printStackTrace();

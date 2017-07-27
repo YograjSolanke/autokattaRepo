@@ -30,11 +30,12 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime,strServiceid;
+    String strEndDateTime;
+    private int strServiceid = 0;
     TextView txtTimer;
     CountDownTimer cdt;
-    ServiceParticipantsFragment serviceParticipantsFragment=new ServiceParticipantsFragment();
-    ServiceMelaAnalyticsFragment serviceMelaAnalyticsFragment=new ServiceMelaAnalyticsFragment();
+    ServiceParticipantsFragment serviceParticipantsFragment = new ServiceParticipantsFragment();
+    ServiceMelaAnalyticsFragment serviceMelaAnalyticsFragment = new ServiceMelaAnalyticsFragment();
 
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
@@ -42,7 +43,7 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_service_mela_preview);
-       // setContentView(R.layout.activity_active_loanmela_preview);
+
         mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,7 +70,7 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
-        strServiceid = getIntent().getExtras().getString("serviceid");
+        strServiceid = getIntent().getExtras().getInt("serviceid");
 
         runOnUiThread(new Runnable() {
             @Override
@@ -82,7 +83,7 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
                 mEndDate.setText(strEnddate);
                 mEndTime.setText(strEndTime);
                 mLocation.setText(strLocation);
-                b.putString("serviceid",strServiceid);
+                b.putInt("serviceid", strServiceid);
                 serviceMelaAnalyticsFragment.setArguments(b);
                 serviceParticipantsFragment.setArguments(b);
 
@@ -159,8 +160,7 @@ public class ActiveServiceMelaPreviewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,12 +40,10 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
     FragmentActivity ctx;
     String allDetails;
 
-
     public ActiveServiceMelaAdapter(Activity activity, List<MyActiveServiceMelaResponse.Success> itemlist) {
 
         this.mActivity = activity;
         this.mMainlist = itemlist;
-
     }
 
     @Override
@@ -53,8 +52,7 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.active_loan_adapter, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        LoanHolder vh = new LoanHolder(v);
-        return vh;
+        return new LoanHolder(v);
     }
 
     @Override
@@ -94,8 +92,10 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
                 b.putString("enddate",mMainlist.get(position).getEndDate());
                 b.putString("endtime",mMainlist.get(position).getEndTime());
                 b.putString("location",mMainlist.get(position).getLocation());
-                b.putString("enddatetime",mMainlist.get(position).getEndDateTime().replace("T"," "));
+                b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
                 b.putInt("serviceid",mMainlist.get(position).getId());
+
+                Log.i("hhhhhhhjjj", mMainlist.get(position).getEndDateTime());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(mActivity, ActiveServiceMelaPreviewActivity.class);
                 i.putExtras(b);
@@ -124,8 +124,8 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-                   mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                       putInt("Share_service_id", mMainlist.get(position).getId()).apply();
+               /* mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                       putInt("Share_service_id", mMainlist.get(position).getId()).apply();*/
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "servicemela").apply();
 

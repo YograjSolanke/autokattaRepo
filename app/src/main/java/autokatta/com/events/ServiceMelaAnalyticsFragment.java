@@ -36,7 +36,7 @@ public class ServiceMelaAnalyticsFragment extends Fragment implements SwipeRefre
     View mServiceAnalytics;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private String strServiceId = "";
+    private int strServiceId = 0;
     List<LoanMelaAnalyticsResponse.Success> analyticsList = new ArrayList<>();
     boolean hasViewCreated = false;
     TextView mNoData;
@@ -75,7 +75,7 @@ public class ServiceMelaAnalyticsFragment extends Fragment implements SwipeRefre
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
-                    strServiceId = bundle.getString("serviceid");
+                    strServiceId = bundle.getInt("serviceid");
 
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
@@ -113,16 +113,14 @@ public class ServiceMelaAnalyticsFragment extends Fragment implements SwipeRefre
         getServiceAnalytics(strServiceId);
     }
 
-    private void getServiceAnalytics(String strServiceId) {
+    private void getServiceAnalytics(int strServiceId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getServiceMelaAnalytics(strServiceId);
-            // apiCall.AuctionAnalyticsData(strServiceId);
-            //apiCall.AuctionAnalyticsData("1047");
+
         } else {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -173,19 +171,14 @@ public class ServiceMelaAnalyticsFragment extends Fragment implements SwipeRefre
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "service mela Analytics Fragment");
             error.printStackTrace();

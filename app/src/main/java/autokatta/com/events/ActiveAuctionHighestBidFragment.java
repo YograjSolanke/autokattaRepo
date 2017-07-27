@@ -48,7 +48,7 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
     }
 
     private LinearLayout mLinearLayout;
-    private String mAuctionId = "";
+    private int mAuctionId = 0;
     private String myContact = "";
     private String VehiId = "";
     private String RContact = "";
@@ -88,11 +88,8 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
             public void run() {
                 try {
                     mTestConnection = new ConnectionDetector(getActivity());
-                    mAuctionId = bundle.getString("auctionid");
+                    mAuctionId = bundle.getInt("auctionid");
 
-
-                    // mApiCall.ActiveAuctionHighBid(myContact, mAuctionId);
-                    //mApiCall.ActiveAuctionHighBid(myContact, "1047");
                     getHighVehicle(myContact, mAuctionId);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -113,7 +110,7 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
         }
     }
 
-    private void getHighVehicle(String myContact, String strAuctionId) {
+    private void getHighVehicle(String myContact, int strAuctionId) {
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
@@ -121,7 +118,6 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
 
         } else {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -281,7 +277,7 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
                                 if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
                                     Bundle b = new Bundle();
                                     b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
-                                    b.putString("auction_id", mAuctionId);
+                                    b.putInt("auction_id", mAuctionId);
 
                                     Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
                                     intent.putExtras(b);
@@ -394,10 +390,8 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Active Auction HighesBid Fragment");
             error.printStackTrace();

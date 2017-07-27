@@ -27,7 +27,7 @@ public class MyActiveExchangeMelaResponse {
 
         @SerializedName("Id")
         @Expose
-        private String id;
+        private int id;
         @SerializedName("contact")
         @Expose
         private String contact;
@@ -68,11 +68,11 @@ public class MyActiveExchangeMelaResponse {
         @Expose
         private String details;
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 

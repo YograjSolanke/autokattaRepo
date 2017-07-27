@@ -38,9 +38,10 @@ public class SaleParticipantsAdapter extends RecyclerView.Adapter<SaleParticipan
 
     Activity mActivity;
     private List<SaleMelaParticipantsResponse.Success> mParticipantList;
-    private String strSaleId, keyword = "";
+    private String keyword = "";
+    private int strSaleId = 0;
 
-    public SaleParticipantsAdapter(Activity activity, String strSaleId, List<SaleMelaParticipantsResponse.Success> participantList) {
+    public SaleParticipantsAdapter(Activity activity, int strSaleId, List<SaleMelaParticipantsResponse.Success> participantList) {
         mActivity = activity;
         mParticipantList = participantList;
         this.strSaleId = strSaleId;

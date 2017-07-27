@@ -112,7 +112,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
     private void getData() {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.wallNotifications(mLoginContact, "2020202020", "");
+        apiCall.wallNotifications(mLoginContact, mLoginContact, "");
     }
 
     @Override
@@ -233,6 +233,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setGroupName(notification.getGroupName());
                         notification.setGroupImage(notification.getGroupImage());
                         notification.setGroupMembers(notification.getGroupMembers());
+                        notification.setGroupProductCount(notification.getGroupProductCount());
+                        notification.setGroupServiceCount(notification.getGroupServiceCount());
 
                         notification.setProductLikeStatus(notification.getProductLikeStatus());
                         notification.setProductFollowStatus(notification.getProductFollowStatus());
@@ -241,7 +243,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setProductFollowCount(notification.getProductFollowCount());
                         notification.setProductName(notification.getProductName());
                         notification.setProductType(notification.getProductType());
-                        //notification.setProductImage(notification.getProductImage());
+                        notification.setProductRating(notification.getProductRating());
                         String proImage = notification.getProductImage();
                         if (proImage.contains(",")) {
                             String[] items = proImage.split(",");
@@ -261,7 +263,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setServiceFollowCount(notification.getServiceFollowCount());
                         notification.setServiceName(notification.getServiceName());
                         notification.setServiceType(notification.getServiceType());
-                        //notification.setServiceImage(notification.getServiceImage());
+                        notification.setServiceRating(notification.getServiceRating());
                         String serviceImage = notification.getServiceImage();
                         if (serviceImage.contains(",")) {
                             String[] items = serviceImage.split(",");
