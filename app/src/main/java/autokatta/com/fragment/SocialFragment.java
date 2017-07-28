@@ -44,9 +44,9 @@ public class SocialFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getChildFragmentManager());
+        adapter.addFragment(new AllEnquiryTabFragment(), "Enquiries");
         adapter.addFragment(new SellerNotificationFragment(), "Seller");
         adapter.addFragment(new BuyerNotificationFragment(), "Buyer");
-        adapter.addFragment(new AllEnquiryTabFragment(), "Enquiries");
         viewPager.setAdapter(adapter);
     }
 }
