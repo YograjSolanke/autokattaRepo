@@ -53,7 +53,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private OnLoadMoreListener mOnLoadMoreListener;
     private String mLoginContact = "";
     private ApiCall mApiCall;
-    private int profile_likecountint, profile_followcountint, product_likecountint, service_likecountint;
+    private int profile_likecountint, profile_followcountint, product_likecountint, service_likecountint, store_likecountint,
+            store_followcountint, store_sharecountint;
 
     public WallNotificationAdapter(Activity mActivity1, List<WallResponse.Success.WallNotification> notificationList) {
         this.mActivity = mActivity1;
@@ -94,7 +95,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         CardView mProfileCardView;
         ImageView mProfilePic, mProfileImage;
         ImageButton mShareAutokatta, mCall, mLike, mUnlike, mFav, mUnfav;
-        TextView mProfileName, mProfileContact, mProfileTitle, mUserName, mProfileWorkAt, mProfileWebSite, mLocation,
+        TextView mProfileAction, mActionTime, mProfileTitle, mUserName, mProfileWorkAt, mProfileWebSite, mLocation,
                 mFollowCount, mLikes, mShares;
         RelativeLayout mRelativeLike;
 
@@ -103,8 +104,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mProfileCardView = (CardView) profileView.findViewById(R.id.profile_card_view);
             mProfilePic = (ImageView) profileView.findViewById(R.id.pro_pic);
             mProfileImage = (ImageView) profileView.findViewById(R.id.profile_image);
-            mProfileName = (TextView) profileView.findViewById(R.id.profile_name);
-            mProfileContact = (TextView) profileView.findViewById(R.id.profile_time);
+            mProfileAction = (TextView) profileView.findViewById(R.id.profile_name);
+            mActionTime = (TextView) profileView.findViewById(R.id.profile_time);
             mProfileTitle = (TextView) profileView.findViewById(R.id.profile_title);
             mUserName = (TextView) profileView.findViewById(R.id.username);
             mProfileWorkAt = (TextView) profileView.findViewById(R.id.profileworkat);
@@ -128,29 +129,32 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
      */
     private static class StoreNotifications extends RecyclerView.ViewHolder {
         CardView mStoreCardView;
-        ImageView mStorePic, mStoreImage;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mFollow;
+        ImageView mProfilePic, mStoreImage;
+        ImageButton mShareAutokatta, mCall, mLike, mUnlike, mFollow, mUnfollow;
         RatingBar mStoreRating;
-        TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
-                mStoreLocation, mFollowCount, mLikes, mShares;
+        TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreType, mStoreWebSite, mStoreTiming,
+                mStoreWorkingDay, mStoreLocation, mFollowCount, mLikes, mShares;
+        RelativeLayout mRelativeLike;
 
         private StoreNotifications(View storeView) {
             super(storeView);
             mStoreCardView = (CardView) storeView.findViewById(R.id.store_card_view);
-            mStorePic = (ImageView) storeView.findViewById(R.id.store_pic);
+            mProfilePic = (ImageView) storeView.findViewById(R.id.store_pic);
             mStoreImage = (ImageView) storeView.findViewById(R.id.store_image);
 
             mShareAutokatta = (ImageButton) storeView.findViewById(R.id.share_autokatta);
             mCall = (ImageButton) storeView.findViewById(R.id.call);
             mLike = (ImageButton) storeView.findViewById(R.id.like);
+            mUnlike = (ImageButton) storeView.findViewById(R.id.unlike);
             mFollow = (ImageButton) storeView.findViewById(R.id.follow_store);
+            mUnfollow = (ImageButton) storeView.findViewById(R.id.unfollow_store);
             mStoreRating = (RatingBar) storeView.findViewById(R.id.store_rating);
 
             mStoreActionName = (TextView) storeView.findViewById(R.id.store_action_names);
             mActionTime = (TextView) storeView.findViewById(R.id.store_action_time);
             mStoreName = (TextView) storeView.findViewById(R.id.store_name);
             mStoreCategory = (TextView) storeView.findViewById(R.id.store_category);
-            mStoreWorkAt = (TextView) storeView.findViewById(R.id.store_workat);
+            mStoreType = (TextView) storeView.findViewById(R.id.store_type);
             mStoreWebSite = (TextView) storeView.findViewById(R.id.store_website);
             mStoreTiming = (TextView) storeView.findViewById(R.id.store_time);
             mStoreWorkingDay = (TextView) storeView.findViewById(R.id.store_working_day);
@@ -158,6 +162,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mFollowCount = (TextView) storeView.findViewById(R.id.followcnt);
             mLikes = (TextView) storeView.findViewById(R.id.likes);
             mShares = (TextView) storeView.findViewById(R.id.share);
+            mRelativeLike = (RelativeLayout) storeView.findViewById(R.id.rlLike);
         }
     }
 
@@ -590,10 +595,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mProfileHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                mProfileHolder.mProfileName.setText(notificationList.get(position).getSenderName() + " "
+                mProfileHolder.mProfileAction.setText(notificationList.get(position).getSenderName() + " "
                         + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " " + "Profile");
 
-                mProfileHolder.mProfileContact.setText(notificationList.get(position).getDateTime());
+                mProfileHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mProfileHolder.mUserName.setText(notificationList.get(position).getSenderName());
                 mProfileHolder.mProfileWorkAt.setText(notificationList.get(position).getSenderProfession());
                 mProfileHolder.mProfileWebSite.setText(notificationList.get(position).getSenderWebsite());
@@ -799,12 +804,152 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 2:
-                ImageView mStorePic, mStoreImage;
-                ImageButton mShareAutokatta, mShareOther, mCall, mLike, mFollow;
+               /* CardView mStoreCardView;
+                ImageView mProfilePic, mStoreImage;
+                ImageButton mShareAutokatta, mCall, mLike, mUnlike, mFollow, mUnfollow;
                 RatingBar mStoreRating;
-                TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
-                        mStoreLocation, mFollowCount, mLikes, mShares;
+                TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreType, mStoreWebSite, mStoreTiming,
+                        mStoreWorkingDay, mStoreLocation, mFollowCount, mLikes, mShares;*/
 
+                final StoreNotifications mStoreHolder = (StoreNotifications) holder;
+                Log.i("Wall", "Store-LayType ->" + notificationList.get(position).getLayoutType());
+
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                    mStoreHolder.mCall.setVisibility(View.GONE);
+                    mStoreHolder.mRelativeLike.setVisibility(View.GONE);
+
+                } else {
+                    mStoreHolder.mCall.setVisibility(View.VISIBLE);
+                    mStoreHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                }
+
+                mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSenderName() + " "
+                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " "
+                        + notificationList.get(position).getStoreName() + " " + "Store");
+
+                mStoreHolder.mActionTime.setText(notificationList.get(position).getDateTime());
+                mStoreHolder.mStoreName.setText(notificationList.get(position).getStoreName());
+                //mStoreHolder.mStoreCategory.setText(notificationList.get(position).getStoreCategory());
+                mStoreHolder.mStoreType.setText(notificationList.get(position).getStoreType());
+                mStoreHolder.mStoreWebSite.setText(notificationList.get(position).getStoreWebsite());
+                mStoreHolder.mStoreTiming.setText(notificationList.get(position).getStoreTiming());
+                mStoreHolder.mStoreWorkingDay.setText(notificationList.get(position).getWorkingDays());
+                mStoreHolder.mStoreLocation.setText(notificationList.get(position).getStoreLocation());
+                mStoreHolder.mFollowCount.setText("Followers(" + notificationList.get(position).getStoreFollowCount() + ")");
+                mStoreHolder.mLikes.setText("Likes(" + notificationList.get(position).getStoreLikeCount() + ")");
+                //mStoreHolder.mShares.setText("Shares(" + notificationList.get(position).getStoreLikeCount() + ")");
+                mStoreHolder.mStoreRating.setRating(notificationList.get(position).getStoreRating());
+
+         /* Sender Profile Pic */
+
+                if (notificationList.get(position).getSenderPicture() == null ||
+                        notificationList.get(position).getSenderPicture().equals("") ||
+                        notificationList.get(position).getSenderPicture().equals("null")) {
+                    mStoreHolder.mProfilePic.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProfileHolder.mProfileImage);*/
+                }
+
+        /* Store pic */
+
+                if (notificationList.get(position).getStoreImage() == null ||
+                        notificationList.get(position).getStoreImage().equals("") ||
+                        notificationList.get(position).getStoreImage().equals("null")) {
+                    mStoreHolder.mStoreImage.setBackgroundResource(R.drawable.store);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getStoreImage())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProfileHolder.mProfileImage);*/
+                }
+
+                mStoreHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+
+     /* Like & Unlike Functionality */
+
+                if (notificationList.get(position).getStoreLikeStatus().equalsIgnoreCase("yes")) {
+                    mStoreHolder.mLike.setVisibility(View.VISIBLE);
+                    mStoreHolder.mUnlike.setVisibility(View.GONE);
+                } else {
+                    mStoreHolder.mUnlike.setVisibility(View.VISIBLE);
+                    mStoreHolder.mLike.setVisibility(View.GONE);
+                }
+
+                mStoreHolder.mLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getSender();
+                        int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreID();
+                        mStoreHolder.mLike.setVisibility(View.GONE);
+                        mStoreHolder.mUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "2", storeId, 0, 0, 0, 0, 0, 0);
+                        store_likecountint = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreLikeCount();
+                        store_likecountint = store_likecountint - 1;
+                        mStoreHolder.mLikes.setText("Likes(" + store_likecountint + ")");
+                        notificationList.get(mStoreHolder.getAdapterPosition()).setStoreLikeCount(store_likecountint);
+                        notificationList.get(mStoreHolder.getAdapterPosition()).setStoreLikeStatus("no");
+                    }
+                });
+
+                mStoreHolder.mUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getSender();
+                        int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreID();
+                        mStoreHolder.mUnlike.setVisibility(View.GONE);
+                        mStoreHolder.mLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "1", storeId, 0, 0, 0, 0, 0, 0);
+                        store_likecountint = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreLikeCount();
+                        store_likecountint = store_likecountint + 1;
+                        mStoreHolder.mLikes.setText("Likes(" + store_likecountint + ")");
+                        notificationList.get(mStoreHolder.getAdapterPosition()).setStoreLikeCount(store_likecountint);
+                        notificationList.get(mStoreHolder.getAdapterPosition()).setStoreLikeStatus("yes");
+                    }
+                });
+
+      /* Fav & Unfav Functionality */
+                /*if (notificationList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
+                    mStoreHolder.mFav.setVisibility(View.VISIBLE);
+                    mStoreHolder.mUnfav.setVisibility(View.GONE);
+                } else {
+                    mStoreHolder.mUnfav.setVisibility(View.VISIBLE);
+                    mStoreHolder.mFav.setVisibility(View.GONE);
+                }
+
+                mStoreHolder.mFav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unfavorite web service
+                        int notiId = notificationList.get(mStoreHolder.getAdapterPosition()).getActionID();
+                        mStoreHolder.mFav.setVisibility(View.GONE);
+                        mStoreHolder.mUnfav.setVisibility(View.VISIBLE);
+                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mStoreHolder.getAdapterPosition()).setMyFavStatus("no");
+                    }
+                });
+
+                mStoreHolder.mUnfav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Favorite web service
+                        int notiId = notificationList.get(mStoreHolder.getAdapterPosition()).getActionID();
+                        mStoreHolder.mUnfav.setVisibility(View.GONE);
+                        mStoreHolder.mFav.setVisibility(View.VISIBLE);
+                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mStoreHolder.getAdapterPosition()).setMyFavStatus("yes");
+                    }
+                });*/
                 break;
 
             case 3:
@@ -820,10 +965,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         + " group");
                 mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
                 mGroupHolder.mActionTime.setText(notificationList.get(position).getDateTime());
-                mGroupHolder.mGroupMembers.setText(notificationList.get(position).getGroupMembers());
-                mGroupHolder.mGroupNoOfVehicles.setText(notificationList.get(position).getGroupVehicles());
-                mGroupHolder.mGroupNoOfProducts.setText(notificationList.get(position).getGroupProductCount());
-                mGroupHolder.mGroupNoOfServices.setText(notificationList.get(position).getGroupServiceCount());
+                mGroupHolder.mGroupMembers.setText(String.valueOf(notificationList.get(position).getGroupMembers()));
+                mGroupHolder.mGroupNoOfVehicles.setText(String.valueOf(notificationList.get(position).getGroupVehicles()));
+                mGroupHolder.mGroupNoOfProducts.setText(String.valueOf(notificationList.get(position).getGroupProductCount()));
+                mGroupHolder.mGroupNoOfServices.setText(String.valueOf(notificationList.get(position).getGroupServiceCount()));
 
                /* Profile pic */
                 if (notificationList.get(position).getSenderPicture() == null ||
@@ -1462,36 +1607,43 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success_follow")) {
-                CustomToast.customToast(mActivity, "Following");
+            switch (str) {
+                case "success_follow":
+                    CustomToast.customToast(mActivity, "Following");
                 /*mFollow.setVisibility(View.GONE);
                 mUnFollow.setVisibility(View.VISIBLE);
                 mFolllowstr = "yes";*/
-            } else if (str.equals("success_unfollow")) {
-                CustomToast.customToast(mActivity, "UnFollowing");
+                    break;
+                case "success_unfollow":
+                    CustomToast.customToast(mActivity, "UnFollowing");
                 /*mFollow.setVisibility(View.VISIBLE);
                 mUnFollow.setVisibility(View.GONE);
                 mFolllowstr = "no";*/
-            } else if (str.equals("success_like")) {
-                CustomToast.customToast(mActivity, "Liked");
+                    break;
+                case "success_like":
+                    CustomToast.customToast(mActivity, "Liked");
                 /*mLike.setVisibility(View.VISIBLE);
                 mUnlike.setVisibility(View.GONE);*/
-                //mLikestr = "yes";
-            } else if (str.equals("success_unlike")) {
-                CustomToast.customToast(mActivity, "Unliked");
+                    //mLikestr = "yes";
+                    break;
+                case "success_unlike":
+                    CustomToast.customToast(mActivity, "Unliked");
                 /*mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);*/
-                //mLikestr = "no";
-            } else if (str.equals("success_favourite")) {
-                CustomToast.customToast(mActivity, "Favorite");
+                    //mLikestr = "no";
+                    break;
+                case "success_favourite":
+                    CustomToast.customToast(mActivity, "Favorite");
                 /*mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);*/
-                //mLikestr = "no";
-            } else if (str.equals("success_remove")) {
-                CustomToast.customToast(mActivity, "Unfavorite");
+                    //mLikestr = "no";
+                    break;
+                case "success_remove":
+                    CustomToast.customToast(mActivity, "Unfavorite");
                 /*mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);*/
-                //mLikestr = "no";
+                    //mLikestr = "no";
+                    break;
             }
         }
 

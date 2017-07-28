@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -49,30 +50,32 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
     /* view class Group*/
     private static class StoreNotifications extends RecyclerView.ViewHolder {
         CardView mStoreCardView;
-        ImageView mStorePic, mStoreImage;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mFollow;
+        ImageView mProfilePic, mStoreImage;
+        ImageButton mShareAutokatta, mCall, mLike, mUnlike, mFollow, mUnfollow;
         RatingBar mStoreRating;
-        TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreWorkAt, mStoreWebSite, mStoreTiming, mStoreWorkingDay,
-                mStoreLocation, mFollowCount, mLikes, mShares;
+        TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreType, mStoreWebSite, mStoreTiming,
+                mStoreWorkingDay, mStoreLocation, mFollowCount, mLikes, mShares;
+        RelativeLayout mRelativeLike;
 
         private StoreNotifications(View storeView) {
             super(storeView);
             mStoreCardView = (CardView) storeView.findViewById(R.id.store_card_view);
-            mStorePic = (ImageView) storeView.findViewById(R.id.store_pic);
+            mProfilePic = (ImageView) storeView.findViewById(R.id.store_pic);
             mStoreImage = (ImageView) storeView.findViewById(R.id.store_image);
 
             mShareAutokatta = (ImageButton) storeView.findViewById(R.id.share_autokatta);
-            mShareOther = (ImageButton) storeView.findViewById(R.id.share_other);
             mCall = (ImageButton) storeView.findViewById(R.id.call);
             mLike = (ImageButton) storeView.findViewById(R.id.like);
+            mUnlike = (ImageButton) storeView.findViewById(R.id.unlike);
             mFollow = (ImageButton) storeView.findViewById(R.id.follow_store);
+            mUnfollow = (ImageButton) storeView.findViewById(R.id.unfollow_store);
             mStoreRating = (RatingBar) storeView.findViewById(R.id.store_rating);
 
             mStoreActionName = (TextView) storeView.findViewById(R.id.store_action_names);
             mActionTime = (TextView) storeView.findViewById(R.id.store_action_time);
             mStoreName = (TextView) storeView.findViewById(R.id.store_name);
             mStoreCategory = (TextView) storeView.findViewById(R.id.store_category);
-            mStoreWorkAt = (TextView) storeView.findViewById(R.id.store_workat);
+            mStoreType = (TextView) storeView.findViewById(R.id.store_type);
             mStoreWebSite = (TextView) storeView.findViewById(R.id.store_website);
             mStoreTiming = (TextView) storeView.findViewById(R.id.store_time);
             mStoreWorkingDay = (TextView) storeView.findViewById(R.id.store_working_day);
@@ -80,6 +83,7 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             mFollowCount = (TextView) storeView.findViewById(R.id.followcnt);
             mLikes = (TextView) storeView.findViewById(R.id.likes);
             mShares = (TextView) storeView.findViewById(R.id.share);
+            mRelativeLike = (RelativeLayout) storeView.findViewById(R.id.rlLike);
         }
     }
 

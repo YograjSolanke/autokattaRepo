@@ -5785,8 +5785,8 @@ Get saved search Seller list
        Like
      */
 
-    public void Like(String myContact, String othercontact, String layout, int store_id, int gid, int vid, int pid,
-                     int sid, int statusid, int searchid) {
+    public void Like(String myContact, String othercontact, String layout, int store_id, int group_id, int vehicle_id,
+                     int product_id, int service_id, int status_id, int search_id) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5803,7 +5803,8 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaLike(myContact, othercontact, layout, store_id, gid, vid, pid, sid, statusid, searchid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaLike(myContact, othercontact, layout, store_id, group_id,
+                        vehicle_id, product_id, service_id, status_id, search_id);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5826,8 +5827,8 @@ Get saved search Seller list
       UnLike
      */
 
-    public void UnLike(String myContact, String othercontact, String layout, int store_id, int gid, int vid,
-                       int pid, int sid, int statusid, int searchid) {
+    public void UnLike(String myContact, String othercontact, String layout, int store_id, int group_id, int vehicle_id,
+                       int product_id, int service_id, int status_id, int search_id) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5844,7 +5845,8 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(myContact, othercontact, layout, store_id, gid, vid, pid, sid, statusid, searchid);
+                Call<String> mUnfollowResponse = serviceApi._autokattaUnLike(myContact, othercontact, layout, store_id, group_id,
+                        vehicle_id, product_id, service_id, status_id, search_id);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

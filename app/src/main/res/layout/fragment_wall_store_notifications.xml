@@ -173,11 +173,11 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/store_workat"
+                        android:id="@+id/store_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storelocationtxt"
-                        android:hint="work at"
+                        android:hint="type"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -378,6 +378,17 @@
                 android:layout_toStartOf="@id/rlShare">
 
                 <ImageButton
+                    android:id="@+id/unfollow_store"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="@dimen/cards_button_width"
+                    android:layout_height="@dimen/cards_button_height"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/text_margin_top"
+                    android:contentDescription="@string/app_name"
+                    android:tint="@color/button_grey"
+                    app:srcCompat="@mipmap/ic_comment_account" />
+
+                <ImageButton
                     android:id="@+id/follow_store"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="@dimen/cards_button_width"
@@ -386,7 +397,8 @@
                     android:layout_marginEnd="@dimen/text_margin_top"
                     android:contentDescription="@string/app_name"
                     android:tint="@color/button_grey"
-                    app:srcCompat="@mipmap/ic_follow" />
+                    android:visibility="gone"
+                    app:srcCompat="@mipmap/ic_comment_check" />
 
                 <ImageButton
                     android:id="@+id/like"
@@ -394,7 +406,7 @@
                     android:layout_width="@dimen/cards_button_width"
                     android:layout_height="@dimen/cards_button_height"
                     android:layout_marginEnd="@dimen/text_margin_top"
-                    android:layout_toStartOf="@id/follow_store"
+                    android:layout_toStartOf="@id/unfollow_store"
                     android:contentDescription="@string/app_name"
                     android:tint="@color/button_grey"
                     android:visibility="gone"
@@ -406,7 +418,7 @@
                     android:layout_width="@dimen/cards_button_width"
                     android:layout_height="@dimen/cards_button_height"
                     android:layout_marginEnd="@dimen/text_margin_top"
-                    android:layout_toStartOf="@id/follow_store"
+                    android:layout_toStartOf="@id/unfollow_store"
                     android:contentDescription="@string/app_name"
                     android:tint="@color/button_grey"
                     app:srcCompat="@mipmap/ic_like" />

@@ -10,41 +10,50 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
+import retrofit2.Response;
 
 /**
  * Created by ak-003 on 7/7/17.
  */
 
-public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
 
     private Activity mActivity;
-    private List<WallResponse.Success.WallNotification> groupNotiList = new ArrayList<>();
+    private List<WallResponse.Success.WallNotification> notificationList = new ArrayList<>();
     private String mLoginContact;
+    private ApiCall mApiCall;
 
     /* constructor */
     public GroupNotificationAdapter(Activity activity, List<WallResponse.Success.WallNotification> groupNotiList1,
                                     String myContact) {
         mActivity = activity;
-        groupNotiList = groupNotiList1;
+        notificationList = groupNotiList1;
+        this.mApiCall = new ApiCall(mActivity, this);
         mLoginContact = myContact;
     }
 
     @Override
     public int getItemCount() {
-        return groupNotiList.size();
+        return notificationList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return Integer.parseInt(groupNotiList.get(position).getLayout());
+        return Integer.parseInt(notificationList.get(position).getLayout());
     }
+
 
     /* view class Group*/
     private static class GroupNotifications extends RecyclerView.ViewHolder {
@@ -136,44 +145,44 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             case 3:
                 final GroupNotifications mGroupHolder = (GroupNotifications) holder;
 
-                mGroupHolder.mActionName.setText(groupNotiList.get(position).getSenderName() + " " +
-                        groupNotiList.get(position).getAction() + " " + groupNotiList.get(position).getReceiverName() +
-                        " in " + groupNotiList.get(position).getGroupName()
+                mGroupHolder.mActionName.setText(notificationList.get(position).getSenderName() + " " +
+                        notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() +
+                        " in " + notificationList.get(position).getGroupName()
                         + " group");
 
-                mGroupHolder.mGroupName.setText(groupNotiList.get(position).getGroupName());
-                mGroupHolder.mActionTime.setText(groupNotiList.get(position).getDateTime());
-                mGroupHolder.mGroupMembers.setText(groupNotiList.get(position).getGroupMembers());
-                mGroupHolder.mGroupNoOfVehicles.setText(groupNotiList.get(position).getGroupVehicles());
-               /* mGroupHolder.mGroupNoOfProducts.setText(groupNotiList.get(position));
-                mGroupHolder.mGroupNoOfServices.setText(groupNotiList.get(position));*/
+                mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
+                mGroupHolder.mActionTime.setText(notificationList.get(position).getDateTime());
+                mGroupHolder.mGroupMembers.setText(String.valueOf(notificationList.get(position).getGroupMembers()));
+                mGroupHolder.mGroupNoOfVehicles.setText(String.valueOf(notificationList.get(position).getGroupVehicles()));
+                mGroupHolder.mGroupNoOfProducts.setText(String.valueOf(notificationList.get(position).getGroupProductCount()));
+                mGroupHolder.mGroupNoOfServices.setText(String.valueOf(notificationList.get(position).getGroupServiceCount()));
 
                /* Profile pic */
-                if (groupNotiList.get(position).getSenderPicture() == null ||
-                        groupNotiList.get(position).getSenderPicture().equals("") ||
-                        groupNotiList.get(position).getSenderPicture().equals("null")) {
+                if (notificationList.get(position).getSenderPicture() == null ||
+                        notificationList.get(position).getSenderPicture().equals("") ||
+                        notificationList.get(position).getSenderPicture().equals("null")) {
                     mGroupHolder.mUserPic.setBackgroundResource(R.mipmap.profile);
                 } else {
                     /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + groupNotiList.get(position).getSenderPicture())
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mGroupHolder.mUserPic);*/
                 }
 
                /* Group pic */
-                if (groupNotiList.get(position).getGroupImage() == null ||
-                        groupNotiList.get(position).getGroupImage().equals("") ||
-                        groupNotiList.get(position).getGroupImage().equals("null")) {
+                if (notificationList.get(position).getGroupImage() == null ||
+                        notificationList.get(position).getGroupImage().equals("") ||
+                        notificationList.get(position).getGroupImage().equals("null")) {
                     mGroupHolder.mGroupImage.setBackgroundResource(R.drawable.group);
                 } else {
                     /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + groupNotiList.get(position).getGroupImage())
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getGroupImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mGroupHolder.mGroupImage);*/
                 }
 
                 /* Fav & Unfav Functionality */
-                if (groupNotiList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
+                if (notificationList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
                     mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
                     mGroupHolder.mGroupUnFav.setVisibility(View.GONE);
                 } else {
@@ -185,12 +194,11 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                     @Override
                     public void onClick(View v) {
                         //Unfavorite web service
-                        int notiId = groupNotiList.get(mGroupHolder.getAdapterPosition()).getActionID();
+                        int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupFavourite.setVisibility(View.GONE);
                         mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);
-                        /*mApiCall.UnLike(mLoginContact, otherContact, "1", 0, "", "", "", "", "", "");
-                        groupNotiList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");*/
-                        Toast.makeText(mActivity, "unFavorite", Toast.LENGTH_SHORT).show();
+                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
 
@@ -198,21 +206,66 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                     @Override
                     public void onClick(View v) {
                         //Favorite web service
-                        int notiId = groupNotiList.get(mGroupHolder.getAdapterPosition()).getActionID();
+                        int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupUnFav.setVisibility(View.GONE);
                         mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
-                        /*mApiCall.addRemovefavouriteStatus(mLoginContact, notiId, "1", 0, "", "", "", "", "", "");
-                        groupNotiList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");*/
-                        Toast.makeText(mActivity, "Favorite", Toast.LENGTH_SHORT).show();
+                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
                 break;
 
             case 10:
-                UploadVehicleNotifications uploadVehicleNotifications = (UploadVehicleNotifications) holder;
+                final UploadVehicleNotifications uploadVehicleNotifications = (UploadVehicleNotifications) holder;
                 break;
         }
 
+    }
+
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            switch (str) {
+                case "success_like":
+                    CustomToast.customToast(mActivity, "Liked");
+                    break;
+                case "success_unlike":
+                    CustomToast.customToast(mActivity, "Unliked");
+                    break;
+                case "success_favourite":
+                    CustomToast.customToast(mActivity, "Favorite");
+                    break;
+                case "success_remove":
+                    CustomToast.customToast(mActivity, "Unfavorite");
+                    break;
+            }
+        }
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "Group Notification Adapter");
+            error.printStackTrace();
+        }
     }
 
 
