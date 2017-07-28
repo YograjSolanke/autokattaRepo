@@ -18,6 +18,8 @@
 
     <!--simple Text -->
     <string name="to"> <b>TO</b> </string>
+    <string name="post">Post</string>
+    <string name="select_picture">Select Picture</string>
     <!-- Enquires -->
     <string name="test_drive">Test Drive</string>
     <string name="manual_enquiry">Manual Enquiry</string>

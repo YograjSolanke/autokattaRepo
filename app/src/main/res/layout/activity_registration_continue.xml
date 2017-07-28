@@ -11,7 +11,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginEnd="@dimen/card_margin">
 
             <RelativeLayout
                 android:id="@+id/hint_layout"
@@ -71,19 +73,21 @@
 
                 <ImageView
                     android:id="@+id/user_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/detail_backdrop_height"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:background="@drawable/profile"
                     android:contentDescription="@string/app_name"
                     android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop" />
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/click"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
+                    android:layout_margin="@dimen/text_margin_top"
                     android:clickable="true"
+                    app:backgroundTint="@android:color/transparent"
                     android:src="@android:drawable/ic_menu_camera"
                     app:layout_anchor="@id/user_image"
                     app:layout_anchorGravity="bottom|end" />
@@ -147,13 +151,14 @@
 
     <Button
         android:id="@+id/btnSub"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@color/background"
         android:selectAllOnFocus="true"
         android:text="Submit"
+        android:textStyle="bold"
         android:textColor="@color/white" />
 
 </RelativeLayout>

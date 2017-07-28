@@ -13,16 +13,16 @@
 
         <ImageView
             android:id="@+id/profile_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/hdlogo"
-            android:contentDescription="@string/app_name" />
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/hdlogo" />
 
         <TextView
             android:id="@+id/profile_name"
@@ -34,6 +34,7 @@
             android:textColor="#2C3343"
             android:textSize="16sp"
             android:textStyle="bold" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -47,22 +48,40 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/status_height"
             android:background="@android:color/transparent"
+            android:gravity="top"
             android:hint="What's on your mind"
-            android:paddingStart="@dimen/margin_small"
             android:paddingEnd="@dimen/margin_small"
-            android:paddingTop="@dimen/margin_small"
-            android:gravity="top" />
+            android:paddingStart="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small" />
 
-        <Button
-            android:id="@+id/post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:layout_below="@+id/status"
-            android:layout_alignParentEnd="true"
-            android:background="@color/colorPrimary"
-            android:text="POST"
-            android:textColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/picture_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:layout_marginTop="5dp"
+            android:drawableStart="@drawable/ic_post_pictures"
+            android:text="Picture/Video"
+            android:drawablePadding="@dimen/card_margin"
+            android:textColor="#2C3343"
+            android:textSize="16sp"
             android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/picture_video"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </RelativeLayout>
 </RelativeLayout>

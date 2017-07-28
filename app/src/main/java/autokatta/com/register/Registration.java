@@ -561,10 +561,10 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        if (sharedPreferences.getBoolean("firstRun", true)) {
+        if (sharedPreferences.getBoolean("registerFirstRun", true)) {
             startActivity(new Intent(getApplicationContext(), GradientBackgroundExampleActivity.class));
             editor = sharedPreferences.edit();
-            editor.putBoolean("firstRun", false);
+            editor.putBoolean("registerFirstRun", false);
             editor.apply();
         }
     }
