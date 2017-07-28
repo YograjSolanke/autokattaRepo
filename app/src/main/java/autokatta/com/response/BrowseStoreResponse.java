@@ -14,6 +14,9 @@ public class BrowseStoreResponse {
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public List<Success> getSuccess() {
         return success;
@@ -23,59 +26,16 @@ public class BrowseStoreResponse {
         this.success = success;
     }
 
-    public class Success {
+    public Object getError() {
+        return error;
+    }
 
-        @SerializedName("store_id")
-        @Expose
-        private int storeId;
-        @SerializedName("contact_no")
-        @Expose
-        private String contactNo;
-        @SerializedName("store_name")
-        @Expose
-        private String storeName;
-        @SerializedName("location")
-        @Expose
-        private String location;
-        @SerializedName("store_image")
-        @Expose
-        private String storeImage;
-        @SerializedName("store_type")
-        @Expose
-        private String storeType;
-        @SerializedName("website")
-        @Expose
-        private String website;
-        @SerializedName("store_open_time")
-        @Expose
-        private String storeOpenTime;
-        @SerializedName("store_close_time")
-        @Expose
-        private String storeCloseTime;
-        @SerializedName("working_days")
-        @Expose
-        private String workingDays;
-        @SerializedName("category")
-        @Expose
-        private String category;
-        @SerializedName("coverImage")
-        @Expose
-        private String coverImage;
-        @SerializedName("rating")
-        @Expose
-        private String rating;
-        @SerializedName("likecount")
-        @Expose
-        private String likecount;
-        @SerializedName("followcount")
-        @Expose
-        private String followcount;
-        @SerializedName("likestatus")
-        @Expose
-        private String likestatus;
-        @SerializedName("followstatus")
-        @Expose
-        private String followstatus;
+    public void setError(Object error) {
+        this.error = error;
+    }
+
+
+    public class Success {
 
 
         public boolean isVisibility() {
@@ -88,11 +48,72 @@ public class BrowseStoreResponse {
 
         private boolean visibility;
 
-        public int getStoreId() {
+        @SerializedName("store_id")
+        @Expose
+        private Integer storeId;
+        @SerializedName("contact_no")
+        @Expose
+        private String contactNo;
+        @SerializedName("store_name")
+        @Expose
+        private String storeName;
+        @SerializedName("store_image")
+        @Expose
+        private String storeImage;
+        @SerializedName("location")
+        @Expose
+        private String location;
+        @SerializedName("category")
+        @Expose
+        private String category;
+        @SerializedName("website")
+        @Expose
+        private String website;
+        @SerializedName("store_type")
+        @Expose
+        private String storeType;
+        @SerializedName("working_days")
+        @Expose
+        private String workingDays;
+        @SerializedName("modified_date")
+        @Expose
+        private String modifiedDate;
+        @SerializedName("store_open_time")
+        @Expose
+        private String storeOpenTime;
+        @SerializedName("store_close_time")
+        @Expose
+        private String storeCloseTime;
+        @SerializedName("likestatus")
+        @Expose
+        private String likestatus;
+        @SerializedName("followstatus")
+        @Expose
+        private String followstatus;
+        @SerializedName("likecount")
+        @Expose
+        private Integer likecount;
+        @SerializedName("followcount")
+        @Expose
+        private Integer followcount;
+        @SerializedName("rating")
+        @Expose
+        private Double rating;
+        @SerializedName("productcount")
+        @Expose
+        private Integer productcount;
+        @SerializedName("servicecount")
+        @Expose
+        private Integer servicecount;
+        @SerializedName("vehiclecount")
+        @Expose
+        private Integer vehiclecount;
+
+        public Integer getStoreId() {
             return storeId;
         }
 
-        public void setStoreId(int storeId) {
+        public void setStoreId(Integer storeId) {
             this.storeId = storeId;
         }
 
@@ -112,6 +133,14 @@ public class BrowseStoreResponse {
             this.storeName = storeName;
         }
 
+        public String getStoreImage() {
+            return storeImage;
+        }
+
+        public void setStoreImage(String storeImage) {
+            this.storeImage = storeImage;
+        }
+
         public String getLocation() {
             return location;
         }
@@ -120,12 +149,20 @@ public class BrowseStoreResponse {
             this.location = location;
         }
 
-        public String getStoreImage() {
-            return storeImage;
+        public String getCategory() {
+            return category;
         }
 
-        public void setStoreImage(String storeImage) {
-            this.storeImage = storeImage;
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public String getWebsite() {
+            return website;
+        }
+
+        public void setWebsite(String website) {
+            this.website = website;
         }
 
         public String getStoreType() {
@@ -136,12 +173,20 @@ public class BrowseStoreResponse {
             this.storeType = storeType;
         }
 
-        public String getWebsite() {
-            return website;
+        public String getWorkingDays() {
+            return workingDays;
         }
 
-        public void setWebsite(String website) {
-            this.website = website;
+        public void setWorkingDays(String workingDays) {
+            this.workingDays = workingDays;
+        }
+
+        public String getModifiedDate() {
+            return modifiedDate;
+        }
+
+        public void setModifiedDate(String modifiedDate) {
+            this.modifiedDate = modifiedDate;
         }
 
         public String getStoreOpenTime() {
@@ -160,54 +205,6 @@ public class BrowseStoreResponse {
             this.storeCloseTime = storeCloseTime;
         }
 
-        public String getWorkingDays() {
-            return workingDays;
-        }
-
-        public void setWorkingDays(String workingDays) {
-            this.workingDays = workingDays;
-        }
-
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public String getCoverImage() {
-            return coverImage;
-        }
-
-        public void setCoverImage(String coverImage) {
-            this.coverImage = coverImage;
-        }
-
-        public String getRating() {
-            return rating;
-        }
-
-        public void setRating(String rating) {
-            this.rating = rating;
-        }
-
-        public String getLikecount() {
-            return likecount;
-        }
-
-        public void setLikecount(String likecount) {
-            this.likecount = likecount;
-        }
-
-        public String getFollowcount() {
-            return followcount;
-        }
-
-        public void setFollowcount(String followcount) {
-            this.followcount = followcount;
-    }
-
         public String getLikestatus() {
             return likestatus;
         }
@@ -222,6 +219,54 @@ public class BrowseStoreResponse {
 
         public void setFollowstatus(String followstatus) {
             this.followstatus = followstatus;
+        }
+
+        public Integer getLikecount() {
+            return likecount;
+    }
+
+        public void setLikecount(Integer likecount) {
+            this.likecount = likecount;
+        }
+
+        public Integer getFollowcount() {
+            return followcount;
+        }
+
+        public void setFollowcount(Integer followcount) {
+            this.followcount = followcount;
+        }
+
+        public Double getRating() {
+            return rating;
+        }
+
+        public void setRating(Double rating) {
+            this.rating = rating;
+    }
+
+        public Integer getProductcount() {
+            return productcount;
+        }
+
+        public void setProductcount(Integer productcount) {
+            this.productcount = productcount;
+        }
+
+        public Integer getServicecount() {
+            return servicecount;
+        }
+
+        public void setServicecount(Integer servicecount) {
+            this.servicecount = servicecount;
+        }
+
+        public Integer getVehiclecount() {
+            return vehiclecount;
+        }
+
+        public void setVehiclecount(Integer vehiclecount) {
+            this.vehiclecount = vehiclecount;
         }
 
     }

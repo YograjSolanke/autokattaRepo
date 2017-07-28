@@ -77,11 +77,13 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.storetype.setText(success.getStoreType());
         holder.storeservices.setText(success.getCategory());
         holder.storeworkingdays.setText(success.getWorkingDays());
-        holder.mRatingCount.setText(success.getRating());
+        holder.mRatingCount.setText(String.valueOf(success.getRating()));
         holder.storetiming.setText(success.getStoreOpenTime() + " " + activity.getString(R.string.to) + " " + success.getStoreCloseTime());
         holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
         holder.storerating.setEnabled(false);
+        holder.productCount.setText("Products(" + String.valueOf(success.getProductcount()) + ")");
+        holder.serviceCount.setText("Services(" + String.valueOf(success.getServicecount()) + ")");
 
         if (success.getWebsite() == null || success.getWebsite().isEmpty() || success.getWebsite().equals("null")) {
             holder.storewebsite.setText("No website found");
@@ -98,6 +100,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.storetiming.setTypeface(tf);
         holder.btnlike.setTypeface(tf);
         holder.btnfollow.setTypeface(tf);
+        holder.serviceCount.setTypeface(tf);
+        holder.productCount.setTypeface(tf);
 
         if (success.getLikestatus().equalsIgnoreCase("yes")) {
             holder.linearlike.setVisibility(View.GONE);
@@ -121,7 +125,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         if (success.getRating() == null) {
 
         } else if (!success.getRating().equals("0")) {
-            holder.storerating.setRating(Float.parseFloat(success.getRating()));
+            holder.storerating.setRating(Float.parseFloat(String.valueOf(success.getRating())));
         }
 
         image = "http://autokatta.com/mobile/store_profiles/" + success.getStoreImage();
@@ -161,8 +165,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 StoreContact = success.getContactNo();
                 if (!StoreContact.equals(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""))) {
-                    String likecountstr = success.getLikecount();
-                    likecountint = Integer.parseInt(likecountstr);
+                    int likecountstr = success.getLikecount();
+                    likecountint = likecountstr;
 
                     StoreId = success.getStoreId();
                     mApiCall.Like(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -173,7 +177,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     holder.linearlike.setVisibility(View.GONE);
 
                     likecountint++;
-                    success.setLikecount(String.valueOf(likecountint));
+                    success.setLikecount(likecountint);
                     holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
 
                     success.setLikestatus("yes");
@@ -190,8 +194,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 StoreContact = success.getContactNo();
                 if (!StoreContact.equals(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""))) {
-                    String likecountstr = success.getLikecount();
-                    likecountint = Integer.parseInt(likecountstr);
+                    Integer likecountstr = success.getLikecount();
+                    likecountint = likecountstr;
 
                     StoreId = success.getStoreId();
                     mApiCall.UnLike(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -201,7 +205,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     holder.linearunlike.setVisibility(View.GONE);
                     holder.linearlike.setVisibility(View.VISIBLE);
                     likecountint--;
-                    success.setLikecount(String.valueOf(likecountint));
+                    success.setLikecount(likecountint);
                     holder.btnlike.setText("Likes(" + success.getLikecount() + ")");
 
                     success.setLikestatus("no");
@@ -220,8 +224,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 StoreContact = success.getContactNo();
                 if (!StoreContact.equals(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""))) {
-                    String followcountstr = success.getFollowcount();
-                    followcountint = Integer.parseInt(followcountstr);
+                    int followcountstr = success.getFollowcount();
+                    followcountint = followcountstr;
 
                     StoreId = success.getStoreId();
                     mApiCall.Follow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -231,7 +235,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     holder.linearunfollow.setVisibility(View.VISIBLE);
 
                     followcountint++;
-                    success.setFollowcount(String.valueOf(followcountint));
+                    success.setFollowcount(followcountint);
                     holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
 
                     success.setFollowstatus("yes");
@@ -249,8 +253,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 StoreContact = success.getContactNo();
                 if (!StoreContact.equals(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                         .getString("loginContact", ""))) {
-                    String followcountstr = success.getFollowcount();
-                    followcountint = Integer.parseInt(followcountstr);
+                    int followcountstr = success.getFollowcount();
+                    followcountint = followcountstr;
 
                     StoreId = success.getStoreId();
                     mApiCall.UnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -260,7 +264,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     holder.linearunfollow.setVisibility(View.GONE);
 
                     followcountint--;
-                    success.setFollowcount(String.valueOf(followcountint));
+                    success.setFollowcount(followcountint);
                     holder.btnfollow.setText("Follow(" + success.getFollowcount() + ")");
 
                     success.setFollowstatus("no");
@@ -387,7 +391,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         TextView btnlike, btnfollow;
         RatingBar storerating;
         LinearLayout linearlike, linearunlike, linearfollow, linearunfollow;
-        TextView linearshare, linearshare1, mRatingCount, mStoreTime;
+        TextView linearshare, linearshare1, mRatingCount, mStoreTime, productCount, serviceCount;
         Button btndetail;
         CardView mCardView;
 
@@ -415,6 +419,8 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             linearfollow = (LinearLayout) itemView.findViewById(R.id.linear_follow);
             linearunfollow = (LinearLayout) itemView.findViewById(R.id.linear_unfollow);
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
+            productCount = (TextView) itemView.findViewById(R.id.productCount);
+            serviceCount = (TextView) itemView.findViewById(R.id.serviceCount);
 
             //btndetail = (Button) itemView.findViewById(R.id.details);
             storerating = (RatingBar) itemView.findViewById(R.id.storerating);
