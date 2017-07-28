@@ -582,7 +582,8 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     */
     private void addOtherBrandTags(String brandtagpart) {
         ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
-        mApiCall.addOtherBrandTags(brandtagpart, "1");
+       // mApiCall.addOtherBrandTags(brandtagpart, "1");
+        mApiCall.addOtherBrandTags(brandtagpart, "product");
     }
 
     /*
@@ -606,7 +607,8 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
      */
     private void getBrandTags() {
         ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
-        mApiCall.getBrandTags("1");
+        mApiCall.getBrandTags("product");
+        //mApiCall.getBrandTags("1");
     }
 
 

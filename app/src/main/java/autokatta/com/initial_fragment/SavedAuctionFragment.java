@@ -95,9 +95,9 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
                     for (MySavedAuctionResponse.Success success : savedAuctionResponse.getSuccess()) {
                         success.setAuctionId(success.getAuctionId());
                         success.setActionTitle(success.getActionTitle());
-                        success.setStartDate(success.getStartDate());
+                        success.setStartDate(success.getStartDate().replace("T00:00:00:00",""));
                         success.setStartTime(success.getStartTime());
-                        success.setEndDate(success.getEndDate());
+                        success.setEndDate(success.getEndDate().replace("T00:00:00:00",""));
                         success.setEndTime(success.getEndTime());
                         success.setNoOfVehicles(success.getNoOfVehicles());
                         success.setSpecialClauses(success.getSpecialClauses());

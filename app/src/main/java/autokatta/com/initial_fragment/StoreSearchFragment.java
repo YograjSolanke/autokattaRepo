@@ -332,6 +332,7 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
     }
 
     private void getBrandTags() {
-        apiCall.getBrandTags("1,2");
+        apiCall.getBrandTags("both");
+        //apiCall.getBrandTags("1,2");
     }
 }

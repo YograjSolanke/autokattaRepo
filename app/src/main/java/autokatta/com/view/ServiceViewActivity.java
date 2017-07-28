@@ -381,7 +381,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void getBrandTags() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.getBrandTags("2");
+        mApiCall.getBrandTags("service");
+        //mApiCall.getBrandTags("2");
     }
 
     /*
@@ -397,7 +398,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     */
     private void addOtherBrandTags(String brandtagpart) {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.addOtherBrandTags(brandtagpart, "2");
+    //    mApiCall.addOtherBrandTags(brandtagpart, "2");
+        mApiCall.addOtherBrandTags(brandtagpart, "service");
     }
 
     /*

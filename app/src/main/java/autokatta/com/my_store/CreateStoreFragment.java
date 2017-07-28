@@ -360,11 +360,11 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 } else if (rbtstorevehicle.isChecked() && !rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked()) {
                     storetype = "vehicle";
                 } else if (rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && !rbtstorevehicle.isChecked()) {
-                    storetype = "product & service";
+                    storetype = "product,service";
                 } else if (rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
-                    storetype = "product & vehicle";
+                    storetype = "product,vehicle";
                 } else if (!rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
-                    storetype = "service & vehicle";
+                    storetype = "service,vehicle";
                 } else if (rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
                     storetype = "product,service,vehicle";
                 }
@@ -453,7 +453,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 //                    brandSpinner.requestFocus();
 //                }
                 else {
-                    if (create.getText().toString().equalsIgnoreCase("create")) {
+                    if (create.getText().toString().equalsIgnoreCase("next")) {
                         createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription
                                 , finalbrandtags, "");
                     } else {
@@ -759,12 +759,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     private void getBrandTags() {
         String type = "";
         if (typeproduct && !typeservice)
-            type = "1";
+           // type = "1";
+        type="product";
 
         else if (typeservice && !typeproduct)
-            type = "2";
+          //  type = "2";
+            type = "service";
         else
-            type = "1,2";
+           // type = "1,2";
+            type = "both";
 
         mApiCall.getBrandTags(type);
     }
@@ -772,12 +775,13 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     private void addOtherBrandTags(String brandtagpart) {
         String type = "";
         if (typeproduct && !typeservice)
-            type = "1";
+            //type = "1";
+            type = "product";
 
         else if (typeservice && !typeproduct)
-            type = "2";
+            type = "service";
         else
-            type = "1,2";
+            type = "both";
         mApiCall.addOtherBrandTags(brandtagpart, type);
 
     }

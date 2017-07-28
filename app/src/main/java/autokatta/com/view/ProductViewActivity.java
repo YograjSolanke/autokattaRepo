@@ -340,7 +340,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void addOtherBrandTags(String brandtagpart) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addOtherBrandTags(brandtagpart, "1");
+        mApiCall.addOtherBrandTags(brandtagpart, "product");
     }
 
     /*
@@ -364,7 +364,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      */
     private void getBrandTags() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.getBrandTags("1");
+        mApiCall.getBrandTags("product");
     }
 
     /*

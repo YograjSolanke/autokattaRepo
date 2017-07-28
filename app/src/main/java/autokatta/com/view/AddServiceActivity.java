@@ -584,7 +584,8 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     */
     private void addOtherBrandTags(String brandtagpart) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addOtherBrandTags(brandtagpart, "2");
+        mApiCall.addOtherBrandTags(brandtagpart, "service");
+      //  mApiCall.addOtherBrandTags(brandtagpart, "2");
     }
 
     /*
@@ -608,7 +609,8 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
      */
     private void getBrandTags() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.getBrandTags("2");
+        mApiCall.getBrandTags("service");
+       // mApiCall.getBrandTags("2");
     }
 
     private void getGroupData() {

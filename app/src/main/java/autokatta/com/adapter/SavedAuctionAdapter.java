@@ -51,9 +51,9 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
     @Override
     public void onBindViewHolder(final SavedAuctionAdapter.AuctionHolder holder, final int position) {
         holder.title.setText(mMainlist.get(position).getActionTitle());
-        holder.start_date.setText(mMainlist.get(position).getStartDate());
+        holder.start_date.setText(mMainlist.get(position).getStartDate().replace("T00:00:00",""));
         holder.start_time.setText(mMainlist.get(position).getStartTime());
-        holder.end_date.setText(mMainlist.get(position).getEndDate());
+        holder.end_date.setText(mMainlist.get(position).getEndDate().replace("T00:00:00",""));
         holder.end_time.setText(mMainlist.get(position).getEndTime());
         holder.editvehicle.setText(mMainlist.get(position).getNoOfVehicles());
         holder.mAuction_category.setText(mMainlist.get(position).getAuctioncategory());
@@ -117,17 +117,17 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
                 Bundle b = new Bundle();
                 b.putInt("auction_id", mMainlist.get(position).getAuctionId());
                 b.putString("title", mMainlist.get(position).getActionTitle());
-                b.putString("startdate", mMainlist.get(position).getStartDate());
+                b.putString("startdate", mMainlist.get(position).getStartDate().replace("T00:00:00",""));
                 b.putString("starttime", mMainlist.get(position).getStartTime());
-                b.putString("enddate", mMainlist.get(position).getEndDate());
+                b.putString("enddate", mMainlist.get(position).getEndDate().replace("T00:00:00",""));
                 b.putString("endtime", mMainlist.get(position).getEndTime());
                 b.putString("className", "SavedAuction");
                 b.putString("cluases", mMainlist.get(position).getSpecialClauses());
                 b.putString("category", mMainlist.get(position).getAuctioncategory());
                 b.putString("location", mMainlist.get(position).getStockLocation());
                 b.putString("ids", mMainlist.get(position).getSpecialIds());
-               if ( mMainlist.get(position).getNoOfVehicles().equalsIgnoreCase("")
-                       ||mMainlist.get(position).getNoOfVehicles().equalsIgnoreCase(null)
+               if ( mMainlist.get(position).getNoOfVehicles()==null
+                     //  ||mMainlist.get(position).getNoOfVehicles().equalsIgnoreCase(null)
                || mMainlist.get(position).getNoOfVehicles().isEmpty())
                {
                    b.putString("noofvehicles", "0");
