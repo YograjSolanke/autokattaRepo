@@ -532,20 +532,20 @@ public interface ServiceApi {
     Call<GetLiveServiceEventsResponse> getLiveServiceEvents(@Query("contact") String contact);
 
     //All Upcoming Sale Events Events
-    @GET("getAllUpcomingSaleEvents.php")
-    Call<GetLiveSaleEventsResponse> getUpcomingSaleEvents(@Query("contact") String contact);
+    @GET("GetAllUpcomingSaleEvents")
+    Call<GetLiveSaleEventsResponse> getUpcomingSaleEvents(@Query("Contact") String contact);
 
     //All Upcoming Loan Events Events
-    @GET("getAllUpcomingLoanEvents.php")
-    Call<GetLiveSaleEventsResponse> getUpcomingLoanEvents(@Query("contact") String contact);
+    @GET("GetAllUpcomingLoanEvents")
+    Call<GetLiveSaleEventsResponse> getUpcomingLoanEvents(@Query("Contact") String contact);
 
     //All Upcoming Exchange Events Events
-    @GET("getAllUpcomingExchangeEvents.php")
-    Call<GetLiveSaleEventsResponse> getUpcomingExchangeEvents(@Query("contact") String contact);
+    @GET("GetAllUpcomingExchangeEvents")
+    Call<GetLiveSaleEventsResponse> getUpcomingExchangeEvents(@Query("Contact") String contact);
 
     //All Upcoming Service Events Events
-    @GET("getAllUpcomingServiceEvents.php")
-    Call<GetLiveSaleEventsResponse> getUpcomingServiceEvents(@Query("contact") String contact);
+    @GET("GetAllUpcomingServiceEvents")
+    Call<GetLiveSaleEventsResponse> getUpcomingServiceEvents(@Query("Contact") String contact);
 
     //All Going Events
     @GET("GetAllGoingEventsByMe")

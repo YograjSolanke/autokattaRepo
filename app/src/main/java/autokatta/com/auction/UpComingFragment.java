@@ -102,11 +102,11 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 try {
-                    //geUpcomingAuctionEvents();
-                    //getUpcomingLoanEvents();
-                    //getUpcomingExchangeEvents();
-                    //getUpcomingServiceEvents();
-                    //getUpcomingSaleEvents();
+                    //  geUpcomingAuctionEvents();
+                    getUpcomingLoanEvents();
+                    getUpcomingExchangeEvents();
+                    getUpcomingServiceEvents();
+                    getUpcomingSaleEvents();
                     mAuctionEvent.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
