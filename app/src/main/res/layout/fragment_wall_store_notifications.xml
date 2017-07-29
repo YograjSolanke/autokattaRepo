@@ -68,21 +68,56 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rating_layout"
+                    android:id="@+id/fav_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@+id/relContact">
 
                     <ImageButton
                         android:id="@+id/call"
                         style="?android:attr/borderlessButtonStyle"
                         android:layout_width="@dimen/cards_button_width"
-                        android:layout_height="@dimen/card_title_height"
+                        android:layout_height="@dimen/cards_button_height"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/text_margin_top"
+                        android:layout_marginEnd="@dimen/layout_top"
                         android:contentDescription="@string/app_name"
                         android:tint="@color/button_grey"
                         app:srcCompat="@android:drawable/ic_menu_call" />
+
+                    <ImageButton
+                        android:id="@+id/store_favourite"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/card_title_height"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/layout_top"
+                        android:layout_toStartOf="@+id/call"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="gone"
+                        app:srcCompat="@mipmap/heart_liked" />
+
+                    <ImageButton
+                        android:id="@+id/store_unfavourite"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/card_title_height"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/layout_top"
+                        android:layout_toStartOf="@+id/call"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/button_grey"
+                        android:visibility="visible"
+                        app:srcCompat="@mipmap/ic_heart_like" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rating_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relContact">
 
                     <RatingBar
                         android:id="@+id/store_rating"
@@ -90,7 +125,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/call"
                         android:numStars="5"
                         android:stepSize="1.0"
                         android:theme="@style/RatingBar" />
@@ -368,6 +402,7 @@
 
             </RelativeLayout>
 
+
             <RelativeLayout
                 android:id="@+id/rlLike"
                 android:layout_width="wrap_content"
@@ -377,54 +412,61 @@
                 android:layout_toEndOf="@+id/re"
                 android:layout_toStartOf="@id/rlShare">
 
-                <ImageButton
-                    android:id="@+id/unfollow_store"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="@dimen/cards_button_width"
-                    android:layout_height="@dimen/cards_button_height"
+
+                <LinearLayout
+                    android:id="@+id/llLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/text_margin_top"
+                    android:layout_toStartOf="@+id/llFollow">
+
+                    <ImageButton
+                        android:id="@+id/like"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/cards_button_height"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/button_grey"
+                        android:visibility="gone"
+                        app:srcCompat="@mipmap/ic_thumb_like" />
+
+                    <ImageButton
+                        android:id="@+id/unlike"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/cards_button_height"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/button_grey"
+                        app:srcCompat="@mipmap/ic_like" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/text_margin_top"
-                    android:contentDescription="@string/app_name"
-                    android:tint="@color/button_grey"
-                    app:srcCompat="@mipmap/ic_comment_account" />
+                    android:layout_marginEnd="@dimen/text_margin_top">
 
-                <ImageButton
-                    android:id="@+id/follow_store"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="@dimen/cards_button_width"
-                    android:layout_height="@dimen/cards_button_height"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/text_margin_top"
-                    android:contentDescription="@string/app_name"
-                    android:tint="@color/button_grey"
-                    android:visibility="gone"
-                    app:srcCompat="@mipmap/ic_comment_check" />
+                    <ImageButton
+                        android:id="@+id/unfollow_store"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/cards_button_height"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/button_grey"
+                        app:srcCompat="@mipmap/ic_comment_account" />
 
-                <ImageButton
-                    android:id="@+id/like"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="@dimen/cards_button_width"
-                    android:layout_height="@dimen/cards_button_height"
-                    android:layout_marginEnd="@dimen/text_margin_top"
-                    android:layout_toStartOf="@id/unfollow_store"
-                    android:contentDescription="@string/app_name"
-                    android:tint="@color/button_grey"
-                    android:visibility="gone"
-                    app:srcCompat="@mipmap/ic_thumb_like" />
-
-                <ImageButton
-                    android:id="@+id/unlike"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="@dimen/cards_button_width"
-                    android:layout_height="@dimen/cards_button_height"
-                    android:layout_marginEnd="@dimen/text_margin_top"
-                    android:layout_toStartOf="@id/unfollow_store"
-                    android:contentDescription="@string/app_name"
-                    android:tint="@color/button_grey"
-                    app:srcCompat="@mipmap/ic_like" />
+                    <ImageButton
+                        android:id="@+id/follow_store"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/cards_button_height"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/button_grey"
+                        android:visibility="gone"
+                        app:srcCompat="@mipmap/ic_comment_check" />
+                </LinearLayout>
             </RelativeLayout>
-
-
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
