@@ -75,7 +75,8 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             holder.relativeLayout.setVisibility(View.VISIBLE);
         }
 
-        if (mMainlist.get(position).getMysearchstatus().equalsIgnoreCase("") ||
+        if (mMainlist.get(position).getMysearchstatus()==null ||
+                mMainlist.get(position).getMysearchstatus().isEmpty() ||
                 mMainlist.get(position).getMysearchstatus().equalsIgnoreCase("start")) {
             holder.Stopsearch.setVisibility(View.VISIBLE);
             holder.Startsearch.setVisibility(View.GONE);

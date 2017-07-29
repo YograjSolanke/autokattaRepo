@@ -108,7 +108,7 @@ public class MyEndedAuctionPreviewNextActivity extends AppCompatActivity impleme
                     txtEndDate.setText(strEndDate);
                     txtEndTime.setText(strEndTime);
                     txtVehicle.setText(strVehicleCount);
-                    txtParticipant.setText(strParticipantcount);
+                    txtParticipant.setText(String.valueOf(strParticipantcount));
                     txtCategory.setText(strCategory);
                     txtLocation.setText(strLocation);
                     //mAuctionText.setText(getString(R.string.live_auction));

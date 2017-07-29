@@ -133,7 +133,7 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
 
                         Date d = null, d1 = null;
                         try {
-                            d = f.parse(mySearchSuccess.getSearchdate());
+                            d = f.parse(mySearchSuccess.getSearchdate().replace("T"," "));
                             d1 = f.parse(mySearchSuccess.getStopdate());
                         } catch (ParseException e) {
                             e.printStackTrace();

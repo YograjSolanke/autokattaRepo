@@ -39,16 +39,16 @@ public class AuctionAnalyticsAdapter extends RecyclerView.Adapter<AuctionAnalyti
     @Override
     public void onBindViewHolder(AuctionAnalyticsAdapter.AuctionHolder holder, int position) {
         AuctionAnalyticsResponse.Success obj = mAnalyticsList.get(position);
-        holder.reachd.setText(obj.getReachedCount());
-        holder.going.setText(obj.getGoingCount());
-        holder.ignore.setText(obj.getIgnoreCount());
-        holder.share.setText(obj.getSharedCount());
-        holder.goingstud.setText(obj.getGoingStudent());
-        holder.goingselfemp.setText(obj.getGoingSelfStudent());
-        holder.goingemp.setText(obj.getGoingEmployee());
-        holder.ignorestud.setText(obj.getIgnoreStudent());
-        holder.ignoreselfemp.setText(obj.getIgnoreSelfStudent());
-        holder.ignoreemp.setText(obj.getIgnoreEmployee());
+        holder.reachd.setText(String.valueOf(obj.getReachedCount()));
+        holder.going.setText(String.valueOf(obj.getGoingCount()));
+        holder.ignore.setText(String.valueOf(obj.getIgnoreCount()));
+        holder.share.setText(String.valueOf(obj.getSharedCount()));
+        holder.goingstud.setText(String.valueOf(obj.getGoingStudent()));
+        holder.goingselfemp.setText(String.valueOf(obj.getGoingSelfStudent()));
+        holder.goingemp.setText(String.valueOf(obj.getGoingEmployee()));
+        holder.ignorestud.setText(String.valueOf(obj.getIgnoreStudent()));
+        holder.ignoreselfemp.setText(String.valueOf(obj.getIgnoreSelfStudent()));
+        holder.ignoreemp.setText(String.valueOf(obj.getIgnoreEmployee()));
 
         /*holder.gotolive.setOnClickListener(new View.OnClickListener() {
             @Override
