@@ -42,10 +42,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/relContact"
+                    android:id="@+id/relAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/relImg">
+                    android:layout_toEndOf="@+id/relImg"
+                    android:layout_toStartOf="@+id/fav_layout">
 
                     <TextView
                         android:id="@+id/store_action_names"
@@ -55,35 +56,31 @@
                         android:layout_marginTop="10dp"
                         android:text="Store Actions"
                         android:textColor="#2C3343" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relActionTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relAction"
+                    android:layout_toEndOf="@+id/relImg"
+                    android:layout_toStartOf="@+id/fav_layout">
 
                     <TextView
                         android:id="@+id/store_action_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/store_action_names"
                         android:layout_marginStart="7dp"
                         android:text="Time"
                         android:textColor="#2C3343" />
-
                 </RelativeLayout>
+
 
                 <RelativeLayout
                     android:id="@+id/fav_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toEndOf="@+id/relContact">
-
-                    <ImageButton
-                        android:id="@+id/call"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:layout_width="@dimen/cards_button_width"
-                        android:layout_height="@dimen/cards_button_height"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="@dimen/layout_top"
-                        android:contentDescription="@string/app_name"
-                        android:tint="@color/button_grey"
-                        app:srcCompat="@android:drawable/ic_menu_call" />
+                    android:layout_alignParentEnd="true">
 
                     <ImageButton
                         android:id="@+id/store_favourite"
@@ -92,7 +89,6 @@
                         android:layout_height="@dimen/card_title_height"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/layout_top"
-                        android:layout_toStartOf="@+id/call"
                         android:contentDescription="@string/app_name"
                         android:visibility="gone"
                         app:srcCompat="@mipmap/heart_liked" />
@@ -104,7 +100,6 @@
                         android:layout_height="@dimen/card_title_height"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/layout_top"
-                        android:layout_toStartOf="@+id/call"
                         android:contentDescription="@string/app_name"
                         android:tint="@color/button_grey"
                         android:visibility="visible"
@@ -117,7 +112,7 @@
                     android:id="@+id/rating_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relContact">
+                    android:layout_below="@+id/fav_layout">
 
                     <RatingBar
                         android:id="@+id/store_rating"
@@ -389,7 +384,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/linear_card">
+                android:layout_below="@+id/re">
 
                 <ImageButton
                     android:id="@+id/share_autokatta"
@@ -407,18 +402,34 @@
                 android:id="@+id/rlLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linear_card"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/re"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/re"
                 android:layout_toStartOf="@id/rlShare">
 
+                <LinearLayout
+                    android:id="@+id/llCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp">
+
+                    <ImageButton
+                        android:id="@+id/call"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="@dimen/cards_button_width"
+                        android:layout_height="@dimen/cards_button_height"
+                        android:layout_marginEnd="@dimen/layout_top"
+                        android:contentDescription="@string/app_name"
+                        android:tint="@color/button_grey"
+                        app:srcCompat="@android:drawable/ic_menu_call" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/text_margin_top"
-                    android:layout_toStartOf="@+id/llFollow">
+                    android:layout_marginStart="@dimen/card_margin"
+                    android:layout_toEndOf="@+id/llCall">
 
                     <ImageButton
                         android:id="@+id/like"
@@ -445,7 +456,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/text_margin_top">
+                    android:layout_marginEnd="@dimen/text_margin_top"
+                    android:layout_marginStart="@dimen/card_margin"
+                    android:layout_toEndOf="@+id/llLike">
 
                     <ImageButton
                         android:id="@+id/unfollow_store"
