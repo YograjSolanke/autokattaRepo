@@ -12,32 +12,43 @@ import java.util.List;
 public class GetStatesResponse {
 
 
-        @SerializedName("Success")
-        @Expose
-        private List<Success> success = null;
+    @SerializedName("Success")
+    @Expose
+    private List<Success> success = null;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
-        public List<Success> getSuccess() {
-            return success;
-        }
+    public List<Success> getSuccess() {
+        return success;
+    }
 
-        public void setSuccess(List<Success> success) {
-            this.success = success;
-        }
+    public void setSuccess(List<Success> success) {
+        this.success = success;
+    }
+
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
 
     public class Success {
 
         @SerializedName("stateId")
         @Expose
-        private String stateId;
+        private Integer stateId;
         @SerializedName("stateName")
         @Expose
         private String stateName;
 
-        public String getStateId() {
+        public Integer getStateId() {
             return stateId;
         }
 
-        public void setStateId(String stateId) {
+        public void setStateId(Integer stateId) {
             this.stateId = stateId;
         }
 

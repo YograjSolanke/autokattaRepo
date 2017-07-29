@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <TableRow
         android:id="@+id/tablerow1"
-        android:layout_height="40dip"
         android:layout_width="match_parent"
-        >
+        android:layout_height="40dip">
+
         <RelativeLayout
-            android:background="#2C3343"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_width="match_parent">
+            android:background="#2C3343">
 
             <TextView
                 android:id="@+id/text_registration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:text="Add Profession Details"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#ffffff"
@@ -32,101 +30,95 @@
     </TableRow>
 
     <ScrollView
-        android:layout_below="@+id/tablerow1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tablerow1">
 
         <RelativeLayout
             android:id="@+id/RelativeLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
             android:paddingBottom="20dp"
-            >
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/auto1"
-                android:layout_marginTop="10dip"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                >
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/autocompany"
-                    android:hint="Company Name"
-                    android:ems="10"
-                    android:paddingLeft="10dp"
-                    android:textColorHint="#848484"
-                    android:textColor="#2C3343"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/auto2"
-                android:layout_below="@+id/auto1"
-                android:layout_marginTop="10dip"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                >
+                android:layout_marginTop="10dip">
+
                 <AutoCompleteTextView
+                    android:id="@+id/autocompany"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/autodesignation"
-                    android:hint="Designation"
                     android:ems="10"
+                    android:hint="Company Name"
                     android:paddingLeft="10dp"
-                    android:textColorHint="#848484"
-                    android:textColor="#2C3343" />
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/auto2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/auto1"
+                android:layout_marginTop="10dip">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autodesignation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Designation"
+                    android:paddingLeft="10dp"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484" />
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/auto2"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                >
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/auto2">
+
                 <MultiAutoCompleteTextView
+                    android:id="@+id/autoskills"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/autoskills"
-                    android:hint="Add Skills"
                     android:ems="10"
+                    android:hint="Add Skills"
                     android:paddingLeft="10dp"
-                    android:textColorHint="#848484"
                     android:textColor="#2C3343"
-                    />
+                    android:textColorHint="#848484" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/auto3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/auto"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                >
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/auto">
+
                 <MultiAutoCompleteTextView
+                    android:id="@+id/autodeals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/autodeals"
-                    android:hint="Dealing With"
                     android:ems="10"
+                    android:hint="Dealing With"
                     android:paddingLeft="10dp"
-                    android:textColorHint="#848484"
                     android:textColor="#2C3343"
-                    />
+                    android:textColorHint="#848484" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -137,14 +129,12 @@
                 android:layout_below="@+id/auto3"
                 android:layout_marginTop="15dp">
 
-
                 <Spinner
                     android:id="@+id/spinnerArea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
-                    android:entries="@array/areaOptions">
-                </Spinner>
+                    android:entries="@array/areaOptions"></Spinner>
             </RelativeLayout>
 
 
@@ -153,9 +143,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relArea"
-                android:paddingLeft="10dp"
-                android:layout_marginTop="15dp">
-
+                android:layout_marginTop="15dp"
+                android:paddingLeft="10dp">
 
                 <RelativeLayout
                     android:id="@+id/relSpinnerKms"
@@ -167,9 +156,9 @@
                         android:id="@+id/spinnerKms"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:entries="@array/kmsOptions">
-                    </Spinner>
+                        android:entries="@array/kmsOptions"></Spinner>
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/relSpinnerDistrict"
                     android:layout_width="wrap_content"
@@ -179,9 +168,7 @@
                     <autokatta.com.Registration.MultiSelectionSpinner
                         android:id="@+id/spinnerDistrict"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                    </autokatta.com.Registration.MultiSelectionSpinner>
+                        android:layout_height="wrap_content"></autokatta.com.Registration.MultiSelectionSpinner>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -202,28 +189,27 @@
                 android:id="@+id/btnnext"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:text="Next"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:background="@color/background"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/mainrelSpinner"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="9dp"
                 android:layout_toLeftOf="@+id/btncancel"
-                android:layout_toStartOf="@+id/btncancel"/>
+                android:layout_toStartOf="@+id/btncancel"
+                android:background="@color/background"
+                android:text="Next"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btncancel"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="Cancel"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:background="@color/background"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/mainrelSpinner"
+                android:layout_centerHorizontal="true"
                 android:layout_margin="9dp"
-                />
+                android:background="@color/background"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
         </RelativeLayout>
     </ScrollView>

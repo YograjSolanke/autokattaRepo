@@ -36,18 +36,18 @@ public class GetCompaniesResponse {
 
     public class Success {
 
-        @SerializedName("compid")
+        @SerializedName("CompanyID")
         @Expose
-        private String companyID;
-        @SerializedName("companyName")
+        private Integer companyID;
+        @SerializedName("CompanyName")
         @Expose
         private String companyName;
 
-        public String getCompanyID() {
+        public Integer getCompanyID() {
             return companyID;
         }
 
-        public void setCompanyID(String companyID) {
+        public void setCompanyID(Integer companyID) {
             this.companyID = companyID;
         }
 

@@ -62,19 +62,20 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     final HashMap<String, String> mDealList1 = new HashMap<>();
 
     final ArrayList<String> mCompanyList = new ArrayList<>();
-    final HashMap<String, String> mCompanyList1 = new HashMap<>();
+    final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
 
     final HashMap<String,String> mdistList1 = new HashMap();
     final List<String> distNameList = new ArrayList<String>();
 
 
-    final HashMap<String,String> mStatelist1 = new HashMap();
+    final HashMap<String, Integer> mStatelist1 = new HashMap();
     final List<String> stateLst = new ArrayList<String>();
 
     List<String> parsedDataCompany = new ArrayList<>();
     List<String> parsedDataDesignation = new ArrayList<>();
     List<String> parsedDataSkills = new ArrayList<>();
     List<String> parsedDataDeals = new ArrayList<>();
+    List<String> parsedDataStates = new ArrayList<>();
 
 
     final ArrayList<String> mDesignationList = new ArrayList<>();
@@ -264,7 +265,6 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 if (response.body() instanceof GetCompaniesResponse) {
                     GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();
                     if (!mGetCompanyList.getSuccess().isEmpty()) {
@@ -300,18 +300,14 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                                 R.layout.addproductspinner_color, parsedDataDesignation);
                         autoDesignation.setAdapter(dataAdapter);
                     }
-
                 } else if (response.body() instanceof GetSkillsResponse) {
                     GetSkillsResponse mGetSkillsResponse = (GetSkillsResponse) response.body();
                     if (!mGetSkillsResponse.getSuccess().isEmpty()) {
-
                         for (GetSkillsResponse.Success skillsResponse : mGetSkillsResponse.getSuccess()) {
                             skillsResponse.setSkillId(skillsResponse.getSkillId());
                             skillsResponse.setSkillNames(skillsResponse.getSkillNames());
-
                             mSkillList.add(skillsResponse.getSkillNames());
                             mSkillList1.put(skillsResponse.getSkillNames(), skillsResponse.getSkillId());
-
                         }
                         parsedDataSkills.addAll(mSkillList);
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
@@ -322,14 +318,11 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                 } else if (response.body() instanceof getDealsResponse) {
                     getDealsResponse mGetDealsList = (getDealsResponse) response.body();
                     if (!mGetDealsList.getSuccess().isEmpty()) {
-
                         for (getDealsResponse.Success dealsResponse : mGetDealsList.getSuccess()) {
                             dealsResponse.setDealId(dealsResponse.getDealId());
                             dealsResponse.setDealNames(dealsResponse.getDealNames());
-
                             mDealList.add(dealsResponse.getDealNames());
                             mDealList1.put(dealsResponse.getDealNames(), dealsResponse.getDealId());
-
                         }
                         parsedDataDeals.addAll(mDealList);
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
@@ -341,11 +334,9 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                 else if (response.body() instanceof GetDistrictsResponse) {
                     GetDistrictsResponse mGetDistrict = (GetDistrictsResponse) response.body();
                     if (!mGetDistrict.getSuccess().isEmpty()) {
-
                         for (GetDistrictsResponse.Success DistrictResponse : mGetDistrict.getSuccess()) {
                             DistrictResponse.setDistId(DistrictResponse.getDistId());
                             DistrictResponse.setDistName(DistrictResponse.getDistName());
-
                             distNameList.add(DistrictResponse.getDistName());
                             mdistList1.put(DistrictResponse.getDistName(), DistrictResponse.getDistId());
 
@@ -357,16 +348,18 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                 else if (response.body() instanceof GetStatesResponse) {
                     GetStatesResponse mGetState = (GetStatesResponse) response.body();
                     if (!mGetState.getSuccess().isEmpty()) {
-
                         for (GetStatesResponse.Success StateResponse : mGetState.getSuccess()) {
                             StateResponse.setStateId(StateResponse.getStateId());
                             StateResponse.setStateName(StateResponse.getStateName());
-
+                            Log.i("States", "->" + StateResponse.getStateName());
                             stateLst.add(StateResponse.getStateName());
                             mStatelist1.put(StateResponse.getStateName(), StateResponse.getStateId());
 
                         }
-                        spinState.setItems(distNameList, "Select State", this);
+                        parsedDataStates.addAll(stateLst);
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
+                                R.layout.addproductspinner_color, parsedDataStates);
+                        spinState.setAdapter(dataAdapter);
                     }
 
                 }

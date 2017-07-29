@@ -66,18 +66,19 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     HashMap<String, String> mDealList1 = new HashMap<>();
 
     List<String> mCompanyList = new ArrayList<>();
-    HashMap<String, String> mCompanyList1 = new HashMap<>();
+    HashMap<String, Integer> mCompanyList1 = new HashMap<>();
 
     HashMap<String, String> mdistList1 = new HashMap<>();
     final List<String> distNameList = new ArrayList<>();
 
-    HashMap<String, String> mStatelist1 = new HashMap<>();
+    HashMap<String, Integer> mStatelist1 = new HashMap<>();
     List<String> stateLst = new ArrayList<>();
 
     List<String> parsedDataCompany = new ArrayList<>();
     List<String> parsedDataDesignation = new ArrayList<>();
     List<String> parsedDataSkills = new ArrayList<>();
     List<String> parsedDataDeals = new ArrayList<>();
+    List<String> parsedDataStates = new ArrayList<>();
 
     List<String> mDesignationList = new ArrayList<>();
     HashMap<String, String> mDesignationList1 = new HashMap<>();
@@ -383,7 +384,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                             distNameList.add(DistrictResponse.getDistName());
                             mdistList1.put(DistrictResponse.getDistName(), DistrictResponse.getDistId());
                         }
-                        spinDistrict.setItems(distNameList, "Select District", this);
+                        if (!distNameList.isEmpty()) {
+                            spinDistrict.setItems(distNameList, "Select District", this);
+                        }
                     }
                 } else if (response.body() instanceof GetStatesResponse) {
                     stateLst.clear();
@@ -395,7 +398,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                             stateLst.add(StateResponse.getStateName());
                             mStatelist1.put(StateResponse.getStateName(), StateResponse.getStateId());
                         }
-                        spinState.setItems(distNameList, "Select State", this);
+                        if (!stateLst.isEmpty()) {
+                            spinState.setItems(stateLst, "Select State", this);
+                        }
                     }
                 }
 
