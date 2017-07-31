@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
@@ -13,10 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,6 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
     private ConnectionDetector mConnectionDetector;
     private String myContact, spcl;
 
-
     public EndedAuctionAdapter(Activity mActivity, List<MyActiveAuctionResponse.Success.Auction> mItemList) {
         try {
             this.mActivity = mActivity;
@@ -45,7 +48,6 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                     getString("loginContact", "");
             mConnectionDetector = new ConnectionDetector(mActivity);
-
         } catch (ClassCastException c) {
             c.printStackTrace();
         }
@@ -139,7 +141,6 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
                     textView.setGravity(Gravity.CENTER_VERTICAL);
                     textView.setTextColor(Color.parseColor("#110359"));
                     textView.setTextSize(20);
-
                     dialog.setView(textView);
                 }
 
@@ -171,6 +172,21 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             }
         });
 
+        holder.menu.hideMenuButton(false);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                holder.menu.showMenuButton(true);
+            }
+        }, 400);
+        holder.menu.setClosedOnTouchOutside(true);
+
+        holder.btnReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "Under Working", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -181,10 +197,13 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
     static class AuctionHolder extends RecyclerView.ViewHolder {
         TextView action_title, auction_vehicle, auction_enddate, auction_endtime, auction_startdate, auction_starttime;
         TextView timer, mAuction_category, mStockLocation;
-        FloatingActionButton btnPreview, btnCluse;
+        FloatingActionButton btnPreview, btnCluse, btnReport;
+        FloatingActionMenu menu;
+        RelativeLayout rela;
 
         AuctionHolder(View itemview) {
             super(itemview);
+            rela = (RelativeLayout) itemview.findViewById(R.id.rela);
             action_title = (TextView) itemview.findViewById(R.id.typeofauction2);
             auction_vehicle = (TextView) itemview.findViewById(R.id.editvehicle);
             auction_enddate = (TextView) itemview.findViewById(R.id.datetime2);
@@ -193,6 +212,8 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             auction_starttime = (TextView) itemview.findViewById(R.id.editTime);
             btnCluse = (FloatingActionButton) itemview.findViewById(R.id.btncluse);
             btnPreview = (FloatingActionButton) itemview.findViewById(R.id.gotopreview);
+            btnReport = (FloatingActionButton) itemview.findViewById(R.id.generate_report);
+            menu = (FloatingActionMenu) itemview.findViewById(R.id.menu_red);
             timer = (TextView) itemview.findViewById(R.id.timer);
             mAuction_category = (TextView) itemview.findViewById(R.id.auction_category);
             mStockLocation = (TextView) itemview.findViewById(R.id.stockLocation);

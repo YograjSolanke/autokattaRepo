@@ -58,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
+                    android:descendantFocusability="blocksDescendants"
                     app:layout_anchorGravity="end|top"
                     app:menu_fab_size="mini"
                     fab:menu_labels_ellipsize="end"
@@ -65,19 +66,27 @@
                     fab:menu_openDirection="up">
 
                     <com.github.clans.fab.FloatingActionButton
-                        android:id="@+id/gotopreview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/auctionwhite"
-                        app:fabSize="mini"
-                        app:fab_label="Preview" />
-
-                    <com.github.clans.fab.FloatingActionButton
                         android:id="@+id/btncluse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/clause"
                         app:fab_label="Clauses"
+                        app:fab_size="mini" />
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/gotopreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/auctionwhite"
+                        app:fab_label="Preview"
+                        app:fab_size="mini" />
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/generate_report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_file_chart"
+                        app:fab_label="Report"
                         app:fab_size="mini" />
 
                 </com.github.clans.fab.FloatingActionMenu>
@@ -107,10 +116,7 @@
                     android:enabled="false"
                     android:hint="No of vehicle"
                     android:textColor="#808080" />
-
-
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/rl4"
@@ -127,9 +133,7 @@
                     android:layout_marginStart="5dp"
                     android:text="Start :"
                     android:textColor="#808080"
-                    android:textStyle="bold">
-
-                </TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/datetime1"
@@ -163,9 +167,7 @@
                     android:hint="Time"
                     android:textColor="#808080" />
 
-
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/rl5"
@@ -182,9 +184,7 @@
                     android:layout_marginStart="5dp"
                     android:text="End :"
                     android:textColor="#808080"
-                    android:textStyle="bold">
-
-                </TextView>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/datetime2"
@@ -273,13 +273,13 @@
 
             </RelativeLayout>
 
-
             <LinearLayout
                 android:id="@+id/rl6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Rl_stockLocation"
                 android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:weightSum="2">
 
@@ -292,15 +292,13 @@
                     android:textColor="@color/red"
                     android:textStyle="bold" />
             </LinearLayout>
-
-
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <View
+    <!--<View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/auction_card_view"
-        android:background="@color/grey" />
+        android:background="@color/grey" />-->
 </RelativeLayout>

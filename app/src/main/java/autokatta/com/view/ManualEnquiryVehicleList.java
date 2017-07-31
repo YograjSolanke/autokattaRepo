@@ -4,8 +4,6 @@ import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,15 +54,6 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
         mSubmit = (Button) findViewById(R.id.submit);
         mSubmit.setOnClickListener(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         if (getIntent().getExtras() != null) {
             getMyInventoryData(getIntent().getExtras().getString("spinnerValue"));
 
@@ -94,7 +84,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                 if (response.body() instanceof AddManualEnquiryResponse) {
                     AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
                     if (enquiryResponse.getSuccess() != null) {
-                        if (enquiryResponse.getSuccess().getMessage().equalsIgnoreCase("Data successfully Inserted.")) {
+                        if (enquiryResponse.getSuccess().getSuccess().equalsIgnoreCase("Data successfully Inserted.")) {
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
                             alertDialog.setTitle("Add Enquiry");
                             alertDialog.setMessage("Do you want to add another enquiry...?");
@@ -121,11 +111,9 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                     }
                 } else if (response.body() instanceof GetInventoryResponse) {
                     GetInventoryResponse mInventoryResponse = (GetInventoryResponse) response.body();
-                    if (mInventoryResponse.getSuccess() != null) {
+                    if (!mInventoryResponse.getSuccess().isEmpty()) {
                         mItemList.clear();
-                        // mListView.setVisibility(View.VISIBLE);
                         for (GetInventoryResponse.Success success : mInventoryResponse.getSuccess()) {
-                            // mNoData.setVisibility(View.GONE);
                             if (success.getInventoryType().equals("UsedVehicle")) {
                                 success.setVehicleId(success.getVehicleId());
                                 success.setTitle(success.getTitle());
@@ -169,6 +157,81 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                         }
                     } else {
                         //Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                        try {
+                            if (getIntent().getExtras().getString("spinnerValue") != null) {
+                                if (getIntent().getExtras().getString("spinnerValue").equals("New Vehicle")) {
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
+                                    alertDialog.setTitle("No New Vehicle Found");
+                                    alertDialog.setMessage("Do you want to add New Vehicle...?");
+                                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            startActivity(new Intent(ManualEnquiryVehicleList.this, NewVehicleCatalogActivity.class));
+                                        }
+                                    });
+                                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                            finish();
+                                        }
+                                    });
+                                    alertDialog.show();
+                                } else if (getIntent().getExtras().getString("spinnerValue").equals("Used Vehicle")) {
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
+                                    alertDialog.setTitle("No Used Vehicle Found");
+                                    alertDialog.setMessage("Do you want to add Used Vehicle...?");
+                                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Toast.makeText(ManualEnquiryVehicleList.this, "used", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                            finish();
+                                        }
+                                    });
+                                    alertDialog.show();
+                                } else if (getIntent().getExtras().getString("spinnerValue").equals("Products")) {
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
+                                    alertDialog.setTitle("No Products Found");
+                                    alertDialog.setMessage("Do you want to add Products...?");
+                                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Toast.makeText(ManualEnquiryVehicleList.this, "products", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                            finish();
+                                        }
+                                    });
+                                    alertDialog.show();
+                                } else if (getIntent().getExtras().getString("spinnerValue").equals("Services")) {
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
+                                    alertDialog.setTitle("No Services Found");
+                                    alertDialog.setMessage("Do you want to add Services...?");
+                                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Toast.makeText(ManualEnquiryVehicleList.this, "services", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                            finish();
+                                        }
+                                    });
+                                    alertDialog.show();
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -206,6 +269,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
+                Log.i("addArray", "->" + arrayList);
                 if (arrayList != null) {
                     arrayList = adapter.getInventoryList();
                     for (int i = 0; i < arrayList.size(); i++) {

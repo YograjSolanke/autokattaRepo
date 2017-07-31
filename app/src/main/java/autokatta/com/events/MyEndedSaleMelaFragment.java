@@ -36,8 +36,6 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
-
-
     View mEndedLoan;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
@@ -55,25 +53,19 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mEndedLoan = inflater.inflate(R.layout.fragment_simple_listview, container, false);
-
-
         return mEndedLoan;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mTestConnection = new ConnectionDetector(getActivity());
-
         mNoData = (TextView) mEndedLoan.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mEndedLoan.findViewById(R.id.swipeRefreshLayoutMain);
         mRecyclerView = (RecyclerView) mEndedLoan.findViewById(R.id.recyclerMain);
 
         mRecyclerView.setHasFixedSize(true);
-
-
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
@@ -90,21 +82,19 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getEndedSaleData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
-
+                getEndedSaleData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
             }
         });
 
     }
 
     private void getEndedSaleData(String loginContact) {
-
         if (mTestConnection.isConnectedToInternet()) {
             apiCall = new ApiCall(getActivity(), this);
             apiCall.getEndedSaleMelaDetails(loginContact);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -113,8 +103,7 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
-                getEndedSaleData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+                getEndedSaleData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
                 hasViewCreated = true;
             }
         }
@@ -122,33 +111,29 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        getEndedSaleData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392"));
+        getEndedSaleData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
-
             if (response.isSuccessful()) {
-
                 EndedSaleMelaResponse myEndedSaleMelaResponse = (EndedSaleMelaResponse) response.body();
                 if (!myEndedSaleMelaResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     endedSaleMelaResponseList.clear();
                     for (EndedSaleMelaResponse.Success loanSuccess : myEndedSaleMelaResponse.getSuccess()) {
-
                         loanSuccess.setId(loanSuccess.getId());
                         loanSuccess.setName(loanSuccess.getName());
                         loanSuccess.setLocation(loanSuccess.getLocation());
                         loanSuccess.setAddress(loanSuccess.getAddress());
-                        loanSuccess.setStartDate(loanSuccess.getStartDate().replace("T00:00:00",""));
+                        loanSuccess.setStartDate(loanSuccess.getStartDate().replace("T00:00:00", ""));
                         loanSuccess.setStartTime(loanSuccess.getStartTime());
-                        loanSuccess.setEndDate(loanSuccess.getEndDate().replace("T00:00:00",""));
+                        loanSuccess.setEndDate(loanSuccess.getEndDate().replace("T00:00:00", ""));
                         loanSuccess.setEndTime(loanSuccess.getEndTime());
                         loanSuccess.setImage(loanSuccess.getImage());
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
-
                         endedSaleMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -156,35 +141,36 @@ public class MyEndedSaleMelaFragment extends Fragment implements SwipeRefreshLay
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     Log.i("size loan list", String.valueOf(endedSaleMelaResponseList.size()));
-                } else
+                } else {
                     mNoData.setVisibility(View.VISIBLE);
-                mSwipeRefreshLayout.setRefreshing(false);
-
-            } else
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            } else {
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
-
-        } else
+            }
+        } else {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+        }
     }
 
     @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-         //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-         // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-         //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "My Ended Sale Mela Fragment");
             error.printStackTrace();

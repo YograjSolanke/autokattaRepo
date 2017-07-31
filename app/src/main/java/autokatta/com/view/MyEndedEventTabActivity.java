@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
-import autokatta.com.events.MyEndedTabFragment;
+import autokatta.com.fragment.MyEndedEventFragment;
 
 public class MyEndedEventTabActivity extends AppCompatActivity {
     @Override
@@ -26,11 +26,13 @@ public class MyEndedEventTabActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    /*FragmentManager mFragmentManager = getSupportFragmentManager();
-                    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                    mFragmentTransaction.replace(R.id.ended_event_frame, new MyEndedTabFragment()).commit();*/
-                    getSupportFragmentManager().beginTransaction()
+                    /*getSupportFragmentManager().beginTransaction()
                             .replace(R.id.ended_event_frame, new MyEndedTabFragment(), "myEndedTabFragment")
+                            .addToBackStack("myEndedTabFragment")
+                            .commit();*/
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.ended_event_frame, new MyEndedEventFragment(), "myEndedTabFragment")
                             .addToBackStack("myEndedTabFragment")
                             .commit();
 

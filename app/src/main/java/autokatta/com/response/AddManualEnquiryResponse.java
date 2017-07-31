@@ -12,6 +12,44 @@ public class AddManualEnquiryResponse {
     @SerializedName("Success")
     @Expose
     private Success success;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
+
+    public Success getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Success success) {
+        this.success = success;
+    }
+
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
+    public class Success {
+
+        @SerializedName("Success")
+        @Expose
+        private String success;
+
+        public String getSuccess() {
+            return success;
+        }
+
+        public void setSuccess(String success) {
+            this.success = success;
+        }
+
+    }
+    /*@SerializedName("Success")
+    @Expose
+    private Success success;
 
     public Success getSuccess() {
         return success;
@@ -65,5 +103,5 @@ public class AddManualEnquiryResponse {
             this.message = message;
         }
 
-    }
+    }*/
 }

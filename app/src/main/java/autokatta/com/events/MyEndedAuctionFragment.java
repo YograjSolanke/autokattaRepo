@@ -63,38 +63,40 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mTestConnection = new ConnectionDetector(getActivity());
-
-        mNoData = (TextView) mMyEndedAuction.findViewById(R.id.no_category);
-        mNoData.setVisibility(View.GONE);
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mMyEndedAuction.findViewById(R.id.swipeRefreshLayoutMain);
-        mRecyclerView = (RecyclerView) mMyEndedAuction.findViewById(R.id.recyclerMain);
-        mRecyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setReverseLayout(true);
-        mLinearLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                getAuctionData(myContact);
+                mTestConnection = new ConnectionDetector(getActivity());
+                mNoData = (TextView) mMyEndedAuction.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) mMyEndedAuction.findViewById(R.id.swipeRefreshLayoutMain);
+                mRecyclerView = (RecyclerView) mMyEndedAuction.findViewById(R.id.recyclerMain);
+                mRecyclerView.setHasFixedSize(true);
 
+                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+                mLinearLayoutManager.setReverseLayout(true);
+                mLinearLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLinearLayoutManager);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+
+                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
+                mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        getAuctionData(myContact);
+
+                    }
+                });
             }
         });
-
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void getAuctionData(String myContact) {
@@ -103,11 +105,10 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
             apiCall.getMyEndedAuction(myContact);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
+            //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
 
     }
-
 
     @Override
     public void onRefresh() {
@@ -126,20 +127,20 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
                         auctionSuccess.setAuctionId(auctionSuccess.getAuctionId());
                         auctionSuccess.setActionTitle(auctionSuccess.getActionTitle());
                         auctionSuccess.setNoOfVehicle(auctionSuccess.getNoOfVehicle());
-                        auctionSuccess.setEndDate(auctionSuccess.getEndDate().replace("T00:00:00",""));
+                        auctionSuccess.setEndDate(auctionSuccess.getEndDate().replace("T00:00:00", ""));
                         auctionSuccess.setEndTime(auctionSuccess.getEndTime());
-                        auctionSuccess.setStartDate(auctionSuccess.getStartDate().replace("T00:00:00",""));
+                        auctionSuccess.setStartDate(auctionSuccess.getStartDate().replace("T00:00:00", ""));
                         auctionSuccess.setStartTime(auctionSuccess.getStartTime());
                         auctionSuccess.setSpecialClauses(auctionSuccess.getSpecialClauses());
                         auctionSuccess.setAuctionType(auctionSuccess.getAuctionType());
                         auctionSuccess.setGoingcount(auctionSuccess.getGoingcount());
 
                         auctionSuccess.setAuctioncategory(auctionSuccess.getAuctioncategory());
-                        if (auctionSuccess.getStockLocation().equals(""))
+                        if (auctionSuccess.getStockLocation().equals("")) {
                             auctionSuccess.setStockLocation(auctionSuccess.getLocation());
-                        else
+                        } else {
                             auctionSuccess.setStockLocation(auctionSuccess.getStockLocation());
-
+                        }
                         myActiveAuctionResponseList.add(auctionSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -151,13 +152,12 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
                     mNoData.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
-            } else
+            } else {
                 CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
+            }
         } else {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
         }
-        // CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-
     }
 
     @Override
@@ -176,19 +176,19 @@ public class MyEndedAuctionFragment extends Fragment implements RequestNotifier,
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string._404_));
-         ///   showMessage(getActivity(), getString(R.string._404_));
+            ///   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-          //  showMessage(getActivity(), getString(R.string.no_response));
+            //  showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-        //    showMessage(getActivity(), getString(R.string.no_response));
+            //    showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "My Ended Auction Fragment");
             error.printStackTrace();

@@ -22,9 +22,11 @@ import autokatta.com.events.MyEndedServiceMelaFragment;
  */
 
 public class MyEndedEventFragment extends Fragment {
-
-
     View mEndedEvent;
+
+    public MyEndedEventFragment() {
+        //empty constructor...
+    }
 
     @Nullable
     @Override

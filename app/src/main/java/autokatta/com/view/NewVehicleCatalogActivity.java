@@ -47,6 +47,10 @@ public class NewVehicleCatalogActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
+
+            case R.id.add_manual:
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -312,7 +312,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
                     intent.putExtras(bundle);
                     startActivity(intent, options.toBundle());
-                    finish();
                     /*AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
                             discussion, nextFollowupDate, addArray);*/
                 }

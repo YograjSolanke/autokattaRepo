@@ -45,8 +45,6 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
         mConnectionDetector = new ConnectionDetector(mActivity);
-
-
     }
 
 
@@ -62,7 +60,6 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
 
     @Override
     public void onBindViewHolder(EndedSaleMelaAdapter.LoanHolder holder, final int position) {
-
         holder.title.setText(mMainList.get(position).getName());
         holder.startdate.setText(mMainList.get(position).getStartDate());
         holder.starttime.setText(mMainList.get(position).getStartTime());
@@ -70,7 +67,6 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
         holder.endtime.setText(mMainList.get(position).getEndTime());
         holder.location.setText(mMainList.get(position).getLocation());
         holder.address.setText(mMainList.get(position).getAddress());
-
 
         if (mMainList.get(position).getImage().equals("") || mMainList.get(position).getImage().equals("null")) {
             holder.image.setImageResource(R.mipmap.sale);
@@ -100,7 +96,6 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
                 b.putString("saleid",mMainList.get(position).getId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(mActivity, MyEndedSaleMelaPreviewActivity.class);
-
                 i.putExtras(b);
                 mActivity.startActivityForResult(i, 1, options.toBundle());
 
@@ -138,20 +133,16 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
 
         //Share With Other
         holder.mShare.setOnClickListener(new View.OnClickListener() {
-
             Intent intent = new Intent(Intent.ACTION_SEND);
             String imageFilePath;
-
             @Override
             public void onClick(View v) {
-
                 allDetails = mMainList.get(position).getName() + "="
                         + mMainList.get(position).getStartDate() + "="
                         + mMainList.get(position).getEndDate() + "=" +
                         mMainList.get(position).getEndTime() + "=" +
                         mMainList.get(position).getLocation() + "=" +
                         "0" + "=" + "0" + "=" + "a";
-
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
@@ -161,13 +152,10 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
                         putString("Share_keyword", "endedsalemela").apply();
 
                 System.out.println("Share Image \n");
-
                 intent.setType("text/plain");
-
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
                 mActivity.startActivity(intent);
-
             }
         });
 
@@ -179,13 +167,10 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
     }
 
     static class LoanHolder extends RecyclerView.ViewHolder {
-
-
         TextView title, enddate, endtime, startdate, starttime, location, address, details;
         ImageView image;
         Button mPreview,mShare;
         RelativeLayout relativeshare;
-
 
         LoanHolder(View view) {
             super(view);
@@ -201,10 +186,6 @@ public class EndedSaleMelaAdapter extends RecyclerView.Adapter<EndedSaleMelaAdap
             mPreview= (Button) itemView.findViewById(R.id.button);
             mShare= (Button) itemView.findViewById(R.id.share);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
-
-
-
-
         }
     }
 }
