@@ -206,11 +206,9 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                allDetails = mItemList.get(position).getTitle() + "=" +
-                                        mItemList.get(position).getCategory() + "=" +
-                                        "-" + "=" +
+                                allDetails =mItemList.get(position).getTitle() + "=" +
                                         mItemList.get(position).getPrice() + "=" +
-                                        "" + "=" +
+                                        mItemList.get(position).getCategory() + "=" +
                                         mItemList.get(position).getModel() + "=" +
                                         mItemList.get(position).getYearOfManufacture() + "=" +
                                         mItemList.get(position).getKmsRunning() + "=" +
@@ -218,6 +216,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                         mItemList.get(position).getLocationCity() + "=" +
                                         mItemList.get(position).getRegistrationNumber() + "=" +
                                         mItemList.get(position).getSingleImage() + "=" +
+                                        ""+"="+
                                         myContact + "=" + "0";
 
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
@@ -235,11 +234,9 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                allDetails = mItemList.get(position).getTitle() + "=" +
-                                        mItemList.get(position).getCategory() + "=" +
-                                        "-" + "=" +
+                                allDetails =mItemList.get(position).getTitle() + "=" +
                                         mItemList.get(position).getPrice() + "=" +
-                                        "" + "=" +
+                                        mItemList.get(position).getCategory() + "=" +
                                         mItemList.get(position).getModel() + "=" +
                                         mItemList.get(position).getYearOfManufacture() + "=" +
                                         mItemList.get(position).getKmsRunning() + "=" +
@@ -247,6 +244,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                         mItemList.get(position).getLocationCity() + "=" +
                                         mItemList.get(position).getRegistrationNumber() + "=" +
                                         mItemList.get(position).getSingleImage() + "=" +
+                                        ""+"="+
                                         mItemList.get(position).getContact();
 
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
@@ -308,12 +306,32 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                                 System.out.println("ImageFilePath:" + imageFilePath);
 
+
+                                String allGroupVehicleDetails =
+                                        "Vehicle Title : "+mItemList.get(position).getTitle() + "\n" +
+                                                "Vehicle Title : "+ mItemList.get(position).getPrice() + "\n" +
+                                                "Vehicle Brand : "+ mItemList.get(position).getCategory() + "\n" +
+                                                "Vehicle Model : "+ mItemList.get(position).getModel() + "\n" +
+                                                "Vehicle Manufacturing Year : "+  mItemList.get(position).getYearOfManufacture() + "\n" +
+                                                "Vehicle Running (Km/Hr) : "+   mItemList.get(position).getKmsRunning() + "\n" +
+                                                "RTO City : "+   mItemList.get(position).getRTOCity() + "\n" +
+                                                "Vehicle Location City : "+   mItemList.get(position).getLocationCity() + "\n" +
+                                                "Vehicle Registration Number : "+  mItemList.get(position).getRegistrationNumber() + "\n" +
+                                                "Contact : "+  mItemList.get(position).getContact();
+
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
                                         + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + myContact);
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allGroupVehicleDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);
+
                             }
                         })
 
@@ -350,12 +368,30 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                                 System.out.println("ImageFilePath:" + imageFilePath);
 
+                                String allGroupVehicleDetails =
+                                        "Vehicle Title : "+mItemList.get(position).getTitle() + "\n" +
+                                                "Vehicle Title : "+ mItemList.get(position).getPrice() + "\n" +
+                                                "Vehicle Brand : "+ mItemList.get(position).getCategory() + "\n" +
+                                                "Vehicle Model : "+ mItemList.get(position).getModel() + "\n" +
+                                                "Vehicle Manufacturing Year : "+  mItemList.get(position).getYearOfManufacture() + "\n" +
+                                                "Vehicle Running (Km/Hr) : "+   mItemList.get(position).getKmsRunning() + "\n" +
+                                                "RTO City : "+   mItemList.get(position).getRTOCity() + "\n" +
+                                                "Vehicle Location City : "+   mItemList.get(position).getLocationCity() + "\n" +
+                                                "Vehicle Registration Number : "+  mItemList.get(position).getRegistrationNumber();
+
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
                                         + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + mItemList.get(position).getContact());
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allGroupVehicleDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);
+
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
