@@ -369,6 +369,8 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     storetype = "product,service,vehicle";
                 }
 
+                System.out.println("Storetype=" + storetype);
+
                 category = category.trim();
                 if (category.endsWith(","))
                     category = category.substring(0, category.length() - 1);
@@ -896,16 +898,16 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                                 rbtstoreservice.setChecked(true);
                             } else if (storeType.equalsIgnoreCase("vehicle")) {
                                 rbtstorevehicle.setChecked(true);
-                            } else if (storeType.equalsIgnoreCase("product & service")) {
+                            } else if (storeType.equalsIgnoreCase("product,service")) {
                                 rbtstoreproduct.setChecked(true);
                                 rbtstoreservice.setChecked(true);
-                            } else if (storeType.equalsIgnoreCase("product & vehicle")) {
+                            } else if (storeType.equalsIgnoreCase("product,vehicle")) {
                                 rbtstoreproduct.setChecked(true);
                                 rbtstorevehicle.setChecked(true);
-                            } else if (storeType.equalsIgnoreCase("service & vehicle")) {
+                            } else if (storeType.equalsIgnoreCase("service,vehicle")) {
                                 rbtstoreservice.setChecked(true);
                                 rbtstorevehicle.setChecked(true);
-                            } else {
+                            } else if (storeType.equalsIgnoreCase("product,service,vehicle")) {
                                 rbtstoreproduct.setChecked(true);
                                 rbtstoreservice.setChecked(true);
                                 rbtstorevehicle.setChecked(true);
