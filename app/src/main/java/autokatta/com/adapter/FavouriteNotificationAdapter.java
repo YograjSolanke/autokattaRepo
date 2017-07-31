@@ -187,9 +187,11 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class VehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mDelete;
+        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav,
+                mFollow, mUnfollow;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
-                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;
+                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares, mFollowCount;
+        RelativeLayout mRelativeLike;
 
         private VehicleNotifications(View upVehicleView) {
             super(upVehicleView);
@@ -204,7 +206,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mVehicleLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
-            mDelete = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
+            mVehicleUnfav = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
+            mFollow = (ImageButton) upVehicleView.findViewById(R.id.follow_vehicle);
+            mUnfollow = (ImageButton) upVehicleView.findViewById(R.id.unfollow_vehicle);
 
 
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
@@ -218,6 +222,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mRtoCity = (TextView) upVehicleView.findViewById(R.id.vehicle_rto_city);
             mLikes = (TextView) upVehicleView.findViewById(R.id.likes);
             mShares = (TextView) upVehicleView.findViewById(R.id.share);
+            mFollowCount = (TextView) upVehicleView.findViewById(R.id.followcnt);
+            mRelativeLike = (RelativeLayout) upVehicleView.findViewById(R.id.rlLike);
         }
     }
 
@@ -340,14 +346,16 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     /*
     UpVehicle Notification Class...
      */
-    private static class UpVehicleNotifications extends RecyclerView.ViewHolder {
+    private static class UploadVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav;
+        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav,
+                mFollow, mUnfollow;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
-                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;
+                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares, mFollowCount;
+        RelativeLayout mRelativeLike;
 
-        private UpVehicleNotifications(View upVehicleView) {
+        private UploadVehicleNotifications(View upVehicleView) {
             super(upVehicleView);
             mVehicleCardView = (CardView) upVehicleView.findViewById(R.id.vehicle_card_view);
             mUserPic = (ImageView) upVehicleView.findViewById(R.id.profile_pic);
@@ -361,6 +369,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
             mVehicleUnfav = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
+            mFollow = (ImageButton) upVehicleView.findViewById(R.id.follow_vehicle);
+            mUnfollow = (ImageButton) upVehicleView.findViewById(R.id.unfollow_vehicle);
 
 
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
@@ -374,6 +384,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mRtoCity = (TextView) upVehicleView.findViewById(R.id.vehicle_rto_city);
             mLikes = (TextView) upVehicleView.findViewById(R.id.likes);
             mShares = (TextView) upVehicleView.findViewById(R.id.share);
+            mFollowCount = (TextView) upVehicleView.findViewById(R.id.followcnt);
+            mRelativeLike = (RelativeLayout) upVehicleView.findViewById(R.id.rlLike);
         }
     }
 
@@ -650,7 +662,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
             case 10:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_vehicle_notifications, parent, false);
-                return new UpVehicleNotifications(mView);
+                return new UploadVehicleNotifications(mView);
 
             case 11:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
@@ -879,7 +891,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
                         //Unlike web service
-                        String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getSender();
+                        String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreContact();
                         int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId();
                         mStoreHolder.mLike.setVisibility(View.GONE);
                         mStoreHolder.mUnlike.setVisibility(View.VISIBLE);
@@ -896,7 +908,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
                         //Like web service
-                        String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getSender();
+                        String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreContact();
                         int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId();
                         mStoreHolder.mUnlike.setVisibility(View.GONE);
                         mStoreHolder.mLike.setVisibility(View.VISIBLE);
@@ -1126,7 +1138,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             case 4:
                 VehicleNotifications mVehicleHolder = (VehicleNotifications) holder;
 
-                mVehicleHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
+                //mVehicleHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
 
                 break;
 
@@ -1596,7 +1608,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
             case 10:
-                UpVehicleNotifications mUpVehicleHolder = (UpVehicleNotifications) holder;
+                UploadVehicleNotifications mUpVehicleHolder = (UploadVehicleNotifications) holder;
 
                 //mUpVehicleHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
 

@@ -31,9 +31,9 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     TextView txtreceiver;
     ListView sharelist;
     String editdata = "";
-    String  sharedata, storecontact,  contactnumber,profile_contact,
+    String sharedata, storecontact, contactnumber, profile_contact,
             keyword, tab, groupname, number, name;
-    Integer store_id,vehicle_id,product_id,service_id,broadcastgroupid=0,groupid=0,
+    Integer store_id, vehicle_id, product_id, service_id, broadcastgroupid = 0, groupid = 0,
             layoutNumber, search_id, status_id, auction_id, loan_id, exchange_id;
     Button sharebutton;
     ApiCall mApiCall;
@@ -82,31 +82,31 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         if (!profile_contact.equals(""))
             layoutNumber = 1;
 
-        else if (store_id!=null)
+        else if (store_id != 0)
             layoutNumber = 2;
 
-        else if (vehicle_id!=0)
+        else if (vehicle_id != 0)
             layoutNumber = 4;
 
-        else if (product_id!=0)
+        else if (product_id != 0)
             layoutNumber = 5;
 
-        else if (service_id!=0)
+        else if (service_id != 0)
             layoutNumber = 6;
 
-        else if (status_id!=0)
+        else if (status_id != 0)
             layoutNumber = 7;
 
-        else if (search_id!=0)
+        else if (search_id != 0)
             layoutNumber = 8;
 
-        else if (auction_id!=0)
+        else if (auction_id != 0)
             layoutNumber = 9;
 
-        else if (loan_id!=0)
+        else if (loan_id != 0)
             layoutNumber = 10;
 
-        else if (exchange_id!=0)
+        else if (exchange_id != 0)
             layoutNumber = 11;
 
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -87,9 +88,11 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
     private static class UploadVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mShareAutokatta, mShareOther, mCall, mLike, mVehicleFavourite;
+        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav,
+                mFollow, mUnfollow;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
-                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikesTxt, mSharesTxt;
+                mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares, mFollowCount;
+        RelativeLayout mRelativeLike;
 
         private UploadVehicleNotifications(View upVehicleView) {
             super(upVehicleView);
@@ -97,14 +100,18 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             mUserPic = (ImageView) upVehicleView.findViewById(R.id.profile_pic);
             mActionTime = (TextView) upVehicleView.findViewById(R.id.action_time);
             mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
-
-            mShareAutokatta = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
-            mShareOther = (ImageButton) upVehicleView.findViewById(R.id.share_other);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
-            mLike = (ImageButton) upVehicleView.findViewById(R.id.like);
-            mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
-
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
+
+            mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
+            mVehicleLike = (ImageButton) upVehicleView.findViewById(R.id.like);
+            mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
+            mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
+            mVehicleUnfav = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
+            mFollow = (ImageButton) upVehicleView.findViewById(R.id.follow_vehicle);
+            mUnfollow = (ImageButton) upVehicleView.findViewById(R.id.unfollow_vehicle);
+
+
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
             mVehicleName = (TextView) upVehicleView.findViewById(R.id.vehicle_name);
             mVehiclePrice = (TextView) upVehicleView.findViewById(R.id.vehicle_price);
@@ -114,10 +121,11 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             mVehicleKmsHrs = (TextView) upVehicleView.findViewById(R.id.vehicle_kms_hrs);
             mVehicleLocation = (TextView) upVehicleView.findViewById(R.id.vehicle_locations);
             mRtoCity = (TextView) upVehicleView.findViewById(R.id.vehicle_rto_city);
-            mLikesTxt = (TextView) upVehicleView.findViewById(R.id.likes);
-            mSharesTxt = (TextView) upVehicleView.findViewById(R.id.share);
+            mLikes = (TextView) upVehicleView.findViewById(R.id.likes);
+            mShares = (TextView) upVehicleView.findViewById(R.id.share);
+            mFollowCount = (TextView) upVehicleView.findViewById(R.id.followcnt);
+            mRelativeLike = (RelativeLayout) upVehicleView.findViewById(R.id.rlLike);
         }
-
     }
 
     @Override
