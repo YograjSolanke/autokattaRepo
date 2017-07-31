@@ -428,6 +428,15 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     CustomToast.customToast(ProductViewActivity.this, "Other Tag added successfully");
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
                     tagflag = true;
+
+                    tagid = tagid.substring(1);
+                    if (!idlist.equalsIgnoreCase(""))
+                        idlist = idlist + "," + tagid;
+                    else
+                        idlist = tagid;
+                    System.out.println("final idlist iddddddddddddddd=" + idlist);
+
+
                 } else if (response.body() instanceof ProductResponse) {
                     ProductResponse productresponse = (ProductResponse) response.body();
                     if (!productresponse.getSuccess().isEmpty()) {
@@ -739,10 +748,11 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 String text = producttags.getText().toString();
                 ArrayList<String> images = new ArrayList<String>();
                 ArrayList<String> othertag = new ArrayList<String>();
-                if (text.endsWith(","))
-                    text = text.substring(0, text.length() - 1);
-
                 text = text.trim();
+                text = text.replaceAll(",$", "");
+                System.out.println("txttttt=" + text);
+
+
                 String[] parts = text.split(",");
 
                 for (int l = 0; l < parts.length; l++) {
@@ -752,34 +762,36 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         images.add(tagpart);
                     if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {
                         othertag.add(tagpart);
+                        System.out.println("tag going to add=" + tagpart);
                         try {
                             addOtherTags();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
+                    System.out.println("other categoryyyyyyyyyyyyyyyy=" + othertag);
 
                 }
+                System.out.println("tagname arrat before change***************" + tagname);
 
                 getTags();
+
                 for (int i = 0; i < images.size(); i++) {
+
                     for (int j = 0; j < tagname.size(); j++) {
-                        if (images.get(i).equalsIgnoreCase(tagname.get(j)))
-                            idlist = idlist + "," + spnid.get(j);
+                        if (images.get(i).toString().equalsIgnoreCase(tagname.get(j).toString()))
+                            idlist = idlist + "," + spnid.get(j).toString();
                     }
+
                 }
+
 
                 if (!producttags.getText().toString().equalsIgnoreCase("") && idlist.length() > 0) {
                     idlist = idlist.substring(1);
-                }
-                if (tagflag) {
-                    tagid = tagid.substring(1);
-                    if (!idlist.equalsIgnoreCase(""))
-                        idlist = idlist + "," + tagid;
-                    else
-                        idlist = tagid;
-                }
+                    System.out.println("substring idddddddddd=" + idlist);
 
+
+                }
                 ArrayList<String> tempbrands = new ArrayList<String>();
                 String textbrand = multiautobrand.getText().toString();
                 if (textbrand.endsWith(","))
