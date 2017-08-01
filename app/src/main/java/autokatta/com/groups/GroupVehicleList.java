@@ -117,7 +117,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 if (response.body() instanceof GetGroupVehiclesResponse) {
                     mSuccesses.clear();
                     GetGroupVehiclesResponse mGetGroupVehiclesResponse = (GetGroupVehiclesResponse) response.body();
-                    if (!mGetGroupVehiclesResponse.getSuccess().isEmpty()) {
+                    if (mGetGroupVehiclesResponse.getSuccess()!=null||!mGetGroupVehiclesResponse.getSuccess().isEmpty()) {
                         mNoData.setVisibility(View.GONE);
                         for (GetGroupVehiclesResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
                             success.setVehicleId(success.getVehicleId());
