@@ -102,7 +102,7 @@ public class GroupNotification extends Fragment implements SwipeRefreshLayout.On
 
     private void groupNotification() {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.wallNotifications(mLoginContact, "2020202020", "3");
+        apiCall.wallNotifications(mLoginContact, mLoginContact, "3");
 
     }
 
