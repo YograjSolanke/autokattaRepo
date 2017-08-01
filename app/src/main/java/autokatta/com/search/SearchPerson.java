@@ -136,34 +136,39 @@ public class SearchPerson extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchPersonResponse contactResponse = (SearchPersonResponse) response.body();
-                if (contactResponse.getSuccess()!=null) {
-                    mNoData.setVisibility(View.GONE);
-                    allSearchDataArrayList.clear();
-                    filterImg.setVisibility(View.VISIBLE);
-                    for (SearchPersonResponse.Success success : contactResponse.getSuccess()) {
-                        success.setUsername(success.getUsername());
-                        success.setCity(success.getCity());
-                        success.setContact(success.getContact());
-                        success.setMystatus(success.getMystatus());
-                        success.setProfilePhoto(success.getProfilePhoto());
-                        success.setStatus(success.getStatus());
+                if (contactResponse != null) {
+                    if (!contactResponse.getSuccess().isEmpty()) {
+                        mNoData.setVisibility(View.GONE);
+                        allSearchDataArrayList.clear();
+                        filterImg.setVisibility(View.VISIBLE);
+                        for (SearchPersonResponse.Success success : contactResponse.getSuccess()) {
+                            success.setUsername(success.getUsername());
+                            success.setCity(success.getCity());
+                            success.setContact(success.getContact());
+                            success.setMystatus(success.getMystatus());
+                            success.setProfilePhoto(success.getProfilePhoto());
+                            success.setStatus(success.getStatus());
 
-                        if (!cityList.contains(success.getCity()))
-                            cityList.add(success.getCity());
+                            if (!cityList.contains(success.getCity()))
+                                cityList.add(success.getCity());
 
-                        allSearchDataArrayList.add(success);
+                            allSearchDataArrayList.add(success);
+                        }
+                        //For unique data
+                        citySet = new HashSet<>(cityList);
+                        checkedValues = new boolean[citySet.size()];
+                        Arrays.fill(checkedValues, Boolean.TRUE);
+
+                        adapter = new SearchPersonAdapter(getActivity(), allSearchDataArrayList);
+                        searchList.setAdapter(adapter);
+                    } else {
+                        mNoData.setVisibility(View.VISIBLE);
+                        filterImg.setVisibility(View.GONE);
                     }
-                    //For unique data
-                    citySet = new HashSet<>(cityList);
-                    checkedValues = new boolean[citySet.size()];
-                    Arrays.fill(checkedValues, Boolean.TRUE);
-
-                    adapter = new SearchPersonAdapter(getActivity(), allSearchDataArrayList);
-                    searchList.setAdapter(adapter);
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
                     filterImg.setVisibility(View.GONE);
-            }
+                }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }

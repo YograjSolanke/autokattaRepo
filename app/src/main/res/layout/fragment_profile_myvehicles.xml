@@ -6,8 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="5dp">
 
         <TextView
@@ -19,7 +17,8 @@
             android:gravity="center"
             android:text="My Vehicles"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
 
         <android.support.v4.widget.SwipeRefreshLayout
@@ -30,9 +29,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclermyVehicles"
-                android:layout_width="wrap_content"
-                android:layout_height="452dp"
-                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/text_margin_top"
+                android:paddingEnd="@dimen/text_margin_top"
+                android:background="#E6E6E6"
                 android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
 

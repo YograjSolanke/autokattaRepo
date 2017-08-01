@@ -135,9 +135,11 @@ public class SearchStore extends Fragment implements RequestNotifier {
 
         if (mConnectionDetector.isConnectedToInternet()) {
             //dialog.show();
-            ApiCall mApiCall = new ApiCall(getActivity(), this);
-            mApiCall.searchStore(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
-                    Context.MODE_PRIVATE).getString("loginContact", ""));
+            if (searchString != null) {
+                ApiCall mApiCall = new ApiCall(getActivity(), this);
+                mApiCall.searchStore(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
+                        Context.MODE_PRIVATE).getString("loginContact", ""));
+            }
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
@@ -151,49 +153,54 @@ public class SearchStore extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 BrowseStoreResponse searchData = (BrowseStoreResponse) response.body();
-                if (searchData.getSuccess()!=null) {
-                    mNoData.setVisibility(View.GONE);
-                    allSearchDataArrayList.clear();
-                    filterImg.setVisibility(View.VISIBLE);
-                    for (BrowseStoreResponse.Success success : searchData.getSuccess()) {
-                        success.setStoreId(success.getStoreId());
-                        success.setContactNo(success.getContactNo());
-                        success.setStoreName(success.getStoreName());
-                        success.setLocation(success.getLocation());
-                        success.setStoreImage(success.getStoreImage());
-                        success.setStoreType(success.getStoreType());
-                        success.setWebsite(success.getWebsite());
-                        success.setWorkingDays(success.getWorkingDays());
-                        success.setCategory(success.getCategory());
-                        success.setRating(success.getRating());
-                        success.setLikecount(success.getLikecount());
-                        success.setLikestatus(success.getLikestatus());
-                        success.setFollowcount(success.getFollowcount());
-                        success.setFollowstatus(success.getFollowstatus());
+                if (searchData != null) {
+                    if (!searchData.getSuccess().isEmpty()) {
+                        mNoData.setVisibility(View.GONE);
+                        allSearchDataArrayList.clear();
+                        filterImg.setVisibility(View.VISIBLE);
+                        for (BrowseStoreResponse.Success success : searchData.getSuccess()) {
+                            success.setStoreId(success.getStoreId());
+                            success.setContactNo(success.getContactNo());
+                            success.setStoreName(success.getStoreName());
+                            success.setLocation(success.getLocation());
+                            success.setStoreImage(success.getStoreImage());
+                            success.setStoreType(success.getStoreType());
+                            success.setWebsite(success.getWebsite());
+                            success.setWorkingDays(success.getWorkingDays());
+                            success.setCategory(success.getCategory());
+                            success.setRating(success.getRating());
+                            success.setLikecount(success.getLikecount());
+                            success.setLikestatus(success.getLikestatus());
+                            success.setFollowcount(success.getFollowcount());
+                            success.setFollowstatus(success.getFollowstatus());
 
-                        if (success.getCategory().trim().contains(",")) {
-                            String arr[] = success.getCategory().trim().split(",");
-                            for (int l = 0; l < arr.length; l++) {
-                                String part = arr[l].trim();
-                                if (!part.equals(" ") && !part.equals(""))
-                                    categoryList.add(part);
+                            if (success.getCategory().trim().contains(",")) {
+                                String arr[] = success.getCategory().trim().split(",");
+                                for (int l = 0; l < arr.length; l++) {
+                                    String part = arr[l].trim();
+                                    if (!part.equals(" ") && !part.equals(""))
+                                        categoryList.add(part);
+                                }
+                            } else {
+                                categoryList.add(success.getCategory().trim());
                             }
-                        } else {
-                            categoryList.add(success.getCategory().trim());
+
+                            if (!LocationList.contains(success.getLocation()))
+                                LocationList.add(success.getLocation());
+                            Log.i("location", "->" + success.getLocation());
+
+                            allSearchDataArrayList.add(success);
                         }
+                        categoryHashSet = new HashSet<>(categoryList);
+                        locationHashSet = new HashSet<>(LocationList);
+                        adapter = new BrowseStoreAdapter(getActivity(), allSearchDataArrayList);
+                        searchList.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
 
-                        if (!LocationList.contains(success.getLocation()))
-                            LocationList.add(success.getLocation());
-                        Log.i("location", "->" + success.getLocation());
-
-                        allSearchDataArrayList.add(success);
+                    } else {
+                        mNoData.setVisibility(View.VISIBLE);
+                        filterImg.setVisibility(View.GONE);
                     }
-                    categoryHashSet = new HashSet<>(categoryList);
-                    locationHashSet = new HashSet<>(LocationList);
-                    adapter = new BrowseStoreAdapter(getActivity(), allSearchDataArrayList);
-                    searchList.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
                     filterImg.setVisibility(View.GONE);

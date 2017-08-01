@@ -153,14 +153,30 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
                         success.setVersion(success.getVersion());
                         success.setSubcategory(success.getSubcategory());
                         success.setVehiNo(success.getVehiNo());
-                        success.setTaxValidity(success.getTaxValidity().replace("T00:00:00",""));
-                        success.setPermitValidity(success.getPermitValidity().replace("T00:00:00",""));
-                        success.setFitnessValidity(success.getFitnessValidity().replace("T00:00:00",""));
-                        success.setInsurance(success.getInsurance().replace("T00:00:00",""));
-                        success.setPuc(success.getPuc().replace("T00:00:00",""));
-                        success.setLastServiceDate(success.getLastServiceDate().replace("T00:00:00",""));
-                        success.setNextServiceDate(success.getNextServiceDate().replace("T00:00:00",""));
-                        success.setUploaddate(success.getUploaddate().replace("T00:00:00",""));
+                        if (success.getTaxValidity() != null) {
+                            success.setTaxValidity(success.getTaxValidity().replace("T00:00:00", ""));
+                        }
+                        if (success.getPermitValidity() != null) {
+                            success.setPermitValidity(success.getPermitValidity().replace("T00:00:00", ""));
+                        }
+                        if (success.getFitnessValidity() != null) {
+                            success.setFitnessValidity(success.getFitnessValidity().replace("T00:00:00", ""));
+                        }
+                        if (success.getInsurance() != null) {
+                            success.setInsurance(success.getInsurance().replace("T00:00:00", ""));
+                        }
+                        if (success.getPuc() != null) {
+                            success.setPuc(success.getPuc().replace("T00:00:00", ""));
+                        }
+                        if (success.getLastServiceDate() != null) {
+                            success.setLastServiceDate(success.getLastServiceDate().replace("T00:00:00", ""));
+                        }
+                        if (success.getNextServiceDate() != null) {
+                            success.setNextServiceDate(success.getNextServiceDate().replace("T00:00:00", ""));
+                        }
+                        if (success.getUploaddate() != null) {
+                            success.setUploaddate(success.getUploaddate().replace("T00:00:00", ""));
+                        }
                         mGetOwnVehiclesResponse.add(success);
                     }
                     adapter = new MyVehiclesAdapter(getActivity(), mGetOwnVehiclesResponse);

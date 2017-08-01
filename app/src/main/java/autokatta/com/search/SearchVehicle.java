@@ -153,7 +153,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchVehicleResponse vehicleResponse = (SearchVehicleResponse) response.body();
-                if (vehicleResponse.getSuccess()!=null) {
+                if (!vehicleResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
                     allSearchDataArrayList.clear();
                     advanceSearch.setVisibility(View.VISIBLE);

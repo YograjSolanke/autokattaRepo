@@ -163,6 +163,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     lastServiceCancel = (ImageView) findViewById(R.id.lastServiceCan);
                     nextServiceCancel = (ImageView) findViewById(R.id.nextServiceCan);
 
+                    contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", "");
                     Intent i = getIntent();
                     action = i.getStringExtra("action");
 
@@ -185,10 +187,15 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         vehinextservicedate = i.getStringExtra("nextservice");
                         className = i.getStringExtra("className");
                         btnsub.setText("Update");
+                    } else {
+                        className = i.getStringExtra("className");
                     }
 
                     if (className != null) {
                         if (className.equals("myVehicleAdapter")) {
+                            btncancle.setVisibility(View.GONE);
+                            mHintLayout.setVisibility(View.GONE);
+                        } else {
                             btncancle.setVisibility(View.GONE);
                             mHintLayout.setVisibility(View.GONE);
                         }
@@ -398,7 +405,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     edtvehicleno.requestFocus();
                     flag = 0;
                 }
-
+                Log.i("Action", "->" + action);
                 if (flag == 1 && !action.equalsIgnoreCase("MyVehicles") && mSpinnerVehitype.getSelectedItem() != null && mSpinnerVehitype != null
                         && mSpinnerBrand.getSelectedItem() != null && mSpinnerBrand != null &&
                         mSpinnerModel.getSelectedItem() != null && mSpinnerModel != null
@@ -1047,6 +1054,9 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                                         int id) {
                                         if (className != null) {
                                             if (className.equals("myVehicleAdapter")) {
+                                                dialog.cancel();
+                                                finish();
+                                            } else {
                                                 dialog.cancel();
                                                 finish();
                                             }

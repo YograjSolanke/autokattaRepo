@@ -51,14 +51,10 @@ import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.About;
 import autokatta.com.fragment_profile.AboutStore;
-import autokatta.com.fragment_profile.Blog;
 import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
-import autokatta.com.fragment_profile.Images;
 import autokatta.com.fragment_profile.Modules;
 import autokatta.com.fragment_profile.MyVehicles;
-import autokatta.com.fragment_profile.MyVideos;
-import autokatta.com.fragment_profile.Post;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
@@ -281,6 +277,18 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 mCreateGroup.hide(true);
                 break;
 
+            /*case 3:
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
+                break;
+
+            case 4:
+                addVehicle.hide(true);
+                mCreateStore.hide(true);
+                mCreateGroup.hide(true);
+                break;*/
+
             case 3:
                 addVehicle.hide(true);
                 mCreateStore.hide(true);
@@ -294,18 +302,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;
 
             case 5:
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;
-
-            case 6:
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;
-
-            case 7:
                 addVehicle.show(true);
                 mCreateStore.hide(true);
                 mCreateGroup.hide(true);
@@ -360,10 +356,10 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         adapter.addFragment(new Modules(), "MODULE");
         adapter.addFragment(new Follow(), "FOLLOW");
         adapter.addFragment(new MyVehicles(), "MY VEHICLES");
-        adapter.addFragment(new MyVideos(), "MY VIDEO");
+        /*adapter.addFragment(new MyVideos(), "MY VIDEO");
         adapter.addFragment(new Blog(), "BLOG");
         adapter.addFragment(new Post(), "POST");
-        adapter.addFragment(new Images(), "IMAGES");
+        adapter.addFragment(new Images(), "IMAGES");*/
         viewPager.setAdapter(adapter);
     }
 
@@ -679,6 +675,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 ActivityOptions option = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
                         R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), NextRegistrationContinue.class);
+                i.putExtra("action", "profile");
+                i.putExtra("className", "profile");
                 startActivity(i, option.toBundle());
                 break;
         }
