@@ -118,7 +118,7 @@ public interface ServiceApi {
 
     //get My Active Events
     @GET("GetAuctionEvents")
-    Call<MyActiveAuctionResponse> _autokattaGetMyActiveAuction(@Query("Contact") String myContact, @Query("Status") String status, @Query("timestamp") int timestamp);
+    Call<MyActiveAuctionResponse> _autokattaGetMyActiveAuction(@Query("Contact") String myContact, @Query("Status") String status);
 
     //get My Active Loan Mela
     @GET("GetAllLoanMela")
