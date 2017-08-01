@@ -53,7 +53,7 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
     File file;
-    Button mSubmit;
+    Button mSubmit, mSkip;
     Boolean flag = false;
     CoordinatorLayout mCoordinate;
     ConnectionDetector mTestConnection;
@@ -76,6 +76,7 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
                 mAboutUs = (EditText) findViewById(R.id.about_us);
                 mWebSite = (EditText) findViewById(R.id.website);
                 mSubmit = (Button) findViewById(R.id.btnSub);
+                mSkip = (Button) findViewById(R.id.skip);
                 mCoordinate = (CoordinatorLayout) findViewById(R.id.coordinate);
                 mClicked.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -86,6 +87,7 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
             }
         });
         mSubmit.setOnClickListener(this);
+        mSkip.setOnClickListener(this);
     }
 
     public void onPickImage(View view) {
@@ -296,6 +298,15 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
                         CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
                     }
                 }
+                break;
+
+            case R.id.skip:
+                finish();
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent i = new Intent(getApplication(), NextRegistrationContinue.class);
+                i.putExtra("action", "ContinueRegistration");
+                startActivity(i, options.toBundle());
+                finish();
                 break;
         }
     }

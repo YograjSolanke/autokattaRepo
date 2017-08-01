@@ -861,11 +861,19 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         bundle.putInt("store_id", id);
                         bundle.putString("call", callFrom);
 
-                        AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-                        addAdmin.setArguments(bundle);
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
+                        if (callFrom.equals("interestbased")) {
+                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
+                            addAdmin.setArguments(bundle);
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.create_store_container, addAdmin).commit();
+                        } else {
+                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
+                            addAdmin.setArguments(bundle);
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
+                        }
                         //getActivity().finish();
 
                     } else {

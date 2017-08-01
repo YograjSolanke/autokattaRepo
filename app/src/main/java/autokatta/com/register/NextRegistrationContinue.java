@@ -485,8 +485,10 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 edtlastservice.setError(null);
                 edtnextservice.setError(null);
 
+
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 startActivity(new Intent(getApplicationContext(), RegistrationCompanyBased.class), options.toBundle());
+                finish();
                 break;
 
             case R.id.purchaseCal:

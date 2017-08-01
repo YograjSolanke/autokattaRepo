@@ -834,6 +834,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                         Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
                                         intent.putExtras(b);
                                         startActivity(intent, options.toBundle());
+                                        finish();
                                     }
                                 })
                         .setNegativeButton("No",
@@ -844,6 +845,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                         ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                                         Intent i = new Intent(getApplicationContext(), InvitationCompanyBased.class);
                                         startActivity(i, options.toBundle());
+                                        finish();
                                     }
                                 });
 

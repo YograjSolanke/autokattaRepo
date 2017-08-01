@@ -66,6 +66,7 @@ public class InvitationCompanyBased extends AppCompatActivity implements Request
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), SkillsBasedInvitation.class);
                 startActivity(i, options.toBundle());
+
             }
         });
     }

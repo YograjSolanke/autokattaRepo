@@ -7,13 +7,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btnSub">
+        android:layout_above="@+id/linear">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/card_margin"
-            android:layout_marginEnd="@dimen/card_margin">
+            android:layout_marginEnd="@dimen/card_margin"
+            android:layout_marginStart="@dimen/card_margin">
 
             <RelativeLayout
                 android:id="@+id/hint_layout"
@@ -75,10 +75,10 @@
                     android:id="@+id/user_image"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:layout_gravity="center"
                     android:background="@drawable/profile"
                     android:contentDescription="@string/app_name"
                     android:fitsSystemWindows="true"
-                    android:layout_gravity="center"
                     android:scaleType="fitXY" />
 
                 <android.support.design.widget.FloatingActionButton
@@ -87,8 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin_top"
                     android:clickable="true"
-                    app:backgroundTint="@android:color/transparent"
                     android:src="@drawable/ic_photo_camera"
+                    app:backgroundTint="@android:color/transparent"
                     app:layout_anchor="@id/user_image"
                     app:layout_anchorGravity="bottom|end" />
 
@@ -144,21 +144,40 @@
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-
-
         </RelativeLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/btnSub"
+    <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/background"
-        android:selectAllOnFocus="true"
-        android:text="Submit"
-        android:textStyle="bold"
-        android:textColor="@color/white" />
+        android:orientation="horizontal"
+        android:weightSum="2">
 
+        <Button
+            android:id="@+id/skip"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:selectAllOnFocus="true"
+            android:text="Skip"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnSub"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:selectAllOnFocus="true"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
 </RelativeLayout>

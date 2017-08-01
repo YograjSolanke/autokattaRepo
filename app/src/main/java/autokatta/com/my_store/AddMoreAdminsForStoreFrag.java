@@ -33,6 +33,7 @@ import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.register.InvitationCompanyBased;
 import autokatta.com.response.Db_AutokattaContactResponse;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.view.StoreViewActivity;
@@ -135,7 +136,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
                 } else {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
+                    Intent i = new Intent(getActivity(), InvitationCompanyBased.class);
                     getActivity().startActivity(i, options.toBundle());
                     getActivity().finish();
 

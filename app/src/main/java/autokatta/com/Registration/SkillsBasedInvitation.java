@@ -86,6 +86,7 @@ public class SkillsBasedInvitation extends AppCompatActivity implements RequestN
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), InviteFriends.class);
                 startActivity(i, options.toBundle());
+
             }
         });
 
