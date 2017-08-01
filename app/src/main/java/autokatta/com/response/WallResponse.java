@@ -178,6 +178,11 @@ public class WallResponse {
             @SerializedName("UpVehicleLocationCity")
             @Expose
             private String upVehicleLocationCity;
+
+            @SerializedName("UpVehicleShareCount")
+            @Expose
+            private int UpVehicleShareCount;
+
             @SerializedName("SearchLikeStatus")
             @Expose
             private String searchLikeStatus;
@@ -274,6 +279,14 @@ public class WallResponse {
             @SerializedName("StoreTiming")
             @Expose
             private String storeTiming;
+
+            @SerializedName("StoreCategory")
+            @Expose
+            private String StoreCategory;
+            @SerializedName("StoreShareCount")
+            @Expose
+            private int StoreShareCount;
+
             @SerializedName("GroupVehicles")
             @Expose
             private int groupVehicles;
@@ -322,6 +335,11 @@ public class WallResponse {
             @SerializedName("ProductImage")
             @Expose
             private String productImage;
+
+            @SerializedName("ProductShareCount")
+            @Expose
+            private int ProductShareCount;
+
             @SerializedName("ServiceLikeStatus")
             @Expose
             private String serviceLikeStatus;
@@ -349,6 +367,11 @@ public class WallResponse {
             @SerializedName("ServiceImage")
             @Expose
             private String serviceImage;
+
+            @SerializedName("ServiceShareCount")
+            @Expose
+            private int ServiceShareCount;
+
             @SerializedName("AuctionID")
             @Expose
             private int auctionID;
@@ -1215,7 +1238,48 @@ public class WallResponse {
             public void setIgnoreCount(int ignoreCount) {
                 this.ignoreCount = ignoreCount;
             }
-    /*@SerializedName("Success")
+
+            public int getUpVehicleShareCount() {
+                return UpVehicleShareCount;
+            }
+
+            public void setUpVehicleShareCount(int upVehicleShareCount) {
+                UpVehicleShareCount = upVehicleShareCount;
+            }
+
+            public String getStoreCategory() {
+                return StoreCategory;
+            }
+
+            public void setStoreCategory(String storeCategory) {
+                StoreCategory = storeCategory;
+            }
+
+            public int getStoreShareCount() {
+                return StoreShareCount;
+            }
+
+            public void setStoreShareCount(int storeShareCount) {
+                StoreShareCount = storeShareCount;
+            }
+
+            public int getProductShareCount() {
+                return ProductShareCount;
+            }
+
+            public void setProductShareCount(int productShareCount) {
+                ProductShareCount = productShareCount;
+            }
+
+            public int getServiceShareCount() {
+                return ServiceShareCount;
+            }
+
+            public void setServiceShareCount(int serviceShareCount) {
+                ServiceShareCount = serviceShareCount;
+            }
+
+            /*@SerializedName("Success")
     @Expose
     private Success success;
 

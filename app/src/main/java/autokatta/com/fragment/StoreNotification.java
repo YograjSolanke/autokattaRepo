@@ -139,7 +139,23 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                         notification.setSender(notification.getSender());
                         notification.setAction(notification.getAction());
                         notification.setReceiver(notification.getReceiver());
-                        notification.setSubLayout(notification.getSubLayout());
+                        String sublayout = notification.getSubLayout();
+                        if (sublayout.contains("=")) {
+                            String arr[] = sublayout.split("=", 2);
+
+                            notification.setSubLayout(arr[0]);
+                            if (!arr[1].equals(""))
+                                notification.setShareSubData(arr[1]);
+                            else
+                                notification.setShareSubData("No data");
+
+                            //arr[1].equals("") ? notification.setShareSubData(arr[1]) : notification.setShareSubData("No data");
+
+                        } else {
+
+                            notification.setSubLayout(sublayout);
+                            notification.setShareSubData(sublayout);
+                        }
                         notification.setSenderName(notification.getSenderName());
                         notification.setSenderPicture(notification.getSenderPicture());
                         notification.setReceiverName(notification.getReceiverName());
@@ -164,7 +180,7 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                         notification.setUpVehicleFollowCount(notification.getUpVehicleFollowCount());
                         notification.setUpVehicleContact(notification.getUpVehicleContact());
                         notification.setUpVehicleContact(notification.getUpVehicleTitle());
-                        notification.setUpVehicleImage(notification.getUpVehicleImage());
+                        notification.setUpVehicleShareCount(notification.getUpVehicleShareCount());
                         notification.setUpVehiclePrice(notification.getUpVehiclePrice());
                         notification.setUpVehicleModel(notification.getUpVehicleModel());
                         notification.setUpVehicleBrand(notification.getUpVehicleBrand());
@@ -174,6 +190,16 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                         notification.setUpVehicleHrsRun(notification.getUpVehicleHrsRun());
                         notification.setUpVehicleRtoCity(notification.getUpVehicleRtoCity());
                         notification.setUpVehicleLocationCity(notification.getUpVehicleLocationCity());
+                        String vehicleImage = notification.getUpVehicleImage();
+                        if (vehicleImage.contains(",")) {
+                            String[] items = vehicleImage.split(",");
+                            notification.setUpVehicleImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setUpVehicleImage(item);
+                            }*/
+                        } else {
+                            notification.setUpVehicleImage(vehicleImage);
+                        }
 
                         notification.setSearchLikeStatus(notification.getSearchLikeStatus());
                         notification.setSearchCategory(notification.getSearchCategory());
@@ -209,12 +235,16 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                         notification.setWorkingDays(notification.getWorkingDays());
                         notification.setStoreLocation(notification.getStoreLocation());
                         notification.setStoreTiming(notification.getStoreTiming());
+                        notification.setStoreCategory(notification.getStoreCategory());
+                        notification.setStoreShareCount(notification.getStoreShareCount());
 
                         notification.setGroupVehicles(notification.getGroupVehicles());
                         notification.setGroupID(notification.getGroupID());
                         notification.setGroupName(notification.getGroupName());
                         notification.setGroupImage(notification.getGroupImage());
                         notification.setGroupMembers(notification.getGroupMembers());
+                        notification.setGroupProductCount(notification.getGroupProductCount());
+                        notification.setGroupServiceCount(notification.getGroupServiceCount());
 
                         notification.setProductLikeStatus(notification.getProductLikeStatus());
                         notification.setProductFollowStatus(notification.getProductFollowStatus());
@@ -223,7 +253,19 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                         notification.setProductFollowCount(notification.getProductFollowCount());
                         notification.setProductName(notification.getProductName());
                         notification.setProductType(notification.getProductType());
-                        notification.setProductImage(notification.getProductImage());
+                        notification.setProductRating(notification.getProductRating());
+                        notification.setProductShareCount(notification.getProductShareCount());
+                        String proImage = notification.getProductImage();
+                        if (proImage.contains(",")) {
+                            String[] items = proImage.split(",");
+                            notification.setProductImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setProductImage(item);
+                            }*/
+                        } else {
+                            notification.setProductImage(proImage);
+                        }
+
 
                         notification.setServiceLikeStatus(notification.getServiceLikeStatus());
                         notification.setServiceFollowStatus(notification.getServiceFollowStatus());
@@ -232,7 +274,18 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                         notification.setServiceFollowCount(notification.getServiceFollowCount());
                         notification.setServiceName(notification.getServiceName());
                         notification.setServiceType(notification.getServiceType());
-                        notification.setServiceImage(notification.getServiceImage());
+                        notification.setServiceRating(notification.getServiceRating());
+                        notification.setServiceShareCount(notification.getServiceShareCount());
+                        String serviceImage = notification.getServiceImage();
+                        if (serviceImage.contains(",")) {
+                            String[] items = serviceImage.split(",");
+                            notification.setServiceImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setServiceImage(item);
+                            }*/
+                        } else {
+                            notification.setServiceImage(serviceImage);
+                        }
 
                         notification.setAuctionID(notification.getAuctionID());
                         notification.setActionTitle(notification.getActionTitle());
@@ -247,6 +300,7 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                             notification.setLayoutType("MyAction");
                         else
                             notification.setLayoutType("MyNotification");
+
                         storeNotiList.add(notification);
                     }
                     mAdapter = new StoreNotificationAdapter(getActivity(), storeNotiList, mLoginContact);

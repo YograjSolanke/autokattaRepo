@@ -912,7 +912,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId();
                         mStoreHolder.mUnlike.setVisibility(View.GONE);
                         mStoreHolder.mLike.setVisibility(View.VISIBLE);
-                        mApiCall.Like(mLoginContact, otherContact, "1", storeId, 0, 0, 0, 0, 0, 0);
+                        mApiCall.Like(mLoginContact, otherContact, "2", storeId, 0, 0, 0, 0, 0, 0);
                         store_likecountint = notificationList.get(mStoreHolder.getAdapterPosition()).getStorelikecount();
                         store_likecountint = store_likecountint + 1;
                         mStoreHolder.mLikes.setText("Likes(" + store_likecountint + ")");

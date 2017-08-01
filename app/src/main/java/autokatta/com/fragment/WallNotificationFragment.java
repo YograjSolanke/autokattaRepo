@@ -43,7 +43,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     WallNotificationAdapter adapter;
     private String mLoginContact = "";
 
-    public WallNotificationFragment(){
+    public WallNotificationFragment() {
         //Empty Constructor...
     }
 
@@ -172,7 +172,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setUpVehicleFollowCount(notification.getUpVehicleFollowCount());
                         notification.setUpVehicleContact(notification.getUpVehicleContact());
                         notification.setUpVehicleContact(notification.getUpVehicleTitle());
-                        //notification.setUpVehicleImage(notification.getUpVehicleImage());
+                        notification.setUpVehicleShareCount(notification.getUpVehicleShareCount());
                         notification.setUpVehiclePrice(notification.getUpVehiclePrice());
                         notification.setUpVehicleModel(notification.getUpVehicleModel());
                         notification.setUpVehicleBrand(notification.getUpVehicleBrand());
@@ -227,6 +227,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setWorkingDays(notification.getWorkingDays());
                         notification.setStoreLocation(notification.getStoreLocation());
                         notification.setStoreTiming(notification.getStoreTiming());
+                        notification.setStoreCategory(notification.getStoreCategory());
+                        notification.setStoreShareCount(notification.getStoreShareCount());
 
                         notification.setGroupVehicles(notification.getGroupVehicles());
                         notification.setGroupID(notification.getGroupID());
@@ -244,6 +246,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setProductName(notification.getProductName());
                         notification.setProductType(notification.getProductType());
                         notification.setProductRating(notification.getProductRating());
+                        notification.setProductShareCount(notification.getProductShareCount());
                         String proImage = notification.getProductImage();
                         if (proImage.contains(",")) {
                             String[] items = proImage.split(",");
@@ -264,6 +267,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setServiceName(notification.getServiceName());
                         notification.setServiceType(notification.getServiceType());
                         notification.setServiceRating(notification.getServiceRating());
+                        notification.setServiceShareCount(notification.getServiceShareCount());
                         String serviceImage = notification.getServiceImage();
                         if (serviceImage.contains(",")) {
                             String[] items = serviceImage.split(",");

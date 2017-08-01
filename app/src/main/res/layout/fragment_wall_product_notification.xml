@@ -248,8 +248,7 @@
                     android:layout_toEndOf="@+id/dot"
                     android:text="Share"
                     android:textColor="#808080"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
