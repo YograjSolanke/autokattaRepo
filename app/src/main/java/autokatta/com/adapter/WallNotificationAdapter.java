@@ -1099,7 +1099,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                         "Working Days : " + mStoreHolder.mStoreWorkingDay.getText().toString() + "\n" +
                                         "Location : " + mStoreHolder.mStoreLocation.getText().toString();
 
-                                System.out.println("all product detailssss======Other " + allStoreDetails);
+                                System.out.println("all store detailssss======Other " + allStoreDetails);
 
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
@@ -1997,11 +1997,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
 
-                                intent.setType("text/plain");
+                                /*intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                                 intent.putExtra(Intent.EXTRA_TEXT, allServiceDetails);
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);
+                                mActivity.startActivity(intent);*/
 
                                 dialog.dismiss();
                             }
