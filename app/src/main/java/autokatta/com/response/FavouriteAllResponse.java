@@ -85,6 +85,25 @@ public class FavouriteAllResponse {
     private String image;
     private String year;
 
+    private int ServiceRating;
+
+    private int ProductRating;
+
+    private String StoreCategory;
+
+    private int StoreShareCount;
+
+    private int GroupProductCount;
+
+    private int GroupServiceCount;
+
+    private int ProductShareCount;
+
+    private int ServiceShareCount;
+
+    private int VehicleShareCount;
+
+
     public int getFavid() {
         return favid;
     }
@@ -667,6 +686,79 @@ public class FavouriteAllResponse {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+
+    public int getServiceRating() {
+        return ServiceRating;
+    }
+
+    public void setServiceRating(int serviceRating) {
+        ServiceRating = serviceRating;
+    }
+
+    public int getProductRating() {
+        return ProductRating;
+    }
+
+    public void setProductRating(int productRating) {
+        ProductRating = productRating;
+    }
+
+    public String getStoreCategory() {
+        return StoreCategory;
+    }
+
+    public void setStoreCategory(String storeCategory) {
+        StoreCategory = storeCategory;
+    }
+
+    public int getStoreShareCount() {
+        return StoreShareCount;
+    }
+
+    public void setStoreShareCount(int storeShareCount) {
+        StoreShareCount = storeShareCount;
+    }
+
+    public int getGroupProductCount() {
+        return GroupProductCount;
+    }
+
+    public void setGroupProductCount(int groupProductCount) {
+        GroupProductCount = groupProductCount;
+    }
+
+    public int getGroupServiceCount() {
+        return GroupServiceCount;
+    }
+
+    public void setGroupServiceCount(int groupServiceCount) {
+        GroupServiceCount = groupServiceCount;
+    }
+
+    public int getProductShareCount() {
+        return ProductShareCount;
+    }
+
+    public void setProductShareCount(int productShareCount) {
+        ProductShareCount = productShareCount;
+    }
+
+    public int getServiceShareCount() {
+        return ServiceShareCount;
+    }
+
+    public void setServiceShareCount(int serviceShareCount) {
+        ServiceShareCount = serviceShareCount;
+    }
+
+    public int getVehicleShareCount() {
+        return VehicleShareCount;
+    }
+
+    public void setVehicleShareCount(int vehicleShareCount) {
+        VehicleShareCount = vehicleShareCount;
     }
 
     /*

@@ -178,11 +178,15 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setStoreWebsite(successNotification.getStoreWebsite());
                         favouriteAllResponse.setWorkingDays(successNotification.getWorkingDays());
                         favouriteAllResponse.setStoreLocation(successNotification.getStoreLocation());
+                        favouriteAllResponse.setStoreShareCount(successNotification.getStoreShareCount());
+                        favouriteAllResponse.setStoreCategory(successNotification.getStoreCategory());
 
                         favouriteAllResponse.setGroupVehicles(successNotification.getGroupVehicles());
                         favouriteAllResponse.setGroupName(successNotification.getGroupName());
                         favouriteAllResponse.setGroupMembers(successNotification.getGroupMembers());
                         favouriteAllResponse.setGroupImage(successNotification.getGroupImage());
+                        favouriteAllResponse.setGroupProductCount(successNotification.getGroupProductCount());
+                        favouriteAllResponse.setGroupServiceCount(successNotification.getGroupServiceCount());
 
                         favouriteAllResponse.setProductlikestatus(successNotification.getProductlikestatus());
                         favouriteAllResponse.setProductfollowstatus(successNotification.getProductfollowstatus());
@@ -190,6 +194,8 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setProductfollowcount(successNotification.getProductfollowcount());
                         favouriteAllResponse.setProductName(successNotification.getProductName());
                         favouriteAllResponse.setProductType(successNotification.getProductType());
+                        favouriteAllResponse.setProductRating(successNotification.getProductRating());
+                        favouriteAllResponse.setProductShareCount(successNotification.getProductShareCount());
                         //favouriteAllResponse.setProductimages(successNotification.getProductimages());
                         String proImage = successNotification.getProductimages();
                         if (proImage.contains(",")) {
@@ -208,6 +214,8 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setServicefollowcount(successNotification.getServicefollowcount());
                         favouriteAllResponse.setServiceName(successNotification.getSeriveName());
                         favouriteAllResponse.setServiceType(successNotification.getServiceType());
+                        favouriteAllResponse.setServiceRating(successNotification.getServiceRating());
+                        favouriteAllResponse.setServiceShareCount(successNotification.getServiceShareCount());
                         //favouriteAllResponse.setServiceimages(successNotification.getServiceimages());
                         String serviceImage = successNotification.getServiceimages();
                         if (serviceImage.contains(",")) {
@@ -228,6 +236,7 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setTitle(successNotification.getTitle());
                         favouriteAllResponse.setImage(successNotification.getImage());
                         favouriteAllResponse.setYear(successNotification.getYear());
+                        favouriteAllResponse.setVehicleShareCount(successNotification.getVehicleShareCount());
 
                         String vehicleImage = successNotification.getImage();
                         if (vehicleImage.contains(",")) {

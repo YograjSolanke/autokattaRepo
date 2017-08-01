@@ -87,6 +87,82 @@ public class FavouriteResponse {
 
         public class Notification {
 
+
+            @SerializedName("ServiceRating")
+            @Expose
+            private int ServiceRating;
+
+            @SerializedName("ProductRating")
+            @Expose
+            private int ProductRating;
+
+            @SerializedName("StoreCategory")
+            @Expose
+            private String StoreCategory;
+
+
+            @SerializedName("StoreShareCount")
+            @Expose
+            private int StoreShareCount;
+
+
+            @SerializedName("GroupProductCount")
+            @Expose
+            private int GroupProductCount;
+
+
+            @SerializedName("GroupServiceCount")
+            @Expose
+            private int GroupServiceCount;
+
+
+            @SerializedName("ProductShareCount")
+            @Expose
+            private int ProductShareCount;
+
+
+            @SerializedName("ServiceShareCount")
+            @Expose
+            private int ServiceShareCount;
+
+            @SerializedName("VehicleShareCount")
+            @Expose
+            private int VehicleShareCount;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             @SerializedName("id")
             @Expose
             private int id;
@@ -902,6 +978,77 @@ public class FavouriteResponse {
                 this.year = year;
             }
 
+            public int getServiceRating() {
+                return ServiceRating;
+            }
+
+            public void setServiceRating(int serviceRating) {
+                ServiceRating = serviceRating;
+            }
+
+            public int getProductRating() {
+                return ProductRating;
+            }
+
+            public void setProductRating(int productRating) {
+                ProductRating = productRating;
+            }
+
+            public String getStoreCategory() {
+                return StoreCategory;
+            }
+
+            public void setStoreCategory(String storeCategory) {
+                StoreCategory = storeCategory;
+            }
+
+            public int getStoreShareCount() {
+                return StoreShareCount;
+            }
+
+            public void setStoreShareCount(int storeShareCount) {
+                StoreShareCount = storeShareCount;
+            }
+
+            public int getGroupProductCount() {
+                return GroupProductCount;
+            }
+
+            public void setGroupProductCount(int groupProductCount) {
+                GroupProductCount = groupProductCount;
+            }
+
+            public int getGroupServiceCount() {
+                return GroupServiceCount;
+            }
+
+            public void setGroupServiceCount(int groupServiceCount) {
+                GroupServiceCount = groupServiceCount;
+            }
+
+            public int getProductShareCount() {
+                return ProductShareCount;
+            }
+
+            public void setProductShareCount(int productShareCount) {
+                ProductShareCount = productShareCount;
+            }
+
+            public int getServiceShareCount() {
+                return ServiceShareCount;
+            }
+
+            public void setServiceShareCount(int serviceShareCount) {
+                ServiceShareCount = serviceShareCount;
+            }
+
+            public int getVehicleShareCount() {
+                return VehicleShareCount;
+            }
+
+            public void setVehicleShareCount(int vehicleShareCount) {
+                VehicleShareCount = vehicleShareCount;
+            }
         }
 
         public class BuyerSearch {
