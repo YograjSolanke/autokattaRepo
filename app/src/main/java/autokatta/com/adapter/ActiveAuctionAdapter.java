@@ -92,8 +92,8 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            Date futureDate = dateFormat.parse(auctionDetailsArrayList.get(position).getEndDateTime());
-            Date currentDate = dateFormat.parse(auctionDetailsArrayList.get(position).getStartDateTime());
+            Date futureDate = dateFormat.parse(auctionDetailsArrayList.get(position).getEndDateTime().replace("T"," "));
+            Date currentDate = dateFormat.parse(auctionDetailsArrayList.get(position).getStartDateTime().replace("T"," "));
             Date now = new Date();
             long difference = futureDate.getTime() - now.getTime();
             cdt = new CountDownTimer(difference, 1000) {
@@ -202,8 +202,8 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 b.putString("auctionenddate", auctionDetailsArrayList.get(position).getEndDate());
                 b.putString("auctionendtime", auctionDetailsArrayList.get(position).getEndTime());
                 b.putString("specialclauses", auctionDetailsArrayList.get(position).getSpecialClauses());
-                b.putString("enddatetime", auctionDetailsArrayList.get(position).getEndDateTime());
-                b.putString("startdatetime", auctionDetailsArrayList.get(position).getStartDateTime());
+                b.putString("enddatetime", auctionDetailsArrayList.get(position).getEndDateTime().replace("T"," "));
+                b.putString("startdatetime", auctionDetailsArrayList.get(position).getStartDateTime().replace("T"," "));
                 b.putInt("participant_count", auctionDetailsArrayList.get(position).getGoingcount());
                 b.putString("category", auctionDetailsArrayList.get(position).getAuctioncategory());
                 b.putString("location", auctionDetailsArrayList.get(position).getStockLocation());

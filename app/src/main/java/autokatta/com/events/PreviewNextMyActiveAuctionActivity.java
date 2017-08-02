@@ -120,8 +120,8 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
                     txtStartTime.setText(strStartTime);
                     txtEndDate.setText(strEndDate);
                     txtEndTime.setText(strEndTime);
-                    txtVehicle.setText(strVehicleCount);
-                    txtParticipant.setText(strParticipantcount);
+                    txtVehicle.setText(String.valueOf(strVehicleCount));
+                    txtParticipant.setText(String.valueOf(strParticipantcount));
                     txtCategory.setText("Category: " + strCategory);
                     txtLocation.setText(strLocation);
                     //mAuctionText.setText(getString(R.string.live_auction));

@@ -512,24 +512,24 @@ public interface ServiceApi {
     Call<String> deleteGroup(@Query("GroupID") int group_id, @Query("Keyword") String keyword, @Query("Mycontact") String contact);
 
     //All Live Events
-    @POST("getAllLiveEvents.php")
+    @GET("getAllLiveEvents.php")
     Call<GetLiveEventsResponse> getLiveEvents(@Query("contact") String contact);
 
     //All Live Loan Events
-    @POST("getAllLiveLoanEvents.php")
-    Call<GetLiveLoanEventsResponse> getLiveLoanEvents(@Query("contact") String contact);
+    @GET("GetAllLiveLoanEvents")
+    Call<GetLiveLoanEventsResponse> getLiveLoanEvents(@Query("Contact") String contact);
 
     //All Live Exchange Events
-    @GET("getAllLiveExchangeEvents.php")
-    Call<GetLiveExchangeEventsResponse> getLiveExchangeEvents(@Query("contact") String contact);
+    @GET("GetAllLiveExchangeEvents")
+    Call<GetLiveExchangeEventsResponse> getLiveExchangeEvents(@Query("Contact") String contact);
 
     //All Live Sale Events
-    @GET("getAllLiveSaleEvents.php")
-    Call<GetLiveSaleEventsResponse> getLiveSaleEvents(@Query("contact") String contact);
+    @GET("GetAllLiveSaleEvents")
+    Call<GetLiveSaleEventsResponse> getLiveSaleEvents(@Query("Contact") String contact);
 
     //All Live Service Events
-    @GET("getAllLiveServiceEvents.php")
-    Call<GetLiveServiceEventsResponse> getLiveServiceEvents(@Query("contact") String contact);
+    @GET("GetAllLiveServiceEvents")
+    Call<GetLiveServiceEventsResponse> getLiveServiceEvents(@Query("Contact") String contact);
 
     //All Upcoming Sale Events Events
     @GET("GetAllUpcomingSaleEvents")
