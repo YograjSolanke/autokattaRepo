@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -141,16 +142,21 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mCheckBox.setFocusable(false);
                 holder.mCheckBox.setChecked(positionArray[position]);
 
+                final ViewHolder finalHolder = holder;
                 holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
-                            checked_ids.set(position, mItemList.get(position).getVehicleId());
-                            positionArray[position] = true;
-                        } else if (checked_ids.contains(mItemList.get(position).getVehicleId())) {
-                            checked_ids.set(position, "0");
-                            positionArray[position] = false;
+                        if (finalHolder.mCheckBox.isChecked()) {
+                            if (isChecked) {
+                                checked_ids.set(position, mItemList.get(position).getVehicleId());
+                                positionArray[position] = true;
+                            } else if (checked_ids.contains(mItemList.get(position).getVehicleId())) {
+                                checked_ids.set(position, "0");
+                                positionArray[position] = false;
+                            }
+                        } else {
+                            Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
                         }
                     }
 

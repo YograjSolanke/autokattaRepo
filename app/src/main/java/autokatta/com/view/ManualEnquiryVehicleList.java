@@ -269,22 +269,24 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
-                Log.i("addArray", "->" + arrayList);
-                if (arrayList != null) {
-                    arrayList = adapter.getInventoryList();
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        if (!arrayList.get(i).equals("0")) {
-                            if (addArray.equals("")) {
-                                addArray = arrayList.get(i);
-                            } else {
-                                addArray = addArray + "," + arrayList.get(i);
-                                Log.i("addArray", "->" + addArray);
-                            }
+
+                arrayList = adapter.getInventoryList();
+                for (int i = 0; i < arrayList.size(); i++) {
+                    if (!arrayList.get(i).equals("0")) {
+                        if (addArray.equals("")) {
+                            addArray = arrayList.get(i);
+                        } else {
+                            addArray = addArray + "," + arrayList.get(i);
                         }
                     }
                 }
-                AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
-                        discussion, nextFollowupDate, addArray);
+
+                if (!addArray.equals("")) {
+                    AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
+                            discussion, nextFollowupDate, addArray);
+                } else {
+                    Toast.makeText(this, "Please add your Inventory...", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
