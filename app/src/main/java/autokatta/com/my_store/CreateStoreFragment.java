@@ -832,10 +832,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     brandtagIdList.clear();
                     if (!brandResponse.getSuccess().isEmpty()) {
                         for (BrandsTagResponse.Success message : brandResponse.getSuccess()) {
-                            message.setId(message.getId());
-                            message.setTag(message.getTag());
-                            brandtagIdList.add(message.getId());
-                            brandTagsList.add(message.getTag());
+                            message.setTagID(message.getTagID());
+                            message.setTagName(message.getTagName());
+                            //  brandtagIdList.add(message.getTagID());
+                            brandTagsList.add(message.getTagName());
                         }
                         if (getActivity() != null) {
                             ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTagsList);

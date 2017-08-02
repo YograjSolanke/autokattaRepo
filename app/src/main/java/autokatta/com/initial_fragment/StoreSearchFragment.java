@@ -245,10 +245,10 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
                     if (!brandResponse.getSuccess().isEmpty()) {
 
                         for (BrandsTagResponse.Success message : brandResponse.getSuccess()) {
-                            message.setId(message.getId());
-                            message.setTag(message.getTag());
-                            brandtagIdList.add(message.getId());
-                            brandTagsList.add(message.getTag());
+                            message.setTagID(message.getTagID());
+                            message.setTagName(message.getTagName());
+                            //  brandtagIdList.add(message.getTagID());
+                            brandTagsList.add(message.getTagName());
 
                         }
 //

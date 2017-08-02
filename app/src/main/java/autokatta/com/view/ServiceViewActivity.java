@@ -439,7 +439,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     brandTags.clear();
                     if (!brandsTagResponse.getSuccess().isEmpty()) {
                         for (BrandsTagResponse.Success success : brandsTagResponse.getSuccess()) {
-                            brandTags.add(success.getTag());
+                            brandTags.add(success.getTagName());
                         }
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(this, R.layout.addproductspinner_color, brandTags);
                         multiautobrand.setAdapter(dataadapter);
@@ -714,11 +714,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 String text = servicetags.getText().toString();
                 ArrayList<String> images = new ArrayList<String>();
                 ArrayList<String> othertag = new ArrayList<String>();
-                if (text.endsWith(","))
-                    text = text.substring(0, text.length() - 1);
                 text = text.trim();
+                text = text.replaceAll(",$", "");
+                System.out.println("txttttt=" + text);
+
 
                 String[] parts = text.split(",");
+
                 for (int l = 0; l < parts.length; l++) {
                     System.out.println(parts[l]);
                     tagpart = parts[l].trim();
@@ -726,34 +728,34 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         images.add(tagpart);
                     if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {
                         othertag.add(tagpart);
+                        System.out.println("tag going to add=" + tagpart);
                         try {
                             addOtherTags();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
+                    System.out.println("other categoryyyyyyyyyyyyyyyy=" + othertag);
+
                 }
-                try {
-                    getTags();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                System.out.println("tagname arrat before change***************" + tagname);
+
+                getTags();
+
                 for (int i = 0; i < images.size(); i++) {
+
                     for (int j = 0; j < tagname.size(); j++) {
-                        if (images.get(i).equalsIgnoreCase(tagname.get(j)))
-                            idlist = idlist + "," + spnid.get(j);
+                        if (images.get(i).toString().equalsIgnoreCase(tagname.get(j).toString()))
+                            idlist = idlist + "," + spnid.get(j).toString();
                     }
+
                 }
+
 
                 if (!servicetags.getText().toString().equalsIgnoreCase("") && idlist.length() > 0) {
                     idlist = idlist.substring(1);
-                }
-                if (tagflag) {
-                    tagid = tagid.substring(1);
-                    if (!idlist.equalsIgnoreCase(""))
-                        idlist = idlist + "," + tagid;
-                    else
-                        idlist = tagid;
+                    System.out.println("substring idddddddddd=" + idlist);
+
 
                 }
                 ArrayList<String> tempbrands = new ArrayList<String>();

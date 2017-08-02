@@ -13,6 +13,9 @@ public class BrandsTagResponse {
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public List<Success> getSuccess() {
         return success;
@@ -22,31 +25,38 @@ public class BrandsTagResponse {
         this.success = success;
     }
 
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
 
     public class Success {
 
-        @SerializedName("id")
+        @SerializedName("TagID")
         @Expose
-        private String id;
-        @SerializedName("tag")
+        private Integer tagID;
+        @SerializedName("TagName")
         @Expose
-        private String tag;
+        private String tagName;
 
-        public String getId() {
-            return id;
+        public Integer getTagID() {
+            return tagID;
         }
 
-        public void setId(String id) {
-            this.id = id;
+        public void setTagID(Integer tagID) {
+            this.tagID = tagID;
         }
 
-        public String getTag() {
-            return tag;
+        public String getTagName() {
+            return tagName;
         }
 
-        public void setTag(String tag) {
-            this.tag = tag;
+        public void setTagName(String tagName) {
+            this.tagName = tagName;
         }
-
     }
 }

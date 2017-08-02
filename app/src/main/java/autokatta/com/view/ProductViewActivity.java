@@ -405,7 +405,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     brandTags.clear();
                     if (!brandsTagResponse.getSuccess().isEmpty()) {
                         for (BrandsTagResponse.Success success : brandsTagResponse.getSuccess()) {
-                            brandTags.add(success.getTag());
+                            brandTags.add(success.getTagName());
                         }
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(this, R.layout.addproductspinner_color, brandTags);
                         multiautobrand.setAdapter(dataadapter);
