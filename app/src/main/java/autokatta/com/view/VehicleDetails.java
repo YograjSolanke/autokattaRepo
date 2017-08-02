@@ -297,9 +297,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 mLikestr = "no";
             } else if (str.equals("success_message_saved")) {
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
-            } else if (str.equals("yes")) {
+            } else if (str.contains("yes")) {
                 mChat.setLabelText("Chat");
-            } else if (str.equals("no")) {
+            } else if (str.contains("no")) {
                 mChat.setLabelText("Send Enquiry");
 
             }
