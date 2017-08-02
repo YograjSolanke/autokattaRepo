@@ -92,7 +92,9 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();
-                                    startActivity(new Intent(getApplicationContext(), AddManualEnquiry.class));
+                                    Intent i = new Intent(getApplicationContext(), AddManualEnquiry.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i);
                                 }
                             });
                             alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -100,6 +102,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                                     dialog.cancel();
                                     ActivityOptions options = ActivityOptions.makeCustomAnimation(ManualEnquiryVehicleList.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                                     Intent intent = new Intent(getApplicationContext(), ManualEnquiry.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent, options.toBundle());
                                     finish();
                                 }
