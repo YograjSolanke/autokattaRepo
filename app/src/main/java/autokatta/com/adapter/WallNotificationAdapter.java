@@ -333,28 +333,30 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         ImageButton mSearchAutokattaShare, mCall, mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
         TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
                 mSearchDate, mSearchLeads;
+        RelativeLayout mRelativeLike;
 
-        private SearchNotifications(View serviceView) {
-            super(serviceView);
-            mSearchCardView = (CardView) serviceView.findViewById(R.id.search_card_view);
-            mUserPic = (ImageView) serviceView.findViewById(R.id.profile_pro_pic);
+        private SearchNotifications(View searchView) {
+            super(searchView);
+            mSearchCardView = (CardView) searchView.findViewById(R.id.search_card_view);
+            mUserPic = (ImageView) searchView.findViewById(R.id.profile_pro_pic);
 
-            mSearchAutokattaShare = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) serviceView.findViewById(R.id.call);
-            mSearchLike = (ImageButton) serviceView.findViewById(R.id.like);
-            mSearchUnlike = (ImageButton) serviceView.findViewById(R.id.unlike);
-            mSearchFavorite = (ImageButton) serviceView.findViewById(R.id.search_favourite);
-            mSearchUnfav = (ImageButton) serviceView.findViewById(R.id.search_unfavourite);
+            mSearchAutokattaShare = (ImageButton) searchView.findViewById(R.id.share_autokatta);
+            mCall = (ImageButton) searchView.findViewById(R.id.call);
+            mSearchLike = (ImageButton) searchView.findViewById(R.id.like);
+            mSearchUnlike = (ImageButton) searchView.findViewById(R.id.unlike);
+            mSearchFavorite = (ImageButton) searchView.findViewById(R.id.search_favourite);
+            mSearchUnfav = (ImageButton) searchView.findViewById(R.id.search_unfavourite);
 
-            mSearchActionName = (TextView) serviceView.findViewById(R.id.search_action_names);
-            mSearchActionTime = (TextView) serviceView.findViewById(R.id.search_action_time);
-            mSearchCategory = (TextView) serviceView.findViewById(R.id.search_category);
-            mSearchBrand = (TextView) serviceView.findViewById(R.id.search_brand);
-            mSearchModel = (TextView) serviceView.findViewById(R.id.search_model);
-            mSearchPrice = (TextView) serviceView.findViewById(R.id.search_price);
-            mSearchYear = (TextView) serviceView.findViewById(R.id.search_year);
-            mSearchDate = (TextView) serviceView.findViewById(R.id.search_date);
-            mSearchLeads = (TextView) serviceView.findViewById(R.id.search_leads);
+            mSearchActionName = (TextView) searchView.findViewById(R.id.search_action_names);
+            mSearchActionTime = (TextView) searchView.findViewById(R.id.search_action_time);
+            mSearchCategory = (TextView) searchView.findViewById(R.id.search_category);
+            mSearchBrand = (TextView) searchView.findViewById(R.id.search_brand);
+            mSearchModel = (TextView) searchView.findViewById(R.id.search_model);
+            mSearchPrice = (TextView) searchView.findViewById(R.id.search_price);
+            mSearchYear = (TextView) searchView.findViewById(R.id.search_year);
+            mSearchDate = (TextView) searchView.findViewById(R.id.search_date);
+            mSearchLeads = (TextView) searchView.findViewById(R.id.search_leads);
+            mRelativeLike = (RelativeLayout) searchView.findViewById(R.id.rlLike);
 
         }
     }
@@ -2018,10 +2020,206 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 8:
-                /*ImageView mSearchPic;
-                ImageButton mSearchAutokatta, mSearchOther, mCall, mLike;
+                /*CardView mSearchCardView;
+                ImageView mUserPic;
+                ImageButton mSearchAutokattaShare, mCall, mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
                 TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
                         mSearchDate, mSearchLeads;*/
+                final SearchNotifications mSearchHolder = (SearchNotifications) holder;
+
+                Log.i("Wall", "Search-LayType ->" + notificationList.get(position).getLayoutType());
+
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                    //mStoreHolder.mCall.setVisibility(View.GONE);
+                    mSearchHolder.mRelativeLike.setVisibility(View.GONE);
+
+                } else {
+                    //mStoreHolder.mCall.setVisibility(View.VISIBLE);
+                    mSearchHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                }
+
+                mSearchHolder.mSearchActionName.setText(notificationList.get(position).getSenderName() + " " +
+                        notificationList.get(position).getAction() + " " + "search");
+
+                mSearchHolder.mSearchActionTime.setText(notificationList.get(position).getDateTime());
+                mSearchHolder.mSearchCategory.setText(notificationList.get(position).getSearchCategory());
+                mSearchHolder.mSearchBrand.setText(notificationList.get(position).getSearchBrand());
+                mSearchHolder.mSearchModel.setText(notificationList.get(position).getSearchModel());
+                mSearchHolder.mSearchPrice.setText(notificationList.get(position).getSearchPrice());
+                mSearchHolder.mSearchYear.setText(notificationList.get(position).getSearchManfYear());
+                mSearchHolder.mSearchDate.setText(notificationList.get(position).getSearchDate());
+                mSearchHolder.mSearchLeads.setText(String.valueOf(notificationList.get(position).getSearchLeads()));
+
+            /* Sender Profile Pic */
+
+                if (notificationList.get(position).getSenderPicture() == null ||
+                        notificationList.get(position).getSenderPicture().equals("") ||
+                        notificationList.get(position).getSenderPicture().equals("null")) {
+                    mSearchHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProfileHolder.mProfileImage);*/
+                }
+
+                mSearchHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = notificationList.get(mSearchHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+                
+                /* Like & Unlike Functionality */
+
+                if (notificationList.get(position).getSearchLikeStatus().equalsIgnoreCase("yes")) {
+                    mSearchHolder.mSearchLike.setVisibility(View.VISIBLE);
+                    mSearchHolder.mSearchUnlike.setVisibility(View.GONE);
+                } else {
+                    mSearchHolder.mSearchUnlike.setVisibility(View.VISIBLE);
+                    mSearchHolder.mSearchLike.setVisibility(View.GONE);
+                }
+
+                mSearchHolder.mSearchLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = notificationList.get(mSearchHolder.getAdapterPosition()).getSender();
+                        int searchId = notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId();
+                        mSearchHolder.mSearchLike.setVisibility(View.GONE);
+                        mSearchHolder.mSearchUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "8", 0, 0, 0, 0, 0, 0, searchId);
+                        notificationList.get(mSearchHolder.getAdapterPosition()).setSearchLikeStatus("no");
+                    }
+                });
+
+                mSearchHolder.mSearchUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = notificationList.get(mSearchHolder.getAdapterPosition()).getSender();
+                        int searchId = notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId();
+                        mSearchHolder.mSearchUnlike.setVisibility(View.GONE);
+                        mSearchHolder.mSearchLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "8", 0, 0, 0, 0, 0, 0, searchId);
+                        notificationList.get(mSearchHolder.getAdapterPosition()).setSearchLikeStatus("yes");
+                    }
+                });
+
+      /* Fav & Unfav Functionality */
+                if (notificationList.get(position).getMyFavStatus().equalsIgnoreCase("yes")) {
+                    mSearchHolder.mSearchFavorite.setVisibility(View.VISIBLE);
+                    mSearchHolder.mSearchUnfav.setVisibility(View.GONE);
+                } else {
+                    mSearchHolder.mSearchUnfav.setVisibility(View.VISIBLE);
+                    mSearchHolder.mSearchFavorite.setVisibility(View.GONE);
+                }
+
+                mSearchHolder.mSearchFavorite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unfavorite web service
+                        int notiId = notificationList.get(mSearchHolder.getAdapterPosition()).getActionID();
+                        mSearchHolder.mSearchFavorite.setVisibility(View.GONE);
+                        mSearchHolder.mSearchUnfav.setVisibility(View.VISIBLE);
+                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mSearchHolder.getAdapterPosition()).setMyFavStatus("no");
+                    }
+                });
+
+                mSearchHolder.mSearchUnfav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Favorite web service
+                        int notiId = notificationList.get(mSearchHolder.getAdapterPosition()).getActionID();
+                        mSearchHolder.mSearchUnfav.setVisibility(View.GONE);
+                        mSearchHolder.mSearchFavorite.setVisibility(View.VISIBLE);
+                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.get(mSearchHolder.getAdapterPosition()).setMyFavStatus("yes");
+                    }
+                });
+
+                mSearchHolder.mSearchAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    @Override
+                    public void onClick(View v) {
+                        //shareProfileData();
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+                        alert.setTitle("Share");
+                        alert.setMessage("with Autokatta or to other?");
+                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String allSearchDetails = mSearchHolder.mSearchCategory.getText().toString() + "=" +
+                                        mSearchHolder.mSearchBrand.getText().toString() + "=" +
+                                        mSearchHolder.mSearchModel.getText().toString() + "=" +
+                                        mSearchHolder.mSearchPrice.getText().toString() + "=" +
+                                        mSearchHolder.mSearchYear.getText().toString() + "=" +
+                                        mSearchHolder.mSearchDate.getText().toString() + "=" +
+                                        mSearchHolder.mSearchLeads.getText().toString();
+
+
+                                System.out.println("all search detailssss======Auto " + allSearchDetails);
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allSearchDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_search_id", notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId()).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "mysearch").apply();
+
+
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                String allSearchDetails = "Search Category : " + mSearchHolder.mSearchCategory.getText().toString() + "\n" +
+                                        "Search Brand : " + mSearchHolder.mSearchBrand.getText().toString() + "\n" +
+                                        "Search Model : " + mSearchHolder.mSearchModel.getText().toString() + "\n" +
+                                        "Year Of Mfg : " + mSearchHolder.mSearchYear.getText().toString() + "\n" +
+                                        "Price : " + mSearchHolder.mSearchPrice.getText().toString() + "\n" +
+                                        "Leads : " + mSearchHolder.mSearchLeads.getText().toString() + "\n" +
+                                        "Date : " + mSearchHolder.mSearchDate.getText().toString();
+
+                                System.out.println("all search detailssss======Other " + allSearchDetails);
+
+                                intent.setType("text/plain");
+                                /*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId() + "/" + mLoginContact
+                                        + "\n" + "\n" + allSearchDetails);*/
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                /*intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);*/
+
+                                dialog.dismiss();
+                            }
+
+                        });
+                        alert.create();
+                        alert.show();
+                    }
+                });
+
+
                 break;
 
             case 9:

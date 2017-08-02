@@ -318,28 +318,30 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         ImageButton mSearchAutokattaShare, mCall, mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
         TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
                 mSearchDate, mSearchLeads;
+        RelativeLayout mRelativeLike;
 
-        private SearchNotifications(View serviceView) {
-            super(serviceView);
-            mSearchCardView = (CardView) serviceView.findViewById(R.id.search_card_view);
-            mUserPic = (ImageView) serviceView.findViewById(R.id.profile_pro_pic);
+        private SearchNotifications(View searchView) {
+            super(searchView);
+            mSearchCardView = (CardView) searchView.findViewById(R.id.search_card_view);
+            mUserPic = (ImageView) searchView.findViewById(R.id.profile_pro_pic);
 
-            mSearchAutokattaShare = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) serviceView.findViewById(R.id.call);
-            mSearchLike = (ImageButton) serviceView.findViewById(R.id.like);
-            mSearchUnlike = (ImageButton) serviceView.findViewById(R.id.unlike);
-            mSearchFavorite = (ImageButton) serviceView.findViewById(R.id.search_favourite);
-            mSearchUnfav = (ImageButton) serviceView.findViewById(R.id.search_unfavourite);
+            mSearchAutokattaShare = (ImageButton) searchView.findViewById(R.id.share_autokatta);
+            mCall = (ImageButton) searchView.findViewById(R.id.call);
+            mSearchLike = (ImageButton) searchView.findViewById(R.id.like);
+            mSearchUnlike = (ImageButton) searchView.findViewById(R.id.unlike);
+            mSearchFavorite = (ImageButton) searchView.findViewById(R.id.search_favourite);
+            mSearchUnfav = (ImageButton) searchView.findViewById(R.id.search_unfavourite);
 
-            mSearchActionName = (TextView) serviceView.findViewById(R.id.search_action_names);
-            mSearchActionTime = (TextView) serviceView.findViewById(R.id.search_action_time);
-            mSearchCategory = (TextView) serviceView.findViewById(R.id.search_category);
-            mSearchBrand = (TextView) serviceView.findViewById(R.id.search_brand);
-            mSearchModel = (TextView) serviceView.findViewById(R.id.search_model);
-            mSearchPrice = (TextView) serviceView.findViewById(R.id.search_price);
-            mSearchYear = (TextView) serviceView.findViewById(R.id.search_year);
-            mSearchDate = (TextView) serviceView.findViewById(R.id.search_date);
-            mSearchLeads = (TextView) serviceView.findViewById(R.id.search_leads);
+            mSearchActionName = (TextView) searchView.findViewById(R.id.search_action_names);
+            mSearchActionTime = (TextView) searchView.findViewById(R.id.search_action_time);
+            mSearchCategory = (TextView) searchView.findViewById(R.id.search_category);
+            mSearchBrand = (TextView) searchView.findViewById(R.id.search_brand);
+            mSearchModel = (TextView) searchView.findViewById(R.id.search_model);
+            mSearchPrice = (TextView) searchView.findViewById(R.id.search_price);
+            mSearchYear = (TextView) searchView.findViewById(R.id.search_year);
+            mSearchDate = (TextView) searchView.findViewById(R.id.search_date);
+            mSearchLeads = (TextView) searchView.findViewById(R.id.search_leads);
+            mRelativeLike = (RelativeLayout) searchView.findViewById(R.id.rlLike);
 
         }
     }
@@ -610,6 +612,45 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         }
     }
 
+    /*
+   My Search Class...
+    */
+    private static class MySearch extends RecyclerView.ViewHolder {
+        TextView mCategory, mBrand, mModel, mPrice, mYear, mSearchDate, mLeads, mStopdate;
+        ImageView editImg, deleteImg, favImg, unfavImg, share, mAutokattaShare;
+        Button Stopsearch, Startsearch;
+        RelativeLayout relativeLayout;
+        CardView cardView;
+
+        private MySearch(View searchView) {
+            super(searchView);
+            mCategory = (TextView) itemView.findViewById(R.id.mysearch_category);
+            mBrand = (TextView) itemView.findViewById(R.id.mysearch_brand);
+            mModel = (TextView) itemView.findViewById(R.id.mysearch_model);
+            mPrice = (TextView) itemView.findViewById(R.id.mysearch_price);
+            mYear = (TextView) itemView.findViewById(R.id.mysearch_year);
+            mSearchDate = (TextView) itemView.findViewById(R.id.searchdate);
+            mLeads = (TextView) itemView.findViewById(R.id.buyerleads);
+
+            editImg = (ImageView) itemView.findViewById(R.id.editpen);
+            deleteImg = (ImageView) itemView.findViewById(R.id.deletevehi);
+            favImg = (ImageView) itemView.findViewById(R.id.favsearch);
+            unfavImg = (ImageView) itemView.findViewById(R.id.unfavsearch);
+            share = (ImageView) itemView.findViewById(R.id.sharesearch);
+            mAutokattaShare = (ImageView) itemView.findViewById(R.id.sharesearch1);
+            Stopsearch = (Button) itemView.findViewById(R.id.stopsearch);
+            Startsearch = (Button) itemView.findViewById(R.id.startsearch);
+
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relnote);
+            mStopdate = (TextView) itemView.findViewById(R.id.txtdate);
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
+
+            share.setVisibility(View.GONE);
+
+
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
         // Just as an example, return 0 or 2 depending on position
@@ -679,8 +720,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
             case 113:
                 //search
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_search_notifications, parent, false);
-                return new SearchNotifications(mView);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_search_adapter, parent, false);
+                return new MySearch(mView);
         }
         return null;
     }
@@ -2137,7 +2178,13 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
             case 113:
-                SearchNotifications mSearchHolder = (SearchNotifications) holder;
+                MySearch mmySearchHolder = (MySearch) holder;
+
+                TextView mCategory, mBrand, mModel, mPrice, mYear, mSearchDate, mLeads, mStopdate;
+                ImageView editImg, deleteImg, favImg, unfavImg, share, mAutokattaShare;
+                Button Stopsearch, Startsearch;
+                RelativeLayout relativeLayout;
+                CardView cardView;
 
                 break;
 

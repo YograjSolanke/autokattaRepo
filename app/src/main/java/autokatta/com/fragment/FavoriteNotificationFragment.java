@@ -523,7 +523,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setPrice(successSearch.getPrice());
                         favouriteAllResponse.setYearOfManufactur(successSearch.getYearOfManufactur());
                         favouriteAllResponse.setFavid(successSearch.getFavid());
-                        favouriteAllResponse.setImages(successSearch.getImages());
 
                         mainList.add(favouriteAllResponse);
                     }
