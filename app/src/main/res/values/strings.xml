@@ -225,7 +225,7 @@
     <string name="title_activity_my_ended_service_mela">MyEndedServiceMelaActivity</string>
     <string name="title_activity_my_ended_service_mela_preview">MyEndedServiceMelaPreviewActivity</string>
     <string name="title_activity_my_ended_sale_mela_preview">MyEndedSaleMelaPreviewActivity</string>
-    <string name="title_activity_new_vehicle_catalog">NewVehicleCatalogActivity</string>
+    <string name="title_activity_new_vehicle_catalog">Add New Vehicle</string>
     <string name="title_activity_all_enquiry_tab">Enquiry</string>
 
     <!-- Registration -->
