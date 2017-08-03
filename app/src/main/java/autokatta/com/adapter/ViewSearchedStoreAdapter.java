@@ -100,7 +100,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.storeworkingdays.setText("working days:" + object.getWorkingDays());
         holder.btnlike.setText("Likes(" + object.getLikecount() + ")");
         holder.btnfollow.setText("Follow(" + object.getFollowcount() + ")");
-        holder.ratingBar.setRating(Float.parseFloat(object.getRating()));
+        holder.ratingBar.setRating(Float.parseFloat(String.valueOf(object.getRating())));
 
         if (object.getWebsite() == null || object.getWebsite().isEmpty() || object.getWebsite().equals("null")) {
             holder.storewebsite.setText("No website found");
@@ -162,8 +162,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String likecountstr = object.getLikecount();
-                likecountint = Integer.parseInt(likecountstr);
+                int likecountstr = object.getLikecount();
+                likecountint = likecountstr;
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.Like(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -173,8 +173,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 holder.linearlike.setVisibility(View.GONE);
 
                 likecountint++;
-                object.setLikecount(String.valueOf(likecountint));
-                holder.btnlike.setText("Likes(" + likecountint + ")");
+                object.setLikecount(likecountint);
+                holder.btnlike.setText("Likes(" + String.valueOf(likecountint) + ")");
                 object.setLikestatus("yes");
             }
         });
@@ -182,8 +182,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearunlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String likecountstr = object.getLikecount();
-                likecountint = Integer.parseInt(likecountstr);
+                int likecountstr = object.getLikecount();
+                likecountint = likecountstr;
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
 
@@ -193,8 +193,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 holder.linearunlike.setVisibility(View.GONE);
                 holder.linearlike.setVisibility(View.VISIBLE);
                 likecountint--;
-                object.setLikecount(String.valueOf(likecountint));
-                holder.btnlike.setText("Likes(" + likecountint + ")");
+                object.setLikecount(likecountint);
+                holder.btnlike.setText("Likes(" + String.valueOf(likecountint) + ")");
                 object.setLikestatus("no");
             }
         });
@@ -203,8 +203,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String followcountstr = object.getFollowcount();
-                followcountint = Integer.parseInt(followcountstr);
+                int followcountstr = object.getFollowcount();
+                followcountint = followcountstr;
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.Follow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -213,8 +213,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 holder.linearunfollow.setVisibility(View.VISIBLE);
 
                 followcountint++;
-                object.setFollowcount(String.valueOf(followcountint));
-                holder.btnfollow.setText("Follow(" + followcountint + ")");
+                object.setFollowcount(followcountint);
+                holder.btnfollow.setText("Follow(" + String.valueOf(followcountint) + ")");
                 object.setFollowstatus("yes");
             }
         });
@@ -222,8 +222,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearunfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String followcountstr = object.getFollowcount();
-                followcountint = Integer.parseInt(followcountstr);
+                int followcountstr = object.getFollowcount();
+                followcountint = followcountstr;
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.UnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -232,7 +232,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                 holder.linearunfollow.setVisibility(View.GONE);
 
                 followcountint--;
-                object.setFollowcount(String.valueOf(followcountint));
+                object.setFollowcount(followcountint);
                 holder.btnfollow.setText("Follow(" + followcountint + ")");
                 object.setFollowstatus("no");
             }

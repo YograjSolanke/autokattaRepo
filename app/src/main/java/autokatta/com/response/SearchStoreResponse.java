@@ -14,6 +14,9 @@ public class SearchStoreResponse {
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public List<Success> getSuccess() {
         return success;
@@ -23,15 +26,26 @@ public class SearchStoreResponse {
         this.success = success;
     }
 
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
 
     public class Success {
 
+        @SerializedName("city")
+        @Expose
+        private String city;
         @SerializedName("contact")
         @Expose
         private String contact;
         @SerializedName("store_id")
         @Expose
-        private int storeId;
+        private Integer storeId;
         @SerializedName("store_name")
         @Expose
         private String storeName;
@@ -64,7 +78,7 @@ public class SearchStoreResponse {
         private String storeType;
         @SerializedName("working_days")
         @Expose
-        private String workingDays;
+        private Integer workingDays;
         @SerializedName("likestatus")
         @Expose
         private String likestatus;
@@ -73,16 +87,24 @@ public class SearchStoreResponse {
         private String followstatus;
         @SerializedName("likecount")
         @Expose
-        private String likecount;
+        private Integer likecount;
         @SerializedName("followcount")
         @Expose
-        private String followcount;
+        private Integer followcount;
         @SerializedName("rating")
         @Expose
-        private String rating;
+        private Integer rating;
         @SerializedName("km")
         @Expose
-        private Double km;
+        private String km;
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
 
         public String getContact() {
             return contact;
@@ -92,11 +114,11 @@ public class SearchStoreResponse {
             this.contact = contact;
         }
 
-        public int getStoreId() {
+        public Integer getStoreId() {
             return storeId;
         }
 
-        public void setStoreId(int storeId) {
+        public void setStoreId(Integer storeId) {
             this.storeId = storeId;
         }
 
@@ -180,11 +202,11 @@ public class SearchStoreResponse {
             this.storeType = storeType;
         }
 
-        public String getWorkingDays() {
+        public Integer getWorkingDays() {
             return workingDays;
         }
 
-        public void setWorkingDays(String workingDays) {
+        public void setWorkingDays(Integer workingDays) {
             this.workingDays = workingDays;
         }
 
@@ -204,36 +226,37 @@ public class SearchStoreResponse {
             this.followstatus = followstatus;
         }
 
-        public String getLikecount() {
+        public Integer getLikecount() {
             return likecount;
         }
 
-        public void setLikecount(String likecount) {
+        public void setLikecount(Integer likecount) {
             this.likecount = likecount;
         }
 
-        public String getFollowcount() {
+        public Integer getFollowcount() {
             return followcount;
         }
 
-        public void setFollowcount(String followcount) {
+        public void setFollowcount(Integer followcount) {
             this.followcount = followcount;
         }
 
-        public String getRating() {
+        public Integer getRating() {
             return rating;
         }
 
-        public void setRating(String rating) {
+        public void setRating(Integer rating) {
             this.rating = rating;
         }
 
-        public Double getKm() {
+        public String getKm() {
             return km;
         }
 
-        public void setKm(Double km) {
+        public void setKm(String km) {
             this.km = km;
         }
+
     }
 }
