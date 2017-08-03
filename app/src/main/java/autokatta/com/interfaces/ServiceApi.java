@@ -71,10 +71,10 @@ public interface ServiceApi {
     Call<String> _autokattaForgotPassword(@Query("Contact") String contact);
 
     //SearchStore Result
-    @POST("GetStoreByContact")
-    Call<SearchStoreResponse> _autokattaGetSearchStore(@Query("mycontact") String myContact, @Query("storecontact") String storecontact,
-                                                       @Query("location") String location, @Query("category") String category,
-                                                       @Query("phrase") String phrase, @Query("radius") String radius, @Query("brandTags") String brands);
+    @GET("GetStoreByContact")
+    Call<SearchStoreResponse> _autokattaGetSearchStore(@Query("Mycontact") String myContact, @Query("StoreContact") String storecontact,
+                                                       @Query("Location") String location, @Query("Category") String category,
+                                                       @Query("Phrase") String phrase, @Query("Radius") String radius, @Query("BrandTags") String brands);
 
 
     //Registered Contact Validation

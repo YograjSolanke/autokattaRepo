@@ -968,11 +968,11 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 }
                 break;
             case R.id.btnfeedback:
-                if (prate.equals("0")) {
+                if (prate.startsWith("0")) {
                     sendproductrating();
                     System.out.println("hiiii..............send rating called");
                 }
-                if (!prate.equals("0")) {
+                if (!prate.startsWith("0")) {
                     sendupdatedproductrating();
                     System.out.println("hiiii..............send updated product rating called");
                 }
