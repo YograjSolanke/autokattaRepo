@@ -1,7 +1,9 @@
 package autokatta.com.other;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,9 +32,27 @@ public class PostStatus extends AppCompatActivity {
         mPictureVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*,video/*");
-                startActivityForResult(photoPickerIntent, 1);
+                final CharSequence[] options = {"Images", "Videos", "Cancel"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(PostStatus.this);
+                builder.setTitle("Select From...");
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+                        if (options[item].equals("Images")) {
+                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                            startActivityForResult(intent, 1);
+                        } else if (options[item].equals("Videos")) {
+                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                            startActivityForResult(intent, 1);
+                        } else if (options[item].equals("Cancel")) {
+                            dialog.dismiss();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
             }
         });
     }
